@@ -11,14 +11,10 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { PublicHeader } from "@/components/layout/public-header"
 import { TextDisplay } from "@/components/learning/text-display"
-import { Slideshow } from "@/components/learning/slideshow"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronRight, CheckCircle2, Target, Users, TrendingDown, Clock } from "lucide-react"
-import { FlipCard } from "@/components/learning/flip-card"
-import { SourceCard } from "@/components/learning/source-card"
-
 export default function DemoPage() {
   const searchParams = useSearchParams()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
@@ -90,11 +86,11 @@ export default function DemoPage() {
                 <ul className="space-y-2 ml-6">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Personality traits are your natural tendenciesâ€”how you're inclined to think, feel, and behave</span>
+                    <span>Personality traits are your natural tendencies?”how you're inclined to think, feel, and behave</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Mindset is your characterâ€”the conscious choices you make despite your tendencies</span>
+                    <span>Mindset is your character?”the conscious choices you make despite your tendencies</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
@@ -124,34 +120,7 @@ export default function DemoPage() {
                 content="Few, if any, companies leverage the most complete personality assessment known as the Big Five Aspects Model (BFAM) for sales success."
               />
 
-              <Slideshow
-                slides={[
-                  {
-                    id: "market-gap",
-                    title: "Market Gap",
-                    content:
-                      "Entrepreneurs and sales professionals can gain a competitive advantage applying the BFAM for team building and sales success. Currently, this powerful tool is underutilized in the industry.",
-                  },
-                  {
-                    id: "customers",
-                    title: "Who Struggles?",
-                    content:
-                      "Sales professionals and entrepreneurs who struggle with organization, creativity, focus, unwarranted fearfulness, or feel like they are taken advantage of can learn why with BFAM and develop a counter-strategy.",
-                  },
-                  {
-                    id: "financials",
-                    title: "The Cost of Ignorance",
-                    content:
-                      "A study by Exceptional Sales estimates that only 43% of sales quotas are met when a type of personality trait known as neuroticism affects salespeople. This represents massive lost revenue.",
-                  },
-                  {
-                    id: "costs",
-                    title: "Hidden Productivity Loss",
-                    content:
-                      "Loss of productivity and haphazard goal attainment can be attributed to the negative impacts of personality temperament. With the BFAM, Swiftcourse pinpoints where those demons hide and how to overcome them.",
-                  },
-                ]}
-              />
+              
 
               <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white">
                 Continue to Solution
@@ -176,13 +145,7 @@ export default function DemoPage() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FlipCard
-                  frontTitle="Close the Gap"
-                  frontContent={
-                    <div className="space-y-4">
-                      <div className="flex justify-center">
-                        <div className="bg-brand-green/10 p-4 rounded-full">
-                          <Target className="h-10 w-10 text-brand-green" />
+                
                         </div>
                       </div>
                       <p className="text-sm">
@@ -206,13 +169,7 @@ export default function DemoPage() {
                   }
                 />
 
-                <FlipCard
-                  frontTitle="Target Audience"
-                  frontContent={
-                    <div className="space-y-4">
-                      <div className="flex justify-center">
-                        <div className="bg-brand-green/10 p-4 rounded-full">
-                          <Users className="h-10 w-10 text-brand-green" />
+                
                         </div>
                       </div>
                       <p className="text-sm">
@@ -236,13 +193,7 @@ export default function DemoPage() {
                   }
                 />
 
-                <FlipCard
-                  frontTitle="Cost Savings"
-                  frontContent={
-                    <div className="space-y-4">
-                      <div className="flex justify-center">
-                        <div className="bg-brand-orange/10 p-4 rounded-full">
-                          <TrendingDown className="h-10 w-10 text-brand-orange" />
+                
                         </div>
                       </div>
                       <p className="text-sm">
@@ -266,13 +217,7 @@ export default function DemoPage() {
                   }
                 />
 
-                <FlipCard
-                  frontTitle="Easy to Use"
-                  frontContent={
-                    <div className="space-y-4">
-                      <div className="flex justify-center">
-                        <div className="bg-brand-orange/10 p-4 rounded-full">
-                          <Clock className="h-10 w-10 text-brand-orange" />
+                
                         </div>
                       </div>
                       <p className="text-sm">
@@ -313,19 +258,19 @@ export default function DemoPage() {
                 <h3 className="text-2xl font-bold mb-6 text-center">Your Competitive Opportunity</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-green mb-2">âœ“</div>
+                    <div className="text-4xl font-bold text-brand-green mb-2">??/div>
                     <div className="font-semibold">UNIQUE</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-green mb-2">âœ“</div>
+                    <div className="text-4xl font-bold text-brand-green mb-2">??/div>
                     <div className="font-semibold">FIRST TO MARKET</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-orange mb-2">âœ“</div>
+                    <div className="text-4xl font-bold text-brand-orange mb-2">??/div>
                     <div className="font-semibold">TESTED</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-orange mb-2">âœ“</div>
+                    <div className="text-4xl font-bold text-brand-orange mb-2">??/div>
                     <div className="font-semibold">AUTHENTIC</div>
                   </div>
                 </div>
@@ -333,34 +278,7 @@ export default function DemoPage() {
 
               <h3 className="text-2xl font-semibold">Product Benefits</h3>
 
-              <Slideshow
-                slides={[
-                  {
-                    id: "benefit-1",
-                    title: "Increased Sales Activity",
-                    content:
-                      "Learn how to leverage your personality traits to engage more prospects and close more deals consistently. Our approach helps you identify the natural behaviors that drive activity.",
-                  },
-                  {
-                    id: "benefit-2",
-                    title: "Hyper Focused Sales Personnel",
-                    content:
-                      "Develop laser-like focus by understanding which personality traits help or hinder your concentration and goal pursuit. Eliminate distractions that stem from your temperament.",
-                  },
-                  {
-                    id: "benefit-3",
-                    title: "Strong Tactical Approach to Sales",
-                    content:
-                      "Master tactical negotiation techniques that align with your personality strengths for maximum effectiveness. Learn strategies that feel natural to you.",
-                  },
-                  {
-                    id: "benefit-4",
-                    title: "Strengthened Client Retention Skills",
-                    content:
-                      "Build deeper client relationships by understanding how your personality affects communication and trust-building. Turn your traits into relationship advantages.",
-                  },
-                ]}
-              />
+              
 
               <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white">
                 Continue to Strategic Model
@@ -435,15 +353,7 @@ export default function DemoPage() {
             <div className="space-y-6" id="big-five">
               <h2 className="text-3xl font-bold text-brand-green">The Big Five Personality Factors</h2>
 
-              <SourceCard
-                sources={[
-                  {
-                    author: "Jordan Peterson",
-                    title: "Between Facets and Domains",
-                    url: "https://www.jordanbpeterson.com/docs/230/2014/15DeYoung.pdf",
-                  },
-                ]}
-              />
+              
 
               <TextDisplay
                 variant="callout"
@@ -452,189 +362,19 @@ export default function DemoPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Openness Flip Card */}
-                <FlipCard
-                  frontTitle="Openness to Experience (High)"
-                  frontContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Openness (Aesthetic)</h4>
-                        <p className="text-sm">
-                          Tendency to appreciate art, emotion, and adventure. Can see beauty where others can't. Great
-                          for creative sales approaches.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Intellectual Openness</h4>
-                        <p className="text-sm">
-                          Interested in solving complex problems with new solutions. Excellent for consultative selling.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                  backTitle="Openness to Experience (Low)"
-                  backContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Openness (Aesthetic)</h4>
-                        <p className="text-sm">
-                          Conventional and engages in familiar experiences. May prefer proven sales scripts over
-                          creative approaches.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Intellectual Openness</h4>
-                        <p className="text-sm">
-                          Prefers to stick with what they know. May struggle with complex or technical sales.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                />
+                
 
                 {/* Conscientiousness Flip Card */}
-                <FlipCard
-                  frontTitle="Conscientiousness (High)"
-                  frontContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Orderliness</h4>
-                        <p className="text-sm">
-                          Likes to see rules and protocols strictly followed. Perfect for systematic sales processes and
-                          CRM discipline.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Industriousness</h4>
-                        <p className="text-sm">
-                          Goal achievement oriented. Essential for consistent prospecting and pipeline management.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                  backTitle="Conscientiousness (Low)"
-                  backContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Orderliness</h4>
-                        <p className="text-sm">
-                          Disorganized and dislikes schedules. May struggle with CRM systems and follow-up processes.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Industriousness</h4>
-                        <p className="text-sm">
-                          Not concerned with pursuing goals. Can lead to inconsistent prospecting and quota challenges.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                />
+                
 
                 {/* Extraversion Flip Card */}
-                <FlipCard
-                  frontTitle="Extraversion (High)"
-                  frontContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Enthusiasm</h4>
-                        <p className="text-sm">
-                          Energized by interacting with groups. Natural networkers who thrive in social selling.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Assertiveness</h4>
-                        <p className="text-sm">
-                          Likes to take charge and lead. Great for closing deals and leading sales teams.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                  backTitle="Extraversion (Low)"
-                  backContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Enthusiasm</h4>
-                        <p className="text-sm">
-                          Social gatherings deplete energy. May prefer written communication or one-on-one meetings.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Assertiveness</h4>
-                        <p className="text-sm">
-                          Dislikes small talk. May struggle with cold calling and networking events.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                />
+                
 
                 {/* Agreeableness Flip Card */}
-                <FlipCard
-                  frontTitle="Agreeableness (High)"
-                  frontContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Compassion</h4>
-                        <p className="text-sm">
-                          Focuses on others' emotions. Excellent for building trust and long-term relationships.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Politeness</h4>
-                        <p className="text-sm">
-                          Follows social protocols of niceness. Good for maintaining harmony with clients.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                  backTitle="Agreeableness (Low)"
-                  backContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Compassion</h4>
-                        <p className="text-sm">
-                          Highly competitive with little concern for others' emotions. May damage relationships.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Politeness</h4>
-                        <p className="text-sm">
-                          Challenges authority and social norms. May create friction with clients and management.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                />
+                
 
                 {/* Neuroticism Flip Card */}
-                <FlipCard
-                  frontTitle="Neuroticism (High)"
-                  frontContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Withdrawal</h4>
-                        <p className="text-sm">Expects negative outcomes. Can lead to call reluctance and avoidance.</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Volatility</h4>
-                        <p className="text-sm">Temper flare ups or loss of motivation in response to setbacks.</p>
-                      </div>
-                    </div>
-                  }
-                  backTitle="Neuroticism (Low)"
-                  backContent={
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-semibold mb-1">Withdrawal</h4>
-                        <p className="text-sm">Emotionally stable. Handles rejection well and maintains optimism.</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Volatility</h4>
-                        <p className="text-sm">Maintains composure during setbacks. Provides consistent performance.</p>
-                      </div>
-                    </div>
-                  }
-                />
+                
               </div>
 
               <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white">
@@ -867,7 +607,7 @@ export default function DemoPage() {
                   <div className="flex justify-center">
                     <CheckCircle2 className="h-20 w-20 text-brand-green" />
                   </div>
-                  <h2 className="text-4xl font-bold">Congratulations! ðŸŽ‰</h2>
+                  <h2 className="text-4xl font-bold">Congratulations! ?Ž‰</h2>
                   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     You've completed Module 0: Introduction to Swiftcourse
                   </p>

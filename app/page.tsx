@@ -1,4 +1,4 @@
-﻿/**
+/**
  * PUBLIC HOMEPAGE
  * Landing page for the Introduction to AI course
  */
@@ -21,14 +21,14 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div className="inline-block bg-brand-green/10 text-brand-green text-sm font-semibold px-4 py-2 rounded-full border border-brand-green/20">
-              Free Beginner Course — No Experience Required
+              Free Beginner Course ? No Experience Required
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="text-brand-orange">Understand AI</span>{" "}
               <span className="text-brand-green">From Zero</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              A clear, jargon-free introduction to Artificial Intelligence. Learn what AI is, how it works, how to use it, and how to think critically about it — all in one course.
+              A clear, jargon-free introduction to Artificial Intelligence. Learn what AI is, how it works, how to use it, and how to think critically about it ? all in one course.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
@@ -54,7 +54,7 @@ export default function HomePage() {
             <div className="text-center space-y-4">
               <h2 className="text-4xl font-bold">Why Learn AI?</h2>
               <p className="text-xl text-muted-foreground">
-                AI is reshaping every industry. You don&apos;t need to be a programmer to benefit from it — but you do need to understand it.
+                AI is reshaping every industry. You don&apos;t need to be a programmer to benefit from it ? but you do need to understand it.
               </p>
             </div>
 
@@ -79,7 +79,7 @@ export default function HomePage() {
                   <CardTitle>Practical & Actionable</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">Learn how to use AI tools in your daily life and work — starting from day one.</p>
+                  <p className="text-muted-foreground">Learn how to use AI tools in your daily life and work ? starting from day one.</p>
                 </CardContent>
               </Card>
 
@@ -122,15 +122,15 @@ export default function HomePage() {
                       </div>
                       <div>
                         <CardTitle>Module 0: Welcome to AI</CardTitle>
-                        <CardDescription className="text-base mt-1">Orient yourself — what is this course and why does AI matter to you right now?</CardDescription>
+                        <CardDescription className="text-base mt-1">Orient yourself ? what is this course and why does AI matter to you right now?</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• How to use this course for maximum learning</li>
-                      <li>• AI touchpoints already in your daily life</li>
-                      <li>• The road ahead: what you will know by the end</li>
+                      <li>? How to use this course for maximum learning</li>
+                      <li>? AI touchpoints already in your daily life</li>
+                      <li>? The road ahead: what you will know by the end</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -149,10 +149,10 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• Defining AI in plain language</li>
-                      <li>• A brief history: from chess computers to ChatGPT</li>
-                      <li>• Narrow AI vs. General AI — what we actually have today</li>
-                      <li>• Common myths debunked</li>
+                      <li>? Defining AI in plain language</li>
+                      <li>? A brief history: from chess computers to ChatGPT</li>
+                      <li>? Narrow AI vs. General AI ? what we actually have today</li>
+                      <li>? Common myths debunked</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -165,16 +165,16 @@ export default function HomePage() {
                       </div>
                       <div>
                         <CardTitle>Module 2: How Machines Learn</CardTitle>
-                        <CardDescription className="text-base mt-1">Peek inside the black box — without any equations.</CardDescription>
+                        <CardDescription className="text-base mt-1">Peek inside the black box ? without any equations.</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• What is machine learning? (Simple analogy-based explanation)</li>
-                      <li>• Why training data is everything</li>
-                      <li>• Neural networks as pattern-recognition machines</li>
-                      <li>• What AI genuinely cannot do</li>
+                      <li>? What is machine learning? (Simple analogy-based explanation)</li>
+                      <li>? Why training data is everything</li>
+                      <li>? Neural networks as pattern-recognition machines</li>
+                      <li>? What AI genuinely cannot do</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -193,16 +193,16 @@ export default function HomePage() {
                       </div>
                       <div>
                         <CardTitle>Module 3: Large Language Models & Prompting</CardTitle>
-                        <CardDescription className="text-base mt-1">Master the skill of talking to AI — and getting great results every time.</CardDescription>
+                        <CardDescription className="text-base mt-1">Master the skill of talking to AI ? and getting great results every time.</CardDescription>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• How ChatGPT and similar tools actually work</li>
-                      <li>• The anatomy of an effective prompt</li>
-                      <li>• Techniques: role prompting, chain-of-thought, few-shot</li>
-                      <li>• Hands-on practice exercises</li>
+                      <li>? How ChatGPT and similar tools actually work</li>
+                      <li>? The anatomy of an effective prompt</li>
+                      <li>? Techniques: role prompting, chain-of-thought, few-shot</li>
+                      <li>? Hands-on practice exercises</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -221,10 +221,10 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• AI writing assistants: ChatGPT, Claude, Gemini</li>
-                      <li>• AI image generation: Midjourney, DALL·E, Firefly</li>
-                      <li>• Productivity tools: Notion AI, Copilot, Grammarly</li>
-                      <li>• How to choose the right tool for any task</li>
+                      <li>? AI writing assistants: ChatGPT, Claude, Gemini</li>
+                      <li>? AI image generation: Midjourney, DALL��E, Firefly</li>
+                      <li>? Productivity tools: Notion AI, Copilot, Grammarly</li>
+                      <li>? How to choose the right tool for any task</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -249,10 +249,10 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• How AI bias forms and why it matters</li>
-                      <li>• Privacy: what data AI systems collect about you</li>
-                      <li>• Deepfakes and misinformation in the AI age</li>
-                      <li>• The future of AI regulation</li>
+                      <li>? How AI bias forms and why it matters</li>
+                      <li>? Privacy: what data AI systems collect about you</li>
+                      <li>? Deepfakes and misinformation in the AI age</li>
+                      <li>? The future of AI regulation</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -271,10 +271,10 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>• No-code AI tools you can use today</li>
-                      <li>• Building simple AI automations</li>
-                      <li>• Your first AI mini-project</li>
-                      <li>• Curated resources for going deeper</li>
+                      <li>? No-code AI tools you can use today</li>
+                      <li>? Building simple AI automations</li>
+                      <li>? Your first AI mini-project</li>
+                      <li>? Curated resources for going deeper</li>
                     </ul>
                   </CardContent>
                 </Card>

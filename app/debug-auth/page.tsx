@@ -90,7 +90,7 @@ export default function DebugAuthPage() {
               className="w-full rounded-lg border border-gray-300 p-3 text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="?�••••••�?
             />
           </div>
 
@@ -154,13 +154,13 @@ export default function DebugAuthPage() {
             href="/sign-in" 
             className="text-blue-600 hover:underline font-medium"
           >
-            ← Back to Sign In
+            ??Back to Sign In
           </a>
           <a 
             href="/register" 
             className="text-blue-600 hover:underline font-medium"
           >
-            Create New Account →
+            Create New Account ??
           </a>
         </div>
       </div>

@@ -133,7 +133,7 @@ export default function UpdatePasswordPage() {
 
         <div className="text-center text-sm">
           <a href="/sign-in" className="text-blue-600 hover:underline">
-            ← Back to Sign In
+            ??Back to Sign In
           </a>
         </div>
       </div>

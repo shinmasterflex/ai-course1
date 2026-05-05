@@ -1,4 +1,4 @@
-ï»¿/**
+/**
  * MODULE 9: THE FUTURE OF AI
  */
 
@@ -10,10 +10,6 @@ import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { FlipCard } from "@/components/learning/flip-card"
-import { Flashcard } from "@/components/learning/flashcard"
-import { MultipleChoice } from "@/components/learning/multiple-choice"
-import { MatchingGame } from "@/components/learning/matching-game"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
@@ -135,36 +131,15 @@ export default function Module9Page() {
                 <h3 className="text-xl font-semibold mb-1">Test your understanding ??flip each card</h3>
                 <p className="text-sm text-muted-foreground mb-3">Click each card to reveal what each frontier really means.</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <FlipCard
-                    front="What can Multimodal AI do that text-only AI cannot?"
-                    back="Multimodal AI can see, listen, and respond across multiple input types simultaneously. GPT-4o can examine a photo of a broken appliance and explain how to fix it. Gemini Ultra can listen to a live conversation and respond in real time. The next generation of AI assistants will be voice-first, vision-enabled ??not just chat boxes."
-                  />
-                  <FlipCard
-                    front="What is an AI Agent ??and how is it different from ChatGPT?"
-                    back="ChatGPT responds to questions. An AI Agent takes actions. Agents can browse the web, write and execute code, send emails, fill out forms, and complete multi-step tasks autonomously ??without you doing each step. The shift from AI as a tool to AI as a contractor who actually does the work."
-                  />
-                  <FlipCard
-                    front="What did AlphaFold actually solve ??and why does it matter?"
-                    back="The protein folding problem. Proteins are the molecular machines that do almost everything in your body. Their function is determined by their 3D shape ??but figuring out that shape from the amino acid sequence took years of expensive lab work. AlphaFold solved this in 2020, unlocking a new era of drug discovery and materials science."
-                  />
-                  <FlipCard
-                    front="What makes Reasoning Models different from regular LLMs?"
-                    back="Standard LLMs predict the next token immediately. Reasoning models like OpenAI o1/o3 and Gemini 2.0 Flash Thinking spend time 'thinking' ??running through multiple internal reasoning steps before producing an answer. This dramatically improves performance on hard maths, logic, and multi-step planning. Slower, but significantly more accurate on complex problems."
-                  />
+                  
+                  
+                  
+                  
                 </div>
               </div>
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
-                <MultipleChoice
-                  question="An AI system browses the internet, drafts a report, and emails it to your team ??all triggered by a single instruction from you. What type of AI system is this?"
-                  options={[
-                    { text: "A Multimodal AI", isCorrect: false, feedback: "Multimodal AI processes multiple types of input (text, images, audio) ??that is about perception, not taking autonomous actions." },
-                    { text: "A Reasoning Model", isCorrect: false, feedback: "Reasoning models think through problems step by step before answering, but they still just produce text ??they do not take actions autonomously." },
-                    { text: "An AI Agent", isCorrect: true, feedback: "Correct. AI Agents are defined by their ability to take actions ??browsing, writing, executing code, sending messages ??not just answer questions. This is the defining capability of the agentic AI frontier." },
-                    { text: "Scientific AI", isCorrect: false, feedback: "Scientific AI refers to AI applied to research problems like drug discovery and protein folding ??not workflow automation." },
-                  ]}
-                  explanation="AI Agents represent the shift from AI as a tool (you type, AI responds) to AI as an autonomous actor (AI plans and executes multi-step workflows on your behalf). This is one of the most significant capability jumps in current AI development."
-                />
+                
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
             </div>
@@ -186,7 +161,7 @@ export default function Module9Page() {
                         "Cannot generalise to tasks outside its training",
                         "Has no genuine understanding or goals",
                         "Is a tool ??it does what it is designed to do",
-                        "Examples: ChatGPT, AlphaFold, DALLÂ·E",
+                        "Examples: ChatGPT, AlphaFold, DALL¡¤E",
                       ].map((item) => <li key={item} className="flex gap-1"><span className="text-brand-green">??/span>{item}</li>)}
                     </ul>
                   </div>
@@ -206,13 +181,7 @@ export default function Module9Page() {
               </Card>
               <div className="space-y-3">
                 <h3 className="text-xl font-bold">What Leading Experts Believe</h3>
-                <Flashcard cards={[
-                  { id: "optimists", front: "The optimists (Altman, Hassabis, LeCun-ish)", back: "Sam Altman has suggested AGI may arrive within a few years. Demis Hassabis (DeepMind) believes it is within reach this decade. Optimists point to the rapid capability jumps in recent years and argue current approaches, scaled further, could reach AGI." },
-                  { id: "skeptics", front: "The skeptics (Gary Marcus, Yann LeCun)", back: "Many researchers argue current LLMs are fundamentally incapable of true understanding and reasoning. They believe new architectural breakthroughs ??not just scaling ??are needed. Some say AGI is decades away; others question whether the concept is even coherent." },
-                  { id: "safety", front: "The safety camp (Yoshua Bengio, Stuart Russell)", back: "Some who believe AGI is achievable are most concerned about whether we can make it safe. They argue the gap between 'AGI is possible' and 'AGI is aligned with human values' is the most important unsolved problem in AI research." },
-                  { id: "2025context", front: "What happened in 2025 that changed the debate?", back: "DeepSeek R1 ??built by a small Chinese team at a fraction of the cost of GPT-4 ??matched frontier model performance and shocked the AI industry. It showed capability gains do not always require billion-dollar compute budgets, which has accelerated timelines in many researchers' minds. Meanwhile, OpenAI launched o3, scoring 87.5% on the ARC-AGI benchmark (designed to be hard for AI), compared to ~85% for the average human. AGI goalposts are shifting." },
-                  { id: "honest", front: "What we actually know", back: "Nobody knows the timeline with confidence. AI capabilities have consistently surprised experts ??both by advancing faster than expected in some areas and slower in others. The honest answer: AGI may or may not arrive in your lifetime, and the definition of what 'counts' as AGI is itself contested." },
-                ]} />
+                
               </div>
               <TextDisplay variant="callout" content="The practical takeaway: you do not need to know if or when AGI will arrive to benefit from AI today. Focus on what AI can do now, not on speculative timelines." />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
@@ -260,16 +229,7 @@ export default function Module9Page() {
               </div>
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
-                <MultipleChoice
-                  question="What is the primary purpose of the EU AI Act?"
-                  options={[
-                    { text: "To ban all AI systems that could be used for surveillance", isCorrect: false, feedback: "The EU AI Act bans specific high-risk uses like real-time biometric surveillance in public spaces, but does not ban surveillance AI broadly. It takes a risk-based approach." },
-                    { text: "To regulate AI systems by risk level ??imposing stricter requirements on higher-risk applications", isCorrect: true, feedback: "Correct. The EU AI Act classifies AI systems into four risk categories (unacceptable, high, limited, minimal) and imposes requirements proportionate to risk level." },
-                    { text: "To promote European AI development by subsidising domestic AI companies", isCorrect: false, feedback: "The EU AI Act is primarily a regulatory framework, not an investment or subsidy programme. Separate EU initiatives address AI investment and development." },
-                    { text: "To establish a single European AI company to compete with US and Chinese providers", isCorrect: false, feedback: "The EU AI Act is regulation, not an industrial policy to create a single AI company. Several EU programmes support AI research and startups separately." },
-                  ]}
-                  explanation="The EU AI Act uses a risk-based approach: AI applications are categorised by their potential harm, with the most rigorous requirements for AI used in high-stakes decisions about people's lives (healthcare, employment, criminal justice, critical infrastructure)."
-                />
+                
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
             </div>
@@ -342,16 +302,7 @@ export default function Module9Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The most accessible career move for most people: become the most AI-fluent person in your current domain. You do not need to switch careers ??you need to become the bridge between AI capability and your industry's expertise." />
-              <MatchingGame
-                title="Match the AI career role to its core activity"
-                pairs={[
-                  { left: "AI/ML Engineer", right: "Builds and trains AI models" },
-                  { left: "Prompt Engineer", right: "Designs prompts to get reliable outputs in specific domains" },
-                  { left: "AI Ethics & Policy", right: "Ensures AI is fair, transparent, and regulation-compliant" },
-                  { left: "AI Trainer / RLHF", right: "Rates AI outputs to improve model quality" },
-                  { left: "AI Product Manager", right: "Bridges technical AI teams and business goals" },
-                ]}
-              />
+              
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
             </div>
           )}
@@ -400,7 +351,7 @@ export default function Module9Page() {
                   className="bg-brand-green hover:bg-brand-green/90 text-white"
                   onClick={handleSectionComplete}
                 >
-                  Complete Module 9 âœ“
+                  Complete Module 9 ?
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard
@@ -416,43 +367,13 @@ export default function Module9Page() {
               <TextDisplay content="Test your understanding of AI's future trajectory. Choose the best answer for each question." />
               <div className="space-y-6">
                 <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                  <MultipleChoice
-                    question="What is the key difference between 'narrow AI' and 'artificial general intelligence' (AGI)?"
-                    options={[
-                      { text: "Narrow AI can only process text, while AGI can process images and audio too", isCorrect: false, feedback: "This is not the distinction. Today's narrow AI systems (like GPT-4o) can already process text, images, and audio. The narrow/AGI distinction is about generalisation, not modality." },
-                      { text: "Narrow AI excels at specific tasks it was designed for; AGI could perform any intellectual task a human can", isCorrect: true, feedback: "Correct. Narrow AI is purpose-built and cannot genuinely generalise. AGI ??which does not yet exist ??would be able to learn and perform any intellectual task a human can." },
-                      { text: "Narrow AI is used by businesses; AGI is only used by researchers", isCorrect: false, feedback: "AGI does not currently exist in any form, commercial or research. All AI systems deployed today are narrow AI, including cutting-edge research systems." },
-                      { text: "Narrow AI requires internet connectivity; AGI can work offline", isCorrect: false, feedback: "Connectivity requirements are an infrastructure detail unrelated to the narrow AI vs. AGI distinction." },
-                    ]}
-                    explanation="The narrow/AGI distinction is about generalisation and transfer. Narrow AI ??even very powerful narrow AI like GPT-4o ??is trained for specific tasks and cannot genuinely generalise the way humans do. AGI, which remains hypothetical, would have human-like general problem-solving ability across any domain."
-                    onComplete={(c) => handleQuizComplete("quiz1", c)}
-                  />
+                  
                 </Card>
                 <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                  <MultipleChoice
-                    question="Which career approach is MOST accessible for someone who wants to work in AI but does not have a technical background?"
-                    options={[
-                      { text: "Immediately enrol in a computer science degree to learn machine learning from scratch", isCorrect: false, feedback: "This is one valid path, but it takes years and is not the most accessible option. Many impactful AI roles do not require deep technical training." },
-                      { text: "Become the most AI-fluent expert in your current field, bridging AI capability and domain expertise", isCorrect: true, feedback: "Correct. This is the most accessible and often most impactful path. Organisations desperately need people who can bridge AI capability and real-world domain expertise ??whether in law, medicine, education, finance, or any other field." },
-                      { text: "Focus on AI ethics and wait for technical roles to become less specialised", isCorrect: false, feedback: "AI ethics is a real and growing field, but 'waiting' is not a strategy. And AI roles are not converging toward less specialisation ??they are diversifying." },
-                      { text: "Start a company to build competing AI models", isCorrect: false, feedback: "Building foundation models requires hundreds of millions of dollars and deep technical teams. This is not an accessible path for most people." },
-                    ]}
-                    explanation="The most accessible and often most valuable AI career move is becoming the bridge between AI and your existing domain. Organisations across every industry need people who deeply understand both the field and how AI can be applied to it ??and this does not require becoming an ML engineer."
-                    onComplete={(c) => handleQuizComplete("quiz2", c)}
-                  />
+                  
                 </Card>
                 <Card className="p-5 border-blue-500/20 bg-blue-500/5">
-                  <MultipleChoice
-                    question="An AI system that can browse the web, write code, and send emails autonomously ??all from one instruction ??is best described as which type of AI?"
-                    options={[
-                      { text: "A Multimodal AI", isCorrect: false, feedback: "Multimodal AI processes multiple input types (text, images, audio) simultaneously ??that is about perception, not autonomous action-taking across external systems." },
-                      { text: "A Reasoning Model", isCorrect: false, feedback: "Reasoning models like o1/o3 think through problems step by step before answering, but they still produce text responses ??they do not autonomously take actions in the world." },
-                      { text: "An AI Agent", isCorrect: true, feedback: "Correct! AI Agents take actions ??browsing, executing code, sending messages, managing files ??not just generating text. This is the defining capability of agentic AI and one of the most significant current frontiers." },
-                      { text: "Artificial General Intelligence", isCorrect: false, feedback: "AGI would have human-level general intelligence across all domains and does not yet exist. Agents are a specific architecture for autonomous action ??not general intelligence." },
-                    ]}
-                    explanation="AI Agents represent the shift from AI as a conversational tool to AI as an autonomous actor. Unlike standard LLMs that produce text, agents plan and execute multi-step workflows ??browsing, writing, calling APIs, sending messages ??all triggered by a single high-level instruction."
-                    onComplete={(c) => handleQuizComplete("quiz3", c)}
-                  />
+                  
                 </Card>
               </div>
               {allQuizComplete && (

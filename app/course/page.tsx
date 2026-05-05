@@ -1,4 +1,4 @@
-﻿/**
+/**
  * DASHBOARD PAGE
  * AI course main dashboard showing progress and module overview
  */
@@ -20,7 +20,7 @@ const MODULE_META = [
   { id: "module-1", icon: Cpu,          color: "brand-orange", label: "What Is AI?",                  description: "A grounded definition, history, and types of AI." },
   { id: "module-2", icon: Brain,        color: "brand-green",  label: "How Machines Learn",           description: "Training data, neural networks, and AI limits." },
   { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",             description: "How ChatGPT works and how to prompt effectively." },
-  { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity — a guided tour." },
+  { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity ? a guided tour." },
   { id: "module-5", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
   { id: "module-6", icon: Wrench,       color: "brand-green",  label: "Your AI Toolkit",              description: "No-code tools, workflows, and your first project." },
   { id: "module-7", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
@@ -70,7 +70,7 @@ export default function DashboardPage() {
             <span className="text-brand-green">to AI</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Your beginner-friendly journey from zero to AI-confident — one module at a time.
+            Your beginner-friendly journey from zero to AI-confident ? one module at a time.
           </p>
         </div>
 

@@ -163,7 +163,7 @@ export default function SignInPage() {
               }}
               className="mt-3 text-sm text-blue-600 hover:underline"
             >
-              ← Back to Sign In
+              ??Back to Sign In
             </button>
           </div>
         ) : showResetForm ? (
@@ -240,7 +240,7 @@ export default function SignInPage() {
                   className="w-full rounded border p-2 text-black"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="?�••••••�?
                 />
               </div>
 

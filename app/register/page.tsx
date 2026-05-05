@@ -423,7 +423,7 @@ export default function RegisterPage() {
                 required
                 className="w-full p-2 border rounded text-black"
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="?�••••••�?
               />
             </div>
 

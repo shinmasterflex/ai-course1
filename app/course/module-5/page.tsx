@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MODULE 5: AI FOR BUSINESS & WORK
  */
 
@@ -10,10 +10,6 @@ import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { FlipCard } from "@/components/learning/flip-card"
-import { Flashcard } from "@/components/learning/flashcard"
-import { ComparisonCard } from "@/components/learning/comparison-card"
-import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, AlertTriangle, Shield } from "lucide-react"
@@ -78,13 +74,13 @@ export default function Module5Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks — to yourself, to others, and to society. This module gives you that foundation." />
+              <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks ? to yourself, to others, and to society. This module gives you that foundation." />
               <Card className="p-5 space-y-2">
-                {["AI bias — how it forms and who it hurts","Privacy — what AI systems collect about you","Misinformation — deepfakes and AI-generated content","Responsible AI use — principles and practices","The future of AI — what comes next"].map((item) => (
+                {["AI bias ? how it forms and who it hurts","Privacy ? what AI systems collect about you","Misinformation ? deepfakes and AI-generated content","Responsible AI use ? principles and practices","The future of AI ? what comes next"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module →</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ��</Button>
             </div>
           )}
 
@@ -100,8 +96,8 @@ export default function Module5Page() {
                   <div className="space-y-3 text-sm">
                     {[
                       { source: "Biased training data", desc: "If historical hiring data reflects past discrimination (e.g., fewer women in senior roles), an AI trained on it will perpetuate those patterns." },
-                      { source: "Underrepresentation", desc: "Facial recognition AI trained mostly on white male faces performs significantly worse on darker skin tones and women — because those groups were underrepresented in training data." },
-                      { source: "Feedback loops", desc: "AI that recommends content may amplify extreme or sensational content because users engage with it more — creating a feedback loop that reinforces harmful patterns." },
+                      { source: "Underrepresentation", desc: "Facial recognition AI trained mostly on white male faces performs significantly worse on darker skin tones and women ? because those groups were underrepresented in training data." },
+                      { source: "Feedback loops", desc: "AI that recommends content may amplify extreme or sensational content because users engage with it more ? creating a feedback loop that reinforces harmful patterns." },
                       { source: "Measurement bias", desc: "What you measure reflects your values. If a 'good employee' is defined as someone who works 60+ hours a week, the AI will disadvantage people with caregiving responsibilities." },
                     ].map(({ source, desc }) => (
                       <div key={source} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
@@ -114,24 +110,19 @@ export default function Module5Page() {
                 <Card className="p-5 bg-brand-green/5 border-brand-green/20">
                   <h3 className="font-semibold mb-2 text-brand-green flex items-center gap-2"><Shield className="h-4 w-4" />What is being done about it</h3>
                   <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Bias auditing tools that test AI systems for disparate outcomes</li>
-                    <li>• Diverse and representative training datasets</li>
-                    <li>• Regulatory frameworks (EU AI Act) requiring bias assessment for high-risk AI</li>
-                    <li>• Fairness metrics built into model evaluation pipelines</li>
+                    <li>? Bias auditing tools that test AI systems for disparate outcomes</li>
+                    <li>? Diverse and representative training datasets</li>
+                    <li>? Regulatory frameworks (EU AI Act) requiring bias assessment for high-risk AI</li>
+                    <li>? Fairness metrics built into model evaluation pipelines</li>
                   </ul>
                 </Card>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases — Flashcards</h3>
+                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases ? Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
-                <Flashcard cards={[
-                  { id: "amazon-hiring", front: "Amazon's AI Hiring Tool (2018)", back: "Amazon built an AI to screen CVs — and then scrapped it when they discovered it was penalising CVs that contained the word 'women's' (e.g. 'women's chess club') and downgrading graduates of all-women's colleges.\n\nWhy? It was trained on 10 years of past hiring decisions — when Amazon's engineering workforce was predominantly male. The AI learned that maleness correlated with success." },
-                  { id: "compas", front: "COMPAS Recidivism Algorithm (2016)", back: "COMPAS was used by US courts to predict the likelihood a defendant would reoffend. ProPublica's investigation found it incorrectly labelled Black defendants as future criminals at twice the rate of white defendants.\n\nThe algorithm did not use race directly — but it used variables correlated with race (zip code, family history) that produced discriminatory outcomes." },
-                  { id: "face-id", front: "Facial Recognition & Racial Bias", back: "A 2018 MIT Media Lab study (Gender Shades) found commercial facial recognition systems had error rates of 0.8% on white men — but up to 34.7% on darker-skinned women.\n\nThe cause: training datasets were overwhelmingly composed of white male faces. The AI performed best on who it had seen the most of during training." },
-                  { id: "healthcare-bias", front: "Healthcare Algorithm (2019)", back: "A widely-used algorithm to prioritise patients for extra medical care was found to systematically disadvantage Black patients. At any given 'risk score', Black patients were actually sicker than white patients — but the algorithm predicted they needed less care.\n\nWhy? The algorithm used healthcare costs as a proxy for health needs — and Black patients historically had less access to healthcare, so they had lower historical costs despite higher illness." },
-                ]} />
+                
               </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
             </div>
           )}
 
@@ -139,17 +130,8 @@ export default function Module5Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Privacy & Your Data</h2>
-              <TextDisplay content="When you use AI tools, you are sharing data — sometimes more than you realise. Understanding what is collected helps you protect yourself." />
-              <ComparisonCard
-                leftTitle="What you might assume"
-                rightTitle="What may actually happen"
-                items={[
-                  { left: "My conversation is private", right: "Free AI tools may use your chats to train future models" },
-                  { left: "The AI forgets my conversation after it ends", right: "Many services retain conversation history on their servers" },
-                  { left: "Using AI at work is the same as using it personally", right: "Company data entered into consumer AI tools may violate your employer's data policies" },
-                  { left: "The AI does not know who I am", right: "AI services often link your conversations to your account and device" },
-                ]}
-              />
+              <TextDisplay content="When you use AI tools, you are sharing data ? sometimes more than you realise. Understanding what is collected helps you protect yourself." />
+              
               <Card className="p-5">
                 <h3 className="font-semibold mb-3">Practical privacy guidelines</h3>
                 <ul className="space-y-2 text-sm">
@@ -164,21 +146,9 @@ export default function Module5Page() {
                   ))}
                 </ul>
               </Card>
-              <FlipCard
-                front="Does ChatGPT use my conversations to train its models?"
-                back="By default, yes — for free users, OpenAI may use conversations to train future models. You can opt out in Settings > Data Controls > Improve the model for everyone. ChatGPT Team and Enterprise plans do not train on your data by default."
-              />
-              <MultipleChoice
-                question="Your colleague is using the free version of ChatGPT to draft a business proposal that includes details about an unannounced product launch. What is the key privacy concern?"
-                options={[
-                  { text: "ChatGPT might share the proposal with competitor companies", isCorrect: false, feedback: "ChatGPT does not deliberately share data with named companies. The concern is more systemic: data may be used to train future model versions, potentially surfacing patterns from your input in other contexts." },
-                  { text: "Free-tier AI tools may use conversation inputs to train future models, potentially exposing confidential business information", isCorrect: true, feedback: "Correct. This is the core risk. OpenAI's free tier terms permit using conversations for model improvement. Confidential business details — unreleased products, financial projections, client names — should not be entered into consumer AI tools without checking data handling policies." },
-                  { text: "ChatGPT will automatically publish the proposal on the internet", isCorrect: false, feedback: "ChatGPT does not publish your conversations publicly. The risk is data retention and potential use in training — not public disclosure." },
-                  { text: "There is no concern — AI tools are confidential by design", isCorrect: false, feedback: "This is a dangerous assumption. Free-tier consumer AI tools are generally not designed for confidential business use. Enterprise tiers exist specifically to address this gap with stronger data protection agreements." },
-                ]}
-                explanation="Free-tier AI tools typically grant themselves the right to use conversations for model improvement in their terms of service. For confidential information — internal strategy, client data, financial details, unreleased products — use enterprise tiers that include data processing agreements, or check whether your organisation has approved specific AI tools."
-              />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+              
+              
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
             </div>
           )}
 
@@ -186,7 +156,7 @@ export default function Module5Page() {
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Misinformation & Deepfakes</h2>
-              <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content — from text to images to video to audio." />
+              <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content ? from text to images to video to audio." />
               <div className="space-y-4">
                 <Card className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">Types of AI-generated misinformation</h3>
@@ -195,7 +165,7 @@ export default function Module5Page() {
                       { type: "Deepfake video", desc: "Realistic video of a real person saying or doing things they never did. Used in political manipulation, fraud, and non-consensual content." },
                       { type: "Voice cloning", desc: "AI can replicate any voice from just a few seconds of audio. Used in phone scams where the AI 'sounds like' a family member or executive." },
                       { type: "AI-written disinformation", desc: "LLMs can produce thousands of realistic-sounding false news articles, social media posts, or product reviews at near-zero cost." },
-                      { type: "Synthetic images", desc: "Fake but photorealistic images of events that never happened — protests, disasters, crimes, celebrities." },
+                      { type: "Synthetic images", desc: "Fake but photorealistic images of events that never happened ? protests, disasters, crimes, celebrities." },
                     ].map(({ type, desc }) => (
                       <div key={type} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
                         <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
@@ -207,7 +177,7 @@ export default function Module5Page() {
                 <Card className="p-5 bg-brand-green/5 border-brand-green/20">
                   <h3 className="font-semibold mb-3 text-brand-green">How to spot and resist AI misinformation</h3>
                   <ul className="text-sm space-y-2 text-muted-foreground">
-                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing — if it is surprising, check it</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing ? if it is surprising, check it</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use reverse image search to check if images are authentic</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Look for watermarks, distortions, or inconsistencies in video (odd lighting, blurry edges)</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Be suspicious of unexpected calls requesting urgent action or money, even from known voices</li>
@@ -215,15 +185,15 @@ export default function Module5Page() {
                   </ul>
                 </Card>
                 <Card className="p-5 border-blue-500/20 bg-blue-500/5">
-                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools — and Their Limits</h3>
-                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful — but imperfect. Understanding both is important.</p>
+                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools ? and Their Limits</h3>
+                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful ? but imperfect. Understanding both is important.</p>
                   <div className="space-y-3 text-sm">
                     {[
                       { tool: "GPTZero", type: "Text detection", desc: "Analyses writing patterns and perplexity (how predictable the word choices are) to estimate whether text was AI-generated. Widely used by educators. Works reasonably well on clearly AI-generated text; struggles with heavily edited or mixed human/AI content." },
                       { tool: "Originality.ai", type: "Text detection", desc: "Designed for publishers and content teams. Scans for AI content alongside plagiarism checking. Offers sentence-level highlighting to show which parts look AI-generated. Paid tool." },
                       { tool: "Hive Moderation", type: "Image & video detection", desc: "Classifies whether images were AI-generated, with confidence scores. Used by platforms for content moderation. More reliable on images from known AI generators." },
-                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye — inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
-                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos — a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
+                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye ? inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
+                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos ? a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
                     ].map(({ tool, type, desc }) => (
                       <div key={tool} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
                         <div className="flex-1">
@@ -238,24 +208,15 @@ export default function Module5Page() {
                   </div>
                   <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg">
                     <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Critical limitation to understand</p>
-                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common — students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
+                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common ? students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
                   </div>
                 </Card>
               </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Real scenario — what would you do?</h3>
-                <MultipleChoice
-                  question="You see a viral video clip of a famous politician saying something shocking. It is spreading rapidly on social media. What is the best first step?"
-                  options={[
-                    { text: "Share it immediately — the faster you share, the more relevant you are", isCorrect: false, feedback: "Speed of sharing is exactly what makes AI misinformation effective. Being fast and being right are not the same thing." },
-                    { text: "Check whether credible news outlets are reporting on the video and search for the original source", isCorrect: true, feedback: "Correct. If a major news story were real, it would be covered by multiple reliable sources. Search for the original clip, check the date, and look for coverage from established outlets." },
-                    { text: "Look at the comments — if most people believe it, it is probably real", isCorrect: false, feedback: "Social proof is not evidence. Misinformation spreads precisely because many people believe and share it without verification." },
-                    { text: "Ask an AI chatbot whether the video is real", isCorrect: false, feedback: "AI chatbots may not have access to recent events, can hallucinate, and cannot verify video authenticity. Use fact-checking tools and primary sources instead." },
-                  ]}
-                  explanation="The SIFT method works well here: Stop, Investigate the source, Find better coverage, Trace claims to their origin. Credible stories are covered by multiple independent outlets. Viral but unverified clips demand extra skepticism."
-                />
+                <h3 className="font-semibold mb-3 text-brand-orange">Real scenario ? what would you do?</h3>
+                
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
             </div>
           )}
 
@@ -263,10 +224,10 @@ export default function Module5Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Responsible AI Use</h2>
-              <TextDisplay content="Being a responsible AI user does not mean being afraid of AI — it means using it thoughtfully, with awareness of its limitations and impact." />
+              <TextDisplay content="Being a responsible AI user does not mean being afraid of AI ? it means using it thoughtfully, with awareness of its limitations and impact." />
               <div className="space-y-3">
                 {[
-                  { principle: "Verify before you trust", desc: "AI can be confidently wrong. For anything important — medical, legal, financial, factual — always verify AI outputs with authoritative sources." },
+                  { principle: "Verify before you trust", desc: "AI can be confidently wrong. For anything important ? medical, legal, financial, factual ? always verify AI outputs with authoritative sources." },
                   { principle: "Disclose when relevant", desc: "If you use AI to write something that will be presented as your own work or expertise, consider whether disclosure is appropriate. Academic, professional, and journalistic contexts often require it." },
                   { principle: "Do not automate consequential decisions blindly", desc: "AI should augment human judgment, not replace it, for high-stakes decisions (hiring, lending, medical treatment, legal judgments)." },
                   { principle: "Be aware of your own 'automation bias'", desc: "People tend to over-trust AI outputs because they come from computers. Actively question AI suggestions rather than accepting them by default." },
@@ -281,18 +242,9 @@ export default function Module5Page() {
               </div>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
-                <MultipleChoice
-                  question="A manager uses an AI tool to write performance reviews for their team by pasting in each employee's KPIs. They do not read the reviews carefully before sending them. What principle of responsible AI use is being violated?"
-                  options={[
-                    { text: "Privacy — they should not enter KPI data into AI tools", isCorrect: false, feedback: "Privacy is a concern worth thinking about, but the core problem here is that the manager is not reviewing the output before using it to make consequential decisions about people's careers." },
-                    { text: "Do not automate consequential decisions blindly — AI should assist human judgment, not replace it", isCorrect: true, feedback: "Correct. Performance reviews directly affect people's careers, compensation, and wellbeing. Using AI output without careful review means the manager is not exercising the judgment their role requires. AI can assist — but a human must remain accountable for the decision." },
-                    { text: "Verify before you trust — they should fact-check the AI's output", isCorrect: false, feedback: "Verification is part of it, but the deeper issue is that consequential decisions about people require human judgment and accountability — not just fact-checking." },
-                    { text: "There is nothing wrong with this — AI saves time", isCorrect: false, feedback: "Time savings do not justify removing meaningful human oversight from decisions that affect people's livelihoods and careers." },
-                  ]}
-                  explanation="Responsible AI use means using AI as a tool that augments your judgment — not replaces it. For high-stakes decisions (performance reviews, hiring, medical, legal), a human must be genuinely involved in reviewing and owning the output. 'AI drafted it and I sent it without reading' is not responsible use."
-                />
+                
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
             </div>
           )}
 
@@ -303,11 +255,11 @@ export default function Module5Page() {
               <TextDisplay content="AI is evolving faster than almost any technology in history. Here is what experts are currently watching:" />
               <div className="space-y-4">
                 {[
-                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously — browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
-                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code — not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
+                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously ? browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
+                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code ? not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
                   { trend: "AI in Healthcare", desc: "AI is matching or exceeding specialists in reading radiology scans, identifying skin cancers, predicting drug interactions, and discovering new molecules." },
                   { trend: "Regulation", desc: "The EU AI Act is the first major AI regulation globally. The US, UK, China, and others are developing frameworks. This will reshape how AI is built and deployed." },
-                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs — augmenting some, displacing others. The effect will be uneven across roles and sectors." },
+                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs ? augmenting some, displacing others. The effect will be uneven across roles and sectors." },
                   { trend: "AI Safety Research", desc: "A growing field working on the 'alignment problem': ensuring AI systems do what humans actually intend. Organisations like Anthropic, DeepMind Safety, and MIRI are leading this work." },
                 ].map(({ trend, desc }) => (
                   <Card key={trend} className="p-4 flex gap-3">
@@ -316,21 +268,12 @@ export default function Module5Page() {
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool — it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
+              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool ? it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
-                <MultipleChoice
-                  question="Which of the following best describes why the 'AI alignment problem' is considered one of the most important challenges in AI research?"
-                  options={[
-                    { text: "Because AI systems use too much electricity and are bad for the environment", isCorrect: false, feedback: "AI's energy consumption is a real concern, but that is not what alignment refers to." },
-                    { text: "Because current AI systems are too expensive for small organisations to use", isCorrect: false, feedback: "Cost is a practical barrier but has nothing to do with the alignment problem." },
-                    { text: "Because as AI systems become more capable, ensuring they reliably do what humans actually intend becomes harder and more critical", isCorrect: true, feedback: "Exactly. The alignment problem is about building AI systems whose goals, values, and behaviours remain aligned with human intentions — even as their capabilities increase. A highly capable AI pursuing a subtly wrong goal could cause significant harm." },
-                    { text: "Because AI systems cannot be explained to non-technical people", isCorrect: false, feedback: "Explainability (XAI) is a related but separate challenge. Alignment is specifically about ensuring AI goals match human intentions." },
-                  ]}
-                  explanation="AI safety research focuses on the alignment problem: how do we ensure that increasingly capable AI systems continue to pursue goals that are genuinely beneficial to humans? The problem becomes more pressing as AI systems become more autonomous and powerful."
-                />
+                
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
             </div>
           )}
 
@@ -338,45 +281,15 @@ export default function Module5Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <MultipleChoice
-                question="What is the primary reason AI systems can exhibit bias?"
-                options={[
-                  { text: "AI programmers intentionally code biases into the system", isCorrect: false, feedback: "AI bias is usually unintentional and structural, not deliberate." },
-                  { text: "AI systems learn from training data that reflects existing human biases and inequalities", isCorrect: true, feedback: "Correct! AI learns patterns from data — and if that data reflects societal biases, the AI will too." },
-                  { text: "AI is too complex to be tested for fairness", isCorrect: false, feedback: "Bias auditing tools exist to test AI systems for disparate outcomes." },
-                  { text: "All AI is biased and nothing can be done about it", isCorrect: false, feedback: "Bias can be reduced through diverse training data, bias auditing, and careful system design." },
-                ]}
-                explanation="AI bias emerges from training data that reflects historical inequalities, measurement choices that embed assumptions, and feedback loops that amplify patterns — not from intentional programming."
-                onComplete={(c) => handleQuizComplete("quiz1", c)}
-              />
-              <MultipleChoice
-                question="You receive a phone call from your boss's voice asking you to urgently wire money to a new account. What should you do?"
-                options={[
-                  { text: "Wire the money — you recognise the voice", isCorrect: false, feedback: "AI voice cloning can replicate any voice from seconds of audio. This is a common scam tactic." },
-                  { text: "Ignore it — only scammers call about money", isCorrect: false, feedback: "Legitimate requests can come by phone, but any urgent financial request deserves verification." },
-                  { text: "Verify by calling your boss back on a number you already have on file — not the number that called you", isCorrect: true, feedback: "Correct! Always verify unexpected urgent requests through a separate, known contact method. Never trust the number that called you." },
-                  { text: "Ask the caller a personal question to verify their identity", isCorrect: false, feedback: "AI scammers may have researched personal information. A separate call to a known number is more reliable." },
-                ]}
-                explanation="AI voice cloning can convincingly replicate any voice. The standard defence is to verify out-of-band: hang up and call the person back on a number you know to be correct, not the number that called you."
-                onComplete={(c) => handleQuizComplete("quiz2", c)}
-              />
-              <MultipleChoice
-                question="What is 'automation bias' in the context of AI use?"
-                options={[
-                  { text: "When AI automates tasks that humans should do manually", isCorrect: false, feedback: "That describes automation in general, not automation bias." },
-                  { text: "When AI systems are biased towards certain types of automation", isCorrect: false, feedback: "This is not the meaning of automation bias." },
-                  { text: "The tendency to over-trust and under-question AI-generated outputs because they come from a computer", isCorrect: true, feedback: "Correct! People tend to assume computer-generated outputs are more reliable or objective than human judgments — even when they are not." },
-                  { text: "When AI replaces too many human jobs", isCorrect: false, feedback: "That describes technological unemployment, not automation bias." },
-                ]}
-                explanation="Automation bias is a well-documented cognitive phenomenon where people over-rely on automated systems. With AI, this manifests as accepting AI outputs without sufficient critical evaluation — a dangerous habit when AI can be confidently wrong."
-                onComplete={(c) => handleQuizComplete("quiz3", c)}
-              />
+              
+              
+              
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: AI Agents — how autonomous AI systems plan, act, and complete multi-step tasks on your behalf." />
+                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: AI Agents ? how autonomous AI systems plan, act, and complete multi-step tasks on your behalf." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-9")}>
-                      Continue to Module 8 →
+                      Continue to Module 8 ��
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>
