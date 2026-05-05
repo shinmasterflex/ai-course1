@@ -13,10 +13,12 @@ import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
 import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { MatchingGame } from "@/components/learning/matching-game"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
 export default function Module8Page() {
   const router = useRouter()
@@ -25,6 +27,7 @@ export default function Module8Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-8"
+  const { handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
@@ -122,6 +125,41 @@ export default function Module8Page() {
                   </Card>
                 ))}
               </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Test your understanding — flip each card</h3>
+                <p className="text-sm text-muted-foreground mb-3">Click each card to reveal what each frontier really means.</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <FlipCard
+                    front="What can Multimodal AI do that text-only AI cannot?"
+                    back="Multimodal AI can see, listen, and respond across multiple input types simultaneously. GPT-4o can examine a photo of a broken appliance and explain how to fix it. Gemini Ultra can listen to a live conversation and respond in real time. The next generation of AI assistants will be voice-first, vision-enabled — not just chat boxes."
+                  />
+                  <FlipCard
+                    front="What is an AI Agent — and how is it different from ChatGPT?"
+                    back="ChatGPT responds to questions. An AI Agent takes actions. Agents can browse the web, write and execute code, send emails, fill out forms, and complete multi-step tasks autonomously — without you doing each step. The shift from AI as a tool to AI as a contractor who actually does the work."
+                  />
+                  <FlipCard
+                    front="What did AlphaFold actually solve — and why does it matter?"
+                    back="The protein folding problem. Proteins are the molecular machines that do almost everything in your body. Their function is determined by their 3D shape — but figuring out that shape from the amino acid sequence took years of expensive lab work. AlphaFold solved this in 2020, unlocking a new era of drug discovery and materials science."
+                  />
+                  <FlipCard
+                    front="What makes Reasoning Models different from regular LLMs?"
+                    back="Standard LLMs predict the next token immediately. Reasoning models like OpenAI o1/o3 and Gemini 2.0 Flash Thinking spend time 'thinking' — running through multiple internal reasoning steps before producing an answer. This dramatically improves performance on hard maths, logic, and multi-step planning. Slower, but significantly more accurate on complex problems."
+                  />
+                </div>
+              </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
+                <MultipleChoice
+                  question="An AI system browses the internet, drafts a report, and emails it to your team — all triggered by a single instruction from you. What type of AI system is this?"
+                  options={[
+                    { text: "A Multimodal AI", isCorrect: false, feedback: "Multimodal AI processes multiple types of input (text, images, audio) — that is about perception, not taking autonomous actions." },
+                    { text: "A Reasoning Model", isCorrect: false, feedback: "Reasoning models think through problems step by step before answering, but they still just produce text — they do not take actions autonomously." },
+                    { text: "An AI Agent", isCorrect: true, feedback: "Correct. AI Agents are defined by their ability to take actions — browsing, writing, executing code, sending messages — not just answer questions. This is the defining capability of the agentic AI frontier." },
+                    { text: "Scientific AI", isCorrect: false, feedback: "Scientific AI refers to AI applied to research problems like drug discovery and protein folding — not workflow automation." },
+                  ]}
+                  explanation="AI Agents represent the shift from AI as a tool (you type, AI responds) to AI as an autonomous actor (AI plans and executes multi-step workflows on your behalf). This is one of the most significant capability jumps in current AI development."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -297,6 +335,16 @@ export default function Module8Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The most accessible career move for most people: become the most AI-fluent person in your current domain. You do not need to switch careers — you need to become the bridge between AI capability and your industry's expertise." />
+              <MatchingGame
+                title="Match the AI career role to its core activity"
+                pairs={[
+                  { left: "AI/ML Engineer", right: "Builds and trains AI models" },
+                  { left: "Prompt Engineer", right: "Designs prompts to get reliable outputs in specific domains" },
+                  { left: "AI Ethics & Policy", right: "Ensures AI is fair, transparent, and regulation-compliant" },
+                  { left: "AI Trainer / RLHF", right: "Rates AI outputs to improve model quality" },
+                  { left: "AI Product Manager", right: "Bridges technical AI teams and business goals" },
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -370,6 +418,7 @@ export default function Module8Page() {
                       { text: "Narrow AI requires internet connectivity; AGI can work offline", isCorrect: false, feedback: "Connectivity requirements are an infrastructure detail unrelated to the narrow AI vs. AGI distinction." },
                     ]}
                     explanation="The narrow/AGI distinction is about generalisation and transfer. Narrow AI — even very powerful narrow AI like GPT-4o — is trained for specific tasks and cannot genuinely generalise the way humans do. AGI, which remains hypothetical, would have human-like general problem-solving ability across any domain."
+                    onComplete={(c) => handleQuizComplete("quiz1", c)}
                   />
                 </Card>
                 <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
@@ -382,16 +431,40 @@ export default function Module8Page() {
                       { text: "Start a company to build competing AI models", isCorrect: false, feedback: "Building foundation models requires hundreds of millions of dollars and deep technical teams. This is not an accessible path for most people." },
                     ]}
                     explanation="The most accessible and often most valuable AI career move is becoming the bridge between AI and your existing domain. Organisations across every industry need people who deeply understand both the field and how AI can be applied to it — and this does not require becoming an ML engineer."
+                    onComplete={(c) => handleQuizComplete("quiz2", c)}
+                  />
+                </Card>
+                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                  <MultipleChoice
+                    question="An AI system that can browse the web, write code, and send emails autonomously — all from one instruction — is best described as which type of AI?"
+                    options={[
+                      { text: "A Multimodal AI", isCorrect: false, feedback: "Multimodal AI processes multiple input types (text, images, audio) simultaneously — that is about perception, not autonomous action-taking across external systems." },
+                      { text: "A Reasoning Model", isCorrect: false, feedback: "Reasoning models like o1/o3 think through problems step by step before answering, but they still produce text responses — they do not autonomously take actions in the world." },
+                      { text: "An AI Agent", isCorrect: true, feedback: "Correct! AI Agents take actions — browsing, executing code, sending messages, managing files — not just generating text. This is the defining capability of agentic AI and one of the most significant current frontiers." },
+                      { text: "Artificial General Intelligence", isCorrect: false, feedback: "AGI would have human-level general intelligence across all domains and does not yet exist. Agents are a specific architecture for autonomous action — not general intelligence." },
+                    ]}
+                    explanation="AI Agents represent the shift from AI as a conversational tool to AI as an autonomous actor. Unlike standard LLMs that produce text, agents plan and execute multi-step workflows — browsing, writing, calling APIs, sending messages — all triggered by a single high-level instruction."
+                    onComplete={(c) => handleQuizComplete("quiz3", c)}
                   />
                 </Card>
               </div>
-              <Button
-                onClick={handleSectionComplete}
-                size="lg"
-                className="bg-brand-green hover:bg-brand-green/90 text-white"
-              >
-                Complete Course ✓
-              </Button>
+              {allQuizComplete && (
+                <div className="space-y-4">
+                  <TextDisplay variant="success" content="Outstanding! You have completed Module 8 and the full course. You now have a solid grounding in AI — from the fundamentals through to the future. The real learning begins when you go apply it." />
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={handleSectionComplete}
+                      size="lg"
+                      className="bg-brand-green hover:bg-brand-green/90 text-white"
+                    >
+                      Complete Course ✓
+                    </Button>
+                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
+                      Back to Dashboard
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

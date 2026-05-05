@@ -151,6 +151,16 @@ export default function Module3Page() {
                 front="Does ChatGPT know it is wrong when it makes mistakes?"
                 back="No. ChatGPT has no mechanism to detect its own errors. It predicts likely next words — if the likely next word happens to be wrong, it says it confidently anyway. This is why you must fact-check important AI-generated information."
               />
+              <MultipleChoice
+                question="You ask ChatGPT: 'What are the three tallest buildings in the world?' It gives you a confident, well-formatted list. What should you do before relying on this answer?"
+                options={[
+                  { text: "Trust it — ChatGPT is trained on internet data and buildings are well-documented", isCorrect: false, feedback: "Even well-documented facts can be wrong in ChatGPT's output. Rankings change as new buildings are completed, and the model's training data has a cutoff date. It cannot know about buildings completed after training." },
+                  { text: "Verify the answer with a current source — ChatGPT has a training cutoff and can hallucinate specific facts", isCorrect: true, feedback: "Correct. Specific facts — rankings, statistics, dates, names — are exactly where hallucination happens most. ChatGPT predicts the most likely answer based on training data, but rankings change over time and specific details can be wrong even within the training window." },
+                  { text: "Ask ChatGPT to confirm the answer a second time — if it gives the same answer, it is correct", isCorrect: false, feedback: "Asking the same question twice does not verify accuracy. ChatGPT will confidently repeat an incorrect answer because it has no internal fact-checking mechanism — it just predicts likely text." },
+                  { text: "The question is too simple for ChatGPT to get wrong", isCorrect: false, feedback: "Simplicity does not protect against hallucination. ChatGPT gets simple, well-known facts wrong regularly — especially when rankings, numbers, or dates are involved." },
+                ]}
+                explanation="ChatGPT predicts statistically likely text — not verified facts. Specific claims (rankings, statistics, citations, current events) are highest risk for hallucination. The rule: use AI for ideas, structure, and drafts; always verify specific facts from authoritative sources."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -183,6 +193,41 @@ export default function Module3Page() {
                 <p className="text-sm font-mono bg-white p-3 rounded border italic text-gray-700">
                   You are an expert nutritionist. I am a 35-year-old who runs 5km three times a week and wants to lose 5kg. Create a 7-day meal plan for me. Present it as a table with breakfast, lunch, and dinner columns. Keep each meal simple and under 10 minutes to prepare.
                 </p>
+              </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Why each component matters — flip to find out</h3>
+                <p className="text-sm text-muted-foreground mb-3">Click each card to reveal the reasoning behind the component.</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <FlipCard
+                    front="Why assign a Role in your prompt?"
+                    back="Role-setting dramatically shifts the style, depth, and framing of AI responses. An 'expert nutritionist' gives specific, confident dietary advice. A 'supportive friend' gives the same information warmly. A 'sceptical scientist' challenges assumptions. The role is a lens — choose it deliberately."
+                  />
+                  <FlipCard
+                    front="Why does Context matter so much?"
+                    back="Context is everything AI cannot guess about your situation. Without it, the model makes assumptions — and those assumptions are often wrong. The more precise your context (age, goal, constraints, background), the more targeted the response. Think of it as briefing a consultant who knows nothing about you yet."
+                  />
+                  <FlipCard
+                    front="What makes a Task description strong?"
+                    back="A strong task is specific, bounded, and unambiguous. 'Help me with writing' is weak. 'Write a 200-word introduction for a blog post aimed at first-time investors that explains compound interest without jargon' is strong. Vague tasks produce vague outputs — every time."
+                  />
+                  <FlipCard
+                    front="Why bother specifying Format?"
+                    back="Without a format instruction, AI will choose one — and it may not suit your needs. Specifying a format (bullet list, table, numbered steps, code block, paragraph) makes the output immediately useful. Bonus: format instructions often sharpen the AI's reasoning too, because structure forces clarity."
+                  />
+                </div>
+              </div>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Spot the missing component</h3>
+                <MultipleChoice
+                  question='"Write me a cover letter." Which ESSENTIAL component is most obviously missing?'
+                  options={[
+                    { text: "Role — the AI was not told to act as a hiring expert", isCorrect: false, feedback: "Role is useful but not the most critical missing piece here. The bigger problem is the AI has no idea who you are or what job you are applying for." },
+                    { text: "Context — the AI has no idea about you, the role, or the company", isCorrect: true, feedback: "Exactly. 'Write me a cover letter' is almost useless as a prompt — the AI does not know your name, background, the role you want, the company, or why you are a strong fit. Context is the fuel of a good prompt." },
+                    { text: "Task — the task is unclear", isCorrect: false, feedback: "The task ('write a cover letter') is actually quite clear — it is everything else that is missing." },
+                    { text: "Format — the AI does not know how long it should be", isCorrect: false, feedback: "Format matters but is not the most critical omission here. Without context, even a perfectly formatted cover letter will be completely generic." },
+                  ]}
+                  explanation="Context is often the most underused component. Without it, you get generic outputs no matter how good the rest of your prompt is. Before writing any prompt, ask: what does the AI need to know about ME and my SITUATION to give a genuinely useful answer?"
+                />
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>

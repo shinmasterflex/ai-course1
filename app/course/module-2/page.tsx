@@ -16,6 +16,7 @@ import { ComparisonCard } from "@/components/learning/comparison-card"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { MatchingGame } from "@/components/learning/matching-game"
 import { GridDisplay } from "@/components/learning/grid-display"
+import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, XCircle } from "lucide-react"
@@ -111,6 +112,16 @@ export default function Module2Page() {
               <FlipCard
                 front="What is the simplest way to describe machine learning?"
                 back="Instead of telling the computer exactly what to do, you show it thousands of examples and let it figure out the pattern itself. Just like a child learns to recognise cats not from a rule book, but from seeing many cats."
+              />
+              <MultipleChoice
+                question="A bank wants to automatically approve or reject loan applications. Using a traditional rule-based approach, which of the following would they write?"
+                options={[
+                  { text: "Show the system 1 million past loan decisions and let it figure out the pattern", isCorrect: false, feedback: "That is machine learning — learning from examples. Traditional programming requires writing the rules explicitly." },
+                  { text: "IF income > $50,000 AND credit score > 700 AND debt-to-income ratio < 0.4 THEN approve", isCorrect: true, feedback: "Correct! Traditional programming means a human expert writes explicit rules that the computer follows exactly. Every scenario must be anticipated and coded in advance." },
+                  { text: "Train the algorithm on historical approval data to find correlations", isCorrect: false, feedback: "Finding correlations in historical data is machine learning — the system learns the rules from data rather than having rules written explicitly." },
+                  { text: "Let the AI observe human loan officers and copy their behaviour", isCorrect: false, feedback: "Observing and copying behaviour to learn patterns is a form of machine learning (imitation learning), not traditional rule-based programming." },
+                ]}
+                explanation="Traditional programming requires a human expert to explicitly write every rule. Machine learning flips this: instead of writing rules, you provide examples — and the system learns the rules automatically. The bank example is perfect: manually writing every approval rule is impractical, but training on millions of past decisions is very effective."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
@@ -225,6 +236,19 @@ export default function Module2Page() {
                   back="ChatGPT-4 has hundreds of billions of 'neurons' and connections. More connections = more ability to represent complex patterns in language. The training required thousands of powerful computers running for months — and cost tens of millions of dollars."
                 />
               </div>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Quick check</h3>
+                <MultipleChoice
+                  question="In a neural network, what happens when the model makes a wrong prediction during training?"
+                  options={[
+                    { text: "The wrong answer is deleted and the model moves on", isCorrect: false, feedback: "Neural networks do not just delete errors — they learn from them by adjusting the strength of connections." },
+                    { text: "The error is fed back through the network and the connections are adjusted to reduce future mistakes", isCorrect: true, feedback: "Correct! This is called backpropagation. The model adjusts millions of connection weights slightly each time it sees an error — eventually getting much better at the task through millions of repetitions." },
+                    { text: "A human programmer manually fixes the error", isCorrect: false, feedback: "Neural network training is automated — humans define the training setup but do not manually correct individual errors." },
+                    { text: "The model restarts from the beginning with different data", isCorrect: false, feedback: "Models do not restart for each error. They continuously update through the whole training dataset many times over." },
+                  ]}
+                  explanation="The learning loop in a neural network is: predict → compare to correct answer → calculate error → adjust connection weights slightly to reduce that error → repeat millions of times. This process (gradient descent + backpropagation) is how neural networks get good at tasks."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -243,6 +267,12 @@ export default function Module2Page() {
                 { id: "goals", front: "Does AI have goals, desires, or intentions of its own?", back: "No. Current AI has no motivation, agenda, or consciousness. It processes your input and produces the statistically most likely output. There is no 'it' that wants anything — just mathematics operating on pattern-matched representations of language." },
                 { id: "judgment", front: "Can AI replace human judgment in high-stakes decisions?", back: "It should not — at least not yet. AI can assist with medical diagnosis, legal research, and financial decisions, but the final call must involve human accountability. AI errors in high-stakes contexts can cause real harm, and unlike a human professional, AI cannot be held responsible." },
               ]} />
+              <TextInputExercise
+                title="Reflect: AI limitations in the real world"
+                prompt="Think of a time you (or someone you know) encountered an AI limitation from this section — a hallucination, a confident wrong answer, or a situation where AI clearly did not 'understand' what it was saying. Describe what happened and what it revealed about how AI actually works."
+                placeholder="Example: I asked ChatGPT about a local restaurant and it described the menu in detail — but the restaurant had closed two years ago. The AI had no way to know its training data was outdated, and presented stale information with complete confidence. This made me realise AI's knowledge has a cutoff date and it cannot know what it does not know..."
+                onComplete={() => {}}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

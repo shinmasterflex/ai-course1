@@ -16,6 +16,7 @@ import { Slideshow } from "@/components/learning/slideshow"
 import { ComparisonCard } from "@/components/learning/comparison-card"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { MatchingGame } from "@/components/learning/matching-game"
+import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Brain, Clock, Lightbulb } from "lucide-react"
@@ -128,6 +129,12 @@ export default function Module1Page() {
                   { id: "accuracy", front: "Accuracy", back: "How often an AI model gets the correct answer on a test dataset. 95% accuracy means correct 95 out of 100 times. But accuracy alone can be misleading — the type of errors matters too." },
                 ]} />
               </div>
+              <TextInputExercise
+                title="In your own words"
+                prompt="How would YOU explain AI to a friend or family member who has never heard the term before? Write one or two sentences in plain language — no jargon allowed."
+                placeholder="AI is basically... It works by..."
+                onComplete={() => {}}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

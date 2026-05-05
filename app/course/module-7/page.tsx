@@ -13,20 +13,22 @@ import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
 import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { MatchingGame } from "@/components/learning/matching-game"
 import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
 export default function Module7Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
-  const [quizComplete, setQuizComplete] = useState(false)
 
   const MODULE_ID = "module-7"
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
@@ -271,6 +273,17 @@ export default function Module7Page() {
                   </Card>
                 ))}
               </div>
+              <MatchingGame
+                title="Match the AI application to its industry"
+                pairs={[
+                  { left: "Detects cancer in medical scans with radiologist-level accuracy", right: "Healthcare" },
+                  { left: "Flags suspicious transactions in real time", right: "Finance" },
+                  { left: "Adapts learning content to each student's pace", right: "Education" },
+                  { left: "AI drives 35% of revenue through product recommendations", right: "Retail" },
+                  { left: "Reviews thousands of contract pages in minutes", right: "Legal" },
+                  { left: "Predicts machine failures before they happen", right: "Manufacturing" },
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -355,7 +368,7 @@ export default function Module7Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <TextDisplay content="Test your understanding of AI in the workplace. Choose the best answer for each question." />
+              <TextDisplay content="Three questions to lock in what you have learned. All three must be answered to complete the module." />
               <div className="space-y-6">
                 <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                   <MultipleChoice
@@ -367,6 +380,7 @@ export default function Module7Page() {
                       { text: "Waiting until AI is perfect before deploying any customer-facing features", isCorrect: false, feedback: "AI does not need to be perfect to be useful. Companies that wait for perfection lose competitive ground to those who deploy carefully now." },
                     ]}
                     explanation="The most effective AI customer service deployments use a hybrid model: AI for speed and volume on routine queries, humans for empathy, judgment, and complex cases. This is called the 'human-in-the-loop' model."
+                    onComplete={(c) => handleQuizComplete("quiz1", c)}
                   />
                 </Card>
                 <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
@@ -379,19 +393,37 @@ export default function Module7Page() {
                       { text: "Focus on learning to code so you can build your own AI tools", isCorrect: false, feedback: "Coding is useful but not necessary for most professionals. No-code and low-code AI tools can be deployed immediately without programming knowledge." },
                     ]}
                     explanation="A successful AI strategy starts with understanding your own workflow, not with the technology. Once you know which tasks are most time-consuming and most automatable, you can target AI tools precisely where they will have the most impact."
+                    onComplete={(c) => handleQuizComplete("quiz2", c)}
+                  />
+                </Card>
+                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                  <MultipleChoice
+                    question="A lawyer notices that when they use AI to draft contract clauses, they stop reading them as carefully because the AI 'sounds right'. What phenomenon is this?"
+                    options={[
+                      { text: "Hallucination", isCorrect: false, feedback: "Hallucination is when AI generates confident but false information. The problem here is on the human side — over-trust, not AI error." },
+                      { text: "Automation bias", isCorrect: true, feedback: "Exactly. Automation bias is the human tendency to over-trust outputs from automated systems, reducing critical review. It is particularly dangerous in legal, medical, and financial contexts where errors have serious consequences." },
+                      { text: "Fine-tuning error", isCorrect: false, feedback: "Fine-tuning is a training technique, not a cognitive phenomenon. The issue here is the lawyer's behaviour, not the model's training." },
+                      { text: "Overfitting", isCorrect: false, feedback: "Overfitting is a model training problem where a model performs well on training data but poorly on new data. That is not what is happening here." },
+                    ]}
+                    explanation="Automation bias is one of the most important risks of working with AI — and it affects even experienced professionals. The fix is to build deliberate review habits: treat AI outputs as a strong first draft from a junior colleague, not a final answer from an expert."
+                    onComplete={(c) => handleQuizComplete("quiz3", c)}
                   />
                 </Card>
               </div>
-              <Button
-                onClick={() => {
-                  setQuizComplete(true)
-                  handleSectionComplete()
-                }}
-                size="lg"
-                className="bg-brand-green hover:bg-brand-green/90 text-white"
-              >
-                Complete Module 7 ✓
-              </Button>
+              {allQuizComplete && (
+                <div className="space-y-4">
+                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: the future of AI — where this is all heading." />
+                  <div className="flex gap-4">
+                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={handleSectionComplete}>
+                      Continue to Module 8 →
+                    </Button>
+                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
+                  </div>
+                </div>
+              )}
+              {!allQuizComplete && (
+                <p className="text-sm text-muted-foreground">Answer all three questions above to complete the module.</p>
+              )}
             </div>
           )}
 

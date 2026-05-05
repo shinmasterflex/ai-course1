@@ -13,6 +13,7 @@ import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
 import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { MatchingGame } from "@/components/learning/matching-game"
 import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -127,6 +128,17 @@ export default function Module6Page() {
                   </Card>
                 ))}
               </div>
+              <MatchingGame
+                title="Match each no-code AI tool to its primary use case"
+                pairs={[
+                  { left: "Zapier with AI", right: "Automate tasks between apps with AI steps" },
+                  { left: "Chatbase", right: "Build a chatbot trained on your documents" },
+                  { left: "Bubble", right: "Create full web apps without coding" },
+                  { left: "n8n", right: "Open-source self-hostable automation" },
+                  { left: "Retool", right: "Build internal business data tools" },
+                  { left: "Glide", right: "Turn a spreadsheet into a mobile app" },
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

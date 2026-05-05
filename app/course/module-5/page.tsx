@@ -168,6 +168,16 @@ export default function Module5Page() {
                 front="Does ChatGPT use my conversations to train its models?"
                 back="By default, yes — for free users, OpenAI may use conversations to train future models. You can opt out in Settings > Data Controls > Improve the model for everyone. ChatGPT Team and Enterprise plans do not train on your data by default."
               />
+              <MultipleChoice
+                question="Your colleague is using the free version of ChatGPT to draft a business proposal that includes details about an unannounced product launch. What is the key privacy concern?"
+                options={[
+                  { text: "ChatGPT might share the proposal with competitor companies", isCorrect: false, feedback: "ChatGPT does not deliberately share data with named companies. The concern is more systemic: data may be used to train future model versions, potentially surfacing patterns from your input in other contexts." },
+                  { text: "Free-tier AI tools may use conversation inputs to train future models, potentially exposing confidential business information", isCorrect: true, feedback: "Correct. This is the core risk. OpenAI's free tier terms permit using conversations for model improvement. Confidential business details — unreleased products, financial projections, client names — should not be entered into consumer AI tools without checking data handling policies." },
+                  { text: "ChatGPT will automatically publish the proposal on the internet", isCorrect: false, feedback: "ChatGPT does not publish your conversations publicly. The risk is data retention and potential use in training — not public disclosure." },
+                  { text: "There is no concern — AI tools are confidential by design", isCorrect: false, feedback: "This is a dangerous assumption. Free-tier consumer AI tools are generally not designed for confidential business use. Enterprise tiers exist specifically to address this gap with stronger data protection agreements." },
+                ]}
+                explanation="Free-tier AI tools typically grant themselves the right to use conversations for model improvement in their terms of service. For confidential information — internal strategy, client data, financial details, unreleased products — use enterprise tiers that include data processing agreements, or check whether your organisation has approved specific AI tools."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -280,6 +290,19 @@ export default function Module5Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool — it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
+                <MultipleChoice
+                  question="Which of the following best describes why the 'AI alignment problem' is considered one of the most important challenges in AI research?"
+                  options={[
+                    { text: "Because AI systems use too much electricity and are bad for the environment", isCorrect: false, feedback: "AI's energy consumption is a real concern, but that is not what alignment refers to." },
+                    { text: "Because current AI systems are too expensive for small organisations to use", isCorrect: false, feedback: "Cost is a practical barrier but has nothing to do with the alignment problem." },
+                    { text: "Because as AI systems become more capable, ensuring they reliably do what humans actually intend becomes harder and more critical", isCorrect: true, feedback: "Exactly. The alignment problem is about building AI systems whose goals, values, and behaviours remain aligned with human intentions — even as their capabilities increase. A highly capable AI pursuing a subtly wrong goal could cause significant harm." },
+                    { text: "Because AI systems cannot be explained to non-technical people", isCorrect: false, feedback: "Explainability (XAI) is a related but separate challenge. Alignment is specifically about ensuring AI goals match human intentions." },
+                  ]}
+                  explanation="AI safety research focuses on the alignment problem: how do we ensure that increasingly capable AI systems continue to pursue goals that are genuinely beneficial to humans? The problem becomes more pressing as AI systems become more autonomous and powerful."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

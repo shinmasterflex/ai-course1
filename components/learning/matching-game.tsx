@@ -7,6 +7,11 @@ import { cn } from "@/lib/utils"
 import { Check, X, RefreshCw, Clock } from "lucide-react"
 
 interface MatchPair {
+  left: string
+  right: string
+}
+
+interface InternalPair {
   id: string
   term: string
   definition: string
@@ -19,11 +24,17 @@ interface MatchingGameProps {
 }
 
 export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
+  // Normalise incoming pairs to internal format with stable IDs
+  const normalised: InternalPair[] = useMemo(
+    () => pairs.map((p, i) => ({ id: String(i), term: p.left, definition: p.right })),
+    [pairs],
+  )
+
   // Shuffle definitions for the game
   const shuffledDefinitions = useMemo(() => {
-    const defs = pairs.map((p) => ({ id: p.id, text: p.definition }))
+    const defs = normalised.map((p) => ({ id: p.id, text: p.definition }))
     return defs.sort(() => Math.random() - 0.5)
-  }, [pairs])
+  }, [normalised])
 
   const [matches, setMatches] = useState<Record<string, string>>({}) // termId -> definitionId
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null)
@@ -88,7 +99,7 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
 
       const newMatches = { ...matches, [selectedTerm]: defId }
       const newFeedback = { ...feedback, [selectedTerm]: "correct" }
-      const allCorrect = pairs.every((pair) => newFeedback[pair.id] === "correct")
+      const allCorrect = normalised.every((pair) => newFeedback[pair.id] === "correct")
 
       if (allCorrect) {
         setTimeout(() => {
@@ -142,8 +153,8 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
   }
 
   // Calculate score
-  const correctCount = pairs.filter((pair) => feedback[pair.id] === "correct").length
-  const totalCount = pairs.length
+  const correctCount = normalised.filter((pair) => feedback[pair.id] === "correct").length
+  const totalCount = normalised.length
 
   return (
     <Card className="p-6">
@@ -162,7 +173,7 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
         {/* Terms Column */}
         <div className="space-y-3">
           <h4 className="font-medium text-sm text-muted-foreground mb-3">Terms</h4>
-          {pairs.map((pair) => {
+          {normalised.map((pair) => {
             const isSelected = selectedTerm === pair.id
             const isMatched = !!matches[pair.id]
             const matchFeedback = feedback[pair.id]

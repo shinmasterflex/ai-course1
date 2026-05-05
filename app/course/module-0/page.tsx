@@ -14,6 +14,8 @@ import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
 import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { PersonalityQuiz } from "@/components/learning/personality-quiz"
+import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain, Zap, Globe, Stethoscope, Mic } from "lucide-react"
@@ -24,6 +26,7 @@ export default function Module0Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const [learnerType, setLearnerType] = useState<string | null>(null)
 
   const MODULE_ID = "module-0"
   const courseStructure = getCourseStructure()
@@ -100,6 +103,43 @@ export default function Module0Page() {
                   ))}
                 </div>
               </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> Discover your AI learning style</h3>
+                <p className="text-sm text-muted-foreground mb-4">Answer five quick questions and we will personalise how you approach this course.</p>
+                <PersonalityQuiz
+                  trait="Your AI Learning Style"
+                  questions={[
+                    { id: "q1", text: "I prefer to jump into a new tool and figure it out as I go, rather than reading instructions first.", trait: "exploratory", aspect: "approach" },
+                    { id: "q2", text: "I often help friends and family figure out tech problems.", trait: "helper", aspect: "role" },
+                    { id: "q3", text: "When learning something new, real-world examples make more sense to me than abstract explanations.", trait: "practical", aspect: "style" },
+                    { id: "q4", text: "I am genuinely curious about how AI actually works under the hood — not just how to use it.", trait: "analytical", aspect: "depth" },
+                    { id: "q5", text: "I am already using some AI tools in my daily life or work.", trait: "experienced", aspect: "background" },
+                  ]}
+                  onComplete={(results) => {
+                    if (results["q4"] >= 4) setLearnerType("analyst")
+                    else if (results["q1"] >= 4 || results["q5"] >= 4) setLearnerType("explorer")
+                    else setLearnerType("practitioner")
+                  }}
+                />
+              </div>
+              {learnerType === "analyst" && (
+                <Card className="p-5 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 border-brand-orange/30">
+                  <h3 className="font-bold text-lg text-brand-green mb-2">The Analyst</h3>
+                  <p className="text-muted-foreground">You want to understand the <em>why</em> before the <em>how</em>. Pay special attention to Modules 2 (How Machines Learn) and 5 (Ethics) — they go deep on what is happening under the hood and will satisfy your curiosity.</p>
+                </Card>
+              )}
+              {learnerType === "explorer" && (
+                <Card className="p-5 bg-gradient-to-br from-brand-orange/10 to-brand-green/10 border-brand-green/30">
+                  <h3 className="font-bold text-lg text-brand-orange mb-2">The Explorer</h3>
+                  <p className="text-muted-foreground">You learn by doing — and you are probably already ahead of the curve. This course gives your hands-on experience a conceptual backbone. If you feel impatient, jump ahead to Module 3 (Prompting) — it is the most immediately useful.</p>
+                </Card>
+              )}
+              {learnerType === "practitioner" && (
+                <Card className="p-5 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 border-brand-orange/30">
+                  <h3 className="font-bold text-lg text-brand-green mb-2">The Practitioner</h3>
+                  <p className="text-muted-foreground">You like clear, real-world relevance. You will love Modules 4 (AI Tools) and 6 (Your AI Toolkit) most. Stick with the course in order — each concept builds on the last — and you will leave with skills you can apply immediately.</p>
+                </Card>
+              )}
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                 Got it — let us go! →
               </Button>
@@ -228,6 +268,12 @@ export default function Module0Page() {
               <FlipCard front="What if I don't understand something?" back="Totally normal — and part of learning. Re-read the section, then try asking ChatGPT: 'Explain [concept] to me like I am a complete beginner.' Then come back — it will click." />
               <FlipCard front="Will this course become outdated quickly?" back="The tools change fast, but the fundamentals do not. Understanding what AI is, how it learns, and how to think critically about it will stay relevant no matter what new models appear. Focus on principles, not products." />
               <FlipCard front="Should I take notes?" back="The course is designed to be self-contained, but writing things down in your own words is one of the most effective learning techniques known. Even just jotting a one-sentence summary after each section helps a lot." />
+              <TextInputExercise
+                title="Set your intention"
+                prompt="What is one specific thing you want to be able to do with AI by the time you finish this course?"
+                placeholder="Example: I want to be able to write better prompts so I can use AI to help me draft client emails faster, without spending 20 minutes on each one..."
+                onComplete={() => {}}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

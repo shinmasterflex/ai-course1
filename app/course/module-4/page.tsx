@@ -195,11 +195,34 @@ export default function Module4Page() {
                 />
               </div>
               <TextDisplay variant="warning" content="Important: Always check the terms of service for AI image tools before using images commercially. Ownership and rights vary significantly between platforms." />
+              <div className="grid md:grid-cols-2 gap-4">
+                <FlipCard
+                  front="What makes Adobe Firefly 'commercially safe'?"
+                  back="Firefly was trained exclusively on Adobe Stock images, openly licensed content, and public domain works — not scraped from the general internet. This means generated images are less likely to infringe existing artists' copyrights, making it the go-to choice for agencies and brands who need legally defensible creative outputs."
+                />
+                <FlipCard
+                  front="Midjourney vs Stable Diffusion — what is the key difference?"
+                  back="Midjourney is a hosted service with consistently stunning aesthetic quality — you pay a subscription and images are processed on their servers. Stable Diffusion is open-source — download it and run it free on your own computer. Midjourney wins on quality and ease; Stable Diffusion wins on control, privacy, and cost."
+                />
+              </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Pick the right image tool</h3>
+                <MultipleChoice
+                  question="A marketing agency needs AI-generated visuals for a major brand campaign. They need commercially safe images integrated into their existing Photoshop workflow. Which tool fits best?"
+                  options={[
+                    { text: "Stable Diffusion", isCorrect: false, feedback: "Stable Diffusion requires technical setup and licensing varies by model — not ideal for a client-facing commercial campaign without careful legal review." },
+                    { text: "Midjourney", isCorrect: false, feedback: "Midjourney produces excellent quality but its training data and commercial licensing are more complex. Not the default choice for agencies with strict IP requirements." },
+                    { text: "Adobe Firefly", isCorrect: true, feedback: "Correct! Firefly is trained on licensed material, designed for commercial use, and deeply integrated into Photoshop and Illustrator — exactly what a professional agency needs." },
+                    { text: "DALL·E 3 via ChatGPT Plus", isCorrect: false, feedback: "DALL·E 3 allows commercial use per OpenAI's terms, but it is not as deeply integrated into professional design tools as Firefly, and its training data is broader." },
+                  ]}
+                  explanation="For professional commercial design work, Adobe Firefly is the strongest choice: trained on licensed content, integrated into Photoshop/Illustrator, and specifically built for creative professionals. Always match your tool to your legal and workflow requirements."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* 3: AI Productivity */}
+          {/* 3: AI Productivity */
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
@@ -239,11 +262,21 @@ export default function Module4Page() {
                   </Card>
                 ))}
               </div>
+              <MatchingGame
+                title="Match each AI productivity tool to its primary job"
+                pairs={[
+                  { left: "Otter.ai", right: "Real-time meeting transcription & summaries" },
+                  { left: "Perplexity AI", right: "Research with cited web sources" },
+                  { left: "GitHub Copilot", right: "AI code completion in your editor" },
+                  { left: "Microsoft Copilot", right: "AI across Word, Excel & Outlook" },
+                  { left: "Notion AI", right: "Writing & summarising inside Notion" },
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* 4: AI Creative */}
+          {/* 4: AI Creative */
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">AI in Creative Work</h2>
@@ -265,11 +298,24 @@ export default function Module4Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The creative AI space is moving extremely fast. A tool that is state-of-the-art today may be superseded in months. Focus on learning the principles — the tools change, but the skill of knowing what to ask for, and how to evaluate outputs, stays valuable." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Which creative AI tool?</h3>
+                <MultipleChoice
+                  question="A podcaster wants to create a professional-sounding AI voiceover with a custom voice style for their show intros. Which tool category should they use?"
+                  options={[
+                    { text: "Suno or Udio", isCorrect: false, feedback: "Suno and Udio generate full music tracks with vocals and instruments — great for background music, but not voiceover narration tools." },
+                    { text: "ElevenLabs or Murf", isCorrect: true, feedback: "Correct! ElevenLabs and Murf specialise in AI voice generation and cloning — perfect for podcast intros, narration, and professional audio production with a consistent, customisable voice." },
+                    { text: "RunwayML or Sora", isCorrect: false, feedback: "RunwayML and Sora generate video, not voiceover audio." },
+                    { text: "Uizard or Framer AI", isCorrect: false, feedback: "Uizard and Framer AI generate UI designs and websites — nothing to do with audio." },
+                  ]}
+                  explanation="The AI voice and audio category (ElevenLabs, Murf, Adobe Enhance) is purpose-built for voiceover, narration, and audio production. ElevenLabs is particularly popular for podcast intros, audiobook narration, and custom voice cloning."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* 5: Choosing Tools */}
+          {/* 5: Choosing Tools */
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Choosing the Right Tool</h2>
