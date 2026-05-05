@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -353,6 +353,22 @@ export default function Module4Page() {
                   ))}
                 </ul>
               </Card>
+              <DragSortChallenge
+                title="Workflow Conveyor"
+                description="Drag tasks into a practical beginner sequence from safest to more advanced usage."
+                items={[
+                  "Automate multi-step workflows across tools",
+                  "Summarise meetings into action items",
+                  "Run cited research comparisons",
+                  "Draft and edit status updates",
+                ]}
+                correctOrder={[
+                  "Summarise meetings into action items",
+                  "Draft and edit status updates",
+                  "Run cited research comparisons",
+                  "Automate multi-step workflows across tools",
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -443,6 +459,27 @@ export default function Module4Page() {
                     title: "Best first step",
                     prompt: "You are unsure which tool to try first.",
                     answer: "Start by naming the job to be done. Once you know the task clearly, tool selection becomes much easier.",
+                  },
+                ]}
+              />
+              <MatchingChallenge
+                title="Tool Selection Match"
+                description="Match the situation to the best first decision."
+                pairs={[
+                  {
+                    id: "sensitive",
+                    left: "Input contains confidential strategy",
+                    right: "Check approved tools and privacy policy before use",
+                  },
+                  {
+                    id: "unknown",
+                    left: "You do not know where to start",
+                    right: "Define the exact job-to-be-done first",
+                  },
+                  {
+                    id: "output",
+                    left: "Output is going to leadership",
+                    right: "Verify facts, numbers, and claims before sending",
                   },
                 ]}
               />

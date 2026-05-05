@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, MatchingChallenge, OrderingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -346,6 +346,27 @@ export default function Module1Page() {
                   </Card>
                 ))}
               </div>
+              <MatchingChallenge
+                title="Myth Match Sprint"
+                description="Tap a myth, then tap its matching reality statement."
+                pairs={[
+                  {
+                    id: "patterns",
+                    left: "AI understands like humans",
+                    right: "AI predicts patterns; it does not have lived understanding",
+                  },
+                  {
+                    id: "neutral",
+                    left: "Machine output is always objective",
+                    right: "AI can mirror bias from training data and labels",
+                  },
+                  {
+                    id: "replace",
+                    left: "AI will replace every job completely",
+                    right: "Near-term impact is mostly task automation and augmentation",
+                  },
+                ]}
+              />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Practical takeaway</h3>
                 <p className="text-sm text-muted-foreground mb-3">The healthiest beginner mindset is neither hype nor fear. Treat AI as a useful but limited assistant.</p>
@@ -371,6 +392,22 @@ export default function Module1Page() {
                 correctOptionId="b"
                 explanation="This course frames AI as powerful but limited: useful for support and acceleration, but still requiring human oversight and verification."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <OrderingChallenge
+                title="Build the Responsible AI Workflow"
+                description="Move each step into the strongest practical order."
+                items={[
+                  "Use AI output directly",
+                  "Give clear context and constraints",
+                  "Verify claims and edit for your audience",
+                  "Define your task and desired output",
+                ]}
+                correctOrder={[
+                  "Define your task and desired output",
+                  "Give clear context and constraints",
+                  "Verify claims and edit for your audience",
+                  "Use AI output directly",
+                ]}
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>

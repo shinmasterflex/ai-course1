@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -246,6 +246,20 @@ export default function Module8Page() {
                 </p>
               </Card>
 
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Match each agent component to its role</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a component on the left, then click its matching description on the right.</p>
+                <MatchingChallenge
+                  pairs={[
+                    { left: "Planning", right: "Uses an LLM to decompose a goal into sub-tasks and reason step by step" },
+                    { left: "Memory", right: "Stores context using in-context history and external long-term storage" },
+                    { left: "Tools", right: "Web search, code execution, and API calls that let the agent take real actions" },
+                    { left: "Action Loop", right: "The observe-think-act-observe cycle that repeats until the goal is achieved" },
+                  ]}
+                  accentClassName="border-brand-green/20 bg-brand-green/5"
+                />
+              </div>
+
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -256,7 +270,21 @@ export default function Module8Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Types of AI Agents</h2>
               <TextDisplay content="Not all agents are the same. They range from simple rule-based systems to complex networks of collaborating AI models. Understanding the taxonomy helps you match the right type of agent to a task." />
 
-              
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Order the ReAct loop steps correctly</h3>
+                <p className="text-sm text-muted-foreground mb-4">Use the arrows to put these agent steps into the right sequence.</p>
+                <DragSortChallenge
+                  items={[
+                    { id: "1", label: "Receive a goal from the user" },
+                    { id: "2", label: "Reason about what step to take next" },
+                    { id: "3", label: "Execute an action with a tool" },
+                    { id: "4", label: "Observe the result of the action" },
+                    { id: "5", label: "Repeat reasoning and acting until the goal is achieved" },
+                  ]}
+                  correctOrder={["1", "2", "3", "4", "5"]}
+                  accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                />
+              </div>
 
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Multi-Agent Systems  - why they matter</h3>

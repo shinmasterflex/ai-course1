@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
+import { ArrowDown, ArrowUp, CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
@@ -29,6 +29,32 @@ type FlipCardGridProps = {
   cards: FlipCardItem[]
 }
 
+type MatchingPair = {
+  id: string
+  left: string
+  right: string
+}
+
+type MatchingChallengeProps = {
+  title?: string
+  description?: string
+  pairs: MatchingPair[]
+}
+
+type OrderingChallengeProps = {
+  title?: string
+  description?: string
+  items: string[]
+  correctOrder: string[]
+}
+
+type DragSortChallengeProps = {
+  title?: string
+  description?: string
+  items: string[]
+  correctOrder: string[]
+}
+
 export function FlipCardGrid({ cards }: FlipCardGridProps) {
   const [openCard, setOpenCard] = useState<string | null>(null)
 
@@ -42,22 +68,309 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
             key={card.title}
             type="button"
             onClick={() => setOpenCard(isOpen ? null : card.title)}
-            className="text-left"
+            className="text-left perspective-1000"
           >
-            <Card className={cn(
-              "h-full min-h-40 p-5 transition-colors",
-              isOpen ? "border-brand-orange bg-brand-orange/5" : "hover:border-brand-green/30 hover:bg-brand-green/5"
-            )}>
-              <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{card.title}</p>
-              <p className="mt-3 text-sm font-medium text-foreground">{card.prompt}</p>
-              <div className="mt-4 text-sm text-muted-foreground">
-                {isOpen ? card.answer : "Click to reveal"}
+            <div
+              className={cn(
+                "relative min-h-44 w-full transform-style-3d transition-transform duration-500",
+                isOpen && "rotate-y-180"
+              )}
+            >
+              <Card
+                className={cn(
+                  "absolute inset-0 h-full p-5 backface-hidden",
+                  "border-brand-green/30 bg-gradient-to-br from-white to-brand-green/5",
+                  !isOpen && "hover:border-brand-green/40"
+                )}
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{card.title}</p>
+                <p className="mt-3 text-sm font-medium text-foreground">{card.prompt}</p>
+                <div className="mt-4 text-xs font-medium text-brand-green">Click to flip</div>
+              </Card>
+
+              <Card
+                className={cn(
+                  "absolute inset-0 h-full p-5 backface-hidden rotate-y-180",
+                  "border-brand-orange/30 bg-gradient-to-br from-brand-orange/10 to-white"
+                )}
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Answer</p>
+                <p className="mt-3 text-sm text-foreground">{card.answer}</p>
+                <div className="mt-4 text-xs font-medium text-muted-foreground">Click to flip back</div>
+              </Card>
+            </div>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+export function MatchingChallenge({ title = "Matching Challenge", description, pairs }: MatchingChallengeProps) {
+  const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null)
+  const [matches, setMatches] = useState<Record<string, string>>({})
+  const [attempts, setAttempts] = useState(0)
+
+  const rightItems = [...pairs].sort((a, b) => a.right.localeCompare(b.right))
+  const reverseMatches = Object.fromEntries(
+    Object.entries(matches).map(([leftId, rightId]) => [rightId, leftId])
+  )
+  const matchedCount = Object.keys(matches).length
+  const isComplete = matchedCount === pairs.length
+
+  const tryMatch = (rightId: string) => {
+    if (!selectedLeftId) {
+      return
+    }
+
+    setAttempts((prev) => prev + 1)
+
+    if (selectedLeftId === rightId) {
+      setMatches((prev) => ({ ...prev, [selectedLeftId]: rightId }))
+    }
+
+    setSelectedLeftId(null)
+  }
+
+  return (
+    <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+      <div className="mb-4">
+        <h3 className="font-semibold text-brand-green">{title}</h3>
+        {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Terms</p>
+          {pairs.map((pair) => {
+            const isMatched = Boolean(matches[pair.id])
+            const isSelected = selectedLeftId === pair.id
+
+            return (
+              <button
+                key={pair.id}
+                type="button"
+                disabled={isMatched}
+                onClick={() => setSelectedLeftId(pair.id)}
+                className={cn(
+                  "w-full rounded-lg border px-3 py-2 text-left text-sm transition-all",
+                  "hover:-translate-y-0.5 hover:shadow-sm",
+                  isMatched && "border-green-600 bg-green-50 text-green-900",
+                  !isMatched && isSelected && "border-brand-orange bg-brand-orange/10",
+                  !isMatched && !isSelected && "bg-white"
+                )}
+              >
+                {pair.left}
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Matches</p>
+          {rightItems.map((pair) => {
+            const matchedLeftId = reverseMatches[pair.id]
+            const isMatched = Boolean(matchedLeftId)
+
+            return (
+              <button
+                key={pair.id}
+                type="button"
+                disabled={isMatched}
+                onClick={() => tryMatch(pair.id)}
+                className={cn(
+                  "w-full rounded-lg border px-3 py-2 text-left text-sm transition-all",
+                  "hover:-translate-y-0.5 hover:shadow-sm",
+                  isMatched && "border-green-600 bg-green-50 text-green-900",
+                  !isMatched && "bg-white"
+                )}
+              >
+                {pair.right}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-muted-foreground">
+          Progress: {matchedCount}/{pairs.length} matches. Attempts: {attempts}
+        </p>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="gap-1"
+          onClick={() => {
+            setSelectedLeftId(null)
+            setMatches({})
+            setAttempts(0)
+          }}
+        >
+          <RotateCcw className="h-3 w-3" />
+          Reset
+        </Button>
+      </div>
+
+      {isComplete ? (
+        <p className="mt-3 text-sm font-medium text-green-700">Perfect run. You matched every pair.</p>
+      ) : null}
+    </Card>
+  )
+}
+
+export function OrderingChallenge({
+  title = "Order the Steps",
+  description,
+  items,
+  correctOrder,
+}: OrderingChallengeProps) {
+  const [currentOrder, setCurrentOrder] = useState(items)
+
+  const moveItem = (index: number, direction: -1 | 1) => {
+    const nextIndex = index + direction
+    if (nextIndex < 0 || nextIndex >= currentOrder.length) {
+      return
+    }
+
+    setCurrentOrder((prev) => {
+      const copy = [...prev]
+      const temp = copy[index]
+      copy[index] = copy[nextIndex]
+      copy[nextIndex] = temp
+      return copy
+    })
+  }
+
+  const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
+
+  return (
+    <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+      <div className="mb-4">
+        <h3 className="font-semibold text-brand-orange">{title}</h3>
+        {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+      </div>
+
+      <div className="space-y-2">
+        {currentOrder.map((item, index) => (
+          <div key={item} className="flex items-center gap-2 rounded-lg border bg-white p-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-green/10 text-xs font-semibold text-brand-green">
+              {index + 1}
+            </span>
+            <p className="flex-1 text-sm">{item}</p>
+            <div className="flex gap-1">
+              <Button type="button" size="icon-sm" variant="outline" onClick={() => moveItem(index, -1)} disabled={index === 0}>
+                <ArrowUp className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                size="icon-sm"
+                variant="outline"
+                onClick={() => moveItem(index, 1)}
+                disabled={index === currentOrder.length - 1}
+              >
+                <ArrowDown className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-muted-foreground")}>
+          {isCorrect ? "Nice. You built the correct sequence." : "Move cards up/down to build the right order."}
+        </p>
+        <Button type="button" variant="ghost" size="sm" className="gap-1" onClick={() => setCurrentOrder(items)}>
+          <RotateCcw className="h-3 w-3" />
+          Shuffle Back
+        </Button>
+      </div>
+    </Card>
+  )
+}
               </div>
             </Card>
           </button>
         )
       })}
     </div>
+  )
+}
+
+export function DragSortChallenge({
+  title = "Drag to Arrange",
+  description,
+  items,
+  correctOrder,
+}: DragSortChallengeProps) {
+  const [currentOrder, setCurrentOrder] = useState(items)
+  const [draggedItem, setDraggedItem] = useState<string | null>(null)
+
+  const handleDrop = (targetItem: string) => {
+    if (!draggedItem || draggedItem === targetItem) {
+      return
+    }
+
+    setCurrentOrder((prev) => {
+      const draggedIndex = prev.indexOf(draggedItem)
+      const targetIndex = prev.indexOf(targetItem)
+      if (draggedIndex < 0 || targetIndex < 0) {
+        return prev
+      }
+
+      const copy = [...prev]
+      copy.splice(draggedIndex, 1)
+      copy.splice(targetIndex, 0, draggedItem)
+      return copy
+    })
+  }
+
+  const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
+
+  return (
+    <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white">
+      <div className="mb-4">
+        <h3 className="font-semibold text-brand-green">{title}</h3>
+        {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+      </div>
+
+      <div className="space-y-2">
+        {currentOrder.map((item, index) => (
+          <div
+            key={item}
+            draggable
+            onDragStart={() => setDraggedItem(item)}
+            onDragOver={(event) => event.preventDefault()}
+            onDrop={() => {
+              handleDrop(item)
+              setDraggedItem(null)
+            }}
+            onDragEnd={() => setDraggedItem(null)}
+            className={cn(
+              "flex cursor-grab items-center gap-3 rounded-lg border bg-white p-3 text-sm transition-all",
+              "hover:-translate-y-0.5 hover:shadow-sm active:cursor-grabbing",
+              draggedItem === item && "border-brand-orange bg-brand-orange/10"
+            )}
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange/10 text-xs font-semibold text-brand-orange">
+              {index + 1}
+            </span>
+            <span className="flex-1">{item}</span>
+            <span className="text-xs text-muted-foreground">Drag</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-muted-foreground")}>
+          {isCorrect ? "Perfect order. Nice move." : "Drag rows to reorder the flow."}
+        </p>
+        <Button type="button" variant="ghost" size="sm" className="gap-1" onClick={() => setCurrentOrder(items)}>
+          <RotateCcw className="h-3 w-3" />
+          Reset
+        </Button>
+      </div>
+    </Card>
   )
 }
 

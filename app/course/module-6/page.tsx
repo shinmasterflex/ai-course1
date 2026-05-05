@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -154,6 +154,27 @@ export default function Module6Page() {
                   </Card>
                 ))}
               </div>
+              <MatchingChallenge
+                title="No-Code Tool Match"
+                description="Match the build goal to the strongest no-code tool category."
+                pairs={[
+                  {
+                    id: "automate",
+                    left: "Connect apps + trigger actions",
+                    right: "Automation workflow tools",
+                  },
+                  {
+                    id: "app",
+                    left: "Create a front-end internal tool",
+                    right: "No-code app builders",
+                  },
+                  {
+                    id: "chatbot",
+                    left: "Answer questions from your docs",
+                    right: "Custom chatbot builders",
+                  },
+                ]}
+              />
               <QuickCheckCard
                 prompt="A beginner wants to connect Gmail, Notion, and Slack with one AI step in the middle. Which tool category is the best fit?"
                 options={[
@@ -232,7 +253,22 @@ export default function Module6Page() {
                   <p><span className="font-medium text-foreground">Step 4:</span> test with 3-5 real examples before adding Slack or other outputs.</p>
                 </div>
               </Card>
-              
+              <DragSortChallenge
+                title="Workflow Sequence"
+                description="Drag the workflow pieces into the best first-build order."
+                items={[
+                  "Send summaries to a destination",
+                  "Define one clear trigger",
+                  "Test with real examples",
+                  "Add one AI action",
+                ]}
+                correctOrder={[
+                  "Define one clear trigger",
+                  "Add one AI action",
+                  "Send summaries to a destination",
+                  "Test with real examples",
+                ]}
+              />
               <QuickCheckCard
                 prompt="What makes a good first AI workflow to build for yourself?"
                 options={[
@@ -258,7 +294,31 @@ export default function Module6Page() {
                 <p className="text-sm text-muted-foreground mb-4">Answer the four questions below to design your workflow. There are no wrong answers - this is about thinking it through concretely.</p>
                 <div className="space-y-3 text-sm">
                   {[
-                    "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
+               FlipCardGrid
+                cards={[
+                  {
+                    title: "Trigger",
+                    prompt: "What makes a trigger strong?",
+                    answer: "It is specific, observable, and easy to test, such as a labeled email or a scheduled time.",
+                  },
+                  {
+                    title: "AI Step",
+                    prompt: "How many AI steps should beginners start with?",
+                    answer: "One. Keep the first version simple and reliable before adding complexity.",
+                  },
+                  {
+                    title: "Output",
+                    prompt: "Where should output go first?",
+                    answer: "Send it to one destination you already use daily, like Notion, email, or Slack.",
+                  },
+                  {
+                    title: "Measurement",
+                    prompt: "How do you know it works?",
+                    answer: "Track time saved and quality for one week, then iterate based on real results.",
+                  },
+                ]}
+              />
+              <     "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
                     "2. What would the trigger be? (e.g., receiving an email, saving a file, a daily schedule)",
                     "3. What AI action would be most useful? (e.g., summarise, classify, draft a reply, extract information)",
                     "4. Where should the output go? (e.g., Notion, email, Slack, a spreadsheet)",

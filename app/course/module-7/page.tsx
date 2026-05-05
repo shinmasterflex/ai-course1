@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -154,6 +154,30 @@ export default function Module7Page() {
                   </Card>
                 ))}
               </div>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Low Risk",
+                    prompt: "What work tasks are best for first AI adoption?",
+                    answer: "Repetitive, low-risk tasks with outputs you can review quickly, like summaries and draft updates.",
+                  },
+                  {
+                    title: "Human Review",
+                    prompt: "Why keep a human in the loop at work?",
+                    answer: "Because accountability, context, and final judgment remain human responsibilities in professional settings.",
+                  },
+                  {
+                    title: "Measurement",
+                    prompt: "How do teams prove AI value?",
+                    answer: "Track outcomes like hours saved, faster turnaround, and fewer repetitive manual steps.",
+                  },
+                  {
+                    title: "Scope",
+                    prompt: "Why start with small pilot workflows?",
+                    answer: "Small pilots reduce risk and create evidence for what should scale across the team.",
+                  },
+                ]}
+              />
               <QuickCheckCard
                 prompt="What is the best first AI use for most professionals?"
                 options={[
@@ -184,7 +208,23 @@ export default function Module7Page() {
                       label: "High displacement risk",
                       color: "text-red-500",
                       examples: "Routine data entry, basic document review, simple customer support scripts, rote translation, basic image captioning",
-                      insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
+               DragSortChallenge
+                title="Career Priority Order"
+                description="Drag these actions into a practical sequence for building AI career resilience."
+                items={[
+                  "Lead a team-wide AI initiative",
+                  "Document one workflow that works",
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
+                ]}
+                correctOrder={[
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
+                  "Document one workflow that works",
+                  "Lead a team-wide AI initiative",
+                ]}
+              />
+              <       insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
                     },
                     {
                       label: "Augmentation (most roles)",
@@ -283,7 +323,27 @@ export default function Module7Page() {
                   {
                     industry: "Manufacturing",
                     color: "text-yellow-600",
-                    applications: [
+              <MatchingChallenge
+                title="Industry Match Round"
+                description="Match each industry to a representative AI application."
+                pairs={[
+                  {
+                    id: "healthcare",
+                    left: "Healthcare",
+                    right: "Medical image analysis and clinical documentation",
+                  },
+                  {
+                    id: "finance",
+                    left: "Finance",
+                    right: "Fraud detection and compliance monitoring",
+                  },
+                  {
+                    id: "manufacturing",
+                    left: "Manufacturing",
+                    right: "Predictive maintenance and quality control",
+                  },
+                ]}
+              />      applications: [
                       "Predictive maintenance  - AI prevents machine failures before they happen",
                       "Quality control  - AI vision systems detect defects at speed and scale",
                       "Supply chain optimisation  - AI reduces delays and costs",

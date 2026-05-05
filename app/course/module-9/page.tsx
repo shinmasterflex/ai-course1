@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -318,6 +318,19 @@ export default function Module9Page() {
                 correctOptionId="b"
                 explanation="The section highlights a fragmented landscape: different countries and regions are regulating AI in different ways, which creates compliance complexity."
               />
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Match each region to its governance approach</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a region on the left, then click its matching description on the right.</p>
+                <MatchingChallenge
+                  pairs={[
+                    { left: "European Union", right: "World's first comprehensive AI law classifying systems by risk level" },
+                    { left: "United States", right: "Lighter-touch, sector-by-sector approach prioritising innovation speed" },
+                    { left: "China", right: "State-directed rules with restrictions on foreign AI and content requirements" },
+                    { left: "International Bodies", right: "Early and fragmented coordination via OECD, UN, and G7 frameworks" },
+                  ]}
+                  accentClassName="border-brand-green/20 bg-brand-green/5"
+                />
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -389,6 +402,21 @@ export default function Module9Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The most accessible career move for most people: become the most AI-fluent person in your current domain. You do not need to switch careers  - you need to become the bridge between AI capability and your industry's expertise." />
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Match each AI role to its main contribution</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a role on the left, then click what it does on the right.</p>
+                <DragSortChallenge
+                  items={[
+                    { id: "1", label: "Develop deep expertise in your existing field" },
+                    { id: "2", label: "Build AI literacy and hands-on tool skills" },
+                    { id: "3", label: "Learn to evaluate AI outputs critically" },
+                    { id: "4", label: "Identify where AI creates value in your domain" },
+                    { id: "5", label: "Become the bridge between AI capability and your industry" },
+                  ]}
+                  correctOrder={["1", "2", "3", "4", "5"]}
+                  accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                />
+              </div>
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>

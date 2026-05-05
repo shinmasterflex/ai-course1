@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -292,6 +292,21 @@ export default function Module5Page() {
                   </div>
                 </Card>
               </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Put the verification steps in the right order</h3>
+                <p className="text-sm text-muted-foreground mb-4">When you encounter potentially AI-generated misinformation, drag the steps into the correct sequence.</p>
+                <DragSortChallenge
+                  items={[
+                    { id: "1", label: "Pause — don't share or act immediately" },
+                    { id: "2", label: "Identify the original source of the claim" },
+                    { id: "3", label: "Run a reverse image search or check a fact-checking site" },
+                    { id: "4", label: "Find a primary source that independently confirms it" },
+                    { id: "5", label: "Only share or act after verification is complete" },
+                  ]}
+                  correctOrder={["1", "2", "3", "4", "5"]}
+                  accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                />
+              </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Real scenario - what would you do?</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -355,6 +370,19 @@ export default function Module5Page() {
                   ))}
                 </ul>
               </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Match each principle to what it actually means</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a principle on the left, then click its matching definition on the right.</p>
+                <MatchingChallenge
+                  pairs={[
+                    { left: "Verify before you trust", right: "Check important facts with authoritative sources before acting on AI outputs" },
+                    { left: "Automation bias", right: "The human tendency to over-trust outputs because they come from computers" },
+                    { left: "Disclose when relevant", right: "Telling your audience when AI generated content you present as your own work" },
+                    { left: "Least privilege", right: "Giving AI only the minimum data access needed for its specific task" },
+                  ]}
+                  accentClassName="border-brand-green/20 bg-brand-green/5"
+                />
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}

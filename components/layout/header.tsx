@@ -32,8 +32,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-sky-50/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/course" className="flex items-center gap-2.5">
-          <Image src="/Logo.png" alt="Cognijin Logo" width={720} height={400} className="h-11 w-auto" priority />
+        <Link href="/course" className="flex h-10 shrink-0 items-center">
+          <Image
+            src="/Logo.png"
+            alt="Cognijin Logo"
+            width={720}
+            height={400}
+            className="block h-8 w-auto md:h-9"
+            priority
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

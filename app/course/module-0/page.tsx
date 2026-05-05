@@ -10,6 +10,7 @@ import NextImage from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Button } from "@/components/ui/button"
@@ -121,6 +122,30 @@ export default function Module0Page() {
                   ))}
                 </div>
               </div>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Pattern Recognition",
+                    prompt: "What does AI do best in daily tools?",
+                    answer: "It detects patterns in huge datasets quickly and applies them to tasks like recommendations, ranking, and prediction.",
+                  },
+                  {
+                    title: "Prediction",
+                    prompt: "What is a simple way to think about AI outputs?",
+                    answer: "Most outputs are predictions based on previous examples, not human-like understanding or intuition.",
+                  },
+                  {
+                    title: "Augmentation",
+                    prompt: "Why does AI matter for beginners?",
+                    answer: "It helps you draft, summarize, and organize faster, so you can focus on judgment and decision-making.",
+                  },
+                  {
+                    title: "Verification",
+                    prompt: "What habit keeps AI useful and safe?",
+                    answer: "Always verify important facts and claims before acting on AI output.",
+                  },
+                ]}
+              />
               <div>
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> Discover your AI learning style</h3>
                 <p className="text-sm text-muted-foreground mb-4">We removed the legacy Cognijin personality assessment from this course flow.</p>
@@ -159,8 +184,27 @@ export default function Module0Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The point: AI is not some distant science-fiction technology. It is already woven into the fabric of daily life - often invisibly. This course will help you understand exactly how it works and why it matters." />
-              
-              
+              <MatchingChallenge
+                title="Daily AI Match"
+                description="Choose a real-world AI use and match it to what it does for users."
+                pairs={[
+                  {
+                    id: "navigation",
+                    left: "Navigation apps",
+                    right: "Predict traffic and suggest faster routes",
+                  },
+                  {
+                    id: "spam",
+                    left: "Email spam filter",
+                    right: "Classify messages as likely unwanted content",
+                  },
+                  {
+                    id: "recommendation",
+                    left: "Product recommendations",
+                    right: "Rank options based on similar behavior patterns",
+                  },
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -194,7 +238,21 @@ export default function Module0Page() {
                           <span><span className="font-medium">{title}</span> - <span className="text-muted-foreground text-sm">{desc}</span></span>
                         </li>
                       ))}
-                    </ul>
+               DragSortChallenge
+                title="Course Path Builder"
+                description="Drag each phase into the recommended learning sequence."
+                items={[
+                  "Thinking and Building",
+                  "Understanding AI",
+                  "Using AI",
+                ]}
+                correctOrder={[
+                  "Understanding AI",
+                  "Using AI",
+                  "Thinking and Building",
+                ]}
+              />
+              <     </ul>
                   </Card>
                 ))}
               </div>

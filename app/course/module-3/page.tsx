@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -122,7 +122,30 @@ export default function Module3Page() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">LLM Vocabulary - Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
-                
+                <FlipCardGrid
+                  cards={[
+                    {
+                      title: "Token",
+                      prompt: "What is a token in LLMs?",
+                      answer: "A token is a small text unit the model processes, often part of a word rather than a full word.",
+                    },
+                    {
+                      title: "Context window",
+                      prompt: "Why does context window size matter?",
+                      answer: "It sets how much text the model can keep in active memory while generating the next response.",
+                    },
+                    {
+                      title: "Parameter",
+                      prompt: "What are model parameters?",
+                      answer: "Parameters are the learned internal weights that shape how the model maps input context to output predictions.",
+                    },
+                    {
+                      title: "Fine-tuning",
+                      prompt: "What does fine-tuning do?",
+                      answer: "It adapts a general model to a specific domain or style using focused examples and feedback.",
+                    },
+                  ]}
+                />
               </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -146,8 +169,22 @@ export default function Module3Page() {
                   </Card>
                 ))}
               </div>
-              
-              
+              <DragSortChallenge
+                title="Move the Pipeline"
+                description="Drag each stage to build the correct ChatGPT response pipeline."
+                items={[
+                  "Model predicts next token repeatedly",
+                  "Human feedback tunes helpfulness",
+                  "Input text is tokenized",
+                  "Base model trains on large text corpora",
+                ]}
+                correctOrder={[
+                  "Base model trains on large text corpora",
+                  "Human feedback tunes helpfulness",
+                  "Input text is tokenized",
+                  "Model predicts next token repeatedly",
+                ]}
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -280,7 +317,27 @@ export default function Module3Page() {
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Spot the better prompt</h3>
                 <p className="text-sm text-muted-foreground mb-3">You want AI to help plan a team offsite. Which prompt will get the best result?</p>
-                
+                <MatchingChallenge
+                  title="Technique Match"
+                  description="Match each prompt technique to its strongest benefit."
+                  pairs={[
+                    {
+                      id: "fewshot",
+                      left: "Few-shot prompting",
+                      right: "Calibrates style and format with examples",
+                    },
+                    {
+                      id: "constraints",
+                      left: "Constraint setting",
+                      right: "Limits rambling and off-target output",
+                    },
+                    {
+                      id: "iterative",
+                      left: "Iterative refinement",
+                      right: "Improves quality over multiple targeted passes",
+                    },
+                  ]}
+                />
               </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-blue-500/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-green">Prompt Quick Reference - Copy, Paste, Adapt</h3>

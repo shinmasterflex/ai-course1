@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, OrderingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
@@ -240,6 +240,22 @@ export default function Module2Page() {
                   </div>
                 </div>
               </Card>
+              <OrderingChallenge
+                title="Learning Loop Builder"
+                description="Move the cards to model the machine-learning loop from data to improvement."
+                items={[
+                  "Evaluate errors and adjust parameters",
+                  "Collect and label representative training data",
+                  "Run model on new input and predict",
+                  "Train model to learn patterns",
+                ]}
+                correctOrder={[
+                  "Collect and label representative training data",
+                  "Train model to learn patterns",
+                  "Run model on new input and predict",
+                  "Evaluate errors and adjust parameters",
+                ]}
+              />
               <QuickCheckCard
                 prompt="A retailer wants to group customers into segments without pre-labeling them. Which learning style fits best?"
                 options={[
