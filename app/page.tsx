@@ -70,11 +70,11 @@ export default function HomePage() {
                   </p>
                   <div className="overflow-hidden rounded-2xl border border-brand-indigo/15 bg-white">
                     <Image
-                      src="/graphics/ai-learning-network.svg"
-                      alt="Illustrated map of connected AI concepts"
+                      src="/images/landing/hero-ai.jpg"
+                      alt="Person working with AI generated visuals on multiple screens"
                       width={960}
                       height={680}
-                      className="h-auto w-full"
+                      className="h-auto w-full object-cover"
                       priority
                     />
                   </div>
@@ -110,11 +110,11 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <Image
-                  src="/graphics/ai-learning-network.svg"
-                  alt="Network diagram of learning concepts"
+                  src="/images/landing/concepts-robot.jpg"
+                  alt="Humanoid robot in a modern technology lab"
                   width={960}
                   height={680}
-                  className="h-auto w-full rounded-xl border border-brand-indigo/10"
+                  className="h-auto w-full rounded-xl border border-brand-indigo/10 object-cover"
                 />
               </CardContent>
             </Card>
@@ -126,11 +126,11 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <Image
-                  src="/graphics/progress-rings.svg"
-                  alt="Radial progress chart illustration"
+                  src="/images/landing/progress-dashboard.jpg"
+                  alt="Data dashboard and analytics reports on a desk"
                   width={820}
                   height={520}
-                  className="h-auto w-full rounded-xl border border-brand-green/10"
+                  className="h-auto w-full rounded-xl border border-brand-green/10 object-cover"
                 />
               </CardContent>
             </Card>
@@ -142,11 +142,11 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <Image
-                  src="/graphics/module-path.svg"
-                  alt="Curved path showing learning modules"
+                  src="/images/landing/roadmap-team.jpg"
+                  alt="Team collaborating with laptops during a learning workshop"
                   width={960}
                   height={340}
-                  className="h-auto w-full rounded-xl border border-brand-orange/10"
+                  className="h-auto w-full rounded-xl border border-brand-orange/10 object-cover"
                 />
               </CardContent>
             </Card>
