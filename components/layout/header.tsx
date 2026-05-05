@@ -84,10 +84,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-sky-50/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/course" className="flex items-center gap-2.5">
-          <Image src="/logo1.svg" alt="Cogniijn Logo" width={40} height={28} className="h-7 w-10" priority />
-          <div className="text-[1.9rem] leading-none sm:text-[2rem]">
-            <span className="brand-wordmark text-brand-orange">Cogniijn</span>
-          </div>
+          <Image src="/Logo.png" alt="Cogniijn Logo" width={720} height={400} className="h-11 w-auto" priority />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

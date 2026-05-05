@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   description: "Practical AI education from beginner to advanced, with interactive modules and hands-on exercises.",
   generator: "v0.app",
   icons: {
-    icon: "/favicon1.svg",
+    icon: "/Logo.png",
   },
 }
 
