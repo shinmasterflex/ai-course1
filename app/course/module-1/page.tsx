@@ -1,24 +1,23 @@
-/**
- * MODULE 1: NEUROBIOLOGY & GROWTH MINDSET
- * Comprehensive module covering brain science and mindset for sales success
+﻿/**
+ * MODULE 1: WHAT IS ARTIFICIAL INTELLIGENCE?
  */
 
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Slideshow } from "@/components/learning/slideshow"
 import { ComparisonCard } from "@/components/learning/comparison-card"
-import { GridDisplay } from "@/components/learning/grid-display"
-import { MatchingGame } from "@/components/learning/matching-game"
-import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { MatchingGame } from "@/components/learning/matching-game"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { CheckCircle2, Brain, Clock } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
@@ -26,7 +25,6 @@ export default function Module1Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
-
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-1"
@@ -34,796 +32,244 @@ export default function Module1Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
   const totalSections = sections.length
-
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  // Centralized quiz state management
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, [
-    "matching",
-    "textInput",
-    "quiz1",
-    "quiz2",
-    "quiz3",
-  ])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching"])
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
   useEffect(() => {
     if (sectionParam && sections.length > 0) {
-      const sectionIndex = sections.findIndex((s) => s.id === sectionParam)
-      if (sectionIndex !== -1 && sectionIndex !== currentSectionIndex) {
-        setCurrentSectionIndex(sectionIndex)
-      }
+      const idx = sections.findIndex((s) => s.id === sectionParam)
+      if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
     }
   }, [sectionParam])
 
-  const handleSectionComplete = () => {
-    const currentSection = sections[currentSectionIndex]
-    if (currentSection) {
-      markSectionComplete(MODULE_ID, currentSection.id)
-      // Update global position when user explicitly navigates
-      setCurrentPosition(MODULE_ID, currentSection.id)
+  useEffect(() => {
+    if (allQuizComplete && currentSectionIndex === totalSections - 1) {
+      const last = sections[totalSections - 1]
+      if (last) { markSectionComplete(MODULE_ID, last.id); setCurrentPosition(MODULE_ID, last.id) }
     }
+  }, [allQuizComplete])
 
-    // Move to next section
+  const handleSectionComplete = () => {
+    const current = sections[currentSectionIndex]
+    if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
-      const nextIndex = currentSectionIndex + 1
-      setCurrentSectionIndex(nextIndex)
-      // Update URL to reflect new section
-      const nextSection = sections[nextIndex]
-      if (nextSection) {
-        router.push(`/course/module-1?section=${nextSection.id}`)
-      }
+      const next = sections[currentSectionIndex + 1]
+      setCurrentSectionIndex(currentSectionIndex + 1)
+      router.push(`/course/module-1?section=${next.id}`)
       window.scrollTo({ top: 0, behavior: "smooth" })
     }
   }
 
-  useEffect(() => {
-    // Mark the interactive-quiz section as complete once all assessments are correct
-    if (allQuizComplete && currentSectionIndex === 8) {
-      const assessmentSection = sections[8]
-      if (assessmentSection && assessmentSection.id === "interactive-quiz") {
-        markSectionComplete(MODULE_ID, assessmentSection.id)
-        setCurrentPosition(MODULE_ID, assessmentSection.id)
-      }
-    }
-  }, [
-    allQuizComplete,
-    currentSectionIndex,
-    sections,
-    MODULE_ID,
-    markSectionComplete,
-    setCurrentPosition,
-  ])
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
       <div className="flex">
         <Sidebar />
-
-        <main className="flex-1 p-8 max-w-5xl mx-auto">
-          {/* Module Header */}
+        <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2 text-balance font-heading">
-              Module 1: Neurobiology & Growth Mindset
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Understanding the brain science behind goal achievement and developing a growth mindset
-            </p>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">Module 1: What Is Artificial Intelligence?</h1>
+            <p className="text-lg text-muted-foreground mb-4">Cut through the hype and build a real understanding of AI</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          {/* Section 0: Never Split the Difference */}
+          {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">Never Split the Difference</h2>
-                <p className="text-sm text-muted-foreground mb-4">Chris Voss - How Not to Get Paid (p. 156)</p>
-                <blockquote className="border-l-4 border-brand-green pl-4 italic text-lg leading-relaxed mb-4">
-                  "Let's pause for a minute here, because there is one vitally important thing you have to remember when
-                  you enter a negotiation armed with your list of calibrated questions. That is, all of this is great,
-                  but there's a rub: without self-control and emotional regulation, it doesn't work."
-                </blockquote>
-                <p className="text-muted-foreground">
-                  This foundational quote sets the stage for understanding how neurobiology affects our ability to
-                  succeed in sales and negotiations. Self-control and emotional regulation are not just soft skills—they
-                  are neurological functions that can be understood and improved.
-                </p>
+              <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
+              <TextDisplay variant="callout" content="By the end of this module you will be able to define AI in plain language, explain its history, distinguish between types of AI, spot AI in your daily life, and confidently correct common myths." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 flex items-center gap-2"><Clock className="h-4 w-4" /> What is in this module</h3>
+                <ul className="space-y-2 text-sm">
+                  {["Defining AI — what it actually means", "A brief history — from 1950 to today", "Types of AI — narrow, general, super", "AI in your daily life — real examples", "Myths vs. Reality — what AI can and cannot do", "Module Quiz"].map((item) => (
+                    <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" />{item}</li>
+                  ))}
+                </ul>
               </Card>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Neurology of Goal Seeking
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module →</Button>
             </div>
           )}
 
-          {/* Section 1: Neurology of Goal Seeking (Combined Sections 2 & 3) */}
+          {/* 1: Defining AI */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">Neurology of Goal Seeking</h2>
-                <p className="text-muted-foreground mb-4">Understanding the Brain Regions Involved in Achievement</p>
-                <p>
-                  The human brain has specific regions responsible for goal-seeking behavior, fear management, and
-                  persistence. Understanding these regions helps us develop strategies to overcome obstacles and achieve
-                  our sales objectives.
-                </p>
-                <p className="mt-4 text-sm text-muted-foreground italic">
-                  Click each card to flip between the brain region and its function in goal achievement.
-                </p>
+              <h2 className="text-3xl font-bold text-brand-orange">Defining AI</h2>
+              <TextDisplay content="Artificial Intelligence (AI) is software that is designed to perform tasks that would normally require human intelligence." />
+              <TextDisplay variant="callout" content="Think of it this way: human intelligence lets you recognise faces, understand language, solve problems, and learn from experience. AI is software engineered to do the same kinds of things — not by thinking the way humans do, but by finding patterns in massive amounts of data." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3">Three Key Words in the Definition</h3>
+                <div className="space-y-3">
+                  {[
+                    { word: "Artificial", meaning: "Made by people, not nature. AI is built by engineers and researchers." },
+                    { word: "Intelligence", meaning: "The ability to learn, reason, understand language, or make decisions." },
+                    { word: "Software", meaning: "AI runs on computers. It is not a robot body (though robots can use AI)." },
+                  ].map(({ word, meaning }) => (
+                    <div key={word} className="flex gap-3">
+                      <span className="font-bold text-brand-orange w-32 flex-shrink-0">{word}</span>
+                      <span className="text-muted-foreground">{meaning}</span>
+                    </div>
+                  ))}
+                </div>
               </Card>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Amygdalae */}
-                <FlipCard
-                  frontTitle="Amygdalae"
-                  frontContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        The amygdalae are almond-shaped structures deep in the brain that process emotions, particularly
-                        fear and anxiety.
-                      </p>
-                      <p className="text-sm font-medium text-brand-green">Click to see its role in goal seeking →</p>
-                    </div>
-                  }
-                  backTitle="Amygdalae Function"
-                  backContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        <strong>Responsible for:</strong> Fear and anxiety related to goal seeking and avoidance
-                      </p>
-                      <p className="text-sm">
-                        <strong>Impact:</strong> Fear of punishments like embarrassment or financial ruin
-                      </p>
-                      <p className="text-sm">
-                        <strong>Key Insight:</strong> Mild agitation is the preferred state of mind for most people
-                      </p>
-                    </div>
-                  }
-                />
-
-                {/* Ventral Striatum */}
-                <FlipCard
-                  frontTitle="Ventral Striatum"
-                  frontContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        Part of the Basal Ganglia, this region acts as the brain's decision-making motor system.
-                      </p>
-                      <p className="text-sm font-medium text-brand-green">Click to see its role in goal seeking →</p>
-                    </div>
-                  }
-                  backTitle="Ventral Striatum Function"
-                  backContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        <strong>Function:</strong> Our "go or no-go" motor and brake system
-                      </p>
-                      <p className="text-sm">
-                        <strong>Two Circuits:</strong>
-                      </p>
-                      <ul className="text-sm space-y-1 ml-4">
-                        <li>• One circuit initiates action</li>
-                        <li>• The other circuit stops the initiation of action</li>
-                      </ul>
-                    </div>
-                  }
-                />
-
-                {/* Anterior Mid-Cingulate Cortex */}
-                <FlipCard
-                  frontTitle="Anterior Mid-Cingulate Cortex"
-                  frontContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        This region is crucial for maintaining effort and pushing through challenges.
-                      </p>
-                      <p className="text-sm font-medium text-brand-green">Click to see its role in goal seeking →</p>
-                    </div>
-                  }
-                  backTitle="Anterior Mid-Cingulate Function"
-                  backContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        <strong>Responsible for:</strong> Persistence and willpower regulation
-                      </p>
-                      <p className="text-sm">
-                        <strong>Impact:</strong> Determines how long you can maintain effort toward a goal despite
-                        obstacles
-                      </p>
-                      <p className="text-sm">
-                        <strong>Sales Application:</strong> Critical for consistent prospecting and follow-up activities
-                      </p>
-                    </div>
-                  }
-                />
-
-                {/* Lateral Pre-Frontal Cortex */}
-                <FlipCard
-                  frontTitle="Lateral Pre-Frontal Cortex"
-                  frontContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        The executive function center of the brain, responsible for complex planning and
-                        decision-making.
-                      </p>
-                      <p className="text-sm font-medium text-brand-green">Click to see its role in goal seeking →</p>
-                    </div>
-                  }
-                  backTitle="Lateral Pre-Frontal Function"
-                  backContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        <strong>Function:</strong> Planning and thinking across different time scales
-                      </p>
-                      <p className="text-sm">
-                        <strong>Executive Function:</strong> Coordinates complex goal-directed behavior
-                      </p>
-                      <p className="text-sm">
-                        <strong>Sales Application:</strong> Essential for strategic account planning and long-term
-                        relationship building
-                      </p>
-                    </div>
-                  }
-                />
-
-                {/* Orbital Frontal Cortex */}
-                <FlipCard
-                  frontTitle="Orbital Frontal Cortex"
-                  frontContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        This region connects our current emotional state with anticipated future emotional states.
-                      </p>
-                      <p className="text-sm font-medium text-brand-green">Click to see its role in goal seeking →</p>
-                    </div>
-                  }
-                  backTitle="Orbital Frontal Function"
-                  backContent={
-                    <div className="space-y-3">
-                      <p className="text-sm">
-                        <strong>Function:</strong> Meshes current emotionality with future emotional states
-                      </p>
-                      <p className="text-sm">
-                        <strong>Process:</strong> Compares "Comparison Level" vs "Comparison Level (Alternative)"
-                      </p>
-                      <p className="text-sm">
-                        <strong>Sales Application:</strong> Helps evaluate whether pursuing a deal is worth the
-                        emotional investment
-                      </p>
-                    </div>
-                  }
-                />
-              </div>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to MAD Analysis
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <FlipCard front="Is AI the same as a computer program?" back="Not exactly. All AI is software, but not all software is AI. A basic calculator follows fixed rules you wrote. AI learns its own rules from data — you show it millions of examples and it figures out the pattern itself." />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 2: MAD Analysis */}
+          {/* 2: History */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">MAD Analysis</h2>
-                <p className="text-sm text-muted-foreground mb-4">Does this Make a Difference?</p>
-                <p className="leading-relaxed mb-4">
-                  Understanding how the brain functions will be a key to determining what strategies and language to use
-                  when developing persuasive speech.
-                </p>
-                <p className="leading-relaxed mb-4">
-                  We must understand that <strong>selling is a negotiation process</strong> and understanding how and
-                  why our counterparts move forward only strengthens our propositions.
-                </p>
-                <div className="mt-6 p-4 bg-brand-green/10 rounded-lg border border-brand-green/20">
-                  <p className="text-sm font-medium text-brand-green mb-2">Key Takeaway:</p>
-                  <p className="text-sm">
-                    By understanding the neurobiology of decision-making, we can craft more effective sales strategies
-                    that work with—not against—the natural functioning of the human brain.
-                  </p>
-                </div>
-              </Card>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Growth Mindset
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <h2 className="text-3xl font-bold text-brand-green">A Brief History of AI</h2>
+              <TextDisplay content="AI is not new — researchers have been working on it since the 1950s. Click through the timeline below to see how we got here:" />
+              <Slideshow slides={[
+                { id: "1950", title: "1950 — Alan Turing asks: Can machines think?", content: "Alan Turing published his landmark paper 'Computing Machinery and Intelligence' and proposed the famous Turing Test: if a machine could carry on a conversation indistinguishable from a human, it should be considered intelligent.\n\nThis single question has driven AI research for over 70 years." },
+                { id: "1956", title: "1956 — The word 'Artificial Intelligence' is born", content: "John McCarthy coined the term 'Artificial Intelligence' at the Dartmouth Conference — the official birth of AI as a research field.\n\nMcCarthy's ambition: build machines that can think. Researchers were optimistic that human-level AI was just a few decades away. (It took longer than expected.)" },
+                { id: "1997", title: "1997 — Deep Blue defeats the world chess champion", content: "IBM's Deep Blue beat Garry Kasparov in a six-game match — a stunning moment that showed AI could outperform the world's best human in a complex strategic game.\n\nKasparov accused IBM of cheating. A rematch was denied. The result stood." },
+                { id: "2011", title: "2011 — IBM Watson wins Jeopardy!", content: "Watson competed against two Jeopardy! champions — and won decisively. The impressive part: Jeopardy! requires understanding wordplay, puns, and cultural references. Watson had to process natural language in real time.\n\nThis was a huge leap for AI and natural language understanding." },
+                { id: "2012", title: "2012 — The deep learning revolution", content: "A neural network called AlexNet entered the ImageNet computer vision competition and utterly demolished the competition — cutting the error rate nearly in half.\n\nThis moment launched the deep learning era. Every major AI advance since — ChatGPT, image generators, voice assistants — traces back to this breakthrough." },
+                { id: "2016", title: "2016 — AlphaGo beats the world Go champion", content: "Go was considered the holy grail of AI challenges — the number of possible board positions exceeds the atoms in the observable universe.\n\nDeepMind's AlphaGo beat Lee Sedol 4-1 using strategies that surprised even professional Go players. One move (Move 37) became legendary — no human would have played it." },
+                { id: "2022", title: "2022 — ChatGPT goes mainstream", content: "OpenAI's ChatGPT reached 100 million users in just two months — faster than any product in history. For the first time, anyone could have a natural, open-ended conversation with AI.\n\nAI moved from research labs to kitchen tables overnight. The world has not been the same since." },
+                { id: "now", title: "Today — AI is everywhere", content: "From medical diagnosis to music generation, legal research to software development — AI is woven into nearly every industry.\n\nAnd the pace is accelerating. The models available today are more capable than anything that existed just two years ago. You are living through one of the fastest technological shifts in human history." },
+              ]} />
+              <FlipCard
+                front="Who coined the term 'Artificial Intelligence'?"
+                back="John McCarthy, at the Dartmouth Conference in 1956. But Alan Turing's 1950 question — 'Can machines think?' — laid the philosophical foundation. McCarthy gave AI its name; Turing gave it its purpose."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 3: Growth Mindset */}
+          {/* 3: Types of AI */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold mb-2 font-heading">Growth Mindset</h2>
-                <p className="text-lg text-muted-foreground italic">"The key to Continuous Improvement"</p>
+              <h2 className="text-3xl font-bold text-brand-orange">Types of AI</h2>
+              <TextDisplay content="Not all AI is the same. Researchers distinguish between three levels — and only one of them actually exists today." />
+              <div className="space-y-4">
+                <Card className="p-5 border-2 border-brand-green/40 bg-brand-green/5">
+                  <h3 className="font-bold text-lg text-brand-green mb-2">Narrow AI (Weak AI) — This is real, and it exists today</h3>
+                  <p className="text-muted-foreground">Narrow AI is designed to do one specific task very well. It cannot go beyond what it was trained for. Examples: spam filters, face recognition, ChatGPT, Netflix recommendations, Google Translate.</p>
+                  <p className="mt-2 font-medium">Every AI you have ever used is Narrow AI.</p>
+                </Card>
+                <Card className="p-5 border-2 border-brand-orange/40 bg-brand-orange/5">
+                  <h3 className="font-bold text-lg text-brand-orange mb-2">General AI (AGI) — Theoretical, does not exist yet</h3>
+                  <p className="text-muted-foreground">AGI would be an AI that can do any intellectual task a human can do — reasoning across domains, learning new skills from scratch, understanding context the way people do. Scientists disagree on when (or if) this will happen.</p>
+                </Card>
+                <Card className="p-5 border-2 border-gray-300 bg-gray-50">
+                  <h3 className="font-bold text-lg text-gray-600 mb-2">Superintelligence — Science fiction for now</h3>
+                  <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away — if it is possible at all.</p>
+                </Card>
               </div>
-
-              <ComparisonCard
-                leftSide={{
-                  title: "Fixed Mindset",
-                  subtitle: "Limiting beliefs about ability",
-                  color: "red",
-                  items: [
-                    "Believe talent, intelligence, and ability are fixed",
-                    "May be motivated to learn but believe their abilities are limited",
-                    "Tendency to fear failure",
-                    "Focus on proving themselves",
-                    "Reluctant to accept criticism or feedback",
-                    "Avoids challenges",
-                  ],
-                }}
-                rightSide={{
-                  title: "Growth Mindset",
-                  subtitle: "Embracing potential for development",
-                  color: "green",
-                  items: [
-                    "View challenges as opportunities",
-                    "Embrace constructive feedback",
-                    "Focus on process not the results",
-                    "Learn and grow from failures",
-                    "Believes that talent is ever-improving",
-                    "Is inspired by others' success",
-                  ],
-                }}
-              />
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Mindset Discoveries
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence — things that do not exist. The AI you use today is Narrow AI, which is powerful but limited." />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 4: Mindset Discoveries */}
+          {/* 4: AI in Your Life */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">Mindset Discoveries</h2>
-                <p className="text-sm text-muted-foreground mb-4">Carol Dweck's Groundbreaking Research</p>
-                <p className="font-medium mb-4">First study compared compliments of children on effort vs talent:</p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand-green mt-1">•</span>
-                    <span>Students were given a set of problems to complete</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand-green mt-1">•</span>
-                    <span>
-                      Students who were praised for their <strong>talents</strong> were less willing to engage in more
-                      challenging tasks vs those who were praised for their <strong>effort</strong>
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand-green mt-1">•</span>
-                    <span>
-                      Talent-praised students were willing to game the system or exaggerate their accomplishments to
-                      continue receiving praise for their efforts
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-brand-green mt-1">•</span>
-                    <span>
-                      Effort-praised students looked to find additional challenges that would lead to additional
-                      compliments on their efforts
-                    </span>
-                  </li>
-                </ul>
-                <div className="mt-6 p-4 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-                  <p className="text-sm font-medium text-brand-orange mb-2">Sales Application:</p>
-                  <p className="text-sm">
-                    Focus on praising your own effort and process rather than innate talent. This mindset shift leads to
-                    greater resilience and willingness to tackle difficult prospects.
-                  </p>
-                </div>
-              </Card>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Stress Levels
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <h2 className="text-3xl font-bold text-brand-green">AI in Your Daily Life</h2>
+              <TextDisplay content="Let us look at specific categories where AI is already working for you — right now." />
+              <MatchingGame
+                title="Match the AI application to its category"
+                pairs={[
+                  { left: "Spotify recommending songs", right: "Recommendation Systems" },
+                  { left: "Gmail auto-completing sentences", right: "Natural Language Processing" },
+                  { left: "Unlocking phone with your face", right: "Computer Vision" },
+                  { left: "Google Maps re-routing for traffic", right: "Predictive Algorithms" },
+                  { left: "Alexa understanding your voice", right: "Speech Recognition" },
+                  { left: "Instagram showing you relevant ads", right: "Targeting AI" },
+                ]}
+                onComplete={() => handleQuizComplete("matching", true)}
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 5: Elevated Stress Levels */}
+          {/* 5: Myths vs Reality */}
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">Elevated Stress Levels</h2>
-                <p className="text-sm text-muted-foreground mb-4">Good or Bad?</p>
-                <p className="mb-4">Common stress indicators include:</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                    <span className="text-brand-orange">•</span>
-                    <span>Sweaty palms</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                    <span className="text-brand-orange">•</span>
-                    <span>Increased heart rate</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                    <span className="text-brand-orange">•</span>
-                    <span>Quakiness and quivering</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                    <span className="text-brand-orange">•</span>
-                    <span>Difficult to concentrate</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                    <span className="text-brand-orange">•</span>
-                    <span>Snap at others</span>
-                  </div>
-                </div>
-                <p className="mt-6 text-muted-foreground">
-                  But is stress always negative? The next section explores how our mindset about stress can dramatically
-                  affect our performance.
-                </p>
-              </Card>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Stress & Achievement
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <h2 className="text-3xl font-bold text-brand-orange">Myths vs. Reality</h2>
+              <TextDisplay content="AI gets a lot of hype — and a lot of fear. Most of it comes from misunderstanding what AI actually is. Let us set the record straight:" />
+              <ComparisonCard
+                leftTitle="Common Myths"
+                rightTitle="The Reality"
+                items={[
+                  { left: "AI thinks and feels like humans", right: "AI recognises patterns. It has no thoughts, feelings, or consciousness." },
+                  { left: "AI knows everything", right: "AI only knows what it was trained on. It can be confidently wrong." },
+                  { left: "AI will take over the world", right: "Narrow AI cannot even switch between tasks. It only does what it was designed for." },
+                  { left: "AI is always objective and unbiased", right: "AI learns from human-created data, so it inherits human biases." },
+                  { left: "Only tech experts can use AI", right: "Modern AI tools are designed for anyone. No coding required." },
+                  { left: "AI understands what it says", right: "Language AI predicts likely next words. It does not understand meaning the way you do." },
+                ]}
+              />
+              <MultipleChoice
+                question="True or false: AI is objective because computers don't have feelings or personal opinions."
+                options={[
+                  { text: "True — AI uses pure math, so the output must be unbiased", isCorrect: false, feedback: "The math is only as objective as the data it was trained on. Biased data produces biased AI, regardless of the algorithm." },
+                  { text: "False — AI inherits and can amplify the biases present in its training data", isCorrect: true, feedback: "Exactly right. AI learns patterns from human-generated data — and if that data reflects historical inequalities, the AI will reflect them too." },
+                  { text: "It depends — some AI is unbiased and some is not", isCorrect: false, feedback: "While bias varies in severity, virtually all AI trained on real-world human data carries some form of bias. The question is degree, not whether." },
+                  { text: "True — computers cannot be prejudiced because they have no emotions", isCorrect: false, feedback: "Prejudice in AI does not come from emotions — it comes from patterns in data. Emotionless does not mean fair." },
+                ]}
+                explanation="This is one of the most important AI myths to understand. AI does not 'think' or 'feel' bias — it statistically mirrors the patterns in its training data. Real-world data often contains historical inequalities, so AI can perpetuate and amplify them."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 6: Does Stress Limit Achievement */}
+          {/* 6: Quiz */}
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
-              <Card className="p-6">
-                <h2 className="text-2xl font-bold mb-2 font-heading">Does Stress Limit Achievement?</h2>
-                <p className="text-sm text-muted-foreground mb-4">Stress is Enhancing vs Limiting Mindset</p>
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-semibold mb-3">Impromptu Speech Study:</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-green mt-1">•</span>
-                        <span>Subjects were given opposing descriptions of stress as "enhancing" vs "limiting"</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-green mt-1">•</span>
-                        <span>Subjects were then told they would have to give an impromptu speech</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-green mt-1">•</span>
-                        <span>
-                          <strong>Results:</strong> Those who were given a "stress is enhancing" mindset description
-                          outperformed those who were given a "stress is limiting" description
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="p-4 bg-brand-green/10 rounded-lg border border-brand-green/20">
-                    <h4 className="font-semibold mb-3 text-brand-green">Key Conclusions:</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-green mt-1">•</span>
-                        <span>
-                          Effort praise with a "stress is enhancing" mindset leads to more activity in overcoming
-                          challenges
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-green mt-1">•</span>
-                        <span>
-                          Those who accept improving what they control focus on attention and effort and accept that the
-                          results will come
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="p-4 bg-brand-orange/10 rounded-lg border border-brand-orange/20">
-                    <h4 className="font-semibold mb-3 text-brand-orange">Discoveries:</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-orange mt-1">•</span>
-                        <span>
-                          Growth mindset shifts physiology to psychology and sees stress as an opportunity to learn from
-                          errors
-                        </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand-orange mt-1">•</span>
-                        <span>
-                          GM and stress-enhancing mindset leads to looking and thinking about what leads to errors and
-                          how to fix them vs an emotional state
-                        </span>
-                      </li>
-                    </ul>
+              <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
+              <TextDisplay content="Let us check your understanding. Answer all three questions correctly to complete the module." />
+              <MultipleChoice
+                question="Which type of AI actually exists and is in use today?"
+                options={[
+                  { text: "Superintelligent AI", isCorrect: false, feedback: "Superintelligence is theoretical and does not exist." },
+                  { text: "Artificial General Intelligence (AGI)", isCorrect: false, feedback: "AGI is theoretical — it does not exist yet." },
+                  { text: "Narrow AI", isCorrect: true, feedback: "Correct! Every AI you use today — ChatGPT, Siri, spam filters — is Narrow AI." },
+                  { text: "Conscious AI", isCorrect: false, feedback: "No AI has consciousness. This is a science fiction concept." },
+                ]}
+                explanation="Narrow AI is AI designed to do one specific task very well. All practical AI today falls into this category."
+                onComplete={(correct) => handleQuizComplete("quiz1", correct)}
+              />
+              <MultipleChoice
+                question="Why does AI sometimes produce incorrect or biased results?"
+                options={[
+                  { text: "AI is programmed to lie sometimes", isCorrect: false, feedback: "AI is not programmed to lie. This is a myth." },
+                  { text: "AI learns from human-created data, which can contain biases and errors", isCorrect: true, feedback: "Exactly right! AI reflects the biases in its training data." },
+                  { text: "AI does not have enough computing power", isCorrect: false, feedback: "Bias is not a computing power issue — it is a data quality issue." },
+                  { text: "AI thinks for itself and makes mistakes on purpose", isCorrect: false, feedback: "AI does not think for itself. It finds patterns in data." },
+                ]}
+                explanation="AI models learn by finding patterns in training data. If that data is biased or incorrect, the AI will be too — regardless of how powerful the computer is."
+                onComplete={(correct) => handleQuizComplete("quiz2", correct)}
+              />
+              <MultipleChoice
+                question="In what year did ChatGPT launch and bring AI to mainstream public attention?"
+                options={[
+                  { text: "2016", isCorrect: false, feedback: "2016 was when AlphaGo beat the Go champion — a major milestone, but not ChatGPT." },
+                  { text: "2019", isCorrect: false, feedback: "ChatGPT launched in late 2022." },
+                  { text: "2022", isCorrect: true, feedback: "Correct! ChatGPT launched in November 2022 and reached 100 million users in just two months." },
+                  { text: "2024", isCorrect: false, feedback: "ChatGPT launched in 2022, though newer versions have come out since." },
+                ]}
+                explanation="ChatGPT launched in November 2022 and became the fastest-growing consumer product in history, reaching 100 million users in just two months."
+                onComplete={(correct) => handleQuizComplete("quiz3", correct)}
+              />
+              {allQuizComplete && (
+                <div className="space-y-4">
+                  <TextDisplay variant="success" content="Excellent work! You have completed Module 1. You now have a solid foundation for understanding what AI is." />
+                  <div className="flex gap-4">
+                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-2")}>
+                      Continue to Module 2 →
+                    </Button>
+                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>
                 </div>
-              </Card>
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Goals & Improvement
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-
-          {/* Section 7: Goals and Improvement */}
-          {currentSectionIndex === 7 && (
-            <div className="space-y-6">
-              <GridDisplay
-                title="Goals and Improvement: Four Key Principles"
-                items={[
-                  {
-                    title: "1. View Goal Achievement as a Testing Opportunity",
-                    description:
-                      "View goal achievement as an opportunity to test yourself and where you need to improve. Every sales call is a chance to learn.",
-                  },
-                  {
-                    title: "2. Gentle Self-Feedback",
-                    description:
-                      "Feedback on errors to ourselves should be done with a gentle approach. Others will be brutal enough so that we don't need to pile on. Instead, look at them as a problem to solve and overcome.",
-                  },
-                  {
-                    title: "3. Seek Constructive Criticism",
-                    description:
-                      "Seek constructive criticism from trusted friends and colleagues for honest feedback. Accept the feedback as a discovery on what to improve.",
-                  },
-                  {
-                    title: "4. 3x5 Index Card Exercise",
-                    description:
-                      "Take a 3 x 5 index card and write a short letter to the next person who wants to achieve in your given field. Write what it would take to succeed with a stress-as-growth mindset and how it improves performance.",
-                  },
-                ]}
-              />
-
-              <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white gap-2">
-                Continue to Interactive Quiz
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-
-          {/* Section 8: Interactive Quiz */}
-          {currentSectionIndex === 8 && (
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-3xl font-bold mb-2 font-heading">Module 1 Assessment</h2>
-                <p className="text-muted-foreground">
-                  Complete all exercises and questions correctly to unlock Module 2. You must get all answers correct to
-                  proceed.
-                </p>
-              </div>
-
-              {/* Matching Game */}
-              <MatchingGame
-                title="1. Neurobiology Matching Game"
-                pairs={[
-                  {
-                    id: "amygdalae",
-                    term: "Amygdalae",
-                    definition: "Responsible for fear and anxiety related to goal seeking and avoidance",
-                  },
-                  {
-                    id: "ventral",
-                    term: "Ventral Striatum",
-                    definition: "Functions as our 'go or no-go' motor and brake system",
-                  },
-                  {
-                    id: "anterior",
-                    term: "Anterior Mid-Cingulate Cortex",
-                    definition: "Persistence and willpower are regulated here",
-                  },
-                  {
-                    id: "lateral",
-                    term: "Lateral Pre-Frontal Cortex",
-                    definition: "Handles planning and thinking across different time scales (Executive Function)",
-                  },
-                  {
-                    id: "orbital",
-                    term: "Orbital Frontal Cortex",
-                    definition:
-                      "Meshes current state of emotionality and compares it to future state after objective is met",
-                  },
-                ]}
-                onComplete={(correct) => handleQuizComplete("matching", correct)}
-              />
-
-              {/* Text Input Exercise */}
-              <TextInputExercise
-                title="2. Digital 3x5 Card Exercise"
-                prompt="Write a short letter to the next person who wants to achieve in your field. Explain what it takes to succeed with a stress-as-growth mindset and how it improves performance."
-                placeholder="Dear Future Achiever,
-
-Success in sales requires..."
-                minLength={100}
-                onComplete={() => handleQuizComplete("textInput", true)}
-              />
-
-              {/* Multiple Choice Questions */}
-              <MultipleChoice
-                question="3. According to Carol Dweck's research, what happened to students who were praised for their talent?"
-                options={[
-                  {
-                    id: "a",
-                    text: "They sought out more challenging tasks",
-                    isCorrect: false,
-                    feedback: "This was actually the behavior of effort-praised students.",
-                  },
-                  {
-                    id: "b",
-                    text: "They were less willing to engage in challenging tasks and sometimes exaggerated accomplishments",
-                    isCorrect: true,
-                    feedback:
-                      "Correct! Talent-praised students avoided challenges and sometimes gamed the system to maintain their 'talented' image.",
-                  },
-                  {
-                    id: "c",
-                    text: "They performed the same as effort-praised students",
-                    isCorrect: false,
-                    feedback: "There was a significant difference between the two groups.",
-                  },
-                  {
-                    id: "d",
-                    text: "They became more resilient to failure",
-                    isCorrect: false,
-                    feedback: "This was a characteristic of effort-praised students, not talent-praised ones.",
-                  },
-                ]}
-                explanation="Dweck's research showed that praising talent can actually limit growth, while praising effort encourages a growth mindset."
-                onAnswer={(correct) => handleQuizComplete("quiz1", correct)}
-              />
-
-              <MultipleChoice
-                question="4. In the impromptu speech study, what was the key finding about stress mindset?"
-                options={[
-                  {
-                    id: "a",
-                    text: "Stress always limits performance regardless of mindset",
-                    isCorrect: false,
-                    feedback: "The study showed that mindset about stress matters significantly.",
-                  },
-                  {
-                    id: "b",
-                    text: "Those with a 'stress is enhancing' mindset outperformed those with a 'stress is limiting' mindset",
-                    isCorrect: true,
-                    feedback: "Correct! How we think about stress dramatically affects our performance under pressure.",
-                  },
-                  {
-                    id: "c",
-                    text: "Stress had no impact on speech performance",
-                    isCorrect: false,
-                    feedback: "Stress did impact performance, but the mindset about stress was the key variable.",
-                  },
-                  {
-                    id: "d",
-                    text: "Only experienced speakers benefited from stress",
-                    isCorrect: false,
-                    feedback: "The benefit came from mindset, not experience level.",
-                  },
-                ]}
-                explanation="Viewing stress as enhancing rather than limiting can improve performance by shifting focus from emotional state to problem-solving."
-                onAnswer={(correct) => handleQuizComplete("quiz2", correct)}
-              />
-
-              <MultipleChoice
-                question="5. What is the primary difference between a fixed mindset and a growth mindset?"
-                options={[
-                  {
-                    id: "a",
-                    text: "Fixed mindset believes abilities are unchangeable; growth mindset believes abilities can be developed",
-                    isCorrect: true,
-                    feedback:
-                      "Correct! This fundamental difference affects how people approach challenges, feedback, and failure.",
-                  },
-                  {
-                    id: "b",
-                    text: "Fixed mindset is for beginners; growth mindset is for experts",
-                    isCorrect: false,
-                    feedback: "Mindset is not related to skill level—it's about beliefs about ability.",
-                  },
-                  {
-                    id: "c",
-                    text: "Fixed mindset focuses on effort; growth mindset focuses on talent",
-                    isCorrect: false,
-                    feedback: "This is backwards—growth mindset focuses on effort, fixed mindset on talent.",
-                  },
-                  {
-                    id: "d",
-                    text: "There is no significant difference between the two",
-                    isCorrect: false,
-                    feedback:
-                      "Research shows significant differences in behavior and outcomes between the two mindsets.",
-                  },
-                ]}
-                explanation="Growth mindset is the foundation for continuous improvement and resilience in sales and entrepreneurship."
-                onAnswer={(correct) => handleQuizComplete("quiz3", correct)}
-              />
-
-              {/* Completion Status */}
-              {allQuizComplete && (
-                <Card className="p-6 bg-green-50 dark:bg-green-950 border-2 border-green-500">
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="h-8 w-8 text-green-600 flex-shrink-0 mt-1" />
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-green-900 dark:text-green-100 mb-2">
-                        🎉 Module 1 Complete!
-                      </h3>
-                      <p className="text-green-800 dark:text-green-200 mb-4">
-                        Congratulations! You've successfully completed all sections and assessments for Module 1. You
-                        now understand the neurobiology of goal achievement and the power of a growth mindset.
-                      </p>
-                      <Button onClick={() => router.push("/course")} className="bg-brand-green hover:bg-[#143d31] text-white">
-                        Return to Dashboard
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              {!allQuizComplete && (
-                <Card className="p-6 bg-yellow-50 dark:bg-yellow-950 border-2 border-yellow-500">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                        Complete All Assessments
-                      </h3>
-                      <p className="text-yellow-800 dark:text-yellow-200 mb-3">
-                        You must complete all exercises and answer all questions correctly to unlock the next module.
-                      </p>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center gap-2">
-                          {quizResults.matching ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border-2 border-yellow-600" />
-                          )}
-                          <span>Neurobiology Matching Game</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {quizResults.textInput ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border-2 border-yellow-600" />
-                          )}
-                          <span>3x5 Card Exercise</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {quizResults.quiz1 ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border-2 border-yellow-600" />
-                          )}
-                          <span>Question 3: Carol Dweck's Research</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {quizResults.quiz2 ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border-2 border-yellow-600" />
-                          )}
-                          <span>Question 4: Stress Mindset Study</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {quizResults.quiz3 ? (
-                            <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border-2 border-yellow-600" />
-                          )}
-                          <span>Question 5: Fixed vs Growth Mindset</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
               )}
             </div>
           )}
+
         </main>
       </div>
     </div>
