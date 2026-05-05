@@ -281,43 +281,107 @@ export default function Module2Page() {
               <h2 className="text-3xl font-bold text-brand-green">Neural Networks Simply Explained</h2>
               <TextDisplay content="A neural network is the architecture used by most modern AI systems, including ChatGPT, image generators, and voice assistants." />
               <TextDisplay variant="callout" content="The name comes from the brain. Just like neurons in your brain connect to each other to process information, a neural network is made of artificial 'neurons' (simple math functions) connected in layers." />
-              <div className="space-y-4">
-                <Card className="p-5">
-                  <h3 className="font-semibold mb-3">How it works - a simple example</h3>
-                  <div className="space-y-3 text-sm">
-                    {[
-                      { step: "1. Input", desc: "You show the network an image of an animal." },
-                      { step: "2. Layers", desc: "The image passes through many layers of neurons. Early layers detect edges. Middle layers detect shapes. Later layers detect features like ears, snouts, fur texture." },
-                      { step: "3. Output", desc: "The final layer outputs a guess: 'This is a dog with 94% confidence.'" },
-                      { step: "4. Learning", desc: "If it is wrong, the error is fed back through the network and the connections are adjusted - millions of times, until it gets good at the task." },
-                    ].map(({ step, desc }) => (
-                      <div key={step} className="flex gap-3">
-                        <span className="font-bold text-brand-orange w-20 flex-shrink-0">{step}</span>
-                        <span className="text-muted-foreground">{desc}</span>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
-                  <h3 className="font-semibold mb-3 text-brand-green">What the layers are really doing</h3>
-                  <p className="text-sm text-muted-foreground">Neural networks work by building up from simple patterns to complex ones. In image recognition, early layers detect basic shapes, later layers combine them into features, and final layers make the prediction.</p>
-                </Card>
-              </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Quick check</h3>
-                <QuickCheckCard
-                  prompt="What is the main job of a neural network during training?"
-                  options={[
-                    { id: "a", label: "Memorize every input exactly once and never adjust" },
-                    { id: "b", label: "Adjust internal connections so predictions improve over many examples" },
-                    { id: "c", label: "Browse the web for the correct answer each time" },
-                    { id: "d", label: "Replace training data with human intuition" },
-                  ]}
-                  correctOptionId="b"
-                  explanation="Training repeatedly adjusts the network's internal weights so its predictions become more accurate over many examples."
-                  accentClassName="border-transparent bg-transparent p-0"
-                />
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3">How it works - a simple example</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    { step: "1. Input", desc: "You show the network an image of an animal. Each pixel becomes a number that the network can process." },
+                    { step: "2. Layers", desc: "The image passes through many layers of artificial neurons. Early layers detect edges and basic shapes. Middle layers combine those into features like eyes or fur. Later layers recognise high-level objects." },
+                    { step: "3. Output", desc: "The final layer outputs a probability for each possible label: 'dog: 94%, cat: 4%, rabbit: 2%.' The highest wins." },
+                    { step: "4. Learning", desc: "If it is wrong, the error is fed back through the network - this is called backpropagation - and the connection strengths (weights) are nudged slightly to reduce the mistake. Repeat millions of times." },
+                  ].map(({ step, desc }) => (
+                    <div key={step} className="flex gap-3">
+                      <span className="font-bold text-brand-orange w-20 flex-shrink-0">{step}</span>
+                      <span className="text-muted-foreground">{desc}</span>
+                    </div>
+                  ))}
+                </div>
               </Card>
+
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-green">What Are Weights? The Key Concept</h3>
+                <p className="text-sm text-muted-foreground mb-3">Every connection between neurons has a number attached to it called a <strong>weight</strong>. Weights determine how strongly one neuron influences the next. A high weight means "this connection matters a lot." A weight near zero means "ignore this connection."</p>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Before training:</span> all weights are random noise. The network produces useless outputs.</p>
+                  <p><span className="font-medium text-foreground">During training:</span> the network sees an example, makes a prediction, measures how wrong it was (the "loss"), then nudges weights slightly in the direction that would have made the prediction less wrong. This is repeated billions of times.</p>
+                  <p><span className="font-medium text-foreground">After training:</span> weights have been tuned to encode the patterns found in all the training data. A GPT-4-scale model has approximately 1.8 trillion parameters - 1.8 trillion carefully tuned numbers, all working together to generate text.</p>
+                </div>
+                <div className="mt-3 p-3 bg-white dark:bg-gray-900 rounded border text-sm">
+                  <p className="font-medium text-brand-orange mb-1">Analogy: tuning a mixing board</p>
+                  <p className="text-muted-foreground">Imagine a mixing board with 1.8 trillion sliders. Before training, all sliders are at random positions and the music sounds terrible. Training nudges each slider a tiny amount after every song, until the combination produces something that sounds right. At the end, you have a mixing board that reliably produces good output - even though no one deliberately set each slider by hand.</p>
+                </div>
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-4 text-brand-orange">The Training Loop - Step by Step</h3>
+                <div className="space-y-2 text-sm">
+                  {[
+                    { step: "Forward pass", desc: "Feed an input (e.g. an image, a sentence) through the network from input layer to output layer. Get a prediction." },
+                    { step: "Measure the loss", desc: "Compare the prediction to the correct answer. The 'loss' is a number measuring how wrong the prediction was. Large loss = very wrong. Zero loss = perfect." },
+                    { step: "Backpropagation", desc: "Work backwards through the network, calculating how much each weight contributed to the error. This uses calculus (chain rule), but you do not need to know the math - just the concept." },
+                    { step: "Weight update", desc: "Nudge every weight slightly in the direction that reduces the loss. The size of each nudge is controlled by the 'learning rate' - a setting that prevents overshooting." },
+                    { step: "Repeat", desc: "Run this loop for billions of training examples across thousands of compute hours. The loss gradually decreases as the model gets better at the task." },
+                  ].map(({ step, desc }) => (
+                    <div key={step} className="flex gap-3 border-b last:border-0 py-2">
+                      <span className="font-bold text-brand-green w-36 flex-shrink-0">{step}</span>
+                      <span className="text-muted-foreground">{desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">Why "Deep" Learning? Different Architectures</h3>
+                <p className="text-sm text-muted-foreground mb-4">"Deep" simply refers to networks with many layers (dozens to hundreds). More layers allow the network to learn increasingly complex and abstract features. Different tasks call for different architectures:</p>
+                <div className="space-y-3 text-sm">
+                  {[
+                    { arch: "CNNs - Convolutional Neural Networks", use: "Images and video", how: "Specialised layers that scan across an image looking for features at each position. Excellent at spatial tasks because the same feature-detector can find a cat's ear anywhere in the image, not just where it was in training." },
+                    { arch: "RNNs - Recurrent Neural Networks", use: "Sequences (older text/audio models)", how: "Process inputs one step at a time while passing a 'memory' forward. Good for sequences but struggles with long-range dependencies - what was said 500 words ago still affects meaning now." },
+                    { arch: "Transformers", use: "Modern language models, GPT, Claude, Gemini", how: "Use an 'attention' mechanism that lets every word look directly at every other word in the context to decide what to pay attention to. This is why modern LLMs can handle very long documents and capture subtle long-range relationships. Transformers are the reason modern AI made its big leap forward after 2017." },
+                    { arch: "Diffusion Models", use: "Image generation (DALL-E, Midjourney, Stable Diffusion)", how: "Learn to reverse a noisy-scrambling process. Starting from random noise, they gradually remove noise in the direction of a meaningful image that matches the text prompt." },
+                  ].map(({ arch, use, how }) => (
+                    <div key={arch} className="border-l-2 border-blue-500/30 pl-4">
+                      <p className="font-semibold text-blue-700 dark:text-blue-400">{arch}</p>
+                      <p className="text-xs text-brand-orange mb-1">Best for: {use}</p>
+                      <p className="text-muted-foreground">{how}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Scale Matters: Why Bigger Models Are Different</h3>
+                <p className="text-sm text-muted-foreground mb-3">One of the surprising discoveries of the last decade is that when neural networks get large enough, new capabilities emerge that were not explicitly trained for:</p>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    { size: "Small model (millions of params)", cap: "Translate between specific language pairs with decent quality" },
+                    { size: "Medium model (billions of params)", cap: "Translate many languages, follow basic instructions, answer simple questions" },
+                    { size: "Large model (100B+ params)", cap: "Reason through multi-step problems, write code, understand nuanced context, handle complex instructions" },
+                    { size: "Very large model (1T+ params)", cap: "Sophisticated reasoning, creative writing, professional-level analysis across many domains simultaneously" },
+                  ].map(({ size, cap }) => (
+                    <div key={size} className="border rounded-lg p-3 bg-background">
+                      <p className="font-medium text-brand-orange text-xs mb-1">{size}</p>
+                      <p className="text-muted-foreground text-xs">{cap}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">This "emergent capabilities" phenomenon - where quantitative scale produces qualitative leaps - is one reason AI progress has felt so sudden and surprising.</p>
+              </Card>
+
+              <QuickCheckCard
+                prompt="What is the main job of a neural network during training?"
+                options={[
+                  { id: "a", label: "Memorize every input exactly once and never adjust" },
+                  { id: "b", label: "Adjust internal weights so predictions improve over many examples" },
+                  { id: "c", label: "Browse the web for the correct answer each time" },
+                  { id: "d", label: "Replace training data with human intuition" },
+                ]}
+                correctOptionId="b"
+                explanation="Training repeatedly adjusts the network's internal weights (parameters) using backpropagation so its predictions become more accurate over many examples."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -326,8 +390,73 @@ export default function Module2Page() {
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What AI Can&apos;t Do</h2>
-              <TextDisplay content="AI is remarkably powerful - but it has fundamental limitations that are important to understand." />
-              <TextDisplay variant="callout" content="Flip each card to discover WHY AI has this limitation. Understanding the reason is more useful than just knowing the fact." />
+              <TextDisplay content="AI is remarkably powerful - but it has fundamental limitations that are important to understand. Many of these limitations are structural: they come from how AI learns, not from a lack of effort by developers." />
+              <TextDisplay variant="callout" content="Knowing these limitations is not about being pessimistic about AI. It is about using AI intelligently - getting real value while avoiding the specific failure modes that trip people up." />
+
+              <div className="space-y-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">1. Hallucination - The Confidence Problem</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Hallucination is when an AI generates false information with full confidence. It is not lying - it does not know what it does not know. Because the model&apos;s job is to generate plausible text, it will sometimes produce a fluent, convincing-sounding answer that is simply wrong.</p>
+                  <div className="space-y-2 text-sm">
+                    <p className="font-medium">Real examples that have happened:</p>
+                    <div className="space-y-2 pl-4 border-l-2 border-brand-orange/30">
+                      <p className="text-muted-foreground">A lawyer submitted a legal brief with fake case citations that ChatGPT generated. The cases did not exist - but the citations looked entirely real.</p>
+                      <p className="text-muted-foreground">A journalist used an AI to check biographies. The AI invented plausible-sounding but false publishing credits for real authors.</p>
+                      <p className="text-muted-foreground">A student asked an AI for sources on a topic. The AI generated convincing-looking journal articles with DOI numbers - that did not exist.</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 p-3 bg-brand-green/5 rounded border border-brand-green/20 text-sm">
+                    <p className="font-medium text-brand-green mb-1">Why it happens:</p>
+                    <p className="text-muted-foreground">The model learns that certain types of content (citations, statistics, biographies) follow certain patterns. It produces pattern-matching output - plausible structure filled with plausible-sounding content. It has no mechanism to check whether the content is real.</p>
+                  </div>
+                  <p className="text-sm font-medium mt-2">Rule: always verify specific facts, names, dates, statistics, and citations from AI before using them.</p>
+                </Card>
+
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-green">2. Knowledge Cutoff - Living in the Past</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Most AI models have a training data cutoff date. They know nothing about events that happened after that date - and they will not tell you they do not know unless you ask explicitly.</p>
+                  <div className="grid md:grid-cols-2 gap-3 text-sm mt-3">
+                    <div className="p-3 border rounded bg-background">
+                      <p className="font-medium text-brand-orange mb-1">What this means practically</p>
+                      <p className="text-muted-foreground">If you ask about a recent news event, the latest software version, current prices, or who won the last election, the model may either say it does not know, give outdated information, or worse - confidently fabricate an answer.</p>
+                    </div>
+                    <div className="p-3 border rounded bg-background">
+                      <p className="font-medium text-brand-green mb-1">What helps</p>
+                      <p className="text-muted-foreground">Use AI tools with real-time web access (Perplexity, ChatGPT with Browse) for current information. Always state the date in your prompt if recency matters. Ask the AI explicitly: "Is your knowledge current on this topic?"</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">3. Lack of True Understanding - Pattern Without Meaning</h3>
+                  <p className="text-sm text-muted-foreground mb-3">AI can produce text that sounds deeply knowledgeable about philosophy, grief, physics, or human relationships - without having experienced or understood any of it. This is the difference between statistical pattern-matching and genuine comprehension.</p>
+                  <div className="text-sm space-y-2 text-muted-foreground">
+                    <p><span className="font-medium text-foreground">The classic test:</span> ask an AI "If you move a bathtub to a different room, how many inches of hot water would it take to make soup?" A human immediately recognises this is nonsensical. Many AI systems will attempt to answer seriously, because the sentence uses known words in plausible-sounding structures.</p>
+                    <p><span className="font-medium text-foreground">More practical version:</span> AI can describe empathy fluently but cannot actually feel it. It can explain physical constraints convincingly but may fail at simple spatial reasoning. It can write legal arguments without understanding the spirit of the law.</p>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-green">4. Brittleness - Breaking at the Edges</h3>
+                  <p className="text-sm text-muted-foreground mb-3">AI systems can be excellent within their training distribution but break unexpectedly outside it. Small changes that would not confuse a human can completely derail an AI.</p>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><span className="font-medium text-foreground">Image example:</span> an image recognition model trained on front-facing cats may fail to classify a cat seen from behind or in unusual lighting - even though a toddler would have no trouble.</p>
+                    <p><span className="font-medium text-foreground">Language example:</span> changing one word in a question can sometimes completely change an LLM&apos;s answer - not because the meaning changed, but because the exact phrasing triggers a different pattern association.</p>
+                    <p><span className="font-medium text-foreground">Adversarial example:</span> placing a small, carefully crafted sticker on a stop sign can fool some autonomous driving models into misreading it - because the sticker creates a pattern the model was not trained to ignore.</p>
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">5. The Black Box Problem - Limited Explainability</h3>
+                  <p className="text-sm text-muted-foreground mb-3">For most neural networks, we cannot easily explain why a specific prediction was made. The model has billions of weights working together in complex combinations - there is no simple "reason" to point to.</p>
+                  <div className="text-sm space-y-2 text-muted-foreground">
+                    <p><span className="font-medium text-foreground">Why this matters:</span> in healthcare, when an AI recommends a treatment, doctors want to know why. In finance, when a loan is denied, regulators require an explanation. In criminal justice, when a risk assessment tool is used, defendants deserve to know how they were scored.</p>
+                    <p><span className="font-medium text-foreground">Current state:</span> a growing field called "Explainable AI" (XAI) is working on this - tools like SHAP values and attention visualisation can give partial explanations - but deep neural networks remain fundamentally opaque compared to simple rule-based systems.</p>
+                  </div>
+                </Card>
+              </div>
+
+              <TextDisplay variant="callout" content="Flip each card to test your understanding of why each limitation exists." />
               <FlipCardGrid
                 cards={[
                   {
@@ -336,14 +465,14 @@ export default function Module2Page() {
                     answer: "Because it learns statistical patterns from data, not grounded lived experience. It can sound convincing without truly understanding the physical or social world.",
                   },
                   {
-                    title: "Truthfulness",
+                    title: "Hallucination",
                     prompt: "Why can AI confidently give wrong answers?",
-                    answer: "Its goal is usually to generate a plausible next output, not to verify truth. That is why hallucinations happen.",
+                    answer: "Its goal is to generate plausible text, not to verify truth. It has no mechanism to check whether the specific facts it generates are real.",
                   },
                   {
-                    title: "Generalization",
-                    prompt: "Why doesn't strong performance on one task mean it can do everything?",
-                    answer: "Most current AI is narrow. It can be excellent within a trained domain and still break outside that domain or context.",
+                    title: "Knowledge cutoff",
+                    prompt: "Why can AI give outdated information?",
+                    answer: "Models are trained on data up to a certain date. They have no memory of events after that cutoff and may not know what they do not know.",
                   },
                   {
                     title: "Judgment",
@@ -352,19 +481,35 @@ export default function Module2Page() {
                   },
                 ]}
               />
+
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Best beginner mindset</h3>
                 <ul className="space-y-2 text-sm">
                   {[
-                    "Use AI for support, acceleration, and first drafts",
-                    "Verify important facts, numbers, and citations",
-                    "Expect errors when tasks require deep judgment or real-world understanding",
+                    "Use AI for support, acceleration, and first drafts - not final authority",
+                    "Verify important facts, numbers, citations, and dates from external sources",
+                    "Expect errors when tasks require deep judgment, live data, or real-world understanding",
+                    "Be especially careful when AI sounds most confident - that is when it hallucinate most dangerously",
                     "Keep a human in the loop for anything consequential",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
                   ))}
                 </ul>
               </Card>
+
+              <QuickCheckCard
+                prompt="A colleague says 'The AI gave me a very confident answer with several citations, so it must be correct.' What is the problem with this reasoning?"
+                options={[
+                  { id: "a", label: "Confidence and citation formatting do not guarantee accuracy - hallucination is exactly the case where AI sounds most sure but is wrong" },
+                  { id: "b", label: "Nothing is wrong - AI citations are always accurate" },
+                  { id: "c", label: "The only issue is that AI cannot format citations correctly" },
+                  { id: "d", label: "Confidence is only a problem in small models" },
+                ]}
+                correctOptionId="a"
+                explanation="Hallucinations are especially dangerous because they often come with complete confidence and plausible-looking supporting details. AI has no internal fact-checking - fluency and accuracy are independent."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}

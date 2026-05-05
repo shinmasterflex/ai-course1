@@ -103,54 +103,141 @@ export default function Module3Page() {
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is a Language Model?</h2>
-              <TextDisplay content="A Large Language Model (LLM) is an AI trained on massive amounts of text to understand and generate human language." />
+              <TextDisplay content="A Large Language Model (LLM) is an AI trained on massive amounts of text to understand and generate human language. But to use these tools effectively - and to avoid being misled by them - you need to understand something about how they work internally." />
               <TextDisplay variant="callout" content="The word 'large' refers to the number of parameters (adjustable values) in the model - modern LLMs have hundreds of billions. The more parameters, the more nuance and complexity the model can capture." />
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">What is a token? The fundamental unit of LLMs</h3>
+                <p className="text-sm text-muted-foreground mb-3">LLMs do not read text character by character or word by word. They split text into <strong>tokens</strong> — chunks of text that are typically 3-4 characters long. About 750 words equals approximately 1,000 tokens.</p>
+                <div className="p-3 bg-brand-orange/5 border border-brand-orange/20 rounded-lg mb-3">
+                  <p className="text-sm font-medium mb-2">Example: how &ldquo;ChatGPT is amazing!&rdquo; becomes tokens</p>
+                  <div className="flex flex-wrap gap-2 font-mono text-sm">
+                    {["Chat", "G", "PT", " is", " am", "azing", "!"].map((tok, i) => (
+                      <span key={i} className={`px-2 py-1 rounded border text-xs font-bold ${i % 2 === 0 ? "bg-brand-orange/20 border-brand-orange/40 text-brand-orange" : "bg-brand-green/20 border-brand-green/40 text-brand-green"}`}>{tok}</span>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">7 tokens — not 3 words. Common words like &ldquo;is&rdquo; are single tokens. Long or rare words split into multiple tokens.</p>
+                </div>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p><span className="font-medium text-foreground">Why this matters:</span> LLMs process tokens, not words or meanings. They learn which sequences of tokens tend to follow other sequences. This is why LLMs sometimes struggle with letter-counting (&ldquo;how many r&apos;s in strawberry?&rdquo;) — they see "strawb" + "erry" as two tokens, not individual letters.</p>
+                </div>
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">The context window — what the model can &ldquo;see&rdquo; at once</h3>
+                <p className="text-sm text-muted-foreground mb-3">The <strong>context window</strong> is the amount of text the model can read and use at any one time. Think of it as the model&apos;s working memory. Everything outside the context window does not exist to the model.</p>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="p-3 border rounded bg-background">
+                    <p className="font-medium text-brand-orange mb-1">Small context windows (early models ~4K tokens)</p>
+                    <p className="text-muted-foreground">Could handle a short conversation or a few pages of text. Would &ldquo;forget&rdquo; the beginning of a long document when processing the end.</p>
+                  </div>
+                  <div className="p-3 border rounded bg-background">
+                    <p className="font-medium text-brand-green mb-1">Large context windows (modern models ~128K-1M+ tokens)</p>
+                    <p className="text-muted-foreground">Can handle entire books, long codebases, or hours of meeting transcripts. Claude and Gemini support over 1 million tokens in some configurations.</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mt-3"><span className="font-medium text-foreground">Analogy:</span> Imagine you have to summarise a book, but you can only look at the pages that fit on your desk at one time. A small context window is a tiny desk. A large one is a warehouse floor. The model can only reason about what it can currently &ldquo;see.&rdquo;</p>
+              </Card>
+
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">Attention — how the model decides what matters</h3>
+                <p className="text-sm text-muted-foreground mb-3">The key innovation of the Transformer architecture (the T in ChatGPT) is the <strong>attention mechanism</strong>. When processing any word or token, the model asks: &ldquo;which other tokens in the context should I pay attention to right now?&rdquo;</p>
+                <div className="text-sm space-y-2 text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Example:</span> In the sentence &ldquo;The animal didn&apos;t cross the street because it was too tired,&rdquo; what does &ldquo;it&rdquo; refer to? The attention mechanism allows the model to connect &ldquo;it&rdquo; directly to &ldquo;animal&rdquo; — even if they are far apart in the sentence.</p>
+                  <p><span className="font-medium text-foreground">Why this is revolutionary:</span> Previous architectures processed text sequentially, like reading letter by letter. Attention allows every token to simultaneously look at every other token and decide which ones are relevant. This is why Transformers handle nuance, context, and long-range relationships so much better than older approaches.</p>
+                </div>
+              </Card>
+
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Famous LLMs and who makes them</h3>
                 <div className="space-y-2">
                   {[
-                    { model: "GPT-4 / ChatGPT", company: "OpenAI", note: "The most widely known - launched AI into the mainstream" },
-                    { model: "Claude", company: "Anthropic", note: "Known for safety-focused design and long context windows" },
-                    { model: "Gemini", company: "Google DeepMind", note: "Google's flagship LLM, integrated into Search and Workspace" },
-                    { model: "Llama", company: "Meta", note: "Open-source LLM - free to download and run yourself" },
-                    { model: "Mistral", company: "Mistral AI", note: "European LLM, known for efficiency" },
-                  ].map(({ model, company, note }) => (
-                    <div key={model} className="flex gap-3 text-sm py-1 border-b last:border-0">
-                      <span className="font-semibold w-32 flex-shrink-0 text-brand-green">{model}</span>
+                    { model: "GPT-4o / ChatGPT", company: "OpenAI", params: "~1.8T (GPT-4)", note: "Most widely known — launched AI into the mainstream" },
+                    { model: "Claude 3.5 / 4", company: "Anthropic", params: "Unknown", note: "Safety-focused design, large context windows, strong at analysis" },
+                    { model: "Gemini 2.0 / 2.5", company: "Google DeepMind", params: "Unknown", note: "Google&apos;s flagship LLM, integrated into Search and Workspace" },
+                    { model: "Llama 3.x", company: "Meta", params: "8B-405B", note: "Open-source — free to download and run on your own hardware" },
+                    { model: "Mistral / Mixtral", company: "Mistral AI", params: "7B-141B", note: "European LLM known for efficiency relative to size" },
+                  ].map(({ model, company, params, note }) => (
+                    <div key={model} className="flex gap-3 text-sm py-1 border-b last:border-0 flex-wrap md:flex-nowrap">
+                      <span className="font-semibold w-36 flex-shrink-0 text-brand-green">{model}</span>
                       <span className="text-muted-foreground w-28 flex-shrink-0">{company}</span>
-                      <span className="text-muted-foreground">{note}</span>
+                      <span className="text-muted-foreground w-24 flex-shrink-0 text-xs pt-0.5">{params}</span>
+                      <span className="text-muted-foreground text-xs pt-0.5">{note}</span>
                     </div>
                   ))}
                 </div>
               </Card>
+
+              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Why &ldquo;large&rdquo; parameters create new capabilities</h3>
+                <p className="text-sm text-muted-foreground mb-3">Scale is not just about doing the same things better — it creates <em>qualitatively</em> different capabilities through emergence:</p>
+                <div className="space-y-2 text-sm">
+                  {[
+                    { size: "~1 billion parameters", cap: "Decent text generation, basic Q&A, simple summarisation" },
+                    { size: "~7-13 billion parameters", cap: "Can follow complex instructions, multi-step reasoning, writing assistance" },
+                    { size: "~70 billion parameters", cap: "Professional-level writing, code generation, nuanced understanding of context" },
+                    { size: "~100B+ parameters", cap: "Sophisticated reasoning, novel problem-solving, creative synthesis across domains" },
+                  ].map(({ size, cap }) => (
+                    <div key={size} className="flex gap-3 border-b last:border-0 py-2">
+                      <span className="font-medium text-brand-orange w-44 flex-shrink-0 text-xs pt-0.5">{size}</span>
+                      <span className="text-muted-foreground text-xs">{cap}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
               <div>
-                <h3 className="text-xl font-semibold mb-2">LLM Vocabulary - Flashcards</h3>
+                <h3 className="text-xl font-semibold mb-2">LLM Vocabulary — Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
                 <FlipCardGrid
                   cards={[
                     {
                       title: "Token",
                       prompt: "What is a token in LLMs?",
-                      answer: "A token is a small text unit the model processes, often part of a word rather than a full word.",
+                      answer: "A token is a small text unit the model processes, often part of a word rather than a full word. ~750 words ≈ 1,000 tokens. LLMs count tokens, not words.",
                     },
                     {
                       title: "Context window",
                       prompt: "Why does context window size matter?",
-                      answer: "It sets how much text the model can keep in active memory while generating the next response.",
+                      answer: "It sets how much text the model can keep in active memory. Text outside the window is invisible to the model — it cannot refer back to it.",
                     },
                     {
                       title: "Parameter",
                       prompt: "What are model parameters?",
-                      answer: "Parameters are the learned internal weights that shape how the model maps input context to output predictions.",
+                      answer: "Parameters are the learned internal weights — billions of numbers tuned during training that determine how the model maps input to output.",
                     },
                     {
                       title: "Fine-tuning",
                       prompt: "What does fine-tuning do?",
-                      answer: "It adapts a general model to a specific domain or style using focused examples and feedback.",
+                      answer: "Fine-tuning continues training a pre-trained model on a smaller, specialised dataset to adapt its behaviour to a specific domain or task.",
+                    },
+                    {
+                      title: "Attention",
+                      prompt: "What does 'attention' mean in Transformers?",
+                      answer: "Attention is the mechanism that allows each token to selectively look at all other tokens in the context and decide how much weight to give each one when generating the next token.",
+                    },
+                    {
+                      title: "Embedding",
+                      prompt: "What is an embedding in AI?",
+                      answer: "An embedding converts a word, sentence, or image into a list of numbers (a vector) that represents its meaning. Similar things have similar vectors, so 'king' and 'queen' are numerically close.",
                     },
                   ]}
                 />
               </div>
+
+              <QuickCheckCard
+                prompt="Why might an LLM get confused when asked 'how many r's are in the word strawberry?'"
+                options={[
+                  { id: "a", label: "Because LLMs are not connected to the internet to look it up" },
+                  { id: "b", label: "Because LLMs process tokens (text chunks), not individual letters — 'strawberry' is split across multiple tokens" },
+                  { id: "c", label: "Because letter-counting was not in the training data" },
+                  { id: "d", label: "Because LLMs do not understand the English alphabet" },
+                ]}
+                correctOptionId="b"
+                explanation="LLMs tokenise text into chunks. 'strawberry' might become 'straw' + 'berry', making individual letter-counting difficult since the model never sees raw characters — only token sequences."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -159,36 +246,108 @@ export default function Module3Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">How ChatGPT Works</h2>
-              <TextDisplay content="ChatGPT does not think. It predicts. Here is the simplified version of what is actually happening when you chat with it:" />
+              <TextDisplay content="ChatGPT does not think. It predicts. Here is the simplified version of what is actually happening when you chat with it — and some important mechanics that explain why it behaves the way it does." />
               <div className="space-y-3">
                 {[
-                  { step: "Step 1: Training", desc: "The model reads hundreds of billions of words from the internet, books, code, and articles. It learns which words tend to follow other words in context." },
-                  { step: "Step 2: Tokenisation", desc: "Your message is broken into small chunks called tokens (roughly 3/4 of a word on average). The model sees a sequence of numbers representing your text." },
-                  { step: "Step 3: Prediction", desc: "The model predicts the most likely next token, then the next, then the next - building a response word by word based on all the text it was trained on." },
-                  { step: "Step 4: RLHF", desc: "After base training, humans rated thousands of responses. The model was fine-tuned to produce outputs that humans rated highly. This is why it sounds helpful and coherent." },
+                  { step: "Step 1: Pre-training", desc: "The base model reads hundreds of billions of words from the internet, books, code, and articles. It learns which tokens tend to follow other tokens in context — but at this stage it has no instructions, no personality, and no ability to have a conversation. It is just a next-token predictor." },
+                  { step: "Step 2: Instruction tuning", desc: "The raw base model is then fine-tuned on examples of conversations. Human contractors wrote thousands of example dialogues demonstrating helpful, correct, and safe responses. The model learns to respond as a helpful assistant rather than just completing text patterns." },
+                  { step: "Step 3: RLHF", desc: "Reinforcement Learning from Human Feedback (RLHF) is the process that shaped ChatGPT's personality. Humans rated pairs of responses and preferred the better one. A reward model was trained to predict human preference. The LLM was then tuned to produce outputs that the reward model would rate highly — making it more helpful, honest, and safe." },
+                  { step: "Step 4: Tokenisation and prediction", desc: "At inference time (when you send a message), your prompt is tokenised. The model processes every token, the attention mechanism decides which tokens to focus on, and the model outputs a probability distribution over the entire vocabulary for the next token. It samples from this distribution to choose the next word." },
                 ].map(({ step, desc }) => (
                   <Card key={step} className="p-4 flex gap-3">
-                    <span className="font-bold text-brand-orange w-20 flex-shrink-0 text-sm pt-0.5">{step}</span>
+                    <span className="font-bold text-brand-orange w-24 flex-shrink-0 text-sm pt-0.5">{step}</span>
                     <p className="text-sm text-muted-foreground">{desc}</p>
                   </Card>
                 ))}
               </div>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Temperature — why ChatGPT is not deterministic</h3>
+                <p className="text-sm text-muted-foreground mb-3">Ask ChatGPT the same question twice and you will get different answers. This is intentional. A setting called <strong>temperature</strong> controls how randomly the model samples from its probability distribution:</p>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  <div className="p-3 border rounded bg-background">
+                    <p className="font-semibold text-brand-green mb-1">Low temperature (0.0-0.3)</p>
+                    <p className="text-muted-foreground">Picks the highest-probability next token almost every time. Predictable, consistent, deterministic. Good for factual Q&A, code, and structured outputs.</p>
+                  </div>
+                  <div className="p-3 border rounded bg-background border-brand-orange/30">
+                    <p className="font-semibold text-brand-orange mb-1">Medium temperature (0.7-1.0)</p>
+                    <p className="text-muted-foreground">Default for ChatGPT. Balances coherence with variety. Each response is slightly different even to the same prompt.</p>
+                  </div>
+                  <div className="p-3 border rounded bg-background">
+                    <p className="font-semibold text-brand-green mb-1">High temperature (1.5+)</p>
+                    <p className="text-muted-foreground">More random sampling. Outputs become surprising and creative — but also less coherent and more likely to produce nonsense. Good for brainstorming, bad for accuracy.</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">System prompt vs user prompt — a key distinction</h3>
+                <p className="text-sm text-muted-foreground mb-3">When you use ChatGPT or any AI tool, there are actually two types of input the model receives:</p>
+                <div className="space-y-3 text-sm">
+                  <div className="p-3 border-l-4 border-l-brand-orange pl-4">
+                    <p className="font-semibold text-brand-orange">System prompt (you usually cannot see this)</p>
+                    <p className="text-muted-foreground mt-1">Instructions from the developer that run before your message. These tell the model its role, constraints, tone, and rules. &ldquo;You are a helpful assistant. Do not discuss competitors. Always respond in English.&rdquo; When you use a custom GPT or a company&apos;s AI assistant, they are injecting a system prompt.</p>
+                  </div>
+                  <div className="p-3 border-l-4 border-l-brand-green pl-4">
+                    <p className="font-semibold text-brand-green">User prompt (your message)</p>
+                    <p className="text-muted-foreground mt-1">The message you actually type. The model sees the system prompt + all previous conversation + your new message as a single combined context.</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mt-3">Understanding this explains why the same underlying AI (e.g. GPT-4) can seem very different when used through different products — the system prompt shapes the entire personality and behaviour.</p>
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Why hallucination happens mechanistically</h3>
+                <p className="text-sm text-muted-foreground mb-3">Now that you know ChatGPT predicts the next token based on probability, hallucination makes sense:</p>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">The core problem:</span> the model&apos;s job is to generate a likely continuation — not to verify facts. It has no internal search engine, no live database, no mechanism to say &ldquo;I need to check this.&rdquo;</p>
+                  <p><span className="font-medium text-foreground">When you ask for a citation:</span> the model generates text that pattern-matches to what citations look like (author names + title + journal + year). It may produce something that looks real and is completely fabricated.</p>
+                  <p><span className="font-medium text-foreground">Confidence and correctness are unrelated:</span> the model produces fluent, confident-sounding text whether the content is true or false. Fluency is a property of language modelling. Accuracy requires external grounding that the base model does not have.</p>
+                </div>
+                <div className="mt-3 p-3 bg-brand-orange/5 border border-brand-orange/20 rounded text-sm">
+                  <p className="font-medium text-brand-orange mb-1">The key insight</p>
+                  <p className="text-muted-foreground">ChatGPT is essentially a very sophisticated autocomplete system. When it answers a question, it is generating the most plausible-sounding continuation of your prompt — not retrieving stored facts. This is a feature (it can reason and synthesise) and a limitation (it can synthesise false things just as fluently).</p>
+                </div>
+              </Card>
+
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">Why ChatGPT cannot access real-time information by default</h3>
+                <p className="text-sm text-muted-foreground">The base model is a static snapshot of everything it was trained on up to its knowledge cutoff date. At inference time, it has no internet connection, no ability to run code by default, and no live data feeds. It is like consulting a very knowledgeable person who has been in isolation since a specific date — they know a lot, but nothing that happened after they went in.</p>
+                <p className="text-sm text-muted-foreground mt-2">Some versions of ChatGPT can browse the web or run code — but these are external tools connected to the model, not native capabilities. When those tools are turned off, the model reverts to its training snapshot.</p>
+              </Card>
+
               <DragSortChallenge
-                title="Move the Pipeline"
-                description="Drag each stage to build the correct ChatGPT response pipeline."
+                title="Build the Pipeline"
+                description="Drag each stage to build the correct order of how ChatGPT produces a response."
                 items={[
-                  "Model predicts next token repeatedly",
-                  "Human feedback tunes helpfulness",
-                  "Input text is tokenized",
-                  "Base model trains on large text corpora",
+                  "Model samples next token from probability distribution",
+                  "RLHF tunes model to produce human-preferred responses",
+                  "Base model pre-trains on hundreds of billions of tokens",
+                  "User prompt is tokenised and combined with system prompt",
+                  "Instruction tuning teaches the model to follow directions",
                 ]}
                 correctOrder={[
-                  "Base model trains on large text corpora",
-                  "Human feedback tunes helpfulness",
-                  "Input text is tokenized",
-                  "Model predicts next token repeatedly",
+                  "Base model pre-trains on hundreds of billions of tokens",
+                  "Instruction tuning teaches the model to follow directions",
+                  "RLHF tunes model to produce human-preferred responses",
+                  "User prompt is tokenised and combined with system prompt",
+                  "Model samples next token from probability distribution",
                 ]}
               />
+
+              <QuickCheckCard
+                prompt="Why does asking ChatGPT the same question twice sometimes produce different answers?"
+                options={[
+                  { id: "a", label: "Because ChatGPT searches the web and finds different articles each time" },
+                  { id: "b", label: "Because the model randomly samples from a probability distribution (controlled by temperature), not a fixed lookup table" },
+                  { id: "c", label: "Because OpenAI updates the model between queries" },
+                  { id: "d", label: "Because the model forgets previous answers" },
+                ]}
+                correctOptionId="b"
+                explanation="Temperature controls how randomly the model samples from its output probability distribution. At default settings, the same prompt can produce different responses because sampling introduces controlled randomness."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
