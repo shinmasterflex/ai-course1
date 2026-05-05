@@ -111,6 +111,8 @@ export default function Module4Page() {
             eyebrow="Module 4"
             title="Turn AI tools into daily practical leverage"
             description="Use-case first guidance to pick the right tool quickly for writing, research, creativity, and automation."
+            imageSrc="/images/modules/module-4.jpg"
+            imageAlt="AI tools for creative and productive work"
           />
 
           {/* 0: Overview */}

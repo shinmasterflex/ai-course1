@@ -79,6 +79,8 @@ export default function Module2Page() {
             eyebrow="Module 2"
             title="Understand how models learn from data"
             description="Explore machine learning fundamentals with intuitive analogies that make core concepts click quickly."
+            imageSrc="/images/modules/module-2.jpg"
+            imageAlt="Neural networks and data visualization"
           />
 
           {/* 0: Overview */}

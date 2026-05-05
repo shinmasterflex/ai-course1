@@ -79,6 +79,8 @@ export default function Module5Page() {
             eyebrow="Module 5"
             title="Use AI responsibly and safely"
             description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
+            imageSrc="/images/modules/module-5.jpg"
+            imageAlt="Ethical technology and responsible AI"
           />
 
           {/* 0: Overview */}
@@ -297,13 +299,19 @@ export default function Module5Page() {
                 <p className="text-sm text-muted-foreground mb-4">When you encounter potentially AI-generated misinformation, drag the steps into the correct sequence.</p>
                 <DragSortChallenge
                   items={[
-                    { id: "1", label: "Pause — don't share or act immediately" },
-                    { id: "2", label: "Identify the original source of the claim" },
-                    { id: "3", label: "Run a reverse image search or check a fact-checking site" },
-                    { id: "4", label: "Find a primary source that independently confirms it" },
-                    { id: "5", label: "Only share or act after verification is complete" },
+                    "Only share or act after verification is complete",
+                    "Pause — don't share or act immediately",
+                    "Find a primary source that independently confirms it",
+                    "Run a reverse image search or check a fact-checking site",
+                    "Identify the original source of the claim",
                   ]}
-                  correctOrder={["1", "2", "3", "4", "5"]}
+                  correctOrder={[
+                    "Pause — don't share or act immediately",
+                    "Identify the original source of the claim",
+                    "Run a reverse image search or check a fact-checking site",
+                    "Find a primary source that independently confirms it",
+                    "Only share or act after verification is complete",
+                  ]}
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>

@@ -71,6 +71,8 @@ export default function Module7Page() {
             eyebrow="Module 7"
             title="Translate AI trends into career advantage"
             description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
+            imageSrc="/images/modules/module-7.jpg"
+            imageAlt="Professional business and AI technology"
           />
 
           {/* 0: Overview */}
@@ -208,23 +210,7 @@ export default function Module7Page() {
                       label: "High displacement risk",
                       color: "text-red-500",
                       examples: "Routine data entry, basic document review, simple customer support scripts, rote translation, basic image captioning",
-               DragSortChallenge
-                title="Career Priority Order"
-                description="Drag these actions into a practical sequence for building AI career resilience."
-                items={[
-                  "Lead a team-wide AI initiative",
-                  "Document one workflow that works",
-                  "Apply AI to two repeatable tasks",
-                  "Measure quality and time saved",
-                ]}
-                correctOrder={[
-                  "Apply AI to two repeatable tasks",
-                  "Measure quality and time saved",
-                  "Document one workflow that works",
-                  "Lead a team-wide AI initiative",
-                ]}
-              />
-              <       insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
+                      insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
                     },
                     {
                       label: "Augmentation (most roles)",
@@ -247,6 +233,22 @@ export default function Module7Page() {
                   ))}
                 </div>
               </Card>
+              <DragSortChallenge
+                title="Career Priority Order"
+                description="Drag these actions into a practical sequence for building AI career resilience."
+                items={[
+                  "Lead a team-wide AI initiative",
+                  "Document one workflow that works",
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
+                ]}
+                correctOrder={[
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
+                  "Document one workflow that works",
+                  "Lead a team-wide AI initiative",
+                ]}
+              />
               <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role  - just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
               <QuickCheckCard
                 prompt="What is the most durable career takeaway from this section?"

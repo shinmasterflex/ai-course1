@@ -79,6 +79,8 @@ export default function Module1Page() {
             eyebrow="Module 1"
             title="Build the foundation for everything that follows"
             description="Get clear on what AI is, where it came from, and how to separate practical reality from hype."
+            imageSrc="/images/modules/module-1.jpg"
+            imageAlt="Machine learning and artificial intelligence concepts"
           />
 
           {/* 0: Overview */}

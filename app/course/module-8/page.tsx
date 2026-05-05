@@ -72,6 +72,8 @@ export default function Module8Page() {
             eyebrow="Module 8"
             title="Understand how autonomous AI systems operate"
             description="Learn the architecture of agents and where they outperform simple chat interfaces in real workflows."
+            imageSrc="/images/modules/module-8.jpg"
+            imageAlt="AI agents and autonomous systems"
           />
 
           {/* 0: Overview */}
@@ -275,13 +277,19 @@ export default function Module8Page() {
                 <p className="text-sm text-muted-foreground mb-4">Use the arrows to put these agent steps into the right sequence.</p>
                 <DragSortChallenge
                   items={[
-                    { id: "1", label: "Receive a goal from the user" },
-                    { id: "2", label: "Reason about what step to take next" },
-                    { id: "3", label: "Execute an action with a tool" },
-                    { id: "4", label: "Observe the result of the action" },
-                    { id: "5", label: "Repeat reasoning and acting until the goal is achieved" },
+                    "Execute an action with a tool",
+                    "Receive a goal from the user",
+                    "Repeat reasoning and acting until the goal is achieved",
+                    "Observe the result of the action",
+                    "Reason about what step to take next",
                   ]}
-                  correctOrder={["1", "2", "3", "4", "5"]}
+                  correctOrder={[
+                    "Receive a goal from the user",
+                    "Reason about what step to take next",
+                    "Execute an action with a tool",
+                    "Observe the result of the action",
+                    "Repeat reasoning and acting until the goal is achieved",
+                  ]}
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>

@@ -1,0 +1,64 @@
+<svg viewBox="0 0 960 340" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="960" height="340" fill="url(#bgGradient)"/>
+  
+  <!-- Connecting path line -->
+  <path d="M 50 170 Q 120 100, 190 170 T 330 170 T 470 170 T 610 170 T 750 170 T 890 170" 
+        stroke="url(#pathGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  <!-- Foundation Phase -->
+  <g id="phase1">
+    <circle cx="80" cy="170" r="24" fill="#10b981" opacity="0.2" stroke="#10b981" stroke-width="2"/>
+    <circle cx="80" cy="170" r="16" fill="#10b981"/>
+    <text x="80" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2937">Foundations</text>
+    <text x="80" y="240" text-anchor="middle" font-size="11" fill="#6b7280">Modules 0-2</text>
+  </g>
+  
+  <!-- Practice Phase -->
+  <g id="phase2">
+    <circle cx="320" cy="170" r="24" fill="#f97316" opacity="0.2" stroke="#f97316" stroke-width="2"/>
+    <circle cx="320" cy="170" r="16" fill="#f97316"/>
+    <text x="320" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2937">Practice</text>
+    <text x="320" y="240" text-anchor="middle" font-size="11" fill="#6b7280">Modules 3-6</text>
+  </g>
+  
+  <!-- Advanced Phase -->
+  <g id="phase3">
+    <circle cx="560" cy="170" r="24" fill="#4f46e5" opacity="0.2" stroke="#4f46e5" stroke-width="2"/>
+    <circle cx="560" cy="170" r="16" fill="#4f46e5"/>
+    <text x="560" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2937">Advanced</text>
+    <text x="560" y="240" text-anchor="middle" font-size="11" fill="#6b7280">Modules 7-9</text>
+  </g>
+  
+  <!-- Completion badge -->
+  <g id="completion">
+    <circle cx="800" cy="170" r="32" fill="#10b981" opacity="0.1" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+    <path d="M 795 170 L 802 177 L 815 160" stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="800" y="215" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">Course</text>
+    <text x="800" y="230" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f2937">Complete</text>
+  </g>
+  
+  <!-- Arrows between phases -->
+  <path d="M 130 170 L 150 170" stroke="#d1d5db" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 370 170 L 390 170" stroke="#d1d5db" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 610 170 L 630 170" stroke="#d1d5db" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 750 170 L 770 170" stroke="#d1d5db" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#d1d5db" />
+    </marker>
+  </defs>
+</svg>

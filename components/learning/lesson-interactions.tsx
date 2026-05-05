@@ -30,7 +30,7 @@ type FlipCardGridProps = {
 }
 
 type MatchingPair = {
-  id: string
+  id?: string
   left: string
   right: string
 }
@@ -39,6 +39,7 @@ type MatchingChallengeProps = {
   title?: string
   description?: string
   pairs: MatchingPair[]
+  accentClassName?: string
 }
 
 type OrderingChallengeProps = {
@@ -53,6 +54,7 @@ type DragSortChallengeProps = {
   description?: string
   items: string[]
   correctOrder: string[]
+  accentClassName?: string
 }
 
 export function FlipCardGrid({ cards }: FlipCardGridProps) {
@@ -106,17 +108,18 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
   )
 }
 
-export function MatchingChallenge({ title = "Matching Challenge", description, pairs }: MatchingChallengeProps) {
+export function MatchingChallenge({ title = "Matching Challenge", description, pairs, accentClassName }: MatchingChallengeProps) {
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null)
   const [matches, setMatches] = useState<Record<string, string>>({})
   const [attempts, setAttempts] = useState(0)
 
-  const rightItems = [...pairs].sort((a, b) => a.right.localeCompare(b.right))
+  const normalizedPairs = pairs.map((p, i) => ({ ...p, id: p.id ?? String(i) }))
+  const rightItems = [...normalizedPairs].sort((a, b) => a.right.localeCompare(b.right))
   const reverseMatches = Object.fromEntries(
     Object.entries(matches).map(([leftId, rightId]) => [rightId, leftId])
   )
   const matchedCount = Object.keys(matches).length
-  const isComplete = matchedCount === pairs.length
+  const isComplete = matchedCount === normalizedPairs.length
 
   const tryMatch = (rightId: string) => {
     if (!selectedLeftId) {
@@ -133,7 +136,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
   }
 
   return (
-    <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+    <Card className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5", accentClassName)}>
       <div className="mb-4">
         <h3 className="font-semibold text-brand-green">{title}</h3>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
@@ -142,7 +145,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Terms</p>
-          {pairs.map((pair) => {
+          {normalizedPairs.map((pair) => {
             const isMatched = Boolean(matches[pair.id])
             const isSelected = selectedLeftId === pair.id
 
@@ -288,20 +291,13 @@ export function OrderingChallenge({
     </Card>
   )
 }
-              </div>
-            </Card>
-          </button>
-        )
-      })}
-    </div>
-  )
-}
 
 export function DragSortChallenge({
   title = "Drag to Arrange",
   description,
   items,
   correctOrder,
+  accentClassName,
 }: DragSortChallengeProps) {
   const [currentOrder, setCurrentOrder] = useState(items)
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
@@ -328,7 +324,7 @@ export function DragSortChallenge({
   const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
 
   return (
-    <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white">
+    <Card className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white", accentClassName)}>
       <div className="mb-4">
         <h3 className="font-semibold text-brand-green">{title}</h3>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}

@@ -71,6 +71,8 @@ export default function Module9Page() {
             eyebrow="Module 9"
             title="Plan for the next wave of AI change"
             description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
+            imageSrc="/images/modules/module-9.jpg"
+            imageAlt="Future of AI and innovation"
           />
 
           {/* 0: Overview */}
@@ -407,13 +409,19 @@ export default function Module9Page() {
                 <p className="text-sm text-muted-foreground mb-4">Click a role on the left, then click what it does on the right.</p>
                 <DragSortChallenge
                   items={[
-                    { id: "1", label: "Develop deep expertise in your existing field" },
-                    { id: "2", label: "Build AI literacy and hands-on tool skills" },
-                    { id: "3", label: "Learn to evaluate AI outputs critically" },
-                    { id: "4", label: "Identify where AI creates value in your domain" },
-                    { id: "5", label: "Become the bridge between AI capability and your industry" },
+                    "Identify where AI creates value in your domain",
+                    "Develop deep expertise in your existing field",
+                    "Become the bridge between AI capability and your industry",
+                    "Learn to evaluate AI outputs critically",
+                    "Build AI literacy and hands-on tool skills",
                   ]}
-                  correctOrder={["1", "2", "3", "4", "5"]}
+                  correctOrder={[
+                    "Develop deep expertise in your existing field",
+                    "Build AI literacy and hands-on tool skills",
+                    "Learn to evaluate AI outputs critically",
+                    "Identify where AI creates value in your domain",
+                    "Become the bridge between AI capability and your industry",
+                  ]}
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>

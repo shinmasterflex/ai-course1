@@ -80,11 +80,11 @@ export default function Module0Page() {
               </div>
               <div className="border-t border-brand-indigo/10 bg-sky-50/60 p-4 lg:border-l lg:border-t-0">
                 <NextImage
-                  src="/graphics/module-path.svg"
-                  alt="Visual learning path for course progression"
+                  src="/images/modules/module-0.jpg"
+                  alt="AI technology and artificial intelligence concepts"
                   width={960}
                   height={340}
-                  className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white"
+                  className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white object-cover"
                 />
               </div>
             </div>
@@ -238,7 +238,11 @@ export default function Module0Page() {
                           <span><span className="font-medium">{title}</span> - <span className="text-muted-foreground text-sm">{desc}</span></span>
                         </li>
                       ))}
-               DragSortChallenge
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+              <DragSortChallenge
                 title="Course Path Builder"
                 description="Drag each phase into the recommended learning sequence."
                 items={[
@@ -252,10 +256,6 @@ export default function Module0Page() {
                   "Thinking and Building",
                 ]}
               />
-              <     </ul>
-                  </Card>
-                ))}
-              </div>
               <Card className="p-4 bg-brand-orange/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-3 text-brand-orange">Estimated time</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">

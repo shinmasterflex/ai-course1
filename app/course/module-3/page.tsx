@@ -79,6 +79,8 @@ export default function Module3Page() {
             eyebrow="Module 3"
             title="Move from curiosity to effective prompting"
             description="Learn the mechanics behind LLMs and apply prompting patterns that produce sharper, more reliable outputs."
+            imageSrc="/images/modules/module-3.jpg"
+            imageAlt="Language models and conversation AI"
           />
 
           {/* 0: Overview */}
