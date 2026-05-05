@@ -7,17 +7,17 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import type { ModuleQuizQuestion } from "@/lib/module-quiz-data"
 
-type ModuleQuizProps = {
-  questions: ModuleQuizQuestion[]
-  results: Record<string, boolean>
-  onAnswer: (quizKey: string, correct: boolean) => void
+type ModuleQuizProps<T extends string> = {
+  questions: readonly ModuleQuizQuestion<T>[]
+  results: Record<T, boolean>
+  onAnswer: (quizKey: T, correct: boolean) => void
 }
 
-export function ModuleQuiz({ questions, results, onAnswer }: ModuleQuizProps) {
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({})
+export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: ModuleQuizProps<T>) {
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<T, string>>({} as Record<T, string>)
 
   const answeredCount = useMemo(
-    () => Object.keys(results).filter((key) => results[key]).length,
+    () => Object.values(results).filter(Boolean).length,
     [results]
   )
 

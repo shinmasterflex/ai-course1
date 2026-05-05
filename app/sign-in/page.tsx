@@ -240,7 +240,7 @@ export default function SignInPage() {
                   className="w-full rounded border p-2 text-black"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="?�••••••�?
+                  placeholder="Enter your password"
                 />
               </div>
 

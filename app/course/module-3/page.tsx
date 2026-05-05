@@ -84,7 +84,7 @@ export default function Module3Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
@@ -117,7 +117,7 @@ export default function Module3Page() {
                 <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
                 
               </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -141,7 +141,7 @@ export default function Module3Page() {
               </div>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -214,7 +214,7 @@ export default function Module3Page() {
                 explanation="The prompt is under-specified. Adding context and a target format usually makes the response much more useful and tailored."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -234,7 +234,7 @@ export default function Module3Page() {
                   {
                     technique: "Few-Shot Prompting",
                     how: "Give the AI 2-3 examples of what you want before asking it to do the task.",
-                    example: "Convert these sentences to formal English. Example: 'gonna' �� 'going to'. Example: 'wanna' �� 'want to'. Now convert: 'kinda'",
+                    example: "Convert these sentences to formal English. Example: 'gonna' -> 'going to'. Example: 'wanna' -> 'want to'. Now convert: 'kinda'",
                     why: "Examples calibrate exactly what format, style, and depth you expect. Works extremely well for formatting and style tasks.",
                   },
                   {
@@ -312,7 +312,7 @@ export default function Module3Page() {
                   ))}
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -324,7 +324,7 @@ export default function Module3Page() {
               <TextDisplay variant="callout" content="There are no wrong answers here ? the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -338,7 +338,7 @@ export default function Module3Page() {
                   <TextDisplay variant="success" content="Outstanding! You now understand how LLMs work and how to prompt them effectively. Next: a tour of the best AI tools available today." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-4")}>
-                      Continue to Module 4 ��
+                      Continue to Module 4
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

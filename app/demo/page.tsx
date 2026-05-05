@@ -86,11 +86,11 @@ export default function DemoPage() {
                 <ul className="space-y-2 ml-6">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Personality traits are your natural tendencies?”how you're inclined to think, feel, and behave</span>
+                    <span>Personality traits are your natural tendencies?ï¿½how you're inclined to think, feel, and behave</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Mindset is your character?”the conscious choices you make despite your tendencies</span>
+                    <span>Mindset is your character?ï¿½the conscious choices you make despite your tendencies</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
@@ -145,101 +145,43 @@ export default function DemoPage() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                        </div>
-                      </div>
-                      <p className="text-sm">
-                        Our approach is the most comprehensive in the market today for personality-driven sales training.
-                      </p>
+                {[
+                  {
+                    title: "Complete Picture",
+                    summary: "A complete personality map for sales performance.",
+                    detail: "Other assessments measure fragments. Swiftcourse uses the Big Five Aspects Model to cover all 10 aspects across 5 major traits.",
+                    accent: "text-brand-green",
+                  },
+                  {
+                    title: "Personalized Approach",
+                    summary: "Designed for entrepreneurs and sales professionals who need specific traction.",
+                    detail: "The program targets the tendencies that hold you back while strengthening the traits that already support performance.",
+                    accent: "text-brand-green",
+                  },
+                  {
+                    title: "Smart Investment",
+                    summary: "Better hiring and training decisions reduce wasted spend.",
+                    detail: "Teams can stop investing in generic training and focus on strategies that actually match how people work and sell.",
+                    accent: "text-brand-orange",
+                  },
+                  {
+                    title: "Comprehensive Analysis",
+                    summary: "A fast assessment that leads to an actionable improvement plan.",
+                    detail: "The BFAM assessment takes about 15 minutes, then translates the results into a practical strategy for growth.",
+                    accent: "text-brand-orange",
+                  },
+                ].map(({ title, summary, detail, accent }) => (
+                  <Card key={title} className="p-6 space-y-4">
+                    <div className="flex justify-center">
+                      <CheckCircle2 className={`h-8 w-8 ${accent}`} />
                     </div>
-                  }
-                  backTitle="Complete Picture"
-                  backContent={
-                    <div className="space-y-3">
-                      <div className="flex justify-center">
-                        <CheckCircle2 className="h-8 w-8 text-brand-green" />
-                      </div>
-                      <p className="text-sm">
-                        Other personality assessments measure segments of personality. Only the Big Five Aspects Model (BFAM) gives a complete picture of temperament.
-                      </p>
-                      <p className="text-sm font-semibold text-brand-green">
-                        We measure all 10 aspects across 5 major traits for complete insight.
-                      </p>
+                    <div className="text-center space-y-2">
+                      <h3 className={`text-xl font-semibold ${accent}`}>{title}</h3>
+                      <p className="text-sm">{summary}</p>
+                      <p className="text-sm text-muted-foreground">{detail}</p>
                     </div>
-                  }
-                />
-
-                
-                        </div>
-                      </div>
-                      <p className="text-sm">
-                        Designed for entrepreneurs and sales personnel struggling to achieve their performance goals.
-                      </p>
-                    </div>
-                  }
-                  backTitle="Personalized Approach"
-                  backContent={
-                    <div className="space-y-3">
-                      <div className="flex justify-center">
-                        <CheckCircle2 className="h-8 w-8 text-brand-green" />
-                      </div>
-                      <p className="text-sm">
-                        Our program specifically targets the issues that hold you back while strengthening your positive traits.
-                      </p>
-                      <p className="text-sm font-semibold text-brand-green">
-                        Work with your personality, not against it.
-                      </p>
-                    </div>
-                  }
-                />
-
-                
-                        </div>
-                      </div>
-                      <p className="text-sm">
-                        Massive savings through better hiring decisions and more effective training investments.
-                      </p>
-                    </div>
-                  }
-                  backTitle="Smart Investment"
-                  backContent={
-                    <div className="space-y-3">
-                      <div className="flex justify-center">
-                        <CheckCircle2 className="h-8 w-8 text-brand-orange" />
-                      </div>
-                      <p className="text-sm">
-                        Reduce costs from poor hires and eliminate wasted spending on training personnel who don't adapt their behavior.
-                      </p>
-                      <p className="text-sm font-semibold text-brand-orange">
-                        Invest in what works, eliminate what doesn't.
-                      </p>
-                    </div>
-                  }
-                />
-
-                
-                        </div>
-                      </div>
-                      <p className="text-sm">
-                        The Big Five Aspects Model assessment takes just 15 minutes to complete.
-                      </p>
-                    </div>
-                  }
-                  backTitle="Comprehensive Analysis"
-                  backContent={
-                    <div className="space-y-3">
-                      <div className="flex justify-center">
-                        <CheckCircle2 className="h-8 w-8 text-brand-orange" />
-                      </div>
-                      <p className="text-sm">
-                        A detailed analysis is created to identify the best approach for your personal improvement strategy.
-                      </p>
-                      <p className="text-sm font-semibold text-brand-orange">
-                        Quick assessment, lasting impact.
-                      </p>
-                    </div>
-                  }
-                />
+                  </Card>
+                ))}
               </div>
 
               <Button onClick={handleSectionComplete} className="bg-brand-orange hover:bg-[#e64a19] text-white">
@@ -258,19 +200,19 @@ export default function DemoPage() {
                 <h3 className="text-2xl font-bold mb-6 text-center">Your Competitive Opportunity</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-green mb-2">??/div>
+                    <div className="text-4xl font-bold text-brand-green mb-2">10</div>
                     <div className="font-semibold">UNIQUE</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-green mb-2">??/div>
+                    <div className="text-4xl font-bold text-brand-green mb-2">1st</div>
                     <div className="font-semibold">FIRST TO MARKET</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-orange mb-2">??/div>
+                    <div className="text-4xl font-bold text-brand-orange mb-2">15m</div>
                     <div className="font-semibold">TESTED</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-brand-orange mb-2">??/div>
+                    <div className="text-4xl font-bold text-brand-orange mb-2">100%</div>
                     <div className="font-semibold">AUTHENTIC</div>
                   </div>
                 </div>
@@ -607,7 +549,7 @@ export default function DemoPage() {
                   <div className="flex justify-center">
                     <CheckCircle2 className="h-20 w-20 text-brand-green" />
                   </div>
-                  <h2 className="text-4xl font-bold">Congratulations! ?Ž‰</h2>
+                  <h2 className="text-4xl font-bold">Congratulations! ?ï¿½ï¿½</h2>
                   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     You've completed Module 0: Introduction to Swiftcourse
                   </p>

@@ -83,7 +83,7 @@ export default function Module2Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
@@ -98,7 +98,7 @@ export default function Module2Page() {
               </Card>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -132,7 +132,7 @@ export default function Module2Page() {
                 <h3 className="font-semibold mb-3 text-brand-orange">Spot the Bad Training Data</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -166,7 +166,7 @@ export default function Module2Page() {
                   </div>
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -199,7 +199,7 @@ export default function Module2Page() {
                 <h3 className="font-semibold mb-3 text-brand-orange">Quick check</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -211,7 +211,7 @@ export default function Module2Page() {
               <TextDisplay variant="callout" content="Flip each card to discover WHY AI has this limitation. Understanding the reason is more useful than just knowing the fact." />
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -225,7 +225,7 @@ export default function Module2Page() {
                   <TextDisplay variant="success" content="Well done! You now understand the fundamentals of how AI learns. Next up: we go hands-on with Large Language Models and learn how to communicate with AI effectively." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-3")}>
-                      Continue to Module 3 ��
+                      Continue to Module 3
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

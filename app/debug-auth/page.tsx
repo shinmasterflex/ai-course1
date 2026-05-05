@@ -90,7 +90,7 @@ export default function DebugAuthPage() {
               className="w-full rounded-lg border border-gray-300 p-3 text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="?�••••••�?
+              placeholder="Enter your password"
             />
           </div>
 

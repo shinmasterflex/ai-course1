@@ -71,7 +71,7 @@ export default function Module6Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
@@ -124,7 +124,7 @@ export default function Module6Page() {
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -155,10 +155,10 @@ export default function Module6Page() {
               </Card>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { title: "Content repurposing", desc: "Trigger: new blog post published �� AI rewrites as 5 social posts �� auto-schedules to Buffer" },
-                  { title: "Meeting prep", desc: "Trigger: calendar event in 1 hour �� AI pulls LinkedIn profiles of attendees �� sends you a briefing email" },
-                  { title: "Customer feedback triage", desc: "Trigger: new review arrives �� AI classifies as positive/neutral/negative �� routes to the right Slack channel" },
-                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket �� AI generates summary + tags �� adds to Notion database" },
+                  { title: "Content repurposing", desc: "Trigger: new blog post published -> AI rewrites as 5 social posts -> auto-schedules to Buffer" },
+                  { title: "Meeting prep", desc: "Trigger: calendar event in 1 hour -> AI pulls LinkedIn profiles of attendees -> sends you a briefing email" },
+                  { title: "Customer feedback triage", desc: "Trigger: new review arrives -> AI classifies as positive/neutral/negative -> routes to the right Slack channel" },
+                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket -> AI generates summary + tags -> adds to Notion database" },
                 ].map(({ title, desc }) => (
                   <Card key={title} className="p-4">
                     <p className="font-semibold text-brand-green mb-1">{title}</p>
@@ -178,7 +178,7 @@ export default function Module6Page() {
                 correctOptionId="a"
                 explanation="The strongest starting workflows are narrow, repeatable, and easy to evaluate so you can learn quickly without creating operational risk."
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -200,7 +200,7 @@ export default function Module6Page() {
                 </div>
               </Card>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -276,7 +276,7 @@ export default function Module6Page() {
                   className="bg-brand-green hover:bg-brand-green/90 text-white"
                   onClick={() => router.push("/course/module-7")}
                 >
-                  Continue to Module 7 ��
+                  Continue to Module 7
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard

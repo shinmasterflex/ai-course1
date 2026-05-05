@@ -19,6 +19,38 @@ import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
+type ToolCardProps = {
+  name: string
+  url: string
+  tagline: string
+  strengths: string[]
+  free: boolean
+}
+
+function ToolCard({ name, url, tagline, strengths, free }: ToolCardProps) {
+  return (
+    <Card className="p-4">
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <h4 className="font-bold">{name}</h4>
+          <p className="text-sm text-muted-foreground">{tagline}</p>
+        </div>
+        <span className={`text-xs px-2 py-1 rounded-full font-medium ${free ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>
+          {free ? "Free tier" : "Paid"}
+        </span>
+      </div>
+      <ul className="text-sm space-y-1">
+        {strengths.map((strength) => (
+          <li key={strength} className="flex gap-1 items-start">
+            <CheckCircle2 className="h-3 w-3 text-brand-green mt-0.5 flex-shrink-0" />
+            {strength}
+          </li>
+        ))}
+      </ul>
+    </Card>
+  )
+}
+
 export default function Module4Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -62,23 +94,6 @@ export default function Module4Page() {
     }
   }
 
-  const ToolCard = ({ name, url, tagline, strengths, free }: { name: string; url: string; tagline: string; strengths: string[]; free: boolean }) => (
-    <Card className="p-4">
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h4 className="font-bold">{name}</h4>
-          <p className="text-sm text-muted-foreground">{tagline}</p>
-        </div>
-        <span className={`text-xs px-2 py-1 rounded-full font-medium ${free ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>
-          {free ? "Free tier" : "Paid"}
-        </span>
-      </div>
-      <ul className="text-sm space-y-1">
-        {strengths.map((s) => <li key={s} className="flex gap-1 items-start"><CheckCircle2 className="h-3 w-3 text-brand-green mt-0.5 flex-shrink-0" />{s}</li>)}
-      </ul>
-    </Card>
-  )
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -97,11 +112,11 @@ export default function Module4Page() {
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map ? organised by use case ? so you can quickly find the right tool for any task." />
               <Card className="p-5 space-y-2">
-                {["AI writing assistants ? ChatGPT, Claude, Gemini","AI image generation ? Midjourney, DALL��E, Firefly","AI for productivity ? Notion AI, Copilot, Grammarly","AI in creative work ? music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
+                {["AI writing assistants - ChatGPT, Claude, Gemini","AI image generation - Midjourney, DALL-E, Firefly","AI for productivity - Notion AI, Copilot, Grammarly","AI in creative work - music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
@@ -142,7 +157,7 @@ export default function Module4Page() {
               </div>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -153,7 +168,7 @@ export default function Module4Page() {
               <TextDisplay content="AI image generators create photorealistic images, illustrations, concept art, and more from a text description. They have transformed design and creative work." />
               <div className="grid md:grid-cols-2 gap-4">
                 <ToolCard
-                  name="DALL��E 3"
+                  name="DALL-E 3"
                   url="https://openai.com/dall-e-3"
                   tagline="Built into ChatGPT ? easy to use"
                   free={false}
@@ -217,11 +232,11 @@ export default function Module4Page() {
                 correctOptionId="a"
                 explanation="The section positions Firefly as the strongest fit for commercially safer creative workflows tied to Adobe tools."
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 3: AI Productivity */
+          {/* 3: AI Productivity */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
@@ -262,11 +277,11 @@ export default function Module4Page() {
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 4: AI Creative */
+          {/* 4: AI Creative */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">AI in Creative Work</h2>
@@ -288,15 +303,23 @@ export default function Module4Page() {
                 ))}
               </div>
               <TextDisplay variant="callout" content="The creative AI space is moving extremely fast. A tool that is state-of-the-art today may be superseded in months. Focus on learning the principles ? the tools change, but the skill of knowing what to ask for, and how to evaluate outputs, stays valuable." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Which creative AI tool?</h3>
-                
-              </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <QuickCheckCard
+                prompt="If you want to generate short cinematic video clips from text prompts, which category of tool is the best fit from this section?"
+                options={[
+                  { id: "a", label: "Video tools like Sora or RunwayML" },
+                  { id: "b", label: "Voice tools like ElevenLabs" },
+                  { id: "c", label: "UI tools like Uizard" },
+                  { id: "d", label: "Writing tools like Jasper" },
+                ]}
+                correctOptionId="a"
+                explanation="The video category is the direct fit for text-to-video generation. The section names Sora and RunwayML specifically for that use case."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 5: Choosing Tools */
+          {/* 5: Choosing Tools */}
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Choosing the Right Tool</h2>
@@ -318,7 +341,7 @@ export default function Module4Page() {
                   <h3 className="font-semibold mb-3 text-brand-green">Should I Use AI for This? ? Rapid-Fire Quiz</h3>
                   
                 </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ��</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -332,7 +355,7 @@ export default function Module4Page() {
                   <TextDisplay variant="success" content="Well done! You now have a solid map of the AI tool landscape. Next: we tackle the harder questions ? AI ethics, bias, and how to be a responsible AI user." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-5")}>
-                      Continue to Module 5 ��
+                      Continue to Module 5
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

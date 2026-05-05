@@ -3,15 +3,15 @@ export type ModuleQuizOption = {
   label: string
 }
 
-export type ModuleQuizQuestion = {
-  key: string
+export type ModuleQuizQuestion<T extends string = string> = {
+  key: T
   prompt: string
   explanation: string
   options: ModuleQuizOption[]
   correctOptionId: string
 }
 
-export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
+export const moduleQuizData = {
   "module-1": [
     {
       key: "quiz1",
@@ -358,4 +358,4 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
   ],
-}
+} as const satisfies Record<string, readonly ModuleQuizQuestion[]>
