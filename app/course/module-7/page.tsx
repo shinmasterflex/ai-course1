@@ -1,5 +1,5 @@
-/**
- * MODULE 7: AI ETHICS, SAFETY & SOCIETY
+﻿/**
+ * MODULE 7: AI FOR BUSINESS & WORK
  */
 
 "use client"
@@ -8,13 +8,16 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { moduleQuizData } from "@/lib/module-quiz-data"
 
 export default function Module7Page() {
   const router = useRouter()
@@ -24,6 +27,7 @@ export default function Module7Page() {
 
   const MODULE_ID = "module-7"
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
@@ -58,7 +62,7 @@ export default function Module7Page() {
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 7: AI for Business & Work</h1>
-            <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace ??and how to stay ahead</p>
+            <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace  - and how to stay ahead</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
@@ -66,11 +70,11 @@ export default function Module7Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="AI is not just a technology trend ??it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
+              <TextDisplay variant="callout" content="AI is not just a technology trend  - it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
               <Card className="p-5 space-y-2">
                 {[
                   "How AI is changing the workplace right now",
-                  "What AI means for jobs ??and which skills matter most",
+                  "What AI means for jobs  - and which skills matter most",
                   "AI applications across major industries",
                   "How to build your own AI strategy at work",
                   "Practical steps to build AI skills in your career",
@@ -78,7 +82,7 @@ export default function Module7Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ??/Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
@@ -86,7 +90,7 @@ export default function Module7Page() {
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
-              <TextDisplay content="AI is already embedded in the tools most professionals use every day ??often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
+              <TextDisplay content="AI is already embedded in the tools most professionals use every day  - often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
               <div className="space-y-4">
                 {[
                   {
@@ -104,16 +108,16 @@ export default function Module7Page() {
                     examples: [
                       { name: "Document drafting", desc: "Claude, ChatGPT, and Notion AI draft reports, proposals, and presentations from bullet points." },
                       { name: "Research & analysis", desc: "Perplexity and ChatGPT with web access can synthesise information from hundreds of sources in seconds." },
-                      { name: "Code generation", desc: "GitHub Copilot and Cursor write, review, and debug code ??boosting developer productivity by 30??0%." },
+                      { name: "Code generation", desc: "GitHub Copilot and Cursor write, review, and debug code - boosting developer productivity by 30-50%." },
                     ],
                   },
                   {
                     category: "Business Operations",
                     icon: TrendingUp,
                     examples: [
-                      { name: "Customer service", desc: "AI chatbots now handle 60??0% of tier-1 support queries, with human escalation for complex cases." },
+                      { name: "Customer service", desc: "AI chatbots now handle 60-70% of tier-1 support queries, with human escalation for complex cases." },
                       { name: "Forecasting", desc: "AI models predict sales, inventory demand, and customer churn with greater accuracy than traditional methods." },
-                      { name: "Hiring & HR", desc: "AI screens CVs, schedules interviews, and analyses employee engagement ??raising questions about bias." },
+                      { name: "Hiring & HR", desc: "AI screens CVs, schedules interviews, and analyses employee engagement  - raising questions about bias." },
                     ],
                   },
                 ].map(({ category, icon: Icon, examples }) => (
@@ -131,7 +135,7 @@ export default function Module7Page() {
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -139,7 +143,7 @@ export default function Module7Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">AI & the Future of Jobs</h2>
-              <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others ??but the transition is uneven and can be disruptive for individuals." />
+              <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others  - but the transition is uneven and can be disruptive for individuals." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">The Three-Category Framework</h3>
                 <div className="space-y-4">
@@ -154,7 +158,7 @@ export default function Module7Page() {
                       label: "Augmentation (most roles)",
                       color: "text-brand-orange",
                       examples: "Lawyers, doctors, teachers, marketers, accountants, engineers, designers, writers",
-                      insight: "AI handles research, drafting, and analysis ??humans focus on judgement, relationships, creativity, and accountability. Productivity rises; headcount may shrink modestly.",
+                      insight: "AI handles research, drafting, and analysis  - humans focus on judgement, relationships, creativity, and accountability. Productivity rises; headcount may shrink modestly.",
                     },
                     {
                       label: "High growth & new roles",
@@ -171,12 +175,19 @@ export default function Module7Page() {
                   ))}
                 </div>
               </Card>
-              <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role ??just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
-                
-              </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
+              <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role  - just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
+              <QuickCheckCard
+                prompt="What is the most durable career takeaway from this section?"
+                options={[
+                  { id: "a", label: "Only technical workers need AI fluency" },
+                  { id: "b", label: "AI fluency is becoming a baseline expectation across many roles" },
+                  { id: "c", label: "Career risk disappears if you ignore AI tools" },
+                  { id: "d", label: "The safest move is to wait for the market to settle" },
+                ]}
+                correctOptionId="b"
+                explanation="The section's core point is that AI fluency is turning into a baseline professional skill, not a niche specialty."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -191,73 +202,73 @@ export default function Module7Page() {
                     industry: "Healthcare",
                     color: "text-blue-600",
                     applications: [
-                      "Medical image analysis ??AI detects cancers in scans with radiologist-level accuracy",
-                      "Drug discovery ??AI reduces new drug development from decades to years",
-                      "Clinical documentation ??AI transcribes patient notes automatically",
-                      "Personalised treatment ??AI analyses genomic data to recommend targeted therapies",
+                      "Medical image analysis  - AI detects cancers in scans with radiologist-level accuracy",
+                      "Drug discovery  - AI reduces new drug development from decades to years",
+                      "Clinical documentation  - AI transcribes patient notes automatically",
+                      "Personalised treatment  - AI analyses genomic data to recommend targeted therapies",
                     ],
                   },
                   {
                     industry: "Finance",
                     color: "text-green-600",
                     applications: [
-                      "Fraud detection ??AI flags suspicious transactions in real time",
-                      "Algorithmic trading ??AI executes trades at speeds humans cannot match",
-                      "Credit scoring ??AI analyses thousands of data points beyond credit history",
-                      "Regulatory compliance ??AI monitors transactions for suspicious activity",
+                      "Fraud detection  - AI flags suspicious transactions in real time",
+                      "Algorithmic trading  - AI executes trades at speeds humans cannot match",
+                      "Credit scoring  - AI analyses thousands of data points beyond credit history",
+                      "Regulatory compliance  - AI monitors transactions for suspicious activity",
                     ],
                   },
                   {
                     industry: "Education",
                     color: "text-purple-600",
                     applications: [
-                      "Personalised learning paths ??AI adapts content to each student's pace",
-                      "Automated grading ??AI grades essays with detailed feedback",
-                      "Intelligent tutoring ??AI provides one-on-one tutoring at scale",
-                      "Early intervention ??AI identifies students at risk of falling behind",
+                      "Personalised learning paths  - AI adapts content to each student's pace",
+                      "Automated grading  - AI grades essays with detailed feedback",
+                      "Intelligent tutoring  - AI provides one-on-one tutoring at scale",
+                      "Early intervention  - AI identifies students at risk of falling behind",
                     ],
                   },
                   {
                     industry: "Retail & E-commerce",
                     color: "text-orange-600",
                     applications: [
-                      "Product recommendations ??AI drives 35% of Amazon's revenue",
-                      "Demand forecasting ??AI optimises inventory to reduce waste",
-                      "Visual search ??AI lets shoppers search by uploading photos",
-                      "Dynamic pricing ??AI adjusts prices in real time based on demand",
+                      "Product recommendations  - AI drives 35% of Amazon's revenue",
+                      "Demand forecasting  - AI optimises inventory to reduce waste",
+                      "Visual search  - AI lets shoppers search by uploading photos",
+                      "Dynamic pricing  - AI adjusts prices in real time based on demand",
                     ],
                   },
                   {
                     industry: "Legal",
                     color: "text-red-600",
                     applications: [
-                      "Contract review ??AI reviews thousands of pages in minutes",
-                      "Legal research ??AI finds relevant precedents and case law",
-                      "Due diligence ??AI analyses documents in M&A transactions",
-                      "Litigation prediction ??AI estimates case outcomes from historical data",
+                      "Contract review  - AI reviews thousands of pages in minutes",
+                      "Legal research  - AI finds relevant precedents and case law",
+                      "Due diligence  - AI analyses documents in M&A transactions",
+                      "Litigation prediction  - AI estimates case outcomes from historical data",
                     ],
                   },
                   {
                     industry: "Manufacturing",
                     color: "text-yellow-600",
                     applications: [
-                      "Predictive maintenance ??AI prevents machine failures before they happen",
-                      "Quality control ??AI vision systems detect defects at speed and scale",
-                      "Supply chain optimisation ??AI reduces delays and costs",
-                      "Generative design ??AI generates optimal product designs for given constraints",
+                      "Predictive maintenance  - AI prevents machine failures before they happen",
+                      "Quality control  - AI vision systems detect defects at speed and scale",
+                      "Supply chain optimisation  - AI reduces delays and costs",
+                      "Generative design  - AI generates optimal product designs for given constraints",
                     ],
                   },
                 ].map(({ industry, color, applications }) => (
                   <Card key={industry} className="p-4">
                     <h4 className={`font-bold mb-2 ${color}`}>{industry}</h4>
                     <ul className="text-sm space-y-1 text-muted-foreground">
-                      {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">??/span>{a}</li>)}
+                      {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">*</span>{a}</li>)}
                     </ul>
                   </Card>
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -265,14 +276,14 @@ export default function Module7Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Building an AI Strategy</h2>
-              <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy ??rather than reacting randomly to new tools ??puts you in control." />
+              <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy  - rather than reacting randomly to new tools  - puts you in control." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">The Individual AI Strategy Framework</h3>
                 <div className="space-y-4">
                   {[
                     { step: "1. Audit", action: "List the top 10 tasks you spend time on each week. Estimate hours per task." },
                     { step: "2. Identify", action: "For each task, ask: could AI do this, assist with this, or does it need to stay fully human?" },
-                    { step: "3. Experiment", action: "Pick 2?? tasks where AI could help. Spend one week testing AI tools on those specific tasks." },
+                    { step: "3. Experiment", action: "Pick 2-3 tasks where AI could help. Spend one week testing AI tools on those specific tasks." },
                     { step: "4. Measure", action: "Track time saved and quality. Did AI help? If not, why not? Adjust your approach." },
                     { step: "5. Systematise", action: "Turn your best AI workflows into repeatable habits. Document what works for your role." },
                     { step: "6. Share", action: "Teach colleagues what you have learned. Being the person who raises AI fluency in your team is a career advantage." },
@@ -297,7 +308,7 @@ export default function Module7Page() {
                     },
                     {
                       stage: "Lead with the problem, not the technology",
-                      detail: "Do not say 'We should use AI.' Say 'We spend 6 hours every week on status reports ??I found a way to cut that to 45 minutes.' People care about outcomes, not tools.",
+                      detail: "Do not say 'We should use AI.' Say 'We spend 6 hours every week on status reports  - I found a way to cut that to 45 minutes.' People care about outcomes, not tools.",
                     },
                     {
                       stage: "Address the fears directly",
@@ -317,7 +328,7 @@ export default function Module7Page() {
                     },
                   ].map(({ stage, detail }) => (
                     <div key={stage} className="flex gap-3 items-start">
-                      <span className="bg-brand-green text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">??/span>
+                      <span className="bg-brand-green text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">*</span>
                       <div>
                         <p className="font-medium text-sm">{stage}</p>
                         <p className="text-sm text-muted-foreground">{detail}</p>
@@ -326,7 +337,7 @@ export default function Module7Page() {
                   ))}
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ??/Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -334,7 +345,7 @@ export default function Module7Page() {
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Building Your AI Skills</h2>
-              <TextDisplay content="AI fluency is a competitive advantage right now ??and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
+              <TextDisplay content="AI fluency is a competitive advantage right now  - and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">The AI Skills Stack</h3>
                 <div className="space-y-3">
@@ -364,6 +375,7 @@ export default function Module7Page() {
                   ))}
                 </div>
               </div>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
               
             </div>
           )}
@@ -373,23 +385,13 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="Three questions to lock in what you have learned. All three must be answered to complete the module." />
-              <div className="space-y-6">
-                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                  
-                </Card>
-                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                  
-                </Card>
-                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
-                  
-                </Card>
-              </div>
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: your practical AI toolkit ??no-code tools, workflows, and your first AI mini-project." />
+                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: AI Agents." />
                   <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-6")}>
-                      Continue to Module 6 ??
+                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-8")}>
+                      Continue to Module 8
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>
@@ -406,3 +408,5 @@ export default function Module7Page() {
     </div>
   )
 }
+
+

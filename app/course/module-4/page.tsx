@@ -8,13 +8,16 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, ExternalLink } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { moduleQuizData } from "@/lib/module-quiz-data"
 
 export default function Module4Page() {
   const router = useRouter()
@@ -30,6 +33,7 @@ export default function Module4Page() {
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching"])
+  const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -93,11 +97,11 @@ export default function Module4Page() {
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map ? organised by use case ? so you can quickly find the right tool for any task." />
               <Card className="p-5 space-y-2">
-                {["AI writing assistants ? ChatGPT, Claude, Gemini","AI image generation ? Midjourney, DALL¡¤E, Firefly","AI for productivity ? Notion AI, Copilot, Grammarly","AI in creative work ? music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
+                {["AI writing assistants ? ChatGPT, Claude, Gemini","AI image generation ? Midjourney, DALLï¿½ï¿½E, Firefly","AI for productivity ? Notion AI, Copilot, Grammarly","AI in creative work ? music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -138,7 +142,7 @@ export default function Module4Page() {
               </div>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -149,7 +153,7 @@ export default function Module4Page() {
               <TextDisplay content="AI image generators create photorealistic images, illustrations, concept art, and more from a text description. They have transformed design and creative work." />
               <div className="grid md:grid-cols-2 gap-4">
                 <ToolCard
-                  name="DALL¡¤E 3"
+                  name="DALLï¿½ï¿½E 3"
                   url="https://openai.com/dall-e-3"
                   tagline="Built into ChatGPT ? easy to use"
                   free={false}
@@ -178,15 +182,42 @@ export default function Module4Page() {
                 />
               </div>
               <TextDisplay variant="warning" content="Important: Always check the terms of service for AI image tools before using images commercially. Ownership and rights vary significantly between platforms." />
-              <div className="grid md:grid-cols-2 gap-4">
-                
-                
-              </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Pick the right image tool</h3>
-                
-              </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Midjourney",
+                    prompt: "When is Midjourney usually the right fit?",
+                    answer: "Use it when you want striking, stylized visuals quickly and are comfortable working through Discord-based prompting.",
+                  },
+                  {
+                    title: "Adobe Firefly",
+                    prompt: "When is Firefly the safer choice?",
+                    answer: "It is a strong fit when you care about commercial workflow compatibility and tight integration with Adobe creative tools.",
+                  },
+                  {
+                    title: "Stable Diffusion",
+                    prompt: "Why would someone choose Stable Diffusion?",
+                    answer: "It offers the most flexibility for customization, local control, and community models if you are willing to manage more setup.",
+                  },
+                  {
+                    title: "Usage rights",
+                    prompt: "Why should rights be part of tool selection?",
+                    answer: "Because a good-looking result is not enough if the platform's terms or licensing rules make the image risky for commercial use.",
+                  },
+                ]}
+              />
+              <QuickCheckCard
+                prompt="If you need commercially safer image generation inside an existing Adobe workflow, which tool is the best match from this section?"
+                options={[
+                  { id: "a", label: "Adobe Firefly" },
+                  { id: "b", label: "Midjourney" },
+                  { id: "c", label: "Stable Diffusion with random community models" },
+                  { id: "d", label: "Any tool, because rights never matter" },
+                ]}
+                correctOptionId="a"
+                explanation="The section positions Firefly as the strongest fit for commercially safer creative workflows tied to Adobe tools."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -231,7 +262,7 @@ export default function Module4Page() {
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -261,7 +292,7 @@ export default function Module4Page() {
                 <h3 className="font-semibold mb-3 text-brand-orange">Which creative AI tool?</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -287,7 +318,7 @@ export default function Module4Page() {
                   <h3 className="font-semibold mb-3 text-brand-green">Should I Use AI for This? ? Rapid-Fire Quiz</h3>
                   
                 </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -295,15 +326,13 @@ export default function Module4Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              
-              
-              
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now have a solid map of the AI tool landscape. Next: we tackle the harder questions ? AI ethics, bias, and how to be a responsible AI user." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-5")}>
-                      Continue to Module 5 ¡æ
+                      Continue to Module 5 ï¿½ï¿½
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

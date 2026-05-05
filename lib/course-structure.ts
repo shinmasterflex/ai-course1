@@ -97,7 +97,7 @@ export const courseStructure: CourseStructure = {
     {
       id: "module-5",
       slug: "module-5",
-      title: "Module 5: AI for Business & Work",
+      title: "Module 5: AI Ethics, Safety & Society",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
@@ -125,7 +125,7 @@ export const courseStructure: CourseStructure = {
     {
       id: "module-7",
       slug: "module-7",
-      title: "Module 7: AI Ethics, Safety & Society",
+      title: "Module 7: AI for Business & Work",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "ai-bias", title: "AI Bias & Fairness", completed: false },

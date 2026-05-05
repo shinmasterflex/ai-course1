@@ -8,13 +8,16 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2 } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { moduleQuizData } from "@/lib/module-quiz-data"
 
 export default function Module3Page() {
   const router = useRouter()
@@ -30,6 +33,7 @@ export default function Module3Page() {
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "exercise"])
+  const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -80,7 +84,7 @@ export default function Module3Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -113,7 +117,7 @@ export default function Module3Page() {
                 <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
                 
               </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -137,7 +141,7 @@ export default function Module3Page() {
               </div>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -173,18 +177,44 @@ export default function Module3Page() {
               <div>
                 <h3 className="text-xl font-semibold mb-1">Why each component matters ? flip to find out</h3>
                 <p className="text-sm text-muted-foreground mb-3">Click each card to reveal the reasoning behind the component.</p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  
-                  
-                  
-                  
-                </div>
+                <FlipCardGrid
+                  cards={[
+                    {
+                      title: "Role",
+                      prompt: "Why tell the model who it should be?",
+                      answer: "A role narrows the model's frame of reference and helps it adopt the right perspective, tone, and standards for the task.",
+                    },
+                    {
+                      title: "Context",
+                      prompt: "Why add details about your situation?",
+                      answer: "Context reduces ambiguity. The more the model understands your constraints, audience, and goals, the less generic the output becomes.",
+                    },
+                    {
+                      title: "Task",
+                      prompt: "Why state the task explicitly?",
+                      answer: "A clear task tells the model exactly what success looks like, which improves relevance and reduces drift.",
+                    },
+                    {
+                      title: "Format",
+                      prompt: "Why specify the output format?",
+                      answer: "Format instructions turn a decent answer into a usable one by shaping the structure you actually need, like bullets, tables, or steps.",
+                    },
+                  ]}
+                />
               </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Spot the missing component</h3>
-                
-              </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <QuickCheckCard
+                prompt="If a prompt says 'Write a meal plan' but gives no audience, constraints, or output structure, what is it mainly missing?"
+                options={[
+                  { id: "a", label: "Mostly context and format" },
+                  { id: "b", label: "Only spelling corrections" },
+                  { id: "c", label: "A model update" },
+                  { id: "d", label: "Internet access" },
+                ]}
+                correctOptionId="a"
+                explanation="The prompt is under-specified. Adding context and a target format usually makes the response much more useful and tailored."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -204,7 +234,7 @@ export default function Module3Page() {
                   {
                     technique: "Few-Shot Prompting",
                     how: "Give the AI 2-3 examples of what you want before asking it to do the task.",
-                    example: "Convert these sentences to formal English. Example: 'gonna' ¡æ 'going to'. Example: 'wanna' ¡æ 'want to'. Now convert: 'kinda'",
+                    example: "Convert these sentences to formal English. Example: 'gonna' ï¿½ï¿½ 'going to'. Example: 'wanna' ï¿½ï¿½ 'want to'. Now convert: 'kinda'",
                     why: "Examples calibrate exactly what format, style, and depth you expect. Works extremely well for formatting and style tasks.",
                   },
                   {
@@ -282,7 +312,7 @@ export default function Module3Page() {
                   ))}
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -294,7 +324,7 @@ export default function Module3Page() {
               <TextDisplay variant="callout" content="There are no wrong answers here ? the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -302,15 +332,13 @@ export default function Module3Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              
-              
-              
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Outstanding! You now understand how LLMs work and how to prompt them effectively. Next: a tour of the best AI tools available today." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-4")}>
-                      Continue to Module 4 ¡æ
+                      Continue to Module 4 ï¿½ï¿½
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Button } from "@/components/ui/button"
@@ -20,7 +21,6 @@ export default function Module6Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
-  const [projectComplete, setProjectComplete] = useState(false)
 
   const MODULE_ID = "module-6"
   const courseStructure = getCourseStructure()
@@ -71,7 +71,7 @@ export default function Module6Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -124,7 +124,7 @@ export default function Module6Page() {
                 ))}
               </div>
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -155,10 +155,10 @@ export default function Module6Page() {
               </Card>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { title: "Content repurposing", desc: "Trigger: new blog post published ¡æ AI rewrites as 5 social posts ¡æ auto-schedules to Buffer" },
-                  { title: "Meeting prep", desc: "Trigger: calendar event in 1 hour ¡æ AI pulls LinkedIn profiles of attendees ¡æ sends you a briefing email" },
-                  { title: "Customer feedback triage", desc: "Trigger: new review arrives ¡æ AI classifies as positive/neutral/negative ¡æ routes to the right Slack channel" },
-                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket ¡æ AI generates summary + tags ¡æ adds to Notion database" },
+                  { title: "Content repurposing", desc: "Trigger: new blog post published ï¿½ï¿½ AI rewrites as 5 social posts ï¿½ï¿½ auto-schedules to Buffer" },
+                  { title: "Meeting prep", desc: "Trigger: calendar event in 1 hour ï¿½ï¿½ AI pulls LinkedIn profiles of attendees ï¿½ï¿½ sends you a briefing email" },
+                  { title: "Customer feedback triage", desc: "Trigger: new review arrives ï¿½ï¿½ AI classifies as positive/neutral/negative ï¿½ï¿½ routes to the right Slack channel" },
+                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket ï¿½ï¿½ AI generates summary + tags ï¿½ï¿½ adds to Notion database" },
                 ].map(({ title, desc }) => (
                   <Card key={title} className="p-4">
                     <p className="font-semibold text-brand-green mb-1">{title}</p>
@@ -167,11 +167,18 @@ export default function Module6Page() {
                 ))}
               </div>
               
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
-                
-              </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <QuickCheckCard
+                prompt="What makes a good first AI workflow to build for yourself?"
+                options={[
+                  { id: "a", label: "A small repeatable task with a clear trigger and output" },
+                  { id: "b", label: "The biggest possible workflow with many dependencies" },
+                  { id: "c", label: "A workflow that has no measurable outcome" },
+                  { id: "d", label: "Anything that requires full automation immediately" },
+                ]}
+                correctOptionId="a"
+                explanation="The strongest starting workflows are narrow, repeatable, and easy to evaluate so you can learn quickly without creating operational risk."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -193,9 +200,7 @@ export default function Module6Page() {
                 </div>
               </Card>
               
-              {projectComplete && (
-                <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
-              )}
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -271,7 +276,7 @@ export default function Module6Page() {
                   className="bg-brand-green hover:bg-brand-green/90 text-white"
                   onClick={() => router.push("/course/module-7")}
                 >
-                  Continue to Module 7 ¡æ
+                  Continue to Module 7 ï¿½ï¿½
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard

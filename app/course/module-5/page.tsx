@@ -1,5 +1,5 @@
 /**
- * MODULE 5: AI FOR BUSINESS & WORK
+ * MODULE 5: AI ETHICS, SAFETY & SOCIETY
  */
 
 "use client"
@@ -10,11 +10,13 @@ import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, AlertTriangle, Shield } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { moduleQuizData } from "@/lib/module-quiz-data"
 
 export default function Module5Page() {
   const router = useRouter()
@@ -30,6 +32,7 @@ export default function Module5Page() {
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -80,7 +83,7 @@ export default function Module5Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -122,7 +125,7 @@ export default function Module5Page() {
                 <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
                 
               </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -148,7 +151,7 @@ export default function Module5Page() {
               </Card>
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -216,7 +219,7 @@ export default function Module5Page() {
                 <h3 className="font-semibold mb-3 text-brand-orange">Real scenario ? what would you do?</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -244,7 +247,7 @@ export default function Module5Page() {
                 <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -273,7 +276,7 @@ export default function Module5Page() {
                 <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
                 
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -281,15 +284,13 @@ export default function Module5Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              
-              
-              
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: AI Agents ? how autonomous AI systems plan, act, and complete multi-step tasks on your behalf." />
                   <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-9")}>
-                      Continue to Module 8 ¡æ
+                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-6")}>
+                      Continue to Module 6 ï¿½ï¿½
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>
