@@ -3,6 +3,8 @@
 import { getAuthCallbackUrl } from '@/lib/site-url'
 import { createClient } from '@/lib/supabase'
 import { TurnstileWidget } from '@/components/auth/turnstile-widget'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -137,156 +139,187 @@ export default function SignInPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="w-full max-w-md space-y-6 rounded bg-white p-8 shadow-md">
-        <h1 className="text-center text-2xl font-bold">
-          {showResetForm ? 'Reset Your Password' : 'Sign in to your LMS Account'}
-        </h1>
-
-        {error && (
-          <div className="rounded border border-red-400 bg-red-50 p-3 text-sm text-red-800">
-            {error}
-          </div>
-        )}
-
-        {resetSent ? (
-          <div className="rounded border border-green-400 bg-green-50 p-4 text-center">
-            <p className="font-medium text-green-800 mb-2">Check your email!</p>
-            <p className="text-sm text-green-700">
-              We've sent a password reset link to <strong>{email}</strong>
+    <main className="min-h-screen bg-gradient-to-br from-brand-green/15 via-sky-50 to-brand-orange/15 px-4 py-10 md:py-14">
+      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl border border-brand-indigo/15 bg-white/80 shadow-xl backdrop-blur lg:grid-cols-2">
+        <aside className="relative hidden border-r border-brand-indigo/10 bg-gradient-to-br from-brand-green/10 via-white to-brand-orange/10 p-8 lg:block">
+          <div className="space-y-5">
+            <p className="inline-flex rounded-full border border-brand-green/35 bg-white px-3 py-1 text-xs font-semibold text-brand-indigo">
+              Secure Sign In
             </p>
-            <button
-              onClick={() => {
-                setShowResetForm(false)
-                setResetSent(false)
-                setError(null)
-              }}
-              className="mt-3 text-sm text-blue-600 hover:underline"
-            >
-              ??Back to Sign In
-            </button>
-          </div>
-        ) : showResetForm ? (
-          <form onSubmit={handleResetPassword} className="space-y-4">
-            <p className="text-sm text-gray-600">
-              Enter your email address and we'll send you a link to reset your password.
+            <h2 className="text-3xl font-semibold text-brand-indigo">Welcome back to your AI learning dashboard</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Continue from where you left off with secure authentication, bot protection, and course progress tracking.
             </p>
-            <div>
-              <label className="block text-sm font-medium">Email Address</label>
-              <input
-                type="email"
-                required
-                className="w-full rounded border p-2 text-black"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-              />
-            </div>
-
-            <input
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              value={honeypot}
-              onChange={(e) => setHoneypot(e.target.value)}
-              className="hidden"
-              aria-hidden="true"
+          </div>
+          <div className="mt-8 overflow-hidden rounded-2xl border border-brand-indigo/10 bg-white">
+            <Image
+              src="/graphics/auth-security.svg"
+              alt="Security illustration for account authentication"
+              width={860}
+              height={620}
+              className="h-auto w-full"
+              priority
             />
+          </div>
+          <div className="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-brand-indigo">
+            <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 px-2 py-2">Protected Login</div>
+            <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 px-2 py-2">Course Sync</div>
+            <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 px-2 py-2">Fast Recovery</div>
+          </div>
+        </aside>
 
-            {isTurnstileEnabled && (
-              <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
+        <section className="p-6 md:p-8 lg:p-10">
+          <div className="mx-auto w-full max-w-md space-y-6">
+            <h1 className="text-center text-2xl font-bold text-brand-indigo md:text-3xl">
+              {showResetForm ? 'Reset Your Password' : 'Sign in to your LMS Account'}
+            </h1>
+
+            {error && (
+              <div className="rounded border border-red-400 bg-red-50 p-3 text-sm text-red-800">
+                {error}
+              </div>
             )}
 
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowResetForm(false)
-                  setError(null)
-                }}
-                className="flex-1 rounded border border-gray-300 p-2 text-gray-700 hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 rounded bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
-              >
-                {loading ? 'Sending...' : 'Send Reset Link'}
-              </button>
-            </div>
-          </form>
-        ) : (
-          <>
-            <form onSubmit={handleSignIn} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium">Email Address</label>
-                <input
-                  type="email"
-                  required
-                  className="w-full rounded border p-2 text-black"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                />
+            {resetSent ? (
+              <div className="rounded border border-green-400 bg-green-50 p-4 text-center">
+                <p className="mb-2 font-medium text-green-800">Check your email!</p>
+                <p className="text-sm text-green-700">
+                  We&apos;ve sent a password reset link to <strong>{email}</strong>
+                </p>
+                <button
+                  onClick={() => {
+                    setShowResetForm(false)
+                    setResetSent(false)
+                    setError(null)
+                  }}
+                  className="mt-3 text-sm font-medium text-brand-indigo hover:underline"
+                >
+                  Back to Sign In
+                </button>
               </div>
+            ) : showResetForm ? (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Enter your email address and we&apos;ll send you a link to reset your password.
+                </p>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium">Password</label>
                 <input
-                  type="password"
-                  required
-                  className="w-full rounded border p-2 text-black"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="hidden"
+                  aria-hidden="true"
                 />
-              </div>
 
-              <input
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-                className="hidden"
-                aria-hidden="true"
-              />
+                {isTurnstileEnabled && (
+                  <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
+                )}
 
-              {isTurnstileEnabled && (
-                <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
-              )}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowResetForm(false)
+                      setError(null)
+                    }}
+                    className="flex-1 rounded-lg border border-brand-indigo/20 p-2 text-gray-700 hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 rounded-lg bg-brand-indigo p-2 text-white hover:opacity-90 disabled:bg-gray-400"
+                  >
+                    {loading ? 'Sending...' : 'Send Reset Link'}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <>
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">Email Address</label>
+                    <input
+                      type="email"
+                      required
+                      className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                    />
+                  </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
-              >
-                {loading ? 'Signing in...' : 'Sign In'}
-              </button>
-            </form>
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">Password</label>
+                    <input
+                      type="password"
+                      required
+                      className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                    />
+                  </div>
 
-            <div className="text-center">
-              <button
-                onClick={() => {
-                  setShowResetForm(true)
-                  setError(null)
-                }}
-                className="text-sm text-blue-600 hover:underline"
-              >
-                Forgot your password?
-              </button>
-            </div>
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="hidden"
+                    aria-hidden="true"
+                  />
 
-            <p className="text-center text-sm text-gray-600">
-              Need an account?{' '}
-              <a href="/register" className="font-medium text-blue-600 hover:underline">
-                Register here
-              </a>
-            </p>
-          </>
-        )}
+                  {isTurnstileEnabled && (
+                    <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full rounded-lg bg-brand-orange p-2.5 text-white hover:bg-brand-orange/90 disabled:bg-gray-400"
+                  >
+                    {loading ? 'Signing in...' : 'Sign In'}
+                  </button>
+                </form>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      setShowResetForm(true)
+                      setError(null)
+                    }}
+                    className="text-sm font-medium text-brand-indigo hover:underline"
+                  >
+                    Forgot your password?
+                  </button>
+                </div>
+
+                <p className="text-center text-sm text-gray-600">
+                  Need an account?{' '}
+                  <Link href="/register" className="font-medium text-brand-indigo hover:underline">
+                    Register here
+                  </Link>
+                </p>
+              </>
+            )}
+          </div>
+        </section>
       </div>
     </main>
   )

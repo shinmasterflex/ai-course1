@@ -6,295 +6,207 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { PublicHeader } from "@/components/layout/public-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2, Brain, Zap, Shield, BookOpen, Cpu, MessageSquare, Wrench } from "lucide-react"
+import { ArrowRight, CheckCircle2, CircuitBoard, Sparkles } from "lucide-react"
+import { getCourseStructure } from "@/lib/course-structure"
+
+function modulePhase(index: number): string {
+  if (index <= 2) return "Foundations"
+  if (index <= 5) return "Practice"
+  return "Advanced"
+}
 
 export default function HomePage() {
+  const modules = getCourseStructure().modules
+
   return (
     <div className="min-h-screen bg-background">
       <PublicHeader />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-green/10 via-emerald-50 to-brand-orange/10 py-20 md:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-green/20 via-sky-50 to-brand-orange/20 py-20 md:py-28">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-brand-green/20 blur-3xl" />
+          <div className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-brand-orange/20 blur-3xl" />
+        </div>
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="inline-block bg-brand-green/10 text-brand-green text-sm font-semibold px-4 py-2 rounded-full border border-brand-green/20">
-              Free Beginner Course ? No Experience Required
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand-green/30 bg-white/80 px-4 py-2 text-sm font-semibold text-brand-indigo">
+                <Sparkles className="h-4 w-4 text-brand-orange" />
+                AI Learning System, Zero to Confident
+              </div>
+              <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
+                <span className="text-brand-indigo">Learn AI with</span>{" "}
+                <span className="brand-wordmark bg-gradient-to-r from-brand-indigo via-brand-orange to-brand-green bg-clip-text text-transparent">Cogniijn</span>
+              </h1>
+              <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
+                Explore a complete AI path across 10 modules, from fundamentals and prompting to agents, ethics, and future trends.
+              </p>
+              <div className="flex flex-col gap-4 pt-2 sm:flex-row">
+                <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
+                  <Link href="/sign-in">Start Learning Free</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-lg px-10 border-brand-green/30">
+                  <Link href="/demo">Preview Module 0</Link>
+                </Button>
+              </div>
+              <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> {modules.length} Modules</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Hands-on Activities</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Beginner Friendly</span>
+              </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              <span className="text-brand-orange">Understand AI</span>{" "}
-              <span className="text-brand-green">From Zero</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              A clear, jargon-free introduction to Artificial Intelligence. Learn what AI is, how it works, how to use it, and how to think critically about it ? all in one course.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                <Link href="/sign-in">Start Learning Free</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="text-lg px-10">
-                <Link href="/demo">Preview Module 0</Link>
-              </Button>
-            </div>
-            <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> 7 Modules</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Interactive Exercises</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> No Coding Required</span>
+
+            <div className="relative">
+              <Card className="overflow-hidden border-brand-green/25 bg-white/85 shadow-xl backdrop-blur">
+                <CardContent className="space-y-5 p-6 md:p-8">
+                  <h3 className="text-2xl font-semibold text-brand-indigo">Curriculum Snapshot</h3>
+                  <p className="text-muted-foreground">
+                    Structured modules, interactive checkpoints, and practical guidance so learners can apply AI confidently.
+                  </p>
+                  <div className="overflow-hidden rounded-2xl border border-brand-indigo/15 bg-white">
+                    <Image
+                      src="/graphics/ai-learning-network.svg"
+                      alt="Illustrated map of connected AI concepts"
+                      width={960}
+                      height={680}
+                      className="h-auto w-full"
+                      priority
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-center text-sm font-semibold">
+                    <div className="rounded-xl border border-brand-green/30 bg-brand-green/10 p-3 text-brand-indigo">Prompting</div>
+                    <div className="rounded-xl border border-brand-orange/30 bg-brand-orange/10 p-3 text-brand-indigo">Tools</div>
+                    <div className="rounded-xl border border-brand-green/30 bg-brand-green/10 p-3 text-brand-indigo">Agents</div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="pointer-events-none absolute -left-6 -top-6 hidden rounded-xl border border-brand-green/30 bg-white/95 px-4 py-3 text-sm shadow-lg md:block">
+                <div className="font-semibold text-brand-indigo">10 Modules</div>
+                <div className="text-xs text-muted-foreground">From basics to strategy</div>
+              </div>
+
+              <div className="pointer-events-none absolute -bottom-5 -right-4 hidden rounded-xl border border-brand-orange/30 bg-white/95 px-4 py-3 text-sm shadow-lg md:block">
+                <div className="font-semibold text-brand-indigo">Hands-On Practice</div>
+                <div className="text-xs text-muted-foreground">Lessons plus checkpoints</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-background">
+      <section className="bg-background py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-4xl font-bold">Why Learn AI?</h2>
-              <p className="text-xl text-muted-foreground">
-                AI is reshaping every industry. You don&apos;t need to be a programmer to benefit from it ? but you do need to understand it.
-              </p>
-            </div>
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Card className="overflow-hidden border-brand-indigo/20 bg-white/90">
+              <CardHeader>
+                <CardTitle className="text-brand-indigo">How Concepts Connect</CardTitle>
+                <CardDescription>Visual links between data, models, reasoning, and agent workflows.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Image
+                  src="/graphics/ai-learning-network.svg"
+                  alt="Network diagram of learning concepts"
+                  width={960}
+                  height={680}
+                  className="h-auto w-full rounded-xl border border-brand-indigo/10"
+                />
+              </CardContent>
+            </Card>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="border-2 hover:border-brand-green hover:shadow-2xl transition-all duration-300 group">
-                <CardHeader>
-                  <div className="bg-brand-green/10 w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Brain className="h-10 w-10 text-brand-green" />
-                  </div>
-                  <CardTitle>Beginner Friendly</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">No math, no code. Just clear explanations with real-world examples anyone can follow.</p>
-                </CardContent>
-              </Card>
+            <Card className="overflow-hidden border-brand-green/20 bg-white/90">
+              <CardHeader>
+                <CardTitle className="text-brand-indigo">Progress At A Glance</CardTitle>
+                <CardDescription>Track momentum with clear visual progress states.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Image
+                  src="/graphics/progress-rings.svg"
+                  alt="Radial progress chart illustration"
+                  width={820}
+                  height={520}
+                  className="h-auto w-full rounded-xl border border-brand-green/10"
+                />
+              </CardContent>
+            </Card>
 
-              <Card className="border-2 hover:border-brand-orange hover:shadow-2xl transition-all duration-300 group">
-                <CardHeader>
-                  <div className="bg-brand-orange/10 w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Zap className="h-10 w-10 text-brand-orange" />
-                  </div>
-                  <CardTitle>Practical & Actionable</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Learn how to use AI tools in your daily life and work ? starting from day one.</p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:border-brand-green hover:shadow-2xl transition-all duration-300 group">
-                <CardHeader>
-                  <div className="bg-brand-green/10 w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Shield className="h-10 w-10 text-brand-green" />
-                  </div>
-                  <CardTitle>Critical Thinking</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Understand AI ethics, bias, and safety so you can navigate the AI era with confidence.</p>
-                </CardContent>
-              </Card>
-            </div>
+            <Card className="overflow-hidden border-brand-orange/20 bg-white/90">
+              <CardHeader>
+                <CardTitle className="text-brand-indigo">Roadmap Journey</CardTitle>
+                <CardDescription>A path view that shows where each module fits in the arc.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Image
+                  src="/graphics/module-path.svg"
+                  alt="Curved path showing learning modules"
+                  width={960}
+                  height={340}
+                  className="h-auto w-full rounded-xl border border-brand-orange/10"
+                />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* Course Overview */}
-      <section className="py-20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+      <section className="bg-background py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto space-y-12">
+          <div className="mx-auto max-w-5xl space-y-12">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl font-bold">What You&apos;ll Learn</h2>
+              <h2 className="text-4xl font-bold text-brand-indigo">Overview of All Modules</h2>
               <p className="text-xl text-muted-foreground">
-                A step-by-step journey from &quot;What is AI?&quot; to confidently using AI tools in the real world.
+                Follow a guided journey through every part of modern AI. Start with core concepts and finish with agents, strategy, and the future of AI.
               </p>
             </div>
 
-            {/* Phase 1 */}
-            <div>
-              <h3 className="text-2xl font-bold text-brand-green mb-4">Phase 1: Understanding AI</h3>
-              <div className="space-y-4">
-                <Card className="border-2 hover:border-brand-green hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-green/10 p-3 rounded-lg">
-                        <BookOpen className="h-6 w-6 text-brand-green" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 0: Welcome to AI</CardTitle>
-                        <CardDescription className="text-base mt-1">Orient yourself ? what is this course and why does AI matter to you right now?</CardDescription>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {modules.map((module, index) => (
+                <Card key={module.id} className="group overflow-hidden border-2 border-brand-green/20 transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange/40 hover:shadow-xl">
+                  <CardHeader className="space-y-3">
+                    <div className="rounded-lg border border-brand-green/20 bg-gradient-to-r from-brand-green/10 to-brand-orange/10 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold text-brand-indigo/80">
+                        <span>{module.id.replace("module-", "Module ")}</span>
+                        <span>{module.sections.length} sections</span>
                       </div>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? How to use this course for maximum learning</li>
-                      <li>? AI touchpoints already in your daily life</li>
-                      <li>? The road ahead: what you will know by the end</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-2 hover:border-brand-orange hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-orange/10 p-3 rounded-lg">
-                        <Cpu className="h-6 w-6 text-brand-orange" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 1: What Is Artificial Intelligence?</CardTitle>
-                        <CardDescription className="text-base mt-1">Cut through the hype. Learn a real, grounded definition of AI.</CardDescription>
-                      </div>
+                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide">
+                      <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-brand-indigo">{modulePhase(index)}</span>
                     </div>
+                    <CardTitle className="text-xl leading-snug text-brand-indigo">{module.title}</CardTitle>
+                    <CardDescription className="text-base">
+                      Build practical understanding through concise lessons, examples, and interactive checks.
+                    </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? Defining AI in plain language</li>
-                      <li>? A brief history: from chess computers to ChatGPT</li>
-                      <li>? Narrow AI vs. General AI ? what we actually have today</li>
-                      <li>? Common myths debunked</li>
-                    </ul>
-                  </CardContent>
                 </Card>
-
-                <Card className="border-2 hover:border-brand-green hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-green/10 p-3 rounded-lg">
-                        <Brain className="h-6 w-6 text-brand-green" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 2: How Machines Learn</CardTitle>
-                        <CardDescription className="text-base mt-1">Peek inside the black box ? without any equations.</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? What is machine learning? (Simple analogy-based explanation)</li>
-                      <li>? Why training data is everything</li>
-                      <li>? Neural networks as pattern-recognition machines</li>
-                      <li>? What AI genuinely cannot do</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
+              ))}
             </div>
 
-            {/* Phase 2 */}
-            <div>
-              <h3 className="text-2xl font-bold text-brand-orange mb-4">Phase 2: Using AI</h3>
-              <div className="space-y-4">
-                <Card className="border-2 hover:border-brand-orange hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-orange/10 p-3 rounded-lg">
-                        <MessageSquare className="h-6 w-6 text-brand-orange" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 3: Large Language Models & Prompting</CardTitle>
-                        <CardDescription className="text-base mt-1">Master the skill of talking to AI ? and getting great results every time.</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? How ChatGPT and similar tools actually work</li>
-                      <li>? The anatomy of an effective prompt</li>
-                      <li>? Techniques: role prompting, chain-of-thought, few-shot</li>
-                      <li>? Hands-on practice exercises</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-2 hover:border-brand-green hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-green/10 p-3 rounded-lg">
-                        <Zap className="h-6 w-6 text-brand-green" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 4: AI Tools for Everyday Life</CardTitle>
-                        <CardDescription className="text-base mt-1">A guided tour of the most useful AI tools available today.</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>- AI writing assistants: ChatGPT, Claude, Gemini</li>
-                      <li>- AI image generation: Midjourney, DALL-E, Firefly</li>
-                      <li>- Productivity tools: Notion AI, Copilot, Grammarly</li>
-                      <li>- How to choose the right tool for any task</li>
-                    </ul>
-                  </CardContent>
-                </Card>
+            <div className="rounded-2xl border border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10 p-8 text-center">
+              <h3 className="text-2xl font-bold text-brand-indigo">Start Your AI Journey Today</h3>
+              <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+                Create your account and begin with Module 0. The platform tracks your progress across every module.
+              </p>
+              <div className="mt-6 flex flex-col justify-center gap-4 sm:flex-row">
+                <Button asChild size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                  <Link href="/register" className="inline-flex items-center gap-2">
+                    Create Free Account
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-brand-green/30">
+                  <Link href="/course" className="inline-flex items-center gap-2">
+                    View Course Dashboard
+                    <CircuitBoard className="h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
-
-            {/* Phase 3 */}
-            <div>
-              <h3 className="text-2xl font-bold text-brand-green mb-4">Phase 3: Thinking Critically & Building</h3>
-              <div className="space-y-4">
-                <Card className="border-2 hover:border-brand-green hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-green/10 p-3 rounded-lg">
-                        <Shield className="h-6 w-6 text-brand-green" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 5: AI Ethics, Safety & Society</CardTitle>
-                        <CardDescription className="text-base mt-1">Become an informed, responsible AI user.</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? How AI bias forms and why it matters</li>
-                      <li>? Privacy: what data AI systems collect about you</li>
-                      <li>? Deepfakes and misinformation in the AI age</li>
-                      <li>? The future of AI regulation</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-2 hover:border-brand-orange hover:shadow-xl transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-brand-orange/10 p-3 rounded-lg">
-                        <Wrench className="h-6 w-6 text-brand-orange" />
-                      </div>
-                      <div>
-                        <CardTitle>Module 6: Your AI Toolkit</CardTitle>
-                        <CardDescription className="text-base mt-1">Put it all together and build your first AI-powered workflow.</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? No-code AI tools you can use today</li>
-                      <li>? Building simple AI automations</li>
-                      <li>? Your first AI mini-project</li>
-                      <li>? Curated resources for going deeper</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center space-y-6">
-            <h2 className="text-4xl font-bold">Ready to Start?</h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of people who have already taken their first step into the AI era. No experience needed.
-            </p>
-            <Button asChild size="lg" className="text-lg px-12 bg-brand-orange hover:bg-brand-orange/90 text-white">
-              <Link href="/sign-in">Start Learning Free</Link>
-            </Button>
           </div>
         </div>
       </section>

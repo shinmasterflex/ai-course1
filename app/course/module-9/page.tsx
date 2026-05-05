@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -65,6 +66,12 @@ export default function Module9Page() {
             <p className="text-lg text-muted-foreground mb-4">Where AI is heading  - and how to prepare for what comes next</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
+
+          <ModuleHero
+            eyebrow="Module 9"
+            title="Plan for the next wave of AI change"
+            description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
+          />
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

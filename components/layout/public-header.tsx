@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 
 export function PublicHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-emerald-50/50 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-sky-50/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-top gap-3">
-          <Image src="/logo1.svg" alt="SwiftCourse Logo" width={32} height={32} className="h-8 w-8" priority />
-          <div className="text-3xl">
-            <span className="font-serif font-light italic text-brand-orange">Swift </span>
-            <span className="font-heading font-light text-brand-green">Course</span>
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image src="/logo1.svg" alt="Cogniijn Logo" width={40} height={28} className="h-7 w-10" priority />
+          <div className="text-[1.9rem] leading-none sm:text-[2rem]">
+            <span className="brand-wordmark text-brand-orange">Cogniijn</span>
           </div>
         </Link>
 

@@ -2,6 +2,8 @@
 
 import { getAuthCallbackUrl } from '@/lib/site-url'
 import { createClient } from '@/lib/supabase'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 
 export default function DebugAuthPage() {
@@ -66,17 +68,33 @@ export default function DebugAuthPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-50">
-      <div className="w-full max-w-2xl space-y-6 rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-800">Auth Debug Tool</h1>
-        <p className="text-center text-gray-600">Diagnose authentication issues</p>
+    <main className="min-h-screen bg-gradient-to-br from-brand-green/15 via-sky-50 to-brand-orange/15 p-4 md:p-8">
+      <div className="mx-auto w-full max-w-5xl space-y-6 overflow-hidden rounded-2xl border border-brand-indigo/15 bg-white/85 p-6 shadow-xl backdrop-blur md:p-8">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="space-y-3">
+            <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
+              Internal Debug Utility
+            </p>
+            <h1 className="text-3xl font-bold text-brand-indigo">Auth Debug Tool</h1>
+            <p className="text-sm text-muted-foreground">Diagnose authentication, session, and reset flow issues.</p>
+          </div>
+          <div className="overflow-hidden rounded-xl border border-brand-indigo/10 bg-white">
+            <Image
+              src="/graphics/auth-security.svg"
+              alt="Authentication security visual"
+              width={860}
+              height={620}
+              className="h-auto w-full"
+            />
+          </div>
+        </div>
 
-        <div className="space-y-4 border-t pt-6">
+        <div className="space-y-4 border-t border-brand-indigo/10 pt-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
-              className="w-full rounded-lg border border-gray-300 p-3 text-black"
+              className="w-full rounded-lg border border-brand-indigo/20 p-3 text-black"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your.email@example.com"
@@ -84,10 +102,10 @@ export default function DebugAuthPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Password</label>
             <input
               type="password"
-              className="w-full rounded-lg border border-gray-300 p-3 text-black"
+              className="w-full rounded-lg border border-brand-indigo/20 p-3 text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
@@ -97,21 +115,21 @@ export default function DebugAuthPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <button
               onClick={testLogin}
-              className="rounded-lg bg-blue-600 px-4 py-3 text-white font-medium hover:bg-blue-700 transition"
+              className="rounded-lg bg-brand-indigo px-4 py-3 text-white font-medium transition hover:opacity-90"
             >
               Test Login
             </button>
             
             <button
               onClick={checkSession}
-              className="rounded-lg bg-green-600 px-4 py-3 text-white font-medium hover:bg-green-700 transition"
+              className="rounded-lg bg-brand-green px-4 py-3 text-white font-medium transition hover:opacity-90"
             >
               Check Session
             </button>
 
             <button
               onClick={resetPassword}
-              className="rounded-lg bg-orange-600 px-4 py-3 text-white font-medium hover:bg-orange-700 transition"
+              className="rounded-lg bg-brand-orange px-4 py-3 text-white font-medium transition hover:opacity-90"
             >
               Reset Password
             </button>
@@ -119,15 +137,15 @@ export default function DebugAuthPage() {
         </div>
 
         {result && (
-          <div className="mt-6 rounded-lg bg-gray-100 p-4">
-            <h3 className="font-bold mb-2 text-gray-800">Result:</h3>
-            <pre className="text-xs overflow-auto max-h-96 bg-gray-900 text-green-400 p-4 rounded">
+          <div className="mt-6 rounded-lg border border-brand-indigo/10 bg-gray-100 p-4">
+            <h3 className="mb-2 font-bold text-gray-800">Result:</h3>
+            <pre className="max-h-96 overflow-auto rounded bg-gray-900 p-4 text-xs text-green-400">
               {JSON.stringify(result, null, 2)}
             </pre>
           </div>
         )}
 
-        <div className="border-t pt-6 space-y-3">
+        <div className="space-y-3 border-t border-brand-indigo/10 pt-6">
           <h3 className="font-semibold text-gray-800">Common Issues:</h3>
           <ul className="space-y-2 text-sm text-gray-700">
             <li className="flex items-start gap-2">
@@ -149,19 +167,13 @@ export default function DebugAuthPage() {
           </ul>
         </div>
 
-        <div className="flex justify-center gap-4 border-t pt-6">
-          <a 
-            href="/sign-in" 
-            className="text-blue-600 hover:underline font-medium"
-          >
-            ??Back to Sign In
-          </a>
-          <a 
-            href="/register" 
-            className="text-blue-600 hover:underline font-medium"
-          >
-            Create New Account ??
-          </a>
+        <div className="flex justify-center gap-4 border-t border-brand-indigo/10 pt-6">
+          <Link href="/sign-in" className="font-medium text-brand-indigo hover:underline">
+            Back to Sign In
+          </Link>
+          <Link href="/register" className="font-medium text-brand-indigo hover:underline">
+            Create New Account
+          </Link>
         </div>
       </div>
     </main>

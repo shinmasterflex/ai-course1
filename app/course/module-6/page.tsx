@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Wrench, ArrowRight, BookOpen, Code, Zap } from "lucide-react"
@@ -57,15 +58,21 @@ export default function Module6Page() {
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 6: Your AI Toolkit</h1>
-            <p className="text-lg text-muted-foreground mb-4">Put it all together ? build your first AI-powered workflow</p>
+            <p className="text-lg text-muted-foreground mb-4">Put it all together - build your first AI-powered workflow</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
+
+          <ModuleHero
+            eyebrow="Module 6"
+            title="Design your first repeatable AI workflow"
+            description="Move from concepts to execution by combining no-code tools into a practical system you can deploy this week."
+          />
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="This is the final module ? and the most hands-on. You will explore no-code AI tools, design a simple AI workflow, complete a mini-project, and leave with a curated list of resources for going deeper." />
+              <TextDisplay variant="callout" content="This is the final module - and the most hands-on. You will explore no-code AI tools, design a simple AI workflow, complete a mini-project, and leave with a curated list of resources for going deeper." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">What success looks like here</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -110,8 +117,8 @@ export default function Module6Page() {
                     category: "Automation & Workflows",
                     icon: Zap,
                     tools: [
-                      { name: "Zapier with AI", desc: "Connect apps and automate tasks ? add AI steps that summarise, classify, or generate content as part of any automation." },
-                      { name: "Make (formerly Integromat)", desc: "Visual workflow builder with AI modules ? more powerful than Zapier for complex workflows." },
+                      { name: "Zapier with AI", desc: "Connect apps and automate tasks - add AI steps that summarise, classify, or generate content as part of any automation." },
+                      { name: "Make (formerly Integromat)", desc: "Visual workflow builder with AI modules - more powerful than Zapier for complex workflows." },
                       { name: "n8n", desc: "Open-source automation with AI nodes. Self-hostable. Used by technical non-coders who want more control." },
                     ],
                   },
@@ -120,7 +127,7 @@ export default function Module6Page() {
                     icon: Wrench,
                     tools: [
                       { name: "Bubble + AI Plugins", desc: "Full-featured no-code web app builder with AI integration for building consumer-facing AI products." },
-                      { name: "Glide", desc: "Build mobile apps with AI features from spreadsheet data ? no code required." },
+                      { name: "Glide", desc: "Build mobile apps with AI features from spreadsheet data - no code required." },
                       { name: "Retool", desc: "Build internal tools with AI capabilities. Popular for data-heavy business tools." },
                     ],
                   },
@@ -128,7 +135,7 @@ export default function Module6Page() {
                     category: "Custom Chatbots & AI Assistants",
                     icon: BookOpen,
                     tools: [
-                      { name: "Chatbase", desc: "Upload your documents and create a custom chatbot trained on your content ? no code, minutes to set up." },
+                      { name: "Chatbase", desc: "Upload your documents and create a custom chatbot trained on your content - no code, minutes to set up." },
                       { name: "CustomGPT.ai", desc: "Build GPT-powered chatbots trained on your website or documents." },
                       { name: "Botpress", desc: "More advanced chatbot builder with AI, flows, and integrations." },
                     ],
@@ -168,7 +175,7 @@ export default function Module6Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Building Simple AI Workflows</h2>
-              <TextDisplay content="An AI workflow is a series of steps where AI performs tasks automatically in response to a trigger. You connect existing tools ? no coding required." />
+              <TextDisplay content="An AI workflow is a series of steps where AI performs tasks automatically in response to a trigger. You connect existing tools - no coding required." />
               <Card className="p-5">
                 <h3 className="font-semibold mb-4 text-brand-orange">The easiest first workflow recipe</h3>
                 <div className="space-y-3 text-sm">
@@ -201,7 +208,7 @@ export default function Module6Page() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-muted-foreground mt-3">Result: Every newsletter you receive is automatically summarised and filed ? without you doing anything.</p>
+                <p className="text-xs text-muted-foreground mt-3">Result: Every newsletter you receive is automatically summarised and filed - without you doing anything.</p>
               </Card>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
@@ -248,7 +255,7 @@ export default function Module6Page() {
               <TextDisplay variant="callout" content="The best way to learn is by doing. Your task: design a real AI-powered workflow you could actually use in your own life or work." />
               <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3">Mini-Project: Design Your Workflow</h3>
-                <p className="text-sm text-muted-foreground mb-4">Answer the four questions below to design your workflow. There are no wrong answers ? this is about thinking it through concretely.</p>
+                <p className="text-sm text-muted-foreground mb-4">Answer the four questions below to design your workflow. There are no wrong answers - this is about thinking it through concretely.</p>
                 <div className="space-y-3 text-sm">
                   {[
                     "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
@@ -317,7 +324,7 @@ export default function Module6Page() {
               </Card>
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">Your 30-Day AI Challenge</h3>
-                <p className="text-sm text-muted-foreground">The fastest way to build real AI skill is daily practice. Here is a one-month challenge ? each card reveals a daily micro-task that takes under 15 minutes.</p>
+                <p className="text-sm text-muted-foreground">The fastest way to build real AI skill is daily practice. Here is a one-month challenge - each card reveals a daily micro-task that takes under 15 minutes.</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   {[
                     "Week 1: use AI once per day to summarise or draft something you were already doing.",
@@ -336,28 +343,28 @@ export default function Module6Page() {
                 <div className="grid md:grid-cols-2 gap-4">
                   {[
                     { category: "Free Courses", icon: BookOpen, resources: [
-                      "fast.ai ? Practical Deep Learning for Coders (free, hands-on)",
-                      "Google's AI Essentials ? free certificate course",
-                      "DeepLearning.AI Short Courses ? free 1-hour deep dives",
+                      "fast.ai - Practical Deep Learning for Coders (free, hands-on)",
+                      "Google's AI Essentials - free certificate course",
+                      "DeepLearning.AI Short Courses - free 1-hour deep dives",
                       "Coursera: AI for Everyone by Andrew Ng (highly recommended)",
                     ]},
                     { category: "Books (Non-Technical)", icon: BookOpen, resources: [
-                      "The Age of AI ? Henry Kissinger, Eric Schmidt & Daniel Huttenlocher",
-                      "Human Compatible ? Stuart Russell (AI safety perspective)",
-                      "Atlas of AI ? Kate Crawford (critical perspective)",
-                      "Co-Intelligence ? Ethan Mollick (practical AI use)",
+                      "The Age of AI - Henry Kissinger, Eric Schmidt & Daniel Huttenlocher",
+                      "Human Compatible - Stuart Russell (AI safety perspective)",
+                      "Atlas of AI - Kate Crawford (critical perspective)",
+                      "Co-Intelligence - Ethan Mollick (practical AI use)",
                     ]},
                     { category: "Stay Current", icon: Zap, resources: [
-                      "Ben's Bites newsletter ? daily AI news, beginner-friendly",
-                      "The AI Breakdown podcast ? news and analysis",
-                      "Simon Willison's blog ? technical but accessible AI updates",
+                      "Ben's Bites newsletter - daily AI news, beginner-friendly",
+                      "The AI Breakdown podcast - news and analysis",
+                      "Simon Willison's blog - technical but accessible AI updates",
                       "MIT Technology Review AI section",
                     ]},
                     { category: "If You Want to Code", icon: Code, resources: [
                       "Python.org beginner tutorials (Python is the AI language)",
                       "fast.ai's Practical Deep Learning course",
-                      "Hugging Face tutorials ? work with real AI models",
-                      "LangChain documentation ? build AI applications",
+                      "Hugging Face tutorials - work with real AI models",
+                      "LangChain documentation - build AI applications",
                     ]},
                   ].map(({ category, icon: Icon, resources }) => (
                     <Card key={category} className="p-4">
@@ -371,7 +378,7 @@ export default function Module6Page() {
               </div>
               <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
                 <h3 className="text-2xl font-bold mb-3">You are ready.</h3>
-                <p className="text-muted-foreground mb-4">The AI era is not something that is coming ? it is already here. You now have the foundation to navigate it with confidence, curiosity, and critical thinking.</p>
+                <p className="text-muted-foreground mb-4">The AI era is not something that is coming - it is already here. You now have the foundation to navigate it with confidence, curiosity, and critical thinking.</p>
                 <p className="text-lg font-semibold text-brand-orange">Go build something.</p>
               </Card>
               <div className="flex gap-4">
@@ -394,3 +401,4 @@ export default function Module6Page() {
     </div>
   )
 }
+

@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -66,6 +67,12 @@ export default function Module8Page() {
             <p className="text-lg text-muted-foreground mb-4">From answering questions to taking action  - how AI agents work and why they matter</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
+
+          <ModuleHero
+            eyebrow="Module 8"
+            title="Understand how autonomous AI systems operate"
+            description="Learn the architecture of agents and where they outperform simple chat interfaces in real workflows."
+          />
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

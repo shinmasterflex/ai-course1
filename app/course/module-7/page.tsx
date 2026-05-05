@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -65,6 +66,12 @@ export default function Module7Page() {
             <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace  - and how to stay ahead</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
+
+          <ModuleHero
+            eyebrow="Module 7"
+            title="Translate AI trends into career advantage"
+            description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
+          />
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

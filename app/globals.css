@@ -3,21 +3,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 
-  SWIFTCOURSE DESIGN SYSTEM
-  Color Palette inspired by swiftcourse.com
-  - Primary: Deep forest green (#1a4d3e) - Authority, trust, professionalism
-  - Accent: Vibrant orange (#ff5722) - Energy, action, CTAs
-  - Neutrals: White, grays for backgrounds and text
-  - Typography: Golden ratio scaling (1.618) with Inter font family
+/*
+  COGNIIJN DESIGN SYSTEM
+  Color Palette from the brand mark
+  - Cyan: #2a9fcf
+  - Indigo: #2e43a5
+  - Purple: #7b35a4
 */
 
 :root {
-  /* Brand Colors - Swiftcourse palette */
-  --brand-green: oklch(0.35 0.08 165); /* Deep forest green #1a4d3e */
-  --brand-green-dark: oklch(0.25 0.08 165); /* Darker green for hover states */
-  --brand-orange: oklch(0.65 0.22 35); /* Vibrant orange #ff5722 */
-  --brand-orange-dark: oklch(0.55 0.22 35); /* Darker orange for hover */
+  /* Brand colors kept on legacy token names to avoid widespread component churn */
+  --brand-green: oklch(0.67 0.12 228); /* Cyan #2a9fcf */
+  --brand-green-dark: oklch(0.58 0.12 228);
+  --brand-orange: oklch(0.53 0.18 306); /* Purple #7b35a4 */
+  --brand-orange-dark: oklch(0.45 0.17 306);
+  --brand-indigo: oklch(0.44 0.16 274); /* Indigo #2e43a5 */
 
   /* Semantic tokens */
   --background: oklch(0.99 0 0); /* Off-white for softer look */
@@ -27,8 +27,8 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0 0);
 
-  /* Primary uses brand green */
-  --primary: var(--brand-green);
+  /* Primary uses indigo for stronger contrast */
+  --primary: var(--brand-indigo);
   --primary-foreground: oklch(0.99 0 0);
 
   /* Accent uses brand orange */
@@ -48,26 +48,26 @@
   /* Borders and inputs */
   --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
-  --ring: var(--brand-green);
+  --ring: var(--brand-indigo);
 
   /* Chart colors - professional palette */
-  --chart-1: var(--brand-green);
-  --chart-2: var(--brand-orange);
-  --chart-3: oklch(0.6 0.15 220); /* Blue */
-  --chart-4: oklch(0.7 0.15 140); /* Teal */
-  --chart-5: oklch(0.65 0.15 80); /* Yellow-green */
+  --chart-1: var(--brand-indigo);
+  --chart-2: var(--brand-green);
+  --chart-3: var(--brand-orange);
+  --chart-4: oklch(0.74 0.08 220);
+  --chart-5: oklch(0.82 0.05 265);
 
   /* Border radius */
   --radius: 0.5rem;
 
   /* Sidebar colors */
-  --sidebar: var(--brand-green);
+  --sidebar: var(--brand-indigo);
   --sidebar-foreground: oklch(0.99 0 0);
   --sidebar-primary: var(--brand-orange);
   --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.3 0.08 165);
+  --sidebar-accent: oklch(0.36 0.13 274);
   --sidebar-accent-foreground: oklch(0.99 0 0);
-  --sidebar-border: oklch(0.25 0.08 165);
+  --sidebar-border: oklch(0.3 0.13 274);
   --sidebar-ring: var(--brand-orange);
 }
 
@@ -78,7 +78,7 @@
   --card-foreground: oklch(0.95 0 0);
   --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.45 0.08 165); /* Lighter green for dark mode */
+  --primary: oklch(0.6 0.12 274);
   --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.25 0 0);
   --secondary-foreground: oklch(0.95 0 0);
@@ -90,10 +90,10 @@
   --destructive-foreground: oklch(0.95 0 0);
   --border: oklch(0.3 0 0);
   --input: oklch(0.3 0 0);
-  --ring: var(--brand-orange);
+  --ring: var(--brand-green);
   --sidebar: oklch(0.2 0 0);
   --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: var(--brand-orange);
+  --sidebar-primary: var(--brand-green);
   --sidebar-primary-foreground: oklch(0.99 0 0);
   --sidebar-accent: oklch(0.25 0 0);
   --sidebar-accent-foreground: oklch(0.95 0 0);
@@ -307,5 +307,12 @@
 
   .font-serif {
     font-family: var(--font-merriweather);
+  }
+
+  .brand-wordmark {
+    font-family: var(--font-outfit);
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    text-rendering: geometricPrecision;
   }
 }

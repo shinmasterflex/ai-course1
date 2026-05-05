@@ -9,6 +9,7 @@
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { PublicHeader } from "@/components/layout/public-header"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
@@ -66,6 +67,35 @@ export default function DemoPage() {
           <ProgressBar current={completedSections.size} total={totalSections} label="Module Progress" />
         </div>
 
+        <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
+          <div className="grid items-stretch lg:grid-cols-2">
+            <div className="space-y-4 p-6 md:p-7">
+              <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
+                Visual Preview
+              </p>
+              <h2 className="text-2xl font-semibold text-brand-indigo">Explore the full learning journey before enrolling</h2>
+              <p className="text-sm text-muted-foreground">
+                This demo highlights how Swiftcourse combines clear structure, practical lessons, and milestone-based progress.
+              </p>
+              <div className="grid grid-cols-3 gap-2 text-center text-xs font-semibold text-brand-indigo">
+                <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 p-2">8 Sections</div>
+                <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 p-2">Interactive</div>
+                <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 p-2">Practical</div>
+              </div>
+            </div>
+            <div className="border-t border-brand-indigo/10 bg-sky-50/60 p-4 lg:border-l lg:border-t-0">
+              <Image
+                src="/graphics/module-path.svg"
+                alt="Illustrated learning roadmap"
+                width={960}
+                height={340}
+                className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white"
+                priority
+              />
+            </div>
+          </div>
+        </Card>
+
           {/* Section 0: About Us */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6" id="about">
@@ -86,11 +116,11 @@ export default function DemoPage() {
                 <ul className="space-y-2 ml-6">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Personality traits are your natural tendencies?�how you're inclined to think, feel, and behave</span>
+                    <span>Personality traits are your natural tendencies: how you're inclined to think, feel, and behave</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                    <span>Mindset is your character?�the conscious choices you make despite your tendencies</span>
+                    <span>Mindset is your character: the conscious choices you make despite your tendencies</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
@@ -549,7 +579,7 @@ export default function DemoPage() {
                   <div className="flex justify-center">
                     <CheckCircle2 className="h-20 w-20 text-brand-green" />
                   </div>
-                  <h2 className="text-4xl font-bold">Congratulations! ?��</h2>
+                  <h2 className="text-4xl font-bold">Congratulations!</h2>
                   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     You've completed Module 0: Introduction to Swiftcourse
                   </p>

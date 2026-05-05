@@ -1,0 +1,33 @@
+<svg width="960" height="340" viewBox="0 0 960 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lane" x1="0" y1="0" x2="960" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EAF8FF"/>
+      <stop offset="1" stop-color="#FFF4FA"/>
+    </linearGradient>
+    <linearGradient id="path" x1="80" y1="185" x2="880" y2="185" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2A9FCF"/>
+      <stop offset="0.55" stop-color="#2E43A5"/>
+      <stop offset="1" stop-color="#7B35A4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="340" rx="30" fill="url(#lane)"/>
+
+  <path d="M80 190C210 115 320 255 450 185C560 126 675 249 880 168" stroke="url(#path)" stroke-width="14" stroke-linecap="round"/>
+
+  <g>
+    <circle cx="130" cy="161" r="16" fill="#2A9FCF"/>
+    <circle cx="300" cy="224" r="16" fill="#2E43A5"/>
+    <circle cx="470" cy="183" r="16" fill="#2A9FCF"/>
+    <circle cx="640" cy="214" r="16" fill="#2E43A5"/>
+    <circle cx="840" cy="178" r="16" fill="#7B35A4"/>
+  </g>
+
+  <g fill="#24336F" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">
+    <text x="104" y="126">Foundations</text>
+    <text x="262" y="274">Prompting</text>
+    <text x="426" y="145">Tools</text>
+    <text x="616" y="263">Agents</text>
+    <text x="776" y="139">Leadership</text>
+  </g>
+</svg>

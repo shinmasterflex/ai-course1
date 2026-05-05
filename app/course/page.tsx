@@ -6,6 +6,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -70,9 +71,40 @@ export default function DashboardPage() {
             <span className="text-brand-green">to AI</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Your beginner-friendly journey from zero to AI-confident ? one module at a time.
+            Your beginner-friendly journey from zero to AI-confident, one module at a time.
           </p>
         </div>
+
+        <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
+          <CardContent className="p-0">
+            <div className="grid items-stretch lg:grid-cols-2">
+              <div className="space-y-4 p-6 md:p-8">
+                <div className="inline-flex items-center rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
+                  Visual Progress Center
+                </div>
+                <h2 className="text-2xl font-semibold text-brand-indigo md:text-3xl">See your learning momentum instantly</h2>
+                <p className="text-muted-foreground">
+                  Your dashboard now includes visual progress graphics to make milestones, pacing, and completion trends easier to scan.
+                </p>
+                <div className="grid grid-cols-3 gap-3 text-center text-xs font-semibold text-brand-indigo md:text-sm">
+                  <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 p-2">Completion</div>
+                  <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 p-2">Consistency</div>
+                  <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 p-2">Retention</div>
+                </div>
+              </div>
+              <div className="border-t border-brand-indigo/10 bg-sky-50/70 p-4 lg:border-l lg:border-t-0">
+                <Image
+                  src="/graphics/progress-rings.svg"
+                  alt="Illustrated circular progress metrics"
+                  width={820}
+                  height={520}
+                  className="h-auto w-full rounded-xl border border-brand-indigo/10"
+                  priority
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -113,6 +145,22 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        <Card className="mb-8 overflow-hidden border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-brand-indigo">Your Module Roadmap</CardTitle>
+            <CardDescription>Track where you are in the complete learning arc from foundations to advanced application.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Image
+              src="/graphics/module-path.svg"
+              alt="Visual roadmap connecting module phases"
+              width={960}
+              height={340}
+              className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white"
+            />
+          </CardContent>
+        </Card>
 
         {/* Phases & Modules */}
         <div className="space-y-8">

@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -106,11 +107,17 @@ export default function Module4Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
+          <ModuleHero
+            eyebrow="Module 4"
+            title="Turn AI tools into daily practical leverage"
+            description="Use-case first guidance to pick the right tool quickly for writing, research, creativity, and automation."
+          />
+
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map ? organised by use case ? so you can quickly find the right tool for any task." />
+              <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map - organised by use case - so you can quickly find the right tool for any task." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-green">Start with the job, not the brand</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -174,7 +181,7 @@ export default function Module4Page() {
                 <ToolCard
                   name="Gemini"
                   url="https://gemini.google.com"
-                  tagline="Google's assistant ? integrates with your apps"
+                  tagline="Google's assistant - integrates with your apps"
                   free={true}
                   strengths={["Connects to Gmail, Docs, Drive","Real-time web search","Great for research tasks","Strong at multimodal tasks"]}
                 />
@@ -211,7 +218,7 @@ export default function Module4Page() {
                 <ToolCard
                   name="DALL-E 3"
                   url="https://openai.com/dall-e-3"
-                  tagline="Built into ChatGPT ? easy to use"
+                  tagline="Built into ChatGPT - easy to use"
                   free={false}
                   strengths={["Accessible via ChatGPT Plus","Great at following detailed text descriptions","Strong at photorealistic and artistic styles","No separate account needed"]}
                 />
@@ -225,14 +232,14 @@ export default function Module4Page() {
                 <ToolCard
                   name="Adobe Firefly"
                   url="https://firefly.adobe.com"
-                  tagline="Safe for commercial use ? built into Creative Cloud"
+                  tagline="Safe for commercial use - built into Creative Cloud"
                   free={true}
-                  strengths={["Trained on licensed content ? commercially safe","Integrated into Photoshop and Illustrator","Generative Fill is incredibly powerful","Good for professional design workflows"]}
+                  strengths={["Trained on licensed content - commercially safe","Integrated into Photoshop and Illustrator","Generative Fill is incredibly powerful","Good for professional design workflows"]}
                 />
                 <ToolCard
                   name="Stable Diffusion"
                   url="https://stability.ai"
-                  tagline="Open-source ? run it yourself"
+                  tagline="Open-source - run it yourself"
                   free={true}
                   strengths={["Free and open source","Highly customisable with community models","Can run locally on your own computer","Large ecosystem of fine-tuned models"]}
                 />
@@ -281,7 +288,7 @@ export default function Module4Page() {
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
-              <TextDisplay content="AI productivity tools are embedded into the apps you already use ? transforming how you write, organise, and get things done." />
+              <TextDisplay content="AI productivity tools are embedded into the apps you already use - transforming how you write, organise, and get things done." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A beginner-friendly capability map</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
@@ -306,11 +313,11 @@ export default function Module4Page() {
                     { name: "Notion AI", desc: "AI writing and summarisation built into your Notion workspace" },
                   ]},
                   { category: "Office & Docs", tools: [
-                    { name: "Microsoft Copilot", desc: "AI in Word, Excel, PowerPoint, Teams, Outlook ? summarise emails, draft documents, analyse data" },
-                    { name: "Google Duet AI", desc: "AI in Google Docs, Sheets, Slides, Gmail ? same concept as Copilot for Google Workspace users" },
+                    { name: "Microsoft Copilot", desc: "AI in Word, Excel, PowerPoint, Teams, Outlook - summarise emails, draft documents, analyse data" },
+                    { name: "Google Duet AI", desc: "AI in Google Docs, Sheets, Slides, Gmail - same concept as Copilot for Google Workspace users" },
                   ]},
                   { category: "Research & Browsing", tools: [
-                    { name: "Perplexity AI", desc: "AI search engine that cites sources ? great for research" },
+                    { name: "Perplexity AI", desc: "AI search engine that cites sources - great for research" },
                     { name: "ChatGPT + Browse", desc: "Real-time web browsing with source citations" },
                     { name: "Elicit", desc: "AI research tool that searches academic papers" },
                   ]},
@@ -357,7 +364,7 @@ export default function Module4Page() {
               <TextDisplay content="AI has entered every creative field. Here is a quick tour of what is possible today:" />
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { field: "Music", tools: "Suno, Udio, Stable Audio", desc: "Generate full songs in any style from a text prompt. Suno can produce a complete song ? lyrics, melody, vocals ? in seconds." },
+                  { field: "Music", tools: "Suno, Udio, Stable Audio", desc: "Generate full songs in any style from a text prompt. Suno can produce a complete song - lyrics, melody, vocals - in seconds." },
                   { field: "Video", tools: "Sora (OpenAI), RunwayML, Pika", desc: "Generate video clips from text descriptions. Sora produces cinematic quality video. RunwayML is used by professional filmmakers." },
                   { field: "Design / UI", tools: "Uizard, Framer AI, Locofy", desc: "Generate UI mockups, websites, and app screens from text descriptions or rough sketches." },
                   { field: "Voice / Audio", tools: "ElevenLabs, Murf, Adobe Enhance", desc: "Clone voices, create realistic AI narration, clean up audio recordings, generate sound effects." },
@@ -371,7 +378,7 @@ export default function Module4Page() {
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The creative AI space is moving extremely fast. A tool that is state-of-the-art today may be superseded in months. Focus on learning the principles ? the tools change, but the skill of knowing what to ask for, and how to evaluate outputs, stays valuable." />
+              <TextDisplay variant="callout" content="The creative AI space is moving extremely fast. A tool that is state-of-the-art today may be superseded in months. Focus on learning the principles - the tools change, but the skill of knowing what to ask for, and how to evaluate outputs, stays valuable." />
               <QuickCheckCard
                 prompt="If you want to generate short cinematic video clips from text prompts, which category of tool is the best fit from this section?"
                 options={[
@@ -407,7 +414,7 @@ export default function Module4Page() {
                 <h3 className="font-semibold mb-3">5 Questions Before Choosing an AI Tool</h3>
                 <ol className="space-y-2 text-sm list-decimal list-inside">
                   {[
-                    "What exactly is the task? Be specific ? different tools excel at different things.",
+                    "What exactly is the task? Be specific - different tools excel at different things.",
                     "Does it need to be free? If yes, filter your options accordingly.",
                     "Does it need internet access? Tools like Perplexity are better for current information.",
                     "How sensitive is the data? Avoid putting private company data into external AI tools without checking privacy policies.",
@@ -462,7 +469,7 @@ export default function Module4Page() {
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Well done! You now have a solid map of the AI tool landscape. Next: we tackle the harder questions ? AI ethics, bias, and how to be a responsible AI user." />
+                  <TextDisplay variant="success" content="Well done! You now have a solid map of the AI tool landscape. Next: we tackle the harder questions - AI ethics, bias, and how to be a responsible AI user." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-5")}>
                       Continue to Module 5
@@ -479,3 +486,4 @@ export default function Module4Page() {
     </div>
   )
 }
+

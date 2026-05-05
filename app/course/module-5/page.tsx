@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -74,11 +75,17 @@ export default function Module5Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
+          <ModuleHero
+            eyebrow="Module 5"
+            title="Use AI responsibly and safely"
+            description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
+          />
+
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks ? to yourself, to others, and to society. This module gives you that foundation." />
+              <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks - to yourself, to others, and to society. This module gives you that foundation." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A simple safety operating system</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -88,7 +95,7 @@ export default function Module5Page() {
                 </div>
               </Card>
               <Card className="p-5 space-y-2">
-                {["AI bias ? how it forms and who it hurts","Privacy ? what AI systems collect about you","Misinformation ? deepfakes and AI-generated content","Responsible AI use ? principles and practices","The future of AI ? what comes next"].map((item) => (
+                {["AI bias - how it forms and who it hurts","Privacy - what AI systems collect about you","Misinformation - deepfakes and AI-generated content","Responsible AI use - principles and practices","The future of AI - what comes next"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
@@ -108,8 +115,8 @@ export default function Module5Page() {
                   <div className="space-y-3 text-sm">
                     {[
                       { source: "Biased training data", desc: "If historical hiring data reflects past discrimination (e.g., fewer women in senior roles), an AI trained on it will perpetuate those patterns." },
-                      { source: "Underrepresentation", desc: "Facial recognition AI trained mostly on white male faces performs significantly worse on darker skin tones and women ? because those groups were underrepresented in training data." },
-                      { source: "Feedback loops", desc: "AI that recommends content may amplify extreme or sensational content because users engage with it more ? creating a feedback loop that reinforces harmful patterns." },
+                      { source: "Underrepresentation", desc: "Facial recognition AI trained mostly on white male faces performs significantly worse on darker skin tones and women - because those groups were underrepresented in training data." },
+                      { source: "Feedback loops", desc: "AI that recommends content may amplify extreme or sensational content because users engage with it more - creating a feedback loop that reinforces harmful patterns." },
                       { source: "Measurement bias", desc: "What you measure reflects your values. If a 'good employee' is defined as someone who works 60+ hours a week, the AI will disadvantage people with caregiving responsibilities." },
                     ].map(({ source, desc }) => (
                       <div key={source} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
@@ -130,7 +137,7 @@ export default function Module5Page() {
                 </Card>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases ? Flashcards</h3>
+                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases - Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
                 <FlipCardGrid
                   cards={[
@@ -177,7 +184,7 @@ export default function Module5Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Privacy & Your Data</h2>
-              <TextDisplay content="When you use AI tools, you are sharing data ? sometimes more than you realise. Understanding what is collected helps you protect yourself." />
+              <TextDisplay content="When you use AI tools, you are sharing data - sometimes more than you realise. Understanding what is collected helps you protect yourself." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Traffic-light rule for what to paste</h3>
                 <div className="space-y-3 text-sm">
@@ -229,7 +236,7 @@ export default function Module5Page() {
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Misinformation & Deepfakes</h2>
-              <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content ? from text to images to video to audio." />
+              <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content - from text to images to video to audio." />
               <div className="space-y-4">
                 <Card className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">Types of AI-generated misinformation</h3>
@@ -238,7 +245,7 @@ export default function Module5Page() {
                       { type: "Deepfake video", desc: "Realistic video of a real person saying or doing things they never did. Used in political manipulation, fraud, and non-consensual content." },
                       { type: "Voice cloning", desc: "AI can replicate any voice from just a few seconds of audio. Used in phone scams where the AI 'sounds like' a family member or executive." },
                       { type: "AI-written disinformation", desc: "LLMs can produce thousands of realistic-sounding false news articles, social media posts, or product reviews at near-zero cost." },
-                      { type: "Synthetic images", desc: "Fake but photorealistic images of events that never happened ? protests, disasters, crimes, celebrities." },
+                      { type: "Synthetic images", desc: "Fake but photorealistic images of events that never happened - protests, disasters, crimes, celebrities." },
                     ].map(({ type, desc }) => (
                       <div key={type} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
                         <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
@@ -250,7 +257,7 @@ export default function Module5Page() {
                 <Card className="p-5 bg-brand-green/5 border-brand-green/20">
                   <h3 className="font-semibold mb-3 text-brand-green">How to spot and resist AI misinformation</h3>
                   <ul className="text-sm space-y-2 text-muted-foreground">
-                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing ? if it is surprising, check it</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing - if it is surprising, check it</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use reverse image search to check if images are authentic</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Look for watermarks, distortions, or inconsistencies in video (odd lighting, blurry edges)</li>
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Be suspicious of unexpected calls requesting urgent action or money, even from known voices</li>
@@ -258,15 +265,15 @@ export default function Module5Page() {
                   </ul>
                 </Card>
                 <Card className="p-5 border-blue-500/20 bg-blue-500/5">
-                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools ? and Their Limits</h3>
-                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful ? but imperfect. Understanding both is important.</p>
+                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools - and Their Limits</h3>
+                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful - but imperfect. Understanding both is important.</p>
                   <div className="space-y-3 text-sm">
                     {[
                       { tool: "GPTZero", type: "Text detection", desc: "Analyses writing patterns and perplexity (how predictable the word choices are) to estimate whether text was AI-generated. Widely used by educators. Works reasonably well on clearly AI-generated text; struggles with heavily edited or mixed human/AI content." },
                       { tool: "Originality.ai", type: "Text detection", desc: "Designed for publishers and content teams. Scans for AI content alongside plagiarism checking. Offers sentence-level highlighting to show which parts look AI-generated. Paid tool." },
                       { tool: "Hive Moderation", type: "Image & video detection", desc: "Classifies whether images were AI-generated, with confidence scores. Used by platforms for content moderation. More reliable on images from known AI generators." },
-                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye ? inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
-                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos ? a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
+                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye - inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
+                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos - a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
                     ].map(({ tool, type, desc }) => (
                       <div key={tool} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
                         <div className="flex-1">
@@ -281,12 +288,12 @@ export default function Module5Page() {
                   </div>
                   <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg">
                     <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Critical limitation to understand</p>
-                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common ? students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
+                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common - students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
                   </div>
                 </Card>
               </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Real scenario ? what would you do?</h3>
+                <h3 className="font-semibold mb-3 text-brand-orange">Real scenario - what would you do?</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>You receive a voice note from someone who sounds like your manager asking you to urgently buy gift cards and send the codes.</p>
                   <p><span className="font-medium text-foreground">Best response:</span> do not act from the voice message alone. Verify through a separate trusted channel before doing anything.</p>
@@ -312,10 +319,10 @@ export default function Module5Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Responsible AI Use</h2>
-              <TextDisplay content="Being a responsible AI user does not mean being afraid of AI ? it means using it thoughtfully, with awareness of its limitations and impact." />
+              <TextDisplay content="Being a responsible AI user does not mean being afraid of AI - it means using it thoughtfully, with awareness of its limitations and impact." />
               <div className="space-y-3">
                 {[
-                  { principle: "Verify before you trust", desc: "AI can be confidently wrong. For anything important ? medical, legal, financial, factual ? always verify AI outputs with authoritative sources." },
+                  { principle: "Verify before you trust", desc: "AI can be confidently wrong. For anything important - medical, legal, financial, factual - always verify AI outputs with authoritative sources." },
                   { principle: "Disclose when relevant", desc: "If you use AI to write something that will be presented as your own work or expertise, consider whether disclosure is appropriate. Academic, professional, and journalistic contexts often require it." },
                   { principle: "Do not automate consequential decisions blindly", desc: "AI should augment human judgment, not replace it, for high-stakes decisions (hiring, lending, medical treatment, legal judgments)." },
                   { principle: "Be aware of your own 'automation bias'", desc: "People tend to over-trust AI outputs because they come from computers. Actively question AI suggestions rather than accepting them by default." },
@@ -359,11 +366,11 @@ export default function Module5Page() {
               <TextDisplay content="AI is evolving faster than almost any technology in history. Here is what experts are currently watching:" />
               <div className="space-y-4">
                 {[
-                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously ? browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
-                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code ? not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
+                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously - browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
+                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code - not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
                   { trend: "AI in Healthcare", desc: "AI is matching or exceeding specialists in reading radiology scans, identifying skin cancers, predicting drug interactions, and discovering new molecules." },
                   { trend: "Regulation", desc: "The EU AI Act is the first major AI regulation globally. The US, UK, China, and others are developing frameworks. This will reshape how AI is built and deployed." },
-                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs ? augmenting some, displacing others. The effect will be uneven across roles and sectors." },
+                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs - augmenting some, displacing others. The effect will be uneven across roles and sectors." },
                   { trend: "AI Safety Research", desc: "A growing field working on the 'alignment problem': ensuring AI systems do what humans actually intend. Organisations like Anthropic, DeepMind Safety, and MIRI are leading this work." },
                 ].map(({ trend, desc }) => (
                   <Card key={trend} className="p-4 flex gap-3">
@@ -372,7 +379,7 @@ export default function Module5Page() {
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool ? it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
+              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool - it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -392,7 +399,7 @@ export default function Module5Page() {
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit ? where you turn safe, thoughtful AI use into practical no-code workflows." />
+                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit - where you turn safe, thoughtful AI use into practical no-code workflows." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-6")}>
                       Continue to Module 6
@@ -409,3 +416,4 @@ export default function Module5Page() {
     </div>
   )
 }
+

@@ -30,8 +30,8 @@ const merriweather = Merriweather({
 })
 
 export const metadata: Metadata = {
-  title: "Swiftcourse - Sales & Entrepreneurship Training",
-  description: "Strengthen entrepreneurial and sales success through personality trait assessment with the Big 5 Model",
+  title: "Cogniijn - AI Learning Platform",
+  description: "Practical AI education from beginner to advanced, with interactive modules and hands-on exercises.",
   generator: "v0.app",
   icons: {
     icon: "/favicon1.svg",

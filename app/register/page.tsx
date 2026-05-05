@@ -3,6 +3,8 @@
 import { getAuthCallbackUrl } from '@/lib/site-url'
 import { createClient } from '@/lib/supabase'
 import { TurnstileWidget } from '@/components/auth/turnstile-widget'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -309,49 +311,153 @@ export default function RegisterPage() {
   )
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-        <h1 className="text-2xl font-bold text-center">Create your LMS Account</h1>
-
-        {error && (
-          <div className="rounded border border-red-400 bg-red-50 p-3 text-sm text-red-800">
-            {error}
-          </div>
-        )}
-
-        {!paymentVerified ? (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-700">
-              Payment is required before registration. Complete checkout, then return to this page with the Stripe success link.
+    <main className="min-h-screen bg-gradient-to-br from-brand-green/15 via-sky-50 to-brand-orange/15 px-4 py-10 md:py-14">
+      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl border border-brand-indigo/15 bg-white/80 shadow-xl backdrop-blur lg:grid-cols-2">
+        <aside className="relative hidden border-r border-brand-indigo/10 bg-gradient-to-br from-brand-green/10 via-white to-brand-orange/10 p-8 lg:block">
+          <div className="space-y-5">
+            <p className="inline-flex rounded-full border border-brand-green/35 bg-white px-3 py-1 text-xs font-semibold text-brand-indigo">
+              Guided Enrollment Flow
             </p>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault()
-                if (!checkoutLoading) {
-                  void handleStartCheckout()
-                }
-              }}
-              className="block w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-center"
-              aria-disabled={checkoutLoading}
-            >
-              {checkoutLoading ? 'Redirecting to Checkout...' : 'Pay to Register'}
-            </a>
-            {paymentLoading && (
-              <p className="text-sm text-gray-600">Verifying payment session...</p>
+            <h2 className="text-3xl font-semibold text-brand-indigo">Pay, verify, and unlock course access in minutes</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Registration follows a secure checkout flow so access is linked to the right account every time.
+            </p>
+          </div>
+          <div className="mt-7 overflow-hidden rounded-2xl border border-brand-indigo/10 bg-white">
+            <Image
+              src="/graphics/checkout-flow.svg"
+              alt="Visual three-step checkout and unlock process"
+              width={900}
+              height={560}
+              className="h-auto w-full"
+              priority
+            />
+          </div>
+          <div className="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-brand-indigo">
+            <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 px-2 py-2">Checkout</div>
+            <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 px-2 py-2">Verification</div>
+            <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 px-2 py-2">Access</div>
+          </div>
+        </aside>
+
+        <section className="p-6 md:p-8 lg:p-10">
+          <div className="mx-auto w-full max-w-md space-y-6">
+            <h1 className="text-center text-2xl font-bold text-brand-indigo md:text-3xl">Create your LMS Account</h1>
+
+            {error && (
+              <div className="rounded border border-red-400 bg-red-50 p-3 text-sm text-red-800">
+                {error}
+              </div>
             )}
-          </div>
-        ) : currentUserEmail ? (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-700">
-              Payment verified for <strong>{paymentEmail}</strong>.
-            </p>
-            {paymentEmailMismatch ? (
-              <p className="text-sm text-red-700">
-                The paid email does not match your signed-in account ({currentUserEmail}). Sign in with the paid email account.
-              </p>
+
+            {!paymentVerified ? (
+              <div className="space-y-4 rounded-xl border border-brand-indigo/15 bg-white p-4">
+                <p className="text-sm text-gray-700">
+                  Payment is required before registration. Complete checkout, then return to this page with the Stripe success link.
+                </p>
+                <a
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    if (!checkoutLoading) {
+                      void handleStartCheckout()
+                    }
+                  }}
+                  className="block w-full rounded-lg bg-brand-orange p-2.5 text-center text-white hover:bg-brand-orange/90"
+                  aria-disabled={checkoutLoading}
+                >
+                  {checkoutLoading ? 'Redirecting to Checkout...' : 'Pay to Register'}
+                </a>
+                {paymentLoading && (
+                  <p className="text-sm text-gray-600">Verifying payment session...</p>
+                )}
+              </div>
+            ) : currentUserEmail ? (
+              <div className="space-y-4 rounded-xl border border-brand-green/25 bg-brand-green/5 p-4">
+                <p className="text-sm text-gray-700">
+                  Payment verified for <strong>{paymentEmail}</strong>.
+                </p>
+                {paymentEmailMismatch ? (
+                  <p className="text-sm text-red-700">
+                    The paid email does not match your signed-in account ({currentUserEmail}). Sign in with the paid email account.
+                  </p>
+                ) : (
+                  <>
+                    <input
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+
+                    {isTurnstileEnabled && (
+                      <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={handleUnlockModules}
+                      disabled={loading}
+                      className="w-full rounded-lg bg-brand-indigo p-2.5 text-white hover:opacity-90 disabled:bg-gray-400"
+                    >
+                      {loading ? 'Unlocking...' : 'Unlock Course Modules'}
+                    </button>
+                  </>
+                )}
+              </div>
             ) : (
-              <>
+              <form onSubmit={handleSignUp} className="space-y-4 rounded-xl border border-brand-indigo/15 bg-white p-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">First Name</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="John"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">Last Name</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    readOnly
+                    className="w-full rounded-lg border border-brand-indigo/20 bg-gray-100 p-2.5 text-black"
+                    placeholder="you@example.com"
+                  />
+                  <p className="mt-1 text-xs text-gray-600">Email is locked to the Stripe checkout email.</p>
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Password</label>
+                  <input
+                    type="password"
+                    required
+                    className="w-full rounded-lg border border-brand-indigo/20 p-2.5 text-black"
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                  />
+                </div>
+
                 <input
                   type="text"
                   tabIndex={-1}
@@ -367,96 +473,23 @@ export default function RegisterPage() {
                 )}
 
                 <button
-                  type="button"
-                  onClick={handleUnlockModules}
+                  type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
+                  className="w-full rounded-lg bg-brand-orange p-2.5 text-white hover:bg-brand-orange/90 disabled:bg-gray-400"
                 >
-                  {loading ? 'Unlocking...' : 'Unlock Course Modules'}
+                  {loading ? 'Sending Invite...' : 'Sign Up'}
                 </button>
-              </>
+              </form>
             )}
+
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{' '}
+              <Link href="/sign-in" className="font-medium text-brand-indigo hover:underline">
+                Sign in here
+              </Link>
+            </p>
           </div>
-        ) : (
-          <form onSubmit={handleSignUp} className="space-y-4">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-sm font-medium">First Name</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full p-2 border rounded text-black"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="John"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Last Name</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full p-2 border rounded text-black"
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Doe"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium">Email Address</label>
-              <input
-                type="email"
-                required
-                value={email}
-                readOnly
-                className="w-full p-2 border rounded text-black bg-gray-100"
-                placeholder="you@example.com"
-              />
-              <p className="mt-1 text-xs text-gray-600">Email is locked to the Stripe checkout email.</p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium">Password</label>
-              <input
-                type="password"
-                required
-                className="w-full p-2 border rounded text-black"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              />
-            </div>
-
-            <input
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              value={honeypot}
-              onChange={(e) => setHoneypot(e.target.value)}
-              className="hidden"
-              aria-hidden="true"
-            />
-
-            {isTurnstileEnabled && (
-              <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setCaptchaToken} />
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-            >
-              {loading ? 'Sending Invite...' : 'Sign Up'}
-            </button>
-          </form>
-        )}
-
-        <p className="text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <a href="/sign-in" className="font-medium text-blue-600 hover:underline">
-            Sign in here
-          </a>
-        </p>
+        </section>
       </div>
     </main>
   )

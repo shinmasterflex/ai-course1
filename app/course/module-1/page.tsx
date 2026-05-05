@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -74,6 +75,12 @@ export default function Module1Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
+          <ModuleHero
+            eyebrow="Module 1"
+            title="Build the foundation for everything that follows"
+            description="Get clear on what AI is, where it came from, and how to separate practical reality from hype."
+          />
+
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
@@ -82,7 +89,7 @@ export default function Module1Page() {
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2"><Clock className="h-4 w-4" /> What is in this module</h3>
                 <ul className="space-y-2 text-sm">
-                  {["Defining AI ? what it actually means","A brief history ? from 1950 to today","Types of AI ? narrow, general, super","Your first useful AI win ? a beginner-safe exercise","Myths vs. Reality ? what AI can and cannot do","Module Quiz"].map((item) => (
+                  {["Defining AI - what it actually means","A brief history - from 1950 to today","Types of AI - narrow, general, super","Your first useful AI win - a beginner-safe exercise","Myths vs. Reality - what AI can and cannot do","Module Quiz"].map((item) => (
                     <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" />{item}</li>
                   ))}
                 </ul>
@@ -96,14 +103,14 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Defining AI</h2>
               <TextDisplay content="Artificial Intelligence (AI) is software that is designed to perform tasks that would normally require human intelligence." />
-              <TextDisplay variant="callout" content="Think of it this way: human intelligence lets you recognise faces, understand language, solve problems, and learn from experience. AI is software engineered to do the same kinds of things ? not by thinking the way humans do, but by finding patterns in massive amounts of data." />
+              <TextDisplay variant="callout" content="Think of it this way: human intelligence lets you recognise faces, understand language, solve problems, and learn from experience. AI is software engineered to do the same kinds of things - not by thinking the way humans do, but by finding patterns in massive amounts of data." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3">Three Key Words in the Definition</h3>
                 <div className="space-y-3">
                   {[
-                    { word: "Artificial", meaning: "Made by people, not nature. AI is built by engineers and researchers ? not something that emerges spontaneously from the universe." },
-                    { word: "Intelligence", meaning: "The ability to learn, reason, understand language, or make decisions ? tasks that previously required human minds to perform." },
-                    { word: "Software", meaning: "AI runs on computers. It is not a robot body (though robots can use AI) ? it is code running on chips, servers, and devices you already own." },
+                    { word: "Artificial", meaning: "Made by people, not nature. AI is built by engineers and researchers - not something that emerges spontaneously from the universe." },
+                    { word: "Intelligence", meaning: "The ability to learn, reason, understand language, or make decisions - tasks that previously required human minds to perform." },
+                    { word: "Software", meaning: "AI runs on computers. It is not a robot body (though robots can use AI) - it is code running on chips, servers, and devices you already own." },
                   ].map(({ word, meaning }) => (
                     <div key={word} className="flex gap-3">
                       <span className="font-bold text-brand-orange w-32 flex-shrink-0">{word}</span>
@@ -115,7 +122,7 @@ export default function Module1Page() {
               
               
               <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-brand-orange" /> Core AI Vocabulary ? Flashcards</h3>
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-brand-orange" /> Core AI Vocabulary - Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These terms will appear throughout the course. Click each card to reveal the definition.</p>
                 <FlipCardGrid
                   cards={[
@@ -151,7 +158,7 @@ export default function Module1Page() {
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">A Brief History of AI</h2>
-              <TextDisplay content="AI is not new ? researchers have been working on it since the 1950s. The story matters because each wave of progress came from a combination of better ideas, more data, and more computing power." />
+              <TextDisplay content="AI is not new - researchers have been working on it since the 1950s. The story matters because each wave of progress came from a combination of better ideas, more data, and more computing power." />
               <div className="space-y-4">
                 {[
                   {
@@ -211,25 +218,25 @@ export default function Module1Page() {
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Types of AI</h2>
-              <TextDisplay content="Not all AI is the same. Researchers distinguish between three levels ? and only one of them actually exists today." />
+              <TextDisplay content="Not all AI is the same. Researchers distinguish between three levels - and only one of them actually exists today." />
               <div className="space-y-4">
                 <Card className="p-5 border-2 border-brand-green/40 bg-brand-green/5">
-                  <h3 className="font-bold text-lg text-brand-green mb-2">Narrow AI (Weak AI) ? This is real, and it exists today</h3>
+                  <h3 className="font-bold text-lg text-brand-green mb-2">Narrow AI (Weak AI) - This is real, and it exists today</h3>
                   <p className="text-muted-foreground">Narrow AI is designed to do one specific task very well. It cannot go beyond what it was trained for. Examples: spam filters, face recognition, ChatGPT, Netflix recommendations, Google Translate.</p>
                   <p className="mt-2 font-medium">Every AI you have ever used is Narrow AI.</p>
                 </Card>
                 <Card className="p-5 border-2 border-brand-orange/40 bg-brand-orange/5">
-                  <h3 className="font-bold text-lg text-brand-orange mb-2">General AI (AGI) ? Theoretical, does not exist yet</h3>
-                  <p className="text-muted-foreground">AGI would be an AI that can do any intellectual task a human can do ? reasoning across domains, learning new skills from scratch, understanding context the way people do. Scientists disagree on when (or if) this will happen.</p>
-                  <p className="mt-2 text-sm text-muted-foreground">Notable: Sam Altman (OpenAI CEO) has said AGI could arrive within a few years. Other leading researchers say decades away ? or never.</p>
+                  <h3 className="font-bold text-lg text-brand-orange mb-2">General AI (AGI) - Theoretical, does not exist yet</h3>
+                  <p className="text-muted-foreground">AGI would be an AI that can do any intellectual task a human can do - reasoning across domains, learning new skills from scratch, understanding context the way people do. Scientists disagree on when (or if) this will happen.</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Notable: Sam Altman (OpenAI CEO) has said AGI could arrive within a few years. Other leading researchers say decades away - or never.</p>
                 </Card>
                 <Card className="p-5 border-2 border-gray-300 bg-gray-50">
-                  <h3 className="font-bold text-lg text-gray-600 mb-2">Superintelligence ? Science fiction for now</h3>
-                  <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away ? if it is possible at all.</p>
+                  <h3 className="font-bold text-lg text-gray-600 mb-2">Superintelligence - Science fiction for now</h3>
+                  <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away - if it is possible at all.</p>
                 </Card>
               </div>
-              <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence ? things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
-              <h3 className="text-lg font-semibold">Test your understanding ? Can Narrow AI do this?</h3>
+              <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence - things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
+              <h3 className="text-lg font-semibold">Test your understanding - Can Narrow AI do this?</h3>
               <QuickCheckCard
                 prompt="Which task is the best fit for narrow AI?"
                 options={[
@@ -249,7 +256,7 @@ export default function Module1Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Your First Useful Win</h2>
-              <TextDisplay content="You have learned what AI is. Now use it for something genuinely helpful. Your first win should be small, low-risk, and easy to review ? not a life decision or a complex automation." />
+              <TextDisplay content="You have learned what AI is. Now use it for something genuinely helpful. Your first win should be small, low-risk, and easy to review - not a life decision or a complex automation." />
               <TextDisplay variant="callout" content="The beginner rule: start with summarising, drafting, or organising. Avoid sensitive data. Verify anything important before you use it." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A 10-minute exercise you can do right now</h3>
@@ -313,7 +320,7 @@ export default function Module1Page() {
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Myths vs. Reality</h2>
-              <TextDisplay content="AI gets a lot of hype ? and a lot of fear. Most of it comes from misunderstanding what AI actually is. Let us set the record straight:" />
+              <TextDisplay content="AI gets a lot of hype - and a lot of fear. Most of it comes from misunderstanding what AI actually is. Let us set the record straight:" />
               <div className="space-y-4">
                 {[
                   {
@@ -330,7 +337,7 @@ export default function Module1Page() {
                   },
                   {
                     myth: "Myth: The best way to use AI is to trust the first answer.",
-                    reality: "Reality: strong AI use looks like drafting, reviewing, editing, and verifying ? not blind acceptance.",
+                    reality: "Reality: strong AI use looks like drafting, reviewing, editing, and verifying - not blind acceptance.",
                   },
                 ].map(({ myth, reality }) => (
                   <Card key={myth} className="p-5">
@@ -394,3 +401,4 @@ export default function Module1Page() {
     </div>
   )
 }
+

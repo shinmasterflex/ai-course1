@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
+import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -70,15 +71,21 @@ export default function Module3Page() {
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 3: Large Language Models & Prompting</h1>
-            <p className="text-lg text-muted-foreground mb-4">Learn how ChatGPT works ? and how to use it brilliantly</p>
+            <p className="text-lg text-muted-foreground mb-4">Learn how ChatGPT works - and how to use it brilliantly</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
+
+          <ModuleHero
+            eyebrow="Module 3"
+            title="Move from curiosity to effective prompting"
+            description="Learn the mechanics behind LLMs and apply prompting patterns that produce sharper, more reliable outputs."
+          />
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="This is where things get practical. You will learn exactly how ChatGPT and similar tools work ? and more importantly, how to communicate with them to get genuinely useful results." />
+              <TextDisplay variant="callout" content="This is where things get practical. You will learn exactly how ChatGPT and similar tools work - and more importantly, how to communicate with them to get genuinely useful results." />
               <Card className="p-5 space-y-2">
                 {["What is a Large Language Model (LLM)?","How ChatGPT generates responses","The anatomy of a good prompt","Prompting techniques: role, chain-of-thought, few-shot","Hands-on practice exercises","Module Quiz"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
@@ -93,15 +100,15 @@ export default function Module3Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is a Language Model?</h2>
               <TextDisplay content="A Large Language Model (LLM) is an AI trained on massive amounts of text to understand and generate human language." />
-              <TextDisplay variant="callout" content="The word 'large' refers to the number of parameters (adjustable values) in the model ? modern LLMs have hundreds of billions. The more parameters, the more nuance and complexity the model can capture." />
+              <TextDisplay variant="callout" content="The word 'large' refers to the number of parameters (adjustable values) in the model - modern LLMs have hundreds of billions. The more parameters, the more nuance and complexity the model can capture." />
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Famous LLMs and who makes them</h3>
                 <div className="space-y-2">
                   {[
-                    { model: "GPT-4 / ChatGPT", company: "OpenAI", note: "The most widely known ? launched AI into the mainstream" },
+                    { model: "GPT-4 / ChatGPT", company: "OpenAI", note: "The most widely known - launched AI into the mainstream" },
                     { model: "Claude", company: "Anthropic", note: "Known for safety-focused design and long context windows" },
                     { model: "Gemini", company: "Google DeepMind", note: "Google's flagship LLM, integrated into Search and Workspace" },
-                    { model: "Llama", company: "Meta", note: "Open-source LLM ? free to download and run yourself" },
+                    { model: "Llama", company: "Meta", note: "Open-source LLM - free to download and run yourself" },
                     { model: "Mistral", company: "Mistral AI", note: "European LLM, known for efficiency" },
                   ].map(({ model, company, note }) => (
                     <div key={model} className="flex gap-3 text-sm py-1 border-b last:border-0">
@@ -113,7 +120,7 @@ export default function Module3Page() {
                 </div>
               </Card>
               <div>
-                <h3 className="text-xl font-semibold mb-2">LLM Vocabulary ? Flashcards</h3>
+                <h3 className="text-xl font-semibold mb-2">LLM Vocabulary - Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
                 
               </div>
@@ -130,7 +137,7 @@ export default function Module3Page() {
                 {[
                   { step: "Step 1: Training", desc: "The model reads hundreds of billions of words from the internet, books, code, and articles. It learns which words tend to follow other words in context." },
                   { step: "Step 2: Tokenisation", desc: "Your message is broken into small chunks called tokens (roughly 3/4 of a word on average). The model sees a sequence of numbers representing your text." },
-                  { step: "Step 3: Prediction", desc: "The model predicts the most likely next token, then the next, then the next ? building a response word by word based on all the text it was trained on." },
+                  { step: "Step 3: Prediction", desc: "The model predicts the most likely next token, then the next, then the next - building a response word by word based on all the text it was trained on." },
                   { step: "Step 4: RLHF", desc: "After base training, humans rated thousands of responses. The model was fine-tuned to produce outputs that humans rated highly. This is why it sounds helpful and coherent." },
                 ].map(({ step, desc }) => (
                   <Card key={step} className="p-4 flex gap-3">
@@ -175,7 +182,7 @@ export default function Module3Page() {
                 </p>
               </Card>
               <div>
-                <h3 className="text-xl font-semibold mb-1">Why each component matters ? flip to find out</h3>
+                <h3 className="text-xl font-semibold mb-1">Why each component matters - flip to find out</h3>
                 <p className="text-sm text-muted-foreground mb-3">Click each card to reveal the reasoning behind the component.</p>
                 <FlipCardGrid
                   cards={[
@@ -251,13 +258,13 @@ export default function Module3Page() {
                   },
                   {
                     technique: "Meta-Prompting",
-                    how: "Ask the AI to critique and improve its own output ? or to help you write a better prompt.",
+                    how: "Ask the AI to critique and improve its own output - or to help you write a better prompt.",
                     example: "Here is my prompt: [paste your prompt]. What is wrong with it? Rewrite it to get a better result. Then use the improved version.",
                     why: "AI can often identify what is missing or unclear in a prompt better than you can. Using AI to improve your AI prompts is one of the highest-leverage habits you can develop.",
                   },
                   {
                     technique: "Structured Output Prompting",
-                    how: "Explicitly request a specific output format ? JSON, markdown table, numbered list, bullet points with headers.",
+                    how: "Explicitly request a specific output format - JSON, markdown table, numbered list, bullet points with headers.",
                     example: "Return your answer as a JSON object with keys: 'recommendation', 'reasoning', and 'confidence_score' (0?10).",
                     why: "When AI output feeds into another system, a spreadsheet, or a template, having a predictable structure saves enormous time. Naming the exact format you want all but guarantees you get it.",
                   },
@@ -276,7 +283,7 @@ export default function Module3Page() {
                 
               </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-blue-500/5 border-brand-green/20">
-                <h3 className="font-semibold mb-4 text-brand-green">Prompt Quick Reference ? Copy, Paste, Adapt</h3>
+                <h3 className="font-semibold mb-4 text-brand-green">Prompt Quick Reference - Copy, Paste, Adapt</h3>
                 <p className="text-sm text-muted-foreground mb-4">These six templates cover the most common professional prompting scenarios. Adapt the specifics to your situation.</p>
                 <div className="space-y-3">
                   {[
@@ -286,7 +293,7 @@ export default function Module3Page() {
                     },
                     {
                       label: "Write a first draft",
-                      prompt: "You are an expert [role ? e.g. 'B2B copywriter' / 'technical writer' / 'HR professional']. Write a [document type] for [audience]. Context: [2?3 sentences of background]. Tone: [professional/conversational/formal]. Length: [target word count]. Do not use filler phrases like 'In conclusion' or 'It goes without saying'.",
+                      prompt: "You are an expert [role - e.g. 'B2B copywriter' / 'technical writer' / 'HR professional']. Write a [document type] for [audience]. Context: [2?3 sentences of background]. Tone: [professional/conversational/formal]. Length: [target word count]. Do not use filler phrases like 'In conclusion' or 'It goes without saying'.",
                     },
                     {
                       label: "Analyse a decision or situation",
@@ -294,7 +301,7 @@ export default function Module3Page() {
                     },
                     {
                       label: "Generate ideas",
-                      prompt: "You are a creative strategist. Generate 10 ideas for [goal/problem]. For each idea, provide: the idea in one sentence, one concrete example of it working, and one major risk. Be bold ? include at least 3 ideas that feel unconventional.",
+                      prompt: "You are a creative strategist. Generate 10 ideas for [goal/problem]. For each idea, provide: the idea in one sentence, one concrete example of it working, and one major risk. Be bold - include at least 3 ideas that feel unconventional.",
                     },
                     {
                       label: "Improve existing writing",
@@ -321,7 +328,7 @@ export default function Module3Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Hands-On Practice</h2>
               <TextDisplay content="Now it is your turn. For each scenario below, write a high-quality prompt using what you have learned." />
-              <TextDisplay variant="callout" content="There are no wrong answers here ? the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
+              <TextDisplay variant="callout" content="There are no wrong answers here - the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Beginner adoption framework</h3>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
@@ -444,3 +451,4 @@ export default function Module3Page() {
     </div>
   )
 }
+
