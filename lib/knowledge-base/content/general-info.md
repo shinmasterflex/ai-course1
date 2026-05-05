@@ -1,8 +1,8 @@
-# SwiftCourse Platform Guide
+# Cognijin Platform Guide
 
 ## Getting Started
 
-Welcome to SwiftCourse! Here's how to navigate and make the most of the platform:
+Welcome to Cognijin! Here's how to navigate and make the most of the platform:
 
 ### Navigation
 - **Dashboard**: Your home page showing overall progress and module overview
@@ -70,7 +70,7 @@ To use the AI Assistant:
 ### Course Structure
 
 **Module 0: Introduction**
-- Introduction to SwiftCourse
+- Introduction to Cognijin
 - Understanding the problem and solution
 - OCEAN personality assessment
 - Strategic learning model
@@ -126,7 +126,7 @@ If you encounter any issues:
 
 ### Mobile Experience
 
-SwiftCourse is optimized for mobile devices:
+Cognijin is optimized for mobile devices:
 - Responsive design adapts to screen size
 - Touch-friendly interactive elements
 - Collapsible sidebar for more screen space
@@ -134,4 +134,4 @@ SwiftCourse is optimized for mobile devices:
 
 ### Feedback and Improvement
 
-We're constantly improving SwiftCourse. Your learning experience matters to us, and we use feedback to enhance the platform continuously.
+We're constantly improving Cognijin. Your learning experience matters to us, and we use feedback to enhance the platform continuously.

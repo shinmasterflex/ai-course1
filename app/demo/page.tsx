@@ -23,7 +23,7 @@ export default function DemoPage() {
 
   // Demo sections (same as module 0)
   const sections = [
-    { id: "about-swiftcourse", title: "About Swiftcourse" },
+    { id: "about-cognijin", title: "About Cognijin" },
     { id: "the-problem", title: "The Problem" },
     { id: "our-solution", title: "Our Solution" },
     { id: "the-product", title: "The Product" },
@@ -60,7 +60,7 @@ export default function DemoPage() {
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Module 0: Introduction to Swiftcourse</h1>
+          <h1 className="text-4xl font-bold mb-2">Module 0: Introduction to Cognijin</h1>
           <p className="text-lg text-muted-foreground mb-4">
             Experience the full Introduction module - Discover how personality assessment drives sales success
           </p>
@@ -75,7 +75,7 @@ export default function DemoPage() {
               </p>
               <h2 className="text-2xl font-semibold text-brand-indigo">Explore the full learning journey before enrolling</h2>
               <p className="text-sm text-muted-foreground">
-                This demo highlights how Swiftcourse combines clear structure, practical lessons, and milestone-based progress.
+                This demo highlights how Cognijin combines clear structure, practical lessons, and milestone-based progress.
               </p>
               <div className="grid grid-cols-3 gap-2 text-center text-xs font-semibold text-brand-indigo">
                 <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 p-2">8 Sections</div>
@@ -99,11 +99,11 @@ export default function DemoPage() {
           {/* Section 0: About Us */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6" id="about">
-              <h2 className="text-3xl font-bold text-brand-green">About Swiftcourse</h2>
+              <h2 className="text-3xl font-bold text-brand-green">About Cognijin</h2>
 
               <TextDisplay
                 variant="callout"
-                content="At Swiftcourse, everything we do is to strengthen entrepreneurial and sales success through personality trait assessment."
+                content="At Cognijin, everything we do is to strengthen entrepreneurial and sales success through personality trait assessment."
               />
 
               <TextDisplay content="Our application of the Big 5 Personality Assessment identifies specific strategies entrepreneurs should leverage to increase their success. Additionally, The Big 5 identifies where your personality traits can hold you back." />
@@ -166,7 +166,7 @@ export default function DemoPage() {
 
               <TextDisplay
                 variant="success"
-                content="Swiftcourse provides the most comprehensive personality-driven sales training in the market today."
+                content="Cognijin provides the most comprehensive personality-driven sales training in the market today."
               />
 
               <TextDisplay
@@ -179,7 +179,7 @@ export default function DemoPage() {
                   {
                     title: "Complete Picture",
                     summary: "A complete personality map for sales performance.",
-                    detail: "Other assessments measure fragments. Swiftcourse uses the Big Five Aspects Model to cover all 10 aspects across 5 major traits.",
+                    detail: "Other assessments measure fragments. Cognijin uses the Big Five Aspects Model to cover all 10 aspects across 5 major traits.",
                     accent: "text-brand-green",
                   },
                   {
@@ -533,7 +533,7 @@ export default function DemoPage() {
 
               <TextDisplay
                 variant="success"
-                content="By combining personality insights with proven tactical skills, Swiftcourse creates a comprehensive framework for sustainable sales success."
+                content="By combining personality insights with proven tactical skills, Cognijin creates a comprehensive framework for sustainable sales success."
               />
 
               <Card className="p-6">
@@ -581,7 +581,7 @@ export default function DemoPage() {
                   </div>
                   <h2 className="text-4xl font-bold">Congratulations!</h2>
                   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                    You've completed Module 0: Introduction to Swiftcourse
+                    You've completed Module 0: Introduction to Cognijin
                   </p>
                   <p className="text-lg text-muted-foreground">
                     Now you understand how personality assessment drives sales success and the power of the Big 5 model.
@@ -628,7 +628,7 @@ export default function DemoPage() {
                       Talk to our team about the full course and how it can transform your sales approach. Get personalized insights and discuss your goals.
                     </p>
                     <Button asChild className="w-full bg-brand-orange hover:bg-[#e64a19] text-white" size="lg">
-                      <Link href="https://calendly.com/lfederico-swiftcourse/30min?month=2026-01" target="_blank" rel="noopener noreferrer">
+                      <Link href="https://calendly.com/lfederico-cognijin/30min?month=2026-01" target="_blank" rel="noopener noreferrer">
                         Book an Appointment
                       </Link>
                     </Button>

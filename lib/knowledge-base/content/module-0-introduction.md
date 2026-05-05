@@ -1,8 +1,8 @@
-# Module 0: Introduction to SwiftCourse
+# Module 0: Introduction to Cognijin
 
-## About SwiftCourse
+## About Cognijin
 
-SwiftCourse is an innovative online learning platform designed to help individuals achieve personal and professional growth through evidence-based learning methodologies. Our platform combines neuroscience, psychology, and proven learning techniques to create an effective and engaging learning experience.
+Cognijin is an innovative online learning platform designed to help individuals achieve personal and professional growth through evidence-based learning methodologies. Our platform combines neuroscience, psychology, and proven learning techniques to create an effective and engaging learning experience.
 
 ## The Problem
 
@@ -15,7 +15,7 @@ Many people struggle with:
 
 ## Our Solution
 
-SwiftCourse addresses these challenges by:
+Cognijin addresses these challenges by:
 - Providing personalized learning paths based on personality assessments
 - Using interactive exercises and real-world applications
 - Incorporating neuroscience-based learning techniques
@@ -24,7 +24,7 @@ SwiftCourse addresses these challenges by:
 
 ## The Product
 
-SwiftCourse offers:
+Cognijin offers:
 - **Structured Learning Modules**: Carefully designed courses covering personal development, neurobiology, and growth mindset
 - **Interactive Exercises**: Engaging activities including quizzes, matching games, flashcards, and practical exercises
 - **Progress Tracking**: Real-time monitoring of your learning journey
@@ -69,7 +69,7 @@ The OCEAN personality model assesses five key dimensions:
 
 ## Action Plan
 
-To get the most out of SwiftCourse:
+To get the most out of Cognijin:
 1. Complete the OCEAN personality assessment
 2. Review your personality profile and insights
 3. Progress through modules at your own pace

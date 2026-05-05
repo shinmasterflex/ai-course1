@@ -123,7 +123,7 @@ export default function Module0Page() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> Discover your AI learning style</h3>
-                <p className="text-sm text-muted-foreground mb-4">We removed the legacy Swiftcourse personality assessment from this course flow.</p>
+                <p className="text-sm text-muted-foreground mb-4">We removed the legacy Cognijin personality assessment from this course flow.</p>
               </div>
               <TextDisplay
                 variant="info"

@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       .join("\n")
 
     // Create enhanced prompt with knowledge base context
-    const enhancedPrompt = `You are a helpful AI learning assistant for SwiftCourse, an online learning platform focused on personal development, neurobiology, and growth mindset.
+    const enhancedPrompt = `You are a helpful AI learning assistant for Cognijin, an online learning platform focused on personal development, neurobiology, and growth mindset.
 
 KNOWLEDGE BASE CONTEXT:
 ${relevantKnowledge}

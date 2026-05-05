@@ -41,14 +41,14 @@ export default function HomePage() {
               </div>
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
                 <span className="text-brand-indigo">Learn AI with</span>{" "}
-                <span className="brand-wordmark bg-gradient-to-r from-brand-indigo via-brand-orange to-brand-green bg-clip-text text-transparent">Cogniijn</span>
+                <span className="brand-wordmark bg-gradient-to-r from-brand-indigo via-brand-orange to-brand-green bg-clip-text text-transparent">Cognijin</span>
               </h1>
               <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
                 Explore a complete AI path across 10 modules, from fundamentals and prompting to agents, ethics, and future trends.
               </p>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/sign-in">Start Learning Free</Link>
+                  <Link href="/course">Start Learning</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="text-lg px-10 border-brand-green/30">
                   <Link href="/demo">Preview Module 0</Link>
@@ -190,12 +190,12 @@ export default function HomePage() {
             <div className="rounded-2xl border border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10 p-8 text-center">
               <h3 className="text-2xl font-bold text-brand-indigo">Start Your AI Journey Today</h3>
               <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-                Create your account and begin with Module 0. The platform tracks your progress across every module.
+                Start with Module 0 and continue through the full learning path. The platform tracks your progress across every module.
               </p>
               <div className="mt-6 flex flex-col justify-center gap-4 sm:flex-row">
                 <Button asChild size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/register" className="inline-flex items-center gap-2">
-                    Create Free Account
+                  <Link href="/course" className="inline-flex items-center gap-2">
+                    Open Course
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>

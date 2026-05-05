@@ -152,29 +152,6 @@ export async function proxy(request: NextRequest) {
 
   console.log('[Middleware] User after exchange:', user?.email || 'none')
 
-  const { pathname } = new URL(request.url)
-  const isPublicPath =
-    pathname === '/' ||
-    pathname === '/demo' ||
-    pathname.startsWith('/demo/') ||
-    pathname === '/sign-in' ||
-    pathname.startsWith('/sign-in/') ||
-    pathname === '/register' ||
-    pathname.startsWith('/register/') ||
-    pathname.startsWith('/auth/')
-  const isCoursePath = pathname.startsWith('/course/') || pathname === '/course'
-
-  if (!user && isCoursePath && !isPublicPath) {
-    const redirectUrl = new URL('/sign-in', request.url)
-    const redirectResponse = NextResponse.redirect(redirectUrl)
-
-    supabaseResponse.cookies.getAll().forEach((cookie) => {
-      redirectResponse.cookies.set(cookie)
-    })
-
-    return redirectResponse
-  }
-
   return supabaseResponse
 }
 

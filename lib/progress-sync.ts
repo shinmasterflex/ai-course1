@@ -5,9 +5,9 @@
 
 import { loadProgress, saveProgress, flushProgress, type GlobalProgress } from './progress-manager'
 
-const STORAGE_KEY = 'swiftcourse_progress'
-const LEGACY_STORAGE_KEY = 'swiftcourse-progress'
-const ACTIVE_USER_KEY = 'swiftcourse_active_user'
+const STORAGE_KEY = 'cognijin_progress'
+const LEGACY_STORAGE_KEY = 'cognijin-progress'
+const ACTIVE_USER_KEY = 'cognijin_active_user'
 
 type UnloadSnapshot = {
   modules?: Array<{

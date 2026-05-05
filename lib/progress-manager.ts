@@ -8,8 +8,8 @@ import { courseStructure } from "./course-structure"
 import { createClient } from "./supabase"
 
 // Storage key for session caching
-const STORAGE_KEY = "swiftcourse-progress"
-const ACTIVE_USER_KEY = "swiftcourse_active_user"
+const STORAGE_KEY = "cognijin-progress"
+const ACTIVE_USER_KEY = "cognijin_active_user"
 
 // Type definitions for progress data (section-level only, no quiz)
 export interface ModuleProgress {

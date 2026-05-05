@@ -7,11 +7,11 @@
 import { courseStructure } from "./course-structure"
 import { createClient } from "./supabase"
 
-const STORAGE_KEY = "swiftcourse_progress"
-const POSITION_KEY = "swiftcourse_position"
-const ACTIVE_USER_KEY = "swiftcourse_active_user"
-const LEGACY_STORAGE_KEY = "swiftcourse_progress"
-const LEGACY_POSITION_KEY = "swiftcourse_position"
+const STORAGE_KEY = "cognijin_progress"
+const POSITION_KEY = "cognijin_position"
+const ACTIVE_USER_KEY = "cognijin_active_user"
+const LEGACY_STORAGE_KEY = "cognijin_progress"
+const LEGACY_POSITION_KEY = "cognijin_position"
 
 type ProgressListener = () => void
 

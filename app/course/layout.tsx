@@ -1,6 +1,5 @@
 "use client"
 
-import { AuthGuard } from "@/components/auth/auth-guard"
 import { setupProgressSyncOnUnload } from "@/lib/progress-sync"
 import { useEffect } from "react"
 import type React from "react"
@@ -21,5 +20,5 @@ export default function CourseLayout({
     return cleanup
   }, [])
 
-  return <AuthGuard>{children}</AuthGuard>
+  return <>{children}</>
 }

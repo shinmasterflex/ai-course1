@@ -1,7 +1,7 @@
 /**
  * DESIGN TOKENS
  * Centralized design system values for consistent styling across the application
- * Based on Swiftcourse brand colors and golden ratio typography
+ * Based on Cognijin brand colors and golden ratio typography
  */
 
 /**

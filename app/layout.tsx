@@ -30,7 +30,7 @@ const merriweather = Merriweather({
 })
 
 export const metadata: Metadata = {
-  title: "Cogniijn - AI Learning Platform",
+  title: "Cognijin - AI Learning Platform",
   description: "Practical AI education from beginner to advanced, with interactive modules and hands-on exercises.",
   generator: "v0.app",
   icons: {

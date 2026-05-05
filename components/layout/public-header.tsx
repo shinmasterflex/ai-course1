@@ -9,21 +9,18 @@ export function PublicHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-sky-50/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/Logo.png" alt="Cogniijn Logo" width={720} height={400} className="h-11 w-auto" priority />
+          <Image src="/Logo.png" alt="Cognijin Logo" width={720} height={400} className="h-11 w-auto" priority />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
-          <Button asChild>
-            <Link href="/sign-in">Sign In</Link>
-          </Button>
           <Button asChild variant="outline">
-            <Link href="/register">Register</Link>
+            <Link href="/course">Course</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/demo">Try Module 0</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="https://calendly.com/lfederico-swiftcourse/30min?month=2026-01" target="_blank" rel="noopener noreferrer">
+            <Link href="https://calendly.com/lfederico-cognijin/30min?month=2026-01" target="_blank" rel="noopener noreferrer">
               Schedule a Call
             </Link>
           </Button>

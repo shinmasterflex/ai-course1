@@ -167,7 +167,7 @@ async function saveProgress(request: NextRequest) {
         update: { updatedAt: new Date() },
         create: {
           id: generateId(),
-          title: 'Swift Course',
+          title: 'Cognijin Course',
           slug: 'swift-course',
           description: 'Auto-created by progress API to persist module progress.',
           updatedAt: new Date(),

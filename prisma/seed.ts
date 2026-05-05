@@ -52,12 +52,12 @@ async function main() {
   const course = await prisma.courses.upsert({
     where: { slug: "swift-course" },
     update: {
-      title: "Swift Course",
+      title: "Cognijin Course",
       description: "A structured program covering mindset, habits, negotiation, and behavior change.",
     },
     create: {
       id: courseId,
-      title: "Swift Course",
+      title: "Cognijin Course",
       slug: "swift-course",
       description: "A structured program covering mindset, habits, negotiation, and behavior change.",
       updatedAt: new Date(),

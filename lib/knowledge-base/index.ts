@@ -15,7 +15,7 @@ const knowledgeIndex: KnowledgeIndex = {
     file: "module-0-introduction.md",
     keywords: [
       "introduction",
-      "swiftcourse",
+      "cognijin",
       "problem",
       "solution",
       "product",
@@ -24,7 +24,7 @@ const knowledgeIndex: KnowledgeIndex = {
       "ocean",
       "personality",
     ],
-    description: "Introduction to SwiftCourse, the problem it solves, and the OCEAN personality assessment",
+    description: "Introduction to Cognijin, the problem it solves, and the OCEAN personality assessment",
   },
   "module-1": {
     file: "module-1-neurobiology.md",

@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 type RateLimitStore = Map<string, number[]>
 
 declare global {
-  var __swiftcourseRateLimitStore: RateLimitStore | undefined
+  var __cognijinRateLimitStore: RateLimitStore | undefined
 }
 
 type RateLimitConfig = {
@@ -19,11 +19,11 @@ export type RateLimitResult = {
 }
 
 function getStore(): RateLimitStore {
-  if (!globalThis.__swiftcourseRateLimitStore) {
-    globalThis.__swiftcourseRateLimitStore = new Map<string, number[]>()
+  if (!globalThis.__cognijinRateLimitStore) {
+    globalThis.__cognijinRateLimitStore = new Map<string, number[]>()
   }
 
-  return globalThis.__swiftcourseRateLimitStore
+  return globalThis.__cognijinRateLimitStore
 }
 
 function getClientIp(request: Request | NextRequest): string {

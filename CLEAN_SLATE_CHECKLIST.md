@@ -62,7 +62,7 @@ console.log('Storage cleared');
 ```
 
 **What this does:**
-- Removes cached progress: `swiftcourse_progress:*`, `swiftcourse_position:*`
+- Removes cached progress: `cognijin_progress:*`, `cognijin_position:*`
 - Removes session data and auth cookies
 - Browser will forget old auth tokens
 
@@ -93,12 +93,12 @@ If you only want to clear progress (not auth/session):
 
 ```javascript
 // Client-side progress namespaced keys
-localStorage.removeItem('swiftcourse_progress:anonymous');
-localStorage.removeItem('swiftcourse_position:anonymous');
-localStorage.removeItem('swiftcourse-progress:anonymous');
+localStorage.removeItem('cognijin_progress:anonymous');
+localStorage.removeItem('cognijin_position:anonymous');
+localStorage.removeItem('cognijin-progress:anonymous');
 
 // Active user tracker
-localStorage.removeItem('swiftcourse_active_user');
+localStorage.removeItem('cognijin_active_user');
 ```
 
 ---
