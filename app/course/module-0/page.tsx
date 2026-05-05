@@ -106,7 +106,7 @@ export default function Module0Page() {
                 content="You can continue directly into the course modules. Learning guidance is now built into each module section instead of a separate personality quiz."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
-                Got it ? let us go! ¡æ
+                Got it - let us go!
               </Button>
             </div>
           )}
@@ -137,7 +137,7 @@ export default function Module0Page() {
               <TextDisplay variant="callout" content="The point: AI is not some distant science-fiction technology. It is already woven into the fabric of daily life ? often invisibly. This course will help you understand exactly how it works and why it matters." />
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -189,7 +189,7 @@ export default function Module0Page() {
                   ))}
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -216,7 +216,7 @@ export default function Module0Page() {
               
               
               
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ¡æ</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next ï¿½ï¿½</Button>
             </div>
           )}
 
@@ -248,7 +248,7 @@ export default function Module0Page() {
               <TextDisplay variant="callout" content="Up next: Module 1 ? What Is Artificial Intelligence? We will give AI a real definition, look at its history, and bust some popular myths." />
               <div className="flex gap-4">
                 <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  Complete Module and Go to Module 1 ¡æ
+                  Complete Module and Go to Module 1 ï¿½ï¿½
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard

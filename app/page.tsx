@@ -221,10 +221,10 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-1 ml-4 text-sm text-muted-foreground">
-                      <li>? AI writing assistants: ChatGPT, Claude, Gemini</li>
-                      <li>? AI image generation: Midjourney, DALL¡¤E, Firefly</li>
-                      <li>? Productivity tools: Notion AI, Copilot, Grammarly</li>
-                      <li>? How to choose the right tool for any task</li>
+                      <li>- AI writing assistants: ChatGPT, Claude, Gemini</li>
+                      <li>- AI image generation: Midjourney, DALL-E, Firefly</li>
+                      <li>- Productivity tools: Notion AI, Copilot, Grammarly</li>
+                      <li>- How to choose the right tool for any task</li>
                     </ul>
                   </CardContent>
                 </Card>
