@@ -32,8 +32,8 @@ export function SourceCard({ sources, className }: SourceCardProps) {
       </div>
 
       <div className="space-y-3">
-        {sources.map((source, index) => (
-          <div key={index} className="text-sm">
+        {sources.map((source) => (
+          <div key={`source-${source.author}-${source.title}`} className="text-sm">
             <p className="font-medium text-foreground mb-1">{source.author}</p>
             <a
               href={source.url}

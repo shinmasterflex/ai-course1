@@ -17,6 +17,34 @@ interface TextDisplayProps {
   className?: string
 }
 
+/**
+ * Parse markdown-like bold syntax (**text**) and return React elements
+ * This safely handles text without XSS vulnerabilities
+ */
+function parseBoldText(text: string): ReactNode[] {
+  const parts: ReactNode[] = []
+  const regex = /\*\*(.*?)\*\*/g
+  let lastIndex = 0
+  let match
+
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index))
+    }
+    // Add the bold text
+    parts.push(<strong key={`bold-${match.index}`}>{match[1]}</strong>)
+    lastIndex = regex.lastIndex
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex))
+  }
+
+  return parts.length > 0 ? parts : [text]
+}
+
 export function TextDisplay({ title, subtitle, content, children, variant = "default", className }: TextDisplayProps) {
   // Icon mapping for different variants
   const icons = {
@@ -56,17 +84,21 @@ export function TextDisplay({ title, subtitle, content, children, variant = "def
             ) : hasContent ? (
               <div className="prose prose-sm max-w-none dark:prose-invert">
                 {content.split("\n").map((line, index) => {
+                  const trimmedLine = line.trim()
                   // Handle bullet points
-                  if (line.trim().startsWith("•") || line.trim().startsWith("-")) {
+                  if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
                     return (
-                      <li key={index} className="ml-4">
-                        {line.trim().substring(1).trim()}
+                      <li key={`bullet-${index}`} className="ml-4">
+                        {parseBoldText(trimmedLine.substring(1).trim())}
                       </li>
                     )
                   }
-                  // Handle bold text
-                  const boldText = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                  return <p key={index} dangerouslySetInnerHTML={{ __html: boldText }} className="mb-2" />
+                  // Handle regular paragraphs with bold text support
+                  return (
+                    <p key={`para-${index}`} className="mb-2">
+                      {parseBoldText(line)}
+                    </p>
+                  )
                 })}
               </div>
             ) : null}
@@ -80,15 +112,19 @@ export function TextDisplay({ title, subtitle, content, children, variant = "def
           ) : hasContent ? (
             <div className="prose prose-sm max-w-none dark:prose-invert">
               {content.split("\n").map((line, index) => {
-                if (line.trim().startsWith("•") || line.trim().startsWith("-")) {
+                const trimmedLine = line.trim()
+                if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
                   return (
-                    <li key={index} className="ml-4">
-                      {line.trim().substring(1).trim()}
+                    <li key={`bullet-${index}`} className="ml-4">
+                      {parseBoldText(trimmedLine.substring(1).trim())}
                     </li>
                   )
                 }
-                const boldText = line.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                return <p key={index} dangerouslySetInnerHTML={{ __html: boldText }} className="mb-2" />
+                return (
+                  <p key={`para-${index}`} className="mb-2">
+                    {parseBoldText(line)}
+                  </p>
+                )
               })}
             </div>
           ) : null}

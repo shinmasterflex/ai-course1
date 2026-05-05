@@ -22,7 +22,7 @@ import { CheckCircle2, Bot, Zap, Layers, Globe, AlertTriangle, Wrench, ChevronRi
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
-export default function Module9Page() {
+export default function Module8Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()

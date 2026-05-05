@@ -329,7 +329,7 @@ export function DailyCallSheet({ onComplete, storageKey = "daily-call-sheet" }: 
         <div className="grid grid-cols-20 gap-1 mb-4">
           {callLog.map((callState, index) => (
             <button
-              key={index}
+              key={`call-${date}-${index}`}
               onClick={() => toggleCallLog(index)}
               className={cn(
                 "aspect-square text-[10px] font-mono flex items-center justify-center border rounded transition-all relative",
@@ -404,7 +404,7 @@ export function DailyCallSheet({ onComplete, storageKey = "daily-call-sheet" }: 
         <div className="grid grid-cols-20 gap-1 mb-4">
           {outcomeLog.map((outcomeState, index) => (
             <button
-              key={index}
+              key={`outcome-${date}-${index}`}
               onClick={() => toggleOutcomeLog(index)}
               className={cn(
                 "aspect-square text-[10px] font-mono flex items-center justify-center border rounded transition-all relative",

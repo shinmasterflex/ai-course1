@@ -33,9 +33,9 @@ export function GridDisplay({ title, items, xAxisLabel, yAxisLabel }: GridDispla
 
         {/* Grid */}
         <div className="grid grid-cols-2 gap-8">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <Card
-              key={index}
+              key={`grid-${item.title}`}
               className="p-6 border-2 border-brand-green/20 hover:border-brand-green/40 transition-colors"
             >
               <h4 className="text-lg font-semibold mb-3 text-brand-green">{item.title}</h4>

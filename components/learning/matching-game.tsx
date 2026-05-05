@@ -90,25 +90,28 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
         [selectedTerm]: defId,
       }))
 
-      setFeedback((prev) => ({
-        ...prev,
-        [selectedTerm]: "correct",
-      }))
+      setFeedback((prev) => {
+        const updated = {
+          ...prev,
+          [selectedTerm]: "correct",
+        }
+        
+        // Check if all pairs are now correct
+        const allCorrect = normalised.every((pair) => updated[pair.id] === "correct")
+        
+        if (allCorrect) {
+          setTimeout(() => {
+            setIsComplete(true)
+            if (onComplete) {
+              onComplete(true)
+            }
+          }, 500)
+        }
+        
+        return updated
+      })
 
       setSelectedTerm(null)
-
-      const newMatches = { ...matches, [selectedTerm]: defId }
-      const newFeedback = { ...feedback, [selectedTerm]: "correct" }
-      const allCorrect = normalised.every((pair) => newFeedback[pair.id] === "correct")
-
-      if (allCorrect) {
-        setTimeout(() => {
-          setIsComplete(true)
-          if (onComplete) {
-            onComplete(true)
-          }
-        }, 500)
-      }
     } else {
       setMatches((prev) => ({
         ...prev,
@@ -157,10 +160,10 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
   const totalCount = normalised.length
 
   return (
-    <Card className="p-6">
+    <Card className="p-6" role="region" aria-labelledby="matching-game-title">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold text-balance">{title}</h3>
-        <div className="flex items-center gap-2 text-lg font-mono font-semibold text-brand-orange">
+        <h3 id="matching-game-title" className="text-xl font-semibold text-balance">{title}</h3>
+        <div className="flex items-center gap-2 text-lg font-mono font-semibold text-brand-orange" aria-live="polite">
           <Clock className="h-5 w-5" />
           <span>{formatTime(elapsedTime)}</span>
         </div>
@@ -194,11 +197,13 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
                   isIncorrect && "border-red-500 bg-red-50 dark:bg-red-950/50",
                   isComplete && !isCorrect && "opacity-50",
                 )}
+                aria-label={`Term: ${pair.term}${isSelected ? ", selected" : ""}${isCorrect ? ", correctly matched" : ""}${isIncorrect ? ", incorrectly matched" : ""}`}
+                aria-pressed={isSelected}
               >
                 <div className="flex items-center justify-between">
                   <span className="font-medium">{pair.term}</span>
-                  {isCorrect && <Check className="h-5 w-5 text-green-600" />}
-                  {isIncorrect && <X className="h-5 w-5 text-red-600" />}
+                  {isCorrect && <Check className="h-5 w-5 text-green-600" aria-label="Correct match" />}
+                  {isIncorrect && <X className="h-5 w-5 text-red-600" aria-label="Incorrect match" />}
                 </div>
               </button>
             )
@@ -228,11 +233,12 @@ export function MatchingGame({ title, pairs, onComplete }: MatchingGameProps) {
                   isIncorrectlyMatched && "border-red-500 bg-red-50 dark:bg-red-950/50",
                   isComplete && !isCorrectlyMatched && "opacity-50",
                 )}
+                aria-label={`Definition: ${def.text}${isCorrectlyMatched ? ", correctly matched" : ""}${isIncorrectlyMatched ? ", incorrectly matched" : ""}`}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm">{def.text}</span>
-                  {isCorrectlyMatched && <Check className="h-5 w-5 text-green-600" />}
-                  {isIncorrectlyMatched && <X className="h-5 w-5 text-red-600" />}
+                  {isCorrectlyMatched && <Check className="h-5 w-5 text-green-600" aria-label="Correct match" />}
+                  {isIncorrectlyMatched && <X className="h-5 w-5 text-red-600" aria-label="Incorrect match" />}
                 </div>
               </button>
             )

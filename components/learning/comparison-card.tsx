@@ -40,8 +40,8 @@ export function ComparisonCard({ leftSide, rightSide }: ComparisonCardProps) {
         <h3 className="text-xl font-semibold mb-2 text-balance">{leftSide.title}</h3>
         {leftSide.subtitle && <p className="text-sm text-muted-foreground mb-4">{leftSide.subtitle}</p>}
         <ul className="space-y-3">
-          {leftSide.items.map((item, index) => (
-            <li key={index} className="flex items-start gap-2">
+          {leftSide.items.map((item) => (
+            <li key={`left-${item.slice(0, 20)}`} className="flex items-start gap-2">
               <span className="text-brand-green mt-1">•</span>
               <span className="flex-1 text-sm">{item}</span>
             </li>
@@ -54,8 +54,8 @@ export function ComparisonCard({ leftSide, rightSide }: ComparisonCardProps) {
         <h3 className="text-xl font-semibold mb-2 text-balance">{rightSide.title}</h3>
         {rightSide.subtitle && <p className="text-sm text-muted-foreground mb-4">{rightSide.subtitle}</p>}
         <ul className="space-y-3">
-          {rightSide.items.map((item, index) => (
-            <li key={index} className="flex items-start gap-2">
+          {rightSide.items.map((item) => (
+            <li key={`right-${item.slice(0, 20)}`} className="flex items-start gap-2">
               <span className="text-brand-orange mt-1">•</span>
               <span className="flex-1 text-sm">{item}</span>
             </li>

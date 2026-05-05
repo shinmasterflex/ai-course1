@@ -20,7 +20,7 @@ import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
-export default function Module8Page() {
+export default function Module9Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
