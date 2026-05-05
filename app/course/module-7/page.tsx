@@ -67,13 +67,15 @@ export default function Module7Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 7"
-            title="Translate AI trends into career advantage"
-            description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
-            imageSrc="/images/modules/module-7.jpg"
-            imageAlt="Professional business and AI technology"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 7"
+              title="Translate AI trends into career advantage"
+              description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
+              imageSrc="/images/modules/module-7.jpg"
+              imageAlt="Professional business and AI technology"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

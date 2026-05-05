@@ -75,13 +75,15 @@ export default function Module2Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 2"
-            title="Understand how models learn from data"
-            description="Explore machine learning fundamentals with intuitive analogies that make core concepts click quickly."
-            imageSrc="/images/modules/module-2.jpg"
-            imageAlt="Neural networks and data visualization"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 2"
+              title="Understand how models learn from data"
+              description="Explore machine learning fundamentals with intuitive analogies that make core concepts click quickly."
+              imageSrc="/images/modules/module-2.jpg"
+              imageAlt="Neural networks and data visualization"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

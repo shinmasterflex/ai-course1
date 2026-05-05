@@ -62,13 +62,15 @@ export default function Module6Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 6"
-            title="Design your first repeatable AI workflow"
-            description="Move from concepts to execution by combining no-code tools into a practical system you can deploy this week."
-            imageSrc="/images/modules/module-6.jpg"
-            imageAlt="Workflow automation and AI integration"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 6"
+              title="Design your first repeatable AI workflow"
+              description="Move from concepts to execution by combining no-code tools into a practical system you can deploy this week."
+              imageSrc="/images/modules/module-6.jpg"
+              imageAlt="Workflow automation and AI integration"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

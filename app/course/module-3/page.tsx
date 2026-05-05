@@ -75,13 +75,15 @@ export default function Module3Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 3"
-            title="Move from curiosity to effective prompting"
-            description="Learn the mechanics behind LLMs and apply prompting patterns that produce sharper, more reliable outputs."
-            imageSrc="/images/modules/module-3.jpg"
-            imageAlt="Language models and conversation AI"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 3"
+              title="Move from curiosity to effective prompting"
+              description="Learn the mechanics behind LLMs and apply prompting patterns that produce sharper, more reliable outputs."
+              imageSrc="/images/modules/module-3.jpg"
+              imageAlt="Language models and conversation AI"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

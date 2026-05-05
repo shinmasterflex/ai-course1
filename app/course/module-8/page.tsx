@@ -68,13 +68,15 @@ export default function Module8Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 8"
-            title="Understand how autonomous AI systems operate"
-            description="Learn the architecture of agents and where they outperform simple chat interfaces in real workflows."
-            imageSrc="/images/modules/module-8.jpg"
-            imageAlt="AI agents and autonomous systems"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 8"
+              title="Understand how autonomous AI systems operate"
+              description="Learn the architecture of agents and where they outperform simple chat interfaces in real workflows."
+              imageSrc="/images/modules/module-8.jpg"
+              imageAlt="AI agents and autonomous systems"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

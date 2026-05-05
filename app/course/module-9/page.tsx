@@ -67,13 +67,15 @@ export default function Module9Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 9"
-            title="Plan for the next wave of AI change"
-            description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
-            imageSrc="/images/modules/module-9.jpg"
-            imageAlt="Future of AI and innovation"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 9"
+              title="Plan for the next wave of AI change"
+              description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
+              imageSrc="/images/modules/module-9.jpg"
+              imageAlt="Future of AI and innovation"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (

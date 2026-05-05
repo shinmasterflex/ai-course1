@@ -40,6 +40,8 @@ type MatchingChallengeProps = {
   description?: string
   pairs: MatchingPair[]
   accentClassName?: string
+  leftLabel?: string
+  rightLabel?: string
 }
 
 type OrderingChallengeProps = {
@@ -58,19 +60,19 @@ type DragSortChallengeProps = {
 }
 
 export function FlipCardGrid({ cards }: FlipCardGridProps) {
-  const [openCard, setOpenCard] = useState<string | null>(null)
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
 
   return (
     <div className="grid md:grid-cols-2 gap-4">
       {cards.map((card) => {
-        const isOpen = openCard === card.title
+        const isOpen = hoveredCard === card.title
 
         return (
-          <button
+          <div
             key={card.title}
-            type="button"
-            onClick={() => setOpenCard(isOpen ? null : card.title)}
-            className="text-left perspective-1000"
+            onMouseEnter={() => setHoveredCard(card.title)}
+            onMouseLeave={() => setHoveredCard(null)}
+            className="text-left perspective-1000 cursor-default"
           >
             <div
               className={cn(
@@ -87,7 +89,7 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
               >
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{card.title}</p>
                 <p className="mt-3 text-sm font-medium text-foreground">{card.prompt}</p>
-                <div className="mt-4 text-xs font-medium text-brand-green">Click to flip</div>
+                <div className="mt-4 text-xs font-medium text-brand-green">Hover to flip</div>
               </Card>
 
               <Card
@@ -98,17 +100,17 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
               >
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Answer</p>
                 <p className="mt-3 text-sm text-foreground">{card.answer}</p>
-                <div className="mt-4 text-xs font-medium text-muted-foreground">Click to flip back</div>
+                <div className="mt-4 text-xs font-medium text-muted-foreground">Move away to flip back</div>
               </Card>
             </div>
-          </button>
+          </div>
         )
       })}
     </div>
   )
 }
 
-export function MatchingChallenge({ title = "Matching Challenge", description, pairs, accentClassName }: MatchingChallengeProps) {
+export function MatchingChallenge({ title = "Matching Challenge", description, pairs, accentClassName, leftLabel = "Terms", rightLabel = "Matches" }: MatchingChallengeProps) {
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null)
   const [matches, setMatches] = useState<Record<string, string>>({})
   const [attempts, setAttempts] = useState(0)
@@ -144,7 +146,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Terms</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{leftLabel}</p>
           {normalizedPairs.map((pair) => {
             const isMatched = Boolean(matches[pair.id])
             const isSelected = selectedLeftId === pair.id
@@ -156,7 +158,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
                 disabled={isMatched}
                 onClick={() => setSelectedLeftId(pair.id)}
                 className={cn(
-                  "w-full rounded-lg border px-3 py-2 text-left text-sm transition-all",
+                  "w-full rounded-lg border px-3 py-2 text-left text-sm text-foreground transition-all",
                   "hover:-translate-y-0.5 hover:shadow-sm",
                   isMatched && "border-green-600 bg-green-50 text-green-900",
                   !isMatched && isSelected && "border-brand-orange bg-brand-orange/10",
@@ -170,7 +172,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
         </div>
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Matches</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{rightLabel}</p>
           {rightItems.map((pair) => {
             const matchedLeftId = reverseMatches[pair.id]
             const isMatched = Boolean(matchedLeftId)
@@ -182,7 +184,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
                 disabled={isMatched}
                 onClick={() => tryMatch(pair.id)}
                 className={cn(
-                  "w-full rounded-lg border px-3 py-2 text-left text-sm transition-all",
+                  "w-full rounded-lg border px-3 py-2 text-left text-sm text-foreground transition-all",
                   "hover:-translate-y-0.5 hover:shadow-sm",
                   isMatched && "border-green-600 bg-green-50 text-green-900",
                   !isMatched && "bg-white"
@@ -406,9 +408,9 @@ export function QuickCheckCard({
               type="button"
               variant="outline"
               className={cn(
-                "h-auto justify-start whitespace-normal px-4 py-3 text-left",
-                isAnswered && isRightAnswer && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50",
-                isAnswered && isSelected && !isRightAnswer && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50"
+                "h-auto justify-start whitespace-normal px-4 py-3 text-left text-foreground hover:bg-muted hover:text-foreground",
+                isAnswered && isRightAnswer && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50 hover:text-green-900",
+                isAnswered && isSelected && !isRightAnswer && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50 hover:text-red-900"
               )}
               onClick={() => setSelectedOptionId(option.id)}
             >

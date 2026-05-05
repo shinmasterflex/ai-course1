@@ -67,28 +67,30 @@ export default function Module0Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
-            <div className="grid items-stretch lg:grid-cols-2">
-              <div className="space-y-3 p-5 md:p-6">
-                <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
-                  Module Visual Guide
-                </p>
-                <h2 className="text-2xl font-semibold text-brand-indigo">A clear path through your AI fundamentals</h2>
-                <p className="text-sm text-muted-foreground">
-                  Follow each section in order, complete checkpoints, and build confidence before moving to Module 1.
-                </p>
+          {currentSectionIndex === 0 && (
+            <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
+              <div className="grid items-stretch lg:grid-cols-2">
+                <div className="space-y-3 p-5 md:p-6">
+                  <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
+                    Module Visual Guide
+                  </p>
+                  <h2 className="text-2xl font-semibold text-brand-indigo">A clear path through your AI fundamentals</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Follow each section in order, complete checkpoints, and build confidence before moving to Module 1.
+                  </p>
+                </div>
+                <div className="border-t border-brand-indigo/10 bg-sky-50/60 p-4 lg:border-l lg:border-t-0">
+                  <NextImage
+                    src="/images/modules/module-0.jpg"
+                    alt="AI technology and artificial intelligence concepts"
+                    width={960}
+                    height={340}
+                    className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white object-cover"
+                  />
+                </div>
               </div>
-              <div className="border-t border-brand-indigo/10 bg-sky-50/60 p-4 lg:border-l lg:border-t-0">
-                <NextImage
-                  src="/images/modules/module-0.jpg"
-                  alt="AI technology and artificial intelligence concepts"
-                  width={960}
-                  height={340}
-                  className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white object-cover"
-                />
-              </div>
-            </div>
-          </Card>
+            </Card>
+          )}
 
           {currentSectionIndex === 0 && (
             <div className="space-y-6">

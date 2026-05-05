@@ -75,13 +75,15 @@ export default function Module1Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 1"
-            title="Build the foundation for everything that follows"
-            description="Get clear on what AI is, where it came from, and how to separate practical reality from hype."
-            imageSrc="/images/modules/module-1.jpg"
-            imageAlt="Machine learning and artificial intelligence concepts"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 1"
+              title="Build the foundation for everything that follows"
+              description="Get clear on what AI is, where it came from, and how to separate practical reality from hype."
+              imageSrc="/images/modules/module-1.jpg"
+              imageAlt="Machine learning and artificial intelligence concepts"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
@@ -350,7 +352,9 @@ export default function Module1Page() {
               </div>
               <MatchingChallenge
                 title="Myth Match Sprint"
-                description="Tap a myth, then tap its matching reality statement."
+                description="Select a myth on the left, then tap its matching reality on the right."
+                leftLabel="Myths"
+                rightLabel="Realities"
                 pairs={[
                   {
                     id: "patterns",

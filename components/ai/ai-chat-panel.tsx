@@ -20,11 +20,11 @@ interface AIChatPanelProps {
 }
 
 const SUGGESTED_PROMPTS = [
-  "What is neuroplasticity?",
-  "Explain the concept of synaptic pruning",
-  "How do I navigate the course?",
-  "What are the key topics in Module 0?",
-  "Tell me about the neurobiology of learning",
+  "What is artificial intelligence?",
+  "How does machine learning work?",
+  "What are large language models?",
+  "How do I write a good AI prompt?",
+  "What are the key topics in this course?",
 ]
 
 function parseMarkdown(text: string) {

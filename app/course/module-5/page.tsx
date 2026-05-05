@@ -75,13 +75,15 @@ export default function Module5Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          <ModuleHero
-            eyebrow="Module 5"
-            title="Use AI responsibly and safely"
-            description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
-            imageSrc="/images/modules/module-5.jpg"
-            imageAlt="Ethical technology and responsible AI"
-          />
+          {currentSectionIndex === 0 && (
+            <ModuleHero
+              eyebrow="Module 5"
+              title="Use AI responsibly and safely"
+              description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
+              imageSrc="/images/modules/module-5.jpg"
+              imageAlt="Ethical technology and responsible AI"
+            />
+          )}
 
           {/* 0: Overview */}
           {currentSectionIndex === 0 && (
