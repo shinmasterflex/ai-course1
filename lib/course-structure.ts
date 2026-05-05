@@ -93,20 +93,22 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
+    // Position 5
     {
       id: "module-5",
       slug: "module-5",
-      title: "Module 5: AI Ethics, Safety & Society",
+      title: "Module 5: AI for Business & Work",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
-        { id: "ai-bias", title: "AI Bias & Fairness", completed: false },
-        { id: "privacy-data", title: "Privacy & Your Data", completed: false },
-        { id: "misinformation", title: "Misinformation & Deepfakes", completed: false },
-        { id: "responsible-ai", title: "Responsible AI Use", completed: false },
-        { id: "ai-future", title: "The Future of AI", completed: false },
+        { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
+        { id: "ai-and-jobs", title: "AI & the Future of Jobs", completed: false },
+        { id: "industry-applications", title: "AI Across Industries", completed: false },
+        { id: "ai-strategy", title: "Building an AI Strategy", completed: false },
+        { id: "building-ai-skills", title: "Building Your AI Skills", completed: false },
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
+    // Position 6: was module-6
     {
       id: "module-6",
       slug: "module-6",
@@ -119,24 +121,42 @@ export const courseStructure: CourseStructure = {
         { id: "next-steps", title: "Next Steps & Resources", completed: false },
       ],
     },
+    // Position 7
     {
       id: "module-7",
       slug: "module-7",
-      title: "Module 7: AI for Business & Work",
+      title: "Module 7: AI Ethics, Safety & Society",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
-        { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
-        { id: "ai-and-jobs", title: "AI & the Future of Jobs", completed: false },
-        { id: "industry-applications", title: "AI Across Industries", completed: false },
-        { id: "ai-strategy", title: "Building an AI Strategy", completed: false },
-        { id: "building-ai-skills", title: "Building Your AI Skills", completed: false },
+        { id: "ai-bias", title: "AI Bias & Fairness", completed: false },
+        { id: "privacy-data", title: "Privacy & Your Data", completed: false },
+        { id: "misinformation", title: "Misinformation & Deepfakes", completed: false },
+        { id: "responsible-ai", title: "Responsible AI Use", completed: false },
+        { id: "ai-future", title: "The Future of AI", completed: false },
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
+    // Position 8
     {
       id: "module-8",
       slug: "module-8",
-      title: "Module 8: The Future of AI",
+      title: "Module 8: AI Agents",
+      sections: [
+        { id: "module-overview", title: "Module Overview", completed: false },
+        { id: "what-are-agents", title: "What Are AI Agents?", completed: false },
+        { id: "how-agents-work", title: "How Agents Work", completed: false },
+        { id: "types-of-agents", title: "Types of AI Agents", completed: false },
+        { id: "real-world-applications", title: "AI Agents in the Real World", completed: false },
+        { id: "building-with-agents", title: "Building Your First Agent", completed: false },
+        { id: "risks-and-limits", title: "Risks & Limitations", completed: false },
+        { id: "module-quiz", title: "Module Quiz", completed: false },
+      ],
+    },
+    // Position 9
+    {
+      id: "module-9",
+      slug: "module-9",
+      title: "Module 9: The Future of AI",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "current-frontiers", title: "Current AI Frontiers", completed: false },

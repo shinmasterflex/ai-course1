@@ -76,13 +76,19 @@ export function Sidebar() {
 
   const handleSectionClick = (moduleId: string, sectionId: string) => {
     setCurrentPosition(moduleId, sectionId)
-
-    // Navigate to the module with section parameter
-    const modulePath = `/course/${moduleId}`
-    router.push(`${modulePath}?section=${sectionId}`)
+    router.push(`/course/${moduleId}?section=${sectionId}`)
   }
 
-  const activeModuleId = pathname?.includes("module-1") ? "module-1" : "module-0"
+  const handleModuleClick = (moduleId: string, sections: { id: string }[]) => {
+    if (pathname?.includes(moduleId)) return // already here
+    const firstSection = sections[0]?.id
+    if (firstSection) {
+      setCurrentPosition(moduleId, firstSection)
+      router.push(`/course/${moduleId}?section=${firstSection}`)
+    } else {
+      router.push(`/course/${moduleId}`)
+    }
+  }
 
   if (isCollapsed) {
     return (
@@ -125,15 +131,16 @@ export function Sidebar() {
             return (
               <div key={module.id}>
                 {/* Module Header */}
-                <div
+                <button
+                  onClick={() => handleModuleClick(module.id, module.sections)}
                   className={cn(
-                    "w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-colors font-heading",
+                    "w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-colors font-heading text-left",
                     isActiveModule ? "bg-primary/10 text-primary" : "hover:bg-muted",
                   )}
                 >
                   <span className="text-left">{module.title}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </div>
+                  <ChevronDown className={cn("h-4 w-4 flex-shrink-0 transition-transform", isActiveModule && "rotate-180")} />
+                </button>
 
                 {/* Module Sections - Always show for active module */}
                 {isActiveModule && (

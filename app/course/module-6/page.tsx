@@ -238,7 +238,7 @@ export default function Module6Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Next Steps & Resources</h2>
-              <TextDisplay variant="success" content="Congratulations! You have completed Introduction to AI. You now have a genuine understanding of what AI is, how it works, and how to use it responsibly." />
+              <TextDisplay variant="success" content="You have built your practical AI toolkit! You can automate workflows, build simple no-code agents, and have a clear plan for the next 30 days. Up next: AI Ethics, Safety & Society." />
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />What you can now do</h3>
                 <ul className="space-y-2 text-sm">
@@ -309,9 +309,9 @@ export default function Module6Page() {
                 <Button
                   size="lg"
                   className="bg-brand-green hover:bg-brand-green/90 text-white"
-                  onClick={handleSectionComplete}
+                  onClick={() => router.push("/course/module-7")}
                 >
-                  Complete Course ✓
+                  Continue to Module 7 →
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard

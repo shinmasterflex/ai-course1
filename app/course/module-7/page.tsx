@@ -1,5 +1,5 @@
 /**
- * MODULE 7: AI FOR BUSINESS & WORK
+ * MODULE 7: AI ETHICS, SAFETY & SOCIETY
  */
 
 "use client"
@@ -318,6 +318,46 @@ export default function Module7Page() {
                 { id: "mistake3", front: "Common AI strategy mistake #3", back: "Keeping AI use secret from your manager and team. Transparency about how you use AI builds trust. Sharing what works positions you as a resource — not a risk. The people who benefit most from AI are those who are open about it." },
                 { id: "mistake4", front: "Common AI strategy mistake #4", back: "Using AI only for writing tasks. AI can help with analysis, research, brainstorming, planning, coding, data processing, meeting prep, and much more. Think beyond drafting — think about every step in your workflow." },
               ]} />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-orange">How to Champion AI at Your Organisation</h3>
+                <p className="text-sm text-muted-foreground mb-4">Being the person who helps their team adopt AI well is one of the most valuable roles you can play right now. Here is how to do it without overstepping or creating resistance:</p>
+                <div className="space-y-3">
+                  {[
+                    {
+                      stage: "Start with a small, visible win",
+                      detail: "Pick one task that everyone finds tedious and show how AI handles it. A 10-minute demonstration beats a 10-page proposal every time. Seeing is believing.",
+                    },
+                    {
+                      stage: "Lead with the problem, not the technology",
+                      detail: "Do not say 'We should use AI.' Say 'We spend 6 hours every week on status reports — I found a way to cut that to 45 minutes.' People care about outcomes, not tools.",
+                    },
+                    {
+                      stage: "Address the fears directly",
+                      detail: "Colleagues often worry about job security. Acknowledge it honestly: AI is changing jobs, and learning it is the best career protection available. The goal is to free people from drudgework, not replace them.",
+                    },
+                    {
+                      stage: "Create a safe space to experiment",
+                      detail: "Share your failures alongside your successes. When people see that AI sometimes gets it wrong and that is okay, they feel safe trying it themselves. Perfection culture kills experimentation.",
+                    },
+                    {
+                      stage: "Document and share what works",
+                      detail: "Build a simple shared doc of prompts, workflows, and tools that work for your team&apos;s specific tasks. A prompt library tailored to your organisation is far more valuable than generic advice.",
+                    },
+                    {
+                      stage: "Raise the governance conversation early",
+                      detail: "Proactively ask: which tools are approved? What data can we put in AI systems? Who reviews AI-generated outputs before they go to clients? Being the person who asks these questions earns trust from leadership.",
+                    },
+                  ].map(({ stage, detail }) => (
+                    <div key={stage} className="flex gap-3 items-start">
+                      <span className="bg-brand-green text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">→</span>
+                      <div>
+                        <p className="font-medium text-sm">{stage}</p>
+                        <p className="text-sm text-muted-foreground">{detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -412,10 +452,10 @@ export default function Module7Page() {
               </div>
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: the future of AI — where this is all heading." />
+                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: your practical AI toolkit — no-code tools, workflows, and your first AI mini-project." />
                   <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={handleSectionComplete}>
-                      Continue to Module 8 →
+                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-6")}>
+                      Continue to Module 6 →
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

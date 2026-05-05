@@ -11,24 +11,28 @@ import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { Target, TrendingUp, Award, Brain, Cpu, MessageSquare, Zap, Shield, Wrench, BookOpen } from "lucide-react"
+import { Target, TrendingUp, Award, Brain, Cpu, MessageSquare, Zap, Shield, Wrench, BookOpen, Briefcase, Bot, Rocket } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { cn } from "@/lib/utils"
 
 const MODULE_META = [
-  { id: "module-0", icon: BookOpen,     color: "brand-green", label: "Welcome to AI",                    description: "Get oriented and understand the road ahead." },
-  { id: "module-1", icon: Cpu,          color: "brand-orange", label: "What Is AI?",                      description: "A grounded definition, history, and types of AI." },
-  { id: "module-2", icon: Brain,        color: "brand-green", label: "How Machines Learn",                description: "Training data, neural networks, and AI limits." },
-  { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",                 description: "How ChatGPT works and how to prompt effectively." },
-  { id: "module-4", icon: Zap,          color: "brand-green", label: "AI Tools for Everyday Life",       description: "Writing, images, productivity — a guided tour." },
-  { id: "module-5", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",     description: "Bias, privacy, deepfakes, and responsible use." },
-  { id: "module-6", icon: Wrench,       color: "brand-green", label: "Your AI Toolkit",                  description: "No-code tools, workflows, and your first project." },
+  { id: "module-0", icon: BookOpen,     color: "brand-green",  label: "Welcome to AI",                description: "Get oriented and understand the road ahead." },
+  { id: "module-1", icon: Cpu,          color: "brand-orange", label: "What Is AI?",                  description: "A grounded definition, history, and types of AI." },
+  { id: "module-2", icon: Brain,        color: "brand-green",  label: "How Machines Learn",           description: "Training data, neural networks, and AI limits." },
+  { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",             description: "How ChatGPT works and how to prompt effectively." },
+  { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity — a guided tour." },
+  { id: "module-5", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
+  { id: "module-6", icon: Wrench,       color: "brand-green",  label: "Your AI Toolkit",              description: "No-code tools, workflows, and your first project." },
+  { id: "module-7", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
+  { id: "module-8", icon: Bot,          color: "brand-green",  label: "AI Agents",                    description: "How autonomous AI agents work and what they can do." },
+  { id: "module-9", icon: Rocket,       color: "brand-orange", label: "The Future of AI",             description: "AGI, governance, careers, and what comes next." },
 ]
 
 const PHASES = [
-  { label: "Phase 1: Understanding AI",          color: "brand-green",  moduleIds: ["module-0", "module-1", "module-2"] },
-  { label: "Phase 2: Using AI",                  color: "brand-orange", moduleIds: ["module-3", "module-4"] },
-  { label: "Phase 3: Thinking Critically & Building", color: "brand-green", moduleIds: ["module-5", "module-6"] },
+  { label: "Phase 1: Understanding AI",       color: "brand-green",  moduleIds: ["module-0", "module-1", "module-2"] },
+  { label: "Phase 2: Using AI",               color: "brand-orange", moduleIds: ["module-3", "module-4"] },
+  { label: "Phase 3: AI in the World",        color: "brand-green",  moduleIds: ["module-5", "module-6"] },
+  { label: "Phase 4: Thinking Critically & Building", color: "brand-orange", moduleIds: ["module-7", "module-8", "module-9"] },
 ]
 
 export default function DashboardPage() {

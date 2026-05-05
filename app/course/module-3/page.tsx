@@ -264,6 +264,18 @@ export default function Module3Page() {
                     example: "Summarise this article in 3 bullet points. Do not use jargon. Do not exceed 50 words per bullet.",
                     why: "AI responds well to negative constraints. Explicit limits prevent rambling, off-topic content, or overly complex outputs.",
                   },
+                  {
+                    technique: "Meta-Prompting",
+                    how: "Ask the AI to critique and improve its own output — or to help you write a better prompt.",
+                    example: "Here is my prompt: [paste your prompt]. What is wrong with it? Rewrite it to get a better result. Then use the improved version.",
+                    why: "AI can often identify what is missing or unclear in a prompt better than you can. Using AI to improve your AI prompts is one of the highest-leverage habits you can develop.",
+                  },
+                  {
+                    technique: "Structured Output Prompting",
+                    how: "Explicitly request a specific output format — JSON, markdown table, numbered list, bullet points with headers.",
+                    example: "Return your answer as a JSON object with keys: 'recommendation', 'reasoning', and 'confidence_score' (0–10).",
+                    why: "When AI output feeds into another system, a spreadsheet, or a template, having a predictable structure saves enormous time. Naming the exact format you want all but guarantees you get it.",
+                  },
                 ].map(({ technique, how, example, why }) => (
                   <Card key={technique} className="p-5">
                     <h3 className="font-bold text-brand-orange mb-2">{technique}</h3>
@@ -286,6 +298,43 @@ export default function Module3Page() {
                   ]}
                   explanation="The best prompts are specific: they assign a role, provide context, set a clear task, specify the format, and include constraints. Every extra detail you give is an instruction the AI can follow."
                 />
+              </Card>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-blue-500/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-green">Prompt Quick Reference — Copy, Paste, Adapt</h3>
+                <p className="text-sm text-muted-foreground mb-4">These six templates cover the most common professional prompting scenarios. Adapt the specifics to your situation.</p>
+                <div className="space-y-3">
+                  {[
+                    {
+                      label: "Summarise a long document",
+                      prompt: "You are a professional editor. I will paste a [document type] below. Summarise it in exactly 5 bullet points, each under 25 words. Focus on the most actionable insights. Do not include background or context the reader already knows.",
+                    },
+                    {
+                      label: "Write a first draft",
+                      prompt: "You are an expert [role — e.g. 'B2B copywriter' / 'technical writer' / 'HR professional']. Write a [document type] for [audience]. Context: [2–3 sentences of background]. Tone: [professional/conversational/formal]. Length: [target word count]. Do not use filler phrases like 'In conclusion' or 'It goes without saying'.",
+                    },
+                    {
+                      label: "Analyse a decision or situation",
+                      prompt: "Think step by step. I am trying to decide [decision]. Here is my situation: [context]. What are the 3 strongest arguments FOR and 3 strongest arguments AGAINST? End with a recommendation and your reasoning.",
+                    },
+                    {
+                      label: "Generate ideas",
+                      prompt: "You are a creative strategist. Generate 10 ideas for [goal/problem]. For each idea, provide: the idea in one sentence, one concrete example of it working, and one major risk. Be bold — include at least 3 ideas that feel unconventional.",
+                    },
+                    {
+                      label: "Improve existing writing",
+                      prompt: "You are a senior editor. Improve the following text. Goals: [list 2–3 goals e.g. 'make it more concise', 'improve flow', 'make the argument stronger']. Preserve the author's voice. Highlight every change you made and explain why.",
+                    },
+                    {
+                      label: "Research a topic",
+                      prompt: "You are an expert in [field]. Give me a structured overview of [topic]. Include: what it is, why it matters, 3 key things most people misunderstand, and 3 recommended next steps for someone who wants to learn more. Cite specific examples where possible.",
+                    },
+                  ].map(({ label, prompt }) => (
+                    <div key={label} className="border rounded-lg p-3">
+                      <p className="text-xs font-bold text-brand-orange uppercase tracking-wide mb-2">{label}</p>
+                      <p className="text-xs font-mono bg-gray-50 dark:bg-gray-900 p-2 rounded text-muted-foreground leading-relaxed">{prompt}</p>
+                    </div>
+                  ))}
+                </div>
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>

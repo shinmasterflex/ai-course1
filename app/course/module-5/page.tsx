@@ -1,5 +1,5 @@
 ﻿/**
- * MODULE 5: AI ETHICS, SAFETY & SOCIETY
+ * MODULE 5: AI FOR BUSINESS & WORK
  */
 
 "use client"
@@ -214,6 +214,33 @@ export default function Module5Page() {
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use tools like Google Fact Check, Snopes, AFP Fact Check for viral claims</li>
                   </ul>
                 </Card>
+                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools — and Their Limits</h3>
+                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful — but imperfect. Understanding both is important.</p>
+                  <div className="space-y-3 text-sm">
+                    {[
+                      { tool: "GPTZero", type: "Text detection", desc: "Analyses writing patterns and perplexity (how predictable the word choices are) to estimate whether text was AI-generated. Widely used by educators. Works reasonably well on clearly AI-generated text; struggles with heavily edited or mixed human/AI content." },
+                      { tool: "Originality.ai", type: "Text detection", desc: "Designed for publishers and content teams. Scans for AI content alongside plagiarism checking. Offers sentence-level highlighting to show which parts look AI-generated. Paid tool." },
+                      { tool: "Hive Moderation", type: "Image & video detection", desc: "Classifies whether images were AI-generated, with confidence scores. Used by platforms for content moderation. More reliable on images from known AI generators." },
+                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye — inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
+                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos — a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
+                    ].map(({ tool, type, desc }) => (
+                      <div key={tool} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-medium">{tool}</p>
+                            <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded">{type}</span>
+                          </div>
+                          <p className="text-muted-foreground">{desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg">
+                    <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Critical limitation to understand</p>
+                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common — students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
+                  </div>
+                </Card>
               </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Real scenario — what would you do?</h3>
@@ -346,10 +373,10 @@ export default function Module5Page() {
               />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. One final module to go: building your personal AI toolkit." />
+                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: AI Agents — how autonomous AI systems plan, act, and complete multi-step tasks on your behalf." />
                   <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-6")}>
-                      Continue to Module 6 →
+                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-9")}>
+                      Continue to Module 8 →
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>

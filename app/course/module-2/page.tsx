@@ -197,11 +197,26 @@ export default function Module2Page() {
                 onComplete={() => handleQuizComplete("matching", true)}
               />
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-2 text-brand-green">Bonus: A Third Type — Reinforcement Learning</h3>
-                <p className="text-sm text-muted-foreground mb-3">There is actually a third major learning style worth knowing about:</p>
-                <div className="text-sm space-y-2">
-                  <p><span className="font-semibold text-brand-orange">Reinforcement Learning</span> — the AI learns by trial and error in a simulated environment, receiving rewards for correct actions and penalties for wrong ones. Like training a dog with treats, but for software.</p>
-                  <p className="text-muted-foreground">Famous examples: AlphaGo learned to play Go by playing millions of games against itself. OpenAI&apos;s RLHF (Reinforcement Learning from Human Feedback) is what makes ChatGPT sound helpful and safe — humans rated responses and the model was trained to produce higher-rated outputs.</p>
+                <h3 className="font-semibold mb-2 text-brand-green">A Third Type — Reinforcement Learning</h3>
+                <p className="text-sm text-muted-foreground mb-3">There is a third major learning style that powers some of AI&apos;s most impressive achievements:</p>
+                <div className="text-sm space-y-3">
+                  <p><span className="font-semibold text-brand-orange">Reinforcement Learning (RL)</span> — the AI learns by trial and error in a simulated environment, receiving rewards for correct actions and penalties for wrong ones. Like training a dog with treats, but for software at superhuman speed.</p>
+                  <div className="space-y-2 pl-3 border-l-2 border-brand-orange/30">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">AlphaGo (2016):</span> DeepMind&apos;s AI played millions of Go games against itself, getting a +1 reward for wins and -1 for losses. After enough iterations, it discovered strategies no human had ever conceived — including the legendary Move 37.</p>
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">RLHF — how ChatGPT got its personality:</span> After initial training on text, OpenAI used Reinforcement Learning from Human Feedback. Human raters compared pairs of responses and marked which was more helpful, accurate, and safe. The model was then trained to produce the kind of responses humans preferred. This is why ChatGPT sounds helpful and coherent rather than just statistically likely — humans taught it what &apos;good&apos; means.</p>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-semibold mb-2 text-blue-700 dark:text-blue-400">Bonus: Transfer Learning — Why Fine-Tuning Works</h3>
+                <p className="text-sm text-muted-foreground mb-3">There is a fourth concept worth understanding because it explains a huge amount of modern AI:</p>
+                <div className="text-sm space-y-3">
+                  <p><span className="font-semibold text-brand-orange">Transfer Learning</span> — instead of training a model from scratch for every task, you take a model already trained on a huge general dataset and fine-tune it on a smaller, specific dataset for your new task.</p>
+                  <p className="text-muted-foreground">Think of it like hiring an experienced doctor and training them in a specialist area — versus training a brand new medical student from scratch. The specialist training takes months; starting from zero takes a decade.</p>
+                  <div className="space-y-2 pl-3 border-l-2 border-blue-500/30">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">Example:</span> GPT-4 is trained on hundreds of billions of words of general text. To create a medical AI, you then fine-tune it on medical literature — it already understands language, so you just need to teach it domain knowledge. This process takes days and thousands of examples, not years and billions of examples.</p>
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">Why it matters:</span> Transfer learning is why the AI revolution accelerated so sharply after 2017. The same base model (called a foundation model) can be adapted into a legal AI, a coding assistant, a customer service bot, or a medical tool — all using the same foundation, just with specialised training on top.</p>
+                  </div>
                 </div>
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
