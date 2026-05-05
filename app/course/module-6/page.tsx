@@ -66,6 +66,13 @@ export default function Module6Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="This is the final module ? and the most hands-on. You will explore no-code AI tools, design a simple AI workflow, complete a mini-project, and leave with a curated list of resources for going deeper." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">What success looks like here</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Not:</span> building the most advanced automation you can imagine.</p>
+                  <p><span className="font-medium text-foreground">Yes:</span> choosing one small repeatable task, mapping the trigger and output, and leaving with a workflow you could realistically build this week.</p>
+                </div>
+              </Card>
               <Card className="p-5 space-y-2">
                 {["No-code AI platforms you can use today","Building a simple AI workflow (no coding required)","Your first AI mini-project","Next steps & resources for continued learning"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
@@ -80,6 +87,23 @@ export default function Module6Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">No-Code AI Tools</h2>
               <TextDisplay content="You do not need to write a single line of code to build powerful AI-powered tools. Here are the best platforms for non-technical builders:" />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Choose by build goal</h3>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-green mb-1">Automate steps</p>
+                    <p className="text-muted-foreground">Use Zapier, Make, or n8n when you want triggers, actions, and integrations between apps.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-green mb-1">Build an app</p>
+                    <p className="text-muted-foreground">Use Bubble, Glide, or Retool when you want a front-end product or internal tool.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-green mb-1">Build a chatbot</p>
+                    <p className="text-muted-foreground">Use Chatbase, CustomGPT.ai, or Botpress when the main job is answering questions from your content.</p>
+                  </div>
+                </div>
+              </Card>
               <div className="space-y-4">
                 {[
                   {
@@ -123,6 +147,18 @@ export default function Module6Page() {
                   </Card>
                 ))}
               </div>
+              <QuickCheckCard
+                prompt="A beginner wants to connect Gmail, Notion, and Slack with one AI step in the middle. Which tool category is the best fit?"
+                options={[
+                  { id: "a", label: "Automation and workflow tools" },
+                  { id: "b", label: "Image generation tools" },
+                  { id: "c", label: "Standalone chatbot builders only" },
+                  { id: "d", label: "3D modeling tools" },
+                ]}
+                correctOptionId="a"
+                explanation="This is a classic workflow-automation use case: connect existing apps, add one AI step, and route the result somewhere useful."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -133,6 +169,20 @@ export default function Module6Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Building Simple AI Workflows</h2>
               <TextDisplay content="An AI workflow is a series of steps where AI performs tasks automatically in response to a trigger. You connect existing tools ? no coding required." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-4 text-brand-orange">The easiest first workflow recipe</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    "1. Pick one repeatable task you already do every week.",
+                    "2. Choose a clear trigger such as a new email, saved article, or scheduled time.",
+                    "3. Add one AI action only: summarise, classify, extract, or draft.",
+                    "4. Send the result somewhere useful: email, Slack, Notion, spreadsheet.",
+                    "5. Review the output for a week before making the workflow more complex.",
+                  ].map((step) => (
+                    <div key={step} className="rounded-lg border bg-background p-3 text-muted-foreground">{step}</div>
+                  ))}
+                </div>
+              </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">Example Workflow: Auto-summarise any email newsletter</h3>
                 <div className="space-y-3">
@@ -166,6 +216,15 @@ export default function Module6Page() {
                   </Card>
                 ))}
               </div>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">If you built this in Zapier or Make, what would you do first?</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Step 1:</span> create the trigger in Gmail for labeled newsletter emails.</p>
+                  <p><span className="font-medium text-foreground">Step 2:</span> pass the email body into one AI summary step.</p>
+                  <p><span className="font-medium text-foreground">Step 3:</span> send the summary to one destination only, such as Notion.</p>
+                  <p><span className="font-medium text-foreground">Step 4:</span> test with 3-5 real examples before adding Slack or other outputs.</p>
+                </div>
+              </Card>
               
               <QuickCheckCard
                 prompt="What makes a good first AI workflow to build for yourself?"
@@ -199,6 +258,40 @@ export default function Module6Page() {
                   ].map((q) => <p key={q} className="text-muted-foreground">{q}</p>)}
                 </div>
               </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Three starter project ideas</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Inbox helper:</span> when a new email arrives, AI classifies it and drafts a reply outline.</p>
+                  <p><span className="font-medium text-foreground">Reading assistant:</span> when you save an article, AI creates a summary and three takeaways in Notion.</p>
+                  <p><span className="font-medium text-foreground">Meeting follow-up:</span> when notes are uploaded, AI extracts action items and sends them to the team.</p>
+                </div>
+              </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Mini-project success checklist</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "The task is specific and repeatable",
+                    "The trigger is clear",
+                    "The AI step does one job only",
+                    "The output goes somewhere you already use",
+                    "You can tell in one week whether it saves time or not",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
+              </Card>
+              <QuickCheckCard
+                prompt="Which mini-project idea is strongest for a beginner?"
+                options={[
+                  { id: "a", label: "A narrow workflow with one trigger, one AI action, and one clear output" },
+                  { id: "b", label: "A fully autonomous system that handles all work tasks immediately" },
+                  { id: "c", label: "A project with no clear trigger or measurable result" },
+                  { id: "d", label: "A workflow that starts by using confidential data in public tools" },
+                ]}
+                correctOptionId="a"
+                explanation="The best beginner project is intentionally small, testable, and safe enough to evaluate quickly."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -225,7 +318,18 @@ export default function Module6Page() {
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">Your 30-Day AI Challenge</h3>
                 <p className="text-sm text-muted-foreground">The fastest way to build real AI skill is daily practice. Here is a one-month challenge ? each card reveals a daily micro-task that takes under 15 minutes.</p>
-                
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  {[
+                    "Week 1: use AI once per day to summarise or draft something you were already doing.",
+                    "Week 2: test three prompt variations on the same task and compare the results.",
+                    "Week 3: automate one tiny workflow with a trigger, one AI step, and one output.",
+                    "Week 4: document what worked, what failed, and what you would keep using.",
+                  ].map((item) => (
+                    <Card key={item} className="p-4">
+                      <p className="text-muted-foreground">{item}</p>
+                    </Card>
+                  ))}
+                </div>
               </div>
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">Curated Resources for Going Deeper</h3>

@@ -322,7 +322,99 @@ export default function Module3Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Hands-On Practice</h2>
               <TextDisplay content="Now it is your turn. For each scenario below, write a high-quality prompt using what you have learned." />
               <TextDisplay variant="callout" content="There are no wrong answers here ? the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
-              
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Beginner adoption framework</h3>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <p className="font-semibold text-brand-orange mb-2">Start here</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Summarising</li>
+                      <li>Drafting</li>
+                      <li>Organising</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-brand-orange mb-2">Avoid for now</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Sensitive personal data</li>
+                      <li>Confidential company information</li>
+                      <li>High-stakes decisions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-brand-orange mb-2">Always do this</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Review the output</li>
+                      <li>Verify important facts</li>
+                      <li>Rewrite in your own judgment</li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "Scenario 1: Draft a clearer client update",
+                    situation: "You have rough notes from a project call and need to send a concise update email to a client by the end of the day.",
+                    weakPrompt: "Write an email to my client.",
+                    strongPrompt: "You are a project manager. Draft a professional client update email based on the notes below. Audience: a busy client stakeholder. Goals: be clear, calm, and specific. Include 1) progress made, 2) risks or blockers, and 3) next steps by Friday. Keep it under 180 words. Notes: [paste notes].",
+                  },
+                  {
+                    title: "Scenario 2: Summarise a long article for your team",
+                    situation: "You found a long industry article and want to post only the key takeaways in Slack so teammates can scan it quickly.",
+                    weakPrompt: "Summarise this article.",
+                    strongPrompt: "You are an analyst writing for a busy internal team. Summarise the article below in exactly 5 bullet points. Focus on implications for our team, not general background. Then add a final bullet called 'Why this matters now'. Use plain English and mention uncertainty where the article is speculative. Article: [paste article].",
+                  },
+                  {
+                    title: "Scenario 3: Turn messy notes into an action plan",
+                    situation: "You have unstructured notes from a meeting and need a usable checklist with owners and deadlines.",
+                    weakPrompt: "Organise these notes.",
+                    strongPrompt: "Act as an operations assistant. Convert the notes below into a table with columns for task, owner, deadline, and open question. If the owner or deadline is missing, mark it as 'unknown' instead of inventing one. After the table, list the top 3 decisions that still need clarification. Notes: [paste notes].",
+                  },
+                ].map(({ title, situation, weakPrompt, strongPrompt }) => (
+                  <Card key={title} className="p-5">
+                    <h3 className="font-semibold text-brand-green mb-2">{title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">{situation}</p>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="rounded-lg border border-brand-orange/20 bg-brand-orange/5 p-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-2">Too weak</p>
+                        <p className="text-xs font-mono text-muted-foreground leading-relaxed">{weakPrompt}</p>
+                      </div>
+                      <div className="rounded-lg border border-brand-green/20 bg-brand-green/5 p-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-brand-green mb-2">Model answer</p>
+                        <p className="text-xs font-mono text-muted-foreground leading-relaxed">{strongPrompt}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Simple prompt review rubric</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    "Role: did you tell the AI what perspective to use?",
+                    "Context: did you include the situation, audience, or constraints?",
+                    "Task: is the requested outcome specific and concrete?",
+                    "Format: did you say how the answer should be structured?",
+                    "Guardrails: did you tell it what not to guess or invent?",
+                    "Usability: could you copy the result directly into your workflow?",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-background p-3 text-muted-foreground">{item}</div>
+                  ))}
+                </div>
+              </Card>
+              <QuickCheckCard
+                prompt="A beginner wants to use AI at work tomorrow. Which starting point is strongest?"
+                options={[
+                  { id: "a", label: "Paste a confidential contract into a public chatbot and ask for legal advice" },
+                  { id: "b", label: "Start with a low-risk summarising or drafting task, then verify the output" },
+                  { id: "c", label: "Use AI for final decisions without checking the result" },
+                  { id: "d", label: "Wait until you can build a full automation" },
+                ]}
+                correctOptionId="b"
+                explanation="The safest and fastest way to build skill is to start with low-risk summarising, drafting, or organising tasks where you can easily review the result."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>

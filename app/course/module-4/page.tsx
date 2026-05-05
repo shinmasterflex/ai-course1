@@ -111,6 +111,24 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map ? organised by use case ? so you can quickly find the right tool for any task." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-green">Start with the job, not the brand</h3>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  {[
+                    { job: "Summarise", desc: "Turn long inputs into key points, action items, or highlights." },
+                    { job: "Draft", desc: "Create a first version of an email, report, agenda, or post." },
+                    { job: "Research", desc: "Gather, compare, and synthesize information from multiple sources." },
+                    { job: "Create", desc: "Generate images, music, video, or design concepts." },
+                    { job: "Organise", desc: "Convert messy notes or data into structure, categories, or plans." },
+                    { job: "Automate", desc: "Trigger repeatable actions across tools with minimal manual work." },
+                  ].map(({ job, desc }) => (
+                    <div key={job} className="rounded-lg border bg-background p-3">
+                      <p className="font-semibold text-brand-orange mb-1">{job}</p>
+                      <p className="text-muted-foreground">{desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Card className="p-5 space-y-2">
                 {["AI writing assistants - ChatGPT, Claude, Gemini","AI image generation - Midjourney, DALL-E, Firefly","AI for productivity - Notion AI, Copilot, Grammarly","AI in creative work - music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
@@ -125,6 +143,19 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI Writing Assistants</h2>
               <TextDisplay content="AI writing tools can draft emails, reports, essays, code, social posts, and more. Here are the main players and when to use each." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Which writing job are you trying to do?</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    "Draft something from scratch",
+                    "Rewrite something to improve tone or clarity",
+                    "Summarise a long document",
+                    "Brainstorm ideas or outlines",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-background p-3 text-muted-foreground">{item}</div>
+                  ))}
+                </div>
+              </Card>
               <div className="grid md:grid-cols-2 gap-4">
                 <ToolCard
                   name="ChatGPT"
@@ -155,8 +186,18 @@ export default function Module4Page() {
                   strengths={["Real-time suggestions in any browser","Tone detection and adjustment","Best for editing, not drafting","Works inside Gmail, Docs, etc."]}
                 />
               </div>
-              
-              
+              <QuickCheckCard
+                prompt="If your main task is polishing tone and grammar inside apps you already use, which tool in this section is the most direct fit?"
+                options={[
+                  { id: "a", label: "Grammarly" },
+                  { id: "b", label: "Midjourney" },
+                  { id: "c", label: "Stable Diffusion" },
+                  { id: "d", label: "Otter.ai" },
+                ]}
+                correctOptionId="a"
+                explanation="Grammarly is positioned here as the editing and tone-adjustment tool, especially for improving writing inside existing workflows."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -241,6 +282,22 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
               <TextDisplay content="AI productivity tools are embedded into the apps you already use ? transforming how you write, organise, and get things done." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A beginner-friendly capability map</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    { label: "Summarising", example: "Meeting transcripts, articles, long emails" },
+                    { label: "Drafting", example: "Replies, memos, proposals, slide outlines" },
+                    { label: "Researching", example: "Compare options, gather sources, build briefings" },
+                    { label: "Organising", example: "Turn notes into checklists, tables, categories" },
+                  ].map(({ label, example }) => (
+                    <div key={label} className="rounded-lg border bg-background p-3">
+                      <p className="font-semibold text-brand-orange mb-1">{label}</p>
+                      <p className="text-muted-foreground">{example}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <div className="space-y-4">
                 {[
                   { category: "Meeting & Notes", tools: [
@@ -276,7 +333,19 @@ export default function Module4Page() {
                   </Card>
                 ))}
               </div>
-              
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Good first uses at work</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Summarise a meeting transcript into decisions and action items",
+                    "Turn bullet notes into a polished status update",
+                    "Research a topic and return cited pros, cons, and recommendations",
+                    "Organise survey responses or customer feedback into categories",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -324,6 +393,15 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Choosing the Right Tool</h2>
               <TextDisplay content="With hundreds of AI tools available, how do you decide which to use? Use this simple framework:" />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">The decision order that keeps beginners out of trouble</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">1. Define the job:</span> summarise, draft, research, create, organise, or automate.</p>
+                  <p><span className="font-medium text-foreground">2. Check the data:</span> if it is sensitive, stop and check policy before pasting it anywhere.</p>
+                  <p><span className="font-medium text-foreground">3. Choose the lightest tool that fits:</span> use a simple assistant before adopting a full workflow or platform.</p>
+                  <p><span className="font-medium text-foreground">4. Verify the output:</span> especially facts, numbers, citations, or anything going to a client or boss.</p>
+                </div>
+              </Card>
               
               <Card className="p-5">
                 <h3 className="font-semibold mb-3">5 Questions Before Choosing an AI Tool</h3>
@@ -337,10 +415,42 @@ export default function Module4Page() {
                   ].map((q, i) => <li key={i} className="text-muted-foreground">{q}</li>)}
                 </ol>
               </Card>
-                <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                  <h3 className="font-semibold mb-3 text-brand-green">Should I Use AI for This? ? Rapid-Fire Quiz</h3>
-                  
-                </Card>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Use AI",
+                    prompt: "You need a first draft of a project update from your own notes.",
+                    answer: "Yes. This is a strong use case: low risk, easy to review, and time-saving.",
+                  },
+                  {
+                    title: "Be careful",
+                    prompt: "You want AI to summarize internal strategy notes with confidential details.",
+                    answer: "Only if your approved tools and company policy allow it. Sensitivity matters before convenience.",
+                  },
+                  {
+                    title: "Do not rely blindly",
+                    prompt: "You want AI to make the final legal or medical decision for you.",
+                    answer: "No. AI can support research or drafting, but high-stakes judgment still needs expert human review.",
+                  },
+                  {
+                    title: "Best first step",
+                    prompt: "You are unsure which tool to try first.",
+                    answer: "Start by naming the job to be done. Once you know the task clearly, tool selection becomes much easier.",
+                  },
+                ]}
+              />
+              <QuickCheckCard
+                prompt="What is the best beginner sequence for choosing an AI tool?"
+                options={[
+                  { id: "a", label: "Pick the newest brand, then look for a task" },
+                  { id: "b", label: "Define the task, check the data sensitivity, choose the simplest suitable tool, then verify the output" },
+                  { id: "c", label: "Always use the most advanced tool available" },
+                  { id: "d", label: "Start with automation before trying any simple use case" },
+                ]}
+                correctOptionId="b"
+                explanation="Good tool selection starts with the job, then privacy and risk, then the simplest tool that fits, followed by output verification."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}

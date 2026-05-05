@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
@@ -94,10 +95,41 @@ export default function Module2Page() {
               <TextDisplay content="Machine learning is a type of AI where the system learns from data instead of following hand-written rules." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3">The Old Way vs. Machine Learning</h3>
-                
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div className="rounded-lg border border-brand-orange/20 bg-background p-4">
+                    <h4 className="font-semibold text-brand-orange mb-3 flex items-center gap-2"><XCircle className="h-4 w-4" /> Traditional software</h4>
+                    <div className="space-y-2 text-muted-foreground">
+                      <p>You write explicit rules.</p>
+                      <p>Example: "If an email contains these words, mark it as spam."</p>
+                      <p>Works well when the rules are stable and easy to define.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-lg border border-brand-green/20 bg-background p-4">
+                    <h4 className="font-semibold text-brand-green mb-3 flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Machine learning</h4>
+                    <div className="space-y-2 text-muted-foreground">
+                      <p>You show the system many examples.</p>
+                      <p>Example: millions of emails already labeled as spam or not spam.</p>
+                      <p>The model learns the pattern instead of you writing every rule by hand.</p>
+                    </div>
+                  </div>
+                </div>
               </Card>
-              
-              
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">A simple analogy</h3>
+                <p className="text-sm text-muted-foreground">Traditional software is like giving someone a strict recipe. Machine learning is like showing them 10,000 examples until they begin to recognize the pattern for themselves.</p>
+              </Card>
+              <QuickCheckCard
+                prompt="When does machine learning make the most sense?"
+                options={[
+                  { id: "a", label: "When every rule is obvious and never changes" },
+                  { id: "b", label: "When you have many examples and the pattern is too complex to hand-code" },
+                  { id: "c", label: "When no data exists at all" },
+                  { id: "d", label: "Only when you are building a robot body" },
+                ]}
+                correctOptionId="b"
+                explanation="Machine learning is most useful when there are lots of examples but the pattern would be difficult or fragile to capture with explicit rules."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -130,8 +162,23 @@ export default function Module2Page() {
               </div>
               <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Spot the Bad Training Data</h3>
-                
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Bad example 1:</span> a hiring model trained mostly on past successful hires from one narrow demographic.</p>
+                  <p><span className="font-medium text-foreground">Bad example 2:</span> a medical model trained mostly on data from one country, hospital system, or age group.</p>
+                  <p><span className="font-medium text-foreground">Bad example 3:</span> a customer support model trained on tickets that were mislabeled or inconsistently categorized.</p>
+                </div>
               </Card>
+              <QuickCheckCard
+                prompt="What is the biggest risk in weak training data?"
+                options={[
+                  { id: "a", label: "The AI becomes more creative" },
+                  { id: "b", label: "The model learns the wrong patterns and repeats them in output" },
+                  { id: "c", label: "The model automatically corrects bad labels later" },
+                  { id: "d", label: "Only the user interface is affected" },
+                ]}
+                correctOptionId="b"
+                explanation="Models learn from the examples they receive. If those examples are skewed, missing context, or mislabeled, the model will reproduce those flaws."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -141,8 +188,28 @@ export default function Module2Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Supervised vs. Unsupervised Learning</h2>
               <TextDisplay content="There are two main ways machines learn from data. The difference comes down to whether the training examples have labels." />
-              
-              
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <h3 className="font-semibold mb-3 text-brand-green">Supervised learning</h3>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><span className="font-medium text-foreground">What it gets:</span> labeled examples.</p>
+                    <p><span className="font-medium text-foreground">Typical question:</span> "Given this input, what is the correct answer?"</p>
+                    <p><span className="font-medium text-foreground">Examples:</span> spam detection, fraud detection, house-price prediction, medical image classification.</p>
+                  </div>
+                </Card>
+                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">Unsupervised learning</h3>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><span className="font-medium text-foreground">What it gets:</span> unlabeled data.</p>
+                    <p><span className="font-medium text-foreground">Typical question:</span> "What patterns or groups can be found here?"</p>
+                    <p><span className="font-medium text-foreground">Examples:</span> customer segmentation, anomaly detection, grouping similar products or documents.</p>
+                  </div>
+                </Card>
+              </div>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3">Fast rule of thumb</h3>
+                <p className="text-sm text-muted-foreground">If humans already know the right answer for many examples, supervised learning is usually the better fit. If you want the system to discover hidden structure in messy data, unsupervised learning is the better starting point.</p>
+              </Card>
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-2 text-brand-green">A Third Type ? Reinforcement Learning</h3>
                 <p className="text-sm text-muted-foreground mb-3">There is a third major learning style that powers some of AI&apos;s most impressive achievements:</p>
@@ -166,6 +233,17 @@ export default function Module2Page() {
                   </div>
                 </div>
               </Card>
+              <QuickCheckCard
+                prompt="A retailer wants to group customers into segments without pre-labeling them. Which learning style fits best?"
+                options={[
+                  { id: "a", label: "Supervised learning" },
+                  { id: "b", label: "Unsupervised learning" },
+                  { id: "c", label: "Only reinforcement learning" },
+                  { id: "d", label: "None of the above" },
+                ]}
+                correctOptionId="b"
+                explanation="Customer segmentation is a classic unsupervised learning problem because the system is discovering groups in unlabeled data."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -193,11 +271,25 @@ export default function Module2Page() {
                     ))}
                   </div>
                 </Card>
-                
+                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                  <h3 className="font-semibold mb-3 text-brand-green">What the layers are really doing</h3>
+                  <p className="text-sm text-muted-foreground">Neural networks work by building up from simple patterns to complex ones. In image recognition, early layers detect basic shapes, later layers combine them into features, and final layers make the prediction.</p>
+                </Card>
               </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Quick check</h3>
-                
+                <QuickCheckCard
+                  prompt="What is the main job of a neural network during training?"
+                  options={[
+                    { id: "a", label: "Memorize every input exactly once and never adjust" },
+                    { id: "b", label: "Adjust internal connections so predictions improve over many examples" },
+                    { id: "c", label: "Browse the web for the correct answer each time" },
+                    { id: "d", label: "Replace training data with human intuition" },
+                  ]}
+                  correctOptionId="b"
+                  explanation="Training repeatedly adjusts the network's internal weights so its predictions become more accurate over many examples."
+                  accentClassName="border-transparent bg-transparent p-0"
+                />
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -209,8 +301,43 @@ export default function Module2Page() {
               <h2 className="text-3xl font-bold text-brand-orange">What AI Can&apos;t Do</h2>
               <TextDisplay content="AI is remarkably powerful ? but it has fundamental limitations that are important to understand." />
               <TextDisplay variant="callout" content="Flip each card to discover WHY AI has this limitation. Understanding the reason is more useful than just knowing the fact." />
-              
-              
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Common sense",
+                    prompt: "Why can AI still fail at obvious real-world judgment?",
+                    answer: "Because it learns statistical patterns from data, not grounded lived experience. It can sound convincing without truly understanding the physical or social world.",
+                  },
+                  {
+                    title: "Truthfulness",
+                    prompt: "Why can AI confidently give wrong answers?",
+                    answer: "Its goal is usually to generate a plausible next output, not to verify truth. That is why hallucinations happen.",
+                  },
+                  {
+                    title: "Generalization",
+                    prompt: "Why doesn't strong performance on one task mean it can do everything?",
+                    answer: "Most current AI is narrow. It can be excellent within a trained domain and still break outside that domain or context.",
+                  },
+                  {
+                    title: "Judgment",
+                    prompt: "Why should humans stay responsible for important decisions?",
+                    answer: "AI can support analysis and drafting, but it lacks accountability, values, and the broader context needed for high-stakes judgment.",
+                  },
+                ]}
+              />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Best beginner mindset</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Use AI for support, acceleration, and first drafts",
+                    "Verify important facts, numbers, and citations",
+                    "Expect errors when tasks require deep judgment or real-world understanding",
+                    "Keep a human in the loop for anything consequential",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}

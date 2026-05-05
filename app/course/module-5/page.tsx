@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
+import { FlipCardGrid, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
@@ -78,6 +79,14 @@ export default function Module5Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks ? to yourself, to others, and to society. This module gives you that foundation." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A simple safety operating system</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Before you paste:</span> ask whether the data is personal, confidential, or regulated.</p>
+                  <p><span className="font-medium text-foreground">Before you trust:</span> ask what must be verified before anyone acts on the output.</p>
+                  <p><span className="font-medium text-foreground">Before you automate:</span> ask whether a human should still review the result.</p>
+                </div>
+              </Card>
               <Card className="p-5 space-y-2">
                 {["AI bias ? how it forms and who it hurts","Privacy ? what AI systems collect about you","Misinformation ? deepfakes and AI-generated content","Responsible AI use ? principles and practices","The future of AI ? what comes next"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
@@ -123,8 +132,43 @@ export default function Module5Page() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases ? Flashcards</h3>
                 <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
-                
+                <FlipCardGrid
+                  cards={[
+                    {
+                      title: "Hiring",
+                      prompt: "What happened when AI learned from biased historical hiring data?",
+                      answer: "It reproduced the past instead of correcting it. Systems trained on skewed hiring history can downgrade qualified candidates from underrepresented groups.",
+                    },
+                    {
+                      title: "Facial recognition",
+                      prompt: "Why did some facial recognition systems fail certain groups more often?",
+                      answer: "Because the training data underrepresented those groups, so the model learned weaker patterns for them and made more mistakes.",
+                    },
+                    {
+                      title: "Healthcare",
+                      prompt: "How can bias show up in medical AI?",
+                      answer: "If training data comes mostly from one population or care system, the model may work less well for patients outside that group.",
+                    },
+                    {
+                      title: "Key lesson",
+                      prompt: "What is the beginner takeaway from these cases?",
+                      answer: "Do not assume an AI system is fair because it is automated. Ask what data it learned from, who might be missing, and who bears the risk if it is wrong.",
+                    },
+                  ]}
+                />
               </div>
+              <QuickCheckCard
+                prompt="What is the strongest beginner question to ask about an AI system used in hiring, lending, or healthcare?"
+                options={[
+                  { id: "a", label: "Does the interface look modern?" },
+                  { id: "b", label: "Who might be disadvantaged if the training data is incomplete or biased?" },
+                  { id: "c", label: "Is it faster than humans in every situation?" },
+                  { id: "d", label: "Does it use a large model?" },
+                ]}
+                correctOptionId="b"
+                explanation="In high-stakes contexts, the most important question is who could be harmed if the model learned from incomplete, biased, or unrepresentative data."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -134,6 +178,23 @@ export default function Module5Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Privacy & Your Data</h2>
               <TextDisplay content="When you use AI tools, you are sharing data ? sometimes more than you realise. Understanding what is collected helps you protect yourself." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Traffic-light rule for what to paste</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-green-700 mb-1">Green: usually safe</p>
+                    <p className="text-muted-foreground">Public articles, your own generic drafts, non-sensitive brainstorming, already-public marketing copy.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-amber-700 mb-1">Yellow: pause and check policy</p>
+                    <p className="text-muted-foreground">Internal documents, client materials, unpublished strategy notes, anything covered by workplace rules.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-red-700 mb-1">Red: do not paste into general AI tools</p>
+                    <p className="text-muted-foreground">Passwords, financial account details, SSNs, medical records, legal secrets, regulated personal data.</p>
+                  </div>
+                </div>
+              </Card>
               
               <Card className="p-5">
                 <h3 className="font-semibold mb-3">Practical privacy guidelines</h3>
@@ -149,8 +210,17 @@ export default function Module5Page() {
                   ))}
                 </ul>
               </Card>
-              
-              
+              <QuickCheckCard
+                prompt="You want AI to summarize internal meeting notes that include client names and confidential plans. What is the safest default?"
+                options={[
+                  { id: "a", label: "Paste them into any public chatbot because summarization is low risk" },
+                  { id: "b", label: "Check whether your organization has approved a protected tool before using AI with that content" },
+                  { id: "c", label: "Replace only one client name and paste the rest" },
+                  { id: "d", label: "Use AI first and ask about policy later" },
+                ]}
+                correctOptionId="b"
+                explanation="Confidential internal notes are not a casual input. The safe default is to check policy and use only approved tools with the right protections."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -217,8 +287,23 @@ export default function Module5Page() {
               </div>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Real scenario ? what would you do?</h3>
-                
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>You receive a voice note from someone who sounds like your manager asking you to urgently buy gift cards and send the codes.</p>
+                  <p><span className="font-medium text-foreground">Best response:</span> do not act from the voice message alone. Verify through a separate trusted channel before doing anything.</p>
+                </div>
               </Card>
+              <QuickCheckCard
+                prompt="What is the best first move when a realistic AI-generated voice or video seems urgent and emotionally pressuring?"
+                options={[
+                  { id: "a", label: "Act quickly before the opportunity disappears" },
+                  { id: "b", label: "Verify through another trusted channel before responding" },
+                  { id: "c", label: "Forward it to friends and ask what they think" },
+                  { id: "d", label: "Assume it is real if the quality is good" },
+                ]}
+                correctOptionId="b"
+                explanation="Urgency is a classic manipulation tactic. The safest move is to slow down and verify through a separate trusted channel."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -245,7 +330,23 @@ export default function Module5Page() {
               </div>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
-                
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>You used AI to draft a client-facing report. The draft is strong, but it includes a statistic you have not verified and a confident recommendation you would not personally stand behind yet.</p>
+                  <p><span className="font-medium text-foreground">Responsible move:</span> check the source of the statistic, edit the recommendation to match your real judgment, and only then send the report.</p>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">A simple checklist before you use AI output</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Did I verify the important facts, numbers, and names?",
+                    "Would I still stand behind this if my name were on it?",
+                    "Did I remove or protect any sensitive data?",
+                    "Should a human review this before it affects someone else?",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -274,7 +375,11 @@ export default function Module5Page() {
               <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool ? it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
-                
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Question 1:</span> Which human skills become more valuable as AI gets better?</p>
+                  <p><span className="font-medium text-foreground">Question 2:</span> Where in your life or work should speed never outrun judgment?</p>
+                  <p><span className="font-medium text-foreground">Question 3:</span> What rule will you personally use for deciding when AI helps and when a human must stay in charge?</p>
+                </div>
               </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -287,7 +392,7 @@ export default function Module5Page() {
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: AI Agents ? how autonomous AI systems plan, act, and complete multi-step tasks on your behalf." />
+                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit ? where you turn safe, thoughtful AI use into practical no-code workflows." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-6")}>
                       Continue to Module 6

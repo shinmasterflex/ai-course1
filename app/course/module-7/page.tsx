@@ -91,6 +91,19 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
               <TextDisplay content="AI is already embedded in the tools most professionals use every day  - often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Your first workplace use should pass this test</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "The task is repetitive and low-risk",
+                    "The output is easy for you to review",
+                    "You can measure time saved in a week",
+                    "No sensitive data is shared outside approved tools",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
+              </Card>
               <div className="space-y-4">
                 {[
                   {
@@ -134,6 +147,18 @@ export default function Module7Page() {
                   </Card>
                 ))}
               </div>
+              <QuickCheckCard
+                prompt="What is the best first AI use for most professionals?"
+                options={[
+                  { id: "a", label: "Automate every client-facing decision immediately" },
+                  { id: "b", label: "Start with a low-risk repetitive task and keep human review" },
+                  { id: "c", label: "Adopt the newest tool first and find a task later" },
+                  { id: "d", label: "Wait until your role is fully disrupted" },
+                ]}
+                correctOptionId="b"
+                explanation="The safest high-leverage starting point is a repeatable, low-risk task where you can verify output quality and track time saved."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -375,6 +400,26 @@ export default function Module7Page() {
                   ))}
                 </div>
               </div>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A practical 90-day career plan</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Days 1-30:</span> pick two recurring tasks and use AI on them daily. Track time saved and output quality.</p>
+                  <p><span className="font-medium text-foreground">Days 31-60:</span> standardize your best prompts and workflow steps into a mini playbook for your role.</p>
+                  <p><span className="font-medium text-foreground">Days 61-90:</span> share one documented workflow with your team and gather feedback to improve it.</p>
+                </div>
+              </Card>
+              <QuickCheckCard
+                prompt="Which approach best builds durable AI career advantage?"
+                options={[
+                  { id: "a", label: "Try every tool briefly without measuring outcomes" },
+                  { id: "b", label: "Go deep on specific tasks in your domain and document what works" },
+                  { id: "c", label: "Focus only on AI news and skip practical application" },
+                  { id: "d", label: "Avoid sharing what you learn with your team" },
+                ]}
+                correctOptionId="b"
+                explanation="Durable advantage comes from repeatable workflow skill in your actual domain, not from broad but shallow experimentation."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
               
             </div>

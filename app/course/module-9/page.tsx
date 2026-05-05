@@ -210,9 +210,45 @@ export default function Module9Page() {
               </Card>
               <div className="space-y-3">
                 <h3 className="text-xl font-bold">What Leading Experts Believe</h3>
-                
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  {[
+                    {
+                      view: "Near-term AGI optimists",
+                      detail: "Some leaders at frontier labs argue AGI could emerge within a few years as model capabilities compound quickly.",
+                    },
+                    {
+                      view: "Long-horizon realists",
+                      detail: "Many researchers believe current systems are still far from robust general intelligence and estimate decades, not years.",
+                    },
+                    {
+                      view: "Skeptics",
+                      detail: "Some experts question whether AGI, as commonly imagined, is achievable with current paradigms at all.",
+                    },
+                    {
+                      view: "Policy and safety focus",
+                      detail: "Another group argues timeline debates matter less than governance, safety, and responsible deployment of capabilities we already have.",
+                    },
+                  ].map(({ view, detail }) => (
+                    <Card key={view} className="p-4">
+                      <p className="font-semibold text-brand-orange mb-1">{view}</p>
+                      <p className="text-muted-foreground">{detail}</p>
+                    </Card>
+                  ))}
+                </div>
               </div>
               <TextDisplay variant="callout" content="The practical takeaway: you do not need to know if or when AGI will arrive to benefit from AI today. Focus on what AI can do now, not on speculative timelines." />
+              <QuickCheckCard
+                prompt="What is the most practical stance for a learner today given AGI uncertainty?"
+                options={[
+                  { id: "a", label: "Ignore current AI until AGI timelines are settled" },
+                  { id: "b", label: "Focus on useful current capabilities while staying informed about future risks" },
+                  { id: "c", label: "Treat AGI as already achieved" },
+                  { id: "d", label: "Build strategy only on one prediction from one expert" },
+                ]}
+                correctOptionId="b"
+                explanation="The robust strategy is to use present-day AI productively and responsibly while tracking future developments with healthy uncertainty."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -256,6 +292,14 @@ export default function Module9Page() {
                   </Card>
                 ))}
               </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">What governance means for you in practice</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Expect more transparency requirements for high-risk AI systems in work contexts.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />If you deploy AI in business, you will likely need clearer documentation and human oversight.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Regional differences in rules can affect tool choice, rollout speed, and compliance obligations.</li>
+                </ul>
+              </Card>
               <QuickCheckCard
                 prompt="Why does AI governance remain complex for global companies?"
                 options={[
