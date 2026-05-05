@@ -1,0 +1,311 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 
+  SWIFTCOURSE DESIGN SYSTEM
+  Color Palette inspired by swiftcourse.com
+  - Primary: Deep forest green (#1a4d3e) - Authority, trust, professionalism
+  - Accent: Vibrant orange (#ff5722) - Energy, action, CTAs
+  - Neutrals: White, grays for backgrounds and text
+  - Typography: Golden ratio scaling (1.618) with Inter font family
+*/
+
+:root {
+  /* Brand Colors - Swiftcourse palette */
+  --brand-green: oklch(0.35 0.08 165); /* Deep forest green #1a4d3e */
+  --brand-green-dark: oklch(0.25 0.08 165); /* Darker green for hover states */
+  --brand-orange: oklch(0.65 0.22 35); /* Vibrant orange #ff5722 */
+  --brand-orange-dark: oklch(0.55 0.22 35); /* Darker orange for hover */
+
+  /* Semantic tokens */
+  --background: oklch(0.99 0 0); /* Off-white for softer look */
+  --foreground: oklch(0.2 0 0); /* Dark gray for text */
+  --card: oklch(1 0 0); /* Pure white for cards */
+  --card-foreground: oklch(0.2 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0 0);
+
+  /* Primary uses brand green */
+  --primary: var(--brand-green);
+  --primary-foreground: oklch(0.99 0 0);
+
+  /* Accent uses brand orange */
+  --accent: var(--brand-orange);
+  --accent-foreground: oklch(0.99 0 0);
+
+  /* Secondary and muted tones */
+  --secondary: oklch(0.95 0 0); /* Light gray */
+  --secondary-foreground: oklch(0.2 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+
+  /* Destructive (errors) */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Borders and inputs */
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: var(--brand-green);
+
+  /* Chart colors - professional palette */
+  --chart-1: var(--brand-green);
+  --chart-2: var(--brand-orange);
+  --chart-3: oklch(0.6 0.15 220); /* Blue */
+  --chart-4: oklch(0.7 0.15 140); /* Teal */
+  --chart-5: oklch(0.65 0.15 80); /* Yellow-green */
+
+  /* Border radius */
+  --radius: 0.5rem;
+
+  /* Sidebar colors */
+  --sidebar: var(--brand-green);
+  --sidebar-foreground: oklch(0.99 0 0);
+  --sidebar-primary: var(--brand-orange);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.3 0.08 165);
+  --sidebar-accent-foreground: oklch(0.99 0 0);
+  --sidebar-border: oklch(0.25 0.08 165);
+  --sidebar-ring: var(--brand-orange);
+}
+
+.dark {
+  --background: oklch(0.15 0 0);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.45 0.08 165); /* Lighter green for dark mode */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: var(--brand-orange);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.5 0.2 27);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.3 0 0);
+  --input: oklch(0.3 0 0);
+  --ring: var(--brand-orange);
+  --sidebar: oklch(0.2 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: var(--brand-orange);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.25 0 0);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.3 0 0);
+  --sidebar-ring: var(--brand-orange);
+}
+
+/* 
+  TYPOGRAPHY SYSTEM - Golden Ratio (1.618)
+  Base: 16px (1rem)
+  Scale: Each level multiplies by 1.25 (approximation of golden ratio for web)
+*/
+@theme inline {
+  /* Updated font variables to use Outfit for headings, Inter for body, Merriweather for serif */
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-outfit);
+  --font-serif: var(--font-merriweather);
+
+  /* Typography scale using golden ratio */
+  --font-size-xs: 0.64rem; /* 10.24px */
+  --font-size-sm: 0.8rem; /* 12.8px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.25rem; /* 20px */
+  --font-size-xl: 1.563rem; /* 25px */
+  --font-size-2xl: 1.953rem; /* 31.25px */
+  --font-size-3xl: 2.441rem; /* 39px */
+  --font-size-4xl: 3.052rem; /* 48.8px */
+  --font-size-5xl: 3.815rem; /* 61px */
+
+  /* Line heights for readability */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 1.75;
+
+  /* Color mappings */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Radius tokens */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Sidebar tokens */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    @apply leading-relaxed; /* 1.625 line height for readability */
+  }
+
+  /* Typography base styles with Outfit for headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-outfit);
+  }
+
+  h1 {
+    @apply text-4xl font-bold leading-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-bold leading-tight;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold leading-normal;
+  }
+
+  h4 {
+    @apply text-xl font-semibold leading-normal;
+  }
+
+  h5 {
+    @apply text-lg font-semibold leading-normal;
+  }
+
+  h6 {
+    @apply text-base font-semibold leading-normal;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom utility classes for the learning platform */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Brand color utilities */
+  .bg-brand-green {
+    background-color: var(--brand-green);
+  }
+
+  .bg-brand-orange {
+    background-color: var(--brand-orange);
+  }
+
+  .text-brand-green {
+    color: var(--brand-green);
+  }
+
+  .text-brand-orange {
+    color: var(--brand-orange);
+  }
+
+  .border-brand-green {
+    border-color: var(--brand-green);
+  }
+
+  .border-brand-orange {
+    border-color: var(--brand-orange);
+  }
+
+  /* Hover states for brand colors */
+  .hover-brand-green:hover {
+    background-color: var(--brand-green-dark);
+  }
+
+  .hover-brand-orange:hover {
+    background-color: var(--brand-orange-dark);
+  }
+
+  /* Added hover effect utilities for AI chat suggestions */
+  .hover-bg-brand-orange-light:hover {
+    background-color: oklch(0.95 0.05 35); /* Very light orange tint */
+  }
+
+  .hover-border-brand-orange-light:hover {
+    border-color: oklch(0.85 0.1 35); /* Light orange border */
+  }
+
+  /* 3D Transform utilities for flip cards */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .rotate-x-180 {
+    transform: rotateX(180deg);
+  }
+
+  /* Font family utilities */
+  .font-heading {
+    font-family: var(--font-outfit);
+  }
+
+  .font-serif {
+    font-family: var(--font-merriweather);
+  }
+}
