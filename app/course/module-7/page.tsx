@@ -1,0 +1,402 @@
+/**
+ * MODULE 7: AI FOR BUSINESS & WORK
+ */
+
+"use client"
+
+import { useState, useEffect, useMemo } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
+import { Header } from "@/components/layout/header"
+import { Sidebar } from "@/components/layout/sidebar"
+import { TextDisplay } from "@/components/learning/text-display"
+import { ProgressBar } from "@/components/learning/progress-bar"
+import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
+import { MultipleChoice } from "@/components/learning/multiple-choice"
+import { TextInputExercise } from "@/components/learning/text-input-exercise"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
+import { useProgress } from "@/hooks/use-progress"
+
+export default function Module7Page() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const [quizComplete, setQuizComplete] = useState(false)
+
+  const MODULE_ID = "module-7"
+  const courseStructure = getCourseStructure()
+  const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
+  const sections = module?.sections || []
+  const totalSections = sections.length
+  const completedSectionIds = getCompletedSections(MODULE_ID)
+
+  const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
+
+  useEffect(() => {
+    if (sectionParam && sections.length > 0) {
+      const idx = sections.findIndex((s) => s.id === sectionParam)
+      if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
+    }
+  }, [sectionParam])
+
+  const handleSectionComplete = () => {
+    const current = sections[currentSectionIndex]
+    if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
+    if (currentSectionIndex < totalSections - 1) {
+      const next = sections[currentSectionIndex + 1]
+      setCurrentSectionIndex(currentSectionIndex + 1)
+      router.push(`/course/module-7?section=${next.id}`)
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="flex">
+        <Sidebar />
+        <main className="flex-1 p-8 max-w-4xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">Module 7: AI for Business & Work</h1>
+            <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace — and how to stay ahead</p>
+            <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
+          </div>
+
+          {/* 0: Overview */}
+          {currentSectionIndex === 0 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
+              <TextDisplay variant="callout" content="AI is not just a technology trend — it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
+              <Card className="p-5 space-y-2">
+                {[
+                  "How AI is changing the workplace right now",
+                  "What AI means for jobs — and which skills matter most",
+                  "AI applications across major industries",
+                  "How to build your own AI strategy at work",
+                  "Practical steps to build AI skills in your career",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
+                ))}
+              </Card>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module →</Button>
+            </div>
+          )}
+
+          {/* 1: AI in the Workplace */}
+          {currentSectionIndex === 1 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
+              <TextDisplay content="AI is already embedded in the tools most professionals use every day — often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
+              <div className="space-y-4">
+                {[
+                  {
+                    category: "Communication & Collaboration",
+                    icon: Users,
+                    examples: [
+                      { name: "Meeting summaries", desc: "Tools like Otter.ai, Fireflies, and Microsoft Copilot auto-transcribe and summarise meetings, extracting action items." },
+                      { name: "Email assistance", desc: "Gmail's Smart Compose, Outlook Copilot, and Superhuman draft replies and surface important emails automatically." },
+                      { name: "Instant translation", desc: "DeepL and Google Translate now produce near-human quality for business documents and real-time conversations." },
+                    ],
+                  },
+                  {
+                    category: "Knowledge Work",
+                    icon: Briefcase,
+                    examples: [
+                      { name: "Document drafting", desc: "Claude, ChatGPT, and Notion AI draft reports, proposals, and presentations from bullet points." },
+                      { name: "Research & analysis", desc: "Perplexity and ChatGPT with web access can synthesise information from hundreds of sources in seconds." },
+                      { name: "Code generation", desc: "GitHub Copilot and Cursor write, review, and debug code — boosting developer productivity by 30–50%." },
+                    ],
+                  },
+                  {
+                    category: "Business Operations",
+                    icon: TrendingUp,
+                    examples: [
+                      { name: "Customer service", desc: "AI chatbots now handle 60–80% of tier-1 support queries, with human escalation for complex cases." },
+                      { name: "Forecasting", desc: "AI models predict sales, inventory demand, and customer churn with greater accuracy than traditional methods." },
+                      { name: "Hiring & HR", desc: "AI screens CVs, schedules interviews, and analyses employee engagement — raising questions about bias." },
+                    ],
+                  },
+                ].map(({ category, icon: Icon, examples }) => (
+                  <Card key={category} className="p-5">
+                    <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
+                    <div className="space-y-2">
+                      {examples.map(({ name, desc }) => (
+                        <div key={name} className="flex gap-3 text-sm">
+                          <span className="font-medium w-40 flex-shrink-0">{name}</span>
+                          <span className="text-muted-foreground">{desc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <FlipCard
+                front="Is AI replacing workers or augmenting them?"
+                back="Both — but augmentation is far more common right now. Most AI tools make individual workers more productive rather than eliminating roles entirely. The bigger pattern: AI is reshaping what tasks humans spend time on, eliminating lower-value work and amplifying higher-value work. The workers most at risk are those who refuse to adapt."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+            </div>
+          )}
+
+          {/* 2: AI & Jobs */}
+          {currentSectionIndex === 2 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">AI & the Future of Jobs</h2>
+              <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others — but the transition is uneven and can be disruptive for individuals." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-4 text-brand-orange">The Three-Category Framework</h3>
+                <div className="space-y-4">
+                  {[
+                    {
+                      label: "High displacement risk",
+                      color: "text-red-500",
+                      examples: "Routine data entry, basic document review, simple customer support scripts, rote translation, basic image captioning",
+                      insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
+                    },
+                    {
+                      label: "Augmentation (most roles)",
+                      color: "text-brand-orange",
+                      examples: "Lawyers, doctors, teachers, marketers, accountants, engineers, designers, writers",
+                      insight: "AI handles research, drafting, and analysis — humans focus on judgement, relationships, creativity, and accountability. Productivity rises; headcount may shrink modestly.",
+                    },
+                    {
+                      label: "High growth & new roles",
+                      color: "text-brand-green",
+                      examples: "AI trainers, prompt engineers, AI ethicists, AI product managers, data curators, human-AI interaction designers",
+                      insight: "New roles that did not exist five years ago are growing rapidly. Organisations need people who can bridge AI capability and human context.",
+                    },
+                  ].map(({ label, color, examples, insight }) => (
+                    <div key={label} className="border-l-2 border-muted pl-4">
+                      <p className={`font-bold mb-1 ${color}`}>{label}</p>
+                      <p className="text-sm text-muted-foreground mb-1"><span className="font-medium">Examples:</span> {examples}</p>
+                      <p className="text-sm text-muted-foreground"><span className="font-medium">Insight:</span> {insight}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role — just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>
+                <MultipleChoice
+                  question="Which type of job task is MOST at risk from AI automation?"
+                  options={[
+                    { text: "Tasks requiring emotional intelligence and interpersonal negotiation", isCorrect: false, feedback: "Emotional intelligence and relationship-based work remains very difficult for AI. This is one of the safer areas." },
+                    { text: "Tasks that are repetitive, rule-based, and involve structured text or data", isCorrect: true, feedback: "Correct. Predictable, procedural tasks with clear rules are exactly what AI is optimised to automate. If you can write a procedure for it, AI can probably do it." },
+                    { text: "Tasks requiring physical dexterity in unstructured environments", isCorrect: false, feedback: "Physical work in unstructured environments (like plumbing or care work) is actually harder for AI to automate than knowledge work." },
+                    { text: "Tasks requiring creative judgment about complex, novel situations", isCorrect: false, feedback: "Novel, ambiguous situations requiring human judgment are much harder for AI. AI excels at pattern-matching on familiar data, not genuinely novel scenarios." },
+                  ]}
+                  explanation="AI automation follows a clear pattern: structured, rule-based, repetitive tasks are automated first. Tasks requiring physical dexterity, emotional intelligence, creative judgment in novel contexts, and complex interpersonal skills remain much harder to automate."
+                />
+              </Card>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+            </div>
+          )}
+
+          {/* 3: Industry Applications */}
+          {currentSectionIndex === 3 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">AI Across Industries</h2>
+              <TextDisplay content="AI is being deployed in every major industry. The applications vary, but the underlying pattern is the same: AI handles analysis and prediction at scale, freeing humans for higher-value work." />
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    industry: "Healthcare",
+                    color: "text-blue-600",
+                    applications: [
+                      "Medical image analysis — AI detects cancers in scans with radiologist-level accuracy",
+                      "Drug discovery — AI reduces new drug development from decades to years",
+                      "Clinical documentation — AI transcribes patient notes automatically",
+                      "Personalised treatment — AI analyses genomic data to recommend targeted therapies",
+                    ],
+                  },
+                  {
+                    industry: "Finance",
+                    color: "text-green-600",
+                    applications: [
+                      "Fraud detection — AI flags suspicious transactions in real time",
+                      "Algorithmic trading — AI executes trades at speeds humans cannot match",
+                      "Credit scoring — AI analyses thousands of data points beyond credit history",
+                      "Regulatory compliance — AI monitors transactions for suspicious activity",
+                    ],
+                  },
+                  {
+                    industry: "Education",
+                    color: "text-purple-600",
+                    applications: [
+                      "Personalised learning paths — AI adapts content to each student's pace",
+                      "Automated grading — AI grades essays with detailed feedback",
+                      "Intelligent tutoring — AI provides one-on-one tutoring at scale",
+                      "Early intervention — AI identifies students at risk of falling behind",
+                    ],
+                  },
+                  {
+                    industry: "Retail & E-commerce",
+                    color: "text-orange-600",
+                    applications: [
+                      "Product recommendations — AI drives 35% of Amazon's revenue",
+                      "Demand forecasting — AI optimises inventory to reduce waste",
+                      "Visual search — AI lets shoppers search by uploading photos",
+                      "Dynamic pricing — AI adjusts prices in real time based on demand",
+                    ],
+                  },
+                  {
+                    industry: "Legal",
+                    color: "text-red-600",
+                    applications: [
+                      "Contract review — AI reviews thousands of pages in minutes",
+                      "Legal research — AI finds relevant precedents and case law",
+                      "Due diligence — AI analyses documents in M&A transactions",
+                      "Litigation prediction — AI estimates case outcomes from historical data",
+                    ],
+                  },
+                  {
+                    industry: "Manufacturing",
+                    color: "text-yellow-600",
+                    applications: [
+                      "Predictive maintenance — AI prevents machine failures before they happen",
+                      "Quality control — AI vision systems detect defects at speed and scale",
+                      "Supply chain optimisation — AI reduces delays and costs",
+                      "Generative design — AI generates optimal product designs for given constraints",
+                    ],
+                  },
+                ].map(({ industry, color, applications }) => (
+                  <Card key={industry} className="p-4">
+                    <h4 className={`font-bold mb-2 ${color}`}>{industry}</h4>
+                    <ul className="text-sm space-y-1 text-muted-foreground">
+                      {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">•</span>{a}</li>)}
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+            </div>
+          )}
+
+          {/* 4: AI Strategy */}
+          {currentSectionIndex === 4 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Building an AI Strategy</h2>
+              <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy — rather than reacting randomly to new tools — puts you in control." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-4 text-brand-orange">The Individual AI Strategy Framework</h3>
+                <div className="space-y-4">
+                  {[
+                    { step: "1. Audit", action: "List the top 10 tasks you spend time on each week. Estimate hours per task." },
+                    { step: "2. Identify", action: "For each task, ask: could AI do this, assist with this, or does it need to stay fully human?" },
+                    { step: "3. Experiment", action: "Pick 2–3 tasks where AI could help. Spend one week testing AI tools on those specific tasks." },
+                    { step: "4. Measure", action: "Track time saved and quality. Did AI help? If not, why not? Adjust your approach." },
+                    { step: "5. Systematise", action: "Turn your best AI workflows into repeatable habits. Document what works for your role." },
+                    { step: "6. Share", action: "Teach colleagues what you have learned. Being the person who raises AI fluency in your team is a career advantage." },
+                  ].map(({ step, action }) => (
+                    <div key={step} className="flex gap-3 items-start">
+                      <span className="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0">{step}</span>
+                      <p className="text-sm text-muted-foreground pt-0.5">{action}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <TextDisplay variant="callout" content="The biggest mistake people make with AI at work: trying every new tool that launches instead of going deep on a few tools that actually fit their workflow. Depth beats breadth." />
+              <Flashcard cards={[
+                { id: "mistake1", front: "Common AI strategy mistake #1", back: "Tool hopping — trying every new AI tool without building real proficiency with any of them. Better approach: pick 2–3 core tools, go deep, and integrate them into your daily workflow before adding more." },
+                { id: "mistake2", front: "Common AI strategy mistake #2", back: "Expecting AI to be perfect. AI makes mistakes. The skill is in knowing when to trust it, when to verify it, and how to catch errors before they cause problems. Always review AI outputs in high-stakes situations." },
+                { id: "mistake3", front: "Common AI strategy mistake #3", back: "Keeping AI use secret from your manager and team. Transparency about how you use AI builds trust. Sharing what works positions you as a resource — not a risk. The people who benefit most from AI are those who are open about it." },
+                { id: "mistake4", front: "Common AI strategy mistake #4", back: "Using AI only for writing tasks. AI can help with analysis, research, brainstorming, planning, coding, data processing, meeting prep, and much more. Think beyond drafting — think about every step in your workflow." },
+              ]} />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
+            </div>
+          )}
+
+          {/* 5: Building AI Skills */}
+          {currentSectionIndex === 5 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Building Your AI Skills</h2>
+              <TextDisplay content="AI fluency is a competitive advantage right now — and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold">The AI Skills Stack</h3>
+                <div className="space-y-3">
+                  {[
+                    {
+                      level: "Foundation (everyone needs this)",
+                      skills: ["Understanding what AI can and cannot do", "Effective prompting across major LLMs", "Identifying AI-generated content and misinformation", "Basic AI ethics and bias awareness"],
+                      bg: "bg-brand-green/5 border-brand-green/20",
+                    },
+                    {
+                      level: "Professional (for knowledge workers)",
+                      skills: ["Integrating AI into your specific role's workflow", "Using AI for research, analysis, and drafting", "Building simple no-code AI automations", "Evaluating AI outputs critically for your domain"],
+                      bg: "bg-brand-orange/5 border-brand-orange/20",
+                    },
+                    {
+                      level: "Advanced (for those who want to lead)",
+                      skills: ["Designing AI strategies for teams or organisations", "Understanding AI model selection and limitations in depth", "Managing AI projects and vendor relationships", "Developing AI governance policies"],
+                      bg: "bg-blue-500/5 border-blue-500/20",
+                    },
+                  ].map(({ level, skills, bg }) => (
+                    <Card key={level} className={`p-4 border ${bg}`}>
+                      <h4 className="font-bold mb-2">{level}</h4>
+                      <ul className="text-sm space-y-1 text-muted-foreground">
+                        {skills.map((s) => <li key={s} className="flex gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-brand-green flex-shrink-0 mt-0.5" />{s}</li>)}
+                      </ul>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+              <TextInputExercise
+                prompt="Identify ONE specific task in your current job or daily life where you will start using AI this week. What is the task, what tool will you try, and what result are you hoping for?"
+                placeholder="Example: I spend 2 hours each Monday compiling a weekly status report from notes and emails. This week I will try using Claude to draft it from bullet points. Hoping to cut this from 2 hours to 30 minutes, leaving me more time for actual analysis."
+                onComplete={handleSectionComplete}
+              />
+            </div>
+          )}
+
+          {/* 6: Module Quiz */}
+          {currentSectionIndex === 6 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
+              <TextDisplay content="Test your understanding of AI in the workplace. Choose the best answer for each question." />
+              <div className="space-y-6">
+                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <MultipleChoice
+                    question="A company wants to use AI to improve customer service. Which application is MOST realistic with current AI technology?"
+                    options={[
+                      { text: "Fully replacing all customer service agents with AI immediately", isCorrect: false, feedback: "Not realistic or advisable. Current AI handles routine queries well but struggles with complex, emotional, or novel situations that human agents handle better." },
+                      { text: "Using AI to handle routine, repetitive queries while routing complex cases to human agents", isCorrect: true, feedback: "This is exactly how most companies are successfully deploying AI in customer service. AI handles volume; humans handle complexity and relationships." },
+                      { text: "Using AI only for internal analysis, not customer-facing interactions", isCorrect: false, feedback: "Customer-facing AI (chatbots, virtual assistants) is one of the most mature and widely deployed AI use cases in business." },
+                      { text: "Waiting until AI is perfect before deploying any customer-facing features", isCorrect: false, feedback: "AI does not need to be perfect to be useful. Companies that wait for perfection lose competitive ground to those who deploy carefully now." },
+                    ]}
+                    explanation="The most effective AI customer service deployments use a hybrid model: AI for speed and volume on routine queries, humans for empathy, judgment, and complex cases. This is called the 'human-in-the-loop' model."
+                  />
+                </Card>
+                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                  <MultipleChoice
+                    question="When building a personal AI strategy at work, what should be your first step?"
+                    options={[
+                      { text: "Sign up for every AI tool that launches and try them all", isCorrect: false, feedback: "Tool hopping without direction is one of the most common AI strategy mistakes. It creates noise without building depth." },
+                      { text: "Wait for your manager to give you official guidance on which AI tools to use", isCorrect: false, feedback: "Waiting for top-down guidance means falling behind. Individual initiative in AI adoption is one of the strongest career differentiators right now." },
+                      { text: "Audit the tasks you spend most time on and identify where AI could help", isCorrect: true, feedback: "Correct. Starting with a task audit gives you a concrete, personalised picture of where AI can have the highest impact for your specific role." },
+                      { text: "Focus on learning to code so you can build your own AI tools", isCorrect: false, feedback: "Coding is useful but not necessary for most professionals. No-code and low-code AI tools can be deployed immediately without programming knowledge." },
+                    ]}
+                    explanation="A successful AI strategy starts with understanding your own workflow, not with the technology. Once you know which tasks are most time-consuming and most automatable, you can target AI tools precisely where they will have the most impact."
+                  />
+                </Card>
+              </div>
+              <Button
+                onClick={() => {
+                  setQuizComplete(true)
+                  handleSectionComplete()
+                }}
+                size="lg"
+                className="bg-brand-green hover:bg-brand-green/90 text-white"
+              >
+                Complete Module 7 ✓
+              </Button>
+            </div>
+          )}
+
+        </main>
+      </div>
+    </div>
+  )
+}

@@ -302,6 +302,19 @@ export default function Module4Page() {
                   ].map((q, i) => <li key={i} className="text-muted-foreground">{q}</li>)}
                 </ol>
               </Card>
+                <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                  <h3 className="font-semibold mb-3 text-brand-green">Should I Use AI for This? — Rapid-Fire Quiz</h3>
+                  <MultipleChoice
+                    question="Your company asks you to summarise a confidential investor report using a free AI tool. What should you do?"
+                    options={[
+                      { text: "Go ahead — AI tools are designed for this kind of task", isCorrect: false, feedback: "The issue is not capability — it is privacy. Free AI tools often use inputs for training. Confidential business documents should not go into consumer AI tools without checking your company's policy and the tool's privacy terms." },
+                      { text: "Check your company's AI use policy and the tool's data privacy terms before proceeding", isCorrect: true, feedback: "Correct. Many organisations have explicit policies about which AI tools are approved for sensitive data. Enterprise tiers of tools like ChatGPT or Claude offer much stronger data protection than free tiers." },
+                      { text: "It is fine as long as you delete the conversation afterwards", isCorrect: false, feedback: "Deleting your end of the conversation may not prevent the data from being stored server-side. The tool's privacy policy governs what happens to your data — not the delete button." },
+                      { text: "AI is never appropriate for business documents", isCorrect: false, feedback: "AI is widely used for business documents — but appropriately, with the right tools that meet data governance requirements." },
+                    ]}
+                    explanation="The right approach: always check (1) your employer's AI usage policy, and (2) the tool's data handling terms. Enterprise/paid tiers typically offer data processing agreements and do not train on your inputs. For sensitive data, use approved enterprise tools — not free consumer tiers."
+                  />
+                </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

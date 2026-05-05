@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { TextInputExercise } from "@/components/learning/text-input-exercise"
 import { Button } from "@/components/ui/button"
@@ -239,6 +240,16 @@ export default function Module6Page() {
                   ].map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />{item}</li>)}
                 </ul>
               </Card>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold">Your 30-Day AI Challenge</h3>
+                <p className="text-sm text-muted-foreground">The fastest way to build real AI skill is daily practice. Here is a one-month challenge — each card reveals a daily micro-task that takes under 15 minutes.</p>
+                <Flashcard cards={[
+                  { id: "week1", front: "Week 1 — Foundation (Days 1–7)", back: "Day 1: Start a free ChatGPT account and have a 10-minute conversation about any topic.\nDay 2: Try Claude at claude.ai. Compare how it responds differently to the same question.\nDay 3: Use Gemini to help you draft an email you have been putting off.\nDay 4: Try the Role + Context + Task + Format prompt structure for something you need.\nDay 5: Ask an AI to explain something confusing from your work or study.\nDay 6: Use Perplexity to research a topic and check its sources.\nDay 7: Reflect — what was most useful? What did not work?" },
+                  { id: "week2", front: "Week 2 — Productivity (Days 8–14)", back: "Day 8: Summarise a long article or document using AI.\nDay 9: Let AI draft a first version of something you have to write.\nDay 10: Use chain-of-thought prompting to think through a real decision.\nDay 11: Have AI play devil's advocate on an idea you are developing.\nDay 12: Use AI to create a template you use regularly (meeting agenda, email format).\nDay 13: Try Grammarly or an AI editor on something you wrote.\nDay 14: Set up a basic Zapier automation — start with the free tier." },
+                  { id: "week3", front: "Week 3 — Creative & Learning (Days 15–21)", back: "Day 15: Ask an AI to tutor you on one topic you have always wanted to understand better.\nDay 16: Use few-shot prompting — give AI 3 examples, then ask it to continue the pattern.\nDay 17: Try an AI image generator (DALL·E via ChatGPT, or Adobe Firefly).\nDay 18: Ask AI to critique something you created — a plan, a design, a piece of writing.\nDay 19: Use AI to generate ideas — give it a problem and ask for 10 unconventional solutions.\nDay 20: Try a specialised AI tool in your field (legal, medical, financial, coding).\nDay 21: Share what you have learned with someone — explaining deepens understanding." },
+                  { id: "week4", front: "Week 4 — Systems (Days 22–30)", back: "Day 22: Design a custom AI workflow for a recurring task in your life.\nDay 23: Create a Chatbase or CustomGPT chatbot trained on a document you own.\nDay 24: Practice iterative prompting — start simple, then refine 5 times.\nDay 25: Use AI to learn something in a field completely outside your expertise.\nDay 26: Test an AI's limits — find something it gets wrong, then understand why.\nDay 27: Explore one AI ethics topic from Module 5 in more depth.\nDay 28: Build a simple personal knowledge base using Notion AI or a similar tool.\nDay 29: Identify one thing in your professional life AI could meaningfully improve.\nDay 30: Write a brief reflection — how has your thinking about AI changed over this month?" },
+                ]} />
+              </div>
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">Curated Resources for Going Deeper</h3>
                 <div className="grid md:grid-cols-2 gap-4">

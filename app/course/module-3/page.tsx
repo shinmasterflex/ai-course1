@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
 import { ComparisonCard } from "@/components/learning/comparison-card"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { TextInputExercise } from "@/components/learning/text-input-exercise"
@@ -112,6 +113,18 @@ export default function Module3Page() {
                   ))}
                 </div>
               </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">LLM Vocabulary — Flashcards</h3>
+                <p className="text-sm text-muted-foreground mb-4">These terms come up constantly when reading about AI. Click each card to reveal the definition.</p>
+                <Flashcard cards={[
+                  { id: "token", front: "Token", back: "The basic unit an LLM processes — roughly 3/4 of a word. 'Hello world' is 2 tokens. GPT-4 can process up to 128,000 tokens at once (about a 100,000-word book). Your cost to use AI APIs is usually measured in tokens." },
+                  { id: "context-window", front: "Context Window", back: "The total amount of text an LLM can 'see' at once — including your conversation history and the AI's previous responses. Once you exceed the context window, the model forgets earlier parts of the conversation." },
+                  { id: "temperature", front: "Temperature", back: "A setting that controls how creative or random an AI's outputs are. Low temperature (0.1) = predictable, consistent, factual. High temperature (0.9) = creative, varied, sometimes surprising. For coding or facts, use low temperature; for brainstorming, use higher." },
+                  { id: "hallucination-llm", front: "Hallucination", back: "When an LLM generates factually incorrect information with complete confidence. Happens because the model predicts likely text — not true text. The model has no way to know the difference between something it learned from a reliable source vs a pattern it invented." },
+                  { id: "fine-tuning", front: "Fine-tuning", back: "Training a pre-existing large model on a smaller, specialised dataset to improve its performance in a specific domain. E.g., taking GPT-4 and fine-tuning it on thousands of legal documents to make it better at legal tasks than the base model." },
+                  { id: "embeddings", front: "Embeddings", back: "A way of representing words and concepts as lists of numbers so that similar meanings are mathematically close together. 'King' minus 'Man' plus 'Woman' famously equals 'Queen' in embedding space. The foundation of how AI understands semantic similarity." },
+                ]} />
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

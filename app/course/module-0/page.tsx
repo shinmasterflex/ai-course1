@@ -12,10 +12,11 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain } from "lucide-react"
+import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain, Zap, Globe, Stethoscope, Mic } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 
 export default function Module0Page() {
@@ -67,7 +68,6 @@ export default function Module0Page() {
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
-          {/* Section 0: Welcome */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Welcome & Course Overview</h2>
@@ -76,12 +76,7 @@ export default function Module0Page() {
               <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> What makes this course different</h3>
                 <ul className="space-y-3">
-                  {[
-                    "No jargon — every technical term is explained in plain language",
-                    "No math — you will understand the concepts without a single equation",
-                    "No coding — this is for users of AI, not builders (though we will point you there if you want)",
-                    "Interactive — quizzes, flashcards, and exercises keep you engaged",
-                  ].map((item) => (
+                  {["No jargon — every technical term is explained in plain language","No math — you will understand the concepts without a single equation","No coding — this is for users of AI, not builders (though we will point you there if you want)","Interactive — quizzes, flashcards, and exercises keep you engaged"].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
@@ -89,25 +84,44 @@ export default function Module0Page() {
                   ))}
                 </ul>
               </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Zap className="h-5 w-5 text-brand-orange" /> Mind-blowing AI facts to get you started</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    { stat: "100M users", detail: "ChatGPT reached 100 million users in just 2 months — faster than any product in history. Netflix took 3.5 years." },
+                    { stat: "1.8 trillion", detail: "The estimated number of parameters in GPT-4 — roughly 1,800,000,000,000 adjustable values that shape every response." },
+                    { stat: "700%", detail: "AI investment grew 700% in the decade from 2010 to 2020, and the pace has only accelerated since." },
+                    { stat: "30+ times", detail: "The average person interacts with AI over 30 times per day — most of it completely invisible in the background." },
+                  ].map(({ stat, detail }) => (
+                    <Card key={stat} className="p-4 border-l-4 border-l-brand-orange">
+                      <p className="text-2xl font-black text-brand-orange mb-1">{stat}</p>
+                      <p className="text-sm text-muted-foreground">{detail}</p>
+                    </Card>
+                  ))}
+                </div>
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
-                Got it — let&apos;s go! →
+                Got it — let us go! →
               </Button>
             </div>
           )}
 
-          {/* Section 1: AI Is Already Around You */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI Is Already Around You</h2>
-              <TextDisplay content="Before we define AI, let us notice something: you have probably already used AI today without realising it." />
+              <TextDisplay content="Before we define AI, let us notice something: you have probably already used AI today without realising it. The average person interacts with AI over 30 times a day — most of it invisible." />
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { icon: Smartphone,    label: "Face ID / Fingerprint Unlock",  desc: "AI recognises your face or fingerprint in milliseconds." },
-                  { icon: ShoppingCart,  label: "Product Recommendations",        desc: "Amazon, Netflix, Spotify — all use AI to suggest what you might like." },
-                  { icon: MessageSquare, label: "Spam Filter",                    desc: "Your email's spam folder is an AI that learns what to block." },
-                  { icon: Car,           label: "Navigation Apps",                desc: "Google Maps uses AI to predict traffic and find the fastest route." },
-                  { icon: Music,         label: "Voice Assistants",               desc: "Siri, Alexa, and Google Assistant all run on AI." },
-                  { icon: Image,         label: "Photo Apps",                     desc: "Organising photos by person, place, or object is AI at work." },
+                  { icon: Smartphone,    label: "Face ID / Fingerprint Unlock",  desc: "AI recognises your face or fingerprint in milliseconds — trained on millions of facial images to find patterns unique to you." },
+                  { icon: ShoppingCart,  label: "Product Recommendations",        desc: "Amazon, Netflix, Spotify — all use AI to suggest what you might like by finding users who behave similarly to you." },
+                  { icon: MessageSquare, label: "Spam Filter",                    desc: "Your email's spam folder is an AI that has learned what bad emails look like — updated continuously as new spam evolves." },
+                  { icon: Car,           label: "Navigation Apps",                desc: "Google Maps uses AI to predict traffic 60+ minutes in advance using real-time data from millions of drivers on the road right now." },
+                  { icon: Music,         label: "Voice Assistants",               desc: "Siri, Alexa, and Google Assistant convert your voice to text, understand intent, and generate responses — all powered by AI." },
+                  { icon: Image,         label: "Photo Apps",                     desc: "Organising photos by person, place, or object is AI at work — automatically identifying faces, landscapes, and objects." },
+                  { icon: Globe,         label: "Search Engines",                 desc: "Google processes 8.5 billion searches per day. AI ranks results, understands typos, and answers questions directly in the search bar." },
+                  { icon: Stethoscope,   label: "Medical Imaging",                desc: "AI can now detect certain cancers in X-rays and MRI scans as accurately as — or better than — specialist radiologists." },
+                  { icon: Mic,           label: "Real-time Translation",          desc: "Tools like Google Translate use neural machine translation, converting between 100+ languages almost instantly." },
+                  { icon: Brain,         label: "Credit Scoring",                 desc: "When you apply for a loan or credit card, AI analyses hundreds of data points in seconds to determine your risk profile." },
                 ].map(({ icon: Icon, label, desc }) => (
                   <Card key={label} className="p-4 flex gap-3 items-start">
                     <div className="bg-brand-green/10 p-2 rounded-lg mt-1"><Icon className="h-5 w-5 text-brand-green" /></div>
@@ -115,27 +129,34 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The point: AI is not some distant science-fiction technology. It is already woven into daily life. This course will help you understand exactly how." />
-              <div className="rounded-xl border bg-gradient-to-br from-brand-orange/5 to-brand-green/5 p-1">
-                <MultipleChoice
-                  question="Quick challenge — which of these does NOT use AI?"
-                  options={[
-                    { text: "Netflix recommending your next show", isCorrect: false, feedback: "Netflix's recommendation engine learns your tastes and compares them with millions of other viewers to predict what you'll love next." },
-                    { text: "A basic light switch turning on the lights", isCorrect: true, feedback: "Correct! A light switch just follows a fixed electrical rule: flip up = on. No data, no learning, no patterns — pure physics." },
-                    { text: "Gmail auto-completing your sentences", isCorrect: false, feedback: "Gmail's Smart Compose is powered by a language model trained on billions of emails to predict what you're about to type." },
-                    { text: "Spotify's Discover Weekly playlist", isCorrect: false, feedback: "Discover Weekly is entirely AI — Spotify analyses your listening history and compares it to millions of listeners to surface music you'll likely love." },
-                  ]}
-                  explanation="AI learns from data and adapts over time. A light switch just follows the laws of electricity — no intelligence, no patterns, no learning. That is the fundamental difference."
-                />
-              </div>
+              <TextDisplay variant="callout" content="The point: AI is not some distant science-fiction technology. It is already woven into the fabric of daily life — often invisibly. This course will help you understand exactly how it works and why it matters." />
+              <MultipleChoice
+                question="Quick challenge — which of these does NOT use AI?"
+                options={[
+                  { text: "Netflix recommending your next show", isCorrect: false, feedback: "Netflix's recommendation engine learns your tastes and compares them with millions of other viewers to predict what you will love next." },
+                  { text: "A basic light switch turning on the lights", isCorrect: true, feedback: "Correct! A light switch just follows a fixed electrical rule: flip up = on. No data, no learning, no patterns — pure physics." },
+                  { text: "Gmail auto-completing your sentences", isCorrect: false, feedback: "Gmail's Smart Compose is powered by a language model trained on billions of emails to predict what you are about to type." },
+                  { text: "Spotify's Discover Weekly playlist", isCorrect: false, feedback: "Discover Weekly is entirely AI — Spotify analyses your listening history and compares it to millions of listeners to surface music you will likely love." },
+                ]}
+                explanation="AI learns from data and adapts over time. A light switch just follows the laws of electricity — no intelligence, no patterns, no learning. That is the fundamental difference."
+              />
+              <MultipleChoice
+                question="Which of the following best describes why Google Maps can predict traffic in advance?"
+                options={[
+                  { text: "It receives traffic reports filed by police departments", isCorrect: false, feedback: "While some official data may be used, the primary source is real-time GPS data from millions of drivers, processed by AI." },
+                  { text: "AI analyses real-time GPS data from millions of drivers to find patterns and make predictions", isCorrect: true, feedback: "Exactly right. Google Maps collects anonymous location data from phones, then AI finds patterns in how traffic flows and predicts congestion before it happens." },
+                  { text: "It uses historical data from the same time last week", isCorrect: false, feedback: "Historical patterns do play a role, but the real power is real-time AI processing of live GPS data from millions of drivers." },
+                  { text: "It checks traffic cameras manually", isCorrect: false, feedback: "Camera data may be used in some cities, but the core system is AI processing live GPS signals at massive scale." },
+                ]}
+                explanation="Google Maps is a great example of AI working invisibly. It collects anonymised GPS signals from hundreds of millions of phones, applies machine learning to find patterns in traffic flow, and makes predictions that update in real time as conditions change."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 2: What You'll Learn */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">What You&apos;ll Learn</h2>
+              <h2 className="text-3xl font-bold text-brand-green">What You will Learn</h2>
               <TextDisplay content="Here is the full journey you are embarking on. Seven modules, three phases:" />
               <div className="space-y-4">
                 {[
@@ -166,11 +187,25 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
+              <Card className="p-4 bg-brand-orange/5 border-brand-orange/20">
+                <h3 className="font-semibold mb-3 text-brand-orange">Estimated time</h3>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  {[
+                    { label: "Per module", time: "20–40 min" },
+                    { label: "Full course", time: "3–5 hours" },
+                    { label: "Weekend sprint", time: "✓ Achievable" },
+                  ].map(({ label, time }) => (
+                    <div key={label} className="text-center p-3 bg-white rounded-lg border">
+                      <p className="text-muted-foreground text-xs mb-1">{label}</p>
+                      <p className="font-bold text-brand-orange">{time}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 3: How to Use This Course */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">How to Use This Course</h2>
@@ -189,23 +224,14 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
-              <FlipCard
-                front="How long will this course take?"
-                back="Most people complete each module in 20-40 minutes. The full course can be done in a weekend, or spread over a few weeks — whichever works for you."
-              />
-              <FlipCard
-                front="What if I don't understand something?"
-                back="Totally normal — and part of learning. Re-read the section, then try asking ChatGPT: 'Explain [concept] to me like I am a complete beginner.' Then come back — it will click."
-              />
-              <FlipCard
-                front="Will this course become outdated quickly?"
-                back="The tools change fast, but the fundamentals do not. Understanding what AI is, how it learns, and how to think critically about it will stay relevant no matter what new models appear. Focus on principles, not products."
-              />
+              <FlipCard front="How long will this course take?" back="Most people complete each module in 20-40 minutes. The full course can be done in a weekend, or spread over a few weeks — whichever works for you. There is no deadline and no pressure." />
+              <FlipCard front="What if I don't understand something?" back="Totally normal — and part of learning. Re-read the section, then try asking ChatGPT: 'Explain [concept] to me like I am a complete beginner.' Then come back — it will click." />
+              <FlipCard front="Will this course become outdated quickly?" back="The tools change fast, but the fundamentals do not. Understanding what AI is, how it learns, and how to think critically about it will stay relevant no matter what new models appear. Focus on principles, not products." />
+              <FlipCard front="Should I take notes?" back="The course is designed to be self-contained, but writing things down in your own words is one of the most effective learning techniques known. Even just jotting a one-sentence summary after each section helps a lot." />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
 
-          {/* Section 4: Summary */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Summary & Next Steps</h2>
@@ -226,10 +252,22 @@ export default function Module0Page() {
                   ))}
                 </ul>
               </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> Preview: Key Terms You Will Master</h3>
+                <p className="text-sm text-muted-foreground mb-4">Flip each card to get a sneak peek at the AI vocabulary you will understand by the end of this course.</p>
+                <Flashcard cards={[
+                  { id: "ai", front: "Artificial Intelligence (AI)", back: "Software designed to perform tasks that would normally require human intelligence — recognising patterns, understanding language, making decisions, and learning from data." },
+                  { id: "ml", front: "Machine Learning (ML)", back: "A subset of AI where the system learns rules from data instead of following rules written by a programmer. You show it thousands of examples and it figures out the pattern itself." },
+                  { id: "llm", front: "Large Language Model (LLM)", back: "An AI trained on enormous amounts of text — hundreds of billions of words — to understand and generate human language. ChatGPT, Claude, and Gemini are all LLMs." },
+                  { id: "prompt", front: "Prompt", back: "The message or instruction you send to an AI system. The quality of your prompt directly determines the quality of the response. Learning to prompt well is the core skill of Module 3." },
+                  { id: "training", front: "Training Data", back: "The dataset used to teach an AI model. It is the fuel that makes AI possible — and the reason AI can reflect human biases if the data is not carefully curated." },
+                  { id: "hallucination", front: "Hallucination", back: "When an AI generates confident-sounding but factually incorrect information. AI has no mechanism to detect its own uncertainty — it produces the most statistically likely output." },
+                ]} />
+              </div>
               <TextDisplay variant="callout" content="Up next: Module 1 — What Is Artificial Intelligence? We will give AI a real definition, look at its history, and bust some popular myths." />
               <div className="flex gap-4">
                 <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  Complete Module & Go to Module 1 →
+                  Complete Module and Go to Module 1 →
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard

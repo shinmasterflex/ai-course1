@@ -119,6 +119,34 @@ export const courseStructure: CourseStructure = {
         { id: "next-steps", title: "Next Steps & Resources", completed: false },
       ],
     },
+    {
+      id: "module-7",
+      slug: "module-7",
+      title: "Module 7: AI for Business & Work",
+      sections: [
+        { id: "module-overview", title: "Module Overview", completed: false },
+        { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
+        { id: "ai-and-jobs", title: "AI & the Future of Jobs", completed: false },
+        { id: "industry-applications", title: "AI Across Industries", completed: false },
+        { id: "ai-strategy", title: "Building an AI Strategy", completed: false },
+        { id: "building-ai-skills", title: "Building Your AI Skills", completed: false },
+        { id: "module-quiz", title: "Module Quiz", completed: false },
+      ],
+    },
+    {
+      id: "module-8",
+      slug: "module-8",
+      title: "Module 8: The Future of AI",
+      sections: [
+        { id: "module-overview", title: "Module Overview", completed: false },
+        { id: "current-frontiers", title: "Current AI Frontiers", completed: false },
+        { id: "agi-explained", title: "What Is AGI?", completed: false },
+        { id: "ai-governance", title: "AI Governance & Policy", completed: false },
+        { id: "ai-careers", title: "AI Careers & Opportunities", completed: false },
+        { id: "your-ai-future", title: "Your AI Future", completed: false },
+        { id: "module-quiz", title: "Module Quiz", completed: false },
+      ],
+    },
   ],
 }
 

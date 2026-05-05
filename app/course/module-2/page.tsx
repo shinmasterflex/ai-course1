@@ -142,6 +142,19 @@ export default function Module2Page() {
                 </Card>
                 <TextDisplay variant="warning" content="Important: If training data is biased, incomplete, or wrong — the AI will be too. Garbage in, garbage out. This is why data quality is a major ethical concern in AI." />
               </div>
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Spot the Bad Training Data</h3>
+                <MultipleChoice
+                  question="A hospital wants to train an AI to predict which patients are likely to need urgent care. They collect 10 years of patient records — but 90% of their patients are over 60. What is the problem?"
+                  options={[
+                    { text: "10 years is not enough data — they need 20 years", isCorrect: false, feedback: "More data helps, but the age imbalance is the critical problem here. 10 years of skewed data is still skewed data." },
+                    { text: "The AI will likely be less accurate for younger patients because they are underrepresented in training", isCorrect: true, feedback: "Correct! If 90% of training examples are elderly patients, the AI learns patterns from that group. It will perform poorly on younger patients whose health patterns differ significantly." },
+                    { text: "Patient records are too private to use as training data", isCorrect: false, feedback: "Privacy is a legitimate concern, but with proper de-identification it can be managed. The underrepresentation is the bigger problem here." },
+                    { text: "There is no problem — more training data is always better regardless of balance", isCorrect: false, feedback: "Quantity does not fix quality. Biased data — even in large quantities — produces biased AI." },
+                  ]}
+                  explanation="This is a classic example of sampling bias in training data. The AI will be optimised for the majority group and underperform for underrepresented groups. In healthcare, this is not just a technical problem — it can cost lives."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -172,6 +185,14 @@ export default function Module2Page() {
                 ]}
                 onComplete={() => handleQuizComplete("matching", true)}
               />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-2 text-brand-green">Bonus: A Third Type — Reinforcement Learning</h3>
+                <p className="text-sm text-muted-foreground mb-3">There is actually a third major learning style worth knowing about:</p>
+                <div className="text-sm space-y-2">
+                  <p><span className="font-semibold text-brand-orange">Reinforcement Learning</span> — the AI learns by trial and error in a simulated environment, receiving rewards for correct actions and penalties for wrong ones. Like training a dog with treats, but for software.</p>
+                  <p className="text-muted-foreground">Famous examples: AlphaGo learned to play Go by playing millions of games against itself. OpenAI&apos;s RLHF (Reinforcement Learning from Human Feedback) is what makes ChatGPT sound helpful and safe — humans rated responses and the model was trained to produce higher-rated outputs.</p>
+                </div>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

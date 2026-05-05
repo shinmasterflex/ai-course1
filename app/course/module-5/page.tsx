@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
 import { ComparisonCard } from "@/components/learning/comparison-card"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { Button } from "@/components/ui/button"
@@ -120,6 +121,16 @@ export default function Module5Page() {
                   </ul>
                 </Card>
               </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases — Flashcards</h3>
+                <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
+                <Flashcard cards={[
+                  { id: "amazon-hiring", front: "Amazon's AI Hiring Tool (2018)", back: "Amazon built an AI to screen CVs — and then scrapped it when they discovered it was penalising CVs that contained the word 'women's' (e.g. 'women's chess club') and downgrading graduates of all-women's colleges.\n\nWhy? It was trained on 10 years of past hiring decisions — when Amazon's engineering workforce was predominantly male. The AI learned that maleness correlated with success." },
+                  { id: "compas", front: "COMPAS Recidivism Algorithm (2016)", back: "COMPAS was used by US courts to predict the likelihood a defendant would reoffend. ProPublica's investigation found it incorrectly labelled Black defendants as future criminals at twice the rate of white defendants.\n\nThe algorithm did not use race directly — but it used variables correlated with race (zip code, family history) that produced discriminatory outcomes." },
+                  { id: "face-id", front: "Facial Recognition & Racial Bias", back: "A 2018 MIT Media Lab study (Gender Shades) found commercial facial recognition systems had error rates of 0.8% on white men — but up to 34.7% on darker-skinned women.\n\nThe cause: training datasets were overwhelmingly composed of white male faces. The AI performed best on who it had seen the most of during training." },
+                  { id: "healthcare-bias", front: "Healthcare Algorithm (2019)", back: "A widely-used algorithm to prioritise patients for extra medical care was found to systematically disadvantage Black patients. At any given 'risk score', Black patients were actually sicker than white patients — but the algorithm predicted they needed less care.\n\nWhy? The algorithm used healthcare costs as a proxy for health needs — and Black patients historically had less access to healthcare, so they had lower historical costs despite higher illness." },
+                ]} />
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -223,14 +234,27 @@ export default function Module5Page() {
                   { principle: "Do not automate consequential decisions blindly", desc: "AI should augment human judgment, not replace it, for high-stakes decisions (hiring, lending, medical treatment, legal judgments)." },
                   { principle: "Be aware of your own 'automation bias'", desc: "People tend to over-trust AI outputs because they come from computers. Actively question AI suggestions rather than accepting them by default." },
                   { principle: "Consider impact on others", desc: "AI-generated content, images, and audio can harm real people. Think about downstream effects before you create or share AI content." },
-                  { principle: "Protect privacy", desc: "Do not use AI tools to collect, analyse, or share personal information about others without consent." },
-                ].map(({ principle, desc }) => (
-                  <Card key={principle} className="p-4">
-                    <p className="font-semibold text-brand-orange mb-1">{principle}</p>
-                    <p className="text-sm text-muted-foreground">{desc}</p>
-                  </Card>
-                ))}
+                    { principle: "Protect privacy", desc: "Do not use AI tools to collect, analyse, or share personal information about others without consent." },
+                  ].map(({ principle, desc }) => (
+                    <Card key={principle} className="p-4">
+                      <p className="font-semibold text-brand-orange mb-1">{principle}</p>
+                      <p className="text-sm text-muted-foreground">{desc}</p>
+                    </Card>
+                  ))}
               </div>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
+                <MultipleChoice
+                  question="A manager uses an AI tool to write performance reviews for their team by pasting in each employee's KPIs. They do not read the reviews carefully before sending them. What principle of responsible AI use is being violated?"
+                  options={[
+                    { text: "Privacy — they should not enter KPI data into AI tools", isCorrect: false, feedback: "Privacy is a concern worth thinking about, but the core problem here is that the manager is not reviewing the output before using it to make consequential decisions about people's careers." },
+                    { text: "Do not automate consequential decisions blindly — AI should assist human judgment, not replace it", isCorrect: true, feedback: "Correct. Performance reviews directly affect people's careers, compensation, and wellbeing. Using AI output without careful review means the manager is not exercising the judgment their role requires. AI can assist — but a human must remain accountable for the decision." },
+                    { text: "Verify before you trust — they should fact-check the AI's output", isCorrect: false, feedback: "Verification is part of it, but the deeper issue is that consequential decisions about people require human judgment and accountability — not just fact-checking." },
+                    { text: "There is nothing wrong with this — AI saves time", isCorrect: false, feedback: "Time savings do not justify removing meaningful human oversight from decisions that affect people's livelihoods and careers." },
+                  ]}
+                  explanation="Responsible AI use means using AI as a tool that augments your judgment — not replaces it. For high-stakes decisions (performance reviews, hiring, medical, legal), a human must be genuinely involved in reviewing and owning the output. 'AI drafted it and I sent it without reading' is not responsible use."
+                />
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}

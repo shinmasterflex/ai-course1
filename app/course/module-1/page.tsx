@@ -11,13 +11,14 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { FlipCard } from "@/components/learning/flip-card"
+import { Flashcard } from "@/components/learning/flashcard"
 import { Slideshow } from "@/components/learning/slideshow"
 import { ComparisonCard } from "@/components/learning/comparison-card"
 import { MultipleChoice } from "@/components/learning/multiple-choice"
 import { MatchingGame } from "@/components/learning/matching-game"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Brain, Clock } from "lucide-react"
+import { CheckCircle2, Brain, Clock, Lightbulb } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 
@@ -83,7 +84,7 @@ export default function Module1Page() {
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2"><Clock className="h-4 w-4" /> What is in this module</h3>
                 <ul className="space-y-2 text-sm">
-                  {["Defining AI — what it actually means", "A brief history — from 1950 to today", "Types of AI — narrow, general, super", "AI in your daily life — real examples", "Myths vs. Reality — what AI can and cannot do", "Module Quiz"].map((item) => (
+                  {["Defining AI — what it actually means","A brief history — from 1950 to today","Types of AI — narrow, general, super","AI in your daily life — real examples","Myths vs. Reality — what AI can and cannot do","Module Quiz"].map((item) => (
                     <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" />{item}</li>
                   ))}
                 </ul>
@@ -102,9 +103,9 @@ export default function Module1Page() {
                 <h3 className="font-semibold mb-3">Three Key Words in the Definition</h3>
                 <div className="space-y-3">
                   {[
-                    { word: "Artificial", meaning: "Made by people, not nature. AI is built by engineers and researchers." },
-                    { word: "Intelligence", meaning: "The ability to learn, reason, understand language, or make decisions." },
-                    { word: "Software", meaning: "AI runs on computers. It is not a robot body (though robots can use AI)." },
+                    { word: "Artificial", meaning: "Made by people, not nature. AI is built by engineers and researchers — not something that emerges spontaneously from the universe." },
+                    { word: "Intelligence", meaning: "The ability to learn, reason, understand language, or make decisions — tasks that previously required human minds to perform." },
+                    { word: "Software", meaning: "AI runs on computers. It is not a robot body (though robots can use AI) — it is code running on chips, servers, and devices you already own." },
                   ].map(({ word, meaning }) => (
                     <div key={word} className="flex gap-3">
                       <span className="font-bold text-brand-orange w-32 flex-shrink-0">{word}</span>
@@ -114,6 +115,19 @@ export default function Module1Page() {
                 </div>
               </Card>
               <FlipCard front="Is AI the same as a computer program?" back="Not exactly. All AI is software, but not all software is AI. A basic calculator follows fixed rules you wrote. AI learns its own rules from data — you show it millions of examples and it figures out the pattern itself." />
+              <FlipCard front="Is robotics the same as AI?" back="No — though they often work together. A robot is the physical body (motors, sensors, arms). AI is the software that decides what to do. A robot vacuum uses AI to navigate; the wheels and motor are just robotics. Many robots have no AI at all — they follow fixed programmed routines." />
+              <div>
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-brand-orange" /> Core AI Vocabulary — Flashcards</h3>
+                <p className="text-sm text-muted-foreground mb-4">These terms will appear throughout the course. Click each card to reveal the definition.</p>
+                <Flashcard cards={[
+                  { id: "ai-def", front: "Artificial Intelligence", back: "Software that performs tasks normally requiring human intelligence — learning from data, recognising patterns, understanding language, making decisions." },
+                  { id: "algo", front: "Algorithm", back: "A step-by-step set of instructions for solving a problem. Traditional software uses hand-written algorithms. AI learns its own algorithms by finding patterns in data." },
+                  { id: "model", front: "AI Model", back: "The end product of training an AI system — the file or service that takes inputs and produces outputs. ChatGPT, the spam filter in your email, and face-unlock on your phone are all AI models." },
+                  { id: "inference", front: "Inference", back: "When an AI model is actually used to make predictions or generate outputs. Training is how a model learns; inference is when it applies what it learned to new data in real time." },
+                  { id: "parameter", front: "Parameter", back: "A numeric value inside an AI model adjusted during training to capture patterns. GPT-4 reportedly has ~1.8 trillion parameters. More parameters = more capacity to learn complex patterns." },
+                  { id: "accuracy", front: "Accuracy", back: "How often an AI model gets the correct answer on a test dataset. 95% accuracy means correct 95 out of 100 times. But accuracy alone can be misleading — the type of errors matters too." },
+                ]} />
+              </div>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -131,11 +145,16 @@ export default function Module1Page() {
                 { id: "2012", title: "2012 — The deep learning revolution", content: "A neural network called AlexNet entered the ImageNet computer vision competition and utterly demolished the competition — cutting the error rate nearly in half.\n\nThis moment launched the deep learning era. Every major AI advance since — ChatGPT, image generators, voice assistants — traces back to this breakthrough." },
                 { id: "2016", title: "2016 — AlphaGo beats the world Go champion", content: "Go was considered the holy grail of AI challenges — the number of possible board positions exceeds the atoms in the observable universe.\n\nDeepMind's AlphaGo beat Lee Sedol 4-1 using strategies that surprised even professional Go players. One move (Move 37) became legendary — no human would have played it." },
                 { id: "2022", title: "2022 — ChatGPT goes mainstream", content: "OpenAI's ChatGPT reached 100 million users in just two months — faster than any product in history. For the first time, anyone could have a natural, open-ended conversation with AI.\n\nAI moved from research labs to kitchen tables overnight. The world has not been the same since." },
+                { id: "2023", title: "2023 — The multimodal race begins", content: "GPT-4 launched with vision capabilities. Claude 2 extended context to 100,000 tokens. Google launched Gemini. AI could now see images, analyse documents, and understand far longer conversations.\n\nThe year AI stopped being a text-only technology and became truly multimodal." },
                 { id: "now", title: "Today — AI is everywhere", content: "From medical diagnosis to music generation, legal research to software development — AI is woven into nearly every industry.\n\nAnd the pace is accelerating. The models available today are more capable than anything that existed just two years ago. You are living through one of the fastest technological shifts in human history." },
               ]} />
               <FlipCard
                 front="Who coined the term 'Artificial Intelligence'?"
                 back="John McCarthy, at the Dartmouth Conference in 1956. But Alan Turing's 1950 question — 'Can machines think?' — laid the philosophical foundation. McCarthy gave AI its name; Turing gave it its purpose."
+              />
+              <FlipCard
+                front="What was special about the 2012 AlexNet moment?"
+                back="AlexNet — a deep neural network — entered the ImageNet visual recognition challenge and halved the previous best error rate. This shocked the field and triggered a massive shift to deep learning. Almost every major AI achievement since then (ChatGPT, DALL-E, self-driving cars) is built on neural network approaches pioneered in that era."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
@@ -155,13 +174,25 @@ export default function Module1Page() {
                 <Card className="p-5 border-2 border-brand-orange/40 bg-brand-orange/5">
                   <h3 className="font-bold text-lg text-brand-orange mb-2">General AI (AGI) — Theoretical, does not exist yet</h3>
                   <p className="text-muted-foreground">AGI would be an AI that can do any intellectual task a human can do — reasoning across domains, learning new skills from scratch, understanding context the way people do. Scientists disagree on when (or if) this will happen.</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Notable: Sam Altman (OpenAI CEO) has said AGI could arrive within a few years. Other leading researchers say decades away — or never.</p>
                 </Card>
                 <Card className="p-5 border-2 border-gray-300 bg-gray-50">
                   <h3 className="font-bold text-lg text-gray-600 mb-2">Superintelligence — Science fiction for now</h3>
                   <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away — if it is possible at all.</p>
                 </Card>
               </div>
-              <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence — things that do not exist. The AI you use today is Narrow AI, which is powerful but limited." />
+              <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence — things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
+              <h3 className="text-lg font-semibold">Test your understanding — Can Narrow AI do this?</h3>
+              <MultipleChoice
+                question="ChatGPT just wrote a brilliant essay on climate change. Can it also give you turn-by-turn driving directions?"
+                options={[
+                  { text: "Yes — it is an advanced AI so it can do anything", isCorrect: false, feedback: "This is a common misconception about Narrow AI. ChatGPT was not trained as a navigation system and cannot access your location or real-time map data." },
+                  { text: "No — ChatGPT is Narrow AI trained for language tasks, not navigation", isCorrect: true, feedback: "Correct! Even though ChatGPT is impressively capable at language tasks, it is Narrow AI — it cannot do things outside its design. Google Maps is a separate Narrow AI trained specifically for navigation." },
+                  { text: "It depends on whether you have the paid version", isCorrect: false, feedback: "The paid version adds capabilities like web browsing, but GPS navigation is not within ChatGPT's design regardless of tier." },
+                  { text: "Yes — it can look up directions in its training data", isCorrect: false, feedback: "ChatGPT cannot access real-time data or your location. Even if it had street knowledge from training, that is not the same as live navigation." },
+                ]}
+                explanation="This illustrates why Narrow AI is 'narrow.' ChatGPT is extraordinary at language tasks but cannot navigate, control hardware, or do tasks outside what it was designed and trained for. You need a different Narrow AI (like Google Maps) for navigation."
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
           )}
@@ -196,12 +227,14 @@ export default function Module1Page() {
                 leftTitle="Common Myths"
                 rightTitle="The Reality"
                 items={[
-                  { left: "AI thinks and feels like humans", right: "AI recognises patterns. It has no thoughts, feelings, or consciousness." },
-                  { left: "AI knows everything", right: "AI only knows what it was trained on. It can be confidently wrong." },
-                  { left: "AI will take over the world", right: "Narrow AI cannot even switch between tasks. It only does what it was designed for." },
-                  { left: "AI is always objective and unbiased", right: "AI learns from human-created data, so it inherits human biases." },
-                  { left: "Only tech experts can use AI", right: "Modern AI tools are designed for anyone. No coding required." },
-                  { left: "AI understands what it says", right: "Language AI predicts likely next words. It does not understand meaning the way you do." },
+                  { left: "AI thinks and feels like humans", right: "AI recognises patterns. It has no thoughts, feelings, or consciousness — it is sophisticated statistics, not a mind." },
+                  { left: "AI knows everything", right: "AI only knows what it was trained on. It can be — and frequently is — confidently wrong about things outside its training." },
+                  { left: "AI will take over the world", right: "Narrow AI cannot even switch between tasks. It only does what it was specifically designed and trained for." },
+                  { left: "AI is always objective and unbiased", right: "AI learns from human-created data, so it inherits and can amplify human biases and historical inequalities." },
+                  { left: "Only tech experts can use AI", right: "Modern AI tools are designed for anyone. ChatGPT, Claude, and Gemini require no coding or technical background." },
+                  { left: "AI understands what it says", right: "Language AI predicts statistically likely next words. It does not understand meaning the way you do — it mimics understanding." },
+                  { left: "AI will replace all jobs", right: "AI is transforming jobs — automating some tasks while creating new ones. The net effect is complex and varies enormously by industry and role." },
+                  { left: "If AI is wrong, it is rare and obvious", right: "AI can be wrong in subtle, confident ways. Hallucinations — false but plausible-sounding statements — are a genuine and ongoing challenge." },
                 ]}
               />
               <MultipleChoice
@@ -213,6 +246,16 @@ export default function Module1Page() {
                   { text: "True — computers cannot be prejudiced because they have no emotions", isCorrect: false, feedback: "Prejudice in AI does not come from emotions — it comes from patterns in data. Emotionless does not mean fair." },
                 ]}
                 explanation="This is one of the most important AI myths to understand. AI does not 'think' or 'feel' bias — it statistically mirrors the patterns in its training data. Real-world data often contains historical inequalities, so AI can perpetuate and amplify them."
+              />
+              <MultipleChoice
+                question="A friend says: 'ChatGPT told me the capital of Australia is Sydney, so it must be right.' What is wrong with this reasoning?"
+                options={[
+                  { text: "Nothing — ChatGPT is always right about geography", isCorrect: false, feedback: "ChatGPT is not always right. The capital of Australia is Canberra, not Sydney. Sydney is the largest city — a common confusion that AI makes too." },
+                  { text: "AI can be confidently wrong — always verify important facts with reliable sources", isCorrect: true, feedback: "Correct! ChatGPT does make this specific mistake. The capital of Australia is Canberra. AI confidence does not equal accuracy." },
+                  { text: "AI is never wrong about well-known facts", isCorrect: false, feedback: "AI makes factual errors all the time, including on well-known facts. It produces the statistically likely output, which is not always the correct one." },
+                  { text: "ChatGPT knows it is wrong but says Sydney anyway", isCorrect: false, feedback: "AI has no awareness of its own errors. It does not know when it is wrong — it generates the most statistically likely text." },
+                ]}
+                explanation="The capital of Australia is Canberra — not Sydney, which is the largest city. This is a classic AI hallucination. Language models predict statistically likely text, and 'capital of Australia... Sydney' is a common enough pattern to confuse the model. Always verify important AI outputs."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next →</Button>
             </div>
