@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ArrowDown, ArrowUp, CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -58,6 +58,39 @@ type DragSortChallengeProps = {
   items: string[]
   correctOrder: string[]
   accentClassName?: string
+}
+
+function hashString(value: string) {
+  let hash = 0
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0
+  }
+
+  return hash
+}
+
+function createSeededRandom(seed: number) {
+  let current = seed || 1
+
+  return () => {
+    current = (current * 1664525 + 1013904223) >>> 0
+    return current / 4294967296
+  }
+}
+
+function shuffleOptions(options: QuickCheckOption[], seedSource: string) {
+  const shuffled = [...options]
+  const random = createSeededRandom(hashString(seedSource))
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const nextIndex = Math.floor(random() * (index + 1))
+    const temp = shuffled[index]
+    shuffled[index] = shuffled[nextIndex]
+    shuffled[nextIndex] = temp
+  }
+
+  return shuffled
 }
 
 export function FlipCardGrid({ cards }: FlipCardGridProps) {
@@ -452,6 +485,10 @@ export function QuickCheckCard({
   onAnswered,
 }: QuickCheckProps) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
+  const shuffledOptions = useMemo(
+    () => shuffleOptions(options, `${prompt}:${options.map((option) => `${option.id}:${option.label}`).join("|")}`),
+    [options, prompt]
+  )
   const isAnswered = selectedOptionId !== null
   const isCorrect = selectedOptionId === correctOptionId
 
@@ -470,7 +507,7 @@ export function QuickCheckCard({
       </div>
 
       <div className="mt-4 grid gap-3 md:grid-cols-2">
-        {options.map((option) => {
+        {shuffledOptions.map((option) => {
           const isSelected = selectedOptionId === option.id
           const isRightAnswer = option.id === correctOptionId
 

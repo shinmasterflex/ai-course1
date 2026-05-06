@@ -1,5 +1,5 @@
-/**
- * MODULE 6: YOUR AI TOOLKIT
+﻿/**
+ * MODULE 6: AI FOR BUSINESS & WORK
  */
 
 "use client"
@@ -12,10 +12,14 @@ import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } fr
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
+import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Wrench, ArrowRight, BookOpen, Code, Zap } from "lucide-react"
+import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
+import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { moduleQuizData } from "@/lib/module-quiz-data"
 
 export default function Module6Page() {
   const router = useRouter()
@@ -24,6 +28,8 @@ export default function Module6Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-6"
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
@@ -39,7 +45,16 @@ export default function Module6Page() {
     }
   }, [sectionParam])
 
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [4],
+  })
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -57,18 +72,18 @@ export default function Module6Page() {
         <Sidebar />
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Module 6: Your AI Toolkit</h1>
-            <p className="text-lg text-muted-foreground mb-4">Put it all together - build your first AI-powered workflow</p>
+            <h1 className="text-4xl font-bold mb-2">Module 6: AI for Business & Work</h1>
+            <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace  - and how to stay ahead</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
           {currentSectionIndex === 0 && (
             <ModuleHero
               eyebrow="Module 6"
-              title="Design your first repeatable AI workflow"
-              description="Move from concepts to execution by combining no-code tools into a practical system you can deploy this week."
+              title="Translate AI trends into career advantage"
+              description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
               imageSrc="/images/modules/module-6.jpg"
-              imageAlt="Workflow automation and AI integration"
+              imageAlt="Professional business and AI technology"
             />
           )}
 
@@ -76,16 +91,15 @@ export default function Module6Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="This is the final module - and the most hands-on. You will explore no-code AI tools, design a simple AI workflow, complete a mini-project, and leave with a curated list of resources for going deeper." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-3 text-brand-green">What success looks like here</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">Not:</span> building the most advanced automation you can imagine.</p>
-                  <p><span className="font-medium text-foreground">Yes:</span> choosing one small repeatable task, mapping the trigger and output, and leaving with a workflow you could realistically build this week.</p>
-                </div>
-              </Card>
+              <TextDisplay variant="callout" content="AI is not just a technology trend  - it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
               <Card className="p-5 space-y-2">
-                {["No-code AI platforms you can use today","Building a simple AI workflow (no coding required)","Your first AI mini-project","Next steps & resources for continued learning"].map((item) => (
+                {[
+                  "How AI is changing the workplace right now",
+                  "What AI means for jobs  - and which skills matter most",
+                  "AI applications across major industries",
+                  "How to build your own AI strategy at work",
+                  "Practical steps to build AI skills in your career",
+                ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
@@ -93,64 +107,60 @@ export default function Module6Page() {
             </div>
           )}
 
-          {/* 1: No-Code AI */}
+          {/* 1: AI in the Workplace */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">No-Code AI Tools</h2>
-              <TextDisplay content="You do not need to write a single line of code to build powerful AI-powered tools. Here are the best platforms for non-technical builders:" />
+              <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
+              <TextDisplay content="AI is already embedded in the tools most professionals use every day  - often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Choose by build goal</h3>
-                <div className="grid md:grid-cols-3 gap-3 text-sm">
-                  <div className="rounded-lg border bg-background p-3">
-                    <p className="font-semibold text-brand-green mb-1">Automate steps</p>
-                    <p className="text-muted-foreground">Use Zapier, Make, or n8n when you want triggers, actions, and integrations between apps.</p>
-                  </div>
-                  <div className="rounded-lg border bg-background p-3">
-                    <p className="font-semibold text-brand-green mb-1">Build an app</p>
-                    <p className="text-muted-foreground">Use Bubble, Glide, or Retool when you want a front-end product or internal tool.</p>
-                  </div>
-                  <div className="rounded-lg border bg-background p-3">
-                    <p className="font-semibold text-brand-green mb-1">Build a chatbot</p>
-                    <p className="text-muted-foreground">Use Chatbase, CustomGPT.ai, or Botpress when the main job is answering questions from your content.</p>
-                  </div>
-                </div>
+                <h3 className="font-semibold mb-3 text-brand-orange">Your first workplace use should pass this test</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "The task is repetitive and low-risk",
+                    "The output is easy for you to review",
+                    "You can measure time saved in a week",
+                    "No sensitive data is shared outside approved tools",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
               </Card>
               <div className="space-y-4">
                 {[
                   {
-                    category: "Automation & Workflows",
-                    icon: Zap,
-                    tools: [
-                      { name: "Zapier with AI", desc: "Connect apps and automate tasks - add AI steps that summarise, classify, or generate content as part of any automation." },
-                      { name: "Make (formerly Integromat)", desc: "Visual workflow builder with AI modules - more powerful than Zapier for complex workflows." },
-                      { name: "n8n", desc: "Open-source automation with AI nodes. Self-hostable. Used by technical non-coders who want more control." },
+                    category: "Communication & Collaboration",
+                    icon: Users,
+                    examples: [
+                      { name: "Meeting summaries", desc: "Tools like Otter.ai, Fireflies, and Microsoft Copilot auto-transcribe and summarise meetings, extracting action items." },
+                      { name: "Email assistance", desc: "Gmail's Smart Compose, Outlook Copilot, and Superhuman draft replies and surface important emails automatically." },
+                      { name: "Instant translation", desc: "DeepL and Google Translate now produce near-human quality for business documents and real-time conversations." },
                     ],
                   },
                   {
-                    category: "Build AI Apps Without Code",
-                    icon: Wrench,
-                    tools: [
-                      { name: "Bubble + AI Plugins", desc: "Full-featured no-code web app builder with AI integration for building consumer-facing AI products." },
-                      { name: "Glide", desc: "Build mobile apps with AI features from spreadsheet data - no code required." },
-                      { name: "Retool", desc: "Build internal tools with AI capabilities. Popular for data-heavy business tools." },
+                    category: "Knowledge Work",
+                    icon: Briefcase,
+                    examples: [
+                      { name: "Document drafting", desc: "Claude, ChatGPT, and Notion AI draft reports, proposals, and presentations from bullet points." },
+                      { name: "Research & analysis", desc: "Perplexity and ChatGPT with web access can synthesise information from hundreds of sources in seconds." },
+                      { name: "Code generation", desc: "GitHub Copilot and Cursor write, review, and debug code - boosting developer productivity by 30-50%." },
                     ],
                   },
                   {
-                    category: "Custom Chatbots & AI Assistants",
-                    icon: BookOpen,
-                    tools: [
-                      { name: "Chatbase", desc: "Upload your documents and create a custom chatbot trained on your content - no code, minutes to set up." },
-                      { name: "CustomGPT.ai", desc: "Build GPT-powered chatbots trained on your website or documents." },
-                      { name: "Botpress", desc: "More advanced chatbot builder with AI, flows, and integrations." },
+                    category: "Business Operations",
+                    icon: TrendingUp,
+                    examples: [
+                      { name: "Customer service", desc: "AI chatbots now handle 60-70% of tier-1 support queries, with human escalation for complex cases." },
+                      { name: "Forecasting", desc: "AI models predict sales, inventory demand, and customer churn with greater accuracy than traditional methods." },
+                      { name: "Hiring & HR", desc: "AI screens CVs, schedules interviews, and analyses employee engagement  - raising questions about bias." },
                     ],
                   },
-                ].map(({ category, icon: Icon, tools }) => (
+                ].map(({ category, icon: Icon, examples }) => (
                   <Card key={category} className="p-5">
                     <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
                     <div className="space-y-2">
-                      {tools.map(({ name, desc }) => (
+                      {examples.map(({ name, desc }) => (
                         <div key={name} className="flex gap-3 text-sm">
-                          <span className="font-medium w-36 flex-shrink-0">{name}</span>
+                          <span className="font-medium w-40 flex-shrink-0">{name}</span>
                           <span className="text-muted-foreground">{desc}</span>
                         </div>
                       ))}
@@ -158,37 +168,40 @@ export default function Module6Page() {
                   </Card>
                 ))}
               </div>
-              <MatchingChallenge
-                title="No-Code Tool Match"
-                description="Match the build goal to the strongest no-code tool category."
-                pairs={[
+              <FlipCardGrid
+                cards={[
                   {
-                    id: "automate",
-                    left: "Connect apps + trigger actions",
-                    right: "Automation workflow tools",
+                    title: "Low Risk",
+                    prompt: "What work tasks are best for first AI adoption?",
+                    answer: "Repetitive, low-risk tasks with outputs you can review quickly, like summaries and draft updates.",
                   },
                   {
-                    id: "app",
-                    left: "Create a front-end internal tool",
-                    right: "No-code app builders",
+                    title: "Human Review",
+                    prompt: "Why keep a human in the loop at work?",
+                    answer: "Because accountability, context, and final judgment remain human responsibilities in professional settings.",
                   },
                   {
-                    id: "chatbot",
-                    left: "Answer questions from your docs",
-                    right: "Custom chatbot builders",
+                    title: "Measurement",
+                    prompt: "How do teams prove AI value?",
+                    answer: "Track outcomes like hours saved, faster turnaround, and fewer repetitive manual steps.",
+                  },
+                  {
+                    title: "Scope",
+                    prompt: "Why start with small pilot workflows?",
+                    answer: "Small pilots reduce risk and create evidence for what should scale across the team.",
                   },
                 ]}
               />
               <QuickCheckCard
-                prompt="A beginner wants to connect Gmail, Notion, and Slack with one AI step in the middle. Which tool category is the best fit?"
+                prompt="What is the best first AI use for most professionals?"
                 options={[
-                  { id: "a", label: "Automation and workflow tools" },
-                  { id: "b", label: "Image generation tools" },
-                  { id: "c", label: "Standalone chatbot builders only" },
-                  { id: "d", label: "3D modeling tools" },
+                  { id: "a", label: "Automate every client-facing decision immediately" },
+                  { id: "b", label: "Start with a low-risk repetitive task and keep human review" },
+                  { id: "c", label: "Adopt the newest tool first and find a task later" },
+                  { id: "d", label: "Wait until your role is fully disrupted" },
                 ]}
-                correctOptionId="a"
-                explanation="This is a classic workflow-automation use case: connect existing apps, add one AI step, and route the result somewhere useful."
+                correctOptionId="b"
+                explanation="The safest high-leverage starting point is a repeatable, low-risk task where you can verify output quality and track time saved."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               
@@ -196,267 +209,340 @@ export default function Module6Page() {
             </div>
           )}
 
-          {/* 2: AI Workflows */}
+          {/* 2: AI & Jobs */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Building Simple AI Workflows</h2>
-              <TextDisplay content="An AI workflow is a series of steps where AI performs tasks automatically in response to a trigger. You connect existing tools - no coding required." />
-              <Card className="p-5">
-                <h3 className="font-semibold mb-4 text-brand-orange">The easiest first workflow recipe</h3>
-                <div className="space-y-3 text-sm">
-                  {[
-                    "1. Pick one repeatable task you already do every week.",
-                    "2. Choose a clear trigger such as a new email, saved article, or scheduled time.",
-                    "3. Add one AI action only: summarise, classify, extract, or draft.",
-                    "4. Send the result somewhere useful: email, Slack, Notion, spreadsheet.",
-                    "5. Review the output for a week before making the workflow more complex.",
-                  ].map((step) => (
-                    <div key={step} className="rounded-lg border bg-background p-3 text-muted-foreground">{step}</div>
-                  ))}
-                </div>
-              </Card>
+              <h2 className="text-3xl font-bold text-brand-green">AI & the Future of Jobs</h2>
+              <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others  - but the transition is uneven and can be disruptive for individuals." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                <h3 className="font-semibold mb-4 text-brand-orange">Example Workflow: Auto-summarise any email newsletter</h3>
-                <div className="space-y-3">
+                <h3 className="font-semibold mb-4 text-brand-orange">The Three-Category Framework</h3>
+                <div className="space-y-4">
                   {[
-                    { step: "Trigger", tool: "Gmail", action: "New email arrives with label 'Newsletter'" },
-                    { step: "Action 1", tool: "Zapier AI", action: "Summarise the email into 3 bullet points" },
-                    { step: "Action 2", tool: "Notion", action: "Append the summary to your reading notes database" },
-                    { step: "Action 3", tool: "Slack", action: "Send the summary to your #reading channel" },
-                  ].map(({ step, tool, action }) => (
-                    <div key={step} className="flex gap-3 items-start">
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        <span className="bg-brand-orange text-white text-xs font-bold px-2 py-0.5 rounded">{step}</span>
-                        <ArrowRight className="h-3 w-3 text-muted-foreground" />
-                      </div>
-                      <div className="text-sm"><span className="font-medium">{tool}:</span> <span className="text-muted-foreground">{action}</span></div>
+                    {
+                      label: "High displacement risk",
+                      color: "text-red-500",
+                      examples: "Routine data entry, basic document review, simple customer support scripts, rote translation, basic image captioning",
+                      insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
+                    },
+                    {
+                      label: "Augmentation (most roles)",
+                      color: "text-brand-orange",
+                      examples: "Lawyers, doctors, teachers, marketers, accountants, engineers, designers, writers",
+                      insight: "AI handles research, drafting, and analysis  - humans focus on judgement, relationships, creativity, and accountability. Productivity rises; headcount may shrink modestly.",
+                    },
+                    {
+                      label: "High growth & new roles",
+                      color: "text-brand-green",
+                      examples: "AI trainers, prompt engineers, AI ethicists, AI product managers, data curators, human-AI interaction designers",
+                      insight: "New roles that did not exist five years ago are growing rapidly. Organisations need people who can bridge AI capability and human context.",
+                    },
+                  ].map(({ label, color, examples, insight }) => (
+                    <div key={label} className="border-l-2 border-muted pl-4">
+                      <p className={`font-bold mb-1 ${color}`}>{label}</p>
+                      <p className="text-sm text-muted-foreground mb-1"><span className="font-medium">Examples:</span> {examples}</p>
+                      <p className="text-sm text-muted-foreground"><span className="font-medium">Insight:</span> {insight}</p>
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-muted-foreground mt-3">Result: Every newsletter you receive is automatically summarised and filed - without you doing anything.</p>
-              </Card>
-              <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  { title: "Content repurposing", desc: "Trigger: new blog post published -> AI rewrites as 5 social posts -> auto-schedules to Buffer" },
-                  { title: "Meeting prep", desc: "Trigger: calendar event in 1 hour -> AI pulls LinkedIn profiles of attendees -> sends you a briefing email" },
-                  { title: "Customer feedback triage", desc: "Trigger: new review arrives -> AI classifies as positive/neutral/negative -> routes to the right Slack channel" },
-                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket -> AI generates summary + tags -> adds to Notion database" },
-                ].map(({ title, desc }) => (
-                  <Card key={title} className="p-4">
-                    <p className="font-semibold text-brand-green mb-1">{title}</p>
-                    <p className="text-sm text-muted-foreground">{desc}</p>
-                  </Card>
-                ))}
-              </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">If you built this in Zapier or Make, what would you do first?</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">Step 1:</span> create the trigger in Gmail for labeled newsletter emails.</p>
-                  <p><span className="font-medium text-foreground">Step 2:</span> pass the email body into one AI summary step.</p>
-                  <p><span className="font-medium text-foreground">Step 3:</span> send the summary to one destination only, such as Notion.</p>
-                  <p><span className="font-medium text-foreground">Step 4:</span> test with 3-5 real examples before adding Slack or other outputs.</p>
-                </div>
               </Card>
               <DragSortChallenge
-                title="Workflow Sequence"
-                description="Drag the workflow pieces into the best first-build order."
+                title="Career Priority Order"
+                description="Drag these actions into a practical sequence for building AI career resilience."
                 items={[
-                  "Send summaries to a destination",
-                  "Define one clear trigger",
-                  "Test with real examples",
-                  "Add one AI action",
+                  "Lead a team-wide AI initiative",
+                  "Document one workflow that works",
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
                 ]}
                 correctOrder={[
-                  "Define one clear trigger",
-                  "Add one AI action",
-                  "Send summaries to a destination",
-                  "Test with real examples",
+                  "Apply AI to two repeatable tasks",
+                  "Measure quality and time saved",
+                  "Document one workflow that works",
+                  "Lead a team-wide AI initiative",
                 ]}
               />
+              <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role  - just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
               <QuickCheckCard
-                prompt="What makes a good first AI workflow to build for yourself?"
+                prompt="What is the most durable career takeaway from this section?"
                 options={[
-                  { id: "a", label: "A small repeatable task with a clear trigger and output" },
-                  { id: "b", label: "The biggest possible workflow with many dependencies" },
-                  { id: "c", label: "A workflow that has no measurable outcome" },
-                  { id: "d", label: "Anything that requires full automation immediately" },
+                  { id: "a", label: "Only technical workers need AI fluency" },
+                  { id: "b", label: "AI fluency is becoming a baseline expectation across many roles" },
+                  { id: "c", label: "Career risk disappears if you ignore AI tools" },
+                  { id: "d", label: "The safest move is to wait for the market to settle" },
                 ]}
-                correctOptionId="a"
-                explanation="The strongest starting workflows are narrow, repeatable, and easy to evaluate so you can learn quickly without creating operational risk."
+                correctOptionId="b"
+                explanation="The section's core point is that AI fluency is turning into a baseline professional skill, not a niche specialty."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 3: Mini Project */}
+          {/* 3: Industry Applications */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Your First AI Mini-Project</h2>
-              <TextDisplay variant="callout" content="The best way to learn is by doing. Your task: design a real AI-powered workflow you could actually use in your own life or work." />
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
-                <h3 className="font-semibold mb-3">Mini-Project: Design Your Workflow</h3>
-                <p className="text-sm text-muted-foreground mb-4">Answer the four questions below to design your workflow. There are no wrong answers - this is about thinking it through concretely.</p>
-                <div className="space-y-3 text-sm">
-                  <FlipCardGrid
-                    cards={[
-                      {
-                        title: "Trigger",
-                        prompt: "What makes a trigger strong?",
-                        answer: "It is specific, observable, and easy to test, such as a labeled email or a scheduled time.",
-                      },
-                      {
-                        title: "AI Step",
-                        prompt: "How many AI steps should beginners start with?",
-                        answer: "One. Keep the first version simple and reliable before adding complexity.",
-                      },
-                      {
-                        title: "Output",
-                        prompt: "Where should output go first?",
-                        answer: "Send it to one destination you already use daily, like Notion, email, or Slack.",
-                      },
-                      {
-                        title: "Measurement",
-                        prompt: "How do you know it works?",
-                        answer: "Track time saved and quality for one week, then iterate based on real results.",
-                      },
-                    ]}
-                  />
-                  {[
-                    "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
-                    "2. What would the trigger be? (e.g., receiving an email, saving a file, a daily schedule)",
-                    "3. What AI action would be most useful? (e.g., summarise, classify, draft a reply, extract information)",
-                    "4. Where should the output go? (e.g., Notion, email, Slack, a spreadsheet)",
-                  ].map((q) => <p key={q} className="text-muted-foreground">{q}</p>)}
-                </div>
-              </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Three starter project ideas</h3>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">Inbox helper:</span> when a new email arrives, AI classifies it and drafts a reply outline.</p>
-                  <p><span className="font-medium text-foreground">Reading assistant:</span> when you save an article, AI creates a summary and three takeaways in Notion.</p>
-                  <p><span className="font-medium text-foreground">Meeting follow-up:</span> when notes are uploaded, AI extracts action items and sends them to the team.</p>
-                </div>
-              </Card>
-              <Card className="p-5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Mini-project success checklist</h3>
-                <ul className="space-y-2 text-sm">
-                  {[
-                    "The task is specific and repeatable",
-                    "The trigger is clear",
-                    "The AI step does one job only",
-                    "The output goes somewhere you already use",
-                    "You can tell in one week whether it saves time or not",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
-                  ))}
-                </ul>
-              </Card>
-              <QuickCheckCard
-                prompt="Which mini-project idea is strongest for a beginner?"
-                options={[
-                  { id: "a", label: "A narrow workflow with one trigger, one AI action, and one clear output" },
-                  { id: "b", label: "A fully autonomous system that handles all work tasks immediately" },
-                  { id: "c", label: "A project with no clear trigger or measurable result" },
-                  { id: "d", label: "A workflow that starts by using confidential data in public tools" },
+              <h2 className="text-3xl font-bold text-brand-orange">AI Across Industries</h2>
+              <TextDisplay content="AI is being deployed in every major industry. The applications vary, but the underlying pattern is the same: AI handles analysis and prediction at scale, freeing humans for higher-value work." />
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    industry: "Healthcare",
+                    color: "text-blue-600",
+                    applications: [
+                      "Medical image analysis  - AI detects cancers in scans with radiologist-level accuracy",
+                      "Drug discovery  - AI reduces new drug development from decades to years",
+                      "Clinical documentation  - AI transcribes patient notes automatically",
+                      "Personalised treatment  - AI analyses genomic data to recommend targeted therapies",
+                    ],
+                  },
+                  {
+                    industry: "Finance",
+                    color: "text-green-600",
+                    applications: [
+                      "Fraud detection  - AI flags suspicious transactions in real time",
+                      "Algorithmic trading  - AI executes trades at speeds humans cannot match",
+                      "Credit scoring  - AI analyses thousands of data points beyond credit history",
+                      "Regulatory compliance  - AI monitors transactions for suspicious activity",
+                    ],
+                  },
+                  {
+                    industry: "Education",
+                    color: "text-purple-600",
+                    applications: [
+                      "Personalised learning paths  - AI adapts content to each student's pace",
+                      "Automated grading  - AI grades essays with detailed feedback",
+                      "Intelligent tutoring  - AI provides one-on-one tutoring at scale",
+                      "Early intervention  - AI identifies students at risk of falling behind",
+                    ],
+                  },
+                  {
+                    industry: "Retail & E-commerce",
+                    color: "text-orange-600",
+                    applications: [
+                      "Product recommendations  - AI drives 35% of Amazon's revenue",
+                      "Demand forecasting  - AI optimises inventory to reduce waste",
+                      "Visual search  - AI lets shoppers search by uploading photos",
+                      "Dynamic pricing  - AI adjusts prices in real time based on demand",
+                    ],
+                  },
+                  {
+                    industry: "Legal",
+                    color: "text-red-600",
+                    applications: [
+                      "Contract review  - AI reviews thousands of pages in minutes",
+                      "Legal research  - AI finds relevant precedents and case law",
+                      "Due diligence  - AI analyses documents in M&A transactions",
+                      "Litigation prediction  - AI estimates case outcomes from historical data",
+                    ],
+                  },
+                  {
+                    industry: "Manufacturing",
+                    color: "text-yellow-600",
+                    applications: [
+                      "Predictive maintenance  - AI prevents machine failures before they happen",
+                      "Quality control  - AI vision systems detect defects at speed and scale",
+                      "Supply chain optimisation  - AI reduces delays and costs",
+                      "Generative design  - AI generates optimal product designs for given constraints",
+                    ],
+                  },
+                ].map(({ industry, color, applications }) => (
+                  <Card key={industry} className="p-4">
+                    <h4 className={`font-bold mb-2 ${color}`}>{industry}</h4>
+                    <ul className="text-sm space-y-1 text-muted-foreground">
+                      {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">*</span>{a}</li>)}
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+              <MatchingChallenge
+                title="Industry Match Round"
+                description="Match each industry to a representative AI application."
+                pairs={[
+                  {
+                    id: "healthcare",
+                    left: "Healthcare",
+                    right: "Medical image analysis and clinical documentation",
+                  },
+                  {
+                    id: "finance",
+                    left: "Finance",
+                    right: "Fraud detection and compliance monitoring",
+                  },
+                  {
+                    id: "manufacturing",
+                    left: "Manufacturing",
+                    right: "Predictive maintenance and quality control",
+                  },
                 ]}
-                correctOptionId="a"
-                explanation="The best beginner project is intentionally small, testable, and safe enough to evaluate quickly."
-                accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
               
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 4: Next Steps */}
+          {/* 4: AI Strategy */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Next Steps & Resources</h2>
-              <TextDisplay variant="success" content="You have built your practical AI toolkit! You can automate workflows, build simple no-code agents, and have a clear plan for the next 30 days. Up next: AI Ethics, Safety & Society." />
-              <Card className="p-5">
-                <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />What you can now do</h3>
-                <ul className="space-y-2 text-sm">
+              <h2 className="text-3xl font-bold text-brand-green">Building an AI Strategy</h2>
+              <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy  - rather than reacting randomly to new tools  - puts you in control." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-4 text-brand-orange">The Individual AI Strategy Framework</h3>
+                <div className="space-y-4">
                   {[
-                    "Explain what AI is and how it works to anyone",
-                    "Use ChatGPT, Claude, and Gemini effectively with well-structured prompts",
-                    "Navigate the AI tool landscape and choose the right tool for any task",
-                    "Identify AI bias, misinformation, and privacy risks",
-                    "Design no-code AI workflows to automate repetitive tasks",
-                    "Think critically about AI claims in the media and in products",
-                  ].map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />{item}</li>)}
-                </ul>
-              </Card>
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold">Your 30-Day AI Challenge</h3>
-                <p className="text-sm text-muted-foreground">The fastest way to build real AI skill is daily practice. Here is a one-month challenge - each card reveals a daily micro-task that takes under 15 minutes.</p>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  {[
-                    "Week 1: use AI once per day to summarise or draft something you were already doing.",
-                    "Week 2: test three prompt variations on the same task and compare the results.",
-                    "Week 3: automate one tiny workflow with a trigger, one AI step, and one output.",
-                    "Week 4: document what worked, what failed, and what you would keep using.",
-                  ].map((item) => (
-                    <Card key={item} className="p-4">
-                      <p className="text-muted-foreground">{item}</p>
-                    </Card>
+                    { step: "1. Audit", action: "List the top 10 tasks you spend time on each week. Estimate hours per task." },
+                    { step: "2. Identify", action: "For each task, ask: could AI do this, assist with this, or does it need to stay fully human?" },
+                    { step: "3. Experiment", action: "Pick 2-3 tasks where AI could help. Spend one week testing AI tools on those specific tasks." },
+                    { step: "4. Measure", action: "Track time saved and quality. Did AI help? If not, why not? Adjust your approach." },
+                    { step: "5. Systematise", action: "Turn your best AI workflows into repeatable habits. Document what works for your role." },
+                    { step: "6. Share", action: "Teach colleagues what you have learned. Being the person who raises AI fluency in your team is a career advantage." },
+                  ].map(({ step, action }) => (
+                    <div key={step} className="flex gap-3 items-start">
+                      <span className="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0">{step}</span>
+                      <p className="text-sm text-muted-foreground pt-0.5">{action}</p>
+                    </div>
                   ))}
                 </div>
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold">Curated Resources for Going Deeper</h3>
-                <div className="grid md:grid-cols-2 gap-4">
+              </Card>
+              <TextDisplay variant="callout" content="The biggest mistake people make with AI at work: trying every new tool that launches instead of going deep on a few tools that actually fit their workflow. Depth beats breadth." />
+              
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-orange">How to Champion AI at Your Organisation</h3>
+                <p className="text-sm text-muted-foreground mb-4">Being the person who helps their team adopt AI well is one of the most valuable roles you can play right now. Here is how to do it without overstepping or creating resistance:</p>
+                <div className="space-y-3">
                   {[
-                    { category: "Free Courses", icon: BookOpen, resources: [
-                      "fast.ai - Practical Deep Learning for Coders (free, hands-on)",
-                      "Google's AI Essentials - free certificate course",
-                      "DeepLearning.AI Short Courses - free 1-hour deep dives",
-                      "Coursera: AI for Everyone by Andrew Ng (highly recommended)",
-                    ]},
-                    { category: "Books (Non-Technical)", icon: BookOpen, resources: [
-                      "The Age of AI - Henry Kissinger, Eric Schmidt & Daniel Huttenlocher",
-                      "Human Compatible - Stuart Russell (AI safety perspective)",
-                      "Atlas of AI - Kate Crawford (critical perspective)",
-                      "Co-Intelligence - Ethan Mollick (practical AI use)",
-                    ]},
-                    { category: "Stay Current", icon: Zap, resources: [
-                      "Ben's Bites newsletter - daily AI news, beginner-friendly",
-                      "The AI Breakdown podcast - news and analysis",
-                      "Simon Willison's blog - technical but accessible AI updates",
-                      "MIT Technology Review AI section",
-                    ]},
-                    { category: "If You Want to Code", icon: Code, resources: [
-                      "Python.org beginner tutorials (Python is the AI language)",
-                      "fast.ai's Practical Deep Learning course",
-                      "Hugging Face tutorials - work with real AI models",
-                      "LangChain documentation - build AI applications",
-                    ]},
-                  ].map(({ category, icon: Icon, resources }) => (
-                    <Card key={category} className="p-4">
-                      <h4 className="font-bold text-brand-green mb-2 flex items-center gap-1"><Icon className="h-4 w-4" />{category}</h4>
+                    {
+                      stage: "Start with a small, visible win",
+                      detail: "Pick one task that everyone finds tedious and show how AI handles it. A 10-minute demonstration beats a 10-page proposal every time. Seeing is believing.",
+                    },
+                    {
+                      stage: "Lead with the problem, not the technology",
+                      detail: "Do not say 'We should use AI.' Say 'We spend 6 hours every week on status reports  - I found a way to cut that to 45 minutes.' People care about outcomes, not tools.",
+                    },
+                    {
+                      stage: "Address the fears directly",
+                      detail: "Colleagues often worry about job security. Acknowledge it honestly: AI is changing jobs, and learning it is the best career protection available. The goal is to free people from drudgework, not replace them.",
+                    },
+                    {
+                      stage: "Create a safe space to experiment",
+                      detail: "Share your failures alongside your successes. When people see that AI sometimes gets it wrong and that is okay, they feel safe trying it themselves. Perfection culture kills experimentation.",
+                    },
+                    {
+                      stage: "Document and share what works",
+                      detail: "Build a simple shared doc of prompts, workflows, and tools that work for your team&apos;s specific tasks. A prompt library tailored to your organisation is far more valuable than generic advice.",
+                    },
+                    {
+                      stage: "Raise the governance conversation early",
+                      detail: "Proactively ask: which tools are approved? What data can we put in AI systems? Who reviews AI-generated outputs before they go to clients? Being the person who asks these questions earns trust from leadership.",
+                    },
+                  ].map(({ stage, detail }) => (
+                    <div key={stage} className="flex gap-3 items-start">
+                      <span className="bg-brand-green text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">*</span>
+                      <div>
+                        <p className="font-medium text-sm">{stage}</p>
+                        <p className="text-sm text-muted-foreground">{detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <QuickCheckCard
+                prompt="Your team spends six hours weekly on repetitive status updates. What is the strongest first AI strategy move?"
+                options={[
+                  { id: "a", label: "Roll out many tools at once to everyone" },
+                  { id: "b", label: "Pilot one narrow workflow, measure time saved, then document and share results" },
+                  { id: "c", label: "Wait for a perfect enterprise strategy before trying anything" },
+                  { id: "d", label: "Push adoption without governance discussion" },
+                ]}
+                correctOptionId="b"
+                explanation="Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails."
+                onAnswered={() => {
+                  markSectionInteractionComplete(4)
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the strategy checkpoint to unlock the next section.</p> : null}
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 5: Building AI Skills */}
+          {currentSectionIndex === 5 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Building Your AI Skills</h2>
+              <TextDisplay content="AI fluency is a competitive advantage right now  - and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold">The AI Skills Stack</h3>
+                <div className="space-y-3">
+                  {[
+                    {
+                      level: "Foundation (everyone needs this)",
+                      skills: ["Understanding what AI can and cannot do", "Effective prompting across major LLMs", "Identifying AI-generated content and misinformation", "Basic AI ethics and bias awareness"],
+                      bg: "bg-brand-green/5 border-brand-green/20",
+                    },
+                    {
+                      level: "Professional (for knowledge workers)",
+                      skills: ["Integrating AI into your specific role's workflow", "Using AI for research, analysis, and drafting", "Building simple no-code AI automations", "Evaluating AI outputs critically for your domain"],
+                      bg: "bg-brand-orange/5 border-brand-orange/20",
+                    },
+                    {
+                      level: "Advanced (for those who want to lead)",
+                      skills: ["Designing AI strategies for teams or organisations", "Understanding AI model selection and limitations in depth", "Managing AI projects and vendor relationships", "Developing AI governance policies"],
+                      bg: "bg-blue-500/5 border-blue-500/20",
+                    },
+                  ].map(({ level, skills, bg }) => (
+                    <Card key={level} className={`p-4 border ${bg}`}>
+                      <h4 className="font-bold mb-2">{level}</h4>
                       <ul className="text-sm space-y-1 text-muted-foreground">
-                        {resources.map((r) => <li key={r} className="flex gap-1"><span className="text-brand-orange">?</span>{r}</li>)}
+                        {skills.map((s) => <li key={s} className="flex gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-brand-green flex-shrink-0 mt-0.5" />{s}</li>)}
                       </ul>
                     </Card>
                   ))}
                 </div>
               </div>
-              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
-                <h3 className="text-2xl font-bold mb-3">You are ready.</h3>
-                <p className="text-muted-foreground mb-4">The AI era is not something that is coming - it is already here. You now have the foundation to navigate it with confidence, curiosity, and critical thinking.</p>
-                <p className="text-lg font-semibold text-brand-orange">Go build something.</p>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A practical 90-day career plan</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Days 1-30:</span> pick two recurring tasks and use AI on them daily. Track time saved and output quality.</p>
+                  <p><span className="font-medium text-foreground">Days 31-60:</span> standardize your best prompts and workflow steps into a mini playbook for your role.</p>
+                  <p><span className="font-medium text-foreground">Days 61-90:</span> share one documented workflow with your team and gather feedback to improve it.</p>
+                </div>
               </Card>
-              <div className="flex gap-4">
-                <Button
-                  size="lg"
-                  className="bg-brand-green hover:bg-brand-green/90 text-white"
-                  onClick={() => router.push("/course/module-7")}
-                >
-                  Continue to Module 7
-                </Button>
-                <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
-                  Back to Dashboard
-                </Button>
-              </div>
+              <QuickCheckCard
+                prompt="Which approach best builds durable AI career advantage?"
+                options={[
+                  { id: "a", label: "Try every tool briefly without measuring outcomes" },
+                  { id: "b", label: "Go deep on specific tasks in your domain and document what works" },
+                  { id: "c", label: "Focus only on AI news and skip practical application" },
+                  { id: "d", label: "Avoid sharing what you learn with your team" },
+                ]}
+                correctOptionId="b"
+                explanation="Durable advantage comes from repeatable workflow skill in your actual domain, not from broad but shallow experimentation."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              
+            </div>
+          )}
+
+          {/* 6: Module Quiz */}
+          {currentSectionIndex === 6 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
+              <TextDisplay content="Three questions to lock in what you have learned. All three must be answered to complete the module." />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              {allQuizComplete && (
+                <div className="space-y-4">
+                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: AI Agents." />
+                  <div className="flex gap-4">
+                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-7")}>
+                      Continue to Module 7
+                    </Button>
+                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
+                  </div>
+                </div>
+              )}
+              {!allQuizComplete && (
+                <p className="text-sm text-muted-foreground">Answer all three questions above to complete the module.</p>
+              )}
             </div>
           )}
 
@@ -465,4 +551,5 @@ export default function Module6Page() {
     </div>
   )
 }
+
 

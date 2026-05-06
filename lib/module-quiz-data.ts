@@ -231,7 +231,7 @@ export const moduleQuizData = {
       ],
     },
   ],
-  "module-7": [
+  "module-6": [
     {
       key: "quiz1",
       prompt: "Which tasks are most exposed to automation risk?",
@@ -266,7 +266,7 @@ export const moduleQuizData = {
       ],
     },
   ],
-  "module-8": [
+  "module-7": [
     {
       key: "quiz1",
       prompt: "What most clearly distinguishes an agent from a simple chatbot?",

@@ -108,24 +108,11 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
-    // Position 6: was module-6
+    // Position 6
     {
       id: "module-6",
       slug: "module-6",
-      title: "Module 6: Your AI Toolkit",
-      sections: [
-        { id: "module-overview", title: "Module Overview", completed: false },
-        { id: "no-code-ai", title: "No-Code AI Tools", completed: false },
-        { id: "ai-workflows", title: "Building Simple AI Workflows", completed: false },
-        { id: "ai-project", title: "Your First AI Mini-Project", completed: false },
-        { id: "next-steps", title: "Next Steps & Resources", completed: false },
-      ],
-    },
-    // Position 7
-    {
-      id: "module-7",
-      slug: "module-7",
-      title: "Module 7: AI for Business & Work",
+      title: "Module 6: AI for Business & Work",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
@@ -136,11 +123,11 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
-    // Position 8
+    // Position 7
     {
-      id: "module-8",
-      slug: "module-8",
-      title: "Module 8: AI Agents",
+      id: "module-7",
+      slug: "module-7",
+      title: "Module 7: AI Agents",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "what-are-agents", title: "What Are AI Agents?", completed: false },
@@ -150,6 +137,22 @@ export const courseStructure: CourseStructure = {
         { id: "building-with-agents", title: "Building Your First Agent", completed: false },
         { id: "risks-and-limits", title: "Risks & Limitations", completed: false },
         { id: "module-quiz", title: "Module Quiz", completed: false },
+      ],
+    },
+    // Position 8
+    {
+      id: "module-8",
+      slug: "module-8",
+      title: "Module 8: Your AI Toolkit",
+      sections: [
+        { id: "module-overview", title: "Module Overview", completed: false },
+        { id: "explain-ai", title: "Explain AI Clearly", completed: false },
+        { id: "tool-selection", title: "Choose the Right AI Tool", completed: false },
+        { id: "prompting-assistants", title: "Prompt ChatGPT, Claude, and Gemini", completed: false },
+        { id: "risk-check", title: "Bias, Privacy, and Misinformation Checks", completed: false },
+        { id: "ai-workflows", title: "Building Simple AI Workflows", completed: false },
+        { id: "ai-project", title: "Your First AI Mini-Project", completed: false },
+        { id: "next-steps", title: "Next Steps & Resources", completed: false },
       ],
     },
     // Position 9
