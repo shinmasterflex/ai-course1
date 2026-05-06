@@ -40,12 +40,12 @@ Sections and lesson summaries:
 5. Executive Decision Brief and Next Steps
    - Build a 90-day AI posture plan.
 
-Worksheets and checklists:
+Resources and checklists:
 - AI Pressure Assessment (market, customer, competitor)
 - Inaction Cost Estimator
 - Executive Misconception Audit
 
-Case studies:
+Examples:
 - Company delayed adoption and lost deal velocity
 - Company rushed adoption and created compliance exposure
 
@@ -76,17 +76,17 @@ Sections and lesson summaries:
    - Practical integration fit checklist.
 10. Security and Data Exposure Baseline
    - Quick risk review before pilots.
-11. Landscape Scoring Worksheet
+11. Landscape Scoring Guide
    - Compare options with weighted criteria.
 12. Leadership Checkpoint
    - Defend a shortlist recommendation.
 
-Worksheets and checklists:
+Resources and checklists:
 - Vendor Landscape Scoring Matrix
 - Tool-Type Decision Tree
 - Data Risk Pre-Screen
 
-Case studies:
+Examples:
 - Buying from strongest demo vendor versus strongest integration fit
 - Agency-led pilot versus product-led pilot outcomes
 
@@ -105,12 +105,12 @@ Sections and lesson summaries:
 6. Revenue Lift vs. Cost Reduction Matrix
 7. Prioritization Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - AI Opportunity Inventory by Function
 - Bottleneck Mapping Canvas
 - Priority Matrix (Value x Effort x Confidence)
 
-Case studies:
+Examples:
 - Revenue enablement assistant in sales operations
 - Customer support ticket triage automation with human approval
 
@@ -129,12 +129,12 @@ Sections and lesson summaries:
 6. Decision Tree: Buy, Wait, or Pilot
 7. Procurement Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - Tool Evaluation Scorecard
 - Questions to Ask Before Buying
 - Red Flags During Tool Demos
 
-Case studies:
+Examples:
 - Tool consolidation reduced spend by 38 percent
 - Premium niche tool outperformed generic assistant in regulated workflow
 
@@ -153,12 +153,12 @@ Sections and lesson summaries:
 6. AI Pricing Models in Practice
 7. Vendor Diligence Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - Agency Interview Script
 - Proposal Red Flag Checklist
 - Pilot Scope and Success Criteria Template
 
-Case studies:
+Examples:
 - Agency oversold multi-agent architecture; pilot failed reliability tests
 - Smaller specialist partner delivered measurable automation gains in 10 weeks
 
@@ -177,12 +177,12 @@ Sections and lesson summaries:
 6. Executive Reporting and Experiment Governance
 7. ROI Decision Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - ROI Calculator Template
 - AI Experiment Budget Planner
 - Executive Monthly AI Scorecard
 
-Case studies:
+Examples:
 - Time-saved metric looked strong but delivered no actual P&L impact
 - Risk-adjusted experimentation improved win rate for pilots
 
@@ -202,12 +202,12 @@ Sections and lesson summaries:
 7. Governance Scorecard
 8. Governance Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - Internal AI Usage Policy Starter Kit
 - Vendor Risk Assessment Template
 - AI Incident Response Playbook
 
-Case studies:
+Examples:
 - Public-facing hallucination incident and response timeline
 - Contract language saved a company from data-use dispute
 
@@ -230,12 +230,12 @@ Sections and lesson summaries:
 10. Long-Term Transformation Planning
 11. Roadmap Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - 30-60-90 Day AI Roadmap Builder
 - Change Readiness Assessment
 - Champion Network Operating Guide
 
-Case studies:
+Examples:
 - High tool usage but low workflow adoption due to weak change management
 - Champion model accelerated adoption across cross-functional teams
 
@@ -255,12 +255,12 @@ Sections and lesson summaries:
 7. Operational Automation Blueprint
 8. Automation Design Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - Agent Readiness Checklist
 - Human Approval Gate Design Canvas
-- Automation Failure Mode Worksheet
+- Automation Failure Mode Guide
 
-Case studies:
+Examples:
 - Over-engineered autonomous system replaced by reliable workflow automation
 - Human-in-the-loop design prevented high-cost customer errors
 
@@ -278,14 +278,14 @@ Sections and lesson summaries:
 5. Procurement Framework and Controls
 6. Long-Term Maintainability
 7. Internal Ownership Blueprint
-8. Stack Decision Worksheet and Next Actions
+8. Stack Decision Plan and Next Actions
 
-Worksheets and checklists:
+Resources and checklists:
 - AI Stack Map Template
 - Vendor Consolidation Calculator
-- Ownership and RACI Worksheet
+- Ownership and RACI Guide
 
-Case studies:
+Examples:
 - 14-tool stack consolidation into 5 core systems
 - Stack redesign improved governance and reduced renewals complexity
 
@@ -304,12 +304,12 @@ Sections and lesson summaries:
 6. Strategic Positioning Playbook
 7. Executive Strategy Checkpoint
 
-Worksheets and checklists:
+Resources and checklists:
 - Strategic Scenario Planning Grid
-- AI Competitive Positioning Worksheet
+- AI Competitive Positioning Guide
 - 12-Month Strategic Bets Tracker
 
-Case studies:
+Examples:
 - How a traditional services firm repositioned as AI-enabled operator
 - How a small company built defensibility despite model commoditization
 
@@ -325,7 +325,7 @@ Case studies:
 - Decision trees for buy, wait, pilot, or scale
 - Procurement frameworks with risk controls
 - AI prioritization matrices
-- Downloadable executive worksheets per module
+- Downloadable executive planning tools per module
 
 ---
 
@@ -342,7 +342,7 @@ Credibility strip:
 - 11 modules
 - Decision frameworks
 - ROI and governance tools
-- Real-world case studies
+- Real-world examples
 
 Primary CTA options:
 - Start Executive Program

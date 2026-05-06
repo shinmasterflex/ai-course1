@@ -16,8 +16,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
   "module-1": [
     {
       key: "quiz1",
-      prompt: "Which distinction is most important in executive AI planning?",
-      explanation: "Leaders need to distinguish infrastructure models from business-facing tools to avoid procurement confusion.",
+      prompt: "Which distinction is most important in AI adoption planning?",
+      explanation: "Learners need to distinguish infrastructure models from business-facing tools to avoid procurement confusion.",
       correctOptionId: "b",
       options: [
         { id: "a", label: "Color theme of each product" },
@@ -95,8 +95,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     },
     {
       key: "quiz4",
-      prompt: "Which framing best connects AI initiatives to executive goals?",
-      explanation: "Leaders should tie AI initiatives to revenue, margin, speed, risk, or customer outcomes.",
+      prompt: "Which framing best connects AI initiatives to business goals?",
+      explanation: "Teams should tie AI initiatives to revenue, margin, speed, risk, or customer outcomes.",
       correctOptionId: "a",
       options: [
         { id: "a", label: "Map each initiative to concrete business outcomes" },
@@ -141,7 +141,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     },
     {
       key: "quiz4",
-      prompt: "How should leaders handle shiny-object pressure?",
+      prompt: "How should teams handle shiny-object pressure?",
       explanation: "A predefined buy-wait-pilot framework keeps teams focused on business value.",
       correctOptionId: "c",
       options: [
@@ -223,7 +223,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "How should experimentation risk be handled in budgeting?",
-      explanation: "Leaders should budget by stage-gated experiments with explicit risk-adjusted thresholds.",
+      explanation: "Teams should budget by stage-gated experiments with explicit risk-adjusted thresholds.",
       correctOptionId: "b",
       options: [
         { id: "a", label: "Single annual commitment without checkpoints" },
@@ -233,8 +233,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     },
     {
       key: "quiz4",
-      prompt: "What belongs in an executive AI scorecard?",
-      explanation: "Executive reporting must combine value outcomes and risk posture.",
+      prompt: "What belongs in an AI progress scorecard?",
+      explanation: "Progress reporting should combine value outcomes and risk posture.",
       correctOptionId: "a",
       options: [
         { id: "a", label: "Outcome metrics, risk indicators, and next decisions" },
@@ -430,8 +430,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
   "module-10": [
     {
       key: "quiz1",
-      prompt: "Which future signal should leaders prioritize most?",
-      explanation: "Leaders should prioritize signals that materially affect margins, customer value, or operating speed.",
+      prompt: "Which future signal should teams prioritize most?",
+      explanation: "Teams should prioritize signals that materially affect margins, customer value, or operating speed.",
       correctOptionId: "b",
       options: [
         { id: "a", label: "Social media excitement about new model launches" },
@@ -452,8 +452,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     },
     {
       key: "quiz3",
-      prompt: "How should leaders approach workforce implications?",
-      explanation: "Leaders should redesign roles around AI-assisted workflows and invest in capability transitions.",
+      prompt: "How should teams approach workforce implications?",
+      explanation: "Teams should redesign roles around AI-assisted workflows and invest in capability transitions.",
       correctOptionId: "c",
       options: [
         { id: "a", label: "Assume role design remains unchanged" },

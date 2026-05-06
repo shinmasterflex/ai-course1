@@ -644,7 +644,7 @@ Even if you never build corporate strategy, understanding these questions helps 
     title: "Real-World Workflows: How Teams Actually Use AI",
     explanation: `The focus moves from theoretical to practical. Real teams use AI in specific ways that solve specific problems. Understanding their workflows gives you concrete mental models to draw on.
 
-It uses examples. Case studies show what's possible and what's realistic. They show that AI adoption is messy and iterative, not clean and predetermined. Teams experiment. Some experiments work. Others fail. Learning continues.
+It uses examples. Real-world examples show what's possible and what's realistic. They show that AI adoption is messy and iterative, not clean and predetermined. Teams experiment. Some experiments work. Others fail. Learning continues.
 
 Studying real workflows builds transferable pattern knowledge: where AI adds value, what blocks adoption, and how organizations adapt execution over time.`,
   },
@@ -1038,10 +1038,10 @@ This comparison card teaches decision-making: when should you use rules, and whe
 
   "m1-real-world-cases": {
     id: "m1-real-world-cases",
-    title: "Real-World Case Studies",
-    explanation: `Real case studies ground abstract concepts in concrete outcomes. When you see how Netflix uses AI for recommendations, how hospitals use AI for diagnosis, how banks use AI for fraud detection, you understand that AI is not theoretical. It's already reshaping industries.
+    title: "Real-World AI Examples",
+    explanation: `Real examples ground abstract concepts in concrete outcomes. When you see how Netflix uses AI for recommendations, how hospitals use AI for diagnosis, and how banks use AI for fraud detection, you understand that AI is not theoretical. It's already reshaping industries.
 
-Case studies also teach risk awareness: case studies should include failures and limitations, not just successes. Understanding where AI fails in real situations is as important as understanding where it succeeds.`,
+Examples also teach risk awareness: they should include failures and limitations, not just successes. Understanding where AI fails in real situations is as important as understanding where it succeeds.`,
   },
 
   "m1-module-overview": {

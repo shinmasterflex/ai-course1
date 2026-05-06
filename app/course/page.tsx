@@ -1,6 +1,6 @@
 /**
  * DASHBOARD PAGE
- * AI course main dashboard showing progress and module overview
+ * AI Adoption Beginner's Course dashboard showing progress and module overview
  */
 
 "use client"
@@ -54,7 +54,7 @@ export default function DashboardPage() {
   const completionRate = totalSections > 0 ? Math.round((totalCompleted / totalSections) * 100) : 0
   const dashboardExplainerAttributes = getExplainerAttributes({
     type: "Course dashboard",
-    title: "Executive program overview",
+    title: "AI Adoption Beginner's Course overview",
     summary: "This page summarizes strategic progress across the full AI adoption curriculum and provides direct access to each module.",
     details: [
       `Overall completion is ${completionRate}% across ${MODULE_META.length} modules.`,
@@ -172,7 +172,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-xl text-brand-indigo">All Modules</CardTitle>
-              <CardDescription>Follow the full executive sequence from market context to long-term strategic positioning.</CardDescription>
+              <CardDescription>Follow the full course sequence from market context to practical adoption planning, with checkpoints in every module.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {MODULE_META.map((meta, modIndex) => {

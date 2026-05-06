@@ -1,6 +1,6 @@
 /**
  * PUBLIC HOMEPAGE
- * Landing page for the executive AI strategy program
+ * Landing page for the AI Adoption Beginner's Course
  */
 
 "use client"
@@ -31,36 +31,36 @@ export default function HomePage() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-green/30 bg-white/80 px-4 py-2 text-sm font-semibold text-brand-indigo">
                 <Sparkles className="h-4 w-4 text-brand-orange" />
-                Executive Program for AI Strategy and Implementation
+                AI Adoption Beginner's Course
               </div>
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
                 <span className="text-brand-indigo">Lead AI Adoption with</span>{" "}
                 <span className="brand-wordmark text-brand-orange">Cognijin</span>
               </h1>
               <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
-                A practical field guide for business leaders who need to evaluate vendors, prioritize use cases, measure ROI, and execute AI adoption with confidence.
+                A practical field guide for beginners and business teams who need to evaluate vendors, prioritize use cases, measure ROI, and execute AI adoption with confidence.
               </p>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/course">Start Executive Program</Link>
+                  <Link href="/course">Start AI Adoption Beginner's Course</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="text-lg px-10 border-brand-green/30">
-                  <Link href="/demo">Preview Strategic Module</Link>
+                  <Link href="/demo">Preview Sample Module</Link>
                 </Button>
               </div>
               <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">
                 <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> {modules.length} Modules</span>
                 <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> ROI and Vendor Frameworks</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Worksheets and Decision Tools</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Guided Checkpoints and Decision Tools</span>
               </div>
             </div>
 
             <div className="relative">
               <Card className="overflow-hidden border-brand-green/25 bg-white/85 shadow-xl backdrop-blur">
                 <CardContent className="space-y-5 p-6 md:p-8">
-                  <h3 className="text-2xl font-semibold text-brand-indigo">Strategic Curriculum Snapshot</h3>
+                  <h3 className="text-2xl font-semibold text-brand-indigo">Course Snapshot</h3>
                   <p className="text-muted-foreground">
-                    Structured modules, implementation scorecards, and executive checklists designed for real business decisions.
+                    Structured modules, practical examples, guided checkpoints, and implementation scorecards designed for real business decisions.
                   </p>
                   <div className="overflow-hidden rounded-2xl border border-brand-indigo/15 bg-white">
                     <Image
@@ -82,12 +82,12 @@ export default function HomePage() {
 
               <div className="pointer-events-none absolute -left-6 -top-6 hidden rounded-xl border border-brand-green/30 bg-white/95 px-4 py-3 text-sm shadow-lg md:block">
                 <div className="font-semibold text-brand-indigo">10 Modules</div>
-                <div className="text-xs text-muted-foreground">From market shift to strategic positioning</div>
+                <div className="text-xs text-muted-foreground">From market shift to practical adoption planning</div>
               </div>
 
               <div className="pointer-events-none absolute -bottom-5 -right-4 hidden rounded-xl border border-brand-orange/30 bg-white/95 px-4 py-3 text-sm shadow-lg md:block">
-                <div className="font-semibold text-brand-indigo">Executive Worksheets</div>
-                <div className="text-xs text-muted-foreground">Decision tools plus scorecards</div>
+                <div className="font-semibold text-brand-indigo">Guided Learning Tools</div>
+                <div className="text-xs text-muted-foreground">Decision tools, practice prompts, and scorecards</div>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function HomePage() {
             <Card className="overflow-hidden border-brand-indigo/20 bg-white/90">
               <CardHeader>
                 <CardTitle className="text-brand-indigo">Vendor and Tool Clarity</CardTitle>
-                <CardDescription>Make better platform and partner decisions with structured evaluation frameworks.</CardDescription>
+                <CardDescription>Make better platform and partner decisions with structured evaluation frameworks and realistic examples.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Image
@@ -116,7 +116,7 @@ export default function HomePage() {
             <Card className="overflow-hidden border-brand-green/20 bg-white/90">
               <CardHeader>
                 <CardTitle className="text-brand-indigo">Implementation Momentum</CardTitle>
-                <CardDescription>Track strategic milestones, pilot outcomes, and organizational readiness.</CardDescription>
+                <CardDescription>Track practical milestones, pilot outcomes, learning progress, and organizational readiness.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Image
@@ -132,7 +132,7 @@ export default function HomePage() {
             <Card className="overflow-hidden border-brand-orange/20 bg-white/90">
               <CardHeader>
                 <CardTitle className="text-brand-indigo">Adoption Roadmap</CardTitle>
-                <CardDescription>Sequence opportunities, governance, and stack decisions with less risk.</CardDescription>
+                <CardDescription>Sequence opportunities, governance, and stack decisions with hands-on planning tools.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Image
@@ -153,9 +153,9 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl space-y-12">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl font-bold text-brand-indigo">Executive Curriculum Overview</h2>
+              <h2 className="text-4xl font-bold text-brand-indigo">Beginner Curriculum Overview</h2>
               <p className="text-xl text-muted-foreground">
-                Follow a practical path built for decision-makers. Move from market context to procurement, ROI, governance, implementation, and long-term strategic advantage.
+                Follow a practical path built for beginners and business teams. Move from market context to procurement, ROI, governance, implementation, and long-term advantage.
               </p>
             </div>
 
@@ -175,7 +175,7 @@ export default function HomePage() {
                     </div>
                     <CardTitle className="text-xl leading-snug text-brand-indigo">{module.title}</CardTitle>
                     <CardDescription className="text-base">
-                      {module.description ?? "Practical frameworks, business scenarios, and implementation guidance for leaders."}
+                      {module.description ?? "Practical frameworks, business scenarios, and implementation guidance for beginners."}
                     </CardDescription>
                   </CardHeader>
                 </Card>
@@ -196,7 +196,7 @@ export default function HomePage() {
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-brand-green/30">
                   <Link href="/course" className="inline-flex items-center gap-2">
-                    View Strategic Dashboard
+                    View Course Dashboard
                     <CircuitBoard className="h-4 w-4" />
                   </Link>
                 </Button>

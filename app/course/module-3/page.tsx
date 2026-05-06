@@ -1,7 +1,7 @@
 "use client"
 
-import { ExecutiveModulePage } from "@/components/learning/executive-module-page"
+import { CourseModulePage } from "@/components/learning/course-module-page"
 
 export default function ModulePage() {
-  return <ExecutiveModulePage moduleId="module-3" />
+  return <CourseModulePage moduleId="module-3" />
 }

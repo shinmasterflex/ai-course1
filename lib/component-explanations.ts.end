@@ -13,20 +13,20 @@
 
   "m1-case-study-1": {
     id: "m1-case-study-1",
-    title: "Real-World AI Case Study 1",
-    explanation: `Real case studies ground abstract concepts in concrete outcomes. Case studies should include both successes and failures. Learning from real implementations helps you predict AI impact in your domain.`,
+    title: "Real-World AI Example 1",
+    explanation: `Real examples ground abstract concepts in concrete outcomes. They should include both successes and failures. Learning from real implementations helps you predict AI impact in your domain.`,
   },
 
   "m1-case-study-2": {
     id: "m1-case-study-2",
-    title: "Real-World AI Case Study 2",
-    explanation: `Different industries deploy AI differently based on constraints and opportunities. Comparing case studies across industries helps you understand transfer principles.`,
+    title: "Real-World AI Example 2",
+    explanation: `Different industries deploy AI differently based on constraints and opportunities. Comparing real examples across industries helps you understand transfer principles.`,
   },
 
   "m1-case-study-3": {
     id: "m1-case-study-3",
-    title: "Real-World AI Case Study 3",
-    explanation: `Case studies also reveal common pitfalls: over-relying on AI, ignoring data quality, neglecting human oversight. Learning from others' mistakes is efficient learning.`,
+    title: "Real-World AI Example 3",
+    explanation: `Real examples also reveal common pitfalls: over-relying on AI, ignoring data quality, and neglecting human oversight. Learning from others' mistakes is efficient learning.`,
   },
 
   "m2-supervised-example": {
