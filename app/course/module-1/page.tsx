@@ -344,6 +344,24 @@ export default function Module1Page() {
                 </div>
               </Card>
 
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">A practical test: is this actually an AI problem?</h3>
+                <p className="text-sm text-muted-foreground mb-3">Use this quick filter whenever someone claims a product is "AI-powered":</p>
+                <div className="space-y-2 text-sm">
+                  {[
+                    "Does it improve after seeing more examples or feedback?",
+                    "Is the task pattern-heavy (language, images, prediction, ranking)?",
+                    "Would hand-written rules be fragile or too complex to maintain?",
+                    "Can outputs vary probabilistically instead of always being deterministic?",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2 rounded border bg-background p-2">
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-green" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
               <QuickCheckCard
                 prompt="What is the single most important thing AI systems have in common across all their different tasks?"
                 options={[
@@ -548,6 +566,23 @@ export default function Module1Page() {
                 </div>
               </Card>
 
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Why history matters for everyday users</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    { title: "Expect capability jumps", detail: "Major breakthroughs often look sudden to the public, but they usually come from years of compounding research." },
+                    { title: "Expect failures too", detail: "Periods of hype are often followed by disappointment. Build workflows that survive model changes." },
+                    { title: "Follow incentives", detail: "Products evolve quickly because research, funding, and competition reinforce one another." },
+                    { title: "Stay tool-agnostic", detail: "Core concepts outlast specific apps. Learn principles so your skills transfer to new tools." },
+                  ].map(({ title, detail }) => (
+                    <div key={title} className="rounded-lg border p-3 bg-background">
+                      <p className="font-medium text-brand-green mb-1">{title}</p>
+                      <p className="text-muted-foreground text-xs">{detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
               <QuickCheckCard
                 prompt="What was the significance of the 2012 AlexNet result?"
                 options={[
@@ -586,6 +621,15 @@ export default function Module1Page() {
                 </Card>
               </div>
               <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence - things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
+              <Card className="p-5 bg-brand-orange/5 border-brand-orange/20">
+                <h3 className="font-semibold mb-3 text-brand-orange">Reality check: how to classify any AI headline</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Step 1:</span> Identify the system type (chatbot, recommender, vision model, autonomous system).</p>
+                  <p><span className="font-medium text-foreground">Step 2:</span> Ask whether it is domain-limited (almost always yes today = Narrow AI).</p>
+                  <p><span className="font-medium text-foreground">Step 3:</span> Separate current capability from future speculation (AGI/superintelligence claims).</p>
+                  <p><span className="font-medium text-foreground">Step 4:</span> Look for benchmarks or real evidence, not just marketing language.</p>
+                </div>
+              </Card>
               <h3 className="text-lg font-semibold">Test your understanding - Can Narrow AI do this?</h3>
               <QuickCheckCard
                 prompt="Which task is the best fit for narrow AI?"
@@ -619,6 +663,15 @@ export default function Module1Page() {
                   </p>
                 </div>
               </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Prompt upgrade ladder (same task, better output)</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Level 1 - basic:</span> "Summarise this text."</p>
+                  <p><span className="font-medium text-foreground">Level 2 - structured:</span> "Summarise in 5 bullets and list 3 next actions."</p>
+                  <p><span className="font-medium text-foreground">Level 3 - role and audience:</span> "Summarise for a busy manager in plain language with one risk and one recommendation."</p>
+                  <p><span className="font-medium text-foreground">Level 4 - quality control:</span> "If any detail is uncertain, label it clearly and ask one follow-up question before finalising."</p>
+                </div>
+              </Card>
               <div className="grid md:grid-cols-3 gap-4">
                 {[
                   {
@@ -640,6 +693,22 @@ export default function Module1Page() {
                   </Card>
                 ))}
               </div>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Starter workflows you can repeat this week</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    { name: "Inbox reset", how: "Paste 5 unread emails and ask for priority order plus one-line replies." },
+                    { name: "Meeting prep", how: "Paste notes and ask for agenda, decisions needed, and fallback options." },
+                    { name: "Study support", how: "Paste a chapter and request a glossary plus 5 self-test questions." },
+                    { name: "Writing sprint", how: "Draft a first version, then ask AI to tighten clarity and tone for your audience." },
+                  ].map(({ name, how }) => (
+                    <div key={name} className="rounded-lg border p-3 bg-background">
+                      <p className="font-medium text-brand-orange mb-1">{name}</p>
+                      <p className="text-muted-foreground text-xs">{how}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">What makes this a real win?</h3>
                 <ul className="space-y-2 text-sm">
@@ -659,6 +728,22 @@ export default function Module1Page() {
                   <p><span className="font-medium text-foreground">Do not</span> use AI for medical, legal, or financial decisions without expert verification.</p>
                   <p><span className="font-medium text-foreground">Do not</span> paste confidential work documents into a public AI tool unless your organisation has approved it.</p>
                   <p><span className="font-medium text-foreground">Do not</span> trust the first answer automatically. Read it, edit it, and verify key facts.</p>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">A simple quality scorecard (use after every AI output)</h3>
+                <div className="grid md:grid-cols-4 gap-3 text-xs">
+                  {[
+                    { label: "Accuracy", note: "Are facts and names correct?" },
+                    { label: "Clarity", note: "Is it understandable for your audience?" },
+                    { label: "Completeness", note: "Did it miss anything important?" },
+                    { label: "Actionability", note: "Can you act on it right now?" },
+                  ].map(({ label, note }) => (
+                    <div key={label} className="rounded border bg-white p-3">
+                      <p className="font-semibold text-brand-orange mb-1">{label}</p>
+                      <p className="text-muted-foreground">{note}</p>
+                    </div>
+                  ))}
                 </div>
               </Card>
 
@@ -788,10 +873,34 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="Let us check your understanding. Answer all three questions correctly to complete the module." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Before you start, sanity-check these ideas</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Definition:</span> AI is software that performs tasks that normally require human intelligence.</p>
+                  <p><span className="font-medium text-foreground">History:</span> modern progress came from better algorithms, more data, and more compute.</p>
+                  <p><span className="font-medium text-foreground">Types:</span> everything you use today is Narrow AI, not AGI or superintelligence.</p>
+                  <p><span className="font-medium text-foreground">Practice mindset:</span> use AI as support, then verify before relying on output.</p>
+                </div>
+              </Card>
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work! You have completed Module 1. You now have a solid foundation for understanding what AI is." />
+                  <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                    <h3 className="font-semibold mb-3 text-brand-green">Confidence check before Module 2</h3>
+                    <div className="grid md:grid-cols-2 gap-3 text-sm">
+                      {[
+                        "I can explain AI without using jargon",
+                        "I can distinguish narrow AI from AGI claims",
+                        "I can spot hype and ask for evidence",
+                        "I can choose one low-risk AI task to practice",
+                      ].map((item) => (
+                        <div key={item} className="rounded-lg border bg-white p-3 text-muted-foreground">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-2")}>
                       Continue to Module 2

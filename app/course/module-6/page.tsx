@@ -297,32 +297,32 @@ export default function Module6Page() {
                 <h3 className="font-semibold mb-3">Mini-Project: Design Your Workflow</h3>
                 <p className="text-sm text-muted-foreground mb-4">Answer the four questions below to design your workflow. There are no wrong answers - this is about thinking it through concretely.</p>
                 <div className="space-y-3 text-sm">
+                  <FlipCardGrid
+                    cards={[
+                      {
+                        title: "Trigger",
+                        prompt: "What makes a trigger strong?",
+                        answer: "It is specific, observable, and easy to test, such as a labeled email or a scheduled time.",
+                      },
+                      {
+                        title: "AI Step",
+                        prompt: "How many AI steps should beginners start with?",
+                        answer: "One. Keep the first version simple and reliable before adding complexity.",
+                      },
+                      {
+                        title: "Output",
+                        prompt: "Where should output go first?",
+                        answer: "Send it to one destination you already use daily, like Notion, email, or Slack.",
+                      },
+                      {
+                        title: "Measurement",
+                        prompt: "How do you know it works?",
+                        answer: "Track time saved and quality for one week, then iterate based on real results.",
+                      },
+                    ]}
+                  />
                   {[
-               FlipCardGrid
-                cards={[
-                  {
-                    title: "Trigger",
-                    prompt: "What makes a trigger strong?",
-                    answer: "It is specific, observable, and easy to test, such as a labeled email or a scheduled time.",
-                  },
-                  {
-                    title: "AI Step",
-                    prompt: "How many AI steps should beginners start with?",
-                    answer: "One. Keep the first version simple and reliable before adding complexity.",
-                  },
-                  {
-                    title: "Output",
-                    prompt: "Where should output go first?",
-                    answer: "Send it to one destination you already use daily, like Notion, email, or Slack.",
-                  },
-                  {
-                    title: "Measurement",
-                    prompt: "How do you know it works?",
-                    answer: "Track time saved and quality for one week, then iterate based on real results.",
-                  },
-                ]}
-              />
-              <     "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
+                    "1. What repetitive or time-consuming task in your life could AI automate or assist with?",
                     "2. What would the trigger be? (e.g., receiving an email, saving a file, a daily schedule)",
                     "3. What AI action would be most useful? (e.g., summarise, classify, draft a reply, extract information)",
                     "4. Where should the output go? (e.g., Notion, email, Slack, a spreadsheet)",

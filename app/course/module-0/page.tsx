@@ -178,6 +178,21 @@ export default function Module0Page() {
                 explanation="Right. Consistent interaction plus section order is what turns this into skill, not just reading."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
+              <Card className="p-6 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-brand-green/5">
+                <h3 className="text-lg font-semibold mb-3 text-brand-indigo">What success looks like by the end of this week</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    "Explain AI in plain language to a friend in under 60 seconds",
+                    "Identify three daily tools that already use AI behind the scenes",
+                    "Run one low-risk AI workflow (summary, draft, or checklist)",
+                    "Use a verification habit before trusting any important output",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-white p-3 text-muted-foreground">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                 Got it - let's go!
               </Button>
@@ -229,6 +244,22 @@ export default function Module0Page() {
                   },
                 ]}
               />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">How visible is the AI?</h3>
+                <p className="text-sm text-muted-foreground mb-3">Not all AI feels the same. Sometimes it is obvious, and sometimes it disappears into the product experience.</p>
+                <div className="space-y-2 text-sm">
+                  {[
+                    { level: "Highly visible", example: "Chat assistants, image generators, coding copilots" },
+                    { level: "Partly visible", example: "Smart reply, autocomplete, writing suggestions" },
+                    { level: "Mostly invisible", example: "Fraud scoring, ranking feeds, search relevance, spam detection" },
+                  ].map(({ level, example }) => (
+                    <div key={level} className="flex gap-3 border-b last:border-0 py-2">
+                      <span className="w-32 flex-shrink-0 font-medium text-brand-orange">{level}</span>
+                      <span className="text-muted-foreground">{example}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -291,6 +322,21 @@ export default function Module0Page() {
                     <div key={label} className="text-center p-3 bg-white rounded-lg border">
                       <p className="text-muted-foreground text-xs mb-1">{label}</p>
                       <p className="font-bold text-brand-orange">{time}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">How to pace your learning</h3>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  {[
+                    { plan: "Busy weekday", cadence: "20 minutes per day, one section at a time" },
+                    { plan: "Weekend focus", cadence: "2 x 90-minute sessions with practice breaks" },
+                    { plan: "Team cohort", cadence: "One module per week plus discussion notes" },
+                  ].map(({ plan, cadence }) => (
+                    <div key={plan} className="rounded-lg border bg-white p-3">
+                      <p className="font-medium text-brand-orange mb-1">{plan}</p>
+                      <p className="text-muted-foreground text-xs">{cadence}</p>
                     </div>
                   ))}
                 </div>
@@ -376,6 +422,21 @@ export default function Module0Page() {
                   markSectionInteractionComplete(4)
                 }}
               />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Module 0 completion checklist</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    "I can explain what this course covers in three phases",
+                    "I understand why section order and interactions matter",
+                    "I can name at least three everyday AI touchpoints",
+                    "I am ready to challenge myths instead of memorizing hype",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-white p-3 text-muted-foreground">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </Card>
               {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the check-in to finish this module.</p> : null}
               <div className="flex gap-4">
                 <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">

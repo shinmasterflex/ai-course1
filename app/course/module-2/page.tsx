@@ -139,6 +139,14 @@ export default function Module2Page() {
                 <h3 className="font-semibold mb-3 text-brand-green">A simple analogy</h3>
                 <p className="text-sm text-muted-foreground">Traditional software is like giving someone a strict recipe. Machine learning is like showing them 10,000 examples until they begin to recognize the pattern for themselves.</p>
               </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Three signs a task is a strong ML candidate</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">High variability:</span> the same intent appears in many forms (emails, accents, writing styles, photos).</p>
+                  <p><span className="font-medium text-foreground">Large historical dataset:</span> you already have examples and outcomes to learn from.</p>
+                  <p><span className="font-medium text-foreground">Patterns change over time:</span> rules become stale quickly, so learning systems are more robust.</p>
+                </div>
+              </Card>
               <QuickCheckCard
                 prompt="When does machine learning make the most sense?"
                 options={[
@@ -199,6 +207,22 @@ export default function Module2Page() {
                   <p><span className="font-medium text-foreground">Bad example 1:</span> a hiring model trained mostly on past successful hires from one narrow demographic.</p>
                   <p><span className="font-medium text-foreground">Bad example 2:</span> a medical model trained mostly on data from one country, hospital system, or age group.</p>
                   <p><span className="font-medium text-foreground">Bad example 3:</span> a customer support model trained on tickets that were mislabeled or inconsistently categorized.</p>
+                </div>
+              </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Data quality checklist for beginners</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  {[
+                    { item: "Coverage", tip: "Include varied geographies, devices, ages, and edge cases." },
+                    { item: "Label consistency", tip: "Use clear labeling guidelines and periodic audits." },
+                    { item: "Recency", tip: "Refresh data so the model does not learn outdated behavior." },
+                    { item: "Leakage", tip: "Keep future-only fields out of training to avoid fake accuracy." },
+                  ].map(({ item, tip }) => (
+                    <div key={item} className="rounded-lg border bg-background p-3">
+                      <p className="font-medium text-brand-orange mb-1">{item}</p>
+                      <p className="text-muted-foreground text-xs">{tip}</p>
+                    </div>
+                  ))}
                 </div>
               </Card>
               <QuickCheckCard
@@ -390,6 +414,7 @@ export default function Module2Page() {
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">This "emergent capabilities" phenomenon - where quantitative scale produces qualitative leaps - is one reason AI progress has felt so sudden and surprising.</p>
               </Card>
+              <TextDisplay variant="callout" content="Memory aid: input flows forward to make a prediction, error flows backward to improve weights. Forward for output, backward for learning." />
 
               <QuickCheckCard
                 prompt="What is the main job of a neural network during training?"
@@ -491,6 +516,22 @@ export default function Module2Page() {
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
 
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Red-flag checklist: when to slow down immediately</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm text-muted-foreground">
+                  {[
+                    "The output includes precise citations or statistics without verifiable sources",
+                    "The answer sounds very certain on a topic with legal, medical, or financial consequences",
+                    "The response ignores key constraints from your prompt",
+                    "A small wording change produces a completely different answer",
+                    "The model gives real-time claims but cannot show data freshness",
+                    "The recommendation cannot be explained in plain language",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-white p-3">{item}</div>
+                  ))}
+                </div>
+              </Card>
+
               <TextDisplay variant="callout" content="Flip each card to test your understanding of why each limitation exists." />
               <FlipCardGrid
                 cards={[
@@ -532,6 +573,16 @@ export default function Module2Page() {
                 </ul>
               </Card>
 
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Response audit workflow (60 seconds)</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">1. Mark claims:</span> highlight names, numbers, dates, and citations.</p>
+                  <p><span className="font-medium text-foreground">2. Verify externally:</span> confirm high-impact claims with trusted sources.</p>
+                  <p><span className="font-medium text-foreground">3. Stress test:</span> ask the model to state assumptions and potential failure cases.</p>
+                  <p><span className="font-medium text-foreground">4. Decide owner:</span> assign a human owner for any final decision.</p>
+                </div>
+              </Card>
+
               <QuickCheckCard
                 prompt="A colleague says 'The AI gave me a very confident answer with several citations, so it must be correct.' What is the problem with this reasoning?"
                 options={[
@@ -558,10 +609,41 @@ export default function Module2Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
+              <TextDisplay content="This quiz checks your understanding of how machines learn, not your ability to memorize technical terms." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Fast refresh before submitting</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Machine learning uses examples to learn patterns instead of hand-written rules.",
+                    "Training data quality strongly determines model behavior and fairness.",
+                    "Supervised learning uses labels; unsupervised learning discovers structure.",
+                    "Neural networks improve by adjusting weights through repeated error correction.",
+                    "AI limitations are structural, so verification is always required for high-stakes use.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-brand-green" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now understand the fundamentals of how AI learns. Next up: we go hands-on with Large Language Models and learn how to communicate with AI effectively." />
+                  <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                    <h3 className="font-semibold mb-2 text-brand-green">You are ready for Module 3 if you can:</h3>
+                    <div className="grid md:grid-cols-2 gap-3 text-sm">
+                      {[
+                        "Explain training data quality in plain language",
+                        "Differentiate supervised and unsupervised learning",
+                        "Describe weights and backpropagation conceptually",
+                        "List at least two AI limitations that affect real workflows",
+                      ].map((item) => (
+                        <div key={item} className="rounded-lg border bg-white p-3 text-muted-foreground">{item}</div>
+                      ))}
+                    </div>
+                  </Card>
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-3")}>
                       Continue to Module 3

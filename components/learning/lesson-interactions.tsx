@@ -113,6 +113,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null)
   const [matches, setMatches] = useState<Record<string, string>>({})
   const [attempts, setAttempts] = useState(0)
+  const [lastIncorrectAttempt, setLastIncorrectAttempt] = useState<{ leftId: string; rightId: string } | null>(null)
 
   const normalizedPairs = pairs.map((p, i) => ({ ...p, id: p.id ?? String(i) }))
   const rightItems = [...normalizedPairs].sort((a, b) => a.right.localeCompare(b.right))
@@ -131,6 +132,9 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
 
     if (selectedLeftId === rightId) {
       setMatches((prev) => ({ ...prev, [selectedLeftId]: rightId }))
+      setLastIncorrectAttempt(null)
+    } else {
+      setLastIncorrectAttempt({ leftId: selectedLeftId, rightId })
     }
 
     setSelectedLeftId(null)
@@ -149,19 +153,24 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
           {normalizedPairs.map((pair) => {
             const isMatched = Boolean(matches[pair.id])
             const isSelected = selectedLeftId === pair.id
+            const isWrong = lastIncorrectAttempt?.leftId === pair.id
 
             return (
               <button
                 key={pair.id}
                 type="button"
                 disabled={isMatched}
-                onClick={() => setSelectedLeftId(pair.id)}
+                onClick={() => {
+                  setSelectedLeftId(pair.id)
+                  setLastIncorrectAttempt(null)
+                }}
                 className={cn(
                   "w-full rounded-lg border px-3 py-2 text-left text-sm text-foreground transition-all",
                   "hover:-translate-y-0.5 hover:shadow-sm",
                   isMatched && "border-green-600 bg-green-50 text-green-900",
-                  !isMatched && isSelected && "border-brand-orange bg-brand-orange/10",
-                  !isMatched && !isSelected && "bg-white"
+                  !isMatched && isWrong && "border-red-500 bg-red-50 text-red-900",
+                  !isMatched && !isWrong && isSelected && "border-brand-orange bg-brand-orange/10",
+                  !isMatched && !isWrong && !isSelected && "bg-white"
                 )}
               >
                 {pair.left}
@@ -175,6 +184,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
           {rightItems.map((pair) => {
             const matchedLeftId = reverseMatches[pair.id]
             const isMatched = Boolean(matchedLeftId)
+            const isWrong = lastIncorrectAttempt?.rightId === pair.id
 
             return (
               <button
@@ -186,7 +196,8 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
                   "w-full rounded-lg border px-3 py-2 text-left text-sm text-foreground transition-all",
                   "hover:-translate-y-0.5 hover:shadow-sm",
                   isMatched && "border-green-600 bg-green-50 text-green-900",
-                  !isMatched && "bg-white"
+                  !isMatched && isWrong && "border-red-500 bg-red-50 text-red-900",
+                  !isMatched && !isWrong && "bg-white"
                 )}
               >
                 {pair.right}
@@ -209,6 +220,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
             setSelectedLeftId(null)
             setMatches({})
             setAttempts(0)
+            setLastIncorrectAttempt(null)
           }}
         >
           <RotateCcw className="h-3 w-3" />
@@ -280,9 +292,19 @@ export function OrderingChallenge({
         ))}
       </div>
 
+      {isCorrect && (
+        <div className="mt-4 flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-50 px-4 py-3">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-green-800">Correct order!</p>
+            <p className="text-sm text-green-700">You built the right sequence. That's the full machine-learning loop.</p>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-muted-foreground")}>
-          {isCorrect ? "Nice. You built the correct sequence." : "Move cards up/down to build the right order."}
+        <p className="text-sm text-muted-foreground">
+          {isCorrect ? "" : "Move cards up/down to build the right order."}
         </p>
         <Button type="button" variant="ghost" size="sm" className="gap-1" onClick={() => setCurrentOrder(items)}>
           <RotateCcw className="h-3 w-3" />
@@ -302,9 +324,11 @@ export function DragSortChallenge({
 }: DragSortChallengeProps) {
   const [currentOrder, setCurrentOrder] = useState(items)
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
+  const [hasCheckedOrder, setHasCheckedOrder] = useState(false)
+  const [isDone, setIsDone] = useState(false)
 
   const handleDrop = (targetItem: string) => {
-    if (!draggedItem || draggedItem === targetItem) {
+    if (isDone || !draggedItem || draggedItem === targetItem) {
       return
     }
 
@@ -320,9 +344,19 @@ export function DragSortChallenge({
       copy.splice(targetIndex, 0, draggedItem)
       return copy
     })
+
+    // Re-ordering means the user should re-check the answer state.
+    setHasCheckedOrder(false)
   }
 
   const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
+
+  const handleCheckOrder = () => {
+    setHasCheckedOrder(true)
+    if (isCorrect) {
+      setIsDone(true)
+    }
+  }
 
   return (
     <Card className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white", accentClassName)}>
@@ -335,9 +369,17 @@ export function DragSortChallenge({
         {currentOrder.map((item, index) => (
           <div
             key={item}
-            draggable
-            onDragStart={() => setDraggedItem(item)}
-            onDragOver={(event) => event.preventDefault()}
+            draggable={!isDone}
+            onDragStart={() => {
+              if (!isDone) {
+                setDraggedItem(item)
+              }
+            }}
+            onDragOver={(event) => {
+              if (!isDone) {
+                event.preventDefault()
+              }
+            }}
             onDrop={() => {
               handleDrop(item)
               setDraggedItem(null)
@@ -346,6 +388,7 @@ export function DragSortChallenge({
             className={cn(
               "flex cursor-grab items-center gap-3 rounded-lg border bg-white p-3 text-sm transition-all",
               "hover:-translate-y-0.5 hover:shadow-sm active:cursor-grabbing",
+              isDone && "cursor-default hover:translate-y-0 hover:shadow-none",
               draggedItem === item && "border-brand-orange bg-brand-orange/10"
             )}
           >
@@ -358,14 +401,43 @@ export function DragSortChallenge({
         ))}
       </div>
 
+      {hasCheckedOrder && !isCorrect ? (
+        <p className="mt-4 text-sm font-medium text-brand-orange">Not quite yet. Reorder the steps and check again.</p>
+      ) : null}
+
+      {isDone ? (
+        <div className="mt-4 flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-50 px-4 py-3">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-green-600 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-green-800">Correct order!</p>
+            <p className="text-sm text-green-700">Challenge complete. This sequence is correct.</p>
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-muted-foreground")}>
-          {isCorrect ? "Perfect order. Nice move." : "Drag rows to reorder the flow."}
+        <p className={cn("text-sm", isDone ? "text-green-700" : "text-muted-foreground")}>
+          {isDone ? "Done. Reset to try again." : "Drag rows to reorder the flow, then check your order."}
         </p>
-        <Button type="button" variant="ghost" size="sm" className="gap-1" onClick={() => setCurrentOrder(items)}>
-          <RotateCcw className="h-3 w-3" />
-          Reset
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button type="button" size="sm" onClick={handleCheckOrder} disabled={isDone}>
+            {isDone ? "Done" : "Check order"}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="gap-1"
+            onClick={() => {
+              setCurrentOrder(items)
+              setHasCheckedOrder(false)
+              setIsDone(false)
+            }}
+          >
+            <RotateCcw className="h-3 w-3" />
+            Reset
+          </Button>
+        </div>
       </div>
     </Card>
   )

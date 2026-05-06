@@ -58,10 +58,10 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: M
                     type="button"
                     variant="outline"
                     className={cn(
-                      "h-auto w-full justify-start whitespace-normal px-4 py-3 text-left",
-                      showCorrect && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50",
-                      showIncorrect && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50",
-                      !showCorrect && !showIncorrect && "hover:border-brand-orange hover:bg-orange-50",
+                      "h-auto w-full justify-start whitespace-normal px-4 py-3 text-left text-foreground",
+                      showCorrect && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50 hover:text-green-900",
+                      showIncorrect && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50 hover:text-red-900",
+                      !showCorrect && !showIncorrect && "hover:border-brand-orange hover:bg-orange-50 hover:text-foreground",
                     )}
                     onClick={() => {
                       setSelectedAnswers((prev) => ({ ...prev, [question.key]: option.id }))
