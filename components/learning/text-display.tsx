@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, CheckIcon, Info, XCircle } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
-import { useId, useMemo, useState } from "react"
+import { useEffect, useId, useMemo, useState } from "react"
 
 interface TextDisplayProps {
   title?: string
@@ -887,6 +887,11 @@ export function TextDisplay({
     title: explainerTitle,
     explanation: buildTextDisplayExplanation(content, subtitle, interactive),
   })
+
+  useEffect(() => {
+    setDropTarget(null)
+    setIsDragging(false)
+  }, [content, scopeKey, statementData.statement, title])
 
   return (
     <div {...explainerAttributes} className={cn("p-6 rounded-lg", variantStyles[variant], className)}>

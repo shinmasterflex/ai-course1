@@ -1,7 +1,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { CheckCircle2, Circle, XCircle } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,13 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer, com
   const [attemptedQuestions, setAttemptedQuestions] = useState<Record<T, boolean>>({} as Record<T, boolean>)
   const [xp, setXp] = useState(0)
   const [streak, setStreak] = useState(0)
+
+  useEffect(() => {
+    setSelectedAnswers({} as Record<T, string>)
+    setAttemptedQuestions({} as Record<T, boolean>)
+    setXp(0)
+    setStreak(0)
+  }, [questions])
 
   const answeredCount = useMemo(
     () => Object.values(results).filter(Boolean).length,
@@ -55,6 +62,7 @@ If you struggle on certain questions, that struggle is valuable information. Tho
       {questions.map((question, index) => {
         const selected = selectedAnswers[question.key]
         const isAnswered = Boolean(selected)
+        const isLocked = attemptedQuestions[question.key] === true
         const isCorrect = results[question.key] === true
 
         return (
@@ -92,7 +100,12 @@ If you struggle on certain questions, that struggle is valuable information. Tho
                       showIncorrect && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50 hover:text-red-900",
                       !showCorrect && !showIncorrect && "hover:border-brand-orange hover:bg-orange-50 hover:text-foreground",
                     )}
+                    disabled={isLocked}
                     onClick={() => {
+                      if (isLocked) {
+                        return
+                      }
+
                       const isFirstAttempt = !attemptedQuestions[question.key]
                       const isCorrectAnswer = option.id === question.correctOptionId
 

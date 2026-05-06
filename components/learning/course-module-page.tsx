@@ -2280,6 +2280,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                   <p className="text-sm text-muted-foreground">Use this quick check to confirm you can apply the section in a real situation.</p>
                 </div>
                 <QuickCheckCard
+                  key={`${moduleId}-${currentSection.id}-quick-check`}
                   prompt={sectionLearningContent?.quickCheckPrompt ?? `What is the strongest next move after completing "${currentSection.title}"?`}
                   options={sectionLearningContent?.quickCheckOptions ?? [
                     { id: "a", label: "Buy a tool immediately based on a demo" },
@@ -2318,7 +2319,13 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
             <div className="mt-10 space-y-5">
               <h3 className="text-2xl font-semibold text-brand-indigo">Module checkpoint</h3>
               <TextDisplay content="Use this checkpoint to validate what you learned before moving to the next module." />
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId={`${moduleId}-course-quiz`} />
+              <ModuleQuiz
+                key={`${moduleId}-course-quiz`}
+                questions={questions}
+                results={quizResults}
+                onAnswer={handleQuizComplete}
+                componentId={`${moduleId}-course-quiz`}
+              />
               {allQuizComplete ? (
                 <Card className="p-4 border-brand-green/30 bg-brand-green/10 text-sm text-brand-indigo">
                   Checkpoint complete. You have validated readiness to apply this module in real business decisions.

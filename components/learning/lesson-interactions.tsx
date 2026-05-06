@@ -1,7 +1,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ArrowDown, ArrowUp, CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -427,6 +427,13 @@ As you drag items into order, you're building intuition about workflow logic. Yo
     setHasCheckedOrder(false)
   }
 
+  useEffect(() => {
+    setCurrentOrder(items)
+    setDraggedItem(null)
+    setHasCheckedOrder(false)
+    setIsDone(false)
+  }, [correctOrder, items, title])
+
   const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
 
   const handleCheckOrder = () => {
@@ -545,6 +552,11 @@ If you get this wrong, don't view it as failure. Wrong answers during learning a
     () => shuffleOptions(options, `${prompt}:${options.map((option) => `${option.id}:${option.label}`).join("|")}`),
     [options, prompt]
   )
+
+  useEffect(() => {
+    setSelectedOptionId(null)
+  }, [correctOptionId, options, prompt])
+
   const isAnswered = selectedOptionId !== null
   const isCorrect = selectedOptionId === correctOptionId
   const selectedOption = options.find((option) => option.id === selectedOptionId)
@@ -601,7 +613,12 @@ If you get this wrong, don't view it as failure. Wrong answers during learning a
                 isAnswered && isRightAnswer && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50 hover:text-green-900",
                 isAnswered && isSelected && !isRightAnswer && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50 hover:text-red-900"
               )}
+              disabled={isAnswered}
               onClick={() => {
+                if (isAnswered) {
+                  return
+                }
+
                 setSelectedOptionId(option.id)
                 onAnswered?.(isRightAnswer)
               }}
