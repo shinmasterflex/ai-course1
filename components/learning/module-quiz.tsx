@@ -106,10 +106,34 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: M
             </div>
 
             {isAnswered ? (
-              <p className={cn("mt-4 text-sm", isCorrect ? "text-green-700" : "text-red-700")}>
-                {isCorrect ? "Correct. " : "Not quite. "}
-                {question.explanation}
-              </p>
+              <div className="mt-4 space-y-2">
+                {isCorrect ? (
+                  <p className="text-sm text-green-700">
+                    <span className="font-semibold">Correct!</span> {question.explanation}
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-sm text-red-700 font-semibold">Not quite.</p>
+                    {(() => {
+                      const selectedOption = question.options.find((opt) => opt.id === selected)
+                      const selectedExplanation = selectedOption?.explanation
+                      const correctOption = question.options.find((opt) => opt.id === question.correctOptionId)
+                      
+                      return (
+                        <>
+                          {selectedExplanation && (
+                            <p className="text-sm text-red-600">{selectedExplanation}</p>
+                          )}
+                          <p className="text-sm text-green-700">
+                            <span className="font-semibold">The correct answer:</span> {correctOption?.label}
+                          </p>
+                          <p className="text-sm text-green-600">{question.explanation}</p>
+                        </>
+                      )
+                    })()}
+                  </div>
+                )}
+              </div>
             ) : null}
           </Card>
         )

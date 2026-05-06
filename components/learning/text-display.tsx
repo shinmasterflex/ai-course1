@@ -76,89 +76,166 @@ function pickInferentialStatement(sourceText: string) {
     {
       keywords: ["module 0", "history", "not new", "1950", "foundations"],
       statements: [
-        "Because AI predates modern chatbots, today's progress is mostly acceleration of long-running research, not invention from zero.",
-        "Seeing AI as a decades-long field helps explain why core ideas persist even when interfaces change quickly.",
-        "If AI seems sudden, the better explanation is infrastructure maturity, not a lack of earlier theoretical work.",
+        {
+          statement: "AI research has been developing since the 1950s, long before today's popular chatbots.",
+          explanation: "The course traces AI roots back decades. Current advances build on decades of theoretical and practical work.",
+          isTrue: true,
+        },
+        {
+          statement: "Recent AI tools like ChatGPT represent the first-ever attempt at creating intelligent machines.",
+          explanation: "This is historically inaccurate. AI research goes back to the 1950s Dartmouth conference and beyond.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 1", "ml", "machine learning", "training", "data"],
       statements: [
-        "In machine learning, better labels and data coverage often improve outcomes more reliably than swapping to a larger model.",
-        "If a model fails on edge cases, that usually signals a data distribution gap rather than a purely algorithmic bug.",
-        "Model quality is constrained by what the training data represents, not just by compute scale.",
+        {
+          statement: "Machine learning models learn patterns from training data rather than following only hand-written rules.",
+          explanation: "This is the core distinction: ML adapts from examples, while traditional software follows explicit rules.",
+          isTrue: true,
+        },
+        {
+          statement: "The quality of a machine learning model depends mostly on how powerful the computer running it is.",
+          explanation: "Model quality depends more on data quality and relevance than raw computing power.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 2", "llm", "language model", "token", "context window"],
       statements: [
-        "When context windows are limited, prioritizing relevant context is a stronger tactic than adding more generic instructions.",
-        "LLM reliability is often a retrieval and framing problem, not only a raw capability problem.",
-        "Token limits force trade-offs, so concise structure can outperform exhaustive but noisy prompts.",
+        {
+          statement: "LLMs predict the next token in a sequence based on previous tokens.",
+          explanation: "Token prediction is the fundamental mechanism by which language models generate text.",
+          isTrue: true,
+        },
+        {
+          statement: "Language models understand meaning the same way humans do.",
+          explanation: "Models recognize statistical patterns; they don't have human-like understanding or consciousness.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 3", "prompt", "constraints", "format", "role"],
       statements: [
-        "Prompt quality is mostly a specification problem: clearer constraints reduce variance more than extra stylistic language.",
-        "If outputs fluctuate, tightening task boundaries usually helps more than repeating the same request louder.",
-        "Strong prompting behaves like interface design: ambiguity in inputs becomes inconsistency in outputs.",
+        {
+          statement: "Clear prompts with specific constraints produce more consistent outputs than vague requests.",
+          explanation: "Specificity in prompts reduces ambiguity and helps the model generate more predictable, aligned responses.",
+          isTrue: true,
+        },
+        {
+          statement: "The length of your prompt has no effect on output quality.",
+          explanation: "Prompt structure matters, but so does clarity. Longer prompts with bad structure don't help.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 4", "tool", "tooling", "workflow", "no-code", "automation"],
       statements: [
-        "Tool choice should follow failure tolerance and handoff needs, not trend cycles.",
-        "A simpler workflow with explicit checkpoints often outperforms a complex one that hides state transitions.",
-        "No-code systems become robust when they make assumptions visible and testable at each step.",
+        {
+          statement: "The right tool choice depends on your specific task and failure tolerance, not just what's trendy.",
+          explanation: "Practical tool selection is based on your actual needs, not marketing hype or popularity.",
+          isTrue: true,
+        },
+        {
+          statement: "You should always choose the newest AI tool available for any task.",
+          explanation: "Novelty doesn't equal fitness for your use case. Reliable, proven tools often outperform flashy new ones.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 5", "variables", "conditionals", "loops", "functions", "debug"],
       statements: [
-        "Automation becomes dependable when each step has clear inputs and outputs, so debugging can isolate where expectation and reality diverge.",
-        "In beginner automation, naming and structure errors often cause more failures than syntax itself.",
-        "If logic branches are unclear, adding more code usually increases fragility instead of fixing behavior.",
+        {
+          statement: "Clear variable names and structure make debugging easier because you can trace what data flows where.",
+          explanation: "Good naming and organization let you isolate problems faster instead of guessing.",
+          isTrue: true,
+        },
+        {
+          statement: "More code always fixes broken automation logic.",
+          explanation: "Adding more code without understanding the problem usually makes things worse, not better.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 6", "ethics", "bias", "privacy", "risk", "safeguard"],
       statements: [
-        "When bias is systemic, improving average accuracy alone does not guarantee fair outcomes across groups.",
-        "If users cannot see what data is retained, consent quality drops even when legal terms are accepted.",
-        "In AI ethics, the key question is often who bears downside risk when the model is wrong at scale.",
+        {
+          statement: "AI systems can inherit biases from their training data, which can cause unfair outcomes across different groups.",
+          explanation: "Bias often starts in training data. High average accuracy doesn't guarantee fairness for all groups.",
+          isTrue: true,
+        },
+        {
+          statement: "Sensitive personal data is safe to paste into any public AI tool.",
+          explanation: "Public AI services store and may retain your data. Sensitive information should never be entered without approval.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 7", "productivity", "workflow", "assistant", "execution"],
       statements: [
-        "AI productivity gains compound when teams standardize reusable workflows, not when individuals rely on ad hoc prompts.",
-        "The fastest path to practical value is usually reducing repeatable friction, not maximizing novelty per task.",
-        "Consistent execution frameworks matter more than isolated clever outputs.",
+        {
+          statement: "Repeatable AI workflows produce more consistent results than asking the same question different ways each time.",
+          explanation: "Standardized prompts, templates, and processes reduce variability and improve reliability.",
+          isTrue: true,
+        },
+        {
+          statement: "AI productivity is maximized by using a different tool for every single task.",
+          explanation: "Tool fragmentation creates friction. Standardized workflows across tasks compound gains.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 8", "agent", "goal-driven", "loop", "guardrails", "stopping condition"],
       statements: [
-        "If a system can plan, use tools, and continue until a stopping condition, its edge is persistent execution rather than one-shot answers.",
-        "In loop-based agent workflows, feedback is the control signal that keeps actions aligned with goals.",
-        "Starting with a narrow, reversible agent often improves adoption because reliability can be validated before scaling.",
+        {
+          statement: "AI agents that can plan, use tools, and iterate are more powerful than systems that give one-shot answers.",
+          explanation: "Loop-based agents persist toward goals; one-shot systems are limited to single responses.",
+          isTrue: true,
+        },
+        {
+          statement: "Agents should be given unlimited power and no stopping conditions.",
+          explanation: "Agents need clear guardrails, stopping conditions, and feedback loops to stay aligned and safe.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 9", "explain", "tool choice", "framework", "responsible use"],
       statements: [
-        "Explaining AI clearly to non-experts is a practical test of understanding, not merely a communication add-on.",
-        "Responsible use improves when teams pair output usefulness checks with explicit risk checks.",
-        "Framework-based prompting tends to outperform intuition-only prompting in repeatable business contexts.",
+        {
+          statement: "Explaining AI decisions clearly to stakeholders helps validate whether the system is actually working as intended.",
+          explanation: "Clear explanation is both ethical and practical: it catches problems and builds trust.",
+          isTrue: true,
+        },
+        {
+          statement: "The best AI implementation requires no human review or oversight.",
+          explanation: "Responsible AI includes human checks. Output usefulness and risk assessment both need review.",
+          isTrue: false,
+        },
       ],
     },
     {
       keywords: ["module 10", "frontier", "agi", "governance", "career", "future"],
       statements: [
-        "Tracking frontier AI is most useful when converted into near-term capability bets rather than abstract speculation.",
-        "In uncertain AGI timelines, robust strategy favors optionality and review loops over single irreversible bets.",
-        "Career resilience in AI often comes from combining domain depth with applied fluency, not chasing every new model release.",
+        {
+          statement: "Being AI-fluent in your current profession gives you more career resilience than waiting for AGI predictions.",
+          explanation: "Applied AI skills in your domain are immediately valuable, while AGI timelines remain speculative.",
+          isTrue: true,
+        },
+        {
+          statement: "The best career strategy is to abandon your current expertise and become a full-time AI researcher.",
+          explanation: "Domain depth combined with AI fluency is stronger than chasing pure AI careers without context.",
+          isTrue: false,
+        },
       ],
     },
   ]
@@ -171,10 +248,17 @@ function pickInferentialStatement(sourceText: string) {
     }
   }
 
-  const fallbackStatements = [
-    "A strong practical implication is that method matters as much as tool choice: clearer structure usually produces more reliable outcomes than chasing novelty.",
-    "When outcomes feel inconsistent, making assumptions explicit usually improves quality faster than adding more complexity.",
-    "In applied AI, repeatable process design tends to create more value than isolated one-off wins.",
+  const fallbackStatements: Array<{ statement: string; explanation: string; isTrue: boolean }> = [
+    {
+      statement: "Clear structure and explicit assumptions produce more reliable AI workflows than complex, hidden logic.",
+      explanation: "Transparent, well-organized systems are easier to debug and maintain.",
+      isTrue: true,
+    },
+    {
+      statement: "The best way to improve an AI system is to add more features without testing each one.",
+      explanation: "Incremental testing and validation are essential. Adding untested features creates risk.",
+      isTrue: false,
+    },
   ]
 
   return fallbackStatements[hashString(sourceText) % fallbackStatements.length]
@@ -182,11 +266,12 @@ function pickInferentialStatement(sourceText: string) {
 
 function getTrueFalseStatement(title?: string, content?: string) {
   const source = content?.split("\n").find((line) => line.trim().length > 0)?.trim() || title || "AI systems require human judgment"
-  const statement = toSentence(pickInferentialStatement(`${title ?? ""} ${source}`))
+  const statementData = pickInferentialStatement(`${title ?? ""} ${source}`)
 
   return {
-    statement,
-    isTrue: true,
+    statement: toSentence(statementData.statement),
+    explanation: statementData.explanation,
+    isTrue: statementData.isTrue,
   }
 }
 
@@ -362,19 +447,29 @@ export function TextDisplay({
               </div>
             </div>
 
-            {isCorrectDrop ? (
-              <p className="flex items-center gap-1 text-sm font-medium text-green-700">
-                <CheckCircle2 className="h-4 w-4" />
-                Corrected. You matched the statement to the right True/False target.
-              </p>
-            ) : null}
-
-            {isCorrectDrop === false ? (
-              <p className="flex items-center gap-1 text-sm font-medium text-red-700">
-                <XCircle className="h-4 w-4" />
-                Wrong drop. Try moving it to the correct answer.
-              </p>
-            ) : null}
+            {dropTarget !== null && (
+              <div className="space-y-3 rounded-md bg-gray-50 dark:bg-gray-900 p-3">
+                {isCorrectDrop ? (
+                  <div>
+                    <p className="flex items-center gap-1 text-sm font-semibold text-green-700 mb-2">
+                      <CheckCircle2 className="h-4 w-4" />
+                      Correct!
+                    </p>
+                    <p className="text-sm text-green-700">This statement is <strong>{statementData.isTrue ? "TRUE" : "FALSE"}</strong>.</p>
+                    <p className="text-sm text-green-600 mt-1">{statementData.explanation}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="flex items-center gap-1 text-sm font-semibold text-red-700 mb-2">
+                      <XCircle className="h-4 w-4" />
+                      Not quite. Try again.
+                    </p>
+                    <p className="text-sm text-gray-700">This statement is actually <strong>{statementData.isTrue ? "TRUE" : "FALSE"}</strong>.</p>
+                    <p className="text-sm text-gray-600 mt-1">{statementData.explanation}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
