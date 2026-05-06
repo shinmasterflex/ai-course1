@@ -30,7 +30,7 @@ export default function Module6Page() {
   const MODULE_ID = "module-6"
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
-  const sections = module?.sections || []
+  const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
@@ -44,14 +44,14 @@ export default function Module6Page() {
       const idx = sections.findIndex((s) => s.id === sectionParam)
       if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
     }
-  }, [sectionParam])
+  }, [currentSectionIndex, sectionParam, sections])
 
   useEffect(() => {
     if (allQuizComplete && currentSectionIndex === totalSections - 1) {
       const last = sections[totalSections - 1]
       if (last) { markSectionComplete(MODULE_ID, last.id); setCurrentPosition(MODULE_ID, last.id) }
     }
-  }, [allQuizComplete])
+  }, [allQuizComplete, currentSectionIndex, markSectionComplete, sections, setCurrentPosition, totalSections])
 
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,

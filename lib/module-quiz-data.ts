@@ -101,6 +101,17 @@ export const moduleQuizData = {
         { id: "c", label: "Which tool is newest this week?" },
       ],
     },
+    {
+      key: "tools-quiz4",
+      prompt: "You need repeatable quality from an AI writing workflow. Which setup is strongest?",
+      explanation: "Reusable prompt templates, examples, and review criteria produce more consistent output than ad hoc prompting.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Use a different prompt style every time" },
+        { id: "b", label: "Use a tested prompt template with clear quality criteria" },
+        { id: "c", label: "Always choose the longest possible response" },
+      ],
+    },
   ],
   "module-2": [
     {
@@ -145,6 +156,28 @@ export const moduleQuizData = {
         { id: "a", label: "It always knows why its answer is correct" },
         { id: "b", label: "It can be powerful yet still fail without true understanding" },
         { id: "c", label: "It becomes unbiased automatically with more compute" },
+      ],
+    },
+    {
+      key: "quiz4",
+      prompt: "A model has 99% training accuracy but much lower validation accuracy. What is the strongest diagnosis?",
+      explanation: "This pattern usually signals overfitting, where the model memorizes training examples instead of generalizing.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Overfitting to training data" },
+        { id: "b", label: "Underfitting due to too little training" },
+        { id: "c", label: "A data leak in the validation set" },
+      ],
+    },
+    {
+      key: "quiz5",
+      prompt: "Which split strategy is best when evaluating a classifier with rare fraud cases?",
+      explanation: "Stratified splitting preserves class proportions across train and validation sets, which is important for imbalanced labels.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Use only a random split and ignore class balance" },
+        { id: "b", label: "Train on all data and evaluate on the same data" },
+        { id: "c", label: "Use a stratified train/validation split" },
       ],
     },
   ],
@@ -193,6 +226,28 @@ export const moduleQuizData = {
         { id: "c", label: "Avoid giving any context to keep the model unbiased" },
       ],
     },
+    {
+      key: "quiz4",
+      prompt: "You need a model to return JSON only. Which prompt design is most reliable?",
+      explanation: "Explicit output schema and constraints reduce ambiguity and improve format compliance.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Ask for a concise answer and hope it is valid JSON" },
+        { id: "b", label: "Provide a strict JSON schema and instruct: return valid JSON only" },
+        { id: "c", label: "Use a shorter prompt to reduce token usage" },
+      ],
+    },
+    {
+      key: "quiz5",
+      prompt: "A response sounds confident but includes fabricated citations. Which prompting tactic helps most?",
+      explanation: "Requiring verifiable sources and allowing abstention reduces hallucinated certainty.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Require source links and allow the model to say 'insufficient evidence'" },
+        { id: "b", label: "Increase response length so the model can explain more" },
+        { id: "c", label: "Remove all constraints to let the model reason freely" },
+      ],
+    },
   ],
   "module-4": [
     {
@@ -239,6 +294,28 @@ export const moduleQuizData = {
         { id: "c", label: "Increase model complexity to memorize all rows" },
       ],
     },
+    {
+      key: "quiz4",
+      prompt: "Which metric is more informative than accuracy for a highly imbalanced medical screening dataset?",
+      explanation: "With class imbalance, precision/recall tradeoffs and F1 are often more meaningful than raw accuracy.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Only training loss" },
+        { id: "b", label: "Only overall accuracy" },
+        { id: "c", label: "Precision, recall, and F1" },
+      ],
+    },
+    {
+      key: "quiz5",
+      prompt: "When should missing values be imputed using statistics from the training set only?",
+      explanation: "Imputation parameters should come from training data to avoid leaking validation/test information.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "After combining train and test data for consistency" },
+        { id: "b", label: "Before evaluation, fit imputers on training data and apply to other splits" },
+        { id: "c", label: "Only after model deployment" },
+      ],
+    },
   ],
   "module-5": [
     {
@@ -272,6 +349,39 @@ export const moduleQuizData = {
         { id: "a", label: "Read the error carefully and reproduce the failure path" },
         { id: "b", label: "Rewrite the script from scratch" },
         { id: "c", label: "Change random lines until output looks right" },
+      ],
+    },
+    {
+      key: "quiz4",
+      prompt: "A function updates a global variable and causes unpredictable behavior. What is the best refactor?",
+      explanation: "Returning values explicitly and passing data as parameters reduces side effects and improves testability.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Keep the global variable and add more print statements" },
+        { id: "b", label: "Wrap the function in a loop" },
+        { id: "c", label: "Pass inputs as arguments and return the updated value" },
+      ],
+    },
+    {
+      key: "quiz5",
+      prompt: "In an API pipeline, where should input validation happen?",
+      explanation: "Validate at boundaries before processing so downstream logic receives clean, expected data.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "At the boundary before core business logic" },
+        { id: "b", label: "Only in the database layer" },
+        { id: "c", label: "Only after model inference" },
+      ],
+    },
+    {
+      key: "quiz6",
+      prompt: "Which test gives the fastest signal that a utility function still works after refactoring?",
+      explanation: "A focused unit test checks one function's behavior quickly and isolates regressions.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "A manual end-to-end walkthrough only" },
+        { id: "b", label: "A small unit test with deterministic inputs and expected outputs" },
+        { id: "c", label: "A load test against production" },
       ],
     },
   ],
@@ -331,6 +441,18 @@ export const moduleQuizData = {
         { id: "b", label: "Forward it to others for their opinion" },
         { id: "c", label: "Contact the person through a different, trusted channel to verify" },
         { id: "d", label: "Assume advanced deepfakes are impossible" },
+      ],
+    },
+    {
+      key: "quiz6",
+      prompt: "A hiring model rejects one demographic at much higher rates. What is the most responsible response?",
+      explanation: "Pause high-impact use, run fairness analysis, and remediate before continuing deployment decisions.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Pause deployment decisions, audit fairness metrics, and retrain with mitigation" },
+        { id: "b", label: "Hide demographic fields and continue unchanged" },
+        { id: "c", label: "Accept the output because the model is statistically optimized" },
+        { id: "d", label: "Use human review only for random edge cases" },
       ],
     },
   ],
@@ -404,6 +526,18 @@ export const moduleQuizData = {
         { id: "d", label: "Only junior positions are affected" },
       ],
     },
+    {
+      key: "quiz7",
+      prompt: "Which KPI best shows that AI is improving team performance rather than just adding activity?",
+      explanation: "Outcome metrics like cycle time, quality, and error rate are stronger signals than raw prompt volume.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Number of AI chats started per employee" },
+        { id: "b", label: "Total tools subscribed this quarter" },
+        { id: "c", label: "Reduced cycle time and rework while quality holds or improves" },
+        { id: "d", label: "Average message length in prompts" },
+      ],
+    },
   ],
   "module-8": [
     {
@@ -461,6 +595,17 @@ export const moduleQuizData = {
         { id: "c", label: "Skip human review because agents are faster" },
       ],
     },
+    {
+      key: "quiz6",
+      prompt: "Which architecture best reduces risk for an agent that can spend money on purchases?",
+      explanation: "High-risk actions should require policy checks and explicit human approval before execution.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Give one agent end-to-end authority for speed" },
+        { id: "b", label: "Separate planning from execution and gate purchases with human approval" },
+        { id: "c", label: "Rely only on post-action logs" },
+      ],
+    },
   ],
   "module-10": [
     {
@@ -494,6 +639,39 @@ export const moduleQuizData = {
         { id: "a", label: "Build adaptable judgment and keep learning" },
         { id: "b", label: "Wait until the technology stops changing" },
         { id: "c", label: "Memorize a single tool and ignore the rest" },
+      ],
+    },
+    {
+      key: "quiz4",
+      prompt: "Why do alignment and governance remain critical as models become more capable?",
+      explanation: "Capability growth without constraints can increase real-world risk; governance sets boundaries for safe use.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Because bigger models always become unbiased automatically" },
+        { id: "b", label: "Because regulation removes all technical risk" },
+        { id: "c", label: "Because powerful systems need safeguards, oversight, and clear accountability" },
+      ],
+    },
+    {
+      key: "quiz5",
+      prompt: "In a fast-changing AI landscape, which team behavior is most resilient?",
+      explanation: "Teams that run small experiments, measure outcomes, and adapt quickly tend to outperform static plans.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Continuous learning with iterative experiments and reviews" },
+        { id: "b", label: "Freeze tooling for two years to avoid disruption" },
+        { id: "c", label: "Adopt every new model immediately without evaluation" },
+      ],
+    },
+    {
+      key: "quiz6",
+      prompt: "Which statement best reflects a balanced view of AGI timelines?",
+      explanation: "Timelines are uncertain, so practical preparation should focus on adaptability rather than rigid predictions.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "AGI will definitely arrive within exactly five years" },
+        { id: "b", label: "No one can predict precisely, so build adaptable skills and governance now" },
+        { id: "c", label: "AGI is impossible, so no preparation is needed" },
       ],
     },
   ],

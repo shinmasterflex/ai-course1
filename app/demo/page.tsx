@@ -6,7 +6,7 @@
 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
@@ -22,16 +22,19 @@ export default function DemoPage() {
   const [completedSections, setCompletedSections] = useState<Set<number>>(new Set())
 
   // Demo sections (same as module 0)
-  const sections = [
-    { id: "about-cognijin", title: "About Cognijin" },
-    { id: "the-problem", title: "The Problem" },
-    { id: "our-solution", title: "Our Solution" },
-    { id: "the-product", title: "The Product" },
-    { id: "strategic-model", title: "Strategic Model" },
-    { id: "big-five-factors", title: "Big Five Factors" },
-    { id: "action-plan", title: "Action Plan" },
-    { id: "summary", title: "Summary" },
-  ]
+  const sections = useMemo(
+    () => [
+      { id: "about-cognijin", title: "About Cognijin" },
+      { id: "the-problem", title: "The Problem" },
+      { id: "our-solution", title: "Our Solution" },
+      { id: "the-product", title: "The Product" },
+      { id: "strategic-model", title: "Strategic Model" },
+      { id: "big-five-factors", title: "Big Five Factors" },
+      { id: "action-plan", title: "Action Plan" },
+      { id: "summary", title: "Summary" },
+    ],
+    []
+  )
   const totalSections = sections.length
 
   useEffect(() => {

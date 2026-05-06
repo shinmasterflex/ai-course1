@@ -32,7 +32,7 @@ export default function Module10Page() {
   const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
-  const sections = module?.sections || []
+  const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 

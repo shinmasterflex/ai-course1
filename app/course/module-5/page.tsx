@@ -30,7 +30,7 @@ export default function Module5Page() {
   const MODULE_ID = "module-5"
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
-  const sections = module?.sections || []
+  const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 

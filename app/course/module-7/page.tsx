@@ -32,7 +32,7 @@ export default function Module7Page() {
   const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
-  const sections = module?.sections || []
+  const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
@@ -43,7 +43,7 @@ export default function Module7Page() {
       const idx = sections.findIndex((s) => s.id === sectionParam)
       if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
     }
-  }, [sectionParam])
+  }, [currentSectionIndex, sectionParam, sections])
 
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
