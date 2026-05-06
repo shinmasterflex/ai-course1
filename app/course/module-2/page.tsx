@@ -149,7 +149,7 @@ export default function Module2Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="In this module you will understand how AI systems actually learn - using intuitive analogies instead of math. By the end, the phrase 'machine learning' will make complete sense to you." />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m2-module-overview" className="p-5 space-y-2">
                 {[
                   "How machine learning is like studying from worked examples",
                   "How pattern recognition works (like sorting photos into folders)",
@@ -170,7 +170,7 @@ export default function Module2Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is Machine Learning?</h2>
               <TextDisplay content="Machine learning is a type of AI where the system learns from data instead of following hand-written rules." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m2-what-is-ml" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3">The Old Way vs. Machine Learning</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div className="rounded-lg border border-brand-orange/20 bg-background p-4">
@@ -191,11 +191,11 @@ export default function Module2Page() {
                   </div>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m2-what-is-ml" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">A simple analogy</h3>
                 <p className="text-sm text-muted-foreground">Traditional software is like giving someone a strict recipe. Machine learning is like showing them 10,000 examples until they begin to recognize the pattern for themselves.</p>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m2-what-is-ml" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Three signs a task is a strong ML candidate</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">High variability:</span> the same intent appears in many forms (emails, accents, writing styles, photos).</p>
@@ -250,7 +250,7 @@ export default function Module2Page() {
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <div className="space-y-4">
-                <Card className="p-5">
+                <Card componentId="m2-training-data" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">What training data looks like for different AI tasks:</h3>
                   <div className="space-y-2">
                     {[
@@ -269,7 +269,7 @@ export default function Module2Page() {
                 </Card>
                 <TextDisplay variant="warning" content="Important: If training data is biased, incomplete, or wrong - the AI will be too. Garbage in, garbage out. This is why data quality is a major ethical concern in AI." />
               </div>
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+              <Card componentId="m2-training-data" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Spot the Bad Training Data</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Bad example 1:</span> a hiring model trained mostly on past successful hires from one narrow demographic.</p>
@@ -277,7 +277,7 @@ export default function Module2Page() {
                   <p><span className="font-medium text-foreground">Bad example 3:</span> a customer support model trained on tickets that were mislabeled or inconsistently categorized.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m2-training-data" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Data quality checklist for beginners</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -303,7 +303,7 @@ export default function Module2Page() {
                 ]}
                 correctOptionId="b"
                                 optionExplanations={{
-          a: "Weak data makes models less accurate and more biased — not more creative. Creativity in AI comes from diversity of training data, not from flaws in it.",
+          a: "Weak data makes models less accurate and more biased ??not more creative. Creativity in AI comes from diversity of training data, not from flaws in it.",
           b: "Models learn from the examples they receive. If those examples are skewed, missing context, or mislabeled, the model will reproduce those flaws.",
           c: "Models do not automatically detect and fix bad labels. Cleaning data is a deliberate human and engineering process.",
           d: "Data problems go far beyond the user interface. They affect every prediction the model makes at its core.",
@@ -320,7 +320,7 @@ export default function Module2Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Supervised vs. Unsupervised Learning</h2>
               <TextDisplay content="Think of supervised and unsupervised learning as two classroom styles: one with answer keys, one without answer keys." />
               <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <Card componentId="m2-supervised-unsupervised" className="p-5 border-brand-green/20 bg-brand-green/5">
                   <h3 className="font-semibold mb-3 text-brand-green">Supervised learning</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><span className="font-medium text-foreground">Mental model:</span> like a student practicing with flashcards that already have correct answers.</p>
@@ -328,7 +328,7 @@ export default function Module2Page() {
                     <p><span className="font-medium text-foreground">Relatable examples:</span> email spam filters, handwriting recognition, predicting house prices from past sales.</p>
                   </div>
                 </Card>
-                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <Card componentId="m2-supervised-unsupervised" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                   <h3 className="font-semibold mb-3 text-brand-orange">Unsupervised learning</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><span className="font-medium text-foreground">Mental model:</span> like sorting a box of photos into piles without knowing names first.</p>
@@ -337,12 +337,12 @@ export default function Module2Page() {
                   </div>
                 </Card>
               </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m2-supervised-unsupervised" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Quick rule of thumb</h3>
                 <p className="text-sm text-muted-foreground"><span className="font-medium text-foreground">Supervised:</span> you already know correct answers for many examples. <span className="font-medium text-foreground">Unsupervised:</span> you only have raw data and want the model to discover hidden groups.</p>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m2-classification-exercise" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Interactive Activity: Be the Model Trainer</h3>
                 <p className="text-sm text-muted-foreground mb-4">Classify each message as <span className="font-medium text-foreground">Spam</span> or <span className="font-medium text-foreground">Not Spam</span>. This is exactly what supervised training looks like: examples + labels.</p>
                 <div className="space-y-3">
@@ -392,7 +392,7 @@ export default function Module2Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m2-supervised-unsupervised" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">From labels to learning: the core loop</h3>
                 <p className="text-sm text-muted-foreground mb-3">After we label examples, model learning follows the same repeatable cycle:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -447,7 +447,7 @@ export default function Module2Page() {
               <TextDisplay content="A neural network is a stack of decision layers. Each layer asks a slightly more refined question than the one before it." />
               <TextDisplay variant="callout" content="Think of it like a panel of assistants: the first assistant notices simple clues, the next combines clues, and the final assistant makes the decision." />
 
-              <Card className="p-5">
+              <Card componentId="m2-neural-networks" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Photo-sorting metaphor</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Layer 1:</span> notices basic shapes and colors.</p>
@@ -457,7 +457,7 @@ export default function Module2Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m2-neural-networks" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">How learning happens (without heavy math)</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">1. Predict:</span> the network makes its best guess.</p>
@@ -467,7 +467,7 @@ export default function Module2Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m2-neural-networks" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">What to remember</h3>
                 <p className="text-sm text-muted-foreground">Neural networks are not magic and they are not conscious. They are pattern-learning systems built from many small decisions layered together.</p>
               </Card>
@@ -482,7 +482,7 @@ export default function Module2Page() {
                 ]}
                 correctOptionId="b"
                                 optionExplanations={{
-          a: "Memorising examples exactly causes overfitting — the model fails on new data it has not seen before.",
+          a: "Memorising examples exactly causes overfitting ??the model fails on new data it has not seen before.",
           b: "Training repeatedly adjusts the network's internal weights (parameters) using backpropagation so its predictions become more accurate over many examples.",
           c: "Neural networks do not browse the web. They apply learned patterns from training data, which has a knowledge cutoff date.",
           d: "Training uses labeled data examples, not human intuition. Human judgment is used to evaluate and guide the process, not replace the data.",
@@ -503,22 +503,22 @@ export default function Module2Page() {
               <TextDisplay variant="callout" content="Use this as your safety lens: when outputs look impressive, ask where they might break." />
 
               <div className="space-y-4">
-                <Card className="p-5">
+                <Card componentId="m2-what-ai-cant-do" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">1. Overfitting: memorizing instead of generalizing</h3>
                   <p className="text-sm text-muted-foreground">Overfitting is like a student who memorizes practice questions but freezes on the real test. The model performs well on familiar training examples but struggles on new data.</p>
                 </Card>
 
-                <Card className="p-5">
+                <Card componentId="m2-what-ai-cant-do" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-green">2. Bias: learning skewed patterns</h3>
                   <p className="text-sm text-muted-foreground">Bias happens when training data over-represents some groups and under-represents others. The model can then make unfair or inaccurate decisions because its "experience" was unbalanced.</p>
                 </Card>
 
-                <Card className="p-5">
+                <Card componentId="m2-what-ai-cant-do" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">3. Hallucination: confident but wrong</h3>
                   <p className="text-sm text-muted-foreground">Hallucination means the model generates an answer that sounds fluent and certain but is factually wrong. It is pattern completion, not guaranteed truth checking.</p>
                 </Card>
 
-                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <Card componentId="m2-what-ai-cant-do" className="p-5 border-brand-green/20 bg-brand-green/5">
                   <h3 className="font-semibold mb-3 text-brand-green">Simple prevention habits</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><span className="font-medium text-foreground">For overfitting:</span> test on unseen examples, not just training data.</p>
@@ -547,7 +547,7 @@ export default function Module2Page() {
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m2-what-ai-cant-do" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Red-flag checklist: when to slow down immediately</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm text-muted-foreground">
                   {[
@@ -589,7 +589,7 @@ export default function Module2Page() {
                 ]}
               />
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m2-what-ai-cant-do" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Best beginner mindset</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -604,7 +604,7 @@ export default function Module2Page() {
                 </ul>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m2-what-ai-cant-do" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Response audit workflow (60 seconds)</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">1. Mark claims:</span> highlight names, numbers, dates, and citations.</p>
@@ -647,7 +647,7 @@ export default function Module2Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="This quiz checks your understanding of how machines learn, not your ability to memorize technical terms." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m2-quiz" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Fast refresh before submitting</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -668,7 +668,7 @@ export default function Module2Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now understand the fundamentals of how AI learns. Next up: we go hands-on with Large Language Models and learn how to communicate with AI effectively." />
-                  <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <Card componentId="m2-quiz" className="p-5 border-brand-green/20 bg-brand-green/5"></Card>
                     <h3 className="font-semibold mb-2 text-brand-green">You are ready for Module 3 if you can:</h3>
                     <div className="grid md:grid-cols-2 gap-3 text-sm">
                       {[

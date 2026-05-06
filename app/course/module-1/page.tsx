@@ -280,7 +280,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="By the end of this module you will be able to define AI in plain language, explain its history, distinguish between types of AI, complete your first useful AI task, and confidently correct common myths." />
-              <Card className="p-5">
+              <Card componentId="m1-module-overview" className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2"><Clock className="h-4 w-4" /> What is in this module</h3>
                 <ul className="space-y-2 text-sm">
                   {["Defining AI - what it actually means","A brief history - from 1950 to today","Types of AI - narrow, general, super","Your first useful AI win - a beginner-safe exercise","Myths vs. Reality - what AI can and cannot do","Module Quiz"].map((item) => (
@@ -317,7 +317,7 @@ export default function Module1Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Defining AI</h2>
               <TextDisplay content="Artificial Intelligence (AI) is software that performs specific tasks that used to require human intelligence, such as understanding language, spotting patterns, making predictions, or helping with decisions." />
               <TextDisplay variant="callout" content="Useful analogy: think of a human expert as a seasoned chef who understands ingredients, taste, context, and tradeoffs. Think of modern AI as an extremely fast prep assistant trained on millions of recipes. It can slice, sort, and suggest at scale, but it does not truly taste, care, or understand consequences the way the chef does." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m1-three-key-words" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3">Three Key Words in the Definition</h3>
                 <div className="space-y-3">
                   {[
@@ -333,7 +333,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m1-two-truths" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Two truths to hold at the same time</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -371,7 +371,7 @@ export default function Module1Page() {
                 </div>
               </div>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-defining-ai-five-buckets" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Three core AI categories you will see everywhere</h3>
                 <div className="space-y-3 text-sm">
                   {[
@@ -408,7 +408,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m1-ai-vs-traditional" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">AI vs. Traditional Software vs. Human Intelligence</h3>
                 <p className="text-sm text-muted-foreground mb-3">One of the most useful mental models is understanding how these three differ in practice:</p>
                 <div className="overflow-x-auto">
@@ -442,7 +442,7 @@ export default function Module1Page() {
                 <p className="text-xs text-muted-foreground mt-3">Key takeaway: AI fills the gap between rigid traditional software and flexible human thinking - but it is not the same as human thinking.</p>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m1-real-world-cases" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Mini case studies from the real world</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   {[
@@ -479,7 +479,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-defining-ai" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why "Pattern Recognition" Is the Core Idea</h3>
                 <p className="text-sm text-muted-foreground mb-3">Everything AI does comes down to finding patterns in data and applying them to new inputs. Here is what that looks like in three real examples:</p>
                 <div className="space-y-3 text-sm">
@@ -498,7 +498,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m1-defining-ai" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">A practical test: is this actually an AI problem?</h3>
                 <p className="text-sm text-muted-foreground mb-3">Use this quick filter whenever someone claims a product is "AI-powered":</p>
                 <div className="space-y-2 text-sm">
@@ -724,7 +724,7 @@ export default function Module1Page() {
                 </div>
               </div>
 
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m1-ai-history" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">The key figures — AI&apos;s &ldquo;Founding Fathers&rdquo;</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -744,7 +744,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m1-ai-history-timeline" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">The pattern to remember</h3>
                 <p className="text-sm text-muted-foreground mb-2">AI progress did not follow a straight line. It has been driven by three compounding forces:</p>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
@@ -761,7 +761,7 @@ export default function Module1Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m1-ai-history" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why history matters for everyday users</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -807,22 +807,22 @@ export default function Module1Page() {
               <TextDisplay content="Not all AI is the same. Researchers distinguish between three levels - and only one of them actually exists today." />
               <TextDisplay variant="callout" content="Analogy: Narrow AI is like a world-class specialist with one narrow job description. AGI would be like a flexible generalist teammate who can learn and transfer skills across completely different tasks. Today we have specialists, not true generalists." />
               <div className="space-y-4">
-                <Card className="p-5 border-2 border-brand-green/40 bg-brand-green/5">
+                <Card componentId="m1-ai-narrow-general-super" className="p-5 border-2 border-brand-green/40 bg-brand-green/5">
                   <h3 className="font-bold text-lg text-brand-green mb-2">Narrow AI (Weak AI) - This is real, and it exists today</h3>
                   <p className="text-muted-foreground">Narrow AI is designed to do one specific task very well. It cannot go beyond what it was trained for. Examples: spam filters, face recognition, ChatGPT, Netflix recommendations, Google Translate.</p>
                   <p className="mt-2 font-medium">Every AI you have ever used is Narrow AI.</p>
                 </Card>
-                <Card className="p-5 border-2 border-brand-orange/40 bg-brand-orange/5">
+                <Card componentId="m1-ai-narrow-general-super" className="p-5 border-2 border-brand-orange/40 bg-brand-orange/5">
                   <h3 className="font-bold text-lg text-brand-orange mb-2">General AI (AGI) - Theoretical, does not exist yet</h3>
                   <p className="text-muted-foreground">AGI would be an AI that can do any intellectual task a human can do - reasoning across domains, learning new skills from scratch, understanding context the way people do. Scientists disagree on when (or if) this will happen.</p>
                   <p className="mt-2 text-sm text-muted-foreground">Notable: Sam Altman (OpenAI CEO) has said AGI could arrive within a few years. Other leading researchers say decades away - or never.</p>
                 </Card>
-                <Card className="p-5 border-2 border-gray-300 bg-gray-50">
+                <Card componentId="m1-ai-narrow-general-super" className="p-5 border-2 border-gray-300 bg-gray-50">
                   <h3 className="font-bold text-lg text-gray-600 mb-2">Superintelligence - Science fiction for now</h3>
                   <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away - if it is possible at all.</p>
                 </Card>
               </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m1-ai-narrow-general-super" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Concrete examples: narrow vs speculative</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -845,7 +845,7 @@ export default function Module1Page() {
                   </div>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-types-of-ai" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Four AI agent types emerging right now</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <div className="rounded-lg border bg-background p-3">
@@ -867,7 +867,7 @@ export default function Module1Page() {
                 </div>
               </Card>
               <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence - things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
-              <Card className="p-5 bg-brand-orange/5 border-brand-orange/20">
+              <Card componentId="m1-types-of-ai" className="p-5 bg-brand-orange/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-3 text-brand-orange">Reality check: how to classify any AI headline</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Step 1:</span> Identify the system type (chatbot, recommender, vision model, autonomous system).</p>
@@ -904,7 +904,7 @@ export default function Module1Page() {
               <h2 className="text-3xl font-bold text-brand-green">Your First Useful Win</h2>
               <TextDisplay content="You have learned what AI is. Now use it for something genuinely helpful. Your first win should be small, low-risk, and easy to review - not a life decision or a complex automation." />
               <TextDisplay variant="callout" content="The beginner rule: start with summarising, drafting, or organising. Avoid sensitive data. Verify anything important before you use it." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m1-first-win" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A 10-minute exercise you can do right now</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Task:</span> paste a long email, meeting note, or article into your AI tool and ask for a short summary plus action items.</p>
@@ -915,7 +915,7 @@ export default function Module1Page() {
                   </p>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-prompting-challenge" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Prompt upgrade ladder (same task, better output)</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Level 1 - basic:</span> "Summarise this text."</p>
@@ -945,7 +945,7 @@ export default function Module1Page() {
                   </Card>
                 ))}
               </div>
-              <Card className="p-5">
+              <Card componentId="m1-first-win" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Starter workflows you can repeat this week</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -961,7 +961,7 @@ export default function Module1Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m1-first-win" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">What makes this a real win?</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -974,7 +974,7 @@ export default function Module1Page() {
                   ))}
                 </ul>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m1-first-win" className="p-5">
                 <h3 className="font-semibold mb-3">Three things not to do yet</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Do not</span> use AI for medical, legal, or financial decisions without expert verification.</p>
@@ -982,7 +982,7 @@ export default function Module1Page() {
                   <p><span className="font-medium text-foreground">Do not</span> trust the first answer automatically. Read it, edit it, and verify key facts.</p>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m1-first-win" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">A simple quality scorecard (use after every AI output)</h3>
                 <div className="grid md:grid-cols-4 gap-3 text-xs">
                   {[
@@ -1127,7 +1127,7 @@ export default function Module1Page() {
                 explanation="This is the realistic middle path: keep productivity gains while adding safeguards where errors matter most."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m1-myths-reality" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Practical takeaway</h3>
                 <p className="text-sm text-muted-foreground mb-3">The healthiest beginner mindset is neither hype nor fear. Treat AI as a useful but limited assistant.</p>
                 <ul className="space-y-2 text-sm">
@@ -1159,7 +1159,7 @@ export default function Module1Page() {
                 explanation="This course frames AI as powerful but limited: useful for support and acceleration, but still requiring human oversight and verification."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-myths-reality" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Mini case studies: myth to reality in practice</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -1204,7 +1204,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI Writing Assistants</h2>
               <TextDisplay content="AI writing tools can draft emails, reports, essays, code, social posts, and more. Here are the main players and when to use each." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-writing-assistants-card" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Which writing job are you trying to do?</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -1339,7 +1339,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
               <TextDisplay content="AI productivity tools are embedded into the apps you already use - transforming how you write, organise, and get things done." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m1-productivity-card" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A beginner-friendly capability map</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -1459,7 +1459,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Choosing the Right Tool</h2>
               <TextDisplay content="With hundreds of AI tools available, how do you decide which to use? Use this simple framework:" />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m1-choosing-tools" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">The decision order that keeps beginners out of trouble</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">1. Define the job:</span> summarise, draft, research, create, organise, or automate.</p>
@@ -1468,7 +1468,7 @@ export default function Module1Page() {
                   <p><span className="font-medium text-foreground">4. Verify the output:</span> especially facts, numbers, citations, or anything going to a client or boss.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m1-choosing-tools" className="p-5">
                 <h3 className="font-semibold mb-3">5 Questions Before Choosing an AI Tool</h3>
                 <ol className="space-y-2 text-sm list-decimal list-inside">
                   {[
@@ -1524,7 +1524,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="Let us check your understanding. Answer all three questions correctly to complete the module." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m1-quiz" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Before you start, sanity-check these ideas</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Definition:</span> AI is software that performs tasks that normally require human intelligence.</p>
@@ -1537,7 +1537,7 @@ export default function Module1Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work! You have completed Module 1. You now have a solid foundation for understanding what AI is." />
-                  <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <Card componentId="m1-quiz" className="p-5 border-brand-green/20 bg-brand-green/5">
                     <h3 className="font-semibold mb-3 text-brand-green">Confidence check before Module 2</h3>
                     <div className="grid md:grid-cols-2 gap-3 text-sm">
                       {[

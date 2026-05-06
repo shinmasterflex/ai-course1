@@ -244,6 +244,14 @@ This module focuses on learning itself. How does a system improve from experienc
 The module is structured around problem-solving: we pose a learning challenge, then show you how machines approach it. This problem-first structure means you understand the *why* behind each technique, not just the what. That makes the knowledge much more memorable and transferable.`,
   },
 
+  "m2-module-overview": {
+    id: "m2-module-overview",
+    title: "Module 2 Overview Checklist",
+    explanation: `This card previews the module structure and sets expectations for learning machine learning basics. You'll understand what training data is, how supervised and unsupervised learning differ, and what limitations AI systems have.
+
+Overview checklists improve learning by activating prior knowledge and creating anticipation. Your brain is now ready to filter for these specific topics as you move through the module.`,
+  },
+
   "m2-what-is-ml": {
     id: "m2-what-is-ml",
     title: "What Is Machine Learning?",
@@ -315,6 +323,14 @@ That diagnostic ability is essential for real AI work. Teams rarely fail because
   },
 
   // MODULE 3: Large Language Models & Prompting
+  "m3-module-overview": {
+    id: "m3-module-overview",
+    title: "Module 3: Overview",
+    explanation: `This module covers the practical mechanics of large language models and how to communicate with them effectively. You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality outputs.
+
+By the end you should understand why prompts succeed or fail at a mechanistic level — not just pattern-match on prompt templates.`,
+  },
+
   "m3-hero": {
     id: "m3-hero",
     title: "Module 3: Large Language Models & Prompting",
@@ -750,6 +766,333 @@ By the end of the module, you should be able to think clearly about future AI wi
 Strong performance requires connecting present capability, policy friction, and personal strategy. You should be able to distinguish what is already actionable from what is still speculative, and choose responses that remain useful even if predictions change.
 
 This matters because the future of AI will reward people who can make decisions under uncertainty. The point is not to guess perfectly, but to plan intelligently with incomplete information.`,
+  },
+
+  // MODULE 4 (actual): Data and Preprocessing
+  "m4-module-overview": {
+    id: "m4-module-overview",
+    title: "Module 4: Data and Preprocessing Overview",
+    explanation: `This module covers what happens before model training: how data is collected, cleaned, transformed, and engineered into features a model can learn from. Every AI model is only as good as its training data, so data quality is a prerequisite for model quality.
+
+By the end you should understand the full data pipeline from raw collection through to model-ready features, and be able to identify where data quality issues enter and how to fix them.`,
+  },
+
+  "m4-what-is-data": {
+    id: "m4-what-is-data",
+    title: "What Is Data? Structured, Unstructured, and Types",
+    explanation: `Data in AI is any recorded observation a model can learn from. It comes in two main categories: structured (organised into rows and columns with a fixed schema, like spreadsheets) and unstructured (no fixed format, like emails, photos, or audio).
+
+Understanding data types — numerical, categorical, text, image, audio, time series — matters because each type requires different preprocessing before a model can use it. Most real-world data is unstructured, which is why data preparation is so significant.`,
+  },
+
+  "m4-data-collection": {
+    id: "m4-data-collection",
+    title: "Data Collection: Sources, Methods, and the Labelling Bottleneck",
+    explanation: `Data comes from internal systems, web scraping, APIs, human labelling, surveys, and sensors. Where data comes from and how it is collected directly determines what a model can and cannot learn — including what biases it absorbs.
+
+The labelling bottleneck is a critical constraint: supervised learning requires labelled data, but labelling is expensive. Approaches like active learning and semi-supervised learning reduce annotation cost without sacrificing quality.`,
+  },
+
+  "m4-data-cleaning": {
+    id: "m4-data-cleaning",
+    title: "Data Cleaning: Missing Values, Duplicates, Bias, and Consistency",
+    explanation: `Dirty data produces unreliable models. Data cleaning addresses missing values (impute or drop), duplicate records, inconsistent formats (date strings, capitalisation), and systematic bias introduced by collection gaps.
+
+The key insight is that cleaning decisions are modelling decisions. How you handle missing values or outliers changes what the model learns. Cleaning is not neutral — it embeds assumptions about the domain.`,
+  },
+
+  "m4-preprocessing": {
+    id: "m4-preprocessing",
+    title: "Preprocessing: Normalisation, Encoding, and Splits",
+    explanation: `Preprocessing transforms raw, cleaned data into a format models can process: normalising numerical ranges so no feature dominates by scale, encoding categorical variables (one-hot or ordinal), and splitting data into training, validation, and test sets.
+
+These transformations are not optional. Most models assume input features on comparable scales. Encoding converts categories into numbers without implying false ordering. The train/test split prevents the model from memorising answers it will see at evaluation time.`,
+  },
+
+  "m4-feature-engineering": {
+    id: "m4-feature-engineering",
+    title: "Feature Engineering: Building Better Predictors",
+    explanation: `Feature engineering creates new, more informative columns from raw data. For example, deriving recency_days from a last_purchase_date, or avg_spend_per_order from total_spend and order_count. Good features encode domain knowledge that raw columns cannot capture.
+
+This is where subject-matter expertise translates into model performance. A model trained on well-engineered features often outperforms a more complex model trained on raw fields. Feature engineering is where humans teach the model what signals matter.`,
+  },
+
+  // MODULE 5 (actual): Coding Crash Course for AI
+  "m5-module-overview": {
+    id: "m5-module-overview",
+    title: "Module 5: Coding Crash Course Overview",
+    explanation: `This module introduces the programming concepts that appear most often in AI work: variables and data types, conditionals, loops, functions, and debugging. You do not need to become a software engineer, but understanding these building blocks lets you read, adapt, and reason about AI code.
+
+By the end you should be able to follow a Python script, understand what it does, and modify simple variables or conditions to change behaviour.`,
+  },
+
+  "m5-variables": {
+    id: "m5-variables",
+    title: "Variables and Data Types: The Building Blocks",
+    explanation: `A variable stores a value that a program can use and change. Data types (string, integer, float, boolean, list, dictionary) tell the program what operations are valid. Assigning the wrong type causes errors; understanding types helps you read error messages.
+
+In AI contexts, variables hold everything from model hyperparameters to training data paths. Understanding how values are stored and typed is the first step to reading and modifying AI scripts.`,
+  },
+
+  "m5-conditionals": {
+    id: "m5-conditionals",
+    title: "Conditionals: if/else Decision Logic",
+    explanation: `Conditionals (if/else, elif) let a program take different paths based on conditions. They are how AI pipelines handle edge cases, route different inputs, and implement thresholds — for example, flagging a prediction as low-confidence if the score is below 0.6.
+
+Reading conditional logic tells you what assumptions a system makes about its inputs and what exceptional cases it handles (or ignores).`,
+  },
+
+  "m5-loops": {
+    id: "m5-loops",
+    title: "Loops: Repeating Operations Over Data",
+    explanation: `Loops (for, while) apply operations repeatedly — iterating over dataset rows, batching training examples, or running an evaluation across a test set. Most AI data processing is loop-based.
+
+Understanding loops explains how large datasets are processed: not all at once, but one item or batch at a time. This is why training takes time proportional to data size and why batching matters for memory efficiency.`,
+  },
+
+  "m5-functions": {
+    id: "m5-functions",
+    title: "Functions: Reusable, Modular Code",
+    explanation: `Functions package a block of code under a name so it can be reused without repetition. In AI codebases, functions encapsulate preprocessing steps, model calls, evaluation metrics, and utility operations.
+
+Understanding functions lets you see how a pipeline is composed from smaller reusable parts. When something breaks, functions tell you where to look: the problem is in whichever function the error traces back to.`,
+  },
+
+  "m5-debugging": {
+    id: "m5-debugging",
+    title: "Debugging Mindset and Mini Project",
+    explanation: `Debugging is the process of finding and fixing errors in code. The debugging mindset — read the error message, locate the failing line, check assumptions, isolate the variable — is more valuable than memorising syntax.
+
+In AI work, bugs are often silent: code runs without crashing but produces wrong results because a data transformation was applied incorrectly. The debugging habit of checking intermediate outputs catches these issues before they corrupt a model's training.`,
+  },
+
+  // MODULE 6 additions (m6-module-overview and m6-future-ai)
+  "m6-module-overview": {
+    id: "m6-module-overview",
+    title: "Module 6: AI Ethics, Safety and Society Overview",
+    explanation: `This module covers the human consequences of AI: where systems are unfair, how personal data gets misused, how misinformation spreads at scale, and what responsible deployment looks like. Ethics is not an afterthought — it is a design constraint.
+
+By the end you should be able to identify ethical risks in AI deployments, apply a basic risk-assessment framework, and articulate what responsible AI use looks like in practice.`,
+  },
+
+  "m6-future-ai": {
+    id: "m6-future-ai",
+    title: "The Future of AI: Societal Trajectory",
+    explanation: `AI development is accelerating across capability, access, and regulation simultaneously. Understanding likely near-term trajectories — more powerful models, broader tool access, tightening governance — helps you make better decisions about where to invest learning and when to apply caution.
+
+The future is not predetermined. The choices societies, organisations, and individuals make now about how to build, deploy, and regulate AI will shape outcomes over the next decade.`,
+  },
+
+  // MODULE 7 additions
+  "m7-module-overview": {
+    id: "m7-module-overview",
+    title: "Module 7: AI for Business and Work Overview",
+    explanation: `This module connects AI capability to practical business and career contexts: how AI is already changing workplaces, which jobs and industries are affected first, how to build an AI strategy, and how to redesign workflows with AI assistance.
+
+By the end you should be able to evaluate AI adoption opportunities in a business context, identify where automation adds value versus where human judgment is essential, and plan your own professional adaptation.`,
+  },
+
+  "m7-opportunities": {
+    id: "m7-opportunities",
+    title: "AI Opportunities Framework: Where AI Creates Value",
+    explanation: `Not all tasks benefit equally from AI. An opportunities framework helps you identify where AI creates the most value: high-volume repetitive tasks, pattern recognition at scale, drafting first versions, and summarising large information sets.
+
+The framework also identifies where AI adds little value or introduces risk: high-stakes irreversible decisions, tasks requiring deep contextual judgment, and work where errors have significant consequences. Knowing both sides prevents both under-adoption and over-reliance.`,
+  },
+
+  "m7-role-transformation": {
+    id: "m7-role-transformation",
+    title: "Role Transformation: How AI Changes Job Functions",
+    explanation: `AI does not simply replace jobs — it transforms them. The mix of tasks within a role shifts: routine information processing declines while judgment, communication, and oversight of AI outputs increase in proportion.
+
+Understanding role transformation helps you identify which parts of your current work are most automatable and which require development. The goal is not to avoid AI but to position yourself to do the higher-value work that AI reveals by automating the lower-value work.`,
+  },
+
+  "m7-workflow-redesign": {
+    id: "m7-workflow-redesign",
+    title: "Workflow Redesign: Building AI-Assisted Processes",
+    explanation: `Redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and building feedback loops that catch errors before they compound.
+
+Effective workflow redesign is not just inserting AI into existing steps — it often means rethinking the sequence entirely. The best AI-assisted workflows are designed around AI's strengths (speed, scale, recall) while preserving human oversight at decision points.`,
+  },
+
+  "m7-building-skills": {
+    id: "m7-building-skills",
+    title: "Building AI Skills: Continuous Learning for a Changing Field",
+    explanation: `AI capabilities are evolving faster than traditional skill development cycles. Building AI skills requires a different learning approach: shorter cycles, hands-on experimentation, and continuous updating rather than one-time credential acquisition.
+
+The skills that age most slowly are not tool-specific but capability-general: prompt engineering principles, evaluation habits, workflow design, and the ability to identify where AI is and is not appropriate. These persist across model generations.`,
+  },
+
+  // MODULE 8 (actual): AI Agents
+  "m8-module-overview": {
+    id: "m8-module-overview",
+    title: "Module 8: AI Agents Overview",
+    explanation: `This module covers AI agents — systems that perceive their environment, reason, and take actions to achieve goals. Agents go beyond single-turn responses to multi-step autonomous workflows: browsing the web, writing and running code, calling APIs, and coordinating with other agents.
+
+By the end you should understand how agents work architecturally, what makes them powerful, and why they introduce new risks that single-turn models do not.`,
+  },
+
+  "m8-what-are-agents": {
+    id: "m8-what-are-agents",
+    title: "What Are AI Agents?",
+    explanation: `An AI agent is a system that takes actions in pursuit of a goal, not just responds to a single prompt. Agents can use tools (search, code execution, APIs), maintain memory across steps, and adapt their plan based on intermediate results.
+
+The key distinction from a chatbot is autonomy over time: an agent makes multiple decisions in sequence to accomplish a longer-horizon task, rather than answering a single question and stopping.`,
+  },
+
+  "m8-how-agents-work": {
+    id: "m8-how-agents-work",
+    title: "How AI Agents Work: The Perception-Reasoning-Action Loop",
+    explanation: `Agents operate in a loop: perceive the current state, reason about what action to take next, execute the action, observe the result, and repeat. This loop continues until the goal is achieved or a stopping condition is met.
+
+The reasoning step is typically handled by an LLM (the agent's brain), while actions are handled by tools the LLM can call. Understanding this loop explains why agents can fail: errors accumulate across steps, and a wrong early decision can cascade into a completely wrong final result.`,
+  },
+
+  "m8-agent-types": {
+    id: "m8-agent-types",
+    title: "Types of AI Agents",
+    explanation: `Agents vary in complexity: simple reflex agents react to immediate inputs; goal-based agents plan sequences of actions; learning agents improve from experience; and multi-agent systems have multiple agents collaborating or competing to solve problems.
+
+In practice, most current AI agents are goal-based systems built on LLMs with tool access. Multi-agent orchestration — where a planner agent delegates to specialist agents — is an emerging pattern for complex long-horizon tasks.`,
+  },
+
+  "m8-agent-applications": {
+    id: "m8-agent-applications",
+    title: "Real-World Applications of AI Agents",
+    explanation: `AI agents are already being used for software development (coding agents that write, run, and debug code), research (agents that search the web and synthesise findings), customer support (agents that look up records and take actions), and workflow automation (agents that orchestrate multi-step business processes).
+
+Understanding real applications helps you identify where agent technology is mature enough to be reliable today versus where it remains experimental and requires significant human oversight.`,
+  },
+
+  "m8-building-agents": {
+    id: "m8-building-agents",
+    title: "Building with Agents: Tools and Practical Considerations",
+    explanation: `Building agent systems requires choosing a framework (LangChain, AutoGen, CrewAI), defining tools the agent can call, designing prompts that guide reasoning, and implementing verification steps for high-stakes actions.
+
+The most important practical consideration is guardrails: agents with broad tool access can take irreversible actions. Production agent systems need confirmation steps, audit logs, and scope limits that prevent agents from causing damage when they misinterpret a goal.`,
+  },
+
+  "m8-agent-risks": {
+    id: "m8-agent-risks",
+    title: "Agent Risks and Limitations",
+    explanation: `Agents introduce risks that single-turn models do not: errors compound over steps; agents with tool access can take irreversible real-world actions; and agents can be manipulated through prompt injection in content they retrieve from the web or other sources.
+
+The alignment problem is especially acute for agents because they have more autonomy. An agent pursuing a proxy goal incorrectly can cause significant damage before a human can intervene. Responsible agent deployment requires careful scope definition, monitoring, and intervention capability.`,
+  },
+
+  // MODULE 9 (actual): Your AI Toolkit
+  "m9-module-overview": {
+    id: "m9-module-overview",
+    title: "Module 9: Your AI Toolkit Overview",
+    explanation: `This capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the right tool for a task, how to prompt the major models, how to apply safety checks, and how to build simple AI workflows.
+
+The focus shifts from concepts to habits. By the end you should have a repeatable approach to incorporating AI into your work that balances capability with appropriate caution.`,
+  },
+
+  "m9-explain-ai": {
+    id: "m9-explain-ai",
+    title: "Explaining AI Clearly to Non-Technical Audiences",
+    explanation: `Explaining AI well requires translating capability, limitation, and risk into plain language without over-simplifying or over-promising. The key is analogies (LLMs as sophisticated autocomplete), concrete examples, and honest acknowledgment of what AI cannot do reliably.
+
+Being able to explain AI clearly is a professional skill. Teams that understand AI tools make better decisions about when to use them, how much to trust their outputs, and when to escalate for human review.`,
+  },
+
+  "m9-choose-tools": {
+    id: "m9-choose-tools",
+    title: "Choosing the Right AI Tool for the Task",
+    explanation: `Different AI tools have different strengths. Text generation models excel at drafting and summarising; image models excel at visual creation; code assistants excel at completion and debugging; specialised models exist for transcription, translation, and data extraction.
+
+The right framework for tool selection: what is the task type, what quality of output is required, what are the privacy constraints, and what is the cost of errors? Tool choice is a design decision, not just a preference.`,
+  },
+
+  "m9-prompting": {
+    id: "m9-prompting",
+    title: "Prompting ChatGPT, Claude, and Gemini Effectively",
+    explanation: `The major models (ChatGPT/GPT-4o, Claude, Gemini) have different strengths and behaviours. ChatGPT is the most widely used with broad capability; Claude is strong at analysis and maintains long context well; Gemini is deeply integrated with Google Workspace and excels at multimodal tasks.
+
+Effective prompting across all three follows the same principles (role, context, task, constraints, examples) but with model-specific tuning: Claude benefits from explicit instruction to think step by step; Gemini integrates well with document uploads; ChatGPT has the richest plugin/tool ecosystem.`,
+  },
+
+  "m9-safety-checks": {
+    id: "m9-safety-checks",
+    title: "Bias, Privacy, and Misinformation Checks",
+    explanation: `Every AI output needs a minimum safety check before use: is there potential bias in the output that could disadvantage a group? Does the output contain personal or confidential information that should not be shared? Does the output contain claims that should be verified before repeating?
+
+These checks take seconds but prevent significant downstream harm. Building them into your workflow as automatic habits — not optional reviews — is what distinguishes responsible AI use from careless use.`,
+  },
+
+  "m9-workflows": {
+    id: "m9-workflows",
+    title: "Building Simple AI Workflows",
+    explanation: `An AI workflow is a repeatable sequence of steps where AI assists with one or more stages. Simple examples: research → AI summarise → human review → draft → AI improve → human edit → publish. Or: data export → AI analysis → human interpretation → action.
+
+Good workflows make AI assistance explicit and auditable: you know which parts were AI-generated and which were human-verified. This transparency is essential for professional contexts where you are accountable for the output.`,
+  },
+
+  "m9-mini-project": {
+    id: "m9-mini-project",
+    title: "Your First AI Mini-Project",
+    explanation: `The mini-project synthesises skills from the course: identify a real task you do regularly, build an AI-assisted workflow for it, apply appropriate prompting, and document what the AI handled and what required human judgment.
+
+This application exercise is where learning becomes capability. You are not just understanding AI — you are building a muscle memory for how to approach new tasks with AI assistance. That habit, once established, compounds over time.`,
+  },
+
+  "m9-next-steps": {
+    id: "m9-next-steps",
+    title: "Next Steps and Resources",
+    explanation: `AI is a fast-moving field. The next steps after this course: explore the tools mentioned, build a personal library of effective prompts for your most common tasks, follow a small number of high-signal sources for capability updates, and revisit your AI workflows every few months as models improve.
+
+The most important next step is continued practice. Reading about AI has declining marginal returns after a point; doing things with AI compounds indefinitely.`,
+  },
+
+  // MODULE 10 additions
+  "m10-module-overview": {
+    id: "m10-module-overview",
+    title: "Module 10: The Future of AI Overview",
+    explanation: `This final module addresses AI's trajectory: what is currently at the research frontier, what AGI means and when it might arrive, how AI is being governed, and how to build a personal strategy for a field that will keep changing after this course ends.
+
+The goal is not to make predictions but to reason well under uncertainty — understanding what is already determined, what remains open, and how to make decisions that stay sensible across multiple possible futures.`,
+  },
+
+  "m10-current-frontiers": {
+    id: "m10-current-frontiers",
+    title: "Current Frontiers in AI Research",
+    explanation: `Active research frontiers include multimodal models (combining text, image, audio, video), reasoning and planning improvements, AI agents, long-context understanding, and more efficient training at lower cost. These frontiers matter because they signal where capability will grow fastest in the near term.
+
+Understanding frontiers also reveals where AI is still weak: reliable long-horizon planning, causal reasoning, genuine novelty beyond recombination, and robust performance on truly out-of-distribution inputs. Knowing the limits prevents over-reliance.`,
+  },
+
+  "m10-agi": {
+    id: "m10-agi",
+    title: "Artificial General Intelligence: Definitions and Timelines",
+    explanation: `AGI is typically defined as AI that can perform any intellectual task a human can perform at human level or above. Current AI systems are narrow: extremely capable within domains but brittle outside them. Whether and when AGI will arrive is genuinely uncertain — expert estimates range from years to never.
+
+The productive framing is not "when is AGI coming" but "what capabilities are still missing from today's systems, and how quickly are those gaps closing?" That question has a more tractable answer and is more useful for near-term planning.`,
+  },
+
+  "m10-governance": {
+    id: "m10-governance",
+    title: "AI Governance: Regulation and Oversight",
+    explanation: `AI governance covers the laws, standards, and institutional structures that shape how AI is developed and deployed. The EU AI Act, the US Executive Order on AI, and emerging international frameworks are setting rules around transparency, safety testing, and high-risk use cases.
+
+For practitioners, governance means two things: knowing which regulations apply to your use case, and building systems that can demonstrate compliance (documentation, audit trails, human oversight). Governance is becoming a product requirement, not just a legal formality.`,
+  },
+
+  "m10-careers": {
+    id: "m10-careers",
+    title: "AI Careers and Professional Relevance",
+    explanation: `AI is creating new roles (AI engineer, prompt engineer, AI ethics analyst, ML ops engineer) while transforming existing ones. Roles most at risk are those centred on routine information processing; roles gaining value are those requiring judgment, creativity, oversight, and communication.
+
+Staying relevant requires building an AI-literacy layer on top of your existing domain expertise, not replacing your expertise with AI knowledge. The combination of deep domain knowledge plus AI capability is more valuable than either alone.`,
+  },
+
+  "m10-personal-strategy": {
+    id: "m10-personal-strategy",
+    title: "Personal AI Strategy: Planning for a Changing Field",
+    explanation: `A personal AI strategy answers: which AI tools will I invest in learning deeply, which workflows will I rebuild with AI assistance, how will I stay current without being overwhelmed, and what are my non-negotiables around privacy and responsible use?
+
+Good strategy is specific and revisable. Commit to two or three tools, build habits, and schedule a quarterly review. The goal is a durable practice of human-AI collaboration, not a one-time adoption event.`,
   },
 
   // MODULE 0: Card Components

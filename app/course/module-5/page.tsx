@@ -127,7 +127,7 @@ export default function Module5Page() {
                 variant="callout"
                 content="Think of coding as training a super-literal intern: if your instructions are clear, it performs fast and consistently. This module focuses on intuition first and syntax second."
               />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m5-module-overview" className="p-5 space-y-2">
                 {[
                   "Variables and data types using everyday AI examples",
                   "Conditionals for routing tasks like an AI triage assistant",
@@ -152,7 +152,7 @@ export default function Module5Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Variables and Data Types</h2>
               <TextDisplay content="Analogy: variables are labeled jars in your AI kitchen. You store different ingredients (text, numbers, true/false flags) and combine them to create output." />
-              <Card className="p-5">
+              <Card componentId="m5-variables" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2">
                   <Code2 className="h-4 w-4" />
                   Try this Python snippet
@@ -189,7 +189,7 @@ print(type(tags))          # list`}</code>
                 explanation="Correct. A boolean expresses a yes/no state, such as whether an output should be reviewed by a human."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Card className="p-5 bg-brand-orange/5 border-brand-orange/20">
+              <Card componentId="m5-variables" className="p-5 bg-brand-orange/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-2 text-brand-orange">Micro-challenge</h3>
                 <p className="text-sm text-muted-foreground">Create your own four variables for an AI note summarizer: one string, one number, one boolean, and one list.</p>
               </Card>
@@ -201,7 +201,7 @@ print(type(tags))          # list`}</code>
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Conditionals (if/else)</h2>
               <TextDisplay content="Analogy: conditionals are a decision gate at an airport. Based on what the input contains, your script sends it down different lanes." />
-              <Card className="p-5">
+              <Card componentId="m5-conditionals" className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
                   <GitBranch className="h-4 w-4 text-brand-orange" />
                   AI triage example
@@ -238,7 +238,7 @@ print(route)`}</code>
                 explanation="Conditionals help your workflow react intelligently to different cases."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m5-conditionals" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-2 text-brand-green">Micro-challenge</h3>
                 <p className="text-sm text-muted-foreground">Add one more rule: if the message contains "cancel", route it to "retention_team".</p>
               </Card>
@@ -250,7 +250,7 @@ print(route)`}</code>
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Loops (for/while)</h2>
               <TextDisplay content="Analogy: a loop is a conveyor belt. Instead of repeating yourself, you define one action and apply it to every item." />
-              <Card className="p-5">
+              <Card componentId="m5-loops" className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2 text-brand-green">
                   <Repeat className="h-4 w-4" />
                   Batch text processing example
@@ -290,7 +290,7 @@ for c in comments:
                 explanation="Exactly. Loops are ideal for repetitive tasks like evaluating many comments, prompts, or files."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
-              <Card className="p-5 bg-brand-orange/5 border-brand-orange/20">
+              <Card componentId="m5-loops" className="p-5 bg-brand-orange/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-2 text-brand-orange">Micro-challenge</h3>
                 <p className="text-sm text-muted-foreground">Count how many comments were labeled "positive" by adding a counter variable.</p>
               </Card>
@@ -302,7 +302,7 @@ for c in comments:
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Functions and Reuse</h2>
               <TextDisplay content="Analogy: a function is a coffee machine button. Press it with the right inputs and it reliably produces the same style of output." />
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m5-functions" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2">
                   <FunctionSquare className="h-4 w-4" />
                   A practical checklist
@@ -314,7 +314,7 @@ for c in comments:
                   <li>Avoid hidden side effects when possible.</li>
                 </ul>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m5-functions" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Reusable AI prompt helper</h3>
                 <pre className="rounded-lg bg-muted p-4 text-xs overflow-x-auto">
                   <code>{`def build_prompt(task, tone="clear", max_words=40):
@@ -342,7 +342,7 @@ print(build_prompt("Write a product headline", tone="playful", max_words=12))`}<
                 explanation="Reusable functions let you avoid copy-paste and keep behavior consistent."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m5-functions" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-2 text-brand-green">Micro-challenge</h3>
                 <p className="text-sm text-muted-foreground">Add a new parameter called audience and include it in the returned prompt text.</p>
               </Card>
@@ -354,7 +354,7 @@ print(build_prompt("Write a product headline", tone="playful", max_words=12))`}<
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Debugging Mindset + Mini Project</h2>
               <TextDisplay content="Debugging is detective work. Your job is to compare expectation vs reality, then narrow where they split. Stay calm, inspect clues, and test one fix at a time." />
-              <Card className="p-5">
+              <Card componentId="m5-debugging" className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
                   <Bug className="h-4 w-4 text-brand-orange" />
                   Debug in this order
@@ -367,7 +367,7 @@ print(build_prompt("Write a product headline", tone="playful", max_words=12))`}<
                   <li>Fix one thing, then re-run.</li>
                 </ol>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m5-debugging" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Common beginner mistakes</h3>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>Using a string where a number is expected ("20" vs 20).</li>
@@ -376,7 +376,7 @@ print(build_prompt("Write a product headline", tone="playful", max_words=12))`}<
                   <li>Assuming data exists without checking empties.</li>
                 </ul>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m5-debugging" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Read the error, then fix</h3>
                 <pre className="rounded-lg bg-muted p-4 text-xs overflow-x-auto">
                   <code>{`# Buggy
@@ -388,7 +388,7 @@ max_words = int("20")
 print(max_words + 5)  # 25`}</code>
                 </pre>
               </Card>
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m5-debugging" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Mini project: AI text helper script</h3>
                 <p className="text-sm text-muted-foreground mb-3">Goal: ask for text input, then either call an AI API (if API key exists) or use a local fallback transformation.</p>
                 <p className="text-sm text-muted-foreground mb-3">Companion runnable file: <span className="font-mono">scripts/module-5-ai-text-helper.py</span></p>

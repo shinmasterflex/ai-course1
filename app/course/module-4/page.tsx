@@ -106,7 +106,7 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="Every AI model is only as good as the data it was trained on. This module is a practical guide to what happens before model training: collection, cleaning, transformation, and feature engineering. If the input data is weak, the output intelligence is weak too." />
-              <Card className="p-5">
+              <Card componentId="m4-module-overview" className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2"><Database className="h-4 w-4" /> What is in this module</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -122,7 +122,7 @@ export default function Module4Page() {
                   ))}
                 </ul>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m4-module-overview" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">The practical pipeline you will use</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">1. Collection:</span> gather data from CRMs, forms, emails, product events, and support logs.</p>
@@ -158,7 +158,7 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is Data?</h2>
               <TextDisplay content="In AI, data is any recorded observation that a model can learn from. It comes in many forms - numbers, text, images, audio, video, and more." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m4-what-is-data" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">The Two Main Categories</h3>
                 <div className="space-y-4">
                   <div className="rounded-lg border p-4 bg-background">
@@ -176,7 +176,7 @@ export default function Module4Page() {
                 </div>
               </Card>
               <TextDisplay variant="callout" content="Most of the world's data is unstructured. One of the big challenges in AI is turning unstructured data into a form that models can learn from." />
-              <Card className="p-5">
+              <Card componentId="m4-what-is-data" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Data Types at a Glance</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -241,7 +241,7 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Data Collection</h2>
               <TextDisplay content="Before a model can be trained, someone has to gather the data. Where data comes from - and how it is collected - has a huge effect on what a model can and cannot learn." />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m4-data-collection" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Relatable dataset examples</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -254,7 +254,7 @@ export default function Module4Page() {
                   </div>
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m4-data-collection" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-green">Common Data Sources</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   {[
@@ -273,7 +273,7 @@ export default function Module4Page() {
                 </div>
               </Card>
               <TextDisplay variant="warning" content="Data collection is where bias often enters the pipeline. If you only collect data from one demographic, geography, or time period, the model will reflect those gaps." />
-              <Card className="p-5">
+              <Card componentId="m4-data-collection" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">From raw data to model-ready data: one simple pipeline</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Collection:</span> Pull customer records from CRM and campaign responses from an email platform.</p>
@@ -283,7 +283,7 @@ export default function Module4Page() {
                   <p><span className="font-medium text-foreground">Outcome:</span> Train a churn model that now sees cleaner, more meaningful patterns.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m4-data-collection" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Key Questions When Collecting Data</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Is it representative?</span> Does the data cover the full range of situations the model will encounter in the real world?</p>
@@ -292,7 +292,7 @@ export default function Module4Page() {
                   <p><span className="font-medium text-foreground">Is it fresh enough?</span> Stale data can produce models that are accurate for the past but miss current trends.</p>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m4-data-collection" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">The labelling bottleneck</h3>
                 <p className="text-sm text-muted-foreground mb-3">Supervised learning requires labelled data - and labelling is expensive. A few approaches to deal with this:</p>
                 <div className="space-y-2 text-sm">
@@ -337,7 +337,7 @@ export default function Module4Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Data Quality: Garbage In, Garbage Out</h2>
               <TextDisplay content="Raw data is almost never ready to use. It contains errors, duplicates, missing values, and inconsistencies. Data cleaning is the process of finding and fixing these problems before training begins." />
               <TextDisplay variant="callout" content="A common saying in data science: 'garbage in, garbage out.' A model trained on low-quality data will produce low-quality predictions, no matter how sophisticated the algorithm." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m4-data-cleaning" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">What data quality means in practice</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -381,7 +381,7 @@ export default function Module4Page() {
                   </table>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m4-data-cleaning" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Common Data Quality Problems</h3>
                 <div className="space-y-3">
                   {[
@@ -391,7 +391,7 @@ export default function Module4Page() {
                     { problem: "Outliers", desc: "Extreme values that may be errors (an age of 999) or genuine but rare events.", fix: "Investigate the cause. Remove clear errors; keep genuine outliers but consider robust scaling." },
                     { problem: "Incorrect labels", desc: "A photo of a cat labelled as a dog. Common in large-scale human annotation tasks.", fix: "Audit a sample of labels, use inter-annotator agreement checks, or re-label flagged examples." },
                   ].map(({ problem, desc, fix }) => (
-                    <Card key={problem} className="p-4">
+                    <Card key={problem} componentId="m4-data-cleaning" className="p-4">
                       <p className="font-bold text-brand-orange mb-1">{problem}</p>
                       <p className="text-sm text-muted-foreground mb-2">{desc}</p>
                       <p className="text-xs"><span className="font-medium text-brand-green">Common fix:</span> <span className="text-muted-foreground">{fix}</span></p>
@@ -399,7 +399,7 @@ export default function Module4Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m4-data-cleaning" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">How poor data creates poor AI outcomes</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Loan approvals:</span> If historical approvals were biased against a group, the model learns to repeat that unfair pattern.</p>
@@ -408,7 +408,7 @@ export default function Module4Page() {
                   <p><span className="font-medium text-foreground">Forecasting:</span> If outliers from data-entry errors are kept as real values, the model predicts unrealistic demand spikes.</p>
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m4-data-cleaning" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A practical cleaning checklist</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -423,7 +423,7 @@ export default function Module4Page() {
                   ))}
                 </ul>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m4-data-cleaning" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Mini exercise: clean this messy dataset (no coding)</h3>
                 <p className="text-sm text-muted-foreground mb-3">Imagine this is a small email-campaign dataset:</p>
                 <div className="overflow-x-auto mb-3">
@@ -486,11 +486,11 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Transformation & Preprocessing Techniques</h2>
               <TextDisplay content="Once data is clean, it still needs transformation before a model can use it effectively. Different data types require different preprocessing steps, and small decisions here can strongly affect model performance." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m4-preprocessing" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why preprocessing matters</h3>
                 <p className="text-sm text-muted-foreground">Machine learning algorithms typically work with numbers. Raw data - especially text, images, and categories - needs to be converted and scaled so that all inputs are on comparable terms. Without this, one large-valued feature can dominate the model unfairly.</p>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m4-preprocessing" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Simple demonstrations</h3>
                 <div className="space-y-4 text-sm">
                   <div className="rounded-lg border p-3 bg-background">
@@ -540,7 +540,7 @@ export default function Module4Page() {
                     example: "A dataset of 1,000 chest X-rays is expanded to 5,000 by rotating and flipping each image.",
                   },
                 ].map(({ technique, when, howItWorks, example }) => (
-                  <Card key={technique} className="p-4">
+                  <Card key={technique} componentId="m4-preprocessing" className="p-4">
                     <p className="font-bold text-brand-green mb-1">{technique}</p>
                     <div className="space-y-1 text-sm">
                       <p><span className="font-medium">When to use:</span> <span className="text-muted-foreground">{when}</span></p>
@@ -579,7 +579,7 @@ export default function Module4Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Feature Engineering</h2>
               <TextDisplay content="Feature engineering is the process of creating new input variables - called features - from raw data to help a model learn better patterns. It is one of the most impactful skills in applied machine learning." />
               <TextDisplay variant="callout" content="'Coming up with features is difficult, time-consuming, and requires expert knowledge. Applied machine learning is basically feature engineering.' ??Andrew Ng" />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m4-feature-engineering" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Why raw data is often not enough</h3>
                 <p className="text-sm text-muted-foreground mb-3">Raw data captures what happened. Feature engineering helps a model understand why and how. Consider a dataset of house sales:</p>
                 <div className="overflow-x-auto">
@@ -606,7 +606,7 @@ export default function Module4Page() {
                   </table>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m4-feature-engineering" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Common Feature Engineering Techniques</h3>
                 <div className="space-y-3 text-sm">
                   {[
@@ -624,7 +624,7 @@ export default function Module4Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m4-feature-engineering" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Feature selection vs. feature engineering</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -671,7 +671,7 @@ export default function Module4Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m4-quiz" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Before you start, sanity-check these ideas</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Data types:</span> structured vs. unstructured; numerical, categorical, text, image, time series.</p>

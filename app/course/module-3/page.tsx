@@ -130,7 +130,7 @@ export default function Module3Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="This is where things get practical. You will learn exactly how ChatGPT and similar tools work - and more importantly, how to communicate with them to get genuinely useful results." />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m3-module-overview" className="p-5 space-y-2">
                 {["What is a Large Language Model (LLM)?","How ChatGPT generates responses","The anatomy of a good prompt","Prompting techniques: role, chain-of-thought, few-shot","Hands-on practice exercises","Module Quiz"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
@@ -162,7 +162,7 @@ export default function Module3Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is a Language Model?</h2>
               <TextDisplay content="A Large Language Model (LLM) is an AI trained on massive amounts of text to understand and generate human language. But to use these tools effectively - and to avoid being misled by them - you need to understand something about how they work internally." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m3-language-models" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Core mental model: a next-word prediction engine</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p>An LLM&apos;s core job is simple: given all text so far, predict the next most likely token. It does this again and again, one token at a time, until it produces a full response.</p>
@@ -172,7 +172,7 @@ export default function Module3Page() {
               </Card>
               <TextDisplay variant="callout" content="The word 'large' refers to the number of parameters (adjustable values) in the model - modern LLMs have hundreds of billions. The more parameters, the more nuance and complexity the model can capture." />
 
-              <Card className="p-5">
+              <Card componentId="m3-language-models" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">What is a token? The fundamental unit of LLMs</h3>
                 <p className="text-sm text-muted-foreground mb-3">LLMs do not read text character by character or word by word. They split text into <strong>tokens</strong> — chunks of text that are typically 3-4 characters long. About 750 words equals approximately 1,000 tokens.</p>
                 <div className="p-3 bg-brand-orange/5 border border-brand-orange/20 rounded-lg mb-3">
@@ -189,7 +189,7 @@ export default function Module3Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m3-language-models" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">The context window — what the model can &ldquo;see&rdquo; at once</h3>
                 <p className="text-sm text-muted-foreground mb-3">The <strong>context window</strong> is the amount of text the model can read and use at any one time. Think of it as the model&apos;s working memory. Everything outside the context window does not exist to the model.</p>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
@@ -205,7 +205,7 @@ export default function Module3Page() {
                 <p className="text-sm text-muted-foreground mt-3"><span className="font-medium text-foreground">Analogy:</span> Imagine you have to summarise a book, but you can only look at the pages that fit on your desk at one time. A small context window is a tiny desk. A large one is a warehouse floor. The model can only reason about what it can currently &ldquo;see.&rdquo;</p>
               </Card>
 
-              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+              <Card componentId="m3-language-models" className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">Attention — how the model decides what matters</h3>
                 <p className="text-sm text-muted-foreground mb-3">The key innovation of the Transformer architecture (the T in ChatGPT) is the <strong>attention mechanism</strong>. When processing any word or token, the model asks: &ldquo;which other tokens in the context should I pay attention to right now?&rdquo;</p>
                 <div className="text-sm space-y-2 text-muted-foreground">
@@ -214,7 +214,7 @@ export default function Module3Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m3-language-models" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Famous LLMs and who makes them</h3>
                 <div className="space-y-2">
                   {[
@@ -234,7 +234,7 @@ export default function Module3Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m3-language-models" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Why &ldquo;large&rdquo; parameters create new capabilities</h3>
                 <p className="text-sm text-muted-foreground mb-3">Scale is not just about doing the same things better — it creates <em>qualitatively</em> different capabilities through emergence:</p>
                 <div className="space-y-2 text-sm">
@@ -326,14 +326,14 @@ export default function Module3Page() {
                   { step: "Step 3: RLHF", desc: "Reinforcement Learning from Human Feedback (RLHF) is the process that shaped ChatGPT's personality. Humans rated pairs of responses and preferred the better one. A reward model was trained to predict human preference. The LLM was then tuned to produce outputs that the reward model would rate highly — making it more helpful, honest, and safe." },
                   { step: "Step 4: Tokenisation and prediction", desc: "At inference time (when you send a message), your prompt is tokenised. The model processes every token, the attention mechanism decides which tokens to focus on, and the model outputs a probability distribution over the entire vocabulary for the next token. It samples from this distribution to choose the next word." },
                 ].map(({ step, desc }) => (
-                  <Card key={step} className="p-4 flex gap-3">
+                  <Card key={step} componentId="m3-how-llms-work" className="p-4 flex gap-3">
                     <span className="font-bold text-brand-orange w-24 flex-shrink-0 text-sm pt-0.5">{step}</span>
                     <p className="text-sm text-muted-foreground">{desc}</p>
                   </Card>
                 ))}
               </div>
 
-              <Card className="p-5">
+              <Card componentId="m3-how-llms-work" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Temperature — why ChatGPT is not deterministic</h3>
                 <p className="text-sm text-muted-foreground mb-3">Ask ChatGPT the same question twice and you will get different answers. This is intentional. A setting called <strong>temperature</strong> controls how randomly the model samples from its probability distribution:</p>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
@@ -352,7 +352,7 @@ export default function Module3Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m3-how-llms-work" className="p-5 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">System prompt vs user prompt — a key distinction</h3>
                 <p className="text-sm text-muted-foreground mb-3">When you use ChatGPT or any AI tool, there are actually two types of input the model receives:</p>
                 <div className="space-y-3 text-sm">
@@ -368,7 +368,7 @@ export default function Module3Page() {
                 <p className="text-sm text-muted-foreground mt-3">Understanding this explains why the same underlying AI (e.g. GPT-4) can seem very different when used through different products — the system prompt shapes the entire personality and behaviour.</p>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m3-how-llms-work" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why hallucination happens mechanistically</h3>
                 <p className="text-sm text-muted-foreground mb-3">Now that you know ChatGPT predicts the next token based on probability, hallucination makes sense:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -382,7 +382,7 @@ export default function Module3Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+              <Card componentId="m3-how-llms-work" className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">Why ChatGPT cannot access real-time information by default</h3>
                 <p className="text-sm text-muted-foreground">The base model is a static snapshot of everything it was trained on up to its knowledge cutoff date. At inference time, it has no internet connection, no ability to run code by default, and no live data feeds. It is like consulting a very knowledgeable person who has been in isolation since a specific date — they know a lot, but nothing that happened after they went in.</p>
                 <p className="text-sm text-muted-foreground mt-2">Some versions of ChatGPT can browse the web or run code — but these are external tools connected to the model, not native capabilities. When those tools are turned off, the model reverts to its training snapshot.</p>
@@ -443,7 +443,7 @@ export default function Module3Page() {
                   { part: "Constraints", example: "Each meal under 600 calories, no shellfish, max 20 minutes...", why: "Constraints prevent unusable answers and reduce ambiguity." },
                   { part: "Examples", example: "Here is the style I want: 'Mon: Chicken stir-fry (15 min)'...", why: "Examples calibrate style, depth, and format quickly." },
                 ].map(({ part, example, why }) => (
-                  <Card key={part} className="p-4">
+                  <Card key={part} componentId="m3-prompt-anatomy" className="p-4">
                     <div className="flex gap-3">
                       <span className="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded h-fit flex-shrink-0">{part}</span>
                       <div>
@@ -454,7 +454,7 @@ export default function Module3Page() {
                   </Card>
                 ))}
               </div>
-              <Card className="p-4 bg-brand-green/5 border-brand-green/20">
+              <Card componentId="m3-prompt-anatomy" className="p-4 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-2 text-brand-green">Full example prompt</h3>
                 <p className="text-sm font-mono bg-white p-3 rounded border italic text-gray-700">
                   You are an expert nutrition coach. I am a 35-year-old who runs 5km three times a week and wants to lose 5kg. Create a 7-day meal plan. Constraints: no shellfish, each meal under 10 minutes to prepare, and keep each day near 1,900 calories. Use this style example: &ldquo;Monday - Breakfast: Greek yogurt + berries.&rdquo; Return the result as a table with breakfast, lunch, dinner, and estimated calories.
@@ -544,7 +544,7 @@ export default function Module3Page() {
                     why: "Improves performance on complex reasoning, analysis, and high-value workflows.",
                   },
                 ].map(({ level, technique, how, example, why }) => (
-                  <Card key={level} className="p-5">
+                  <Card key={level} componentId="m3-prompting-techniques" className="p-5">
                     <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-2">{level}</p>
                     <h3 className="font-bold text-brand-green mb-2">{technique}</h3>
                     <p className="text-sm mb-2"><span className="font-medium">How:</span> {how}</p>
@@ -553,7 +553,7 @@ export default function Module3Page() {
                   </Card>
                 ))}
               </div>
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-orange/20">
+              <Card componentId="m3-prompting-techniques" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-4 text-brand-orange">Before vs after: same task, better prompt, better output</h3>
                 <div className="space-y-4 text-sm">
                   <div className="border rounded-lg p-3 bg-background">
@@ -572,7 +572,7 @@ export default function Module3Page() {
                   </div>
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m3-prompting-techniques" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Spot the better prompt</h3>
                 <p className="text-sm text-muted-foreground mb-3">You want AI to help plan a team offsite. Which prompt will get the best result?</p>
                 <MatchingChallenge
@@ -597,7 +597,7 @@ export default function Module3Page() {
                   ]}
                 />
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-blue-500/5 border-brand-green/20">
+              <Card componentId="m3-prompting-techniques" className="p-5 bg-gradient-to-br from-brand-green/5 to-blue-500/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-green">Prompt Quick Reference - Copy, Paste, Adapt</h3>
                 <p className="text-sm text-muted-foreground mb-4">These six templates cover the most common professional prompting scenarios. Adapt the specifics to your situation.</p>
                 <div className="space-y-3">
@@ -644,7 +644,7 @@ export default function Module3Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Hands-On Practice</h2>
               <TextDisplay content="Now it is your turn. For each scenario below, write a high-quality prompt using role, context, task, constraints, and examples where helpful." />
               <TextDisplay variant="callout" content="There are no wrong answers here - the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m3-hands-on-practice" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Beginner adoption framework</h3>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div>
@@ -704,7 +704,7 @@ export default function Module3Page() {
                     outputShift: "Output improves from repetitive suggestions to diverse, execution-ready ideas with measurable outcomes.",
                   },
                 ].map(({ title, situation, weakPrompt, strongPrompt, outputShift }) => (
-                  <Card key={title} className="p-5">
+                  <Card key={title} componentId="m3-hands-on-practice" className="p-5">
                     <h3 className="font-semibold text-brand-green mb-2">{title}</h3>
                     <p className="text-sm text-muted-foreground mb-3">{situation}</p>
                     <div className="grid gap-3 md:grid-cols-2">
@@ -721,7 +721,7 @@ export default function Module3Page() {
                   </Card>
                 ))}
               </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m3-hands-on-practice" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Prompt debugging: why outputs fail and how to fix them</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Failure: too generic.</span> Cause: weak context. <span className="font-medium text-foreground">Fix:</span> add audience, purpose, and situation.</p>
@@ -731,7 +731,7 @@ export default function Module3Page() {
                   <p><span className="font-medium text-foreground">Failure: shallow reasoning.</span> Cause: complex task with simple prompt. <span className="font-medium text-foreground">Fix:</span> ask for step-by-step reasoning and final recommendation.</p>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m3-hands-on-practice" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Mini challenge: upgrade a weak prompt</h3>
                 <p className="text-sm text-muted-foreground mb-3">Take this weak prompt and refine it using the full anatomy plus advanced techniques.</p>
                 <div className="rounded-lg border bg-background p-3 mb-3">
@@ -780,7 +780,7 @@ export default function Module3Page() {
                   )}
                 </div>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m3-hands-on-practice" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Simple prompt review rubric</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
