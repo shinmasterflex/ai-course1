@@ -593,7 +593,7 @@ export default function Module9Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Building Simple AI Workflows</h2>
               <TextDisplay content="Now apply the earlier lessons. A good workflow starts with a real task, uses the right tool for one narrow AI step, and includes a review point if errors would matter." />
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Workflow Blueprint: research -> summarize -> generate output</h3>
+                <h3 className="font-semibold mb-3 text-brand-green">Workflow Blueprint: research {"->"} summarize {"->"} generate output</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border-collapse">
                     <thead>

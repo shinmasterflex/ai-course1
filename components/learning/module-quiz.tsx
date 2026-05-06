@@ -15,14 +15,32 @@ type ModuleQuizProps<T extends string> = {
 
 export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: ModuleQuizProps<T>) {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<T, string>>({} as Record<T, string>)
+  const [attemptedQuestions, setAttemptedQuestions] = useState<Record<T, boolean>>({} as Record<T, boolean>)
+  const [xp, setXp] = useState(0)
+  const [streak, setStreak] = useState(0)
 
   const answeredCount = useMemo(
     () => Object.values(results).filter(Boolean).length,
     [results]
   )
 
+  const progressPct = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0
+
   return (
     <div className="space-y-6">
+      <Card className="p-4 border-brand-orange/20 bg-gradient-to-r from-brand-orange/10 to-brand-green/10">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm font-semibold text-brand-indigo">Quiz Mission Stats</p>
+          <div className="flex items-center gap-2 text-xs font-semibold">
+            <span className="rounded-full bg-white px-2 py-1 text-brand-green">XP: {xp}</span>
+            <span className="rounded-full bg-white px-2 py-1 text-brand-orange">Streak: {streak}</span>
+          </div>
+        </div>
+        <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white">
+          <div className="h-full bg-brand-green transition-all duration-300" style={{ width: `${progressPct}%` }} />
+        </div>
+      </Card>
+
       {questions.map((question, index) => {
         const selected = selectedAnswers[question.key]
         const isAnswered = Boolean(selected)
@@ -64,8 +82,21 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: M
                       !showCorrect && !showIncorrect && "hover:border-brand-orange hover:bg-orange-50 hover:text-foreground",
                     )}
                     onClick={() => {
+                      const isFirstAttempt = !attemptedQuestions[question.key]
+                      const isCorrectAnswer = option.id === question.correctOptionId
+
+                      if (isFirstAttempt) {
+                        setAttemptedQuestions((prev) => ({ ...prev, [question.key]: true }))
+                        if (isCorrectAnswer) {
+                          setXp((prev) => prev + 10)
+                          setStreak((prev) => prev + 1)
+                        } else {
+                          setStreak(0)
+                        }
+                      }
+
                       setSelectedAnswers((prev) => ({ ...prev, [question.key]: option.id }))
-                      onAnswer(question.key, option.id === question.correctOptionId)
+                      onAnswer(question.key, isCorrectAnswer)
                     }}
                   >
                     {option.label}

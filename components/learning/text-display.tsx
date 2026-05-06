@@ -4,9 +4,13 @@
  * Supports both string content and React children
  */
 
+"use client"
+
 import { cn } from "@/lib/utils"
-import { AlertCircle, CheckCircle2, Info } from "lucide-react"
+import { AlertCircle, CheckCircle2, Info, Sparkles, Target, Trophy } from "lucide-react"
 import type { ReactNode } from "react"
+import { useMemo, useState } from "react"
+import { Button } from "@/components/ui/button"
 
 interface TextDisplayProps {
   title?: string
@@ -14,6 +18,8 @@ interface TextDisplayProps {
   content?: string
   children?: ReactNode
   variant?: "default" | "callout" | "warning" | "success" | "info"
+  interactive?: boolean
+  xpReward?: number
   className?: string
 }
 
@@ -45,7 +51,31 @@ function parseBoldText(text: string): ReactNode[] {
   return parts.length > 0 ? parts : [text]
 }
 
-export function TextDisplay({ title, subtitle, content, children, variant = "default", className }: TextDisplayProps) {
+function getChallengePrompt(title?: string, content?: string) {
+  if (title) {
+    return `In one sentence, explain: ${title}`
+  }
+
+  if (content) {
+    const firstSentence = content.split(/[.!?]/)[0]?.trim()
+    if (firstSentence) {
+      return `Rewrite this idea in your own words: ${firstSentence}`
+    }
+  }
+
+  return "Write one practical takeaway from this lesson block."
+}
+
+export function TextDisplay({
+  title,
+  subtitle,
+  content,
+  children,
+  variant = "default",
+  interactive = true,
+  xpReward = 10,
+  className,
+}: TextDisplayProps) {
   // Icon mapping for different variants
   const icons = {
     callout: <Info className="h-5 w-5" />,
@@ -65,6 +95,23 @@ export function TextDisplay({ title, subtitle, content, children, variant = "def
 
   const hasChildren = children !== undefined
   const hasContent = content !== undefined
+  const [challengeAnswer, setChallengeAnswer] = useState("")
+  const [challengeSubmitted, setChallengeSubmitted] = useState(false)
+  const [masteryState, setMasteryState] = useState<"review" | "mastered" | null>(null)
+
+  const totalXp = useMemo(() => {
+    let points = 0
+    if (challengeSubmitted) {
+      points += xpReward
+    }
+    if (masteryState === "mastered") {
+      points += 5
+    }
+    return points
+  }, [challengeSubmitted, masteryState, xpReward])
+
+  const challengePrompt = useMemo(() => getChallengePrompt(title, content), [title, content])
+  const hasPassedChallenge = challengeAnswer.trim().length >= 20
 
   return (
     <div className={cn("p-6 rounded-lg", variantStyles[variant], className)}>
@@ -129,6 +176,68 @@ export function TextDisplay({ title, subtitle, content, children, variant = "def
             </div>
           ) : null}
         </>
+      )}
+
+      {interactive && (
+        <div className="mt-5 rounded-lg border border-brand-orange/20 bg-background/60 p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <p className="flex items-center gap-2 text-sm font-semibold text-brand-orange">
+              <Sparkles className="h-4 w-4" />
+              Interaction Checkpoint
+            </p>
+            <span className="inline-flex items-center gap-1 rounded-full bg-brand-green/10 px-2 py-1 text-xs font-semibold text-brand-green">
+              <Trophy className="h-3 w-3" />
+              XP: {totalXp}
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <div>
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <Target className="h-3.5 w-3.5" />
+                Mini challenge
+              </p>
+              <p className="text-sm text-foreground">{challengePrompt}</p>
+              <textarea
+                value={challengeAnswer}
+                onChange={(event) => {
+                  setChallengeAnswer(event.target.value)
+                  if (challengeSubmitted) {
+                    setChallengeSubmitted(false)
+                  }
+                }}
+                className="mt-2 min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                placeholder="Write your answer here..."
+              />
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+                <p className="text-xs text-muted-foreground">Tip: 20+ characters unlock the XP bonus.</p>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => setChallengeSubmitted(hasPassedChallenge)}
+                  disabled={!hasPassedChallenge}
+                >
+                  Claim +{xpReward} XP
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              <Button type="button" size="sm" variant="outline" onClick={() => setMasteryState("review")}>
+                I need a review
+              </Button>
+              <Button type="button" size="sm" variant="outline" onClick={() => setMasteryState("mastered")}>
+                I mastered this (+5 XP)
+              </Button>
+              {masteryState === "mastered" ? (
+                <span className="text-xs font-medium text-green-700">Checkpoint complete.</span>
+              ) : null}
+              {masteryState === "review" ? (
+                <span className="text-xs font-medium text-brand-orange">Marked for review.</span>
+              ) : null}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
