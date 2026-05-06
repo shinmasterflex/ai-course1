@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, type MouseEvent, type ReactNode } from "react"
+import { useRef, useState, type PointerEvent, type ReactNode } from "react"
 import { Blocks, Clock3, Layers3, MousePointerClick, Sparkles } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { getComponentExplanation } from "@/lib/component-explanations"
 
 export type ExplainerDescriptor = {
+  id?: string
   type: string
   title: string
   explanation: string
@@ -14,7 +15,7 @@ export type ExplainerDescriptor = {
 const DEFAULT_DESCRIPTOR: ExplainerDescriptor = {
   type: "Learning support",
   title: "Explanation Panel",
-  explanation: `This panel provides deeper educational context about concepts in your course modules. Click on any interactive component—a quiz question, a matching exercise, a concept explanation, a progress indicator—and this panel will expand on that topic with additional explanation and context.
+  explanation: `This panel provides deeper educational context about concepts in your course modules. Hover over any interactive component - a quiz question, a matching exercise, a concept explanation, or a progress indicator - and this panel will expand on that topic with additional explanation and context.
 
 The Explanation Panel functions like a textbook sidebar. Where the module component itself teaches a concept through interaction, this panel provides supplementary reading that deepens your understanding. You'll find connections to broader ideas, underlying principles, and practical applications that complement your active learning.
 
@@ -38,6 +39,194 @@ function compactText(value: string | null | undefined, maxLength = 180) {
   return `${normalized.slice(0, maxLength - 1).trimEnd()}...`
 }
 
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .slice(0, 48)
+}
+
+function simpleHash(value: string) {
+  let hash = 0
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0
+  }
+  return hash.toString(16).slice(0, 8)
+}
+
+function sentenceList(value: string, maxItems: number) {
+  const sentences = value
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .map((item) => item.trim())
+    .filter((item) => item.length > 20)
+  return sentences.slice(0, maxItems)
+}
+
+function countWords(value: string) {
+  return value
+    .trim()
+    .split(/\s+/)
+    .filter((token) => token.length > 0).length
+}
+
+function conceptExpansionByIntent(intent: CardIntent, title: string) {
+  if (intent === "timeline") {
+    return `${title} becomes more useful when you read each milestone as a dependency shift instead of a date. Ask which constraint changed first-data volume, compute cost, model architecture, or distribution channel-because that dependency usually explains why progress accelerated at that exact moment.`
+  }
+
+  if (intent === "comparison") {
+    return `${title} should change decisions, not just definitions. Strong comparisons stay anchored to constraints such as latency, cost, reliability, and governance. In practice, the best option is usually the one whose weaknesses are acceptable for the current objective, not the one that appears strongest in the abstract.`
+  }
+
+  if (intent === "risk") {
+    return `${title} matters most when connected to operational controls. Risk claims become actionable only when paired with detection, escalation, and rollback paths. In AI systems, prevention usually depends on process design as much as model quality.`
+  }
+
+  if (intent === "process") {
+    return `${title} is valuable because sequence changes outcomes. Ordering determines what information is available at each step, and early errors propagate quickly through AI workflows. Reliable execution comes from explicit checkpoints rather than from confidence in a single model output.`
+  }
+
+  if (intent === "tooling") {
+    return `${title} is most useful when tied to system boundaries. Tools differ not only by output quality but by data handling, integration overhead, observability, and compliance fit. Choosing well means matching the tool to both the task and the surrounding operating environment.`
+  }
+
+  return `${title} becomes durable knowledge when it is used as a lens for evaluating real outputs. In AI work, strong judgment comes from tracing claims back to evidence, assumptions, and known failure modes, then adapting decisions as context changes.`
+}
+
+function ensureConceptDepth(text: string, minimumWords: number, title: string, intent: CardIntent) {
+  let output = text.trim()
+  while (countWords(output) < minimumWords) {
+    output += `\n\n${conceptExpansionByIntent(intent, title)}`
+  }
+  return output
+}
+
+function toInstructorExplanation(descriptor: ExplainerDescriptor) {
+  const base = expandText(descriptor.explanation)
+  const keySentences = sentenceList(base, 6)
+  const mainIdea = keySentences[0] || `${descriptor.title} introduces a core AI concept in this module.`
+  const mechanism = keySentences[1] || "The underlying mechanism explains why this concept works in some contexts and fails in others."
+  const practical = keySentences[2] || "In practice, this concept should shape concrete decisions about tool choice, validation, and oversight."
+  const limitation = keySentences[3] || "Its limits are part of the concept itself, not edge trivia, because limits determine where confidence is justified."
+  const connection = keySentences[4] || "This idea links directly to later tasks that require tradeoff reasoning rather than memorized definitions."
+  const intent = detectCardIntent(descriptor.title, mainIdea, keySentences.slice(1))
+  const toneSeed = simpleHash(`${descriptor.id ?? descriptor.title}:${descriptor.type}`)
+  const openingVariants = [
+    `${mainIdea} The important move is to separate the core claim from surrounding examples so the same logic can transfer to new AI scenarios.`,
+    `At its core, ${descriptor.title} describes a claim about system behavior. Treat examples as evidence for that claim, not as the claim itself.`,
+    `${descriptor.title} is most useful when interpreted causally: what drives the outcome, what assumptions are required, and what breaks when assumptions fail.`,
+  ]
+  const opening = openingVariants[parseInt(toneSeed.slice(0, 1), 16) % openingVariants.length]
+  const whyVariants = [
+    `${mechanism} In AI, causal understanding is what lets you predict error patterns before they appear in production.`,
+    `${mechanism} Mechanism-level clarity prevents cargo-cult usage and supports adaptation when data, constraints, or goals change.`,
+    `${mechanism} This is the difference between copying demonstrations and making defensible decisions under uncertainty.`,
+  ]
+  const whySection = whyVariants[parseInt(toneSeed.slice(1, 2), 16) % whyVariants.length]
+  const practicalVariants = [
+    `${practical} Decisions should reference objective, constraints, and acceptable failure cost, not tool familiarity alone.`,
+    `${practical} In real workflows, this usually appears as a tradeoff among speed, quality, cost, and risk exposure.`,
+    `${practical} The strongest application is explicit: what changed in the decision once this concept was considered.`,
+  ]
+  const practicalSection = practicalVariants[parseInt(toneSeed.slice(2, 3), 16) % practicalVariants.length]
+  const boundaryVariants = [
+    `${limitation} Over-generalizing from one successful case is a common failure mode in AI adoption.`,
+    `${limitation} Changes in task type, data quality, or governance constraints can invalidate earlier conclusions.`,
+    `${limitation} Confidence should be tied to evidence quality, not to fluent outputs or familiar wording.`,
+  ]
+  const boundarySection = boundaryVariants[parseInt(toneSeed.slice(3, 4), 16) % boundaryVariants.length]
+  const wrapVariants = [
+    `${connection} Carry it forward by using it to explain one downstream decision in the next activity.`,
+    `${connection} The value here is transfer: the same reasoning should hold even when examples and tools change.`,
+    `${connection} Treat this as operating logic for later sections, not as an isolated definition card.`,
+  ]
+  const wrapSection = wrapVariants[parseInt(toneSeed.slice(4, 5), 16) % wrapVariants.length]
+
+  const instructorText = [
+    opening,
+    whySection,
+    practicalSection,
+    boundarySection,
+    wrapSection,
+  ].join("\n\n")
+
+  return {
+    ...descriptor,
+    explanation: ensureConceptDepth(instructorText, 85, descriptor.title, intent),
+  } satisfies ExplainerDescriptor
+}
+
+type CardIntent = "timeline" | "comparison" | "risk" | "process" | "tooling" | "definition"
+
+function detectCardIntent(title: string, summary: string, details: string[]) {
+  const haystack = `${title} ${summary} ${details.join(" ")}`.toLowerCase()
+
+  if (/\b(19\d{2}|20\d{2}|timeline|history|era|winter|present|milestone)\b/.test(haystack)) {
+    return "timeline" satisfies CardIntent
+  }
+  if (/\b(compare|versus|vs\.?|tradeoff|pros|cons|table|difference|choose)\b/.test(haystack)) {
+    return "comparison" satisfies CardIntent
+  }
+  if (/\b(risk|bias|harm|safety|security|failure|liability|mitigation|deepfake)\b/.test(haystack)) {
+    return "risk" satisfies CardIntent
+  }
+  if (/\b(step|workflow|loop|sequence|checklist|process|protocol|order)\b/.test(haystack)) {
+    return "process" satisfies CardIntent
+  }
+  if (/\b(tool|platform|app|api|stack|workflow|automation)\b/.test(haystack)) {
+    return "tooling" satisfies CardIntent
+  }
+  return "definition" satisfies CardIntent
+}
+
+function buildWhySection(intent: CardIntent, title: string, details: string[]) {
+  const firstDetail = details[0] || "the specific examples listed in this card"
+
+  if (intent === "timeline") {
+    return `${title} is not just a historical note - it explains cause and effect in AI progress. When you see the sequence of shifts over time, you can separate durable breakthroughs from short-lived hype cycles and make better predictions about what will matter next.`
+  }
+
+  if (intent === "comparison") {
+    return `${title} gives you a decision framework, not just facts. By comparing options side by side (for example: ${firstDetail}), you reduce vague judgment and can choose methods based on constraints, quality needs, and risk tolerance.`
+  }
+
+  if (intent === "risk") {
+    return `${title} protects quality, trust, and safety outcomes. Risk concepts only become useful when paired with concrete safeguards; this card helps you move from awareness to prevention before errors become costly.`
+  }
+
+  if (intent === "process") {
+    return `${title} turns good intentions into repeatable execution. Process clarity lowers cognitive load, prevents skipped steps, and improves consistency when tasks become complex or time-constrained.`
+  }
+
+  if (intent === "tooling") {
+    return `${title} connects capability to implementation. Understanding tool roles helps you pick the right system for the job instead of forcing one tool to solve every problem.`
+  }
+
+  return `${title} is a foundational concept. If this idea is unclear, later techniques become mechanical. If this idea is clear, you can explain tradeoffs, spot weak outputs, and reason through unfamiliar AI scenarios.`
+}
+
+function buildDecisionSection(intent: CardIntent, title: string) {
+  if (intent === "timeline") {
+    return `Use this context to evaluate new AI claims by asking where they fit in the long-term pattern and what dependency (data, compute, method, or distribution) actually changed.`
+  }
+  if (intent === "comparison") {
+    return `Use ${title} to justify choices explicitly: what option fits your objective, what compromise you accept, and what metric you will track after implementation.`
+  }
+  if (intent === "risk") {
+    return `Translate this card into operating rules: what must be reviewed by a human, what gets logged, and which failure conditions trigger escalation.`
+  }
+  if (intent === "process") {
+    return `Convert this into a checklist you can run under pressure. If a step cannot be measured or verified, refine it before relying on it in production work.`
+  }
+  if (intent === "tooling") {
+    return `Match tools to workload characteristics (speed, accuracy, cost, privacy, and maintainability) before choosing a stack.`
+  }
+  return `Use this concept as a lens when judging outputs: what assumptions are being made, what evidence is missing, and what human oversight is still required.`
+}
+
 function expandText(value: string | null | undefined) {
   if (!value) {
     return ""
@@ -47,6 +236,7 @@ function expandText(value: string | null | undefined) {
 
 export function getExplainerAttributes(descriptor: ExplainerDescriptor) {
   const normalizedDescriptor: ExplainerDescriptor = {
+    id: descriptor.id,
     type: compactText(descriptor.type, 40),
     title: compactText(descriptor.title, 90),
     explanation: expandText(descriptor.explanation),
@@ -77,6 +267,7 @@ function parseDescriptor(value: string | null) {
     }
 
     return {
+      id: parsed.id,
       type: parsed.type,
       title: parsed.title,
       explanation: parsed.explanation,
@@ -95,6 +286,22 @@ function buildFallbackDescriptor(element: HTMLElement) {
   )
 
   if (slot === "button" || tagName === "button" || element.getAttribute("role") === "button") {
+    const normalizedLabel = label.toLowerCase().replace(/\s+/g, " ").trim()
+    const isNavigationButton =
+      normalizedLabel === "next" ||
+      normalizedLabel === "next >" ||
+      normalizedLabel.startsWith("next ") ||
+      normalizedLabel === "previous" ||
+      normalizedLabel.startsWith("previous ") ||
+      normalizedLabel === "back" ||
+      normalizedLabel.startsWith("back ") ||
+      normalizedLabel === "continue" ||
+      normalizedLabel.startsWith("continue ")
+
+    if (isNavigationButton) {
+      return null
+    }
+
     return {
       type: "Action checkpoint",
       title: label || "Next step",
@@ -119,15 +326,79 @@ Don't worry about writing perfectly. The goal is to translate the concepts you'r
   }
 
   if (slot === "card" || slot === "card-header" || slot === "card-content" || tagName === "article" || tagName === "section") {
-    return {
-      type: "Learning block",
-      title: label || "Key material",
-      explanation: `This section packages important concepts into digestible units. The structure isn't arbitrary—it's designed around how your brain learns best.
+    // Pull the card's own heading for the panel title
+    const headingEl = element.querySelector("h1,h2,h3,h4,h5,h6")
+    const headingText = compactText(headingEl?.textContent, 90)
+    // Pull category badge / coloured label spans that sit at the top of many cards
+    const badgeEl = element.querySelector(
+      'span[class*="rounded"][class*="bg-"], span[class*="rounded"][class*="text-white"]',
+    )
+    const badgeText = compactText(badgeEl?.textContent, 60)
 
-When information is grouped into meaningful chunks, your brain can hold multiple pieces together in working memory. Contrast this with walls of undifferentiated text: your brain has to work harder to find the pattern, and much is lost. Here, the grouping helps you see the forest and the trees simultaneously.
+    // Gather rich content from the card itself
+    const paragraphs = Array.from(element.querySelectorAll("p"))
+      .map((p) => p.textContent?.replace(/\s+/g, " ").trim())
+      .filter((t): t is string => !!t && t.length > 10)
 
-As you read this section, look for the underlying pattern. What's the main idea? How do the details support it? This active pattern-seeking strengthens your mental model far more than passive consumption.`,
-    } satisfies ExplainerDescriptor
+    const listItems = Array.from(element.querySelectorAll("li"))
+      .map((li) => li.textContent?.replace(/\s+/g, " ").trim())
+      .filter((t): t is string => !!t && t.length > 10)
+      .slice(0, 5)
+
+    const tableRows = Array.from(element.querySelectorAll("tr"))
+      .map((row) =>
+        Array.from(row.querySelectorAll("th,td"))
+          .map((cell) => cell.textContent?.replace(/\s+/g, " ").trim())
+          .filter((cell): cell is string => !!cell && cell.length > 0)
+          .join(" -> "),
+      )
+      .filter((row) => row.length > 0)
+      .slice(0, 4)
+
+    const cardTitle = headingText || badgeText || compactText(label, 90) || "Key concept"
+    const summarySource = [...paragraphs.slice(0, 2), ...listItems.slice(0, 2), ...tableRows.slice(0, 1)].join(" ")
+    const summarySentences = sentenceList(summarySource, 2)
+    const summary = summarySentences.length > 0 ? summarySentences.join(" ") : compactText(summarySource, 220)
+
+    const detailPool = [...listItems, ...tableRows, ...paragraphs.slice(3)]
+    const uniqueDetails: string[] = []
+    for (const detail of detailPool) {
+      const normalized = detail.toLowerCase()
+      if (!uniqueDetails.some((existing) => existing.toLowerCase() === normalized)) {
+        uniqueDetails.push(detail)
+      }
+      if (uniqueDetails.length === 4) {
+        break
+      }
+    }
+
+    const contextualSection =
+      uniqueDetails.length > 0
+        ? `The surrounding details suggest concrete constraints such as ${uniqueDetails
+            .slice(0, 2)
+            .map((item) => item.replace(/[.!?]+$/, ""))
+            .join(" and ")}. Those constraints are usually what determine whether the concept succeeds in practice.`
+        : ""
+
+    const intent = detectCardIntent(cardTitle, summary, uniqueDetails)
+    const framingSection = summary
+      ? `${cardTitle} is presented through a compact example. The deeper value is the underlying logic: ${summary}`
+      : `${cardTitle} introduces an idea that should be interpreted as decision logic, not just descriptive content.`
+    const whySection = buildWhySection(intent, cardTitle, uniqueDetails)
+    const decisionSection = buildDecisionSection(intent, cardTitle)
+
+    const explanationSections = [
+      framingSection,
+      whySection,
+      contextualSection,
+      decisionSection,
+    ].filter((section) => section.length > 0)
+
+    const explanation = explanationSections.join("\n\n")
+    const explicitId = element.getAttribute("data-explainer-id")
+    const cardId = explicitId || `card-${slugify(cardTitle || "item")}-${simpleHash(explanation)}`
+
+    return { id: cardId, type: "Course content", title: cardTitle, explanation } satisfies ExplainerDescriptor
   }
 
   if (/^h[1-6]$/.test(tagName)) {
@@ -166,11 +437,12 @@ function resolveDescriptor(target: HTMLElement | null) {
     if (componentId) {
       const customExplanation = getComponentExplanation(componentId)
       if (customExplanation) {
-        return {
+        return toInstructorExplanation({
+          id: customExplanation.id,
           type: customExplanation.id.substring(0, customExplanation.id.indexOf("-", 2)), // Extract module prefix
           title: customExplanation.title,
           explanation: customExplanation.explanation,
-        } satisfies ExplainerDescriptor
+        } satisfies ExplainerDescriptor)
       }
     }
     current = current.parentElement
@@ -181,7 +453,7 @@ function resolveDescriptor(target: HTMLElement | null) {
   while (current) {
     const explicitDescriptor = parseDescriptor(current.getAttribute("data-explainer"))
     if (explicitDescriptor) {
-      return explicitDescriptor
+      return toInstructorExplanation(explicitDescriptor)
     }
     current = current.parentElement
   }
@@ -191,7 +463,7 @@ function resolveDescriptor(target: HTMLElement | null) {
   while (current) {
     const fallbackDescriptor = buildFallbackDescriptor(current)
     if (fallbackDescriptor) {
-      return fallbackDescriptor
+      return toInstructorExplanation(fallbackDescriptor)
     }
     current = current.parentElement
   }
@@ -200,6 +472,11 @@ function resolveDescriptor(target: HTMLElement | null) {
 }
 
 function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescriptor; history: ExplainerDescriptor[] }) {
+  const paragraphs = descriptor.explanation
+    .split("\n\n")
+    .map((paragraph) => paragraph.trim())
+    .filter((paragraph) => paragraph.length > 0)
+
   return (
     <Card className="h-full overflow-hidden border-brand-indigo/20 bg-white/95 shadow-xl backdrop-blur">
       <div className="flex h-full flex-col gap-5 p-6 overflow-y-auto">
@@ -209,10 +486,11 @@ function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescript
             Explanation Panel
           </div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">{descriptor.type}</p>
+          <h3 className="text-base font-semibold leading-tight text-brand-indigo">{descriptor.title}</h3>
         </div>
 
         <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">
-          {descriptor.explanation.split("\n\n").map((paragraph, index) => (
+          {paragraphs.map((paragraph, index) => (
             <p key={index} className="leading-relaxed text-sm">
               {paragraph}
             </p>
@@ -227,7 +505,9 @@ export function CourseExplainerLayout({ children }: { children: ReactNode }) {
   const [selectedDescriptor, setSelectedDescriptor] = useState(DEFAULT_DESCRIPTOR)
   const [selectionHistory, setSelectionHistory] = useState<ExplainerDescriptor[]>([])
 
-  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+  const lastDescriptorRef = useRef<string>("")
+
+  const handlePointerOver = (event: PointerEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement | null
 
     if (!target || target.closest('[data-explainer-panel="true"]')) {
@@ -235,17 +515,23 @@ export function CourseExplainerLayout({ children }: { children: ReactNode }) {
     }
 
     const descriptor = resolveDescriptor(target)
-    if (descriptor) {
+    const descriptorSignature = descriptor ? `${descriptor.id ?? descriptor.type}:${descriptor.title}:${descriptor.explanation.slice(0, 80)}` : ""
+    if (descriptor && descriptorSignature !== lastDescriptorRef.current) {
+      lastDescriptorRef.current = descriptorSignature
       setSelectedDescriptor(descriptor)
       setSelectionHistory((previous) => {
-        const nextHistory = previous.filter((item) => !(item.type === descriptor.type && item.title === descriptor.title))
+        const nextHistory = previous.filter((item) => {
+          const previousKey = `${item.id ?? item.type}:${item.title}`
+          const descriptorKey = `${descriptor.id ?? descriptor.type}:${descriptor.title}`
+          return previousKey !== descriptorKey
+        })
         return [descriptor, ...nextHistory].slice(0, 4)
       })
     }
   }
 
   return (
-    <div className="xl:pr-[23.5rem]" onClickCapture={handleClickCapture}>
+    <div className="xl:pr-[23.5rem]" data-course-content="true" onPointerOver={handlePointerOver}>
       {children}
 
       <div className="border-t border-border bg-background/95 p-4 backdrop-blur xl:hidden" data-explainer-panel="true">

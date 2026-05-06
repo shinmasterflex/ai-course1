@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Comprehensive mapping of course components to detailed educational explanations.
  * Each component in every module has a unique explanation that deepens understanding
  * of why that specific element is there and how to engage with it effectively.
@@ -15,61 +15,61 @@ export const COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> = {
   "m0-hero": {
     id: "m0-hero",
     title: "Course Welcome",
-    explanation: `This opening section sets the frame for your entire learning journey. Course introductions aren't fluff—they serve a critical function: establishing psychological safety and motivation.
+    explanation: `This opening section defines the scope of the course: understanding what modern AI systems are, how they make predictions, where they fail, and how to use them responsibly in real work.
 
-Research shows that learners who understand the course structure and rationale before beginning learn more effectively. You're not just absorbing disconnected facts; you're building a mental scaffold that connects everything that follows.
+The sequence of modules mirrors how AI decisions are made in practice. You begin with definitions and historical context, move into model behavior and prompting, then evaluate tools, data quality, risk, and organizational adoption. Each layer adds constraints that make AI judgment more realistic.
 
-Notice what you're about to learn: you'll start with conceptual foundations, practice hands-on techniques, then apply knowledge to real scenarios. This progression from concrete to abstract to applied is how experts actually develop expertise.`,
+Treat this as a map of the full AI stack from concept to deployment. The value is not memorizing terms, but seeing how technical capability, data limitations, and human oversight interact in one system.`,
   },
 
   "m0-why-ai-matters": {
     id: "m0-why-ai-matters",
     title: "Why AI Matters Right Now",
-    explanation: `This section makes a fundamental claim: AI literacy isn't optional anymore; it's as essential as reading in the 21st century. You're learning this not for academic exercise but because AI decisions affect your daily life—what jobs exist, what content you see, what decisions affect you.
+    explanation: `AI now influences ranking, recommendation, hiring filters, fraud controls, and productivity tooling, so even non-technical roles are increasingly affected by model behavior.
 
-The section begins by anchoring learning to relevance. Your brain prioritizes learning about information it perceives as relevant to survival and goals. By establishing why AI matters *to you personally*, you're priming your attention and memory systems to encode information more deeply.
+The important shift is that AI systems increasingly mediate decisions rather than just automate repetitive tasks. That means model errors, bias, and data gaps can directly change outcomes for people, customers, and teams.
 
-As you read, ask: Where am I already encountering AI? What questions do I have about it? This active question-generation is one of the most powerful study techniques.`,
+Understanding AI is therefore operational, not optional: it lets you evaluate claims, set realistic expectations, and choose where human review is required before model output becomes action.`,
   },
 
   "m0-day-in-life": {
     id: "m0-day-in-life",
     title: "A Day in Your Life With AI",
-    explanation: `This narrative component is a cognitive anchor. Rather than presenting abstract concepts, it embeds them in a realistic scenario—a day like yours. This approach, called "contextualization," dramatically improves retention because your brain encodes information using narrative structure.
+    explanation: `This scenario shows that AI appears as many small decisions across a normal day: ranking search results, filtering inboxes, prioritizing notifications, generating drafts, and scoring risk.
 
-When learning feels disconnected from real life, your brain classifies it as "school knowledge"—separate from practical knowledge. By embedding learning in a day-in-the-life scenario, you're building integrated knowledge that transfers to actual situations.
+Most of these systems are narrow models optimized for one objective, such as click-through, response speed, or spam reduction. They feel seamless because the model is embedded in product workflows rather than exposed as a visible AI feature.
 
-Pay attention to the moments where AI appears. Some are obvious (voice assistant). Others are invisible (algorithm deciding which email goes to your inbox). This hidden-in-plain-sight aspect of modern AI is crucial: you encounter it constantly, whether you notice or not.`,
+Seeing these touchpoints together clarifies a core idea: AI impact is cumulative. Many low-visibility predictions can shape what information you see, which options you choose, and how quickly you complete work.`,
   },
 
   "m0-transformation-arc": {
     id: "m0-transformation-arc",
     title: "Your Transformation Arc",
-    explanation: `This section shows you the complete learning pathway before you start. Cognitive science calls this "advance organizers"—seeing the big picture before learning details dramatically improves how well you integrate information.
+    explanation: `This arc tracks the progression from AI awareness to AI decision quality. Early sections establish terminology and model types; middle sections explain mechanisms and prompting; later sections cover risk, governance, and real-world adoption.
 
-You're being shown the progression: awareness → understanding → hands-on practice → application. This structure isn't accidental. It mirrors how expertise actually develops. You first need to know what exists. Then you need to understand mechanisms. Then you need to practice. Finally, you transfer skills to new contexts.
+That progression reflects how AI maturity develops in teams. Organizations typically fail when they jump directly to tools without shared definitions, clear limits, or evaluation criteria.
 
-Understanding this arc matters because when you hit difficult sections (usually around understanding), you'll remember: "This difficulty is *part of the design*. It's where learning is actually happening." That metacognitive awareness itself improves learning.`,
+By moving from fundamentals to application, this module path builds the same dependency chain used in production work: understand what the system is, understand how it behaves, then decide where it should or should not be trusted.`,
   },
 
   "m0-how-to-learn": {
     id: "m0-how-to-learn",
     title: "How to Take This Course Effectively",
-    explanation: `This is meta-learning—learning about how to learn. It might seem like housekeeping, but it's actually foundational. Research on student success shows that explicit instruction on learning strategies increases effectiveness more than extra content does.
+    explanation: `This section explains how the course content is meant to build practical AI fluency: combining concept cards, worked examples, and interactive tasks so each topic is tied to decision-making rather than isolated facts.
 
-You're learning not just *what* but *how to engage* with material. Do you skip interactive components? Do you read explanations passively? Do you test yourself? These behavioral choices dramatically affect what you remember.
+The sequence matters because AI competence depends on integrating several views at once: mechanism, performance limits, risk, and business context. Skipping one layer often leads to overconfidence in another.
 
-Notice that you're being asked to be intentional. Deliberate practice—consciously applying strategies—is harder than passive consumption, but it produces exponentially better learning. The course is designed to support deliberate practice at every step.`,
+As you move through modules, use each interaction to test whether a concept changes an actual choice, such as prompt design, tool selection, review requirements, or risk controls. That is the threshold for usable AI understanding.`,
   },
 
   "m0-self-assessment": {
     id: "m0-self-assessment",
     title: "What Do You Know Already?",
-    explanation: `Self-assessment isn't evaluation in a grading sense; it's cognitive calibration. Before learning new material, your brain needs to activate what you already know. This activation makes new learning "stick" by connecting to existing knowledge structures.
+    explanation: `This check establishes your starting model of AI: what you believe about capabilities, limits, and risk. That baseline matters because many common assumptions about AI are inaccurate but plausible.
 
-Additionally, research shows that attempted retrieval—even when you're unsure of answers—actually *improves* subsequent learning of that material. Your brain is more ready to absorb the correct information after you've attempted to generate an answer, even if that attempt failed.
+Typical gaps include confusing automation with machine learning, overestimating model reasoning, and underestimating data-quality effects. Identifying those gaps early prevents downstream errors in tool use and interpretation.
 
-There's no pass/fail here. This is a learning tool. Some items you'll likely know. Others will reveal gaps. Those gaps are valuable: they direct your attention toward concepts that need your focus.`,
+Use this checkpoint as a calibration reference. When you reach later modules, compare your updated answers to your initial assumptions to see which beliefs changed and why.`,
   },
 
   // MODULE 1: What Is AI?
@@ -80,7 +80,7 @@ There's no pass/fail here. This is a learning tool. Some items you'll likely kno
 
 Notice the module is structured around history, definition, types, then applications. This is pedagogically intentional. By learning history first, you understand *why* AI developed certain characteristics. You'll see how problems drive innovation. This historical context creates deeper understanding than jumping straight to technical definitions.
 
-The module culminates in applications—showing you AI in concrete tools you might use. This arc from abstract (definition) to concrete (applications) helps your brain construct robust understanding that works in both directions.`,
+      The module culminates in applications, showing you AI in concrete tools you might use. This arc from abstract (definition) to concrete (applications) helps your brain construct robust understanding that works in both directions.`,
   },
 
   "m1-defining-ai": {
@@ -88,7 +88,7 @@ The module culminates in applications—showing you AI in concrete tools you mig
     title: "Defining AI: What Makes AI Different?",
     explanation: `This definition section is fighting against common misconceptions. Many people define AI by tools (ChatGPT, robots) rather than by what actually characterizes AI: systems that learn from data and improve without being explicitly programmed for every scenario.
 
-You're learning to think like a scientist: precise definitions matter because they determine what counts as AI versus what's just automation. A thermostat isn't AI (it follows a fixed rule: if temp < 70, heat). A learning algorithm that adapts its recommendations is AI.
+This section emphasizes scientific precision: definitions determine what counts as AI versus automation. A thermostat isn't AI (it follows a fixed rule: if temp < 70, heat). A learning algorithm that adapts its recommendations is AI.
 
 This precision matters because in industry, people often misuse the term. By understanding the definition deeply, you can think clearly about what's actually possible and what's hype.`,
   },
@@ -96,11 +96,11 @@ This precision matters because in industry, people often misuse the term. By und
   "m1-ai-history": {
     id: "m1-ai-history",
     title: "A Brief History of AI: From Dreams to Disappointment to Breakthrough",
-    explanation: `History teaches you patterns. By seeing how AI developed in waves—periods of excitement followed by "AI winters" where progress seemed to stall—you understand something crucial: breakthroughs require not just ideas but technology maturity and data availability.
+    explanation: `History teaches you patterns. By seeing how AI developed in waves-periods of excitement followed by "AI winters," where progress seemed to stall-you understand something crucial: breakthroughs require not just ideas but technology maturity and data availability.
 
 This historical perspective inoculates you against hype. When someone claims AI will replace all jobs by 2025, your historical knowledge says: "Experts have made premature predictions before." This isn't cynicism; it's calibrated realism.
 
-The pattern you'll see: computing power increases → data availability increases → algorithms improve → new applications become possible. This virtuous cycle is the engine of recent AI progress. Understanding it helps you predict where AI will and won't go next.`,
+    The pattern you'll see: computing power increases -> data availability increases -> algorithms improve -> new applications become possible. This virtuous cycle is the engine of recent AI progress. Understanding it helps you predict where AI will and won't go next.`,
   },
 
   "m1-types-of-ai": {
@@ -110,27 +110,27 @@ The pattern you'll see: computing power increases → data availability increase
 
 Understanding these categories is intellectually honest. We can discuss AI's current limitations without being defensive. Narrow AI can be remarkably capable at specific tasks while being unable to perform simple tasks outside its training domain. That's not a flaw; it's reality.
 
-This clarity also helps you make better decisions. If someone sells you a "general AI" tool, you know they're either misunderstanding terminology or misleading you. The distinctions you're learning here are intellectual tools you'll use constantly.`,
+This clarity also improves decision quality. If someone sells a "general AI" tool, the claim is either terminologically incorrect or misleading. These distinctions are recurring intellectual tools in real AI discussions.`,
   },
 
   "m1-first-win": {
     id: "m1-first-win",
     title: "Your First Useful Win: An AI Prompt Challenge",
-    explanation: `This interactive section shifts from passive reading to active doing. Cognitive psychology shows that moving to application dramatically increases retention—perhaps 4x better than reading alone.
+    explanation: `This interactive section shifts from passive reading to active doing. Cognitive psychology shows that moving to application dramatically increases retention, perhaps 4x better than reading alone.
 
-You're writing a prompt for an AI system. This isn't random; it's carefully designed. You're testing your emerging understanding of how to communicate with AI systems. When you see how different prompts get different results, you're building intuition about what AI systems "understand."
+Writing a prompt for an AI system is a deliberate diagnostic exercise. It tests how instruction structure changes output quality and builds intuition for what current models can and cannot reliably follow.
 
-Notice that you can iterate—write a prompt, see results, try again. This iterative cycle is how mastery develops. You're not just learning about AI; you're learning to think in ways that AI systems respond to. That's a different kind of learning than reading alone provides.`,
+    Iteration is the core loop: write a prompt, inspect output, refine constraints, and rerun. That cycle builds operational skill more effectively than static reading alone.`,
   },
 
   "m1-myths-reality": {
     id: "m1-myths-reality",
     title: "Myths vs. Reality: Separating Hype from Truth",
-    explanation: `Misconceptions are notoriously sticky. Once believed, they persist even after you've learned correct information. This section directly confronts common myths—not to mock them, but to inoculate you against them.
+    explanation: `Misconceptions are notoriously sticky. Once believed, they persist even after you've learned correct information. This section directly confronts common myths-not to mock them, but to inoculate you against them.
 
-You're learning media literacy alongside AI literacy. In a world of hype and marketing, distinguishing what's real from what's exaggerated is a survival skill. By explicitly contrasting myths with reality, you're building antibodies against misinformation.
+The section combines AI literacy with media literacy. In a hype-heavy environment, distinguishing substantiated claims from exaggeration is essential for reliable decision-making.
 
-Pay attention to which myths resonate with you personally. Those are probably areas where you'll benefit from returning later if you encounter AI claims that sound too good to be true. Your awareness of your own vulnerabilities to specific myths is valuable.`,
+Myths that feel initially plausible are often the most operationally risky. Tracking those patterns helps prevent future misjudgments when evaluating new AI claims.`,
   },
 
   "m1-writing-assistants": {
@@ -138,19 +138,19 @@ Pay attention to which myths resonate with you personally. Those are probably ar
     title: "In Practice: AI Writing Assistants",
     explanation: `This section transitions from abstract concepts to concrete tools. Research shows that abstract knowledge is much harder to retain than knowledge anchored to examples. By seeing AI writing assistants as specific instances of the broader AI concepts you've learned, you're consolidating abstract knowledge into concrete understanding.
 
-You're also learning to distinguish between marketing claims and actual capability. A writing assistant might claim to "write perfect emails," but what it actually does is generate text from patterns in training data. It doesn't understand your email's context or your relationships. That precision of understanding protects you from over-relying on these tools.
+A key outcome is separating marketing claims from actual capability. A writing assistant may claim to "write perfect emails," but it generates text from training patterns and lacks real situational understanding. That precision prevents over-reliance.
 
-Consider: Where could you use a writing assistant? Where would it fail? This critical application of knowledge—recognizing both possibilities and limitations—is advanced learning.`,
+    Consider: Where could you use a writing assistant? Where would it fail? This critical application of knowledge-recognizing both possibilities and limitations-is advanced learning.`,
   },
 
   "m1-image-generation": {
     id: "m1-image-generation",
     title: "In Practice: AI Image Generation",
-    explanation: `Image generation is conceptually similar to text generation—predicting the next pixel based on patterns—but feels qualitatively different to users. This section helps you understand that the underlying mechanism is consistent even when outputs feel different.
+    explanation: `Image generation is conceptually similar to text generation-predicting the next pixel based on patterns-but feels qualitatively different to users. This section helps you understand that the underlying mechanism is consistent even when outputs feel different.
 
-You're learning to see through surface differences to underlying patterns. DALL-E and ChatGPT use fundamentally similar statistical learning mechanisms even though one generates images and one generates text. This level of pattern recognition—seeing commonalities beneath superficial differences—is sophisticated thinking.
+The important move is seeing through surface differences to underlying mechanisms. DALL-E and ChatGPT use related statistical learning principles even though outputs differ by modality.
 
-There's also ethical dimension here: AI-generated images raise questions about copyright, authenticity, and labor. By understanding how these systems work, you can form more informed ethical positions rather than reacting emotionally to the existence of the technology.`,
+    There's also an ethical dimension here: AI-generated images raise questions about copyright, authenticity, and labor. By understanding how these systems work, you can form more informed ethical positions rather than reacting emotionally to the existence of the technology.`,
   },
 
   "m1-productivity": {
@@ -158,17 +158,17 @@ There's also ethical dimension here: AI-generated images raise questions about c
     title: "In Practice: AI for Productivity",
     explanation: `This section makes a crucial point: AI's most immediate value for individuals isn't replacing jobs; it's augmenting existing work. A programmer using Copilot doesn't become obsolete; they become more productive. A researcher using AI literature summaries can explore broader terrain.
 
-You're learning to think about AI as a tool within your workflow rather than as a replacement for your thinking. This perspective—tool augmentation rather than replacement—is psychologically important. It moves you from fear-based thinking to opportunity-based thinking.
+The section frames AI as workflow augmentation rather than cognitive replacement. That framing supports realistic adoption: use models for leverage while preserving human judgment.
 
-As you read about productivity applications, think: Where in my work could I use AI as a tool? What would that look like? This active mental modeling improves retention and prepares you to actually implement these tools.`,
+For each productivity example, the practical question is where the tool fits in an existing workflow and what verification burden it introduces. That mapping is what enables implementation.`,
   },
 
   "m1-creative-work": {
     id: "m1-creative-work",
     title: "In Practice: AI in Creative Work",
-    explanation: `This section tackles a emotionally charged topic: Can AI be creative? The answer depends on how you define creativity. If creativity means "generating novel combinations," then yes. If it means "expressing human intentionality and emotion," then it's more complicated.
+    explanation: `This section tackles an emotionally charged topic: Can AI be creative? The answer depends on how you define creativity. If creativity means "generating novel combinations," then yes. If it means "expressing human intentionality and emotion," then it's more complicated.
 
-You're developing intellectual nuance. Rather than the binary "AI can create / AI cannot create," you're learning that AI can do certain things well and other things poorly. A musician using AI to generate backing tracks isn't replacing their artistry; they're using a tool within a creative process.
+It pushes beyond "AI can create / AI cannot create." Current systems perform some creative sub-tasks well and others poorly. A musician using AI-generated backing tracks is augmenting process, not replacing authorship.
 
 This section also touches on fundamental questions about authorship and ownership. By engaging with these questions thoughtfully, you're preparing yourself for ethical decisions you'll make in the future. These aren't abstract questions; they're increasingly real as AI tools become commonplace.`,
   },
@@ -178,19 +178,19 @@ This section also touches on fundamental questions about authorship and ownershi
     title: "Choosing the Right Tool for the Job",
     explanation: `This capstone section in the applications section teaches decision-making frameworks. You have ChatGPT, DALL-E, Copilot, and others. When do you use which? How do you choose?
 
-You're learning meta-strategy: how to think about tool selection rather than memorizing specific tool uses. Because new tools will emerge, but the decision framework—considering what task you're doing, what trade-offs matter, what data privacy concerns exist—will remain applicable.
+The focus is meta-strategy: select tools by task requirements, tradeoffs, and privacy constraints rather than memorizing point-in-time tool lists. As tools change, this framework remains stable.
 
-This section also connects back to conceptual foundations: each tool has particular strengths because of its underlying architecture and training data. By reasoning from principles (what each tool is good at) rather than memorizing (tool X is for task Y), you're building knowledge that actually transfers to new situations.`,
+      This section also connects back to conceptual foundations: each tool has particular strengths because of its underlying architecture and training data. By reasoning from principles (what each tool is good at) rather than memorizing (tool X is for task Y), you're building knowledge that actually transfers to new situations.`,
   },
 
   "m1-quiz": {
     id: "m1-quiz",
     title: "Module 1 Mastery Check",
-    explanation: `This quiz consolidates the entire module. Research shows that retrieving information in different contexts—different question phrasings, different connections to other material—creates more flexible knowledge than reviewing.
+    explanation: `This checkpoint tests whether you can separate core AI categories and claims under realistic ambiguity. The key outcomes are distinguishing automation from learning systems, narrow AI from speculative AGI, and capability from marketing language.
 
-You might have remembered material while reading, but can you apply it in a new context? Can you distinguish between different AI types when presented with novel scenarios? Can you evaluate claims about AI using what you've learned? These are the tests of deep understanding.
+Strong performance here means you can evaluate statements about AI without relying on brand names or hype narratives. You should be able to justify why a claim is accurate, overstated, or unsupported based on definitions and historical evidence.
 
-If you struggle on certain questions, that's valuable information. Those difficult questions reveal where your understanding is still forming. Don't just check the answer; investigate why the correct answer makes sense and why your initial thinking went in a different direction. That investigation is where learning actually happens.`,
+The same reasoning appears in later modules when choosing tools and setting risk controls. If category boundaries are unclear at this stage, downstream decisions become noisy and harder to defend.`,
   },
 
   // MODULE 2: How Machines Learn
@@ -209,15 +209,15 @@ The module is structured around problem-solving: we pose a learning challenge, t
     title: "What Is Machine Learning?",
     explanation: `Machine learning is fundamentally about learning from data rather than following explicit rules. A programmer writes 100 rules for how to detect spam; a machine learning system learns patterns from thousands of spam and non-spam examples.
 
-This distinction—rules vs. patterns—is crucial. It determines what's possible. Rules are interpretable but brittle; they break when new situations arise that weren't foreseen. Patterns are flexible but less interpretable; they work well on typical cases but you might not understand exactly why they made a particular decision.
+This distinction-rules vs. patterns-is crucial. It determines what's possible. Rules are interpretable but brittle; they break when new situations arise that weren't foreseen. Patterns are flexible but less interpretable; they work well on typical cases, but you might not understand exactly why they made a particular decision.
 
-You're learning to think about trade-offs. There's no universally "best" approach; different approaches make different sacrifices. Understanding this prevents naive thinking like "just use machine learning for everything." Sometimes explicit rules are better. Sometimes you don't have enough data. Critical thinking means considering which approach suits which problem.`,
+This builds your ability to think about trade-offs. There's no universally "best" approach; different approaches make different sacrifices. Understanding this prevents naive thinking like "just use machine learning for everything." Sometimes explicit rules are better. Sometimes you don't have enough data. Critical thinking means considering which approach suits which problem.`,
   },
 
   "m2-training-data": {
     id: "m2-training-data",
     title: "Training Data: The Fuel of Learning",
-    explanation: `Here's a critical insight: the quality and characteristics of training data directly determine what a machine learning system can learn. Garbage in, garbage out. But also: patterns of the training data, biases of the training data, limitations of the training data—all directly show up in the system's behavior.
+    explanation: `Here's a critical insight: the quality and characteristics of training data directly determine what a machine learning system can learn. Garbage in, garbage out. But also: patterns of the training data, biases of the training data, and limitations of the training data all directly show up in the system's behavior.
 
 This understanding is crucial for your future. When someone says "AI has bias," they're often pointing to training data bias that's been learned by the system. When AI fails on edge cases, it's often because the training data didn't include those cases.
 
@@ -241,7 +241,7 @@ This section also teaches you to reason about practical constraints. Sometimes y
 
 That's less mysterious than it sounds. And that's the point. By understanding that neural networks are fundamentally sophisticated pattern-matchers, not thinking systems, you avoid anthropomorphizing them. They're powerful tools, not intelligence.
 
-Understanding neural networks helps you reason about their limitations. They can learn complex patterns but are bad at novel situations. They need lots of data. They can be opaque—you don't always know why they made a particular decision. Knowing these limitations prevents overconfidence in their recommendations.`,
+Understanding neural networks helps you reason about their limitations. They can learn complex patterns but are bad at novel situations. They need lots of data. They can be opaque-you don't always know why they made a particular decision. Knowing these limitations prevents overconfidence in their recommendations.`,
   },
 
   "m2-what-ai-cant-do": {
@@ -249,7 +249,7 @@ Understanding neural networks helps you reason about their limitations. They can
     title: "What AI Can't Do: Important Limitations",
     explanation: `This section is psychologically crucial: understanding limitations prevents disillusionment. Many AI disappointments come from people expecting more than is possible given current technology.
 
-AI systems are pattern-matchers. They can't reason through novel logical problems from first principles. They can't understand causation—only correlation in training data. They can't truly generalize beyond their training distribution. They can't explain their reasoning in the way humans can.
+AI systems are pattern-matchers. They can't reason through novel logical problems from first principles. They can't understand causation-only correlation in training data. They can't truly generalize beyond their training distribution. They can't explain their reasoning in the way humans can.
 
 These aren't fixable bugs; they're fundamental characteristics of how these systems work. By understanding them deeply, you set realistic expectations. And realistic expectations are the foundation of wise tool use. You don't ask AI to do things it can't do. You use it for what it's good at.`,
   },
@@ -259,7 +259,7 @@ These aren't fixable bugs; they're fundamental characteristics of how these syst
     title: "Hands-On Classification Challenge",
     explanation: `You're now learning by doing. You'll attempt to classify emails as spam or not spam, thereby experiencing the machine learning challenge firsthand. This experiential learning creates memory and intuition in ways that reading alone cannot.
 
-Notice how even as a human, you're using pattern-matching to classify emails. You're looking for markers: misspellings, financial language, formatting oddities. A machine learning system is doing something similar—learning what markers correlate with spam. By doing this classification yourself, you're building empathy for what the algorithm is learning.
+Notice how even as a human, you're using pattern-matching to classify emails. You're looking for markers: misspellings, financial language, and formatting oddities. A machine learning system is doing something similar-learning what markers correlate with spam. By doing this classification yourself, you're building empathy for what the algorithm is learning.
 
 When you make mistakes, pay attention to them. Why did you misclassify an email? What information would you need to make the right decision? This metacognitive reflection about your own classification process actually teaches you how machine learning systems learn.`,
   },
@@ -267,11 +267,11 @@ When you make mistakes, pay attention to them. Why did you misclassify an email?
   "m2-quiz": {
     id: "m2-quiz",
     title: "Module 2 Mastery Check",
-    explanation: `This quiz tests your mechanistic understanding of machine learning. Can you explain why training data quality matters? Can you reason about which approach (supervised vs. unsupervised) suits which problem? Can you identify why an AI system failed at a particular task?
+    explanation: `This checkpoint verifies mechanistic understanding of machine learning: how training data shapes behavior, why supervised and unsupervised approaches solve different problem types, and where model performance breaks down.
 
-These are sophisticated questions. They require you to hold together multiple concepts and apply them to novel scenarios. That's the definition of deep learning: flexible knowledge that transfers to new contexts.
+The questions are designed to test causal reasoning, not memorized terms. You should be able to trace a failure back to data coverage, label quality, objective mismatch, or distribution shift.
 
-Pay special attention to questions you found difficult. Difficult questions reveal frontiers of understanding. Don't just accept the correct answer; investigate why your thinking went in a different direction. That investigation—contrasting your reasoning with correct reasoning—is how understanding develops.`,
+That diagnostic ability is essential for real AI work. Teams rarely fail because they forgot vocabulary; they fail because they cannot identify why a model underperformed and what constraint must change.`,
   },
 
   // MODULE 3: Large Language Models & Prompting
@@ -300,7 +300,7 @@ This understanding is grounding. Language models aren't thinking. They're sophis
     title: "How ChatGPT Works: The Mechanism",
     explanation: `This section takes the abstract concept of language models and shows the mechanism. Text goes in, gets broken into tokens, passes through neural network layers, and emerges as predicted tokens. That process repeats until the model outputs a complete response.
 
-You're learning to reason about how systems transform information. Understanding this mechanism helps you predict behavior. If the model is pattern-matching from training data, then it will be good at questions similar to its training data and bad at novel questions. If it's predicting token by token, then errors can cascade (one wrong word biases subsequent predictions).
+You build the ability to reason about how systems transform information. Understanding this mechanism helps you predict behavior. If the model is pattern-matching from training data, then it will be good at questions similar to its training data and bad at novel questions. If it's predicting token by token, then errors can cascade (one wrong word biases subsequent predictions).
 
 This mechanistic understanding makes you less gullible. When someone claims ChatGPT "understands" something, you know it's actually "very good at predicting text related to that topic." Those are very different claims with different implications.`,
   },
@@ -318,7 +318,7 @@ You're also learning to reason about why structure matters. Language models pred
   "m3-prompting-techniques": {
     id: "m3-prompting-techniques",
     title: "Effective Prompting Techniques: Chain-of-Thought and Beyond",
-    explanation: `You're learning techniques backed by research. Chain-of-thought prompting, for example, works because asking the model to "think step by step" produces more structured reasoning, which produces better results.
+    explanation: `This section introduces techniques backed by research. Chain-of-thought prompting, for example, works because asking the model to "think step by step" produces more structured reasoning, which produces better results.
 
 These techniques aren't mystical. They work because they align with patterns in the training data. Most text about complex reasoning involves showing reasoning steps. So when you ask for step-by-step thinking, the model is tapping into patterns it learned from human reasoning examples.
 
@@ -330,19 +330,19 @@ Understanding *why* techniques work matters. It means you can invent new techniq
     title: "Hands-On Prompting Challenge",
     explanation: `Now you write prompts and iterate based on results. This experiential learning is crucial because prompting is a skill that improves dramatically with practice. Reading about effective prompting is necessary but insufficient.
 
-You're learning by doing and by observing consequences. Different prompt structures produce different outputs. Better prompts get better results. This feedback loop is how skills develop. You're not just learning about prompting; you're learning to prompt.
+The section reinforces skill through iteration and consequence tracking. Different prompt structures produce different outputs, and better structure produces better results.
 
-Pay attention to what works and what doesn't. When a prompt fails, it's usually not because the AI "doesn't understand." It's because you didn't structure the request in a way that aligns with patterns in training data. Debugging failed prompts—understanding why they didn't work—teaches you how language models actually respond.`,
+Track what works and what fails. When a prompt fails, it's usually not because the AI "doesn't understand." It's because you didn't structure the request in a way that aligns with patterns in training data. Debugging failed prompts-understanding why they didn't work-teaches you how language models actually respond.`,
   },
 
   "m3-quiz": {
     id: "m3-quiz",
     title: "Module 3 Mastery Check",
-    explanation: `This quiz tests whether you can apply prompting knowledge. Can you write a good prompt? Can you debug a poor prompt? Can you explain why certain techniques work?
+    explanation: `This checkpoint tests whether you can control model behavior through prompt design rather than trial-and-error guessing. Expected skills include specifying context, constraints, output format, and evaluation criteria.
 
-The quiz isn't about recalling facts; it's about applying understanding. That's the marker of true learning—not memorizing that "chain-of-thought works" but understanding why it works and being able to apply that understanding in new contexts.
+You should be able to diagnose weak outputs by identifying which prompt component failed: missing context, ambiguous task definition, weak constraints, or absent examples.
 
-If you struggle here, that's especially valuable information. Prompting is a practical skill that you'll use repeatedly. Identifying where your understanding gaps are now means you can focus your practice on those areas.`,
+This is foundational for reliable generative AI use. In production settings, prompt quality directly affects cost, consistency, and downstream review burden.`,
   },
 
   // MODULE 4: AI Tools for Everyday Life
@@ -353,7 +353,7 @@ If you struggle here, that's especially valuable information. Prompting is a pra
 
 Rather than overwhelming you with every tool that exists, this module focuses on understanding tool categories and decision frameworks. New tools will emerge constantly. By understanding categories and how to evaluate tools, you'll be able to navigate new tools independently.
 
-You're learning transfer: taking abstract principles you've learned and applying them to concrete situations. This is where learning becomes powerful—not just knowing concepts but being able to use them.`,
+This section emphasizes transfer: taking abstract principles you've learned and applying them to concrete situations. This is where learning becomes powerful-not just knowing concepts but being able to use them.`,
   },
 
   "m4-writing-tools": {
@@ -363,15 +363,15 @@ You're learning transfer: taking abstract principles you've learned and applying
 
 A spell-checker catches errors. A grammar tool suggests better phrasing. A generation tool creates content from prompts. These are qualitatively different capabilities with different use cases and different ethical implications.
 
-You're learning to be a discerning tool user. Not every situation requires an AI assistant. Sometimes writing the email yourself is faster. Sometimes it's clearer. Understanding when tools help and when they don't is practical wisdom that makes you more effective.`,
+This section builds discernment in tool use. Not every situation requires an AI assistant. Sometimes writing the email yourself is faster. Sometimes it's clearer. Understanding when tools help and when they don't is practical wisdom that makes you more effective.`,
   },
 
   "m4-image-tools": {
     id: "m4-image-tools",
     title: "Image Generation: Creating from Description",
-    explanation: `Image generation tools let you create visuals from text descriptions. The capability is impressive, but understanding what it actually does—learning patterns in images and text to generate new images—prevents overvaluing the technology.
+    explanation: `Image generation tools let you create visuals from text descriptions. The capability is impressive, but understanding what it actually does-learning patterns in images and text to generate new images-prevents overvaluing the technology.
 
-You're learning to distinguish between "impressive" and "transformative." Image generation is impressive. But most businesses still need real photography and design. Understanding where generation fits into workflows (quick mockups, inspiration, prototyping) versus where it doesn't (final marketing materials, copyrighted images) is practical judgment.
+This helps you distinguish between "impressive" and "transformative." Image generation is impressive. But most businesses still need real photography and design. Understanding where generation fits into workflows (quick mockups, inspiration, prototyping) versus where it doesn't (final marketing materials, copyrighted images) is practical judgment.
 
 This section also touches on ethical considerations: copyright issues, labor implications, authenticity in media. By engaging with these thoughtfully, you're preparing yourself to make ethical decisions about how to use these tools.`,
   },
@@ -381,7 +381,7 @@ This section also touches on ethical considerations: copyright issues, labor imp
     title: "Productivity Assistants: Working Faster and Smarter",
     explanation: `AI productivity tools include code generation, research summarization, email drafting, and more. The common thread: they augment human capability. A programmer using Copilot doesn't write less code; they write more code and focus on higher-level decisions.
 
-This augmentation model is crucial for your future. Rather than AI replacing work, you're using AI to do existing work differently and more effectively. That shift in perspective—from threat to tool—is empowering.
+This augmentation model is crucial for your future. Rather than AI replacing work, you're using AI to do existing work differently and more effectively. That shift in perspective-from threat to tool-is empowering.
 
 You're also learning to evaluate trade-offs. Does this tool save me time? At what cost? What quality issues might arise? What skills might I lose from not doing this manually? These practical questions matter more than theoretical AI capabilities.`,
   },
@@ -389,11 +389,11 @@ You're also learning to evaluate trade-offs. Does this tool save me time? At wha
   "m4-quiz": {
     id: "m4-quiz",
     title: "Module 4 Mastery Check",
-    explanation: `This quiz tests your practical tool knowledge. Can you choose the right tool for a job? Can you explain capabilities and limitations? Can you think through when a tool is helpful versus when it's not?
+    explanation: `This checkpoint measures tool-selection judgment across writing, image, and productivity systems. The target is choosing based on task requirements, risk tolerance, and operational constraints rather than brand familiarity.
 
-These aren't abstract questions. You're practicing decision-making you'll do in real life. The quiz provides low-stakes practice before high-stakes decisions like adopting new tools in your workflow.
+Correct answers depend on recognizing tradeoffs: speed versus accuracy, convenience versus privacy, and output quality versus verification effort.
 
-Pay attention to questions where you second-guessed yourself. Often, your first intuition is right. Other times, careful reading reveals details you initially missed. This calibration—learning when to trust your intuition and when to reconsider—is a meta-skill that improves decision-making overall.`,
+This decision framework transfers to new tools as the ecosystem changes. Names and interfaces evolve quickly, but constraint-based selection logic remains stable.`,
   },
 
   // MODULE 5: Data and Learning
@@ -402,9 +402,9 @@ Pay attention to questions where you second-guessed yourself. Often, your first 
     title: "Module 5: Data and Learning",
     explanation: `Data is the fuel of machine learning. Without quality data, you can't build effective AI systems. This module focuses on understanding data: how it's collected, how it's cleaned, and how it's prepared for learning algorithms.
 
-This module is more technical than previous ones. You're learning about data engineering concepts. If you're not planning to work in AI engineering, you might wonder why this matters. The answer: understanding data limitations helps you use AI systems wisely and critically.
+This module is more technical than previous ones and introduces core data engineering concepts. If you're not planning to work in AI engineering, you might wonder why this matters. The answer: understanding data limitations helps you use AI systems wisely and critically.
 
-The module is structured around a realistic workflow: collect data, clean it, prepare it, then use it. This progression mirrors actual data science work, so you're learning not just concepts but real-world processes.`,
+The module is structured around a realistic workflow: collect data, clean it, prepare it, then use it. This progression mirrors real data science operations rather than isolated concept study.`,
   },
 
   "m5-what-is-data": {
@@ -412,7 +412,7 @@ The module is structured around a realistic workflow: collect data, clean it, pr
     title: "What Is Data? From Raw Records to Insights",
     explanation: `Data is information encoded in a form machines can process. But data isn't neutral. Every dataset reflects choices: what to measure, how to measure it, what to exclude, what interpretation to embed.
 
-You're learning to think critically about data. "We have the data" doesn't mean "the data answers the question." Data might be incomplete, biased, or not measure what you think it measures.
+This encourages critical thinking about data. "We have the data" doesn't mean "the data answers the question." Data might be incomplete, biased, or not measure what you think it measures.
 
 This critical perspective is increasingly important. Companies make decisions based on data. Governments set policy based on data. Understanding that data is constructed (not discovered) and reflects human choices is foundational to critical data literacy.`,
   },
@@ -424,47 +424,47 @@ This critical perspective is increasingly important. Companies make decisions ba
 
 If you want to understand language, you collect text. But what text? Social media? Books? Academic papers? Transcribed conversations? Each choice leads to different learned patterns. A language model trained primarily on academic text will behave differently from one trained on social media.
 
-You're learning that data collection is a design choice with consequences. Understanding this prevents naive thinking like "we just let the algorithm figure it out from data." The data itself embeds human choices and biases.`,
+It establishes that data collection is a design choice with consequences. Understanding this prevents naive thinking like "we just let the algorithm figure it out from data." The data itself embeds human choices and biases.`,
   },
 
   "m5-data-cleaning": {
     id: "m5-data-cleaning",
     title: "Data Cleaning and Quality: Preparing for Learning",
-    explanation: `Real-world data is messy. Missing values, typos, outliers, inconsistent formatting—data has problems. Cleaning data is unglamorous but crucial. Garbage in, garbage out. A machine learning system trained on messy data will learn the mess, not the underlying pattern.
+    explanation: `Real-world data is messy. Missing values, typos, outliers, and inconsistent formatting create problems. Cleaning data is unglamorous but crucial. Garbage in, garbage out. A machine learning system trained on messy data will learn the mess, not the underlying pattern.
 
-Data scientists spend enormous time on data cleaning. It's not the fun part—the fun part is analyzing clean data or building models. But the foundation work of cleaning is essential.
+Data scientists spend enormous time on data cleaning. It's not the fun part-the fun part is analyzing clean data or building models. But the foundation work of cleaning is essential.
 
-You're learning that effective work is often invisible. Nobody celebrates data cleaning. But systems that work well are usually built on well-cleaned data. Understanding this unglamorous side of AI development prevents romantic views of AI as pure algorithmic innovation. Much of the work is actually data preparation.`,
+It establishes that effective work is often invisible. Nobody celebrates data cleaning. But systems that work well are usually built on well-cleaned data. Understanding this unglamorous side of AI development prevents romantic views of AI as pure algorithmic innovation. Much of the work is actually data preparation.`,
   },
 
   "m5-preprocessing": {
     id: "m5-preprocessing",
     title: "Preprocessing Techniques: Transforming Data",
-    explanation: `After cleaning, data is preprocessed—transformed into a format that learning algorithms can use effectively. This might mean scaling numbers to similar ranges, encoding categories as numbers, or splitting text into tokens.
+    explanation: `After cleaning, data is preprocessed-transformed into a format that learning algorithms can use effectively. This might mean scaling numbers to similar ranges, encoding categories as numbers, or splitting text into tokens.
 
 Preprocessing choices affect results. A poorly scaled dataset might cause learning algorithms to focus on large-scale variables and ignore small-scale ones, even if the small ones are important. Preprocessing isn't mindless transformation; it's intentional preparation.
 
-You're learning that machine learning success depends on countless small decisions before the algorithm ever runs. These decisions are often invisible in final results, but they determine whether results are good or misleading.`,
+It establishes that machine learning success depends on countless small decisions before the algorithm ever runs. These decisions are often invisible in final results, but they determine whether results are good or misleading.`,
   },
 
   "m5-feature-engineering": {
     id: "m5-feature-engineering",
     title: "Feature Engineering: Teaching the Algorithm What Matters",
-    explanation: `Feature engineering means creating new variables from raw data that help learning algorithms find patterns. If you're predicting house prices, the raw data might be square footage, bedrooms, and location. You might engineer a feature: price per square foot. This new feature directly captures what matters—value density.
+    explanation: `Feature engineering means creating new variables from raw data that help learning algorithms find patterns. If you're predicting house prices, the raw data might be square footage, bedrooms, and location. You might engineer a feature: price per square foot. This new feature directly captures what matters-value density.
 
 Feature engineering is part science, part art. It requires domain knowledge. What features would a real estate agent focus on? Those are probably the features that matter for predicting prices.
 
-You're learning that machine learning isn't fully automated. It requires human judgment about what matters. Feature engineering represents your knowledge being embedded in the system. A system with good features learns well. A system with poor features struggles regardless of algorithm sophistication.`,
+It establishes that machine learning isn't fully automated. It requires human judgment about what matters. Feature engineering represents your knowledge being embedded in the system. A system with good features learns well. A system with poor features struggles regardless of algorithm sophistication.`,
   },
 
   "m5-quiz": {
     id: "m5-quiz",
     title: "Module 5 Mastery Check",
-    explanation: `This quiz tests your understanding of data science workflows. Can you think through how to collect data for a problem? Can you identify data quality issues? Can you reason about preprocessing decisions?
+    explanation: `This checkpoint validates whether you can reason through the data pipeline that drives model behavior: collection choices, quality controls, preprocessing, and feature construction.
 
-These questions require you to think like a data scientist. You're taking abstract concepts and applying them to realistic scenarios. That's applied learning—the kind that actually changes how you think about problems.
+The key capability is linking upstream data decisions to downstream model outcomes. A model with poor inputs, weak labels, or inconsistent preprocessing will produce unreliable predictions regardless of architecture.
 
-If you found this module challenging, that's common. Data work is detail-oriented, and details matter enormously. Small mistakes compound. If you want to develop this skill further, that's valuable self-knowledge for career planning.`,
+Strong performance indicates you can evaluate AI outputs as data artifacts, not just algorithm artifacts, which is essential for debugging and governance.`,
   },
 
   // MODULE 6: AI Ethics and Society
@@ -485,7 +485,7 @@ The module covers concrete problems: bias in hiring algorithms, privacy violatio
 
 Understanding bias is crucial because biased systems feel objective. The algorithm is "just following the data," right? But data reflects human choices and prejudices. Calling it objective doesn't make it fair.
 
-You're learning to question automated systems. If an algorithm is making decisions that affect people, asking "is this biased?" should be automatic. And usually, the answer is "probably somewhat." The question becomes: Is it acceptable? Can it be fixed? Should we use this system at all?`,
+You are encouraged to question automated systems. If an algorithm is making decisions that affect people, asking "is this biased?" should be automatic. And usually, the answer is "probably somewhat." The question becomes: Is it acceptable? Can it be fixed? Should we use this system at all?`,
   },
 
   "m6-privacy-data": {
@@ -493,9 +493,9 @@ You're learning to question automated systems. If an algorithm is making decisio
     title: "Privacy and Your Data: Who Owns Information About You?",
     explanation: `AI systems require data. That data is often personal information about you: your searches, your location, your purchases, your communications. Who collects it? Who controls it? Who benefits from it?
 
-Privacy is increasingly valuable and threatened. You're learning to think about your digital footprint as valuable information that should be protected. Terms of service let companies collect enormous amounts of data, often without meaningful consent.
+Privacy is increasingly valuable and threatened. This framing encourages you to treat your digital footprint as valuable information that should be protected. Terms of service let companies collect enormous amounts of data, often without meaningful consent.
 
-You're learning to make informed choices about privacy. What information are you comfortable sharing? With whom? For what purposes? These are increasingly important personal decisions that shape your digital life.`,
+You can also make informed choices about privacy. What information are you comfortable sharing? With whom? For what purposes? These are increasingly important personal decisions that shape your digital life.`,
   },
 
   "m6-misinformation-deepfakes": {
@@ -505,7 +505,7 @@ You're learning to make informed choices about privacy. What information are you
 
 Understanding how these technologies work helps you develop skepticism. If a video seems shocking, where did it come from? Can I verify the source? Is this plausible given what I know about the person or situation? These critical questions are increasingly necessary.
 
-You're learning media literacy for the AI age. You'll encounter AI-generated content. Your job is to think critically: Is this real? Is this reliable? What's the source? What might be the motivation for creating or sharing this? This skeptical thinking protects you from manipulation.`,
+This builds media literacy for the AI age. You'll encounter AI-generated content. Your job is to think critically: Is this real? Is this reliable? What's the source? What might be the motivation for creating or sharing this? This skeptical thinking protects you from manipulation.`,
   },
 
   "m6-responsible-use": {
@@ -515,7 +515,7 @@ You're learning media literacy for the AI age. You'll encounter AI-generated con
 
 This section moves beyond abstract ethics to practical decision-making. How do you decide whether to use a tool? What questions should you ask? What values matter to you? These personal questions don't have universal answers, but working through them is important.
 
-You're developing ethical reasoning skills. You won't agree with everyone on every issue. But you can reason carefully, consider different perspectives, and make principled decisions. That's what responsible use looks like.`,
+It strengthens ethical reasoning skills. You won't agree with everyone on every issue. But you can reason carefully, consider different perspectives, and make principled decisions. That's what responsible use looks like.`,
   },
 
   "m6-ethical-dilemmas": {
@@ -523,7 +523,7 @@ You're developing ethical reasoning skills. You won't agree with everyone on eve
     title: "Ethical Dilemmas: Real Scenarios with Competing Values",
     explanation: `This section presents realistic scenarios with no clean answers. A company wants to use AI to optimize hiring; it's cheaper but introduces bias. A government wants to use facial recognition for security; it's effective but violates privacy. What do you do?
 
-You're practicing ethical reasoning. Different stakeholders value different things. Your job is to recognize the trade-offs, understand different perspectives, and make decisions aligned with your values. That's harder than following rules, but it's more honest.
+The section practices ethical reasoning. Different stakeholders value different things. Your job is to recognize the trade-offs, understand different perspectives, and make decisions aligned with your values. That's harder than following rules, but it's more honest.
 
 Scenarios are unreliable predictors of what you'll actually do when facing pressure. But practicing ethical reasoning now means you're more likely to make thoughtful decisions when real pressure comes. You're building ethical reflexes.`,
   },
@@ -531,21 +531,21 @@ Scenarios are unreliable predictors of what you'll actually do when facing press
   "m6-risk-safeguards": {
     id: "m6-risk-safeguards",
     title: "Risk Assessment and Safeguards: Preventing Harm",
-    explanation: `If something can go wrong, it probably will. Safeguards—redundancies, fail-safes, monitoring systems—exist because failure is inevitable. Rather than hoping systems work perfectly, you assume they won't and plan accordingly.
+    explanation: `If something can go wrong, it probably will. Safeguards-redundancies, fail-safes, and monitoring systems-exist because failure is inevitable. Rather than hoping systems work perfectly, you assume they won't and plan accordingly.
 
 Risk assessment means thinking about what could go wrong and what the consequences would be. High-consequence failures require more safeguards than low-consequence failures. A banking system that makes occasional errors is unacceptable. A recommendation system that occasionally makes poor recommendations is acceptable.
 
-You're learning to think defensively about systems. What could fail? What would be the impact? How can we reduce risk? This careful thinking prevents disasters. It's not glamorous, but it's crucial for responsible AI development and use.`,
+A defensive mindset about systems is essential. What could fail? What would be the impact? How can we reduce risk? This careful thinking prevents disasters. It's not glamorous, but it's crucial for responsible AI development and use.`,
   },
 
   "m6-quiz": {
     id: "m6-quiz",
     title: "Module 6 Mastery Check",
-    explanation: `This quiz tests your ethical reasoning about AI. Can you identify bias? Can you think through privacy implications? Can you reason about when AI use is appropriate versus when it isn't?
+    explanation: `This checkpoint evaluates whether you can identify and reason through AI risk domains such as bias, privacy loss, misinformation, and unsafe automation.
 
-These are sophisticated judgments. They require you to balance competing values and consider implications. There are rarely perfect answers, but there are better and worse ways of thinking about problems.
+Good answers require balancing competing constraints: utility, fairness, transparency, legal exposure, and potential harm. The goal is not moral certainty but defensible reasoning under tradeoffs.
 
-Pay special attention to questions that challenged your thinking. Ethical reasoning grows through confronting complexity and differing perspectives. Questions that made you reconsider are the most valuable for developing your thinking.`,
+This capability is critical in deployment decisions where technical feasibility alone is insufficient and governance requirements determine whether a system should launch at all.`,
   },
 
   // MODULE 7: AI for Business & Work
@@ -556,7 +556,7 @@ Pay special attention to questions that challenged your thinking. Ethical reason
 
 This module helps you think strategically about AI for careers and business. It's not about specific tools but about understanding how AI creates value and where opportunities emerge.
 
-You're learning to think like a strategist. Technical AI skills matter, but understanding business application, change management, and organizational strategy is equally important. This broader perspective is valuable regardless of career path.`,
+You learn to think like a strategist. Technical AI skills matter, but understanding business application, change management, and organizational strategy is equally important. This broader perspective is valuable regardless of career path.`,
   },
 
   "m7-workplace-ai": {
@@ -564,9 +564,9 @@ You're learning to think like a strategist. Technical AI skills matter, but unde
     title: "AI in the Workplace: Current Applications",
     explanation: `AI isn't replacing most jobs yet. It's augmenting them. A radiologist with an AI diagnostic tool is more effective than one without. A writer with an AI assistant drafts content faster. A developer with a code generation tool builds features quicker.
 
-Understanding current applications helps you see where AI might benefit your work. You're learning to think operationally: What could this tool do in my workflow? What would change? What would stay the same?
+Understanding current applications helps you see where AI might benefit your work. It also builds operational thinking: What could this tool do in my workflow? What would change? What would stay the same?
 
-You're also learning that AI adoption requires more than the technology. Training, change management, addressing worker concerns—these organizational factors often determine whether AI implementation succeeds or fails. Technology alone doesn't create value.`,
+You're also learning that AI adoption requires more than the technology. Training, change management, and addressing worker concerns-these organizational factors often determine whether AI implementation succeeds or fails. Technology alone doesn't create value.`,
   },
 
   "m7-future-jobs": {
@@ -576,7 +576,7 @@ You're also learning that AI adoption requires more than the technology. Trainin
 
 Jobs involving routine decision-making are most vulnerable to automation. Jobs requiring complex judgment, emotional intelligence, creativity, and adaptability are more resilient. Understanding this helps you think about your career strategy.
 
-You're learning that technological disruption is real but not predetermined. Society makes choices about how to manage disruption. Workers who understand AI and adapt are better positioned than those who resist. This isn't reassuring in a basic sense, but it's empowering: you have agency in responding to change.`,
+It establishes that technological disruption is real but not predetermined. Society makes choices about how to manage disruption. Workers who understand AI and adapt are better positioned than those who resist. This is not simplistic reassurance, but it is empowering: you have agency in responding to change.`,
   },
 
   "m7-industries": {
@@ -584,9 +584,9 @@ You're learning that technological disruption is real but not predetermined. Soc
     title: "AI Across Industries: Where Is AI Already Changing Work?",
     explanation: `Different industries are adopting AI at different rates. Healthcare, finance, manufacturing, and retail are leading. Understanding where AI is already having impact helps you see patterns and predict where it's headed.
 
-You're learning to observe and extrapolate. What enables AI adoption in healthcare? (High stakes motivate investment. Data-rich environment. Clear metrics.) Are these conditions present in other industries? If so, expect AI adoption there too.
+It trains you to observe and extrapolate. What enables AI adoption in healthcare? (High stakes motivate investment. Data-rich environment. Clear metrics.) Are these conditions present in other industries? If so, expect AI adoption there too.
 
-This pattern-recognizing skill is valuable across domains. You're not just learning about AI; you're learning to predict and navigate change. That skill is permanently valuable.`,
+This pattern-recognition skill is valuable across domains because it supports prediction and adaptation during technological change.`,
   },
 
   "m7-business-strategy": {
@@ -594,7 +594,7 @@ This pattern-recognizing skill is valuable across domains. You're not just learn
     title: "Building an AI Strategy: From Vision to Reality",
     explanation: `Having AI is different from using AI effectively. A strategy requires understanding: What problem are we solving? How does AI help? What infrastructure do we need? What's the timeline? What are the risks?
 
-You're learning to think strategically about technology adoption. Enthusiasm for new technology is common. Wise adoption requires careful planning. Understanding this prevents naive technology purchases that create more problems than they solve.
+Strategic thinking about technology adoption matters here. Enthusiasm for new technology is common. Wise adoption requires careful planning. Understanding this prevents naive technology purchases that create more problems than they solve.
 
 Even if you never build corporate strategy, understanding these questions helps you evaluate opportunities. When someone proposes an AI solution, you can ask: What problem are we solving? Is AI necessary? What are the risks? This critical evaluation protects you from hype.`,
   },
@@ -604,19 +604,19 @@ Even if you never build corporate strategy, understanding these questions helps 
     title: "Real-World Workflows: How Teams Actually Use AI",
     explanation: `This section moves from theoretical to practical. Real teams use AI in specific ways that solve specific problems. Understanding their workflows gives you concrete mental models to draw on.
 
-You're learning by example. Case studies show what's possible and what's realistic. They show that AI adoption is messy and iterative, not clean and predetermined. Teams experiment. Some experiments work. Others fail. Learning continues.
+This section uses examples. Case studies show what's possible and what's realistic. They show that AI adoption is messy and iterative, not clean and predetermined. Teams experiment. Some experiments work. Others fail. Learning continues.
 
-By studying real workflows, you're building your own understanding of what's possible in your context. You might not use the exact same approach, but you're learning patterns: where AI adds value, what gets in the way, how organizations adapt.`,
+Studying real workflows builds transferable pattern knowledge: where AI adds value, what blocks adoption, and how organizations adapt execution over time.`,
   },
 
   "m7-quiz": {
     id: "m7-quiz",
     title: "Module 7 Mastery Check",
-    explanation: `This quiz tests your strategic thinking about AI in business. Can you assess where AI would be valuable in an organization? Can you think through implementation challenges? Can you reason about career implications?
+    explanation: `This checkpoint measures strategic AI reasoning in organizational contexts: where AI creates measurable value, what adoption barriers exist, and which capabilities remain human-critical.
 
-These are judgment calls. There's no single right answer to complex organizational questions. But there are better and worse ways of thinking about them. The quiz rewards careful analysis.
+You should be able to evaluate proposals by problem definition, implementation risk, data readiness, and change-management requirements rather than by technical novelty alone.
 
-Questions you found difficult reveal where your business or strategy knowledge might have gaps. Those gaps aren't problems; they're learning opportunities. Identifying them means you can seek targeted development.`,
+These judgments shape real business outcomes because failed AI initiatives are usually strategy and execution failures, not model-architecture failures.`,
   },
 
   // MODULE 8: Creative AI Applications
@@ -637,7 +637,7 @@ The module shows real examples: AI music, AI visual art, AI writing, AI-assisted
 
 The answer depends on your definition. If creativity is novel pattern combination, then yes. If it requires intentionality or emotional expression, then it's complicated. Most honest assessment: AI can do some things creative humans do but lacks other essential elements of human creativity.
 
-You're learning philosophical nuance. Rather than binary yes/no, you're developing sophisticated understanding. AI is a tool that humans use creatively. Whether that makes the AI "creative" is a semantic question less important than understanding what it can actually do.`,
+This builds philosophical nuance beyond binary framing. AI is a tool humans can use creatively, even when debates about the label "creative" remain unresolved.`,
   },
 
   "m8-ai-augmented-creativity": {
@@ -645,19 +645,19 @@ You're learning philosophical nuance. Rather than binary yes/no, you're developi
     title: "AI-Augmented Creativity: Using AI Within Creative Processes",
     explanation: `Rather than replacing humans, AI augments creativity. Musicians use AI to generate backing tracks. Visual artists use AI for initial concept exploration. Writers use AI for brainstorming and editing suggestions.
 
-This augmentation model transforms the creative process. You're learning that tools always change their domain. Photography changed visual art not by replacing painters but by offering new capabilities. AI is similarly transformative—not replacing human creativity but expanding possibilities.
+This augmentation model transforms the creative process. It establishes that tools always change their domain. Photography changed visual art not by replacing painters but by offering new capabilities. AI is similarly transformative-not replacing human creativity but expanding possibilities.
 
-You're learning to think about your own creative process. Where might AI help? Brainstorming? Iteration? Technical execution? Where is human judgment essential? This thoughtful integration is how tools serve humans.`,
+You'll be prompted to think about your own creative process. Where might AI help? Brainstorming? Iteration? Technical execution? Where is human judgment essential? This thoughtful integration is how tools serve humans.`,
   },
 
   "m8-ai-knowledge": {
     id: "m8-ai-knowledge",
     title: "AI in Knowledge Work: Research, Analysis, and Learning",
-    explanation: `Knowledge workers—researchers, analysts, educators—increasingly use AI for information processing. AI summarizes research. AI identifies patterns in data. AI helps organize and synthesize information.
+    explanation: `Knowledge workers-researchers, analysts, and educators-increasingly use AI for information processing. AI summarizes research, identifies patterns in data, and helps organize and synthesize information.
 
 This augmentation is powerful because knowledge work is limited by human attention and time. An AI that processes large document collections and identifies patterns can expand what's possible. Researchers can explore broader terrain. Analysts can consider more information.
 
-You're learning that knowledge work isn't being replaced; it's being transformed. The worker's role shifts from information processing toward judgment: evaluating AI summaries, deciding what patterns matter, synthesizing insights. That's arguably more valuable work than pre-AI information processing.`,
+It establishes that knowledge work isn't being replaced; it's being transformed. The worker's role shifts from information processing toward judgment: evaluating AI summaries, deciding what patterns matter, synthesizing insights. That's arguably more valuable work than pre-AI information processing.`,
   },
 
   "m8-collaboration": {
@@ -665,19 +665,19 @@ You're learning that knowledge work isn't being replaced; it's being transformed
     title: "Human-AI Collaboration: Building Better Together",
     explanation: `The most powerful model isn't humans alone or AI alone but humans and AI collaborating. Humans provide judgment, creativity, and contextual understanding. AI provides pattern recognition, tireless information processing, and novel combinations.
 
-You're learning an increasingly important skill: collaborating with AI systems. How do you use feedback from an AI system effectively? How do you verify its output? How do you combine AI capability with human judgment?
+An increasingly important skill is collaborating with AI systems. How do you use feedback from an AI system effectively? How do you verify its output? How do you combine AI capability with human judgment?
 
-This collaborative model requires humans to understand AI limitations and strengths. You can't just trust AI blindly. But you also can't ignore its output. Effective collaboration means balancing skepticism with openness—trusting enough to benefit while maintaining critical evaluation.`,
+This collaborative model requires humans to understand AI limitations and strengths. You can't just trust AI blindly. But you also can't ignore its output. Effective collaboration means balancing skepticism with openness-trusting enough to benefit while maintaining critical evaluation.`,
   },
 
   "m8-quiz": {
     id: "m8-quiz",
     title: "Module 8 Mastery Check",
-    explanation: `This quiz tests your thinking about creativity and AI. Can you distinguish between AI replacing creativity and AI augmenting it? Can you imagine where AI might fit into creative processes? Can you reason about where human judgment remains essential?
+    explanation: `This checkpoint tests whether you can reason about AI in creative and knowledge workflows without collapsing into either hype or dismissal.
 
-These questions require integrating technical knowledge with humanistic concerns. That integration is what sophisticated AI literacy looks like. You're not just understanding AI technically; you're understanding its role in human culture and work.
+The central distinction is augmentation versus replacement: where models accelerate exploration, drafting, and synthesis, and where human intent, taste, accountability, and context remain decisive.
 
-Pay special attention to scenarios that challenged your assumptions about AI. Those challenges are opportunities to refine your thinking.`,
+Strong answers integrate mechanism and culture at once, recognizing both the technical capability of generative systems and the authorship, quality, and trust questions they introduce.`,
   },
 };
 
@@ -707,3 +707,7 @@ export function searchExplanations(query: string): ComponentExplanation[] {
       exp.title.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery),
   );
 }
+
+
+
+
