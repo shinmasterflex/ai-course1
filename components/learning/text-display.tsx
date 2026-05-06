@@ -128,6 +128,257 @@ type InferentialStatement = {
   isTrue: boolean
 }
 
+const moduleStatementBanks: Record<string, InferentialStatement[]> = {
+  "module-0": [
+    {
+      statement: "Beginners make faster progress with one low-risk workflow, a named owner, and a simple success metric.",
+      explanation: "The course starts with practical first steps rather than broad, abstract AI theory.",
+      isTrue: true,
+    },
+    {
+      statement: "The safest beginner strategy is to wait until the AI market fully stabilizes before trying anything.",
+      explanation: "The module argues for careful, small-scale experimentation now instead of indefinite delay.",
+      isTrue: false,
+    },
+    {
+      statement: "Separating hype from practical use helps beginners choose safer first AI experiments.",
+      explanation: "Clear mental models improve early adoption decisions.",
+      isTrue: true,
+    },
+    {
+      statement: "A strong start to AI adoption means collecting tools first and deciding on goals later.",
+      explanation: "The course emphasizes outcomes, guardrails, and ownership before shopping for tools.",
+      isTrue: false,
+    },
+  ],
+  "module-1": [
+    {
+      statement: "AI decisions improve when teams distinguish models, tools, automations, agents, and service options.",
+      explanation: "Module 1 is about building clear language and decision categories before buying.",
+      isTrue: true,
+    },
+    {
+      statement: "The best AI tool is usually the one with the most hype, even if task fit is weak.",
+      explanation: "The course emphasizes fit, maturity, lock-in risk, and security over popularity.",
+      isTrue: false,
+    },
+    {
+      statement: "A useful tool comparison includes workflow fit, cost, risk, and integration quality.",
+      explanation: "Those are core decision lenses in this module.",
+      isTrue: true,
+    },
+    {
+      statement: "Security and data checks can wait until after a tool is widely adopted.",
+      explanation: "Basic safety review is positioned as part of early evaluation, not an afterthought.",
+      isTrue: false,
+    },
+  ],
+  "module-2": [
+    {
+      statement: "AI opportunity discovery should start with business outcomes and the workflows tied to them.",
+      explanation: "The module prioritizes measurable value over idea collection alone.",
+      isTrue: true,
+    },
+    {
+      statement: "Whichever department asks first should usually get the first AI investment.",
+      explanation: "Requests are weaker signals than impact, effort, and readiness.",
+      isTrue: false,
+    },
+    {
+      statement: "Quick wins and bigger AI bets should be separated because they require different levels of effort and change.",
+      explanation: "The module teaches structured prioritization, not one-size-fits-all sequencing.",
+      isTrue: true,
+    },
+    {
+      statement: "Repetitive work and bottlenecks are poor places to look for AI value.",
+      explanation: "Those are often high-leverage places to save time or improve quality.",
+      isTrue: false,
+    },
+  ],
+  "module-3": [
+    {
+      statement: "A defensible AI tool recommendation uses a scorecard covering fit, risk, cost, and operational practicality.",
+      explanation: "Module 3 focuses on evidence-based tool selection.",
+      isTrue: true,
+    },
+    {
+      statement: "If a tool demo is impressive, pricing, integration, and security details become secondary.",
+      explanation: "The module explicitly teaches learners to check those issues before committing.",
+      isTrue: false,
+    },
+    {
+      statement: "Sometimes a general assistant is enough, and sometimes a specialized tool is worth the added complexity.",
+      explanation: "The decision depends on workflow needs and controls, not category prestige.",
+      isTrue: true,
+    },
+    {
+      statement: "The right procurement move is always to buy immediately rather than pilot or wait.",
+      explanation: "The module includes buy, wait, or pilot as distinct paths for a reason.",
+      isTrue: false,
+    },
+  ],
+  "module-4": [
+    {
+      statement: "Choosing an AI partner should reflect urgency, capability gaps, ownership goals, and delivery risk.",
+      explanation: "This module is about selecting the right partner model for the stage and outcome.",
+      isTrue: true,
+    },
+    {
+      statement: "A strong agency reputation is enough evidence to skip scope and accountability questions.",
+      explanation: "The course teaches detailed diligence, pilot structure, and explicit success criteria.",
+      isTrue: false,
+    },
+    {
+      statement: "A safe pilot is meant to create learning before a larger rollout, not to guarantee a full commitment.",
+      explanation: "Pilot design is framed as a risk-reduction and evidence-gathering step.",
+      isTrue: true,
+    },
+    {
+      statement: "AI pricing is easiest to manage when change-order risk and expansion terms stay vague.",
+      explanation: "Hidden pricing and vague terms are treated as diligence risks, not advantages.",
+      isTrue: false,
+    },
+  ],
+  "module-5": [
+    {
+      statement: "AI ROI should be tied to business outcomes, baseline comparisons, and realistic adoption effort.",
+      explanation: "Module 5 focuses on measurable value rather than abstract enthusiasm.",
+      isTrue: true,
+    },
+    {
+      statement: "High AI activity counts are enough to prove business impact on their own.",
+      explanation: "The course calls out activity-only metrics as potentially misleading.",
+      isTrue: false,
+    },
+    {
+      statement: "A balanced AI portfolio can include quick wins and longer bets when funding is stage-gated.",
+      explanation: "That is the module's recommended budgeting pattern.",
+      isTrue: true,
+    },
+    {
+      statement: "Once expected impact looks strong, risks and assumptions do not need to appear in progress reporting.",
+      explanation: "Credible reporting combines outcomes, risk indicators, and next decisions.",
+      isTrue: false,
+    },
+  ],
+  "module-6": [
+    {
+      statement: "Responsible AI use includes checks for bias, privacy, misinformation, and human oversight.",
+      explanation: "Those safeguards define the module's safety baseline.",
+      isTrue: true,
+    },
+    {
+      statement: "Sensitive personal or confidential data is usually safe to paste into public AI tools if the task is helpful enough.",
+      explanation: "Usefulness does not remove privacy and policy obligations.",
+      isTrue: false,
+    },
+    {
+      statement: "Verification through trusted sources matters even when AI content looks polished or urgent.",
+      explanation: "The module teaches learners to slow down and verify before acting.",
+      isTrue: true,
+    },
+    {
+      statement: "If an AI system saves time, fairness and governance checks can be postponed until after rollout.",
+      explanation: "Risk controls are presented as part of safe adoption, not optional later work.",
+      isTrue: false,
+    },
+  ],
+  "module-7": [
+    {
+      statement: "A strong AI roadmap sequences pilots, rollout decisions, and review points around real team capacity.",
+      explanation: "The module is about staged adoption, not overloaded launch plans.",
+      isTrue: true,
+    },
+    {
+      statement: "AI adoption succeeds mainly by giving teams tools quickly, even without process or change planning.",
+      explanation: "The course treats workflow design and change support as essential.",
+      isTrue: false,
+    },
+    {
+      statement: "Internal champions can help adoption scale when they are tied to real workflows and local support.",
+      explanation: "Champion networks are included to improve implementation quality across functions.",
+      isTrue: true,
+    },
+    {
+      statement: "Review rhythms matter less than tool choice once rollout has started.",
+      explanation: "Regular review is part of keeping the roadmap adaptive and controlled.",
+      isTrue: false,
+    },
+  ],
+  "module-8": [
+    {
+      statement: "A workflow should only become an agent when the task actually needs planning, tool use, or iteration.",
+      explanation: "Module 8 separates agent use cases from simpler automation patterns.",
+      isTrue: true,
+    },
+    {
+      statement: "More autonomous automation is always better than a simpler workflow with clearer controls.",
+      explanation: "The course explicitly challenges unnecessary agent complexity.",
+      isTrue: false,
+    },
+    {
+      statement: "Human review and recovery paths are important wherever automation mistakes could cause material harm.",
+      explanation: "Human-in-the-loop design is a core operating principle in this module.",
+      isTrue: true,
+    },
+    {
+      statement: "Once automation is live, monitoring and ownership are mostly optional.",
+      explanation: "The automation blueprint includes monitoring, accountability, and failure handling.",
+      isTrue: false,
+    },
+  ],
+  "module-9": [
+    {
+      statement: "A good AI stack reduces sprawl by choosing tools that fit together, stay governable, and have clear owners.",
+      explanation: "This module is about maintainability as much as capability.",
+      isTrue: true,
+    },
+    {
+      statement: "The healthiest AI stack usually has overlapping tools for the same job because redundancy always improves operations.",
+      explanation: "Unnecessary overlap often increases cost and ownership confusion.",
+      isTrue: false,
+    },
+    {
+      statement: "Vendor consolidation should be based on overlap, maintainability, and switching trade-offs, not just discounts.",
+      explanation: "The course frames consolidation as a structured decision.",
+      isTrue: true,
+    },
+    {
+      statement: "Tool ownership becomes less important as the stack grows and more teams get access.",
+      explanation: "Growing stacks need clearer ownership, not less.",
+      isTrue: false,
+    },
+  ],
+  "module-10": [
+    {
+      statement: "Future-aware AI strategy focuses on signals that materially change competition, workflows, or capability economics.",
+      explanation: "Module 10 teaches learners to separate real strategic signals from noise.",
+      isTrue: true,
+    },
+    {
+      statement: "Lower model costs mostly remove the need for strategy because AI markets become self-explanatory.",
+      explanation: "Cheaper models change the basis of competition; they do not eliminate strategic choices.",
+      isTrue: false,
+    },
+    {
+      statement: "AI planning should adapt as roles, partner models, and operating assumptions change over time.",
+      explanation: "The module emphasizes future readiness through disciplined adaptation.",
+      isTrue: true,
+    },
+    {
+      statement: "The best future plan is broad trend awareness without focused bets or ownership.",
+      explanation: "The course argues for focused strategic bets with execution discipline.",
+      isTrue: false,
+    },
+  ],
+}
+
+function getModuleIdFromScope(scopeKey: string) {
+  const [pathFragment] = scopeKey.split("::")
+  const moduleMatch = pathFragment.match(/module-\d+/)
+  return moduleMatch?.[0] ?? null
+}
+
 const usedStatementsByScope = new Map<string, Set<string>>()
 const statementByScopeAndInstance = new Map<string, InferentialStatement>()
 const USED_STATEMENTS_STORAGE_KEY = "ai-course:used-statements-by-scope:v1"
@@ -213,6 +464,14 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
 
 function pickInferentialStatement(sourceText: string, scopeKey: string, instanceKey: string) {
   const normalized = sourceText.toLowerCase()
+  const moduleId = getModuleIdFromScope(scopeKey)
+
+  if (moduleId) {
+    const currentModuleStatements = moduleStatementBanks[moduleId]
+    if (currentModuleStatements) {
+      return pickUnusedStatement(currentModuleStatements, sourceText, scopeKey, instanceKey)
+    }
+  }
 
   const sectionBanks: Array<{ keywords: string[]; statements: InferentialStatement[] }> = [
     {
