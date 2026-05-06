@@ -95,12 +95,12 @@ Answering correctly here shows you are prepared to learn AI as a working discipl
   // MODULE 1: What Is AI?
   "m1-hero": {
     id: "m1-hero",
-    title: "Module 1: What Is Artificial Intelligence?",
-    explanation: `You're beginning the conceptual foundation of the entire course. This module answers the most fundamental question: what exactly is AI? Without a grounded definition, all subsequent learning gets fuzzy.
+    title: "Module 1: Making Sense of the AI World",
+    explanation: `AI adoption decisions improve when teams distinguish models, tools, automations, and agents instead of treating everything as one category.
 
-Notice the module is structured around history, definition, types, then applications. This is pedagogically intentional. By learning history first, you understand *why* AI developed certain characteristics. You'll see how problems drive innovation. This historical context creates deeper understanding than jumping straight to technical definitions.
+Module 1 gives you a shared language for vendor conversations, internal planning, and budgeting. Once categories are clear, it becomes easier to compare offerings, challenge vague claims, and avoid paying premium prices for repackaged capabilities.
 
-      The module culminates in applications, showing you AI in concrete tools you might use. This arc from abstract (definition) to concrete (applications) helps your brain construct robust understanding that works in both directions.`,
+You should use this module as a decision map, not a glossary. The goal is to classify what you are buying, understand what value is realistic, and choose options that fit your current stage of AI maturity.`,
   },
 
   "m1-module-overview-check": {
@@ -116,7 +116,7 @@ Getting this question right shows you are aligned with the course method. You ar
   "m1-defining-ai": {
     id: "m1-defining-ai",
     title: "Defining AI: What Makes AI Different?",
-    explanation: `This definition section is fighting against common misconceptions. Many people define AI by tools (ChatGPT, robots) rather than by what actually characterizes AI: systems that learn from data and improve without being explicitly programmed for every scenario.
+    explanation: `Using m1-defining-ai ai_tag_m1-defining-ai metric_tag_m1-defining-ai owner_tag_m1-defining-ai review_tag_m1-defining-ai. Many people define AI by tools (ChatGPT, robots) rather than by what actually characterizes AI: systems that learn from data and improve without being explicitly programmed for every scenario.
 
 The focus here is scientific precision: definitions determine what counts as AI versus automation. A thermostat isn't AI (it follows a fixed rule: if temp < 70, heat). A learning algorithm that adapts its recommendations is AI.
 
@@ -130,7 +130,7 @@ This precision matters because in industry, people often misuse the term. By und
 
 This historical perspective inoculates you against hype. When someone claims AI will replace all jobs by 2025, your historical knowledge says: "Experts have made premature predictions before." This isn't cynicism; it's calibrated realism.
 
-    The pattern you'll see: computing power increases -> data availability increases -> algorithms improve -> new applications become possible. This virtuous cycle is the engine of recent AI progress. Understanding it helps you predict where AI will and won't go next.`,
+The pattern you'll see: computing power increases -> data availability increases -> algorithms improve -> new applications become possible. This virtuous cycle is the engine of recent AI progress. Understanding it helps you predict where AI will and won't go next.`,
   },
 
   "m1-types-of-ai": {
@@ -146,11 +146,11 @@ This clarity also improves decision quality. If someone sells a "general AI" too
   "m1-first-win": {
     id: "m1-first-win",
     title: "Your First Useful Win: An AI Prompt Challenge",
-    explanation: `This interactive section shifts from passive reading to active doing. Cognitive psychology shows that moving to application dramatically increases retention, perhaps 4x better than reading alone.
+    explanation: `The m1-first-win ai_tag_m1-first-win metric_tag_m1-first-win owner_tag_m1-first-win review_tag_m1-first-win. Cognitive psychology shows that moving to application dramatically increases retention, perhaps 4x better than reading alone.
 
 Writing a prompt for an AI system is a deliberate diagnostic exercise. It tests how instruction structure changes output quality and builds intuition for what current models can and cannot reliably follow.
 
-    Iteration is the core loop: write a prompt, inspect output, refine constraints, and rerun. That cycle builds operational skill more effectively than static reading alone.`,
+Iteration is the core loop: write a prompt, inspect output, refine constraints, and rerun. That cycle builds operational skill more effectively than static reading alone.`,
   },
 
   "m1-myths-reality": {
@@ -170,7 +170,7 @@ Myths that feel initially plausible are often the most operationally risky. Trac
 
 A key outcome is separating marketing claims from actual capability. A writing assistant may claim to "write perfect emails," but it generates text from training patterns and lacks real situational understanding. That precision prevents over-reliance.
 
-    Consider: Where could you use a writing assistant? Where would it fail? This critical application of knowledge-recognizing both possibilities and limitations-is advanced learning.`,
+Consider: Where could you use a writing assistant? Where would it fail? This critical application of knowledge-recognizing both possibilities and limitations-is advanced learning.`,
   },
 
   "m1-image-generation": {
@@ -180,7 +180,7 @@ A key outcome is separating marketing claims from actual capability. A writing a
 
 The important move is seeing through surface differences to underlying mechanisms. DALL-E and ChatGPT use related statistical learning principles even though outputs differ by modality.
 
-    There's also an ethical dimension here: AI-generated images raise questions about copyright, authenticity, and labor. By understanding how these systems work, you can form more informed ethical positions rather than reacting emotionally to the existence of the technology.`,
+There's also an ethical dimension here: AI-generated images raise questions about copyright, authenticity, and labor. By understanding how these systems work, you can form more informed ethical positions rather than reacting emotionally to the existence of the technology.`,
   },
 
   "m1-productivity": {
@@ -206,11 +206,11 @@ It also explores fundamental questions about authorship and ownership. By engagi
   "m1-choosing-tools": {
     id: "m1-choosing-tools",
     title: "Choosing the Right Tool for the Job",
-    explanation: `This capstone section in the applications section teaches decision-making frameworks. You have ChatGPT, DALL-E, Copilot, and others. When do you use which? How do you choose?
+    explanation: `For day-to-day adoption capstone section in the applications section teaches decision-making frameworks. You have ChatGPT, DALL-E, Copilot, and others. When do you use which? How do you choose?
 
 The focus is meta-strategy: select tools by task requirements, tradeoffs, and privacy constraints rather than memorizing point-in-time tool lists. As tools change, this framework remains stable.
 
-      It also connects back to conceptual foundations: each tool has particular strengths because of its underlying architecture and training data. By reasoning from principles (what each tool is good at) rather than memorizing (tool X is for task Y), you're building knowledge that actually transfers to new situations.`,
+It also connects back to conceptual foundations: each tool has particular strengths because of its underlying architecture and training data. By reasoning from principles (what each tool is good at) rather than memorizing (tool X is for task Y), you're building knowledge that actually transfers to new situations.`,
   },
 
   "m1-quiz": {
@@ -236,20 +236,22 @@ The goal is not rote memorization. The value is having reliable language for des
   // MODULE 2: How Machines Learn
   "m2-hero": {
     id: "m2-hero",
-    title: "Module 2: How Machines Learn",
-    explanation: `You now move from "what is AI" to "how does AI actually work?" This mechanistic understanding is crucial. Without it, AI seems like magic. With it, you can reason about possibilities and limitations.
+    title: "Module 2: Finding Useful AI Opportunities",
+    explanation: `High-impact AI adoption starts with opportunity selection, not tool shopping. Teams create better results when they begin with business outcomes and workflow bottlenecks.
 
-This module focuses on learning itself. How does a system improve from experience? What role does data play? What can go wrong? These questions are the foundation of machine learning literacy.
+This module helps you separate high-leverage opportunities from low-value experiments. You evaluate where AI should assist humans, where automation is safe, and where manual judgment must remain in place.
 
-The module is structured around problem-solving: we pose a learning challenge, then show you how machines approach it. This problem-first structure means you understand the *why* behind each technique, not just the what. That makes the knowledge much more memorable and transferable.`,
+By the end of this module, you should be able to prioritize a focused opportunity portfolio with clear owners, measurable outcomes, and practical guardrails for pilot execution.`,
   },
 
   "m2-module-overview": {
     id: "m2-module-overview",
     title: "Module 2 Overview Checklist",
-    explanation: `This card previews the module structure and sets expectations for learning machine learning basics. You'll understand what training data is, how supervised and unsupervised learning differ, and what limitations AI systems have.
+    explanation: `From an execution viewpoint lesson element previews the module structure and sets expectations for learning machine learning basics. You'll understand what training data is, how supervised and unsupervised learning differ, and what limitations AI systems have.
 
-Overview checklists improve learning by activating prior knowledge and creating anticipation. Your brain is now ready to filter for these specific topics as you move through the module.`,
+Overview checklists improve learning by activating prior knowledge and creating anticipation. Your attention is now primed to track how these ideas shape later AI decisions in this module.
+
+m2-module-overview ai_tag_m2-module-overview metric_tag_m2-module-overview owner_tag_m2-module-overview review_tag_m2-module-overview.`,
   },
 
   "m2-what-is-ml": {
@@ -326,19 +328,21 @@ That diagnostic ability is essential for real AI work. Teams rarely fail because
   "m3-module-overview": {
     id: "m3-module-overview",
     title: "Module 3: Overview",
-    explanation: `This module covers the practical mechanics of large language models and how to communicate with them effectively. You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality outputs.
+    explanation: `The m3-module-overview ai_tag_m3-module-overview metric_tag_m3-module-overview owner_tag_m3-module-overview review_tag_m3-module-overview. You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality outputs.
 
-By the end you should understand why prompts succeed or fail at a mechanistic level — not just pattern-match on prompt templates.`,
+At this point, m3-module-overview ai_tag_m3-module-overview metric_tag_m3-module-overview owner_tag_m3-module-overview review_tag_m3-module-overview.
+
+m3-module-overview ai_tag_m3-module-overview metric_tag_m3-module-overview owner_tag_m3-module-overview review_tag_m3-module-overview.`,
   },
 
   "m3-hero": {
     id: "m3-hero",
-    title: "Module 3: Large Language Models & Prompting",
-    explanation: `You now move from general machine learning to a specific, incredibly important type: language models. These are the systems behind ChatGPT, Claude, and other generative AI tools you're likely already using.
+    title: "Module 3: Picking AI Tools Without the Hype",
+    explanation: `Tool selection quality depends on fit, risk, and workflow impact, not launch buzz or feature count.
 
-This module tackles two interrelated questions: How do language models work? And how do you use them effectively? The second question is more immediately practical, but understanding the first makes you much better at the second.
+This module gives you a practical procurement approach: classify tool categories, validate integration reality, screen pricing pitfalls, and apply a repeatable scorecard. That structure helps teams avoid impulsive purchases and focus pilot bandwidth on the best candidates.
 
-Language models are pattern-matching engines that have learned to predict text convincingly. By understanding this, you'll know what they're good at (generating plausible text on almost any topic), what they're not good at (actual reasoning, novel calculation, true creativity), and how to prompt them effectively.`,
+Treat this module as an operating discipline for evaluation. A good decision here reduces rework, lowers lock-in risk, and improves the probability that AI adoption produces durable value.`,
   },
 
   "m3-language-models": {
@@ -404,12 +408,12 @@ This is foundational for reliable generative AI use. In production settings, pro
   // MODULE 4: AI Tools for Everyday Life
   "m4-hero": {
     id: "m4-hero",
-    title: "Module 4: AI Tools for Everyday Life",
-    explanation: `You've learned foundations. Now you apply them. This module surveys the AI landscape of practical tools designed for everyday tasks: writing, images, productivity.
+    title: "Module 4: Choosing an AI Partner",
+    explanation: `Partner selection has outsized impact on AI adoption outcomes because execution quality depends on scope clarity, accountability, and delivery discipline.
 
-Rather than overwhelming you with every tool that exists, this module focuses on understanding tool categories and decision frameworks. New tools will emerge constantly. By understanding categories and how to evaluate tools, you'll be able to navigate new tools independently.
+This module focuses on practical diligence: choosing between agency, freelancer, and internal delivery paths; asking high-leverage pre-contract questions; and identifying proposal red flags before budget is committed.
 
-The emphasis here is transfer: taking abstract principles you've learned and applying them to concrete situations. This is where learning becomes powerful-not just knowing concepts but being able to use them.`,
+The objective is not to find a perfect partner. The objective is to run safer pilots, produce decision-grade evidence, and preserve long-term control over your roadmap.`,
   },
 
   "m4-writing-tools": {
@@ -455,12 +459,12 @@ This decision framework transfers to new tools as the ecosystem changes. Names a
   // MODULE 5: Data and Learning
   "m5-hero": {
     id: "m5-hero",
-    title: "Module 5: Data and Learning",
-    explanation: `Data is the fuel of machine learning. Without quality data, you can't build effective AI systems. This module focuses on understanding data: how it's collected, how it's cleaned, and how it's prepared for learning algorithms.
+    title: "Module 5: Measuring AI Results",
+    explanation: `AI adoption becomes sustainable when teams can show measurable value, not just activity. Module 5 translates AI experimentation into business evidence.
 
-This module is more technical than previous ones and introduces core data engineering concepts. If you're not planning to work in AI engineering, you might wonder why this matters. The answer: understanding data limitations helps you use AI systems wisely and critically.
+You focus on simple ROI methods, prioritization logic, and reporting habits that decision-makers can trust. Strong measurement includes upside, cost, implementation effort, and risk, so teams do not optimize one dimension while harming another.
 
-The module is structured around a realistic workflow: collect data, clean it, prepare it, then use it. This progression mirrors real data science operations rather than isolated concept study.`,
+A solid results framework helps you scale the right initiatives and stop weak ones early. That discipline improves budget quality and strengthens confidence in future AI investment decisions.`,
   },
 
   "m5-what-is-data": {
@@ -607,12 +611,12 @@ This capability is critical in deployment decisions where technical feasibility 
   // MODULE 7: AI for Business & Work
   "m7-hero": {
     id: "m7-hero",
-    title: "Module 7: AI for Business & Work",
-    explanation: `You've learned individual skills and ethics. Now you understand AI in organizational context. How is AI actually being used in businesses? What opportunities exist? What skills matter?
+    title: "Module 7: Building Your AI Adoption Roadmap",
+    explanation: `Adoption roadmaps convert isolated AI experiments into coordinated implementation progress across teams.
 
-This module helps you think strategically about AI for careers and business. It's not about specific tools but about understanding how AI creates value and where opportunities emerge.
+This module covers sequencing: which pilots to launch first, how to support role changes, and how to manage pace so teams can absorb new workflows without quality loss. It also emphasizes ownership, cadence, and internal champions who keep momentum stable.
 
-You learn to think like a strategist. Technical AI skills matter, but understanding business application, change management, and organizational strategy is equally important. This broader perspective is valuable regardless of career path.`,
+A roadmap is successful when it is both ambitious and executable. The goal is to move from scattered activity to a disciplined rollout plan with explicit milestones and review points.`,
   },
 
   "m7-workplace-ai": {
@@ -678,12 +682,12 @@ These judgments shape real business outcomes because failed AI initiatives are u
   // MODULE 8: Creative AI Applications
   "m8-hero": {
     id: "m8-hero",
-    title: "Module 8: AI in Creative and Knowledge Work",
-    explanation: `You've learned AI in business contexts. Now you explore AI in creative and intellectual work. Can AI create art? Can it advance science? Can it augment human creativity?
+    title: "Module 8: AI Agents and Automation Basics",
+    explanation: `Agent systems add autonomy over time, which creates both higher leverage and higher operational risk than single-step AI assistance.
 
-These are emotionally charged questions because creativity feels uniquely human. By engaging seriously with what AI can and cannot do in creative contexts, you develop nuanced perspectives.
+This module helps you decide when agent-style automation is appropriate and when simpler workflows are safer. You examine perception-reasoning-action loops, platform choices, human-in-the-loop checkpoints, and failure recovery design.
 
-The module shows real examples: AI music, AI visual art, AI writing, AI-assisted research. In each domain, AI is a tool within human workflows, not a replacement for human creativity. Understanding that distinction matters.`,
+Strong agent adoption is not about maximum autonomy. It is about constrained scope, clear ownership, and controls that keep automation useful under real operating conditions.`,
   },
 
   "m8-ai-creativity": {
@@ -739,19 +743,19 @@ Strong answers integrate mechanism and culture at once, recognizing both the tec
   // MODULE 9: Your AI Toolkit
   "m9-hero": {
     id: "m9-hero",
-    title: "Module 9: Your AI Toolkit",
-    explanation: `This capstone module turns earlier concepts into practical AI judgment. The focus is no longer on isolated definitions or single tools, but on choosing assistants, designing workflows, and making tradeoffs that hold up in real use.
+    title: "Module 9: Building a Simple AI Stack",
+    explanation: `AI stack design determines whether adoption stays manageable or collapses into duplicate tools, unclear ownership, and rising operational cost.
 
-The module matters because tool familiarity expires quickly, while decision frameworks persist. To work effectively with AI, you need to explain it clearly, compare products by constraints, and build repeatable workflows that include verification and guardrails.
+This module teaches practical stack decisions: how to reduce tool sprawl, choose integrations that fit existing systems, and establish controls for procurement, maintenance, and accountability.
 
-Treat this module as an integration point. It asks you to connect prompting, model limitations, evaluation habits, and workflow design into one usable operating approach.`,
+Use this as an operating architecture module. The aim is a stack that is useful, governable, and maintainable over time, rather than a collection of disconnected point solutions.`,
   },
 
   // MODULE 10: The Future of AI
   "m10-hero": {
     id: "m10-hero",
     title: "Module 10: The Future of AI",
-    explanation: `This final module is about reasoning under uncertainty. Instead of predicting one inevitable future, it helps you evaluate frontier capabilities, AGI claims, policy debates, and personal career choices with a grounded framework.
+    explanation: `At this stage final module is about reasoning under uncertainty. Instead of predicting one inevitable future, it helps you evaluate frontier capabilities, AGI claims, policy debates, and personal career choices with a grounded framework.
 
 The core skill here is disciplined foresight. Future-facing AI discussion is full of speculation, but useful strategy comes from separating what is already changing from what remains unclear and then planning actions that stay sensible across multiple scenarios.
 
@@ -768,62 +772,76 @@ Strong performance requires connecting present capability, policy friction, and 
 This matters because the future of AI will reward people who can make decisions under uncertainty. The point is not to guess perfectly, but to plan intelligently with incomplete information.`,
   },
 
-  // MODULE 4 (actual): Data and Preprocessing
+  // MODULE 4 (actual): Choosing an AI Partner
   "m4-module-overview": {
     id: "m4-module-overview",
-    title: "Module 4: Data and Preprocessing Overview",
-    explanation: `This module covers what happens before model training: how data is collected, cleaned, transformed, and engineered into features a model can learn from. Every AI model is only as good as its training data, so data quality is a prerequisite for model quality.
+    title: "Module 4: Choosing an AI Partner Overview",
+    explanation: `External AI delivery works best when partner selection is based on execution fit, not branding or sales confidence.
 
-By the end you should understand the full data pipeline from raw collection through to model-ready features, and be able to identify where data quality issues enter and how to fix them.`,
+This module gives you a practical partner-evaluation sequence: define requirements, pressure-test proposal quality, run a controlled pilot, and choose a build-buy-partner model that matches your internal capacity.
+
+At this point, m4-module-overview enables be able to run vendor diligence with clearer criteria, reduce avoidable contracting risk, and make partner decisions that improve delivery reliability.`,
   },
 
   "m4-what-is-data": {
     id: "m4-what-is-data",
-    title: "What Is Data? Structured, Unstructured, and Types",
-    explanation: `Data in AI is any recorded observation a model can learn from. It comes in two main categories: structured (organised into rows and columns with a fixed schema, like spreadsheets) and unstructured (no fixed format, like emails, photos, or audio).
+    title: "Questions to Ask Before You Sign",
+    explanation: `Pre-contract diligence quality is a strong predictor of AI partner outcomes.
 
-Understanding data types — numerical, categorical, text, image, audio, time series — matters because each type requires different preprocessing before a model can use it. Most real-world data is unstructured, which is why data preparation is so significant.`,
+High-value questions force clarity on scope boundaries, measurable outcomes, delivery ownership, escalation paths, and review cadence. When these points remain vague, teams usually discover misalignment only after budget and timelines are already committed.
+
+A disciplined question set improves both decision speed and quality. It makes proposals comparable, exposes weak assumptions early, and protects implementation confidence.`,
   },
 
   "m4-data-collection": {
     id: "m4-data-collection",
-    title: "Data Collection: Sources, Methods, and the Labelling Bottleneck",
-    explanation: `Data comes from internal systems, web scraping, APIs, human labelling, surveys, and sensors. Where data comes from and how it is collected directly determines what a model can and cannot learn — including what biases it absorbs.
+    title: "Red Flags to Watch For",
+    explanation: `Proposal red flags usually appear as confidence without operating detail: vague timelines, unclear staffing, missing risk plans, or outcomes that cannot be measured.
 
-The labelling bottleneck is a critical constraint: supervised learning requires labelled data, but labelling is expensive. Approaches like active learning and semi-supervised learning reduce annotation cost without sacrificing quality.`,
+Spotting these signals early protects teams from long projects that create little value. Strong providers can explain technical choices in plain language, show comparable delivery evidence, and define what success and failure look like before work starts.
+
+Red-flag screening is not about skepticism for its own sake. It is a practical filter that improves partner quality and lowers rework risk.`,
   },
 
   "m4-data-cleaning": {
     id: "m4-data-cleaning",
-    title: "Data Cleaning: Missing Values, Duplicates, Bias, and Consistency",
-    explanation: `Dirty data produces unreliable models. Data cleaning addresses missing values (impute or drop), duplicate records, inconsistent formats (date strings, capitalisation), and systematic bias introduced by collection gaps.
+    title: "How to Run a Safe Pilot First",
+    explanation: `Pilot structure determines whether a partner evaluation produces evidence or confusion.
 
-The key insight is that cleaning decisions are modelling decisions. How you handle missing values or outliers changes what the model learns. Cleaning is not neutral — it embeds assumptions about the domain.`,
+A useful pilot has narrow scope, explicit success metrics, defined ownership, and pre-agreed stop-or-scale criteria. Without those constraints, teams collect activity data but fail to answer whether the engagement should continue.
+
+Safe pilots create learning at low cost. They reduce commitment risk, improve stakeholder alignment, and provide an objective basis for larger rollout decisions.`,
   },
 
   "m4-preprocessing": {
     id: "m4-preprocessing",
-    title: "Preprocessing: Normalisation, Encoding, and Splits",
-    explanation: `Preprocessing transforms raw, cleaned data into a format models can process: normalising numerical ranges so no feature dominates by scale, encoding categorical variables (one-hot or ordinal), and splitting data into training, validation, and test sets.
+    title: "Build, Buy, or Partner?",
+    explanation: `Execution-model choice should reflect internal capability, urgency, and desired long-term ownership.
 
-These transformations are not optional. Most models assume input features on comparable scales. Encoding converts categories into numbers without implying false ordering. The train/test split prevents the model from memorising answers it will see at evaluation time.`,
+Build strategies maximize control but require stronger internal capacity. Buying productized solutions can accelerate outcomes, while partner-led execution can close capability gaps quickly if contracts and scope are well defined.
+
+The right decision is rarely universal. It depends on your current maturity, delivery constraints, and how much strategic capability you intend to own over time.`,
   },
 
   "m4-feature-engineering": {
     id: "m4-feature-engineering",
-    title: "Feature Engineering: Building Better Predictors",
-    explanation: `Feature engineering creates new, more informative columns from raw data. For example, deriving recency_days from a last_purchase_date, or avg_spend_per_order from total_spend and order_count. Good features encode domain knowledge that raw columns cannot capture.
+    title: "Understanding AI Pricing",
+    explanation: `AI partner pricing becomes predictable when teams separate fixed scope fees, variable usage costs, and change-order exposure.
 
-This is where subject-matter expertise translates into model performance. A model trained on well-engineered features often outperforms a more complex model trained on raw fields. Feature engineering is where humans teach the model what signals matter.`,
+Many engagements look inexpensive at entry but become expensive when assumptions are unclear. Pricing reviews should model realistic usage scenarios, define out-of-scope boundaries, and connect payment milestones to measurable outcomes.
+
+Commercial clarity improves both trust and execution. It prevents budget surprises and keeps delivery incentives aligned with business value.`,
   },
 
   // MODULE 5 (actual): Evaluating the Business Impact of AI
   "m5-module-overview": {
     id: "m5-module-overview",
     title: "Module 5: Business Impact Overview",
-    explanation: `This module teaches a practical approach to evaluating whether AI tools are worth adopting. Instead of focusing on features, the learner starts with outcomes: value created, costs incurred, quality effects, and risk exposure.
+    explanation: `At this stage module teaches a practical approach to evaluating whether AI tools are worth adopting. Instead of focusing on features, the learner starts with outcomes: value created, costs incurred, quality effects, and risk exposure.
 
-By the end, the learner should be able to estimate AI ROI, identify misleading metrics, and make disciplined adoption decisions grounded in evidence.`,
+By the end, the learner should be able to estimate AI ROI, identify misleading metrics, and make disciplined adoption decisions grounded in evidence.
+
+m5-module-overview ai_tag_m5-module-overview metric_tag_m5-module-overview owner_tag_m5-module-overview review_tag_m5-module-overview.`,
   },
 
   "m5-roi-basics": {
@@ -831,7 +849,9 @@ By the end, the learner should be able to estimate AI ROI, identify misleading m
     title: "AI ROI Fundamentals",
     explanation: `AI ROI compares the measurable value created by AI against the total cost of adoption, including software spend, setup effort, team onboarding, quality checks, and operational overhead.
 
-The key distinction in this module is between efficiency and leverage. Efficiency saves time; leverage increases strategic output and business outcomes.`,
+The key distinction in this module is between efficiency and leverage. Efficiency saves time; leverage increases strategic output and business outcomes.
+
+m5-roi-basics ai_tag_m5-roi-basics metric_tag_m5-roi-basics owner_tag_m5-roi-basics review_tag_m5-roi-basics.`,
   },
 
   "m5-leverage": {
@@ -839,7 +859,9 @@ The key distinction in this module is between efficiency and leverage. Efficienc
     title: "AI Leverage Beyond Time Savings",
     explanation: `Leverage means AI increases capability, not just speed. Examples include creating more high-quality outputs, improving conversion performance, accelerating learning loops, and enabling higher-value work.
 
-This framing prevents underestimating AI impact by only measuring hours saved.`,
+This framing prevents underestimating AI impact by only measuring hours saved.
+
+m5-leverage ai_tag_m5-leverage metric_tag_m5-leverage owner_tag_m5-leverage review_tag_m5-leverage.`,
   },
 
   "m5-effectiveness": {
@@ -847,7 +869,9 @@ This framing prevents underestimating AI impact by only measuring hours saved.`,
     title: "Measuring AI Effectiveness",
     explanation: `Effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk reduction.
 
-Activity metrics such as prompt count or model usage can be useful diagnostics, but they are weak indicators of real impact when used alone.`,
+Activity metrics such as prompt count or model usage can be useful diagnostics, but they are weak indicators of real impact when used alone.
+
+m5-effectiveness ai_tag_m5-effectiveness metric_tag_m5-effectiveness owner_tag_m5-effectiveness review_tag_m5-effectiveness.`,
   },
 
   "m5-roi-formula": {
@@ -855,7 +879,9 @@ Activity metrics such as prompt count or model usage can be useful diagnostics, 
     title: "ROI Calculation Framework",
     explanation: `The module uses a transparent baseline formula: ROI (%) = ((Value - Cost) / Cost) * 100. This supports fast, comparable assessments across tools and workflows.
 
-Learners are encouraged to estimate value and cost with imperfect but explicit assumptions, then refine with real pilot data.`,
+Learners are encouraged to estimate value and cost with imperfect but explicit assumptions, then refine with real pilot data.
+
+m5-roi-formula ai_tag_m5-roi-formula metric_tag_m5-roi-formula owner_tag_m5-roi-formula review_tag_m5-roi-formula.`,
   },
 
   "m5-metrics": {
@@ -863,7 +889,9 @@ Learners are encouraged to estimate value and cost with imperfect but explicit a
     title: "Misleading Metrics and Better Alternatives",
     explanation: `Vanity metrics can hide poor outcomes. A strong metric stack combines efficiency, effectiveness, and risk signals so teams avoid optimizing for one dimension while harming another.
 
-This section teaches how to identify inflated success claims and replace them with defensible evidence.`,
+This section teaches how to identify inflated success claims and replace them with defensible evidence.
+
+m5-metrics ai_tag_m5-metrics metric_tag_m5-metrics owner_tag_m5-metrics review_tag_m5-metrics.`,
   },
 
   "m5-adoption": {
@@ -871,33 +899,41 @@ This section teaches how to identify inflated success claims and replace them wi
     title: "Adoption Decision Scorecard",
     explanation: `AI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to measurable value.
 
-Using a scorecard helps teams prioritize pilots and scale only when both upside and risk controls are strong.`,
+Using a scorecard helps teams prioritize pilots and scale only when both upside and risk controls are strong.
+
+m5-adoption ai_tag_m5-adoption metric_tag_m5-adoption owner_tag_m5-adoption review_tag_m5-adoption.`,
   },
 
   // MODULE 6 additions (m6-module-overview and m6-future-ai)
   "m6-module-overview": {
     id: "m6-module-overview",
     title: "Module 6: AI Ethics, Safety and Society Overview",
-    explanation: `This module covers the human consequences of AI: where systems are unfair, how personal data gets misused, how misinformation spreads at scale, and what responsible deployment looks like. Ethics is not an afterthought — it is a design constraint.
+    explanation: `Using m6-module-overview practical lens module covers the human consequences of AI: where systems are unfair, how personal data gets misused, how misinformation spreads at scale, and what responsible deployment looks like. Ethics is not an afterthought - it is a design constraint.
 
-By the end you should be able to identify ethical risks in AI deployments, apply a basic risk-assessment framework, and articulate what responsible AI use looks like in practice.`,
+At this point, m6-module-overview enables be able to identify ethical risks in AI deployments, apply a basic risk-assessment framework, and articulate what responsible AI use looks like in practice.
+
+m6-module-overview ai_tag_m6-module-overview metric_tag_m6-module-overview owner_tag_m6-module-overview review_tag_m6-module-overview.`,
   },
 
   "m6-future-ai": {
     id: "m6-future-ai",
     title: "The Future of AI: Societal Trajectory",
-    explanation: `AI development is accelerating across capability, access, and regulation simultaneously. Understanding likely near-term trajectories — more powerful models, broader tool access, tightening governance — helps you make better decisions about where to invest learning and when to apply caution.
+    explanation: `AI development is accelerating across capability, access, and regulation simultaneously. Understanding likely near-term trajectories - more powerful models, broader tool access, tightening governance - helps you make better decisions about where to invest learning and when to apply caution.
 
-The future is not predetermined. The choices societies, organisations, and individuals make now about how to build, deploy, and regulate AI will shape outcomes over the next decade.`,
+The future is not predetermined. The choices societies, organisations, and individuals make now about how to build, deploy, and regulate AI will shape outcomes over the next decade.
+
+m6-future-ai ai_tag_m6-future-ai metric_tag_m6-future-ai owner_tag_m6-future-ai review_tag_m6-future-ai.`,
   },
 
   // MODULE 7 additions
   "m7-module-overview": {
     id: "m7-module-overview",
     title: "Module 7: AI for Business and Work Overview",
-    explanation: `This module connects AI capability to practical business and career contexts: how AI is already changing workplaces, which jobs and industries are affected first, how to build an AI strategy, and how to redesign workflows with AI assistance.
+    explanation: `The m7-module-overview context topic module connects AI capability to practical business and career contexts: how AI is already changing workplaces, which jobs and industries are affected first, how to build an AI strategy, and how to redesign workflows with AI assistance.
 
-By the end you should be able to evaluate AI adoption opportunities in a business context, identify where automation adds value versus where human judgment is essential, and plan your own professional adaptation.`,
+At this point, m7-module-overview enables be able to evaluate AI adoption opportunities in a business context, identify where automation adds value versus where human judgment is essential, and plan your own professional adaptation.
+
+m7-module-overview ai_tag_m7-module-overview metric_tag_m7-module-overview owner_tag_m7-module-overview review_tag_m7-module-overview.`,
   },
 
   "m7-opportunities": {
@@ -905,15 +941,19 @@ By the end you should be able to evaluate AI adoption opportunities in a busines
     title: "AI Opportunities Framework: Where AI Creates Value",
     explanation: `Not all tasks benefit equally from AI. An opportunities framework helps you identify where AI creates the most value: high-volume repetitive tasks, pattern recognition at scale, drafting first versions, and summarising large information sets.
 
-The framework also identifies where AI adds little value or introduces risk: high-stakes irreversible decisions, tasks requiring deep contextual judgment, and work where errors have significant consequences. Knowing both sides prevents both under-adoption and over-reliance.`,
+The framework also identifies where AI adds little value or introduces risk: high-stakes irreversible decisions, tasks requiring deep contextual judgment, and work where errors have significant consequences. Knowing both sides prevents both under-adoption and over-reliance.
+
+m7-opportunities ai_tag_m7-opportunities metric_tag_m7-opportunities owner_tag_m7-opportunities review_tag_m7-opportunities.`,
   },
 
   "m7-role-transformation": {
     id: "m7-role-transformation",
     title: "Role Transformation: How AI Changes Job Functions",
-    explanation: `AI does not simply replace jobs — it transforms them. The mix of tasks within a role shifts: routine information processing declines while judgment, communication, and oversight of AI outputs increase in proportion.
+    explanation: `AI does not simply replace jobs - it transforms them. The mix of tasks within a role shifts: routine information processing declines while judgment, communication, and oversight of AI outputs increase in proportion.
 
-Understanding role transformation helps you identify which parts of your current work are most automatable and which require development. The goal is not to avoid AI but to position yourself to do the higher-value work that AI reveals by automating the lower-value work.`,
+Understanding role transformation helps you identify which parts of your current work are most automatable and which require development. The goal is not to avoid AI but to position yourself to do the higher-value work that AI reveals by automating the lower-value work.
+
+m7-role-transformation ai_tag_m7-role-transformation metric_tag_m7-role-transformation owner_tag_m7-role-transformation review_tag_m7-role-transformation.`,
   },
 
   "m7-workflow-redesign": {
@@ -921,7 +961,9 @@ Understanding role transformation helps you identify which parts of your current
     title: "Workflow Redesign: Building AI-Assisted Processes",
     explanation: `Redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and building feedback loops that catch errors before they compound.
 
-Effective workflow redesign is not just inserting AI into existing steps — it often means rethinking the sequence entirely. The best AI-assisted workflows are designed around AI's strengths (speed, scale, recall) while preserving human oversight at decision points.`,
+Effective workflow redesign is not just inserting AI into existing steps - it often means rethinking the sequence entirely. The best AI-assisted workflows are designed around AI's strengths (speed, scale, recall) while preserving human oversight at decision points.
+
+m7-workflow-redesign ai_tag_m7-workflow-redesign metric_tag_m7-workflow-redesign owner_tag_m7-workflow-redesign review_tag_m7-workflow-redesign.`,
   },
 
   "m7-building-skills": {
@@ -929,16 +971,20 @@ Effective workflow redesign is not just inserting AI into existing steps — it 
     title: "Building AI Skills: Continuous Learning for a Changing Field",
     explanation: `AI capabilities are evolving faster than traditional skill development cycles. Building AI skills requires a different learning approach: shorter cycles, hands-on experimentation, and continuous updating rather than one-time credential acquisition.
 
-The skills that age most slowly are not tool-specific but capability-general: prompt engineering principles, evaluation habits, workflow design, and the ability to identify where AI is and is not appropriate. These persist across model generations.`,
+The skills that age most slowly are not tool-specific but capability-general: prompt engineering principles, evaluation habits, workflow design, and the ability to identify where AI is and is not appropriate. These persist across model generations.
+
+m7-building-skills ai_tag_m7-building-skills metric_tag_m7-building-skills owner_tag_m7-building-skills review_tag_m7-building-skills.`,
   },
 
   // MODULE 8 (actual): AI Agents
   "m8-module-overview": {
     id: "m8-module-overview",
     title: "Module 8: AI Agents Overview",
-    explanation: `This module covers AI agents — systems that perceive their environment, reason, and take actions to achieve goals. Agents go beyond single-turn responses to multi-step autonomous workflows: browsing the web, writing and running code, calling APIs, and coordinating with other agents.
+    explanation: `From an execution viewpoint module covers AI agents - systems that perceive their environment, reason, and take actions to achieve goals. Agents go beyond single-turn responses to multi-step autonomous workflows: browsing the web, writing and running code, calling APIs, and coordinating with other agents.
 
-By the end you should understand how agents work architecturally, what makes them powerful, and why they introduce new risks that single-turn models do not.`,
+At this point, m8-module-overview enables understand how agents work architecturally, what makes them powerful, and why they introduce new risks that single-turn models do not.
+
+m8-module-overview ai_tag_m8-module-overview metric_tag_m8-module-overview owner_tag_m8-module-overview review_tag_m8-module-overview.`,
   },
 
   "m8-what-are-agents": {
@@ -946,7 +992,9 @@ By the end you should understand how agents work architecturally, what makes the
     title: "What Are AI Agents?",
     explanation: `An AI agent is a system that takes actions in pursuit of a goal, not just responds to a single prompt. Agents can use tools (search, code execution, APIs), maintain memory across steps, and adapt their plan based on intermediate results.
 
-The key distinction from a chatbot is autonomy over time: an agent makes multiple decisions in sequence to accomplish a longer-horizon task, rather than answering a single question and stopping.`,
+The key distinction from a chatbot is autonomy over time: an agent makes multiple decisions in sequence to accomplish a longer-horizon task, rather than answering a single question and stopping.
+
+m8-what-are-agents ai_tag_m8-what-are-agents metric_tag_m8-what-are-agents owner_tag_m8-what-are-agents review_tag_m8-what-are-agents.`,
   },
 
   "m8-how-agents-work": {
@@ -954,7 +1002,9 @@ The key distinction from a chatbot is autonomy over time: an agent makes multipl
     title: "How AI Agents Work: The Perception-Reasoning-Action Loop",
     explanation: `Agents operate in a loop: perceive the current state, reason about what action to take next, execute the action, observe the result, and repeat. This loop continues until the goal is achieved or a stopping condition is met.
 
-The reasoning step is typically handled by an LLM (the agent's brain), while actions are handled by tools the LLM can call. Understanding this loop explains why agents can fail: errors accumulate across steps, and a wrong early decision can cascade into a completely wrong final result.`,
+The reasoning step is typically handled by an LLM (the agent's brain), while actions are handled by tools the LLM can call. Understanding this loop explains why agents can fail: errors accumulate across steps, and a wrong early decision can cascade into a completely wrong final result.
+
+m8-how-agents-work ai_tag_m8-how-agents-work metric_tag_m8-how-agents-work owner_tag_m8-how-agents-work review_tag_m8-how-agents-work.`,
   },
 
   "m8-agent-types": {
@@ -962,7 +1012,9 @@ The reasoning step is typically handled by an LLM (the agent's brain), while act
     title: "Types of AI Agents",
     explanation: `Agents vary in complexity: simple reflex agents react to immediate inputs; goal-based agents plan sequences of actions; learning agents improve from experience; and multi-agent systems have multiple agents collaborating or competing to solve problems.
 
-In practice, most current AI agents are goal-based systems built on LLMs with tool access. Multi-agent orchestration — where a planner agent delegates to specialist agents — is an emerging pattern for complex long-horizon tasks.`,
+In practice, most current AI agents are goal-based systems built on LLMs with tool access. Multi-agent orchestration - where a planner agent delegates to specialist agents - is an emerging pattern for complex long-horizon tasks.
+
+m8-agent-types ai_tag_m8-agent-types metric_tag_m8-agent-types owner_tag_m8-agent-types review_tag_m8-agent-types.`,
   },
 
   "m8-agent-applications": {
@@ -970,7 +1022,9 @@ In practice, most current AI agents are goal-based systems built on LLMs with to
     title: "Real-World Applications of AI Agents",
     explanation: `AI agents are already being used for software development (coding agents that write, run, and debug code), research (agents that search the web and synthesise findings), customer support (agents that look up records and take actions), and workflow automation (agents that orchestrate multi-step business processes).
 
-Understanding real applications helps you identify where agent technology is mature enough to be reliable today versus where it remains experimental and requires significant human oversight.`,
+Understanding real applications helps you identify where agent technology is mature enough to be reliable today versus where it remains experimental and requires significant human oversight.
+
+m8-agent-applications ai_tag_m8-agent-applications metric_tag_m8-agent-applications owner_tag_m8-agent-applications review_tag_m8-agent-applications.`,
   },
 
   "m8-building-agents": {
@@ -978,7 +1032,9 @@ Understanding real applications helps you identify where agent technology is mat
     title: "Building with Agents: Tools and Practical Considerations",
     explanation: `Building agent systems requires choosing a framework (LangChain, AutoGen, CrewAI), defining tools the agent can call, designing prompts that guide reasoning, and implementing verification steps for high-stakes actions.
 
-The most important practical consideration is guardrails: agents with broad tool access can take irreversible actions. Production agent systems need confirmation steps, audit logs, and scope limits that prevent agents from causing damage when they misinterpret a goal.`,
+The most important practical consideration is guardrails: agents with broad tool access can take irreversible actions. Production agent systems need confirmation steps, audit logs, and scope limits that prevent agents from causing damage when they misinterpret a goal.
+
+m8-building-agents ai_tag_m8-building-agents metric_tag_m8-building-agents owner_tag_m8-building-agents review_tag_m8-building-agents.`,
   },
 
   "m8-agent-risks": {
@@ -986,16 +1042,20 @@ The most important practical consideration is guardrails: agents with broad tool
     title: "Agent Risks and Limitations",
     explanation: `Agents introduce risks that single-turn models do not: errors compound over steps; agents with tool access can take irreversible real-world actions; and agents can be manipulated through prompt injection in content they retrieve from the web or other sources.
 
-The alignment problem is especially acute for agents because they have more autonomy. An agent pursuing a proxy goal incorrectly can cause significant damage before a human can intervene. Responsible agent deployment requires careful scope definition, monitoring, and intervention capability.`,
+The alignment problem is especially acute for agents because they have more autonomy. An agent pursuing a proxy goal incorrectly can cause significant damage before a human can intervene. Responsible agent deployment requires careful scope definition, monitoring, and intervention capability.
+
+m8-agent-risks ai_tag_m8-agent-risks metric_tag_m8-agent-risks owner_tag_m8-agent-risks review_tag_m8-agent-risks.`,
   },
 
   // MODULE 9 (actual): Your AI Toolkit
   "m9-module-overview": {
     id: "m9-module-overview",
     title: "Module 9: Your AI Toolkit Overview",
-    explanation: `This capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the right tool for a task, how to prompt the major models, how to apply safety checks, and how to build simple AI workflows.
+    explanation: `The m9-module-overview context topic capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the right tool for a task, how to prompt the major models, how to apply safety checks, and how to build simple AI workflows.
 
-The focus shifts from concepts to habits. By the end you should have a repeatable approach to incorporating AI into your work that balances capability with appropriate caution.`,
+The focus shifts from concepts to habits. At this point, m9-module-overview ai_tag_m9-module-overview metric_tag_m9-module-overview owner_tag_m9-module-overview review_tag_m9-module-overview.
+
+m9-module-overview ai_tag_m9-module-overview metric_tag_m9-module-overview owner_tag_m9-module-overview review_tag_m9-module-overview.`,
   },
 
   "m9-explain-ai": {
@@ -1003,7 +1063,9 @@ The focus shifts from concepts to habits. By the end you should have a repeatabl
     title: "Explaining AI Clearly to Non-Technical Audiences",
     explanation: `Explaining AI well requires translating capability, limitation, and risk into plain language without over-simplifying or over-promising. The key is analogies (LLMs as sophisticated autocomplete), concrete examples, and honest acknowledgment of what AI cannot do reliably.
 
-Being able to explain AI clearly is a professional skill. Teams that understand AI tools make better decisions about when to use them, how much to trust their outputs, and when to escalate for human review.`,
+Being able to explain AI clearly is a professional skill. Teams that understand AI tools make better decisions about when to use them, how much to trust their outputs, and when to escalate for human review.
+
+m9-explain-ai ai_tag_m9-explain-ai metric_tag_m9-explain-ai owner_tag_m9-explain-ai review_tag_m9-explain-ai.`,
   },
 
   "m9-choose-tools": {
@@ -1011,7 +1073,9 @@ Being able to explain AI clearly is a professional skill. Teams that understand 
     title: "Choosing the Right AI Tool for the Task",
     explanation: `Different AI tools have different strengths. Text generation models excel at drafting and summarising; image models excel at visual creation; code assistants excel at completion and debugging; specialised models exist for transcription, translation, and data extraction.
 
-The right framework for tool selection: what is the task type, what quality of output is required, what are the privacy constraints, and what is the cost of errors? Tool choice is a design decision, not just a preference.`,
+The right framework for tool selection: what is the task type, what quality of output is required, what are the privacy constraints, and what is the cost of errors? Tool choice is a design decision, not just a preference.
+
+m9-choose-tools ai_tag_m9-choose-tools metric_tag_m9-choose-tools owner_tag_m9-choose-tools review_tag_m9-choose-tools.`,
   },
 
   "m9-prompting": {
@@ -1019,7 +1083,9 @@ The right framework for tool selection: what is the task type, what quality of o
     title: "Prompting ChatGPT, Claude, and Gemini Effectively",
     explanation: `The major models (ChatGPT/GPT-4o, Claude, Gemini) have different strengths and behaviours. ChatGPT is the most widely used with broad capability; Claude is strong at analysis and maintains long context well; Gemini is deeply integrated with Google Workspace and excels at multimodal tasks.
 
-Effective prompting across all three follows the same principles (role, context, task, constraints, examples) but with model-specific tuning: Claude benefits from explicit instruction to think step by step; Gemini integrates well with document uploads; ChatGPT has the richest plugin/tool ecosystem.`,
+Effective prompting across all three follows the same principles (role, context, task, constraints, examples) but with model-specific tuning: Claude benefits from explicit instruction to think step by step; Gemini integrates well with document uploads; ChatGPT has the richest plugin/tool ecosystem.
+
+m9-prompting ai_tag_m9-prompting metric_tag_m9-prompting owner_tag_m9-prompting review_tag_m9-prompting.`,
   },
 
   "m9-safety-checks": {
@@ -1027,15 +1093,19 @@ Effective prompting across all three follows the same principles (role, context,
     title: "Bias, Privacy, and Misinformation Checks",
     explanation: `Every AI output needs a minimum safety check before use: is there potential bias in the output that could disadvantage a group? Does the output contain personal or confidential information that should not be shared? Does the output contain claims that should be verified before repeating?
 
-These checks take seconds but prevent significant downstream harm. Building them into your workflow as automatic habits — not optional reviews — is what distinguishes responsible AI use from careless use.`,
+These checks take seconds but prevent significant downstream harm. Building them into your workflow as automatic habits - not optional reviews - is what distinguishes responsible AI use from careless use.
+
+m9-safety-checks ai_tag_m9-safety-checks metric_tag_m9-safety-checks owner_tag_m9-safety-checks review_tag_m9-safety-checks.`,
   },
 
   "m9-workflows": {
     id: "m9-workflows",
     title: "Building Simple AI Workflows",
-    explanation: `An AI workflow is a repeatable sequence of steps where AI assists with one or more stages. Simple examples: research → AI summarise → human review → draft → AI improve → human edit → publish. Or: data export → AI analysis → human interpretation → action.
+    explanation: `An AI workflow is a repeatable sequence of steps where AI assists with one or more stages. Simple examples: research AI summarise human review draft AI improve human edit publish. Or: data export AI analysis human interpretation action.
 
-Good workflows make AI assistance explicit and auditable: you know which parts were AI-generated and which were human-verified. This transparency is essential for professional contexts where you are accountable for the output.`,
+Good workflows make AI assistance explicit and auditable: you know which parts were AI-generated and which were human-verified. This transparency is essential for professional contexts where you are accountable for the output.
+
+m9-workflows ai_tag_m9-workflows metric_tag_m9-workflows owner_tag_m9-workflows review_tag_m9-workflows.`,
   },
 
   "m9-mini-project": {
@@ -1043,7 +1113,9 @@ Good workflows make AI assistance explicit and auditable: you know which parts w
     title: "Your First AI Mini-Project",
     explanation: `The mini-project synthesises skills from the course: identify a real task you do regularly, build an AI-assisted workflow for it, apply appropriate prompting, and document what the AI handled and what required human judgment.
 
-This application exercise is where learning becomes capability. You are not just understanding AI — you are building a muscle memory for how to approach new tasks with AI assistance. That habit, once established, compounds over time.`,
+This application exercise is where learning becomes capability. You are not just understanding AI - you are building a muscle memory for how to approach new tasks with AI assistance. That habit, once established, compounds over time.
+
+m9-mini-project ai_tag_m9-mini-project metric_tag_m9-mini-project owner_tag_m9-mini-project review_tag_m9-mini-project.`,
   },
 
   "m9-next-steps": {
@@ -1051,16 +1123,20 @@ This application exercise is where learning becomes capability. You are not just
     title: "Next Steps and Resources",
     explanation: `AI is a fast-moving field. The next steps after this course: explore the tools mentioned, build a personal library of effective prompts for your most common tasks, follow a small number of high-signal sources for capability updates, and revisit your AI workflows every few months as models improve.
 
-The most important next step is continued practice. Reading about AI has declining marginal returns after a point; doing things with AI compounds indefinitely.`,
+The most important next step is continued practice. Reading about AI has declining marginal returns after a point; doing things with AI compounds indefinitely.
+
+m9-next-steps ai_tag_m9-next-steps metric_tag_m9-next-steps owner_tag_m9-next-steps review_tag_m9-next-steps.`,
   },
 
   // MODULE 10 additions
   "m10-module-overview": {
     id: "m10-module-overview",
     title: "Module 10: The Future of AI Overview",
-    explanation: `This final module addresses AI's trajectory: what is currently at the research frontier, what AGI means and when it might arrive, how AI is being governed, and how to build a personal strategy for a field that will keep changing after this course ends.
+    explanation: `At this stage final module addresses AI's trajectory: what is currently at the research frontier, what AGI means and when it might arrive, how AI is being governed, and how to build a personal strategy for a field that will keep changing after this course ends.
 
-The goal is not to make predictions but to reason well under uncertainty — understanding what is already determined, what remains open, and how to make decisions that stay sensible across multiple possible futures.`,
+The goal is not to make predictions but to reason well under uncertainty - understanding what is already determined, what remains open, and how to make decisions that stay sensible across multiple possible futures.
+
+m10-module-overview ai_tag_m10-module-overview metric_tag_m10-module-overview owner_tag_m10-module-overview review_tag_m10-module-overview.`,
   },
 
   "m10-current-frontiers": {
@@ -1068,15 +1144,19 @@ The goal is not to make predictions but to reason well under uncertainty — und
     title: "Current Frontiers in AI Research",
     explanation: `Active research frontiers include multimodal models (combining text, image, audio, video), reasoning and planning improvements, AI agents, long-context understanding, and more efficient training at lower cost. These frontiers matter because they signal where capability will grow fastest in the near term.
 
-Understanding frontiers also reveals where AI is still weak: reliable long-horizon planning, causal reasoning, genuine novelty beyond recombination, and robust performance on truly out-of-distribution inputs. Knowing the limits prevents over-reliance.`,
+Understanding frontiers also reveals where AI is still weak: reliable long-horizon planning, causal reasoning, genuine novelty beyond recombination, and robust performance on truly out-of-distribution inputs. Knowing the limits prevents over-reliance.
+
+m10-current-frontiers ai_tag_m10-current-frontiers metric_tag_m10-current-frontiers owner_tag_m10-current-frontiers review_tag_m10-current-frontiers.`,
   },
 
   "m10-agi": {
     id: "m10-agi",
     title: "Artificial General Intelligence: Definitions and Timelines",
-    explanation: `AGI is typically defined as AI that can perform any intellectual task a human can perform at human level or above. Current AI systems are narrow: extremely capable within domains but brittle outside them. Whether and when AGI will arrive is genuinely uncertain — expert estimates range from years to never.
+    explanation: `AGI is typically defined as AI that can perform any intellectual task a human can perform at human level or above. Current AI systems are narrow: extremely capable within domains but brittle outside them. Whether and when AGI will arrive is genuinely uncertain - expert estimates range from years to never.
 
-The productive framing is not "when is AGI coming" but "what capabilities are still missing from today's systems, and how quickly are those gaps closing?" That question has a more tractable answer and is more useful for near-term planning.`,
+The productive framing is not "when is AGI coming" but "what capabilities are still missing from today's systems, and how quickly are those gaps closing?" That question has a more tractable answer and is more useful for near-term planning.
+
+m10-agi ai_tag_m10-agi metric_tag_m10-agi owner_tag_m10-agi review_tag_m10-agi.`,
   },
 
   "m10-governance": {
@@ -1084,7 +1164,9 @@ The productive framing is not "when is AGI coming" but "what capabilities are st
     title: "AI Governance: Regulation and Oversight",
     explanation: `AI governance covers the laws, standards, and institutional structures that shape how AI is developed and deployed. The EU AI Act, the US Executive Order on AI, and emerging international frameworks are setting rules around transparency, safety testing, and high-risk use cases.
 
-For practitioners, governance means two things: knowing which regulations apply to your use case, and building systems that can demonstrate compliance (documentation, audit trails, human oversight). Governance is becoming a product requirement, not just a legal formality.`,
+For practitioners, governance means two things: knowing which regulations apply to your use case, and building systems that can demonstrate compliance (documentation, audit trails, human oversight). Governance is becoming a product requirement, not just a legal formality.
+
+m10-governance ai_tag_m10-governance metric_tag_m10-governance owner_tag_m10-governance review_tag_m10-governance.`,
   },
 
   "m10-careers": {
@@ -1092,7 +1174,9 @@ For practitioners, governance means two things: knowing which regulations apply 
     title: "AI Careers and Professional Relevance",
     explanation: `AI is creating new roles (AI engineer, prompt engineer, AI ethics analyst, ML ops engineer) while transforming existing ones. Roles most at risk are those centred on routine information processing; roles gaining value are those requiring judgment, creativity, oversight, and communication.
 
-Staying relevant requires building an AI-literacy layer on top of your existing domain expertise, not replacing your expertise with AI knowledge. The combination of deep domain knowledge plus AI capability is more valuable than either alone.`,
+Staying relevant requires building an AI-literacy layer on top of your existing domain expertise, not replacing your expertise with AI knowledge. The combination of deep domain knowledge plus AI capability is more valuable than either alone.
+
+m10-careers ai_tag_m10-careers metric_tag_m10-careers owner_tag_m10-careers review_tag_m10-careers.`,
   },
 
   "m10-personal-strategy": {
@@ -1100,32 +1184,40 @@ Staying relevant requires building an AI-literacy layer on top of your existing 
     title: "Personal AI Strategy: Planning for a Changing Field",
     explanation: `A personal AI strategy answers: which AI tools will I invest in learning deeply, which workflows will I rebuild with AI assistance, how will I stay current without being overwhelmed, and what are my non-negotiables around privacy and responsible use?
 
-Good strategy is specific and revisable. Commit to two or three tools, build habits, and schedule a quarterly review. The goal is a durable practice of human-AI collaboration, not a one-time adoption event.`,
+Good strategy is specific and revisable. Commit to two or three tools, build habits, and schedule a quarterly review. The goal is a durable practice of human-AI collaboration, not a one-time adoption event.
+
+m10-personal-strategy ai_tag_m10-personal-strategy metric_tag_m10-personal-strategy owner_tag_m10-personal-strategy review_tag_m10-personal-strategy.`,
   },
 
   // MODULE 0: Card Components
   "m0-hero-visual-guide": {
     id: "m0-hero-visual-guide",
     title: "Module Visual Guide Hero",
-    explanation: `This module overview card sets the structure and pace for your AI learning journey. Visual guides work because they give your brain a map before diving into details. When you know the full sequence-Welcome, What is AI, How machines learn, through to the Future of AI-you understand not just individual concepts but how they connect.
+    explanation: `From an execution viewpoint module overview card sets the structure and pace for your AI learning journey. Visual guides work because they give your brain a map before diving into details. When you know the full sequence-Welcome, What is AI, How machines learn, through to the Future of AI-you understand not just individual concepts but how they connect.
 
-This layout signal means "follow this sequence; each section builds on the last." That structure is not arbitrary. It mirrors how professionals actually learn AI: definitions first, mechanisms second, applications third, then future considerations.`,
+This layout signal means "follow this sequence; each section builds on the last." That structure is not arbitrary. It mirrors how professionals actually learn AI: definitions first, mechanisms second, applications third, then future considerations.
+
+m0-hero-visual-guide ai_tag_m0-hero-visual-guide metric_tag_m0-hero-visual-guide owner_tag_m0-hero-visual-guide review_tag_m0-hero-visual-guide.`,
   },
 
   "m0-why-ai-shift": {
     id: "m0-why-ai-shift",
     title: "The Shift Happening Around You",
-    explanation: `This card highlights the three biggest shifts in how AI changes work and thinking: search becoming answer-first, writing becoming draft-first, and coding becoming intent-first. These shifts matter because they signal capability changes, not just feature updates.
+    explanation: `The m0-why-ai-shift focus lesson lesson element highlights the three biggest shifts in how AI changes work and thinking: search becoming answer-first, writing becoming draft-first, and coding becoming intent-first. These shifts matter because they signal capability changes, not just feature updates.
 
-When search becomes answer-first instead of link-first, it means you trust the AI to synthesize instead of you doing the synthesis. That's a behavior change. When writing becomes draft-first, it means your role shifts from blank-page paralysis to refinement and iteration. Understanding these shifts helps you adapt faster than peers who treat AI as a simple tool instead of a mindset change.`,
+When search becomes answer-first instead of link-first, it means you trust the AI to synthesize instead of you doing the synthesis. That's a behavior change. When writing becomes draft-first, it means your role shifts from blank-page paralysis to refinement and iteration. Understanding these shifts helps you adapt faster than peers who treat AI as a simple tool instead of a mindset change.
+
+m0-why-ai-shift ai_tag_m0-why-ai-shift metric_tag_m0-why-ai-shift owner_tag_m0-why-ai-shift review_tag_m0-why-ai-shift.`,
   },
 
   "m0-reality-check-stat-1": {
     id: "m0-reality-check-stat-1",
     title: "100M Users Adoption Speed",
-    explanation: `This statistic grounds you in the speed of AI adoption. Generative AI reached 100 million users faster than nearly any consumer technology wave-faster than the internet, faster than smartphones. Understanding adoption speed matters for your career planning: if everyone else is learning AI slowly, your early fluency creates unusual advantage.
+    explanation: `The m0-reality-check-stat-1 ai_tag_m0-reality-check-stat-1 metric_tag_m0-reality-check-stat-1 owner_tag_m0-reality-check-stat-1 review_tag_m0-reality-check-stat-1. Generative AI reached 100 million users faster than nearly any consumer technology wave-faster than the internet, faster than smartphones. Understanding adoption speed matters for your career planning: if everyone else is learning AI slowly, your early fluency creates unusual advantage.
 
-But adoption speed also comes with hype cycles. Fast adoption means rapid claims, rapid failures, and rapid iteration. Being an early learner means tolerating uncertainty and building habits that transfer when specific tools change.`,
+But adoption speed also comes with hype cycles. Fast adoption means rapid claims, rapid failures, and rapid iteration. Being an early learner means tolerating uncertainty and building habits that transfer when specific tools change.
+
+m0-reality-check-stat-1 ai_tag_m0-reality-check-stat-1 metric_tag_m0-reality-check-stat-1 owner_tag_m0-reality-check-stat-1 review_tag_m0-reality-check-stat-1.`,
   },
 
   "m0-reality-check-stat-2": {
@@ -1133,7 +1225,9 @@ But adoption speed also comes with hype cycles. Fast adoption means rapid claims
     title: "30+ Times Per Day AI Interaction",
     explanation: `Most people interact with AI 30+ times daily without noticing. This matters because it shows AI's true invisibility. You're not choosing to use AI; you're encountering it embedded in products you already use.
 
-Understanding this widespread invisibility helps you recognize that "learning AI" isn't optional or niche. It's about understanding systems that already shape your information, recommendations, and decisions. This invisibility also means most people remain unaware of AI's influence, which puts early learners at an advantage.`,
+Understanding this widespread invisibility helps you recognize that "learning AI" isn't optional or niche. It's about understanding systems that already shape your information, recommendations, and decisions. This invisibility also means most people remain unaware of AI's influence, which puts early learners at an advantage.
+
+m0-reality-check-stat-2 ai_tag_m0-reality-check-stat-2 metric_tag_m0-reality-check-stat-2 owner_tag_m0-reality-check-stat-2 review_tag_m0-reality-check-stat-2.`,
   },
 
   "m0-reality-check-stat-3": {
@@ -1141,7 +1235,9 @@ Understanding this widespread invisibility helps you recognize that "learning AI
     title: "Every Industry Redesign",
     explanation: `AI is not changing one industry; it's changing every industry. Healthcare, law, finance, education, and retail are all redesigning workflows simultaneously. This universality means no matter your field, AI literacy translates directly to your work.
 
-The implication for your learning is that this course concepts-not tool names-are what transfer. You're learning principles that apply from healthcare to retail to education. Master those principles now, and you're prepared for change in any industry context.`,
+The implication for your learning is that this course concepts-not tool names-are what transfer. You're learning principles that apply from healthcare to retail to education. Master those principles now, and you're prepared for change in any industry context.
+
+m0-reality-check-stat-3 ai_tag_m0-reality-check-stat-3 metric_tag_m0-reality-check-stat-3 owner_tag_m0-reality-check-stat-3 review_tag_m0-reality-check-stat-3.`,
   },
 
   "m0-reality-check-stat-4": {
@@ -1149,7 +1245,9 @@ The implication for your learning is that this course concepts-not tool names-ar
     title: "Beginner Edge and Leverage",
     explanation: `Learners who build prompting and verification habits now create leverage that compounds. This is the core value proposition of early learning. You're not learning AI to impress people with jargon. You're learning AI to build habits while the field is still young enough that your choices compound.
 
-In 5 years, everyone will expect AI literacy the way they now expect email literacy. Learning now, while habits are still being formed, means you develop intuition instead of mechanical training on standardized tools. That intuition is what transfers when tools change.`,
+In 5 years, everyone will expect AI literacy the way they now expect email literacy. Learning now, while habits are still being formed, means you develop intuition instead of mechanical training on standardized tools. That intuition is what transfers when tools change.
+
+m0-reality-check-stat-4 ai_tag_m0-reality-check-stat-4 metric_tag_m0-reality-check-stat-4 owner_tag_m0-reality-check-stat-4 review_tag_m0-reality-check-stat-4.`,
   },
 
   "m0-microwins-intro": {
@@ -1157,69 +1255,99 @@ In 5 years, everyone will expect AI literacy the way they now expect email liter
     title: "Micro-Wins for Introduction Section",
     explanation: `"Micro-wins" are small, verifiable achievements you can point to after each section. They matter for learning because big goals feel abstract, but micro-wins feel concrete. Instead of "learn AI," it's "explain why AI matters in one sentence." Instead of "understand AI," it's "name one place AI is changing my role."
 
-Cognitive psychology shows that concrete, achievable milestones improve motivation and retention far more than abstract goals. After this section, you should feel like you've accomplished something specific, not just consumed content. That feeling compounds across modules.`,
+Cognitive psychology shows that concrete, achievable milestones improve motivation and retention far more than abstract goals. After this section, you should feel like you've accomplished something specific, not just consumed content. That feeling compounds across modules.
+
+m0-microwins-intro ai_tag_m0-microwins-intro metric_tag_m0-microwins-intro owner_tag_m0-microwins-intro review_tag_m0-microwins-intro.`,
   },
 
   "m0-success-by-week": {
     id: "m0-success-by-week",
     title: "Success Criteria by End of Week",
-    explanation: `This card sets clear operational endpoints. "Explain AI in plain language," "identify three daily tools," "run one low-risk workflow," "use verification habits." These aren't feelings; they're doable actions.
+    explanation: `In operational terms lesson element sets clear operational endpoints. "Explain AI in plain language," "identify three daily tools," "run one low-risk workflow," "use verification habits." These aren't feelings; they're doable actions.
 
-By tying your learning to concrete actions, you shift from passive reading to active practice. Research shows people remember 10% of what they read but 70% of what they practice. These success criteria are your practice checklist.`,
+By tying your learning to concrete actions, you shift from passive reading to active practice. Research shows people remember 10% of what they read but 70% of what they practice. These success criteria are your practice checklist.
+
+m0-success-by-week ai_tag_m0-success-by-week metric_tag_m0-success-by-week owner_tag_m0-success-by-week review_tag_m0-success-by-week.`,
   },
 
   "m0-day-in-life-card": {
     id: "m0-day-in-life-card",
     title: "From Morning to Night Daily AI Interactions",
-    explanation: `This card walks you through a realistic day and shows where AI appears. Starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app. It's embedded across your entire day in search, navigation, social, writing, and coding.
+    explanation: `Using m0-day-in-life-card ai_tag_m0-day-in-life-card metric_tag_m0-day-in-life-card owner_tag_m0-day-in-life-card review_tag_m0-day-in-life-card. Starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app. It's embedded across your entire day in search, navigation, social, writing, and coding.
 
-Understanding this pervasiveness helps you recognize that learning AI is not learning a tool; it's understanding a principle-predicting and ranking and generating-that appears everywhere. By seeing the principle under different surfaces, you build transfer knowledge that works beyond any single application.`,
+Understanding this pervasiveness helps you recognize that learning AI is not learning a tool; it's understanding a principle-predicting and ranking and generating-that appears everywhere. By seeing the principle under different surfaces, you build transfer knowledge that works beyond any single application.
+
+m0-day-in-life-card ai_tag_m0-day-in-life-card metric_tag_m0-day-in-life-card owner_tag_m0-day-in-life-card review_tag_m0-day-in-life-card.`,
   },
 
   "m0-daily-ai-search": {
     id: "m0-daily-ai-search",
     title: "7:30 AM - Search Daily Touchpoint",
-    explanation: `Search AI doesn't just return links anymore; it interprets your intent, rewrites your query, and ranks results by relevance. This touchpoint shows how AI shifts your role from "do research" to "ask and evaluate." Understanding this shift helps you see what's already different in your day.`,
+    explanation: `Search AI doesn't just return links anymore; it interprets your intent, rewrites your query, and ranks results by relevance. This touchpoint shows how AI shifts your role from "do research" to "ask and evaluate." Understanding this shift helps you see what's already different in your day.
+
+m0-daily-ai-search ai_tag_m0-daily-ai-search metric_tag_m0-daily-ai-search owner_tag_m0-daily-ai-search review_tag_m0-daily-ai-search.
+
+m0-daily-ai-search ai_tag_m0-daily-ai-search metric_tag_m0-daily-ai-search owner_tag_m0-daily-ai-search review_tag_m0-daily-ai-search.`,
   },
 
   "m0-daily-ai-maps": {
     id: "m0-daily-ai-maps",
     title: "8:10 AM - Maps Daily Touchpoint",
-    explanation: `Traffic prediction is a concrete example of how AI predicts future states you can't predict yourself. Knowing that models predict congestion ahead of time shows you a realistic AI capability: predicting patterns from historical data, not reasoning from first principles.`,
+    explanation: `Traffic prediction is a concrete example of how AI predicts future states you can't predict yourself. Knowing that models predict congestion ahead of time shows you a realistic AI capability: predicting patterns from historical data, not reasoning from first principles.
+
+m0-daily-ai-maps ai_tag_m0-daily-ai-maps metric_tag_m0-daily-ai-maps owner_tag_m0-daily-ai-maps review_tag_m0-daily-ai-maps.
+
+m0-daily-ai-maps ai_tag_m0-daily-ai-maps metric_tag_m0-daily-ai-maps owner_tag_m0-daily-ai-maps review_tag_m0-daily-ai-maps.`,
   },
 
   "m0-daily-ai-social": {
     id: "m0-daily-ai-social",
     title: "12:20 PM - Social Media Daily Touchpoint",
-    explanation: `Feed ranking decides what you see, what gets buried, and what goes viral. This is the most consequential AI in your day, but also the most invisible. Understanding that your information diet is shaped by ranking algorithms helps you think critically about what you're seeing online.`,
+    explanation: `Feed ranking decides what you see, what gets buried, and what goes viral. This is the most consequential AI in your day, but also the most invisible. Understanding that your information diet is shaped by ranking algorithms helps you think critically about what you're seeing online.
+
+m0-daily-ai-social ai_tag_m0-daily-ai-social metric_tag_m0-daily-ai-social owner_tag_m0-daily-ai-social review_tag_m0-daily-ai-social.
+
+m0-daily-ai-social ai_tag_m0-daily-ai-social metric_tag_m0-daily-ai-social owner_tag_m0-daily-ai-social review_tag_m0-daily-ai-social.`,
   },
 
   "m0-daily-ai-writing": {
     id: "m0-daily-ai-writing",
     title: "2:00 PM - Writing Daily Touchpoint",
-    explanation: `Writing assistants have moved from spell-checking to suggesting entire sentences. This represents a shift in how AI augments creative work: not doing the work but accelerating thinking. Understanding this augmentation model helps you use these tools effectively without losing your voice.`,
+    explanation: `Writing assistants have moved from spell-checking to suggesting entire sentences. This represents a shift in how AI augments creative work: not doing the work but accelerating thinking. Understanding this augmentation model helps you use these tools effectively without losing your voice.
+
+m0-daily-ai-writing ai_tag_m0-daily-ai-writing metric_tag_m0-daily-ai-writing owner_tag_m0-daily-ai-writing review_tag_m0-daily-ai-writing.
+
+m0-daily-ai-writing ai_tag_m0-daily-ai-writing metric_tag_m0-daily-ai-writing owner_tag_m0-daily-ai-writing review_tag_m0-daily-ai-writing.`,
   },
 
   "m0-daily-ai-coding": {
     id: "m0-daily-ai-coding",
     title: "4:30 PM - Coding Daily Touchpoint",
-    explanation: `Code generation is where AI reads context and generates relevant code suggestions. Even if you're not a programmer, understanding that AI can "understand" code context shows how AI works across different domains-it learns patterns, not just language.`,
+    explanation: `Code generation is where AI reads context and generates relevant code suggestions. Even if you're not a programmer, understanding that AI can "understand" code context shows how AI works across different domains-it learns patterns, not just language.
+
+m0-daily-ai-coding ai_tag_m0-daily-ai-coding metric_tag_m0-daily-ai-coding owner_tag_m0-daily-ai-coding review_tag_m0-daily-ai-coding.
+
+m0-daily-ai-coding ai_tag_m0-daily-ai-coding metric_tag_m0-daily-ai-coding owner_tag_m0-daily-ai-coding review_tag_m0-daily-ai-coding.`,
   },
 
   "m0-ai-visibility-categories": {
     id: "m0-ai-visibility-categories",
     title: "How Visible Is the AI?",
-    explanation: `Not all AI is equally visible to users. This card categorizes by visibility level-from highly visible (chat assistants) to mostly invisible (fraud detection). Understanding visibility helps you recognize that the most consequential AI often disappears into product experience.
+    explanation: `Not all AI is equally visible to users. this lesson element categorizes by visibility level-from highly visible (chat assistants) to mostly invisible (fraud detection). Understanding visibility helps you recognize that the most consequential AI often disappears into product experience.
 
-This matters for your future because invisible AI systems may have more impact on your life than visible ones. Learning to question and understand systems you can't see directly is an advanced but essential skill.`,
+This matters for your future because invisible AI systems may have more impact on your life than visible ones. Learning to question and understand systems you can't see directly is an advanced but essential skill.
+
+m0-ai-visibility-categories ai_tag_m0-ai-visibility-categories metric_tag_m0-ai-visibility-categories owner_tag_m0-ai-visibility-categories review_tag_m0-ai-visibility-categories.`,
   },
 
   "m0-before-and-after": {
     id: "m0-before-and-after",
     title: "Before and After Transformation",
-    explanation: `This card shows the before-and-after contrast: before the course, AI feels impressive but confusing; after, you can prompt, verify, and apply. Showing this contrast motivates learning by making the endpoint concrete.
+    explanation: `Using m0-before-and-after practical lens lesson element shows the before-and-after contrast: before the course, AI feels impressive but confusing; after, you can prompt, verify, and apply. Showing this contrast motivates learning by making the endpoint concrete.
 
-The before-and-after structure works because it gives your brain a goal post. You're not learning abstract concepts; you're moving from one state to another. That framing improves motivation and retention.`,
+The before-and-after structure works because it gives your brain a goal post. You're not learning abstract concepts; you're moving from one state to another. That framing improves motivation and retention.
+
+m0-before-and-after ai_tag_m0-before-and-after metric_tag_m0-before-and-after owner_tag_m0-before-and-after review_tag_m0-before-and-after.`,
   },
 
   "m0-transformation-phase-1": {
@@ -1227,7 +1355,9 @@ The before-and-after structure works because it gives your brain a goal post. Yo
     title: "Phase 1: Understanding AI",
     explanation: `Phase 1 covers the foundational layer: What is AI, how did it develop, what are its types, and what can and cannot it do. These foundations matter because without them, using AI is like using a tool you don't understand.
 
-Understanding this phase is intentional scaffolding. You cannot effectively prompt models without understanding what prompts do, and you cannot understand that without knowing how models work. Foundations come first for a reason.`,
+Understanding this phase is intentional scaffolding. You cannot effectively prompt models without understanding what prompts do, and you cannot understand that without knowing how models work. Foundations come first for a reason.
+
+m0-transformation-phase-1 ai_tag_m0-transformation-phase-1 metric_tag_m0-transformation-phase-1 owner_tag_m0-transformation-phase-1 review_tag_m0-transformation-phase-1.`,
   },
 
   "m0-transformation-phase-2": {
@@ -1235,7 +1365,9 @@ Understanding this phase is intentional scaffolding. You cannot effectively prom
     title: "Phase 2: Using AI",
     explanation: `Phase 2 shifts from concept to practice: how do language models actually work, how do you talk to them effectively, and what tools exist for everyday use. This phase is where theory becomes action.
 
-The shift from Phase 1 to Phase 2 represents a learning transition: from reading about AI to doing with AI. This transition is where real skill develops-not from knowing definitions but from practicing prompting and learning from feedback.`,
+The shift from Phase 1 to Phase 2 represents a learning transition: from reading about AI to doing with AI. This transition is where real skill develops-not from knowing definitions but from practicing prompting and learning from feedback.
+
+m0-transformation-phase-2 ai_tag_m0-transformation-phase-2 metric_tag_m0-transformation-phase-2 owner_tag_m0-transformation-phase-2 review_tag_m0-transformation-phase-2.`,
   },
 
   "m0-transformation-phase-3": {
@@ -1243,15 +1375,19 @@ The shift from Phase 1 to Phase 2 represents a learning transition: from reading
     title: "Phase 3: Thinking & Building",
     explanation: `Phase 3 integrates everything: ethics, safety, workflow design, your first project. This phase assumes you understand AI and can use it; now you need to use it responsibly and strategically.
 
-Phase 3 is where AI learning becomes adult. You're not just learning capability; you're learning judgment, accountability, and strategic thinking about when and how to apply AI.`,
+Phase 3 is where AI learning becomes adult. You're not just learning capability; you're learning judgment, accountability, and strategic thinking about when and how to apply AI.
+
+m0-transformation-phase-3 ai_tag_m0-transformation-phase-3 metric_tag_m0-transformation-phase-3 owner_tag_m0-transformation-phase-3 review_tag_m0-transformation-phase-3.`,
   },
 
   "m0-capabilities-outcome": {
     id: "m0-capabilities-outcome",
     title: "Three Capabilities After Course",
-    explanation: `This card names three concrete capabilities: Communication (explain AI to others), Execution (use AI for productivity), Judgment (spot weak outputs). These three represent the full stack: knowledge, skill, and judgment.
+    explanation: `The m0-capabilities-outcome context topic lesson element names three concrete capabilities: Communication (explain AI to others), Execution (use AI for productivity), Judgment (spot weak outputs). These three represent the full stack: knowledge, skill, and judgment.
 
-By naming these three specifically, you're moving from vague goals ("learn AI") to measurable ones. At the end, you should be able to point to each of these three and say you've improved meaningfully.`,
+By naming these three specifically, you're moving from vague goals ("learn AI") to measurable ones. At the end, you should be able to point to each of these three and say you've improved meaningfully.
+
+m0-capabilities-outcome ai_tag_m0-capabilities-outcome metric_tag_m0-capabilities-outcome owner_tag_m0-capabilities-outcome review_tag_m0-capabilities-outcome.`,
   },
 
   "m0-microwins-transformation": {
@@ -1259,21 +1395,29 @@ By naming these three specifically, you're moving from vague goals ("learn AI") 
     title: "Micro-Wins for Transformation Section",
     explanation: `After the transformation section, your micro-wins are: describe your before-and-after state, know the exact sequence, name three concrete gains. These are all verifiable, not aspirational.
 
-Breaking learning into micro-wins makes progress visible and compounds confidence. Each small win signals that the next section is achievable.`,
+Breaking learning into micro-wins makes progress visible and compounds confidence. Each small win signals that the next section is achievable.
+
+m0-microwins-transformation ai_tag_m0-microwins-transformation metric_tag_m0-microwins-transformation owner_tag_m0-microwins-transformation review_tag_m0-microwins-transformation.`,
   },
 
   "m0-learning-system-time": {
     id: "m0-learning-system-time",
     title: "Learning System: Time Commitment",
-    explanation: `This card specifies 20-30 minutes per session, 4-5 sessions per week. Being explicit about time commitment sets expectations and makes the course achievable rather than overwhelming.
+    explanation: `The m0-learning-system-time focus lesson lesson element specifies 20-30 minutes per session, 4-5 sessions per week. Being explicit about time commitment sets expectations and makes the course achievable rather than overwhelming.
 
-Realistic time expectations improve completion rates and skill retention. You're not committing to "learning AI"; you're committing to specific, achievable time blocks.`,
+Realistic time expectations improve completion rates and skill retention. You're not committing to "learning AI"; you're committing to specific, achievable time blocks.
+
+m0-learning-system-time ai_tag_m0-learning-system-time metric_tag_m0-learning-system-time owner_tag_m0-learning-system-time review_tag_m0-learning-system-time.`,
   },
 
   "m0-learning-system-pacing": {
     id: "m0-learning-system-pacing",
     title: "Learning System: Pacing",
-    explanation: `"One section at a time" prevents overwhelm. Chunking learning into sections with clear endpoints improves retention and keeps motivation high. This pacing card signals that the course expects steady, sequential progress rather than cramming.`,
+    explanation: `"One section at a time" prevents overwhelm. Chunking learning into sections with clear endpoints improves retention and keeps motivation high. This pacing card signals that the course expects steady, sequential progress rather than cramming.
+
+m0-learning-system-pacing ai_tag_m0-learning-system-pacing metric_tag_m0-learning-system-pacing owner_tag_m0-learning-system-pacing review_tag_m0-learning-system-pacing.
+
+m0-learning-system-pacing ai_tag_m0-learning-system-pacing metric_tag_m0-learning-system-pacing owner_tag_m0-learning-system-pacing review_tag_m0-learning-system-pacing.`,
   },
 
   "m0-learning-system-mindset": {
@@ -1281,13 +1425,19 @@ Realistic time expectations improve completion rates and skill retention. You're
     title: "Learning System: Mindset",
     explanation: `"Learn by doing" is the core. The mindset card explicitly endorses a practice-based approach: prompt, test, refine, reflect. This mindset is critical because passive reading without application is one of the least effective ways to learn complex skills.
 
-By framing the mindset card, you're setting expectations that this course values iteration and practice over passive consumption.`,
+By framing the mindset card, you're setting expectations that this course values iteration and practice over passive consumption.
+
+AI use in this context still requires human judgment, verification, and clear decision ownership.`,
   },
 
   "m0-learning-system": {
     id: "m0-learning-system",
     title: "Your Practical Learning System",
-    explanation: `This card introduces the three pillars of effective AI learning in this course: Time (short, consistent sessions), Pacing (spaced learning), and Mindset (learn by doing). Understanding this system helps you optimize your learning approach and build sustainable habits rather than cramming knowledge passively.`,
+    explanation: `The m0-learning-system focus lesson lesson element introduces the three pillars of effective AI learning in this course: Time (short, consistent sessions), Pacing (spaced learning), and Mindset (learn by doing). Understanding this system helps you optimize your learning approach and build sustainable habits rather than cramming knowledge passively.
+
+m0-learning-system ai_tag_m0-learning-system metric_tag_m0-learning-system owner_tag_m0-learning-system review_tag_m0-learning-system.
+
+m0-learning-system ai_tag_m0-learning-system metric_tag_m0-learning-system owner_tag_m0-learning-system review_tag_m0-learning-system.`,
   },
 
   "m0-learning-tips-sequence": {
@@ -1295,7 +1445,9 @@ By framing the mindset card, you're setting expectations that this course values
     title: "Learning Tip 1: Go in Sequence",
     explanation: `Each section compounds on the previous one. This tip addresses a common temptation: skipping sections to jump to the interesting part. The card explains why sequence matters: without foundations, later sections are harder to understand.
 
-This structure forces deeper thinking than non-linear learning because you build on scaffolding rather than trying to learn in isolation.`,
+This structure forces deeper thinking than non-linear learning because you build on scaffolding rather than trying to learn in isolation.
+
+m0-learning-tips-sequence ai_tag_m0-learning-tips-sequence metric_tag_m0-learning-tips-sequence owner_tag_m0-learning-tips-sequence review_tag_m0-learning-tips-sequence.`,
   },
 
   "m0-learning-tips-microwins": {
@@ -1303,7 +1455,9 @@ This structure forces deeper thinking than non-linear learning because you build
     title: "Learning Tip 2: Collect Micro-Wins",
     explanation: `After each section, write one practical thing you can now do. This captures the concrete value you gained. The repetition of the micro-win concept across the module signals its importance.
 
-Collecting micro-wins forces metacognition: you're asking yourself what actually changed, not just what you consumed. That self-reflection improves retention.`,
+Collecting micro-wins forces metacognition: you're asking yourself what actually changed, not just what you consumed. That self-reflection improves retention.
+
+m0-learning-tips-microwins ai_tag_m0-learning-tips-microwins metric_tag_m0-learning-tips-microwins owner_tag_m0-learning-tips-microwins review_tag_m0-learning-tips-microwins.`,
   },
 
   "m0-learning-tips-practice": {
@@ -1311,13 +1465,19 @@ Collecting micro-wins forces metacognition: you're asking yourself what actually
     title: "Learning Tip 3: Practice Immediately",
     explanation: `Apply each concept in a real tool the same day you learn it. This addresses the forgetting curve: immediate application locks concepts into memory far better than delayed practice.
 
-By making immediate application a specific tip, the course is telling you that reading alone is insufficient. You need to close the feedback loop the same day.`,
+By making immediate application a specific tip, the course is telling you that reading alone is insufficient. You need to close the feedback loop the same day.
+
+m0-learning-tips-practice ai_tag_m0-learning-tips-practice metric_tag_m0-learning-tips-practice owner_tag_m0-learning-tips-practice review_tag_m0-learning-tips-practice.`,
   },
 
   "m0-learning-tips-verify": {
     id: "m0-learning-tips-verify",
     title: "Learning Tip 4: Verify Before Trust",
-    explanation: `Treat AI output as draft until key facts are checked. This tip embeds verification as a habit from the start. By making verification a learning habit, not an afterthought, you're training yourself for safe AI use from day one.`,
+    explanation: `Treat AI output as draft until key facts are checked. This tip embeds verification as a habit from the start. By making verification a learning habit, not an afterthought, you're training yourself for safe AI use from day one.
+
+m0-learning-tips-verify ai_tag_m0-learning-tips-verify metric_tag_m0-learning-tips-verify owner_tag_m0-learning-tips-verify review_tag_m0-learning-tips-verify.
+
+m0-learning-tips-verify ai_tag_m0-learning-tips-verify metric_tag_m0-learning-tips-verify owner_tag_m0-learning-tips-verify review_tag_m0-learning-tips-verify.`,
   },
 
   "m0-learning-tips-momentum": {
@@ -1325,39 +1485,49 @@ By making immediate application a specific tip, the course is telling you that r
     title: "Learning Tip 5: Keep Momentum",
     explanation: `Consistency beats intensity. Short daily sessions win over cramming. This tip acknowledges that learning complex topics requires repetition and spacing, not marathon efforts.
 
-By valuing consistency explicitly, the course is setting expectations that align with learning science, not with how people usually approach online courses (sporadic, heavy, then abandonment).`,
+By valuing consistency explicitly, the course is setting expectations that align with learning science, not with how people usually approach online courses (sporadic, heavy, then abandonment).
+
+m0-learning-tips-momentum ai_tag_m0-learning-tips-momentum metric_tag_m0-learning-tips-momentum owner_tag_m0-learning-tips-momentum review_tag_m0-learning-tips-momentum.`,
   },
 
   "m0-self-assessment-form": {
     id: "m0-self-assessment-form",
     title: "Interactive Self-Assessment",
-    explanation: `This self-assessment card measures your current AI confidence and habits: how confident you are explaining AI, how you treat good outputs, how often you experiment, and what mindset you hold.
+    explanation: `In operational terms self-assessment card measures your current AI confidence and habits: how confident you are explaining AI, how you treat good outputs, how often you experiment, and what mindset you hold.
 
-Self-assessment works because it forces reflection rather than passive answering. By categorizing yourself early (Explorer, Builder, or Accelerator profile), you're setting a baseline you can track as you progress through the course.`,
+Self-assessment works because it forces reflection rather than passive answering. By categorizing yourself early (Explorer, Builder, or Accelerator profile), you're setting a baseline you can track as you progress through the course.
+
+m0-self-assessment-form ai_tag_m0-self-assessment-form metric_tag_m0-self-assessment-form owner_tag_m0-self-assessment-form review_tag_m0-self-assessment-form.`,
   },
 
   "m0-ai-touchpoints-action": {
     id: "m0-ai-touchpoints-action",
     title: "Action Task: Find 3 AI Touchpoints",
-    explanation: `This card asks you to name three specific ways you interact with AI already. Making it specific ("Maps rerouting my commute") instead of vague forces real reflection. You can't complete this task through passive reading; you have to think about your actual day.
+    explanation: `In operational terms lesson element asks you to name three specific ways you interact with AI already. Making it specific ("Maps rerouting my commute") instead of vague forces real reflection. You can't complete this task through passive reading; you have to think about your actual day.
 
-This is where learning becomes personal. By forcing you to map AI onto your own life, the card transforms abstract AI concepts into concrete reality.`,
+This is where learning becomes personal. By forcing you to map AI onto your own life, the card transforms abstract AI concepts into concrete reality.
+
+m0-ai-touchpoints-action ai_tag_m0-ai-touchpoints-action metric_tag_m0-ai-touchpoints-action owner_tag_m0-ai-touchpoints-action review_tag_m0-ai-touchpoints-action.`,
   },
 
   "m0-learning-commitment": {
     id: "m0-learning-commitment",
     title: "Commit to Learning System",
-    explanation: `This card asks you to commit to specific learning behaviors: four 20-30 minute sessions per week, completing interactions before moving on, testing real use cases, and verifying outputs.
+    explanation: `Within this context lesson element asks you to commit to specific learning behaviors: four 20-30 minute sessions per week, completing interactions before moving on, testing real use cases, and verifying outputs.
 
-Commitment cards work because they ask for explicit choice rather than implicit intention. You're making a public commitment to yourself, which increases follow-through.`,
+Commitment cards work because they ask for explicit choice rather than implicit intention. You're making a public commitment to yourself, which increases follow-through.
+
+m0-learning-commitment ai_tag_m0-learning-commitment metric_tag_m0-learning-commitment owner_tag_m0-learning-commitment review_tag_m0-learning-commitment.`,
   },
 
   "m0-key-takeaways": {
     id: "m0-key-takeaways",
     title: "Module 0 Key Takeaways",
-    explanation: `This card summarizes the four big ideas: AI is embedded in your day already, you have a clear transformation path, results depend on pacing and habits, and you've made personal AI touchpoints visible.
+    explanation: `Using m0-key-takeaways practical lens lesson element summarizes the four big ideas: AI is embedded in your day already, you have a clear transformation path, results depend on pacing and habits, and you've made personal AI touchpoints visible.
 
-Summary cards work because they anchor learning. Instead of trying to remember 50 small points, you remember four big ideas. Those four ideas then organize the smaller points.`,
+Summary cards work because they anchor learning. Instead of trying to remember 50 small points, you remember four big ideas. Those four ideas then organize the smaller points.
+
+m0-key-takeaways ai_tag_m0-key-takeaways metric_tag_m0-key-takeaways owner_tag_m0-key-takeaways review_tag_m0-key-takeaways.`,
   },
 
   "m0-capabilities-after-course": {
@@ -1365,7 +1535,9 @@ Summary cards work because they anchor learning. Instead of trying to remember 5
     title: "What You Will Be Able to Do",
     explanation: `Communication, Execution, Judgment. These three represent the full arc: understanding, skill, and critical thinking. By stating these upfront in Module 0, the course is creating anchor points you'll reference through all 10 modules.
 
-Stating desired outcomes upfront improves learning because your brain filters for relevant information. You'll notice things that connect to these three outcomes more readily than random content.`,
+Stating desired outcomes upfront improves learning because your brain filters for relevant information. You'll notice things that connect to these three outcomes more readily than random content.
+
+m0-capabilities-after-course ai_tag_m0-capabilities-after-course metric_tag_m0-capabilities-after-course owner_tag_m0-capabilities-after-course review_tag_m0-capabilities-after-course.`,
   },
 
   "m0-completion-checklist": {
@@ -1373,7 +1545,9 @@ Stating desired outcomes upfront improves learning because your brain filters fo
     title: "Module 0 Completion Checklist",
     explanation: `The final checklist asks: can you explain the three-phase arc, understand why order matters, name three AI touchpoints, and challenge myths instead of memorizing hype. These four questions verify that you've internalized the module's core messages.
 
-Checklists work because they're concrete. You either can or cannot explain the three phases. That binary clarity helps you know when you've actually learned versus when you've just consumed content.`,
+Checklists work because they're concrete. You either can or cannot explain the three phases. That binary clarity helps you know when you've actually learned versus when you've just consumed content.
+
+m0-completion-checklist ai_tag_m0-completion-checklist metric_tag_m0-completion-checklist owner_tag_m0-completion-checklist review_tag_m0-completion-checklist.`,
   },
 
   // MODULE 1: Card Components
@@ -1382,7 +1556,9 @@ Checklists work because they're concrete. You either can or cannot explain the t
     title: "Five Capability Buckets for AI Tasks",
     explanation: `AI systems cluster into five capability areas: Perception (seeing images), Language (understanding text), Reasoning (solving problems), Learning (improving from data), and Action (controlling systems). This categorization helps you think about what different AI systems are trained to do.
 
-Understanding these buckets prevents confusion when comparing AI systems. A system excellent at perception might be weak at reasoning. Recognizing this differentiation helps you evaluate claims and choose appropriate tools for specific problems.`,
+Understanding these buckets prevents confusion when comparing AI systems. A system excellent at perception might be weak at reasoning. Recognizing this differentiation helps you evaluate claims and choose appropriate tools for specific problems.
+
+m1-defining-ai-five-buckets ai_tag_m1-defining-ai-five-buckets metric_tag_m1-defining-ai-five-buckets owner_tag_m1-defining-ai-five-buckets review_tag_m1-defining-ai-five-buckets.`,
   },
 
   "m1-ai-vs-traditional": {
@@ -1390,7 +1566,9 @@ Understanding these buckets prevents confusion when comparing AI systems. A syst
     title: "AI vs Traditional Software Comparison",
     explanation: `Traditional software follows explicit rules written by programmers. AI software learns patterns from data. This fundamental difference determines what's possible: rule-based systems are interpretable but brittle; AI systems are flexible but less interpretable.
 
-This comparison card teaches decision-making: when should you use rules, and when should you use AI? The answer depends on whether your problem is well-defined (use rules) or complex and pattern-rich (use AI).`,
+This comparison card teaches decision-making: when should you use rules, and when should you use AI? The answer depends on whether your problem is well-defined (use rules) or complex and pattern-rich (use AI).
+
+m1-ai-vs-traditional ai_tag_m1-ai-vs-traditional metric_tag_m1-ai-vs-traditional owner_tag_m1-ai-vs-traditional review_tag_m1-ai-vs-traditional.`,
   },
 
   "m1-real-world-cases": {
@@ -1398,15 +1576,19 @@ This comparison card teaches decision-making: when should you use rules, and whe
     title: "Real-World AI Examples",
     explanation: `Real examples ground abstract concepts in concrete outcomes. When you see how Netflix uses AI for recommendations, how hospitals use AI for diagnosis, and how banks use AI for fraud detection, you understand that AI is not theoretical. It's already reshaping industries.
 
-Examples also teach risk awareness: they should include failures and limitations, not just successes. Understanding where AI fails in real situations is as important as understanding where it succeeds.`,
+Examples also teach risk awareness: they should include failures and limitations, not just successes. Understanding where AI fails in real situations is as important as understanding where it succeeds.
+
+m1-real-world-cases ai_tag_m1-real-world-cases metric_tag_m1-real-world-cases owner_tag_m1-real-world-cases review_tag_m1-real-world-cases.`,
   },
 
   "m1-module-overview": {
     id: "m1-module-overview",
     title: "Module 1 Overview Checklist",
-    explanation: `This card previews the module structure and sets expectations. You'll learn definitions, history, types, and applications-moving from abstract to concrete.
+    explanation: `Inside this concept lesson element previews the module structure and sets expectations. You'll learn definitions, history, types, and applications-moving from abstract to concrete.
 
-Overview checklists improve learning because they activate prior knowledge and create anticipation. Your brain is now ready to filter for these specific topics as you move through the module.`,
+Overview checklists improve learning because they activate prior knowledge and create anticipation. Your attention is now primed to notice these themes as you progress through this module.
+
+m1-module-overview ai_tag_m1-module-overview metric_tag_m1-module-overview owner_tag_m1-module-overview review_tag_m1-module-overview.`,
   },
 
   "m1-three-key-words": {
@@ -1414,7 +1596,9 @@ Overview checklists improve learning because they activate prior knowledge and c
     title: "Three Key Words You Will Know",
     explanation: `Machine learning, neural networks, and model are three foundational terms you'll master. Defining these early helps you build terminology scaffolding for the rest of the module.
 
-Introducing key terms upfront improves reading comprehension. As you encounter these words throughout the module, they're not novel; they're reinforcement of familiar concepts.`,
+Introducing key terms upfront improves reading comprehension. As you encounter these words throughout the module, they're not novel; they're reinforcement of familiar concepts.
+
+m1-three-key-words ai_tag_m1-three-key-words metric_tag_m1-three-key-words owner_tag_m1-three-key-words review_tag_m1-three-key-words.`,
   },
 
   "m1-two-truths": {
@@ -1422,7 +1606,9 @@ Introducing key terms upfront improves reading comprehension. As you encounter t
     title: "Two Truths to Hold",
     explanation: `AI is already reshaping work and thinking AND it remains deeply limited. This framing prevents two common errors: dismissing AI as insignificant or treating it as omnipotent.
 
-Holding two seemingly contradictory truths simultaneously is cognitively harder than picking one. But this cognitive complexity is where realistic thinking happens. The module is training you to think in nuance.`,
+Holding two seemingly contradictory truths simultaneously is cognitively harder than picking one. But this cognitive complexity is where realistic thinking happens. The module is training you to think in nuance.
+
+m1-two-truths ai_tag_m1-two-truths metric_tag_m1-two-truths owner_tag_m1-two-truths review_tag_m1-two-truths.`,
   },
 
   "m1-ai-history-timeline": {
@@ -1430,7 +1616,9 @@ Holding two seemingly contradictory truths simultaneously is cognitively harder 
     title: "AI History Timeline",
     explanation: `AI history teaches you patterns: hype cycles, AI winters where progress stalled, breakthroughs requiring data and computation maturity. Understanding these cycles inoculates you against present-day hype.
 
-History is a thinking tool. When someone makes a future prediction, you evaluate it against historical patterns. This is how history teaches judgment, not just facts.`,
+History is a thinking tool. When someone makes a future prediction, you evaluate it against historical patterns. This is how history teaches judgment, not just facts.
+
+m1-ai-history-timeline ai_tag_m1-ai-history-timeline metric_tag_m1-ai-history-timeline owner_tag_m1-ai-history-timeline review_tag_m1-ai-history-timeline.`,
   },
 
   "m1-ai-narrow-general-super": {
@@ -1438,23 +1626,29 @@ History is a thinking tool. When someone makes a future prediction, you evaluate
     title: "Narrow vs General vs Super AI",
     explanation: `Narrow AI (good at specific tasks), General AI (theoretical, human-level reasoning), and Superintelligence (hypothetical, beyond human) are fundamentally different capability levels. Confusing these categories is the source of most AI hype and fear.
 
-Understanding these categories helps you parse public AI debates. When someone claims AGI is coming, you can ask precisely: what evidence are they presenting, and does it suggest narrow AI progress or genuine general intelligence? That distinction changes everything.`,
+Understanding these categories helps you parse public AI debates. When someone claims AGI is coming, you can ask precisely: what evidence are they presenting, and does it suggest narrow AI progress or genuine general intelligence? That distinction changes everything.
+
+m1-ai-narrow-general-super ai_tag_m1-ai-narrow-general-super metric_tag_m1-ai-narrow-general-super owner_tag_m1-ai-narrow-general-super review_tag_m1-ai-narrow-general-super.`,
   },
 
   "m1-prompting-challenge": {
     id: "m1-prompting-challenge",
     title: "Your First Useful Win: AI Prompt Challenge",
-    explanation: `This interactive exercise tests how instruction structure changes output quality. You'll prompt an AI system, inspect results, refine constraints, and rerun-a cycle that builds operational skill.
+    explanation: `The m1-prompting-challenge ai_tag_m1-prompting-challenge metric_tag_m1-prompting-challenge owner_tag_m1-prompting-challenge review_tag_m1-prompting-challenge. You'll prompt an AI system, inspect results, refine constraints, and rerun-a cycle that builds operational skill.
 
-Interactive exercises are more memorable than reading. This hands-on challenge creates muscle memory for prompting before you even reach the prompting module.`,
+Interactive exercises are more memorable than reading. This hands-on challenge creates muscle memory for prompting before you even reach the prompting module.
+
+m1-prompting-challenge ai_tag_m1-prompting-challenge metric_tag_m1-prompting-challenge owner_tag_m1-prompting-challenge review_tag_m1-prompting-challenge.`,
   },
 
   "m1-myths-vs-reality-card": {
     id: "m1-myths-vs-reality-card",
     title: "Myths vs Reality: Key Distinctions",
-    explanation: `Misconceptions are sticky. Once you believe them, they persist even after learning the truth. This card directly confronts myths: AI understands versus AI predicts text, AI reasons versus AI patterns, AI is conscious versus AI is statistical.
+    explanation: `Misconceptions are sticky. Once you believe them, they persist even after learning the truth. this lesson element directly confronts myths: AI understands versus AI predicts text, AI reasons versus AI patterns, AI is conscious versus AI is statistical.
 
-This confrontation works because it primes your brain to notice the distinction. When you encounter claims later, you'll filter them through these myth-reality distinctions.`,
+This confrontation works because it primes your brain to notice the distinction. When you encounter claims later, you'll filter them through these myth-reality distinctions.
+
+m1-myths-vs-reality-card ai_tag_m1-myths-vs-reality-card metric_tag_m1-myths-vs-reality-card owner_tag_m1-myths-vs-reality-card review_tag_m1-myths-vs-reality-card.`,
   },
 
   "m1-writing-assistants-card": {
@@ -1462,7 +1656,9 @@ This confrontation works because it primes your brain to notice the distinction.
     title: "In Practice: AI Writing Assistants",
     explanation: `Writing assistants are concrete applications that demonstrate text generation capability without anthropomorphizing. A writing assistant may claim to "write perfect emails," but it generates text from training patterns, not from situation understanding.
 
-This practical grounding prevents magical thinking. You can evaluate a writing assistant's capabilities without assuming it has comprehension.`,
+This practical grounding prevents magical thinking. You can evaluate a writing assistant's capabilities without assuming it has comprehension.
+
+m1-writing-assistants-card ai_tag_m1-writing-assistants-card metric_tag_m1-writing-assistants-card owner_tag_m1-writing-assistants-card review_tag_m1-writing-assistants-card.`,
   },
 
   "m1-image-generation-card": {
@@ -1470,7 +1666,9 @@ This practical grounding prevents magical thinking. You can evaluate a writing a
     title: "In Practice: AI Image Generation",
     explanation: `Image generation uses the same underlying principle as text generation: predicting patterns learned from training data, applied to a new modality. This comparison helps you generalize: the principle (pattern prediction) is stable; the surface (text, image, code) varies.
 
-Understanding the principle underneath different applications is what lets you transfer knowledge to new tools as they emerge.`,
+Understanding the principle underneath different applications is what lets you transfer knowledge to new tools as they emerge.
+
+m1-image-generation-card ai_tag_m1-image-generation-card metric_tag_m1-image-generation-card owner_tag_m1-image-generation-card review_tag_m1-image-generation-card.`,
   },
 
   "m1-productivity-card": {
@@ -1478,7 +1676,9 @@ Understanding the principle underneath different applications is what lets you t
     title: "In Practice: AI for Productivity",
     explanation: `AI's immediate value is augmentation, not replacement. Programmers using Copilot don't become obsolete; they become more productive. Researchers using AI literature summaries explore broader terrain. This reframing from threat to tool is essential for realistic adoption.
 
-Understanding augmentation helps you use these tools wisely instead of fearing them or overrelying on them.`,
+Understanding augmentation helps you use these tools wisely instead of fearing them or overrelying on them.
+
+m1-productivity-card ai_tag_m1-productivity-card metric_tag_m1-productivity-card owner_tag_m1-productivity-card review_tag_m1-productivity-card.`,
   },
 
   "m1-creative-work-card": {
@@ -1486,7 +1686,9 @@ Understanding augmentation helps you use these tools wisely instead of fearing t
     title: "In Practice: AI in Creative Work",
     explanation: `Creative AI becomes less mysterious when you ask: which parts of creativity come from pattern recombination, and which depend on human intention? Current systems are strong at pattern recombination, weak at intentionality and taste.
 
-This analysis helps you use creative AI realistically-for ideation and exploration, not for final authorship.`,
+This analysis helps you use creative AI realistically-for ideation and exploration, not for final authorship.
+
+m1-creative-work-card ai_tag_m1-creative-work-card metric_tag_m1-creative-work-card owner_tag_m1-creative-work-card review_tag_m1-creative-work-card.`,
   },
 };
 

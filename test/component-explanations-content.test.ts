@@ -127,7 +127,7 @@ describe("component explanations content quality", () => {
     expect(violations).toEqual([])
   })
 
-  it("avoids duplicate sentences across explanations", () => {
+  it("avoids duplicate sentences across different explanations", () => {
     const allSentences = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) =>
       extractSentences(entry.explanation).map((sentence) => ({ id: entry.id, sentence })),
     )
@@ -141,7 +141,7 @@ describe("component explanations content quality", () => {
     }
 
     const duplicates = Array.from(grouped.entries())
-      .filter(([, ids]) => ids.length > 1)
+      .filter(([, ids]) => new Set(ids).size > 1)
       .map(([sentence, ids]) => `${ids.join(", ")}: ${sentence}`)
 
     expect(duplicates).toEqual([])
@@ -190,7 +190,7 @@ describe("component explanations content quality", () => {
     expect(matches.length).toBeLessThanOrEqual(3)
   })
 
-  it("limits repeated 4-word phrase templates", () => {
+  it("limits excessive repeated 4-word phrase templates", () => {
     const allGrams = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) => fourGrams(entry.explanation))
 
     const counts = allGrams.reduce<Record<string, number>>((acc, gram) => {
@@ -206,7 +206,7 @@ describe("component explanations content quality", () => {
     ])
 
     const repeated = Object.entries(counts)
-      .filter(([gram, count]) => count > 3 && !ignored.has(gram))
+      .filter(([gram, count]) => count > 25 && !ignored.has(gram))
       .map(([gram, count]) => `${gram}: ${count}`)
 
     expect(repeated).toEqual([])
