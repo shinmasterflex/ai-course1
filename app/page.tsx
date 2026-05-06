@@ -41,7 +41,7 @@ export default function HomePage() {
               </div>
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
                 <span className="text-brand-indigo">Learn AI with</span>{" "}
-                <span className="brand-wordmark bg-gradient-to-r from-brand-indigo via-brand-orange to-brand-green bg-clip-text text-transparent">Cognijin</span>
+                <span className="brand-wordmark text-brand-orange">Cognijin</span>
               </h1>
               <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
                 Explore a complete AI path across 10 modules, from fundamentals and prompting to agents, ethics, and future trends.
