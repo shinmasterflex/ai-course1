@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Bot, Zap, Layers, Globe, AlertTriangle, Wrench, ChevronRight, RotateCcw } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -25,7 +26,6 @@ export default function Module8Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
-  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-8"
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5"])
@@ -46,9 +46,10 @@ export default function Module8Page() {
     }
   }, [sectionParam])
 
-  const interactionRequiredSections = [5]
-  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
-  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [5],
+  })
 
   const handleSectionComplete = () => {
     if (!canAdvance) {
@@ -107,6 +108,18 @@ export default function Module8Page() {
                   </div>
                 ))}
               </Card>
+              <QuickCheckCard
+                prompt="What is the key difference between a chatbot and an agent?"
+                options={[
+                  { id: "a", label: "Agents only generate longer text responses" },
+                  { id: "b", label: "Agents pursue goals across multiple steps and can take actions with tools" },
+                  { id: "c", label: "Chatbots are always autonomous but agents are manual" },
+                  { id: "d", label: "There is no meaningful difference" },
+                ]}
+                correctOptionId="b"
+                explanation="Correct. Agents are defined by multi-step goal pursuit with observation, planning, and tool-based action."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                 Start Module
               </Button>
@@ -523,7 +536,7 @@ export default function Module8Page() {
                 correctOptionId="b"
                 explanation="Exactly. Narrow scope, least privilege, and incremental rollout produce safer agents and faster learning loops."
                 onAnswered={() => {
-                  setSectionInteractionCompletion((prev) => ({ ...prev, 5: true }))
+                  markSectionInteractionComplete(5)
                 }}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />

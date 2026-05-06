@@ -18,6 +18,7 @@ import { Card } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 import { CheckCircle2, Brain, Clock, Lightbulb } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -173,7 +174,16 @@ export default function Module1Page() {
     }
   }, [historyCarouselApi])
 
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [4],
+  })
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -219,6 +229,18 @@ export default function Module1Page() {
                   ))}
                 </ul>
               </Card>
+              <QuickCheckCard
+                prompt="What is the primary goal of this module?"
+                options={[
+                  { id: "a", label: "Memorize AI buzzwords without application" },
+                  { id: "b", label: "Build a practical foundation and separate AI reality from hype" },
+                  { id: "c", label: "Learn advanced model training math" },
+                  { id: "d", label: "Replace all workflows with automation immediately" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. This module is about useful mental models and practical clarity, not hype or heavy math."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
@@ -639,8 +661,26 @@ export default function Module1Page() {
                   <p><span className="font-medium text-foreground">Do not</span> trust the first answer automatically. Read it, edit it, and verify key facts.</p>
                 </div>
               </Card>
-              
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <QuickCheckCard
+                prompt="What is the strongest first AI win for a beginner in this module?"
+                options={[
+                  { id: "a", label: "Use AI for high-stakes legal decisions immediately" },
+                  { id: "b", label: "Pick one low-risk recurring task, use AI for a draft or summary, then verify before using" },
+                  { id: "c", label: "Automate multiple workflows before testing any output quality" },
+                  { id: "d", label: "Share confidential documents in any public AI tool for speed" },
+                ]}
+                correctOptionId="b"
+                explanation="Correct. Durable skill starts with one low-risk, reviewable workflow and strong verification habits."
+                onAnswered={() => {
+                  markSectionInteractionComplete(4)
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the first-win checkpoint to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 

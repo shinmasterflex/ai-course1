@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, AlertTriangle, Shield } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -52,7 +53,16 @@ export default function Module5Page() {
     }
   }, [allQuizComplete])
 
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [5],
+  })
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -103,6 +113,18 @@ export default function Module5Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
+              <QuickCheckCard
+                prompt="Before trusting an AI output, which safety habit matters most?"
+                options={[
+                  { id: "a", label: "Assume confidence means correctness" },
+                  { id: "b", label: "Verify critical claims and keep humans in the loop for consequential use" },
+                  { id: "c", label: "Share private data so the model can personalize better" },
+                  { id: "d", label: "Skip source checks if wording looks professional" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. Verification plus human oversight is the core safety baseline in real-world AI use."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
@@ -426,7 +448,26 @@ export default function Module5Page() {
                   <p><span className="font-medium text-foreground">Question 3:</span> What rule will you personally use for deciding when AI helps and when a human must stay in charge?</p>
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <QuickCheckCard
+                prompt="Which principle is most future-proof as AI tools keep changing?"
+                options={[
+                  { id: "a", label: "Master one current tool and stop adapting" },
+                  { id: "b", label: "Prioritize critical thinking, verification, and human judgment over tool-specific shortcuts" },
+                  { id: "c", label: "Delegate all important decisions to AI for speed" },
+                  { id: "d", label: "Ignore governance and only optimize output volume" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. Tools evolve fast, but judgment, verification discipline, and adaptive learning remain durable advantages."
+                onAnswered={() => {
+                  markSectionInteractionComplete(5)
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the future-readiness checkpoint to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 

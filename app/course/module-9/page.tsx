@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -44,7 +45,16 @@ export default function Module9Page() {
     }
   }, [sectionParam])
 
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [4],
+  })
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -427,8 +437,26 @@ export default function Module9Page() {
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>
-              
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <QuickCheckCard
+                prompt="What is the most accessible AI career move for most learners right now?"
+                options={[
+                  { id: "a", label: "Switch immediately to advanced model engineering regardless of background" },
+                  { id: "b", label: "Become AI-fluent in your current domain and bridge capability with real-world context" },
+                  { id: "c", label: "Focus only on AI news and avoid hands-on workflows" },
+                  { id: "d", label: "Wait for full AGI before adapting your skill set" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. Domain expertise plus practical AI fluency is the strongest near-term leverage path for most people."
+                onAnswered={() => {
+                  markSectionInteractionComplete(4)
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the careers checkpoint to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 

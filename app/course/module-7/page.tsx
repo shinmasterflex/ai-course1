@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -25,7 +26,6 @@ export default function Module7Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
-  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-7"
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
@@ -45,9 +45,10 @@ export default function Module7Page() {
     }
   }, [sectionParam])
 
-  const interactionRequiredSections = [4]
-  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
-  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [4],
+  })
 
   const handleSectionComplete = () => {
     if (!canAdvance) {
@@ -453,7 +454,7 @@ export default function Module7Page() {
                 correctOptionId="b"
                 explanation="Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails."
                 onAnswered={() => {
-                  setSectionInteractionCompletion((prev) => ({ ...prev, 4: true }))
+                  markSectionInteractionComplete(4)
                 }}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />

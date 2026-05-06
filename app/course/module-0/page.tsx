@@ -17,13 +17,13 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain, Zap, Globe, Stethoscope, Mic } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 
 export default function Module0Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
-  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-0"
   const courseStructure = getCourseStructure()
@@ -41,9 +41,10 @@ export default function Module0Page() {
     }
   }, [sectionParam])
 
-  const interactionRequiredSections = [3, 4]
-  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
-  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [3, 4],
+  })
 
   const handleSectionComplete = () => {
     if (!canAdvance) {
@@ -164,6 +165,18 @@ export default function Module0Page() {
               <TextDisplay
                 variant="info"
                 content="You can continue directly into the course modules. Learning guidance is now built into each module section instead of a separate personality quiz."
+              />
+              <QuickCheckCard
+                prompt="Before moving on, what is the best learning approach for this course?"
+                options={[
+                  { id: "a", label: "Skim content quickly and skip interactions" },
+                  { id: "b", label: "Work section-by-section and complete interactive checkpoints" },
+                  { id: "c", label: "Jump straight to advanced modules first" },
+                  { id: "d", label: "Only read summaries and avoid practice" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. Consistent interaction plus section order is what turns this into skill, not just reading."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                 Got it - let's go!
@@ -315,7 +328,7 @@ export default function Module0Page() {
                 correctOptionId="b"
                 explanation="Exactly. Progress sticks when you combine sequence, interaction, and repetition instead of passive reading."
                 onAnswered={() => {
-                  setSectionInteractionCompletion((prev) => ({ ...prev, 3: true }))
+                  markSectionInteractionComplete(3)
                 }}
               />
               {!canAdvance ? <p className="text-sm text-muted-foreground">Answer the quick check to unlock the next section.</p> : null}
@@ -360,7 +373,7 @@ export default function Module0Page() {
                 correctOptionId="b"
                 explanation="Perfect. The next module builds practical understanding by defining AI clearly and separating hype from reality."
                 onAnswered={() => {
-                  setSectionInteractionCompletion((prev) => ({ ...prev, 4: true }))
+                  markSectionInteractionComplete(4)
                 }}
               />
               {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the check-in to finish this module.</p> : null}

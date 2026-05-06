@@ -95,6 +95,18 @@ export default function Module3Page() {
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
+              <QuickCheckCard
+                prompt="What is the practical focus of this module?"
+                options={[
+                  { id: "a", label: "Only AI history and regulation" },
+                  { id: "b", label: "Understanding LLM mechanics and writing stronger prompts" },
+                  { id: "c", label: "Building new models from scratch" },
+                  { id: "d", label: "Replacing verification with automation" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. This module is about getting better output through better understanding and prompting habits."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}

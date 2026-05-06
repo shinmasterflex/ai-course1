@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { CheckCircle2, XCircle } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
 
@@ -52,7 +53,16 @@ export default function Module2Page() {
     }
   }, [allQuizComplete])
 
+  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
+    currentSectionIndex,
+    requiredSections: [5],
+  })
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -151,6 +161,18 @@ export default function Module2Page() {
               <h2 className="text-3xl font-bold text-brand-green">Training Data Explained</h2>
               <TextDisplay content="Training data is the collection of examples used to teach an AI model. It is the most important ingredient in any AI system." />
               <TextDisplay variant="callout" content="A great analogy: imagine learning to cook by reading 10,000 recipes. The more diverse, accurate, and well-written those recipes are, the better cook you become. AI works the same way." />
+              <QuickCheckCard
+                prompt="If you wanted to improve an AI model quickly, what would usually matter most first?"
+                options={[
+                  { id: "a", label: "A flashier UI" },
+                  { id: "b", label: "Higher-quality and more representative training data" },
+                  { id: "c", label: "Longer system prompts only" },
+                  { id: "d", label: "Avoiding labels in all datasets" },
+                ]}
+                correctOptionId="b"
+                explanation="Correct. Better data quality and coverage usually produce the biggest performance and fairness gains."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <div className="space-y-4">
                 <Card className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">What training data looks like for different AI tasks:</h3>
@@ -456,6 +478,19 @@ export default function Module2Page() {
                 </Card>
               </div>
 
+              <QuickCheckCard
+                prompt="For high-stakes tasks, what is the safest way to use AI given these limitations?"
+                options={[
+                  { id: "a", label: "Treat fluent answers as final decisions" },
+                  { id: "b", label: "Use AI for drafts and analysis, then verify critical facts and keep human judgment in control" },
+                  { id: "c", label: "Ask shorter prompts so hallucinations disappear" },
+                  { id: "d", label: "Assume newer models cannot fail in edge cases" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. AI is strongest as a decision-support partner, not a replacement for verification and accountability."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
               <TextDisplay variant="callout" content="Flip each card to test your understanding of why each limitation exists." />
               <FlipCardGrid
                 cards={[
@@ -508,9 +543,14 @@ export default function Module2Page() {
                 correctOptionId="a"
                 explanation="Hallucinations are especially dangerous because they often come with complete confidence and plausible-looking supporting details. AI has no internal fact-checking - fluency and accuracy are independent."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                onAnswered={() => {
+                  markSectionInteractionComplete(5)
+                }}
               />
 
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the limitations checkpoint to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
