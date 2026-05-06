@@ -1,5 +1,5 @@
 "use client"
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { ChevronDown, BookOpen, CheckCircle2, Circle, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useProgress } from "@/hooks/use-progress"
@@ -26,6 +26,7 @@ function getDisplayName(user: { email?: string | null; user_metadata?: Record<st
 export function Sidebar() {
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const { getCourseStructure, getCompletedSections, currentModule, currentSection, setCurrentPosition } = useProgress()
 
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -73,6 +74,7 @@ export function Sidebar() {
   }
 
   const courseStructure = getCourseStructure()
+  const activeSectionFromUrl = searchParams?.get("section")
 
   const handleSectionClick = (moduleId: string, sectionId: string) => {
     setCurrentPosition(moduleId, sectionId)
@@ -148,7 +150,12 @@ export function Sidebar() {
                     {module.sections.map((section, index) => {
                       // Don't show completion or active status until client-side hydration is complete
                       const isCompleted = isClient && completedSectionIds.includes(section.id)
-                      const isActive = isClient && currentModule === module.id && currentSection === section.id
+                      const defaultSectionId = module.sections[0]?.id
+                      const isActive =
+                        isClient &&
+                        ((isActiveModule && activeSectionFromUrl === section.id) ||
+                          (isActiveModule && !activeSectionFromUrl && section.id === defaultSectionId) ||
+                          (currentModule === module.id && currentSection === section.id && !activeSectionFromUrl))
 
                       return (
                         <button

@@ -124,6 +124,12 @@ export default function Module4Page() {
                   { id: "d", label: "Install a data pipeline tool" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Building neural networks from scratch is a different course entirely. This module focuses on data understanding.",
+          b: "This module is about understanding the data lifecycle - from raw collection through to the clean, structured inputs that machine learning models need.",
+          c: "Database query syntax is not the focus. Understanding what data is and how it is prepared matters far more for AI literacy.",
+          d: "Installing a pipeline tool is a technical implementation step, not the conceptual goal of this module.",
+        }}
                 explanation="This module is about understanding the data lifecycle - from raw collection through to the clean, structured inputs that machine learning models need."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -201,6 +207,12 @@ export default function Module4Page() {
                   { id: "d", label: "A CSV export of sensor readings" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "A spreadsheet of sales figures has defined rows, columns, and data types — that makes it structured data.",
+          b: "A database table has a strict schema with named columns and data types — clearly structured data.",
+          c: "Text files with no fixed columns or schema are unstructured data. Spreadsheets, database tables, and CSVs are all structured.",
+          d: "A CSV export has delimited columns and a header row — it is structured data, even though it is a flat file.",
+        }}
                 explanation="Text files with no fixed columns or schema are unstructured data. Spreadsheets, database tables, and CSVs are all structured."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -290,6 +302,12 @@ export default function Module4Page() {
                   { id: "d", label: "The model automatically corrects for data source problems" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Data source problems affect model quality and fairness far more than storage cost — that is a minor operational concern.",
+          b: "Models learn from the patterns in their training data. If the data over-represents certain groups or periods, the model inherits those biases.",
+          c: "Training data source problems affect all data types including text. NLP models can carry significant social bias from their text training corpora.",
+          d: "Models do not automatically correct for data source problems. Addressing bias requires deliberate curation, resampling, and auditing.",
+        }}
                 explanation="Models learn from the patterns in their training data. If the data over-represents certain groups or periods, the model inherits those biases."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -434,6 +452,12 @@ export default function Module4Page() {
                   { id: "d", label: "Garbage collection is a programming technique unrelated to AI" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "The phrase is not about output volume — it is about quality. The quantity of output is not the concern.",
+          b: "Models learn the patterns in their training data. If that data has errors, gaps, or biases, the model's predictions will reflect those flaws.",
+          c: "Models do not automatically retrain on new data unless explicitly set up to do so. Retraining is a deliberate process.",
+          d: "Garbage collection in programming is unrelated. The AI context is entirely about data quality and its impact on model performance.",
+        }}
                 explanation="Models learn the patterns in their training data. If that data has errors, gaps, or biases, the model's predictions will reflect those flaws."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -520,6 +544,12 @@ export default function Module4Page() {
                   { id: "d", label: "It is discarded after data cleaning" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "Using the test set during training is a form of data leakage that inflates measured performance and produces unreliable models.",
+          b: "The validation set is used for hyperparameter tuning. The test set is reserved strictly for final, unbiased evaluation.",
+          c: "The test set is kept completely separate until final evaluation. Using it earlier would cause you to overfit your model to those examples.",
+          d: "Discarding the test set after cleaning would make final unbiased evaluation impossible. It must be preserved separately.",
+        }}
                 explanation="The test set is kept completely separate until final evaluation. Using it earlier would cause you to overfit your model to those examples."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -608,6 +638,12 @@ export default function Module4Page() {
                   { id: "d", label: "Scaling numerical values to the same range" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Deleting irrelevant columns is feature selection or dimensionality reduction, not feature engineering.",
+          b: "Feature engineering means creating new features - transforming or combining raw data into variables that better represent the underlying patterns the model should learn.",
+          c: "Choosing a model architecture is a separate step that follows data preparation. It is not feature engineering.",
+          d: "Scaling numerical values (normalisation) is data preprocessing, not feature engineering. Feature engineering creates new variables, not adjusts existing ranges.",
+        }}
                 explanation="Feature engineering means creating new features - transforming or combining raw data into variables that better represent the underlying patterns the model should learn."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />

@@ -201,6 +201,12 @@ export default function Module7Page() {
                   { id: "d", label: "Wait until your role is fully disrupted" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Automating client-facing decisions immediately is high-risk. Start internally with verifiable, low-stakes tasks.",
+          b: "The safest high-leverage starting point is a repeatable, low-risk task where you can verify output quality and track time saved.",
+          c: "Adopting tools before identifying a task usually leads to wasted effort. The task should drive the tool choice.",
+          d: "Waiting for full disruption before acting means you will be far behind others who have been building skills throughout.",
+        }}
                 explanation="The safest high-leverage starting point is a repeatable, low-risk task where you can verify output quality and track time saved."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -271,6 +277,12 @@ export default function Module7Page() {
                   { id: "d", label: "The safest move is to wait for the market to settle" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "AI fluency matters across writing, research, analysis, teaching, and management — not only for engineers.",
+          b: "The section's core point is that AI fluency is turning into a baseline professional skill, not a niche specialty.",
+          c: "Ignoring AI tools does not reduce career risk — it increases it. The risk comes from not adapting, not from using AI.",
+          d: "Waiting for the market to settle means falling behind those who are building skills and track records now.",
+        }}
                 explanation="The section's core point is that AI fluency is turning into a baseline professional skill, not a niche specialty."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -453,6 +465,12 @@ export default function Module7Page() {
                   { id: "d", label: "Push adoption without governance discussion" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Rolling out many tools at once creates confusion, inconsistent quality, and no clear measure of what is actually working.",
+          b: "Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails.",
+          c: "Waiting for a perfect strategy before trying anything delays all the learning. Start small and prove value incrementally.",
+          d: "Pushing adoption without governance creates risks around data privacy, quality control, and team trust.",
+        }}
                 explanation="Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails."
                 onAnswered={() => {
                   markSectionInteractionComplete(4)
@@ -615,6 +633,12 @@ export default function Module7Page() {
                   { id: "d", label: "AI is equally useful for all tasks" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Across all the workflows shown, humans remain central to review, personalisation, and final decisions. AI augments, not replaces.",
+          b: "The pattern: AI is best at generating options and handling repetitive analysis. Humans remain essential for judgment, context, and final decisions.",
+          c: "Examples in this section span legal, healthcare, marketing, and operations — not just technical roles.",
+          d: "AI is not equally useful for all tasks. It works best on high-volume, pattern-rich, information-heavy work with clear outputs.",
+        }}
                 explanation="The pattern: AI is best at generating options and handling repetitive analysis. Humans remain essential for judgment, context, and final decisions."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -723,6 +747,12 @@ export default function Module7Page() {
                   { id: "d", label: "AI can extract from PDFs, so it definitely works" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "A quarterly task that requires judgment on inaccessible data fails the core AI task-selection criteria. Better opportunities exist.",
+          b: "Right. This task fails multiple framework tests: not repetitive, requires judgment, and data is not easily accessible. Better opportunities exist for AI.",
+          c: "Trying AI without assessing feasibility wastes effort. The framework exists to save you from low-ROI experiments.",
+          d: "PDF extraction is technically possible but the underlying issues remain: infrequent task, judgment required, uncertain data quality.",
+        }}
                 explanation="Right. This task fails multiple framework tests: not repetitive, requires judgment, and data is not easily accessible. Better opportunities exist for AI."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -837,6 +867,12 @@ export default function Module7Page() {
                   { id: "d", label: "Blame my job loss on AI instead of adapting" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Hoping a job stays the same while the industry changes is not a strategy. It is a plan to fall behind.",
+          b: "Your role will change. Your choice is whether you shape that change by learning AI tools, or get left behind.",
+          c: "Copying others later means entering the curve after those who practised early have already built significant advantage.",
+          d: "Blaming displacement without adapting leaves you without agency. The people who thrive are those who build new skills.",
+        }}
                 explanation="Your role will change. Your choice is whether you shape that change by learning AI tools, or get left behind."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -953,6 +989,12 @@ export default function Module7Page() {
                   { id: "d", label: "Redesigning every workflow at once" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "The most advanced tool is often overkill. Workflow success depends on reliability and measurable outcomes, not tool sophistication.",
+          b: "Replacing human judgment entirely creates accountability gaps and removes the oversight needed for quality and safety.",
+          c: "Success: measurable time/effort saved, humans retain judgment and accountability, clear ROI, low risk of error.",
+          d: "Redesigning every workflow at once creates chaos and makes it impossible to measure what is actually working.",
+        }}
                 explanation="Success: measurable time/effort saved, humans retain judgment and accountability, clear ROI, low risk of error."
                 onAnswered={() => {
                   markSectionInteractionComplete(8)
@@ -1017,6 +1059,12 @@ export default function Module7Page() {
                   { id: "d", label: "Avoid sharing what you learn with your team" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Trying every tool briefly without measuring outcomes creates the impression of learning without any lasting skill.",
+          b: "Durable advantage comes from repeatable workflow skill in your actual domain, not from broad but shallow experimentation.",
+          c: "Following AI news without applying it creates theoretical awareness but no practical capability.",
+          d: "Sharing documented wins builds team trust and collective capability. Hoarding knowledge limits your own influence.",
+        }}
                 explanation="Durable advantage comes from repeatable workflow skill in your actual domain, not from broad but shallow experimentation."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />

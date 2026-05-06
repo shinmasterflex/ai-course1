@@ -128,6 +128,12 @@ export default function Module3Page() {
                   { id: "d", label: "Replacing verification with automation" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "This module goes well beyond history and regulation — it is an applied practice module for real prompt improvement.",
+          b: "Exactly. This module is about getting better output through better understanding and prompting habits.",
+          c: "Building new models from scratch requires deep engineering expertise and is not the focus of this course.",
+          d: "Replacing verification with automation is the opposite of what this module teaches. Human review is essential.",
+        }}
                 explanation="Exactly. This module is about getting better output through better understanding and prompting habits."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -278,6 +284,12 @@ export default function Module3Page() {
                   { id: "d", label: "Because LLMs do not understand the English alphabet" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Internet access would not help with letter-counting. The challenge is that LLMs process tokens, not individual characters.",
+          b: "LLMs tokenise text into chunks. 'strawberry' might become 'straw' + 'berry', making individual letter-counting difficult since the model never sees raw characters — only token sequences.",
+          c: "Letter-counting tasks are well represented in training data. The issue is not lack of examples — it is the tokenisation architecture.",
+          d: "LLMs understand the English alphabet well enough to work with text. The specific challenge with counting letters is the token-based representation, not alphabet knowledge.",
+        }}
                 explanation="LLMs tokenise text into chunks. 'strawberry' might become 'straw' + 'berry', making individual letter-counting difficult since the model never sees raw characters — only token sequences."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -388,6 +400,12 @@ export default function Module3Page() {
                   { id: "d", label: "Because the model forgets previous answers" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "LLMs do not search the web unless given specific tools. The same model can produce different answers to the same question due to sampling randomness.",
+          b: "Temperature controls how randomly the model samples from its output probability distribution. At default settings, the same prompt can produce different responses because sampling introduces controlled randomness.",
+          c: "Models are not updated between individual user queries. Variation comes from the probabilistic sampling built into the generation process.",
+          d: "LLMs do not forget previous answers — they produce varied outputs because generation is probabilistic, not because of memory failure.",
+        }}
                 explanation="Temperature controls how randomly the model samples from its output probability distribution. At default settings, the same prompt can produce different responses because sampling introduces controlled randomness."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -468,6 +486,12 @@ export default function Module3Page() {
                   { id: "d", label: "Internet access" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "The prompt is under-specified. Adding context, constraints, and examples usually makes the response far more useful and reliable.",
+          b: "Spelling is fine in this prompt. The problem is that there is no audience, no dietary restrictions, no duration, and no goals specified.",
+          c: "The model does not need updating — the prompt needs more detail. Model capability is not the limiting factor here.",
+          d: "Internet access would not fix a vague prompt. Specificity and context matter more than connectivity.",
+        }}
                 explanation="The prompt is under-specified. Adding context, constraints, and examples usually makes the response far more useful and reliable."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -765,6 +789,12 @@ export default function Module3Page() {
                   { id: "d", label: "Wait until you can build a full automation" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Pasting a confidential contract into a public chatbot creates a serious privacy and data security risk.",
+          b: "The safest and fastest way to build skill is to start with low-risk summarising, drafting, or organising tasks where you can easily review the result.",
+          c: "Using AI for final decisions without checking is the opposite of responsible practice. Review is non-negotiable.",
+          d: "Waiting until you can build a full automation means missing months of incremental benefit. A single summarising task is a better starting point.",
+        }}
                 explanation="The safest and fastest way to build skill is to start with low-risk summarising, drafting, or organising tasks where you can easily review the result."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />

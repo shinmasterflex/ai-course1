@@ -234,6 +234,12 @@ export default function Module0Page() {
                   { id: "d", label: "Prompting matters less than technical jargon" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Waiting makes things harder — the field will keep changing. Early movers build habits and advantages while others pause.",
+          b: "Exactly. Early practical fluency compounds and creates leverage in study and work.",
+          c: "AI is transforming every industry. Writers, managers, teachers, and healthcare workers all benefit from AI fluency.",
+          d: "Prompting is actually one of the most important practical skills. The right framing produces dramatically better results.",
+        }}
                 explanation="Exactly. Early practical fluency compounds and creates leverage in study and work."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -636,6 +642,12 @@ export default function Module0Page() {
                   { id: "d", label: "Assume all AI claims are automatically true" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Treating AI as pure theory means you will never build the practical skill that makes the difference.",
+          b: "Perfect. The next module builds practical understanding by defining AI clearly and separating hype from reality.",
+          c: "Skipping fundamentals leads to fragile, unreliable use. Foundations make advanced work faster, not slower.",
+          d: "Assuming all AI claims are true is one of the most common traps. Critical thinking about AI output is an essential skill.",
+        }}
                 explanation="Perfect. The next module builds practical understanding by defining AI clearly and separating hype from reality."
                 onAnswered={() => {
                   markSectionInteractionComplete(4)

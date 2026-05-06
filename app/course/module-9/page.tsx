@@ -244,6 +244,12 @@ export default function Module9Page() {
                   { id: "d", label: "AI thinks exactly like a human brain, only faster" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Describing AI as magic sets false expectations and leads to misuse. Good explanations ground capability in how the system actually works.",
+          b: "That answer is accurate, plain-English, and includes both capability and limitation.",
+          c: "AI is not one technology — it is a family of approaches including supervised learning, NLP, computer vision, and more.",
+          d: "AI does not think like a human brain. It recognises statistical patterns in data — it has no consciousness or lived experience.",
+        }}
                 explanation="That answer is accurate, plain-English, and includes both capability and limitation."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -353,6 +359,12 @@ export default function Module9Page() {
                   { id: "d", label: "Use an image generator to brainstorm" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Trusting the first chatbot answer without source checking creates serious risk when you need to cite something in a meeting.",
+          b: "When evidence matters, source-backed research is the right tool choice.",
+          c: "Tool marketing quality has no relationship to output accuracy or citability.",
+          d: "Image generators produce visuals, not cited facts. The wrong tool entirely for this task.",
+        }}
                 explanation="When evidence matters, source-backed research is the right tool choice."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -473,6 +485,12 @@ export default function Module9Page() {
                   { id: "d", label: "Keeping the prompt vague so the model can be creative" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Exclamation marks have no effect on AI output quality. The model does not respond to emotional emphasis.",
+          b: "Prompt quality usually matters more than brand choice for everyday tasks.",
+          c: "Switching tools every time is inefficient. Learning to improve prompts is more effective than constant tool-hopping.",
+          d: "Vague prompts produce generic and less useful output. Clarity and specificity almost always produce better results.",
+        }}
                 explanation="Prompt quality usually matters more than brand choice for everyday tasks."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -579,6 +597,12 @@ export default function Module9Page() {
                   { id: "d", label: "Paste confidential company context into the tool to get more detail" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Polished wording is not evidence of accuracy. AI can produce well-formatted misinformation confidently.",
+          b: "The right habit is to treat unsourced AI output as a draft or lead, not as proof.",
+          c: "Sharing quickly before verifying risks spreading misinformation. Speed should never override accuracy for consequential claims.",
+          d: "Adding confidential context to a public tool creates privacy risk. It does not solve the source verification problem.",
+        }}
                 explanation="The right habit is to treat unsourced AI output as a draft or lead, not as proof."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -695,6 +719,12 @@ export default function Module9Page() {
                   { id: "d", label: "A workflow built around confidential data in public tools" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Good beginner workflows are small, testable, and safe enough to evaluate quickly.",
+          b: "A fully autonomous workflow with no human review removes your ability to catch and correct errors before they cause harm.",
+          c: "Building a multi-tool workflow before testing is likely to fail in complex and hard-to-diagnose ways.",
+          d: "Using confidential data in public tools creates serious privacy risks and likely violates your organisation's policies.",
+        }}
                 explanation="Good beginner workflows are small, testable, and safe enough to evaluate quickly."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -792,6 +822,12 @@ export default function Module9Page() {
                   { id: "d", label: "A workflow that starts by pasting confidential data into a public chatbot" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "That option reflects the full capstone skill set, not just tool usage.",
+          b: "A huge automation with no review process amplifies mistakes at scale and demonstrates exactly the wrong lesson from this module.",
+          c: "Following trends without evaluating task fit wastes effort and produces unreliable results.",
+          d: "Starting with confidential data in a public chatbot creates immediate privacy and policy risk.",
+        }}
                 explanation="That option reflects the full capstone skill set, not just tool usage."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />

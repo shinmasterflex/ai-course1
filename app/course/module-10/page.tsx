@@ -211,6 +211,12 @@ export default function Module10Page() {
                   { id: "d", label: "Grammar correction" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Robotics + AI brings AI capability into physical systems, especially in structured environments.",
+          b: "Prompt formatting is a technique for improving AI input quality, not a physical-world expansion.",
+          c: "Spam filtering is a decades-old AI application in the digital domain. It does not expand AI into physical tasks.",
+          d: "Grammar correction is a natural language processing application — it operates only in the digital text domain.",
+        }}
                 explanation="Robotics + AI brings AI capability into physical systems, especially in structured environments."
               />
 
@@ -291,6 +297,12 @@ export default function Module10Page() {
                   { id: "d", label: "Assume one forecast is certainly correct" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "Ignoring current AI while waiting for AGI means missing years of compounding productivity and skill benefits.",
+          b: "Avoiding all AI tools because predictions conflict is a false choice. You can use today's AI while planning adaptively for the future.",
+          c: "A grounded approach captures current value while avoiding overcommitment to any single AGI prediction.",
+          d: "No single AGI forecast should be treated as certain. Locking in plans around one prediction is brittle.",
+        }}
                 explanation="A grounded approach captures current value while avoiding overcommitment to any single AGI prediction."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -382,6 +394,12 @@ export default function Module10Page() {
                   { id: "d", label: "Because AI has no social impact" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "AI systems vary significantly by provider, region, and application. They are far from identical everywhere.",
+          b: "Governance complexity comes from cross-border technology combined with region-specific law, institutions, and priorities.",
+          c: "AI governance applies to all organisations deploying AI, not just startups.",
+          d: "AI has significant social impact across employment, healthcare, finance, and information integrity. That impact is exactly why governance is difficult.",
+        }}
                 explanation="Governance complexity comes from cross-border technology combined with region-specific law, institutions, and priorities."
               />
 
@@ -459,6 +477,12 @@ export default function Module10Page() {
                   { id: "d", label: "Wait for certainty before building any AI skills" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "AI tools evolve rapidly. Mastering one and stopping quickly makes your skills outdated.",
+          b: "Consuming AI news without hands-on practice creates awareness without capability.",
+          c: "Durable advantage comes from domain expertise plus repeated practical adaptation, not static tool knowledge.",
+          d: "Waiting for certainty in a fast-moving field means waiting forever. The right move is structured, adaptive learning.",
+        }}
                 explanation="Durable advantage comes from domain expertise plus repeated practical adaptation, not static tool knowledge."
                 onAnswered={() => {
                   markSectionInteractionComplete(4)

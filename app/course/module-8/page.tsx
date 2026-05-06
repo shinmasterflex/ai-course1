@@ -118,6 +118,12 @@ export default function Module8Page() {
                   { id: "d", label: "There is no meaningful difference" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Response length is not what distinguishes agents. A chatbot can produce long answers; an agent acts across multiple steps.",
+          b: "Correct. Agents are defined by multi-step goal pursuit with observation, planning, and tool-based action.",
+          c: "It is the opposite — agents are autonomous and chatbots are typically manual question-answer interactions.",
+          d: "There is a meaningful difference: agents pursue goals, use tools, and execute multi-step workflows. Chatbots respond to single prompts.",
+        }}
                 explanation="Correct. Agents are defined by multi-step goal pursuit with observation, planning, and tool-based action."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -191,6 +197,12 @@ export default function Module8Page() {
                   { id: "d", label: "A static rules engine with no reasoning" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Agents are defined by goal-directed behavior across multiple steps, often using tools and reacting to outcomes along the way.",
+          b: "A polished interface does not make something an agent. An agent is defined by its multi-step, goal-directed, tool-using behavior.",
+          c: "Agents observe results and adjust their next steps based on those results. Observation is a core part of how they work.",
+          d: "A static rules engine applies fixed rules without reasoning or adaptation. Agents reason, plan, and use tools dynamically.",
+        }}
                 explanation="Agents are defined by goal-directed behavior across multiple steps, often using tools and reacting to outcomes along the way."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -380,6 +392,12 @@ export default function Module8Page() {
                   { id: "d", label: "Because multi-agent systems never fail" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Multi-agent systems are not required by regulation. They are used because specialisation improves quality and coordination.",
+          b: "Splitting work into specialized roles like orchestration, research, and review often produces better results than one generalist agent doing everything.",
+          c: "Single agents can use tools. The benefit of multiple agents is specialisation and parallel execution, not tool capability.",
+          d: "Multi-agent systems can and do fail. The benefit is better quality through specialisation, not guaranteed reliability.",
+        }}
                 explanation="Splitting work into specialized roles like orchestration, research, and review often produces better results than one generalist agent doing everything."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -460,6 +478,12 @@ export default function Module8Page() {
                   { id: "d", label: "They require AGI before being useful" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Agents create value where there is lots of information to process, a repeatable sequence of steps, and clear places for humans to review critical decisions.",
+          b: "Agents augment human judgment rather than replacing it. They handle high-volume information work while humans handle critical decisions.",
+          c: "Agents are used across legal, healthcare, customer service, and research domains — well beyond software teams.",
+          d: "Today's agents are narrow AI systems. They are useful now, in the real world, without requiring AGI.",
+        }}
                 explanation="Agents create value where there is lots of information to process, a repeatable sequence of steps, and clear places for humans to review critical decisions."
               />
 
@@ -588,6 +612,12 @@ export default function Module8Page() {
                   { id: "d", label: "Use the most advanced framework before proving a simple workflow" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Full inbox and CRM write access from day one creates massive risk of unrecoverable mistakes. Start with minimal permissions.",
+          b: "Exactly. Narrow scope, least privilege, and incremental rollout produce safer agents and faster learning loops.",
+          c: "Skipping testing and relying on real traffic means real mistakes affect real users. Always validate in a controlled environment first.",
+          d: "Using the most advanced framework before proving a simple workflow wastes time and adds complexity before you understand the basics.",
+        }}
                 explanation="Exactly. Narrow scope, least privilege, and incremental rollout produce safer agents and faster learning loops."
                 onAnswered={() => {
                   markSectionInteractionComplete(5)
@@ -705,6 +735,12 @@ export default function Module8Page() {
                   { id: "d", label: "Only design outputs; tool limits and stop conditions can be decided later" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Picking tools before defining the goal leads to building the wrong thing. Always start with the trigger, goal, and inputs.",
+          b: "Correct. Safe agent design starts with clear inputs and decisions, then adds feedback checks, human escalation, and stop conditions before deployment.",
+          c: "Starting with full autonomy and removing human escalation creates uncontrolled risk. Start restricted and expand carefully.",
+          d: "Tool limits and stop conditions are not optional extras. They are safety-critical elements that must be designed in from the start.",
+        }}
                 explanation="Correct. Safe agent design starts with clear inputs and decisions, then adds feedback checks, human escalation, and stop conditions before deployment."
                 onAnswered={() => {
                   markSectionInteractionComplete(6)

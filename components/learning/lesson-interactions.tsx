@@ -22,6 +22,7 @@ type QuickCheckProps = {
   options: QuickCheckOption[]
   correctOptionId: string
   explanation: string
+  optionExplanations?: Record<string, string>
   accentClassName?: string
   onAnswered?: (isCorrect: boolean) => void
 }
@@ -481,6 +482,7 @@ export function QuickCheckCard({
   options,
   correctOptionId,
   explanation,
+  optionExplanations,
   accentClassName,
   onAnswered,
 }: QuickCheckProps) {
@@ -491,6 +493,30 @@ export function QuickCheckCard({
   )
   const isAnswered = selectedOptionId !== null
   const isCorrect = selectedOptionId === correctOptionId
+  const selectedOption = options.find((option) => option.id === selectedOptionId)
+  const correctOption = options.find((option) => option.id === correctOptionId)
+
+  const feedbackText = useMemo(() => {
+    if (!selectedOptionId) {
+      return ""
+    }
+
+    const optionSpecificFeedback = optionExplanations?.[selectedOptionId]
+
+    if (optionSpecificFeedback) {
+      return optionSpecificFeedback
+    }
+
+    if (isCorrect) {
+      return explanation
+    }
+
+    const explanationWithoutPrefix = explanation.replace(/^Correct\.\s*/i, "")
+    const pickedAnswerText = selectedOption?.label ?? "your selected option"
+    const bestAnswerText = correctOption?.label ?? "the highlighted option"
+
+    return `Not quite. You selected: ${pickedAnswerText}. The best answer is: ${bestAnswerText}. ${explanationWithoutPrefix}`
+  }, [correctOption?.label, explanation, isCorrect, optionExplanations, selectedOption?.label, selectedOptionId])
 
   return (
     <Card className={cn("p-5 border-brand-green/20 bg-brand-green/5", accentClassName)}>
@@ -534,7 +560,7 @@ export function QuickCheckCard({
 
       {isAnswered ? (
         <div className="mt-4 flex items-center justify-between gap-4">
-          <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-brand-orange")}>{explanation}</p>
+          <p className={cn("text-sm", isCorrect ? "text-green-700" : "text-brand-orange")}>{feedbackText}</p>
           <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedOptionId(null)} className="gap-1">
             <RotateCcw className="h-3 w-3" />
             Reset

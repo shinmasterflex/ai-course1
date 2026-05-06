@@ -196,6 +196,12 @@ export default function Module2Page() {
                   { id: "d", label: "Only when you are building a robot body" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "When every rule is obvious and never changes, traditional software is a better fit than machine learning.",
+          b: "Machine learning is most useful when there are lots of examples but the pattern would be difficult or fragile to capture with explicit rules.",
+          c: "Machine learning requires training data. With no data, there is nothing for the model to learn from.",
+          d: "Most AI software runs without a physical body. Robotics is one application, but it is not a prerequisite for ML.",
+        }}
                 explanation="Machine learning is most useful when there are lots of examples but the pattern would be difficult or fragile to capture with explicit rules."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -218,6 +224,12 @@ export default function Module2Page() {
                   { id: "d", label: "Avoiding labels in all datasets" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "A better UI does not change what a model learns or improves its accuracy.",
+          b: "Correct. Better data quality and coverage usually produce the biggest performance and fairness gains.",
+          c: "Longer system prompts affect inference behaviour, but do not change the trained model's underlying capabilities.",
+          d: "Labels are essential for supervised learning. Removing them makes it impossible for the model to learn correct mappings.",
+        }}
                 explanation="Correct. Better data quality and coverage usually produce the biggest performance and fairness gains."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -274,6 +286,12 @@ export default function Module2Page() {
                   { id: "d", label: "Only the user interface is affected" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Weak data makes models less accurate and more biased — not more creative. Creativity in AI comes from diversity of training data, not from flaws in it.",
+          b: "Models learn from the examples they receive. If those examples are skewed, missing context, or mislabeled, the model will reproduce those flaws.",
+          c: "Models do not automatically detect and fix bad labels. Cleaning data is a deliberate human and engineering process.",
+          d: "Data problems go far beyond the user interface. They affect every prediction the model makes at its core.",
+        }}
                 explanation="Models learn from the examples they receive. If those examples are skewed, missing context, or mislabeled, the model will reproduce those flaws."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -394,6 +412,12 @@ export default function Module2Page() {
                   { id: "d", label: "None of the above" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Supervised learning requires labeled examples with known correct outputs. Customer segments are unknown upfront, so supervised learning does not apply here.",
+          b: "Customer segmentation is a classic unsupervised learning problem because the system is discovering groups in unlabeled data.",
+          c: "Reinforcement learning learns through reward signals from actions in an environment, not from discovering static groups in transaction data.",
+          d: "Unsupervised learning is exactly the right fit here. It is the correct answer.",
+        }}
                 explanation="Customer segmentation is a classic unsupervised learning problem because the system is discovering groups in unlabeled data."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -441,6 +465,12 @@ export default function Module2Page() {
                   { id: "d", label: "Replace training data with human intuition" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Memorising examples exactly causes overfitting — the model fails on new data it has not seen before.",
+          b: "Training repeatedly adjusts the network's internal weights (parameters) using backpropagation so its predictions become more accurate over many examples.",
+          c: "Neural networks do not browse the web. They apply learned patterns from training data, which has a knowledge cutoff date.",
+          d: "Training uses labeled data examples, not human intuition. Human judgment is used to evaluate and guide the process, not replace the data.",
+        }}
                 explanation="Training repeatedly adjusts the network's internal weights (parameters) using backpropagation so its predictions become more accurate over many examples."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -491,6 +521,12 @@ export default function Module2Page() {
                   { id: "d", label: "Assume newer models cannot fail in edge cases" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Fluent output does not mean correct output. AI can sound completely confident while hallucinating facts or missing critical context.",
+          b: "Exactly. AI is strongest as a decision-support partner, not a replacement for verification and accountability.",
+          c: "Hallucinations occur regardless of prompt length. The fix is verification and human review, not shorter prompts.",
+          d: "Even the latest models can fail on edge cases. Model version alone is not a substitute for domain expertise and verification.",
+        }}
                 explanation="Exactly. AI is strongest as a decision-support partner, not a replacement for verification and accountability."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -571,6 +607,12 @@ export default function Module2Page() {
                   { id: "d", label: "Confidence is only a problem in small models" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Hallucinations are especially dangerous because they often come with complete confidence and plausible-looking supporting details. AI has no internal fact-checking - fluency and accuracy are independent.",
+          b: "AI citations can be fabricated. A source-looking reference does not mean the source exists or that it says what the model claims.",
+          c: "AI hallucinations often come with perfectly formatted citations and references. Formatting is not a reliability indicator.",
+          d: "Confidence and hallucination problems exist across model sizes. Larger models can still hallucinate plausibly and convincingly.",
+        }}
                 explanation="Hallucinations are especially dangerous because they often come with complete confidence and plausible-looking supporting details. AI has no internal fact-checking - fluency and accuracy are independent."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 onAnswered={() => {

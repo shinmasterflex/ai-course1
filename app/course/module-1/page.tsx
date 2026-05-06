@@ -270,6 +270,12 @@ export default function Module1Page() {
                   { id: "d", label: "Replace all workflows with automation immediately" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Memorising buzzwords without understanding is not the goal. Application and clear thinking matter far more.",
+          b: "Exactly. This module is about useful mental models and practical clarity, not hype or heavy math.",
+          c: "Heavy model-training math is not the focus here. This module is about practical literacy, not research engineering.",
+          d: "Immediately replacing all workflows is risky and premature. Sustainable skill starts with careful, verifiable first steps.",
+        }}
                 explanation="Exactly. This module is about useful mental models and practical clarity, not hype or heavy math."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -491,6 +497,12 @@ export default function Module1Page() {
                   { id: "d", label: "They all browse the internet in real time before answering" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "AI does not require a physical body. Spam filters, language models, and recommendation engines all run as software with no body.",
+          b: "Pattern recognition in data is the core mechanism behind virtually all AI systems - from spam filters to image generators to language models.",
+          c: "AI does not understand the world like a human. It finds statistical patterns in data and applies them — without awareness or lived experience.",
+          d: "Most AI systems do not browse the internet during inference. They apply patterns learned during training, often with a knowledge cutoff date.",
+        }}
                 explanation="Pattern recognition in data is the core mechanism behind virtually all AI systems - from spam filters to image generators to language models."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -712,6 +724,12 @@ export default function Module1Page() {
                   { id: "d", label: "It proved that AI winters would never happen again" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Beating humans at chess was Deep Blue in 1997, not AlexNet. AlexNet was about image recognition, not chess.",
+          b: "AlexNet's large accuracy gap over prior approaches at the 2012 ImageNet competition convinced the entire research community to switch to deep learning. It is widely considered the starting gun for modern AI.",
+          c: "ChatGPT launched in 2022. AlexNet was a 2012 image recognition breakthrough, a decade earlier.",
+          d: "AI winters have happened before and could happen again. AlexNet's significance was the accuracy jump it achieved, not a proof of permanence.",
+        }}
                 explanation="AlexNet's large accuracy gap over prior approaches at the 2012 ImageNet competition convinced the entire research community to switch to deep learning. It is widely considered the starting gun for modern AI."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -805,6 +823,12 @@ export default function Module1Page() {
                   { id: "d", label: "Instantly transfer common sense to any new task" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Diagnosing every human problem across all domains describes AGI, not narrow AI. Current AI is specialised by task and domain.",
+          b: "Spam filtering is a classic narrow AI task: specific, pattern-based, and trainable from large numbers of examples.",
+          c: "Understanding the world like a human child requires general intelligence, reasoning, and embodied experience — none of which current AI systems have.",
+          d: "Transferring common sense instantly to any new task is a hallmark of hypothetical AGI, not today's narrow AI systems.",
+        }}
                 explanation="Spam filtering is a classic narrow AI task: specific, pattern-based, and trainable from large numbers of examples."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -921,6 +945,12 @@ export default function Module1Page() {
                   { id: "d", label: "Share confidential documents in any public AI tool for speed" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "High-stakes legal decisions require qualified experts and verified sources. Using unverified AI output here creates serious risk.",
+          b: "Correct. Durable skill starts with one low-risk, reviewable workflow and strong verification habits.",
+          c: "Automating multiple workflows before checking quality amplifies mistakes at scale. Prove one thing works first.",
+          d: "Sharing confidential documents in public AI tools can expose sensitive data and violates most organisational policies.",
+        }}
                 explanation="Correct. Durable skill starts with one low-risk, reviewable workflow and strong verification habits."
                 onAnswered={() => {
                   markSectionInteractionComplete(4)
@@ -1025,6 +1055,12 @@ export default function Module1Page() {
                   { id: "d", label: "Only use AI when customers explicitly ask for it" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Completely disabling a tool because it is not perfect discards significant value. Most useful tools have some failure rate — the answer is safeguards, not removal.",
+          b: "This is the realistic middle path: keep productivity gains while adding safeguards where errors matter most.",
+          c: "Trusting AI for all responses without review creates accountability risk, especially for complex or sensitive customer situations.",
+          d: "Limiting AI to cases where customers ask for it misses most of the efficiency benefit. The issue is oversight, not opt-in.",
+        }}
                 explanation="This is the realistic middle path: keep productivity gains while adding safeguards where errors matter most."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -1051,6 +1087,12 @@ export default function Module1Page() {
                   { id: "d", label: "AI outputs should be treated as verified facts by default" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "AI is neither magical nor useless — it is a capable but limited tool. Binary thinking leads to both overreliance and under-use.",
+          b: "This course frames AI as powerful but limited: useful for support and acceleration, but still requiring human oversight and verification.",
+          c: "AI processes tokens to predict language patterns. It does not understand meaning or intent the way humans do.",
+          d: "AI outputs are starting points, not verified facts. Treating them as ground truth without checking is one of the most common beginner mistakes.",
+        }}
                 explanation="This course frames AI as powerful but limited: useful for support and acceleration, but still requiring human oversight and verification."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -1151,6 +1193,12 @@ export default function Module1Page() {
                   { id: "d", label: "Otter.ai" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Grammarly is the editing and tone-adjustment tool, especially for improving writing inside existing workflows.",
+          b: "Midjourney is an image generation tool, not a writing or grammar assistant.",
+          c: "Stable Diffusion generates images from text prompts. It is not for grammar or tone improvement.",
+          d: "Otter.ai focuses on transcription and meeting notes, not grammar or tone editing.",
+        }}
                 explanation="Grammarly is the editing and tone-adjustment tool, especially for improving writing inside existing workflows."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -1211,6 +1259,12 @@ export default function Module1Page() {
                   { id: "d", label: "Any tool, because rights never matter" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "Firefly is the strongest fit for commercially safer creative workflows tied to Adobe tools.",
+          b: "Midjourney is powerful but not specifically designed for commercial safety guarantees or Adobe integration.",
+          c: "Community Stable Diffusion models often use training data without clear commercial licensing — risky for commercial projects.",
+          d: "Rights always matter, especially for commercial use. Ignoring copyright and licensing exposes you to legal risk.",
+        }}
                 explanation="Firefly is the strongest fit for commercially safer creative workflows tied to Adobe tools."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -1324,6 +1378,12 @@ export default function Module1Page() {
                   { id: "d", label: "Writing tools like Jasper" },
                 ]}
                 correctOptionId="a"
+                                optionExplanations={{
+          a: "The video category is the direct fit for text-to-video generation. Sora and RunwayML are named specifically for that use case.",
+          b: "ElevenLabs generates synthetic voice audio, not video clips.",
+          c: "Uizard is a UI/UX prototyping tool. It does not generate video from text prompts.",
+          d: "Jasper is a writing assistant for text content — it does not produce video.",
+        }}
                 explanation="The video category is the direct fit for text-to-video generation. Sora and RunwayML are named specifically for that use case."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -1383,6 +1443,12 @@ export default function Module1Page() {
                   { id: "d", label: "Start with automation before trying any simple use case" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Picking the newest brand first inverts the priority order. Tool choice should follow the task, not the marketing cycle.",
+          b: "Good tool selection starts with the job, then privacy and risk, then the simplest tool that fits, followed by output verification.",
+          c: "More advanced tools are not always better. They are often more complex and harder to verify. Choose the simplest suitable option.",
+          d: "Starting with automation before proving a simple use case often results in wasted effort. Walk before you run.",
+        }}
                 explanation="Good tool selection starts with the job, then privacy and risk, then the simplest tool that fits, followed by output verification."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />

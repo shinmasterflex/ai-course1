@@ -122,6 +122,12 @@ export default function Module6Page() {
                   { id: "d", label: "Skip source checks if wording looks professional" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Confidence in AI output does not mean the output is correct. Hallucinations often come with high confidence.",
+          b: "Right. Verification plus human oversight is the core safety baseline in real-world AI use.",
+          c: "Sharing private data to improve personalisation creates privacy and data security risks. Keep sensitive data out of public AI tools.",
+          d: "Professional wording does not indicate factual accuracy. AI can present incorrect information in polished prose.",
+        }}
                 explanation="Right. Verification plus human oversight is the core safety baseline in real-world AI use."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -199,6 +205,12 @@ export default function Module6Page() {
                   { id: "d", label: "Does it use a large model?" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Interface modernity has nothing to do with fairness, accuracy, or who might be harmed by biased outputs.",
+          b: "In high-stakes contexts, the most important question is who could be harmed if the model learned from incomplete, biased, or unrepresentative data.",
+          c: "Speed comparisons miss the point. In high-stakes decisions, the question is fairness and safety, not efficiency.",
+          d: "Model size does not determine fairness. Large models can still encode and amplify biases present in training data.",
+        }}
                 explanation="In high-stakes contexts, the most important question is who could be harmed if the model learned from incomplete, biased, or unrepresentative data."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -252,6 +264,12 @@ export default function Module6Page() {
                   { id: "d", label: "Use AI first and ask about policy later" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Summarisation tasks still expose the content to the AI provider. The task type does not remove the privacy risk.",
+          b: "Confidential internal notes are not a casual input. The safe default is to check policy and use only approved tools with the right protections.",
+          c: "Replacing one name still exposes all other confidential details. Partial anonymisation is not a substitute for approved tooling.",
+          d: "Using AI first and asking about policy later is exactly backwards. Policy and privacy must be evaluated before sharing confidential data.",
+        }}
                 explanation="Confidential internal notes are not a casual input. The safe default is to check policy and use only approved tools with the right protections."
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -355,6 +373,12 @@ export default function Module6Page() {
                   { id: "d", label: "Assume it is real if the quality is good" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Acting quickly under pressure is exactly what social engineering and deepfake scams rely on. Urgency should increase your caution, not decrease it.",
+          b: "Urgency is a classic manipulation tactic. The safest move is to slow down and verify through a separate trusted channel.",
+          c: "Forwarding to friends exposes more people to potential misinformation without resolving the original uncertainty.",
+          d: "High-quality deepfakes are now easy to produce. Production quality is not a reliability indicator for synthetic media.",
+        }}
                 explanation="Urgency is a classic manipulation tactic. The safest move is to slow down and verify through a separate trusted channel."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -577,6 +601,12 @@ export default function Module6Page() {
                   { id: "d", label: "There is always one obviously correct answer" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Prioritising speed over process often leads to outcomes that breach trust or bypass necessary accountability steps.",
+          b: "Right. Each scenario involves a tension between efficiency and responsibility. The ethical move balances results with transparency and respect for legitimate process.",
+          c: "AI does not remove the need for human judgment — especially in ethical dilemmas. These scenarios demonstrate exactly where judgment is essential.",
+          d: "Ethical dilemmas rarely have one obviously correct answer. That ambiguity is precisely why governance, reasoning, and transparency matter.",
+        }}
                 explanation="Right. Each scenario involves a tension between efficiency and responsibility. The ethical move balances results with transparency and respect for legitimate process."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -722,6 +752,12 @@ export default function Module6Page() {
                   { id: "d", label: "Compliance is only for large companies" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Auditing is not just nice to have — it is increasingly required by law and is the primary way to demonstrate accountability.",
+          b: "Exactly. Auditing is your legal defense. It shows regulators and courts that you knew about the risks and took steps to mitigate them.",
+          c: "AI teams must work with legal and compliance teams together. Treating them as separate creates gaps in accountability.",
+          d: "Regulations like the EU AI Act apply to companies of all sizes depending on risk level. Size does not exempt you.",
+        }}
                 explanation="Exactly. Auditing is your legal defense. It shows regulators and courts that you knew about the risks and took steps to mitigate them."
                 onAnswered={() => {
                   markSectionInteractionComplete(6)

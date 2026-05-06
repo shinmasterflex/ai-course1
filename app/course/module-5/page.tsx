@@ -164,6 +164,12 @@ print(type(tags))          # list`}</code>
                   { id: "d", label: "keywords = [\"refund\", \"delay\"]" },
                 ]}
                 correctOptionId="c"
+                                optionExplanations={{
+          a: "A string prompt stores text content, not a true/false state. Booleans represent binary conditions.",
+          b: "A token limit stores a numeric count — that is an integer, not a boolean.",
+          c: "Correct. A boolean expresses a yes/no state, such as whether an output should be reviewed by a human.",
+          d: "A list of keywords is a list (or array) data type, not a boolean.",
+        }}
                 explanation="Correct. A boolean expresses a yes/no state, such as whether an output should be reviewed by a human."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -207,6 +213,12 @@ print(route)`}</code>
                   { id: "d", label: "To avoid debugging" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Making every input follow the same path defeats the purpose of conditionals. They exist to handle different cases differently.",
+          b: "Conditionals help your workflow react intelligently to different cases.",
+          c: "Conditionals do not remove variables — they use variables to make decisions about which path to take.",
+          d: "Conditionals do not avoid debugging. They are one of the most common areas that require careful debugging.",
+        }}
                 explanation="Conditionals help your workflow react intelligently to different cases."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -253,6 +265,12 @@ for c in comments:
                   { id: "d", label: "They prevent all runtime errors" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Loops are specifically designed to process collections. Avoiding collections would mean never using loops at all.",
+          b: "Exactly. Loops are ideal for repetitive tasks like evaluating many comments, prompts, or files.",
+          c: "Loops and conditionals serve different purposes. Loops iterate; conditionals branch. They complement each other.",
+          d: "Loops cannot prevent runtime errors. Errors can still occur on any iteration — that is why error handling exists.",
+        }}
                 explanation="Exactly. Loops are ideal for repetitive tasks like evaluating many comments, prompts, or files."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
@@ -299,6 +317,12 @@ print(build_prompt("Write a product headline", tone="playful", max_words=12))`}<
                   { id: "d", label: "To remove return values" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Functions make scripts shorter and cleaner by eliminating repeated code, not longer.",
+          b: "Reusable functions let you avoid copy-paste and keep behavior consistent.",
+          c: "Functions are designed specifically to accept parameters. Avoiding parameters would make them far less useful.",
+          d: "Return values are one of the key benefits of functions. Removing them would break the ability to use results elsewhere.",
+        }}
                 explanation="Reusable functions let you avoid copy-paste and keep behavior consistent."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
@@ -385,6 +409,12 @@ else:
                   { id: "d", label: "Assume the Python interpreter is broken" },
                 ]}
                 correctOptionId="b"
+                                optionExplanations={{
+          a: "Deleting and starting over discards all the progress you made and does not help you understand what went wrong.",
+          b: "Great debugging starts with evidence from the error and a reproducible failure path.",
+          c: "Changing random lines is the slowest and most frustrating debugging approach. It relies on luck instead of understanding.",
+          d: "The Python interpreter is rarely the problem. Errors almost always come from the code itself, not the runtime.",
+        }}
                 explanation="Great debugging starts with evidence from the error and a reproducible failure path."
                 onAnswered={() => markSectionInteractionComplete(5)}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
