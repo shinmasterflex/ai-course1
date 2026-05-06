@@ -38,7 +38,6 @@ export const courseStructure: CourseStructure = {
         { id: "what-youll-learn", title: "Common Beginner Misconceptions", summary: "Identify early myths that create confusion, unrealistic expectations, and poor first adoption decisions.", completed: false },
         { id: "how-to-use-course", title: "Safe First Steps for AI Adoption", summary: "Compare doing nothing versus adopting carelessly, then choose a low-risk, high-learning starting strategy.", completed: false },
         { id: "summary", title: "Module Wrap-Up and 30-Day Starter Plan", summary: "Finish with a practical action plan: one workflow to test, one risk guardrail, and one outcome metric to track.", completed: false },
-        { id: "module-quiz", title: "Foundations Checkpoint", summary: "Validate your ability to translate beginner foundations into a practical and safe first AI pilot plan.", completed: false },
       ],
     },
     {

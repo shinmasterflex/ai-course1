@@ -106,7 +106,7 @@ function resolveDescriptor(target: HTMLElement | null) {
         return formatExplainerDescriptor({
           id: customExplanation.id,
           type: customExplanation.id.substring(0, customExplanation.id.indexOf("-", 2)), // Extract module prefix
-          title: customExplanation.title,
+          title: customExplanation.question,
           explanation: customExplanation.explanation,
         } satisfies ExplainerDescriptor)
       }

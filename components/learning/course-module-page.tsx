@@ -35,7 +35,7 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
   welcome: {
     scenarioTitle: "Beginner scenario",
     scenarioBody:
-      "You are new to AI and hearing conflicting opinions. Your goal is to build a clear mental model of what changed recently and why this wave is more practical than earlier AI hype cycles.",
+      "You are new to AI and are hearing conflicting opinions. Your goal is to build a clear mental model of what changed recently and why this wave is more practical than earlier AI hype cycles.",
     checklistTitle: "Foundations checklist",
     checklistItems: [
       "Explain in one sentence what changed in AI since 2022.",
@@ -59,7 +59,7 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
   "ai-is-everywhere": {
     scenarioTitle: "Practical scenario",
     scenarioBody:
-      "You are evaluating AI tools and keep seeing bold claims. You need a simple way to separate truly useful capabilities from hype before spending time or money.",
+      "You are evaluating AI tools and are seeing bold claims everywhere. You need a simple way to separate truly useful capabilities from hype before spending time or money.",
     checklistTitle: "Hype filter checklist",
     checklistItems: [
       "Ask what specific workflow problem the tool solves.",
@@ -107,73 +107,49 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
   "how-to-use-course": {
     scenarioTitle: "Adoption strategy scenario",
     scenarioBody:
-      "You must choose your first adoption move: do nothing, automate everything, or run a small safe pilot. You need a strategy that maximizes learning and minimizes risk.",
+      "You are deciding how to run your first 2-week AI adoption sprint. The objective is to test one workflow, capture evidence, and define next decisions without overcommitting.",
     checklistTitle: "Safe start checklist",
     checklistItems: [
-      "Select one repeatable low-risk workflow to test first.",
-      "Define one success metric and one quality checkpoint.",
-      "Set a short pilot timeline and review point.",
+      "Pick one repeatable workflow with clear before-and-after comparison.",
+      "Choose one existing tool and note why it fits your current constraints.",
+      "Set a 2-week test window with a single review meeting and owner.",
     ],
     quickCheckPrompt: "What is the best first adoption move for beginners?",
     quickCheckOptions: [
-      { id: "a", label: "Run a focused pilot with clear guardrails and review" },
-      { id: "b", label: "Launch pilots in several workflows at once to accelerate learning" },
-      { id: "c", label: "Wait until internal policy is fully mature before any experimentation" },
+      { id: "a", label: "Run one short, scoped sprint in a single workflow with clear ownership" },
+      { id: "b", label: "Run parallel pilots in multiple workflows to maximize early coverage" },
+      { id: "c", label: "Delay all experiments until a full enterprise AI policy is complete" },
     ],
     quickCheckCorrectOptionId: "a",
-    quickCheckExplanation: "A focused pilot creates learning quickly without exposing the team to unnecessary risk.",
+    quickCheckExplanation: "A single scoped sprint creates credible learning while keeping risk and coordination cost low.",
     quickCheckOptionExplanations: {
-      a: "This is the most practical and safest beginner strategy.",
-      b: "Broad automation too early creates quality and governance problems.",
-      c: "Waiting removes momentum and delays capability building.",
+      a: "This is the best beginner pattern for disciplined adoption.",
+      b: "Too much scope early makes results harder to trust or compare.",
+      c: "Over-delaying slows capability building and decision confidence.",
     },
   },
   summary: {
     scenarioTitle: "Wrap-up scenario",
     scenarioBody:
-      "You are finishing Module 0 and preparing to start the rest of the course. Your goal is to leave with one clear plan you can execute in the next 30 days.",
+      "You are finishing Module 0 and preparing to brief your manager. You need a simple 30-day adoption plan that names what to test, who owns decisions, and which partner support is required.",
     checklistTitle: "30-day starter checklist",
     checklistItems: [
-      "Choose one workflow for your first AI pilot.",
-      "Define one measurable outcome and one risk guardrail.",
-      "Schedule one review meeting to decide next steps.",
+      "Name one workflow, one tool candidate, and one fallback option.",
+      "Document selection criteria, required partner capabilities, and budget boundary.",
+      "Assign owner, success metric, and guardrail for the first 30 days.",
     ],
     quickCheckPrompt: "What should you leave Module 0 with?",
     quickCheckOptions: [
-      { id: "a", label: "A prioritized tool shortlist with high-level notes but no execution owner" },
-      { id: "b", label: "A practical 30-day starter plan with metrics and guardrails" },
-      { id: "c", label: "A strategy memo that recommends further research before committing to action" },
+      { id: "a", label: "A ranked list of AI products without ownership, budget, or partner criteria" },
+      { id: "b", label: "A decision-ready 30-day plan with owner, tool criteria, partner path, metric, and guardrail" },
+      { id: "c", label: "A research memo that postpones decisions until the next quarter" },
     ],
     quickCheckCorrectOptionId: "b",
-    quickCheckExplanation: "Module 0 should end with an actionable beginner plan, not abstract theory.",
+    quickCheckExplanation: "Module 0 should conclude with a decision-ready plan, not disconnected research or shopping lists.",
     quickCheckOptionExplanations: {
-      a: "Lists without execution plans rarely produce results.",
+      a: "Lists without owners and constraints rarely move into execution.",
       b: "This is the intended outcome of the module wrap-up.",
-      c: "Delaying learning increases long-term adoption risk.",
-    },
-  },
-  "module-quiz": {
-    scenarioTitle: "Foundations readiness checkpoint",
-    scenarioBody:
-      "You are finalizing Module 0 and need to show that your first AI steps are practical, low-risk, and measurable.",
-    checklistTitle: "Foundations readiness checklist",
-    checklistItems: [
-      "Define one workflow for a focused starter pilot.",
-      "Specify one measurable outcome and one risk guardrail.",
-      "Set a review date and owner for next-step decisions.",
-    ],
-    quickCheckPrompt: "What demonstrates strong Module 0 readiness?",
-    quickCheckOptions: [
-      { id: "a", label: "A broad list of tools to evaluate without ownership or metrics" },
-      { id: "b", label: "A scoped starter plan with measurable outcomes and guardrails" },
-      { id: "c", label: "A recommendation to delay experimentation until policy is fully mature" },
-    ],
-    quickCheckCorrectOptionId: "b",
-    quickCheckExplanation: "Readiness means moving from awareness to a safe, measurable first pilot plan.",
-    quickCheckOptionExplanations: {
-      a: "Lists alone do not create execution readiness.",
-      b: "This is the expected Module 0 outcome.",
-      c: "Delaying all experimentation slows learning and capability growth.",
+      c: "Deferring decisions weakens momentum and slows validated learning.",
     },
   },
 }
@@ -182,12 +158,12 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
   "module-overview": {
     scenarioTitle: "Landscape orientation scenario",
     scenarioBody:
-      "Your team keeps mixing terms like models, tools, and agents. You need one shared map so everyone can discuss AI decisions with consistent language.",
+      "Your team keeps mixing terms like models, tools, and agents. You need one shared map so everyone can discuss AI decisions using consistent language.",
     checklistTitle: "Orientation checklist",
     checklistItems: [
       "Define the four layers: model, app/tool, workflow automation, agent.",
       "Identify where your current tools sit on that map.",
-      "Document one confusion point to fix in team language.",
+      "Document one confusion point to fix in the team's language.",
     ],
     quickCheckPrompt: "Why start Module 1 with a landscape map?",
     quickCheckOptions: [
@@ -511,7 +487,7 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
       { id: "c", label: "When teams are still defining quality thresholds and operating standards" },
     ],
     quickCheckCorrectOptionId: "a",
-    quickCheckExplanation: "Augmentation preserves human judgment while still improving speed and consistency.",
+    quickCheckExplanation: "Augmentation preserves human judgment while improving speed and consistency.",
     quickCheckOptionExplanations: {
       a: "This is the strongest practical criterion.",
       b: "No-review workflows are better candidates for automation.",
@@ -1234,7 +1210,7 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     checklistItems: [
       "Define incident severity levels and response timelines.",
       "Assign owner roles for containment, comms, and remediation.",
-      "Run tabletop drills for likely failure scenarios.",
+      "Run tabletop exercises for likely failure scenarios.",
     ],
     quickCheckPrompt: "What is the best response model for AI incidents?",
     quickCheckOptions: [
@@ -2297,6 +2273,8 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
       ? module10SectionLearningContent[currentSection.id]
       : undefined
 
+  const sectionExplainerBaseId = currentSection ? `${moduleId}-${currentSection.id}` : undefined
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -2318,7 +2296,10 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               />
 
               {sectionLearningContent ? (
-                <Card className="p-5 border-brand-indigo/20 bg-brand-indigo/5 space-y-4">
+                <Card
+                  className="p-5 border-brand-indigo/20 bg-brand-indigo/5 space-y-4"
+                  {...(sectionExplainerBaseId ? { "data-explainer-id": `${sectionExplainerBaseId}-scenario` } : {})}
+                >
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Scenario</p>
                     <p className="text-lg font-semibold text-brand-indigo">{sectionLearningContent.scenarioTitle}</p>
@@ -2343,6 +2324,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 </div>
                 <QuickCheckCard
                   key={`${moduleId}-${currentSection.id}-quick-check`}
+                  componentId={`${moduleId}-${currentSection.id}-quick-check`}
                   prompt={sectionLearningContent?.quickCheckPrompt ?? `What is the strongest next move after completing "${currentSection.title}"?`}
                   options={sectionLearningContent?.quickCheckOptions ?? [
                     { id: "a", label: "Buy a tool immediately based on a demo" },

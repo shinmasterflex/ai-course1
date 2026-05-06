@@ -130,6 +130,48 @@ type InferentialStatement = {
 
 const usedStatementsByScope = new Map<string, Set<string>>()
 const statementByScopeAndInstance = new Map<string, InferentialStatement>()
+const USED_STATEMENTS_STORAGE_KEY = "ai-course:used-statements-by-scope:v1"
+let hasHydratedUsedStatements = false
+
+function hydrateUsedStatementsFromStorage() {
+  if (hasHydratedUsedStatements || typeof window === "undefined") {
+    return
+  }
+
+  hasHydratedUsedStatements = true
+
+  try {
+    const raw = window.sessionStorage.getItem(USED_STATEMENTS_STORAGE_KEY)
+    if (!raw) {
+      return
+    }
+
+    const parsed = JSON.parse(raw) as Record<string, string[]>
+    for (const [scope, statements] of Object.entries(parsed)) {
+      if (Array.isArray(statements) && statements.length > 0) {
+        usedStatementsByScope.set(scope, new Set(statements))
+      }
+    }
+  } catch {
+    // Ignore malformed storage and fall back to in-memory state.
+  }
+}
+
+function persistUsedStatementsToStorage() {
+  if (typeof window === "undefined") {
+    return
+  }
+
+  try {
+    const serializable: Record<string, string[]> = {}
+    for (const [scope, statements] of usedStatementsByScope.entries()) {
+      serializable[scope] = [...statements]
+    }
+    window.sessionStorage.setItem(USED_STATEMENTS_STORAGE_KEY, JSON.stringify(serializable))
+  } catch {
+    // Ignore storage write failures.
+  }
+}
 
 function pickUnusedStatement(candidates: InferentialStatement[], sourceText: string, scopeKey: string, instanceKey: string) {
   const assignmentKey = `${scopeKey}::${instanceKey}`
@@ -138,11 +180,17 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
     return assignedStatement
   }
 
-  if (!usedStatementsByScope.has(scopeKey)) {
-    usedStatementsByScope.set(scopeKey, new Set<string>())
+  hydrateUsedStatementsFromStorage()
+
+  // `scopeKey` is `${pathname}::${sectionId}`.
+  // Deduplicate across sections within the same module/page path.
+  const usedScopeKey = scopeKey.split("::")[0] || scopeKey
+
+  if (!usedStatementsByScope.has(usedScopeKey)) {
+    usedStatementsByScope.set(usedScopeKey, new Set<string>())
   }
 
-  const usedStatements = usedStatementsByScope.get(scopeKey)!
+  const usedStatements = usedStatementsByScope.get(usedScopeKey)!
   const seed = hashString(`${sourceText}::${instanceKey}`)
   const startIndex = seed % candidates.length
 
@@ -150,6 +198,7 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
     const candidate = candidates[(startIndex + offset) % candidates.length]
     if (!usedStatements.has(candidate.statement)) {
       usedStatements.add(candidate.statement)
+      persistUsedStatementsToStorage()
       statementByScopeAndInstance.set(assignmentKey, candidate)
       return candidate
     }
@@ -157,6 +206,7 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
 
   const fallbackCandidate = candidates[startIndex]
   usedStatements.add(fallbackCandidate.statement)
+  persistUsedStatementsToStorage()
   statementByScopeAndInstance.set(assignmentKey, fallbackCandidate)
   return fallbackCandidate
 }
