@@ -25,6 +25,7 @@ export default function Module8Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-8"
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5"])
@@ -45,7 +46,15 @@ export default function Module8Page() {
     }
   }, [sectionParam])
 
+  const interactionRequiredSections = [5]
+  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
+  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -503,9 +512,25 @@ export default function Module8Page() {
                 </div>
               </Card>
 
-              
+              <QuickCheckCard
+                prompt="You are building your first agent for team email triage. What is the safest and most effective way to start?"
+                options={[
+                  { id: "a", label: "Grant full inbox and CRM write access from day one" },
+                  { id: "b", label: "Start with one trigger and one AI step in read-only mode, then add permissions incrementally" },
+                  { id: "c", label: "Skip testing and rely on real traffic to validate behavior" },
+                  { id: "d", label: "Use the most advanced framework before proving a simple workflow" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. Narrow scope, least privilege, and incremental rollout produce safer agents and faster learning loops."
+                onAnswered={() => {
+                  setSectionInteractionCompletion((prev) => ({ ...prev, 5: true }))
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
 
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the build checkpoint to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 

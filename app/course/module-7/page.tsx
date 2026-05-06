@@ -25,6 +25,7 @@ export default function Module7Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-7"
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
@@ -44,7 +45,15 @@ export default function Module7Page() {
     }
   }, [sectionParam])
 
+  const interactionRequiredSections = [4]
+  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
+  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
@@ -433,7 +442,23 @@ export default function Module7Page() {
                   ))}
                 </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              <QuickCheckCard
+                prompt="Your team spends six hours weekly on repetitive status updates. What is the strongest first AI strategy move?"
+                options={[
+                  { id: "a", label: "Roll out many tools at once to everyone" },
+                  { id: "b", label: "Pilot one narrow workflow, measure time saved, then document and share results" },
+                  { id: "c", label: "Wait for a perfect enterprise strategy before trying anything" },
+                  { id: "d", label: "Push adoption without governance discussion" },
+                ]}
+                correctOptionId="b"
+                explanation="Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails."
+                onAnswered={() => {
+                  setSectionInteractionCompletion((prev) => ({ ...prev, 4: true }))
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the strategy checkpoint to unlock the next section.</p> : null}
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 

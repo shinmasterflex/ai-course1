@@ -10,7 +10,7 @@ import NextImage from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { DragSortChallenge, FlipCardGrid, MatchingChallenge } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Button } from "@/components/ui/button"
@@ -23,6 +23,7 @@ export default function Module0Page() {
   const searchParams = useSearchParams()
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const [sectionInteractionCompletion, setSectionInteractionCompletion] = useState<Record<number, boolean>>({})
 
   const MODULE_ID = "module-0"
   const courseStructure = getCourseStructure()
@@ -40,7 +41,15 @@ export default function Module0Page() {
     }
   }, [sectionParam])
 
+  const interactionRequiredSections = [3, 4]
+  const requiresInteraction = interactionRequiredSections.includes(currentSectionIndex)
+  const canAdvance = !requiresInteraction || Boolean(sectionInteractionCompletion[currentSectionIndex])
+
   const handleSectionComplete = () => {
+    if (!canAdvance) {
+      return
+    }
+
     const current = sections[currentSectionIndex]
     if (current) {
       markSectionComplete(MODULE_ID, current.id)
@@ -295,12 +304,22 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
-              
-              
-              
-              
-              
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              <QuickCheckCard
+                prompt="Which habit best ensures you actually learn from this course instead of skimming it?"
+                options={[
+                  { id: "a", label: "Read quickly, skip exercises, and jump modules" },
+                  { id: "b", label: "Follow module order and complete the interactive activities" },
+                  { id: "c", label: "Only read summaries and avoid hands-on practice" },
+                  { id: "d", label: "Treat quizzes as optional decoration" },
+                ]}
+                correctOptionId="b"
+                explanation="Exactly. Progress sticks when you combine sequence, interaction, and repetition instead of passive reading."
+                onAnswered={() => {
+                  setSectionInteractionCompletion((prev) => ({ ...prev, 3: true }))
+                }}
+              />
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Answer the quick check to unlock the next section.</p> : null}
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
@@ -330,8 +349,23 @@ export default function Module0Page() {
                 
               </div>
               <TextDisplay variant="callout" content="Up next: Module 1 - What Is Artificial Intelligence? We will give AI a real definition, look at its history, and bust some popular myths." />
+              <QuickCheckCard
+                prompt="Before moving on, what is the most important mindset for Module 1?"
+                options={[
+                  { id: "a", label: "Treat AI as distant theory only" },
+                  { id: "b", label: "Focus on practical understanding and challenge common myths" },
+                  { id: "c", label: "Skip fundamentals and go straight to advanced coding" },
+                  { id: "d", label: "Assume all AI claims are automatically true" },
+                ]}
+                correctOptionId="b"
+                explanation="Perfect. The next module builds practical understanding by defining AI clearly and separating hype from reality."
+                onAnswered={() => {
+                  setSectionInteractionCompletion((prev) => ({ ...prev, 4: true }))
+                }}
+              />
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the check-in to finish this module.</p> : null}
               <div className="flex gap-4">
-                <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                   Complete Module and Go to Module 1
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>

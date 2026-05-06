@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { ModuleSectionBackButton } from "@/components/learning/module-section-back-button"
 import { RotateCcw } from "lucide-react"
 import { progressManager } from "@/lib/global-progress"
 import { AIChatButton } from "@/components/ai/ai-chat-button"
@@ -32,16 +33,19 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-sky-50/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/course" className="flex h-10 shrink-0 items-center">
-          <Image
-            src="/Logo.png"
-            alt="Cognijin Logo"
-            width={720}
-            height={400}
-            className="block h-8 w-auto md:h-9"
-            priority
-          />
-        </Link>
+        <div className="flex items-center gap-3">
+          <ModuleSectionBackButton />
+          <Link href="/course" className="flex h-10 shrink-0 items-center">
+            <Image
+              src="/Logo.png"
+              alt="Cognijin Logo"
+              width={720}
+              height={400}
+              className="block h-8 w-auto md:h-9"
+              priority
+            />
+          </Link>
+        </div>
 
         <nav className="hidden md:flex items-center gap-6">
           <Link href="/course" className="text-sm font-medium text-foreground hover:text-brand-orange transition-colors">

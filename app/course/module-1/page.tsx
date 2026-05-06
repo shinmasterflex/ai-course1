@@ -15,6 +15,7 @@ import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 import { CheckCircle2, Brain, Clock, Lightbulb } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -32,9 +33,112 @@ export default function Module1Page() {
   const sections = module?.sections || []
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
+  const [historyCarouselApi, setHistoryCarouselApi] = useState<CarouselApi>()
+  const [historySlideIndex, setHistorySlideIndex] = useState(0)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching"])
   const questions = moduleQuizData[MODULE_ID]
+  const historyMilestones = [
+    {
+      year: "1950",
+      label: "The founding question",
+      title: "Alan Turing asks \"Can machines think?\"",
+      summary: "Alan Turing published Computing Machinery and Intelligence and introduced the Turing Test: a machine passes if a human cannot distinguish it from another human in text conversation.",
+      whyItMatters: "This paper set the benchmark for AI research for decades: not raw calculation, but human-like performance in language.",
+      accent: "brand-green",
+      markerClassName: "bg-brand-green",
+      borderClassName: "border-brand-green/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-green/10 via-background to-background",
+    },
+    {
+      year: "1956",
+      label: "The field is born",
+      title: "The Dartmouth Conference gives AI its name",
+      summary: "John McCarthy, Marvin Minsky, Claude Shannon, and others gathered for a summer workshop where McCarthy coined the term Artificial Intelligence.",
+      whyItMatters: "The ambition was enormous: they thought human-level intelligence might be solved within 20 years. That optimism shaped decades of funding and disappointment.",
+      accent: "brand-orange",
+      markerClassName: "bg-brand-orange",
+      borderClassName: "border-brand-orange/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-orange/10 via-background to-background",
+    },
+    {
+      year: "1966",
+      label: "The first chatbot",
+      title: "ELIZA shows how easily humans project intelligence",
+      summary: "Joseph Weizenbaum built ELIZA, a program that reflected users' sentences back as questions. People still formed emotional attachments to it.",
+      whyItMatters: "ELIZA exposed a lasting pattern: even simple systems can feel intelligent if they mimic the right conversational cues.",
+      accent: "brand-green",
+      markerClassName: "bg-brand-green",
+      borderClassName: "border-brand-green/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-green/10 via-background to-background",
+    },
+    {
+      year: "1974-1993",
+      label: "The AI winters",
+      title: "Hype collapses twice when promises outrun reality",
+      summary: "Funding and public interest crashed during two long AI winters after early systems failed to scale and expert systems proved brittle and expensive.",
+      whyItMatters: "This is why serious AI work still treats hype with caution. The field has already survived multiple boom-and-bust cycles.",
+      accent: "red",
+      markerClassName: "bg-red-500",
+      borderClassName: "border-red-300 dark:border-red-800",
+      surfaceClassName: "bg-gradient-to-br from-red-50 via-background to-background dark:from-red-950/30 dark:via-background dark:to-background",
+    },
+    {
+      year: "1986",
+      label: "The missing algorithm",
+      title: "Backpropagation makes neural networks trainable",
+      summary: "Rumelhart, Hinton, and Williams published a practical method for teaching multi-layer neural networks by learning from mistakes.",
+      whyItMatters: "The core idea of modern deep learning existed decades early. The hardware just was not ready yet.",
+      accent: "brand-orange",
+      markerClassName: "bg-brand-orange",
+      borderClassName: "border-brand-orange/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-orange/10 via-background to-background",
+    },
+    {
+      year: "1997",
+      label: "Narrow AI wins big",
+      title: "Deep Blue defeats world chess champion Garry Kasparov",
+      summary: "IBM's system beat the reigning champion by evaluating 200 million positions per second using handcrafted chess rules.",
+      whyItMatters: "It proved machines could outperform top humans in tightly defined domains, even without human-like understanding.",
+      accent: "brand-green",
+      markerClassName: "bg-brand-green",
+      borderClassName: "border-brand-green/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-green/10 via-background to-background",
+    },
+    {
+      year: "2012",
+      label: "Deep learning takes over",
+      title: "AlexNet turns ImageNet into a watershed moment",
+      summary: "A GPU-trained deep neural network dramatically outperformed every other image-recognition approach in the ImageNet competition.",
+      whyItMatters: "This was the tipping point that pushed the whole industry toward deep learning as the default approach for AI.",
+      accent: "brand-orange",
+      markerClassName: "bg-brand-orange",
+      borderClassName: "border-brand-orange/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-orange/10 via-background to-background",
+    },
+    {
+      year: "2017",
+      label: "The transformer era",
+      title: "Attention Is All You Need rewrites modern AI",
+      summary: "Google Brain introduced the Transformer architecture, replacing older recurrent models with attention mechanisms that scale far better.",
+      whyItMatters: "ChatGPT, Claude, Gemini, and LLaMA all build on this same architectural shift.",
+      accent: "brand-green",
+      markerClassName: "bg-brand-green",
+      borderClassName: "border-brand-green/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-green/10 via-background to-background",
+    },
+    {
+      year: "2022-present",
+      label: "AI goes mainstream",
+      title: "ChatGPT brings general-purpose AI to the public",
+      summary: "Consumer chat interfaces made advanced AI instantly usable for people with no technical background, and adoption exploded.",
+      whyItMatters: "The current era is defined by rapid deployment, capability jumps, and an active fight over how these systems should be used and governed.",
+      accent: "brand-orange",
+      markerClassName: "bg-brand-orange",
+      borderClassName: "border-brand-orange/30",
+      surfaceClassName: "bg-gradient-to-br from-brand-orange/10 via-background to-background",
+    },
+  ]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -51,6 +155,23 @@ export default function Module1Page() {
       if (last) { markSectionComplete(MODULE_ID, last.id); setCurrentPosition(MODULE_ID, last.id) }
     }
   }, [allQuizComplete])
+
+  useEffect(() => {
+    if (!historyCarouselApi) return
+
+    const updateHistorySlide = () => {
+      setHistorySlideIndex(historyCarouselApi.selectedScrollSnap())
+    }
+
+    updateHistorySlide()
+    historyCarouselApi.on("select", updateHistorySlide)
+    historyCarouselApi.on("reInit", updateHistorySlide)
+
+    return () => {
+      historyCarouselApi.off("select", updateHistorySlide)
+      historyCarouselApi.off("reInit", updateHistorySlide)
+    }
+  }, [historyCarouselApi])
 
   const handleSectionComplete = () => {
     const current = sections[currentSectionIndex]
@@ -136,8 +257,8 @@ export default function Module1Page() {
                     { category: "Action", examples: "Self-driving cars braking for a pedestrian, a robot arm sorting packages, an AI agent booking a flight", how: "Combines perception and reasoning to control physical or digital systems in real time." },
                   ].map(({ category, examples, how }) => (
                     <Card key={category} className="p-4">
-                      <div className="flex gap-3 items-start">
-                        <span className="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">{category}</span>
+                      <div className="space-y-3">
+                        <span className="inline-flex w-fit rounded bg-brand-orange px-2 py-1 text-xs font-bold text-white">{category}</span>
                         <div className="space-y-1">
                           <p className="text-sm"><span className="font-medium">Examples:</span> <span className="text-muted-foreground">{examples}</span></p>
                           <p className="text-sm"><span className="font-medium">How AI does it:</span> <span className="text-muted-foreground">{how}</span></p>
@@ -273,65 +394,99 @@ export default function Module1Page() {
               <h2 className="text-3xl font-bold text-brand-green">A Brief History of AI</h2>
               <TextDisplay content="AI is not new - researchers have been working on it since the 1950s. The story matters because each wave of progress came from a combination of better ideas, more data, and more computing power. Crucially, the path was not smooth - there were decades of failure, funding collapses, and near-total abandonment before the breakthroughs we see today." />
 
-              <div className="space-y-4">
-                <Card className="p-5 border-l-4 border-l-brand-green">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">1950 — The founding question</p>
-                  <h3 className="font-semibold mb-2">Alan Turing asks &ldquo;Can machines think?&rdquo;</h3>
-                  <p className="text-sm text-muted-foreground">Alan Turing published <em>Computing Machinery and Intelligence</em>, introducing the <strong>Turing Test</strong>: a machine passes if a human cannot distinguish it from another human in text conversation. This single paper defined the goal of AI research for decades.</p>
-                </Card>
-
-                <Card className="p-5 border-l-4 border-l-brand-orange">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">1956 — The Dartmouth Conference</p>
-                  <h3 className="font-semibold mb-2">The field is officially born</h3>
-                  <p className="text-sm text-muted-foreground">John McCarthy, Marvin Minsky, Claude Shannon, and others gathered at Dartmouth College for a summer workshop. McCarthy coined the term "Artificial Intelligence." They confidently believed machines would reach human-level intelligence within 20 years. They were off by at least 70 years.</p>
-                </Card>
-
-                <Card className="p-5 border-l-4 border-l-brand-green">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">1966 — The first chatbot</p>
-                  <h3 className="font-semibold mb-2">ELIZA - a mirror that felt like a mind</h3>
-                  <p className="text-sm text-muted-foreground">Joseph Weizenbaum at MIT built ELIZA, a program that reflected users&apos; sentences back to them as questions. When given the therapist script "DOCTOR," people formed emotional attachments to it and confided personal secrets — even knowing it was just a program. Weizenbaum was disturbed by this and spent the rest of his career warning about human over-trust in AI.</p>
-                </Card>
-
-                <Card className="p-5 border-l-4 border-l-red-400 bg-red-50 dark:bg-red-950/20">
-                  <p className="text-xs font-bold uppercase tracking-wide text-red-500 mb-1">1974-1980 and 1987-1993 — The Two AI Winters</p>
-                  <h3 className="font-semibold mb-2">Funding collapses, hype dies</h3>
-                  <p className="text-sm text-muted-foreground mb-2">An <strong>AI Winter</strong> is a period when AI funding dried up and public interest collapsed after promises were not met. There were two major ones:</p>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <p><span className="font-medium text-foreground">First Winter (1974-1980):</span> Early AI programs couldn&apos;t scale. Translation software needed to understand context to work — and no one knew how to give machines context. Government funding was cut. Progress stalled.</p>
-                    <p><span className="font-medium text-foreground">Second Winter (1987-1993):</span> The "expert systems" boom ended. These systems required experts to hand-write thousands of rules — they were expensive, fragile, and couldn&apos;t keep up with changing real-world conditions. Companies lost billions. The field became unfashionable again.</p>
+              <div className="rounded-3xl border border-brand-green/20 bg-gradient-to-br from-brand-green/5 via-background to-brand-orange/5 p-4 md:p-6">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-orange">Interactive Timeline</p>
+                    <h3 className="mt-1 text-xl font-semibold text-foreground">Swipe through the turning points that shaped modern AI</h3>
                   </div>
-                  <p className="text-sm font-medium mt-2">This is why AI researchers today are careful about hype — the field has been burned before.</p>
-                </Card>
+                  <div className="rounded-full border border-brand-green/20 bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+                    {historySlideIndex + 1} / {historyMilestones.length}
+                  </div>
+                </div>
 
-                <Card className="p-5 border-l-4 border-l-brand-orange">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">1986 — The algorithm that changed everything</p>
-                  <h3 className="font-semibold mb-2">Backpropagation - teaching networks to learn from mistakes</h3>
-                  <p className="text-sm text-muted-foreground">David Rumelhart, Geoffrey Hinton, and Ronald Williams published a practical method for training neural networks called <strong>backpropagation</strong>. It made multi-layer neural networks trainable for the first time. But computers of the era were too slow to make full use of it. The idea sat waiting for the hardware to catch up — which would take 25 more years.</p>
-                </Card>
+                <Carousel setApi={setHistoryCarouselApi} opts={{ align: "start", loop: false }} className="w-full">
+                  <CarouselContent>
+                    {historyMilestones.map((milestone) => (
+                      <CarouselItem key={milestone.year}>
+                        <Card className={`overflow-hidden border ${milestone.borderClassName} ${milestone.surfaceClassName}`}>
+                          <div className="grid gap-6 p-6 md:grid-cols-[140px_minmax(0,1fr)] md:p-8">
+                            <div className="space-y-3">
+                              <div className={`h-2.5 w-16 rounded-full ${milestone.markerClassName}`} />
+                              <p className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">{milestone.year}</p>
+                              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-orange">{milestone.label}</p>
+                            </div>
 
-                <Card className="p-5 border-l-4 border-l-brand-green">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">1997 — Narrow AI outperforms the world&apos;s best</p>
-                  <h3 className="font-semibold mb-2">Deep Blue defeats Garry Kasparov</h3>
-                  <p className="text-sm text-muted-foreground">IBM&apos;s Deep Blue became the first computer to defeat a reigning world chess champion in a standard match. This proved that narrow AI could beat human experts — at least within a perfectly defined domain. Deep Blue evaluated 200 million chess positions per second, using hand-crafted rules, not learning.</p>
-                </Card>
+                            <div className="space-y-4">
+                              <div>
+                                <h4 className="text-2xl font-semibold text-foreground">{milestone.title}</h4>
+                                <p className="mt-3 text-base leading-7 text-muted-foreground">{milestone.summary}</p>
+                              </div>
 
-                <Card className="p-5 border-l-4 border-l-brand-orange">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">2012 — The deep learning revolution</p>
-                  <h3 className="font-semibold mb-2">AlexNet and the ImageNet moment</h3>
-                  <p className="text-sm text-muted-foreground">Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton entered a global image-recognition competition (ImageNet) with a deep neural network trained on GPUs. Their system achieved a 26% error rate when the next best was 26.2% — crushing all previous approaches. This moment is often called the "Big Bang" of modern AI. Within 2 years, every major tech company switched to deep learning. Within 10 years, almost all AI was built on the same core ideas.</p>
-                </Card>
+                              <div className="rounded-2xl border border-white/60 bg-background/80 p-4 shadow-sm backdrop-blur-sm">
+                                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-green">Why it matters</p>
+                                <p className="mt-2 text-sm leading-6 text-muted-foreground">{milestone.whyItMatters}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="left-3 top-6 h-10 w-10 translate-y-0 border-brand-green/20 bg-background text-brand-green hover:bg-brand-green/10 md:left-auto md:right-16" />
+                  <CarouselNext className="right-3 top-6 h-10 w-10 translate-y-0 border-brand-green/20 bg-background text-brand-green hover:bg-brand-green/10" />
+                </Carousel>
 
-                <Card className="p-5 border-l-4 border-l-brand-green">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">2017 — The architecture of modern AI</p>
-                  <h3 className="font-semibold mb-2">&ldquo;Attention Is All You Need&rdquo; — the Transformer paper</h3>
-                  <p className="text-sm text-muted-foreground">A team at Google Brain published a 12-page paper introducing the <strong>Transformer architecture</strong>. It replaced recurrent networks with an "attention mechanism" that allows every word to directly interact with every other word in a sentence. This solved the long-range dependency problem that had limited previous language models. ChatGPT, Claude, Gemini, and LLaMA are all Transformers. The paper has since been cited over 100,000 times.</p>
-                </Card>
+                <div className="mt-6 overflow-x-auto pb-2">
+                  <div className="flex min-w-max items-start px-2">
+                    {historyMilestones.map((milestone, index) => {
+                      const isActive = index === historySlideIndex
+                      const isCompleted = index < historySlideIndex
 
-                <Card className="p-5 border-l-4 border-l-brand-orange">
-                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-1">2022-present — AI for everyone</p>
-                  <h3 className="font-semibold mb-2">ChatGPT launches and AI goes mainstream</h3>
-                  <p className="text-sm text-muted-foreground">OpenAI released ChatGPT in November 2022. It reached 100 million users in 2 months — the fastest product adoption in history. For the first time, a general-purpose AI interface was accessible to people with no technical background. Since then, every major technology company has released competing models. The current era is defined by rapid capability improvement, widespread deployment, and significant societal debate about consequences.</p>
-                </Card>
+                      return (
+                        <div key={milestone.year} className="flex min-w-[104px] flex-1 items-start last:flex-none">
+                          <button
+                            type="button"
+                            onClick={() => historyCarouselApi?.scrollTo(index)}
+                            className="group flex flex-col items-center text-center"
+                            aria-label={`Go to ${milestone.year}: ${milestone.title}`}
+                            aria-pressed={isActive}
+                          >
+                            <span
+                              className={isActive
+                                ? "flex h-5 w-5 items-center justify-center rounded-full border-4 border-brand-green bg-white shadow-sm transition-all"
+                                : isCompleted
+                                  ? "flex h-5 w-5 items-center justify-center rounded-full border-4 border-brand-green bg-brand-green transition-all"
+                                  : "flex h-5 w-5 items-center justify-center rounded-full border-4 border-brand-green/25 bg-background transition-all group-hover:border-brand-green/50"
+                              }
+                            />
+                            <span
+                              className={isActive
+                                ? "mt-3 text-sm font-semibold text-foreground"
+                                : "mt-3 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground"
+                              }
+                            >
+                              {milestone.year}
+                            </span>
+                            <span className="mt-1 max-w-[92px] text-[11px] leading-4 text-muted-foreground/80">
+                              {milestone.label}
+                            </span>
+                          </button>
+
+                          {index < historyMilestones.length - 1 && (
+                            <div className="mt-2 flex flex-1 items-center px-2">
+                              <div className="h-px w-full bg-brand-green/20">
+                                <div
+                                  className={index < historySlideIndex ? "h-px w-full bg-brand-green" : "h-px w-0 bg-brand-green transition-all"}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
 
               <Card className="p-5 bg-brand-green/5 border-brand-green/20">

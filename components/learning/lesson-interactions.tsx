@@ -23,6 +23,7 @@ type QuickCheckProps = {
   correctOptionId: string
   explanation: string
   accentClassName?: string
+  onAnswered?: (isCorrect: boolean) => void
 }
 
 type FlipCardGridProps = {
@@ -89,7 +90,6 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
               >
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">{card.title}</p>
                 <p className="mt-3 text-sm font-medium text-foreground">{card.prompt}</p>
-                <div className="mt-4 text-xs font-medium text-brand-green">Hover to flip</div>
               </Card>
 
               <Card
@@ -100,7 +100,6 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
               >
                 <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Answer</p>
                 <p className="mt-3 text-sm text-foreground">{card.answer}</p>
-                <div className="mt-4 text-xs font-medium text-muted-foreground">Move away to flip back</div>
               </Card>
             </div>
           </div>
@@ -378,6 +377,7 @@ export function QuickCheckCard({
   correctOptionId,
   explanation,
   accentClassName,
+  onAnswered,
 }: QuickCheckProps) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
   const isAnswered = selectedOptionId !== null
@@ -412,7 +412,10 @@ export function QuickCheckCard({
                 isAnswered && isRightAnswer && "border-green-600 bg-green-50 text-green-900 hover:bg-green-50 hover:text-green-900",
                 isAnswered && isSelected && !isRightAnswer && "border-red-500 bg-red-50 text-red-900 hover:bg-red-50 hover:text-red-900"
               )}
-              onClick={() => setSelectedOptionId(option.id)}
+              onClick={() => {
+                setSelectedOptionId(option.id)
+                onAnswered?.(isRightAnswer)
+              }}
             >
               {option.label}
             </Button>
