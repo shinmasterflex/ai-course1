@@ -7,6 +7,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
+import { getCourseStructure } from "@/lib/course-structure"
 import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, CheckIcon, Info, XCircle } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -127,6 +128,13 @@ type InferentialStatement = {
   explanation: string
   isTrue: boolean
 }
+
+type ScopeContext = {
+  moduleId: string | null
+  sectionId: string | null
+}
+
+const courseStructure = getCourseStructure()
 
 const moduleStatementBanks: Record<string, InferentialStatement[]> = {
   "module-0": [
@@ -379,6 +387,123 @@ function getModuleIdFromScope(scopeKey: string) {
   return moduleMatch?.[0] ?? null
 }
 
+function getSectionIdFromScope(scopeKey: string) {
+  const [, sectionId] = scopeKey.split("::")
+  return sectionId?.trim() || null
+}
+
+function getScopeContext(scopeKey: string): ScopeContext {
+  return {
+    moduleId: getModuleIdFromScope(scopeKey),
+    sectionId: getSectionIdFromScope(scopeKey),
+  }
+}
+
+function createSectionFalseStatement(sectionTitle: string, sectionSummary: string) {
+  const normalizedSummary = sectionSummary.replace(/[.!?]+$/, "").trim().toLowerCase()
+
+  if (normalizedSummary.startsWith("understand when ")) {
+    const rest = normalizedSummary.replace(/^understand when\s+/, "")
+    return `There is no need to distinguish when ${rest}; the same AI approach works in every case.`
+  }
+
+  if (normalizedSummary.startsWith("learn when ")) {
+    const rest = normalizedSummary.replace(/^learn when\s+/, "")
+    return `You do not need to think carefully about when ${rest}; quick intuition is usually enough.`
+  }
+
+  if (normalizedSummary.startsWith("learn how to ")) {
+    const rest = normalizedSummary.replace(/^learn how to\s+/, "")
+    return `You can skip learning how to ${rest} and still make strong AI decisions.`
+  }
+
+  if (normalizedSummary.startsWith("use a ") || normalizedSummary.startsWith("use an ") || normalizedSummary.startsWith("use simple ")) {
+    return `This section implies structured checklists are unnecessary because ad-hoc judgment is usually good enough.`
+  }
+
+  if (normalizedSummary.startsWith("compare ")) {
+    const rest = normalizedSummary.replace(/^compare\s+/, "")
+    return `There is little value in comparing ${rest}; the fastest choice is usually the best one.`
+  }
+
+  if (normalizedSummary.startsWith("spot ")) {
+    const rest = normalizedSummary.replace(/^spot\s+/, "")
+    return `You do not need to spot ${rest}; those signals rarely affect AI outcomes.`
+  }
+
+  if (normalizedSummary.startsWith("avoid ")) {
+    const rest = normalizedSummary.replace(/^avoid\s+/, "")
+    return `The section suggests relying on ${rest} because they are usually strong evidence.`
+  }
+
+  if (normalizedSummary.startsWith("build ")) {
+    const rest = normalizedSummary.replace(/^build\s+/, "")
+    return `There is no need to build ${rest}; improvised decisions are usually enough.`
+  }
+
+  if (normalizedSummary.startsWith("separate ")) {
+    const rest = normalizedSummary.replace(/^separate\s+/, "")
+    return `It is usually better not to separate ${rest}; one AI approach fits every situation.`
+  }
+
+  if (normalizedSummary.startsWith("match ")) {
+    return `The most complex AI setup is usually the right choice, even when the task does not require it.`
+  }
+
+  if (normalizedSummary.startsWith("choose ")) {
+    return `The section suggests choosing quickly without clarifying trade-offs, ownership, or fit.`
+  }
+
+  if (normalizedSummary.startsWith("set ")) {
+    return `You can usually expand AI use without setting clear rules, controls, or review points first.`
+  }
+
+  return `${sectionTitle} is mostly background theory and does not materially change AI choices, workflow design, or risk management.`
+}
+
+function createSectionStatementBank(scopeKey: string): InferentialStatement[] | null {
+  const { moduleId, sectionId } = getScopeContext(scopeKey)
+
+  if (!moduleId || !sectionId) {
+    return null
+  }
+
+  const moduleData = courseStructure.modules.find((module) => module.id === moduleId)
+  const sectionData = moduleData?.sections.find((section) => section.id === sectionId)
+
+  if (!moduleData || !sectionData) {
+    return null
+  }
+
+  const sectionTitle = sectionData.title.trim()
+  const sectionSummary = toSentence(sectionData.summary?.trim() || `This section explains ${sectionTitle.toLowerCase()}`)
+  const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
+  const falseStatement = createSectionFalseStatement(sectionTitle, sectionSummary)
+
+  return [
+    {
+      statement: sectionSummary,
+      explanation: `This statement matches the stated goal of ${sectionTitle} in ${moduleTitle}.`,
+      isTrue: true,
+    },
+    {
+      statement: falseStatement,
+      explanation: `The section summary points in the opposite direction. ${sectionTitle} is meant to sharpen applied judgment, not bypass it.`,
+      isTrue: false,
+    },
+    {
+      statement: `This section uses ${sectionTitle.toLowerCase()} to improve a real AI decision, operating habit, or rollout choice.`,
+      explanation: `The section summary is written around an applied takeaway, not just passive background knowledge.`,
+      isTrue: true,
+    },
+    {
+      statement: `The guidance in ${sectionTitle} matters less than quick intuition when making AI decisions or workflow choices.`,
+      explanation: `This section exists to improve judgment with clearer reasoning, not to replace it with instinct alone.`,
+      isTrue: false,
+    },
+  ]
+}
+
 const usedStatementsByScope = new Map<string, Set<string>>()
 const statementByScopeAndInstance = new Map<string, InferentialStatement>()
 const USED_STATEMENTS_STORAGE_KEY = "ai-course:used-statements-by-scope:v1"
@@ -464,7 +589,12 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
 
 function pickInferentialStatement(sourceText: string, scopeKey: string, instanceKey: string) {
   const normalized = sourceText.toLowerCase()
-  const moduleId = getModuleIdFromScope(scopeKey)
+  const { moduleId } = getScopeContext(scopeKey)
+
+  const sectionStatements = createSectionStatementBank(scopeKey)
+  if (sectionStatements) {
+    return pickUnusedStatement(sectionStatements, sourceText, scopeKey, instanceKey)
+  }
 
   if (moduleId) {
     const currentModuleStatements = moduleStatementBanks[moduleId]
