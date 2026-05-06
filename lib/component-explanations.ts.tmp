@@ -933,12 +933,6 @@ Realistic time expectations improve completion rates and skill retention. You're
 By framing the mindset card, you're setting expectations that this course values iteration and practice over passive consumption.`,
   },
 
-  "m0-learning-system": {
-    id: "m0-learning-system",
-    title: "Your Practical Learning System",
-    explanation: `This card introduces the three pillars of effective AI learning in this course: Time (short, consistent sessions), Pacing (spaced learning), and Mindset (learn by doing). Understanding this system helps you optimize your learning approach and build sustainable habits rather than cramming knowledge passively.`,
-  },
-
   "m0-learning-tips-sequence": {
     id: "m0-learning-tips-sequence",
     title: "Learning Tip 1: Go in Sequence",
@@ -1139,26 +1133,3 @@ This analysis helps you use creative AI realistically-for ideation and explorati
   },
 };
 
-
-/**
- * Get an explanation for a component by searching the mapping.
- */
-export function getComponentExplanation(componentId: string): ComponentExplanation | undefined {
-  return COMPONENT_EXPLANATIONS[componentId];
-}
-
-/**
- * Get all explanations for a specific module
- */
-export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
-  const prefix = `m${moduleNumber}-`;
-  return Object.values(COMPONENT_EXPLANATIONS).filter((exp) => exp.id.startsWith(prefix));
-}
-
-/**
- * Search for explanations by keyword
- */
-export function searchExplanations(query: string): ComponentExplanation[] {
-  const lowerQuery = query.toLowerCase();
-  return Object.values(COMPONENT_EXPLANATIONS).filter((exp) => exp.title.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery));
-}

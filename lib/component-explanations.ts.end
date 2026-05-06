@@ -1,0 +1,350 @@
+
+  "m1-capability-bucket-4": {
+    id: "m1-capability-bucket-4",
+    title: "AI Capability Bucket 4",
+    explanation: `The five capability areas organize how to think about AI diversity. Within each area, different systems have different levels of sophistication. Understanding this helps you navigate the AI landscape.`,
+  },
+
+  "m1-capability-bucket-5": {
+    id: "m1-capability-bucket-5",
+    title: "AI Capability Bucket 5",
+    explanation: `These five capabilities represent current AI strengths. Many other problem types remain difficult or unsolved. Recognizing AI limitations is as important as recognizing capabilities.`,
+  },
+
+  "m1-case-study-1": {
+    id: "m1-case-study-1",
+    title: "Real-World AI Case Study 1",
+    explanation: `Real case studies ground abstract concepts in concrete outcomes. Case studies should include both successes and failures. Learning from real implementations helps you predict AI impact in your domain.`,
+  },
+
+  "m1-case-study-2": {
+    id: "m1-case-study-2",
+    title: "Real-World AI Case Study 2",
+    explanation: `Different industries deploy AI differently based on constraints and opportunities. Comparing case studies across industries helps you understand transfer principles.`,
+  },
+
+  "m1-case-study-3": {
+    id: "m1-case-study-3",
+    title: "Real-World AI Case Study 3",
+    explanation: `Case studies also reveal common pitfalls: over-relying on AI, ignoring data quality, neglecting human oversight. Learning from others' mistakes is efficient learning.`,
+  },
+
+  "m2-supervised-example": {
+    id: "m2-supervised-example",
+    title: "Supervised Learning Example",
+    explanation: `A concrete example of supervised learning helps you understand how labeled data trains systems. Seeing the specific examples helps you generalize the principle.`,
+  },
+
+  "m2-unsupervised-example": {
+    id: "m2-unsupervised-example",
+    title: "Unsupervised Learning Example",
+    explanation: `Unsupervised learning discovers patterns without external labels. Examples show exploratory AI: clustering customers, finding document topics, detecting anomalies.`,
+  },
+
+  "m2-data-collection-card": {
+    id: "m2-data-collection-card",
+    title: "Data Collection Methods",
+    explanation: `How you collect data shapes what patterns exist. Biased collection methods create biased models. Understanding collection methods helps you evaluate data quality.`,
+  },
+
+  "m2-data-preprocessing": {
+    id: "m2-data-preprocessing",
+    title: "Data Preprocessing and Cleaning",
+    explanation: `Real data is messy. Preprocessing transforms messy data into clean inputs for learning. Data scientists spend enormous time here. Good preprocessing is invisible but essential.`,
+  },
+
+  "m2-feature-engineering-card": {
+    id: "m2-feature-engineering-card",
+    title: "Feature Engineering: Teaching What Matters",
+    explanation: `Feature engineering means creating new variables that capture patterns the algorithm should find. Good features encode domain knowledge. Feature engineering is where expertise shows up in AI systems.`,
+  },
+
+  "m2-model-training": {
+    id: "m2-model-training",
+    title: "Model Training Process",
+    explanation: `Training adjusts model parameters to minimize prediction errors on training data. Understanding training helps you think about overfitting and generalization.`,
+  },
+
+  "m2-evaluation-metrics": {
+    id: "m2-evaluation-metrics",
+    title: "Model Evaluation and Metrics",
+    explanation: `Models are evaluated on held-out test data, not training data. Metrics vary by task: accuracy for classification, RMSE for regression, AUC for ranking. Choosing the right metric shapes model behavior.`,
+  },
+
+  "m3-tokenization": {
+    id: "m3-tokenization",
+    title: "Tokenization Process",
+    explanation: `Text must be converted to tokens before language models process it. Different tokenization approaches produce different tokens. Understanding tokenization helps you predict model behavior on unusual inputs.`,
+  },
+
+  "m3-embeddings": {
+    id: "m3-embeddings",
+    title: "Embeddings: Vector Representations",
+    explanation: `Language models convert words and phrases into vectors (embeddings) that capture semantic meaning. Words with similar meanings have similar embeddings. Embeddings are how models understand language mathematically.`,
+  },
+
+  "m3-transformer-architecture": {
+    id: "m3-transformer-architecture",
+    title: "Transformer Architecture",
+    explanation: `Most modern language models use the Transformer architecture. Understanding that Transformers use attention to process information helps you grasp model capabilities.`,
+  },
+
+  "m3-fine-tuning": {
+    id: "m3-fine-tuning",
+    title: "Fine-Tuning: Specializing Models",
+    explanation: `Fine-tuning adapts pre-trained models for specific tasks. Fine-tuning is much cheaper than training from scratch. Understanding fine-tuning helps you customize models.`,
+  },
+
+  "m3-prompt-sensitivity": {
+    id: "m3-prompt-sensitivity",
+    title: "Prompt Sensitivity and Fragility",
+    explanation: `Small prompt changes sometimes cause large output changes. Language models can be sensitive to phrasing. Understanding this fragility helps you design robust prompts.`,
+  },
+
+  "m3-output-parsing": {
+    id: "m3-output-parsing",
+    title: "Parsing Model Output",
+    explanation: `Extracting structured information from language model outputs can be challenging. Techniques like asking for JSON or using system prompts help. Understanding output formatting helps you integrate models into systems.`,
+  },
+
+  "m4-writing-grammar": {
+    id: "m4-writing-grammar",
+    title: "Grammar and Style Tools",
+    explanation: `Grammar tools suggest corrections and improvements. These tools are useful but not perfect. Grammar correction can sometimes suggest changes that violate intentional style.`,
+  },
+
+  "m4-writing-generation": {
+    id: "m4-writing-generation",
+    title: "Text Generation for Writing",
+    explanation: `Text generation tools can draft paragraphs and sections. Generated text is a starting point, not a final product. Understanding generation as augmentation prevents over-reliance.`,
+  },
+
+  "m4-image-editing": {
+    id: "m4-image-editing",
+    title: "Image Editing and Enhancement",
+    explanation: `Image AI can remove objects, change styles, or enhance quality. These capabilities are impressive for specific use cases. Understanding limitations prevents using AI where it's not appropriate.`,
+  },
+
+  "m4-productivity-email": {
+    id: "m4-productivity-email",
+    title: "AI for Email and Communication",
+    explanation: `AI can draft emails, suggest responses, and manage inbox. Communication AI augments writing. Understanding when AI helps versus when it creates distance is important for effective communication.`,
+  },
+
+  "m4-productivity-coding": {
+    id: "m4-productivity-coding",
+    title: "AI for Code Generation",
+    explanation: `Code generation tools suggest code snippets and functions. These tools make programmers more productive. Understanding that generated code must still be reviewed prevents security and quality issues.`,
+  },
+
+  "m4-productivity-research": {
+    id: "m4-productivity-research",
+    title: "AI for Research and Analysis",
+    explanation: `Research AI can summarize documents, find connections, and extract insights. Research augmentation shifts human work from information gathering to analysis.`,
+  },
+
+  "m5-data-pipeline": {
+    id: "m5-data-pipeline",
+    title: "Data Pipeline: From Raw to Ready",
+    explanation: `Data flows through collection, cleaning, preprocessing, and feature engineering before reaching models. Understanding the pipeline helps you identify failure points.`,
+  },
+
+  "m5-missing-data": {
+    id: "m5-missing-data",
+    title: "Handling Missing Data",
+    explanation: `Real datasets have gaps. How you handle missing data (deletion, imputation, modeling) affects results. Understanding missing data patterns helps you diagnose problems.`,
+  },
+
+  "m5-outliers": {
+    id: "m5-outliers",
+    title: "Detecting and Handling Outliers",
+    explanation: `Outliers can be real anomalies or errors. Whether to remove, transform, or keep outliers depends on context. Understanding outliers helps you make principled decisions.`,
+  },
+
+  "m5-scaling": {
+    id: "m5-scaling",
+    title: "Scaling and Normalization",
+    explanation: `Scaling brings variables to similar ranges. Neural networks especially benefit from scaling. Understanding scaling helps you prepare data for different algorithms.`,
+  },
+
+  "m5-class-imbalance": {
+    id: "m5-class-imbalance",
+    title: "Handling Class Imbalance",
+    explanation: `When classes have unequal representation (e.g., fraud is rare), standard approaches fail. Techniques like oversampling and reweighting help. Understanding imbalance prevents misleading accuracy metrics.`,
+  },
+
+  "m6-algorithmic-bias": {
+    id: "m6-algorithmic-bias",
+    title: "Algorithmic Bias: Origins and Detection",
+    explanation: `Bias enters systems through training data, feature engineering, and objective design. Detecting bias requires careful analysis. Understanding bias sources helps you design fairer systems.`,
+  },
+
+  "m6-fairness-metrics": {
+    id: "m6-fairness-metrics",
+    title: "Fairness Metrics and Trade-offs",
+    explanation: `Different fairness definitions sometimes conflict. You must choose metrics aligned with values. Understanding fairness as design choice prevents assuming neutrality.`,
+  },
+
+  "m6-privacy-data": {
+    id: "m6-privacy-data",
+    title: "Privacy: Protecting Sensitive Data",
+    explanation: `AI systems trained on personal data can leak privacy. Techniques like differential privacy, federated learning, and data anonymization help. Privacy is not optional; it's a responsibility.`,
+  },
+
+  "m6-privacy-inference": {
+    id: "m6-privacy-inference",
+    title: "Privacy: Inference Attacks",
+    explanation: `Even without seeing training data, attackers can sometimes infer whether specific people's data was used. Understanding inference attacks helps you design privacy-conscious systems.`,
+  },
+
+  "m6-misinformation-deepfakes": {
+    id: "m6-misinformation-deepfakes",
+    title: "Deepfakes and Synthetic Media",
+    explanation: `AI can generate convincing fake images and videos. These capabilities have profound implications for media authenticity. Understanding deepfakes helps you consume media critically.`,
+  },
+
+  "m6-misinformation-detection": {
+    id: "m6-misinformation-detection",
+    title: "Detecting Misinformation",
+    explanation: `AI-generated misinformation shares characteristics with human-generated misinformation. Detection requires critical thinking about source, evidence, and internal consistency.`,
+  },
+
+  "m6-responsible-ai": {
+    id: "m6-responsible-ai",
+    title: "Responsible AI Principles",
+    explanation: `Responsible AI integrates fairness, transparency, accountability, and human oversight. These principles guide ethical AI deployment. Responsible AI is not a feature; it's a design philosophy.`,
+  },
+
+  "m7-workflow-design": {
+    id: "m7-workflow-design",
+    title: "Designing AI into Workflows",
+    explanation: `Successful AI deployment integrates AI into existing workflows thoughtfully. Poor integration can damage productivity. Workflow design matters as much as model quality.`,
+  },
+
+  "m7-human-ai-collaboration": {
+    id: "m7-human-ai-collaboration",
+    title: "Human-AI Collaboration Patterns",
+    explanation: `Different collaboration patterns suit different tasks. Sometimes humans decide and AI executes; sometimes AI suggests and humans filter. Understanding collaboration patterns optimizes team effectiveness.`,
+  },
+
+  "m7-handoffs": {
+    id: "m7-handoffs",
+    title: "Designing Effective Human-AI Handoffs",
+    explanation: `When control transfers from AI to human or vice versa, mistakes happen. Well-designed handoffs include clear handoff criteria, status information, and recovery procedures.`,
+  },
+
+  "m7-monitoring": {
+    id: "m7-monitoring",
+    title: "Monitoring and Maintenance",
+    explanation: `AI systems degrade over time as data distribution shifts. Monitoring catches performance degradation. Maintenance ensures systems remain trustworthy.`,
+  },
+
+  "m8-agent-loop": {
+    id: "m8-agent-loop",
+    title: "The Agent Execution Loop",
+    explanation: `Agents cycle through: observe state, reason about goals, plan actions, execute, observe results. Understanding this loop helps you design agents.`,
+  },
+
+  "m8-agent-memory": {
+    id: "m8-agent-memory",
+    title: "Agent Memory: Working and Long-Term",
+    explanation: `Agents need working memory (current context) and long-term memory (past experiences). How you structure memory affects agent reasoning.`,
+  },
+
+  "m8-agent-tools": {
+    id: "m8-agent-tools",
+    title: "Agents with Tools: Extended Capability",
+    explanation: `Agents can use tools (calculators, search, APIs) to overcome limitations. Tool integration extends AI beyond pattern-matching into action.`,
+  },
+
+  "m8-agent-planning": {
+    id: "m8-agent-planning",
+    title: "Agent Planning: Reasoning About Action Sequences",
+    explanation: `Agents must plan multi-step action sequences to achieve goals. Planning is harder than individual decisions. Understanding planning helps you anticipate agent behavior.`,
+  },
+
+  "m8-agent-autonomy": {
+    id: "m8-agent-autonomy",
+    title: "Agent Autonomy: When to Intervene",
+    explanation: `Autonomous agents make decisions without human input. As autonomy increases, oversight requirements increase. Designing autonomy levels requires careful consideration.`,
+  },
+
+  "m9-tool-selection-framework": {
+    id: "m9-tool-selection-framework",
+    title: "Framework for Selecting AI Tools",
+    explanation: `Choose tools by task requirements, not brand. Evaluate by speed, accuracy, cost, privacy, and support. This framework transfers to new tools as the landscape changes.`,
+  },
+
+  "m9-workflow-creation": {
+    id: "m9-workflow-creation",
+    title: "Creating Effective AI Workflows",
+    explanation: `Workflows chain AI tools with human judgment and verification. Well-designed workflows automate routine decisions while preserving human control over high-stakes choices.`,
+  },
+
+  "m9-verification-habit": {
+    id: "m9-verification-habit",
+    title: "Building Verification Habits",
+    explanation: `Verification must become automatic. For high-stakes outputs, verify key facts and reasoning. Building this habit prevents costly mistakes from AI errors.`,
+  },
+
+  "m10-frontier-capability": {
+    id: "m10-frontier-capability",
+    title: "Frontier Capabilities: What's Emerging",
+    explanation: `Frontier capabilities are advancing quickly: multimodal understanding, longer context windows, improved reasoning. Understanding frontiers helps you stay current.`,
+  },
+
+  "m10-agi-speculation": {
+    id: "m10-agi-speculation",
+    title: "AGI Claims and Speculation",
+    explanation: `AGI speculation is everywhere. Evaluate claims by evidence, not hype. Understanding what would constitute evidence for AGI helps you filter claims.`,
+  },
+
+  "m10-governance-challenges": {
+    id: "m10-governance-challenges",
+    title: "Governance Challenges for AI",
+    explanation: `Policy, regulation, safety, and accountability frameworks are still forming. Understanding challenges helps you contribute to solutions.`,
+  },
+
+  "m10-career-paths": {
+    id: "m10-career-paths",
+    title: "Career Paths in AI",
+    explanation: `Technical and non-technical paths both exist in AI. Understanding different roles helps you identify where your skills are valuable.`,
+  },
+
+  "m10-personal-strategy": {
+    id: "m10-personal-strategy",
+    title: "Personal AI Strategy",
+    explanation: `Your strategy for AI learning and use should align with your goals. The framework for building strategy is more valuable than any single decision.`,
+  },
+};
+
+/**
+ * Get an explanation for a component by searching the mapping.
+ * Can search by exact ID or by partial matching.
+ */
+export function getComponentExplanation(componentId: string): ComponentExplanation | undefined {
+  return COMPONENT_EXPLANATIONS[componentId];
+}
+
+/**
+ * Get all explanations for a specific module
+ */
+export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
+  const prefix = `m${moduleNumber}-`;
+  return Object.values(COMPONENT_EXPLANATIONS).filter((exp) => exp.id.startsWith(prefix));
+}
+
+/**
+ * Search for explanations by keyword
+ */
+export function searchExplanations(query: string): ComponentExplanation[] {
+  const lowerQuery = query.toLowerCase();
+  return Object.values(COMPONENT_EXPLANATIONS).filter(
+    (exp) =>
+      exp.title.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery),
+  );
+}
+
+
+
+

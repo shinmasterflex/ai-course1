@@ -163,7 +163,7 @@ export default function Module0Page() {
           </div>
 
           {currentSectionIndex === 0 && (
-            <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
+            <Card componentId="m0-hero-visual-guide" className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
               <div className="grid items-stretch lg:grid-cols-2">
                 <div className="space-y-3 p-5 md:p-6">
                   <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
@@ -195,7 +195,7 @@ export default function Module0Page() {
                 content="You are not behind. You are early enough to benefit. AI is reshaping work, creativity, and decisions, and practical AI habits built now can compound quickly."
               />
               <TextDisplay content="Think of this module as your launchpad: move from uncertainty to clarity, then from clarity to action. No coding background required." />
-              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
+              <Card componentId="m0-why-ai-shift" className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> The shift happening around you</h3>
                 <ul className="space-y-3">
                   {[
@@ -227,7 +227,7 @@ export default function Module0Page() {
                   ))}
                 </div>
               </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m0-microwins-intro" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Micro-wins in this section</h3>
                 <div className="grid gap-3 md:grid-cols-2 text-sm">
                   {[
@@ -259,7 +259,7 @@ export default function Module0Page() {
                 explanation="Exactly. Early practical fluency compounds and creates leverage in study and work."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Card className="p-6 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-brand-green/5">
+              <Card componentId="m0-success-by-week" className="p-6 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-brand-green/5">
                 <h3 className="text-lg font-semibold mb-3 text-brand-indigo">What success looks like by the end of this week</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -284,17 +284,17 @@ export default function Module0Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">A Day in Your Life With AI</h2>
               <TextDisplay content="You likely used AI before breakfast. Walk through this day and notice how often AI quietly shapes decisions." />
-              <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+              <Card componentId="m0-day-in-life-card" className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
                 <h3 className="font-semibold mb-4 text-brand-orange">From morning to night</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: Search, label: "7:30 AM - Search", detail: "You type a question, and search AI interprets intent, rewrites the query, and ranks results." },
-                    { icon: MapPinned, label: "8:10 AM - Maps", detail: "Traffic models predict congestion and reroute you before delays happen." },
-                    { icon: Users, label: "12:20 PM - Social Media", detail: "Feed ranking decides what appears first, what gets buried, and what goes viral." },
-                    { icon: PenSquare, label: "2:00 PM - Writing", detail: "Autocomplete, grammar suggestions, and rewrite tools help draft faster." },
-                    { icon: Code2, label: "4:30 PM - Coding", detail: "Coding assistants propose snippets, tests, and refactors from your context." },
-                  ].map(({ icon: Icon, label, detail }) => (
-                    <div key={label} className="flex items-start gap-3 rounded-lg border bg-white p-3">
+                    { icon: Search, label: "7:30 AM - Search", detail: "You type a question, and search AI interprets intent, rewrites the query, and ranks results.", id: "m0-daily-ai-search" },
+                    { icon: MapPinned, label: "8:10 AM - Maps", detail: "Traffic models predict congestion and reroute you before delays happen.", id: "m0-daily-ai-maps" },
+                    { icon: Users, label: "12:20 PM - Social Media", detail: "Feed ranking decides what appears first, what gets buried, and what goes viral.", id: "m0-daily-ai-social" },
+                    { icon: PenSquare, label: "2:00 PM - Writing", detail: "Autocomplete, grammar suggestions, and rewrite tools help draft faster.", id: "m0-daily-ai-writing" },
+                    { icon: Code2, label: "4:30 PM - Coding", detail: "Coding assistants propose snippets, tests, and refactors from your context.", id: "m0-daily-ai-coding" },
+                  ].map(({ icon: Icon, label, detail, id }) => (
+                    <div key={label} className="flex items-start gap-3 rounded-lg border bg-white p-3" {...(id ? { "data-explainer-id": id } : {})}>
                       <div className="mt-0.5 rounded-md bg-brand-orange/10 p-2">
                         <Icon className="h-4 w-4 text-brand-orange" />
                       </div>
@@ -347,7 +347,7 @@ export default function Module0Page() {
                   },
                 ]}
               />
-              <Card className="p-5">
+              <Card componentId="m0-ai-visibility-categories" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">How visible is the AI?</h3>
                 <p className="text-sm text-muted-foreground mb-3">Not all AI feels the same. Sometimes it is obvious, and sometimes it disappears into the product experience.</p>
                 <div className="space-y-2 text-sm">
@@ -371,7 +371,7 @@ export default function Module0Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Your Transformation Arc</h2>
               <TextDisplay content="This course is a clear before-and-after journey: from curious beginner to practical AI user who can solve real tasks responsibly." />
-              <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white">
+              <Card componentId="m0-before-and-after" className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white">
                 <h3 className="font-semibold text-brand-green mb-3">Before and After</h3>
                 <div className="grid gap-3 md:grid-cols-2 text-sm">
                   <div className="rounded-lg border bg-white p-4">
@@ -395,16 +395,16 @@ export default function Module0Page() {
               <div className="space-y-4">
                 {[
                   { phase: "Phase 1: Understanding AI", color: "brand-green", modules: [
-                    { n: 0, title: "Welcome to AI",               desc: "Orient yourself - you are here!" },
+                    { n: 0, title: "Welcome to AI",               desc: "Orient yourself - you are here!", id: "m0-transformation-phase-1" },
                     { n: 1, title: "What Is AI?",                 desc: "Definitions, history, and types of AI" },
                     { n: 2, title: "How Machines Learn",          desc: "Training data, neural nets, and AI limits" },
                   ]},
                   { phase: "Phase 2: Using AI", color: "brand-orange", modules: [
-                    { n: 3, title: "LLMs & Prompting",            desc: "How ChatGPT works and how to talk to it well" },
+                    { n: 3, title: "LLMs & Prompting",            desc: "How ChatGPT works and how to talk to it well", id: "m0-transformation-phase-2" },
                     { n: 4, title: "AI Tools for Everyday Life",  desc: "Writing, images, productivity tools" },
                   ]},
                   { phase: "Phase 3: Thinking & Building", color: "brand-green", modules: [
-                    { n: 5, title: "AI Ethics, Safety & Society", desc: "Bias, privacy, and responsible use" },
+                    { n: 5, title: "AI Ethics, Safety & Society", desc: "Bias, privacy, and responsible use", id: "m0-transformation-phase-3" },
                     { n: 6, title: "Your AI Toolkit",             desc: "No-code tools, workflows, your first project" },
                   ]},
                 ].map(({ phase, color, modules }) => (
@@ -435,8 +435,8 @@ export default function Module0Page() {
                   "Thinking and Building",
                 ]}
               />
-              <Card className="p-4 bg-brand-orange/5 border-brand-orange/20">
-                <h3 className="font-semibold mb-3 text-brand-orange">What you will be able to do after this course</h3>
+              <Card componentId="m0-capabilities-outcome" className="p-4 bg-brand-orange/5 border-brand-orange/20">
+                <h3 className="font-semibold mb-3 text-brand-orange\">What you will be able to do after this course</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   {[
                     { label: "Communication", time: "Explain AI concepts clearly to non-technical people" },
@@ -450,14 +450,7 @@ export default function Module0Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Micro-wins for this section</h3>
-                <div className="grid md:grid-cols-3 gap-3 text-sm">
-                  {[
-                    { plan: "Micro-win 1", cadence: "You can describe your before-and-after state clearly." },
-                    { plan: "Micro-win 2", cadence: "You know the exact learning sequence across phases." },
-                    { plan: "Micro-win 3", cadence: "You can name three concrete capabilities you will gain." },
-                  ].map(({ plan, cadence }) => (
+              <Card componentId="m0-microwins-transformation" className="p-5 border-brand-green/20 bg-brand-green/5\">\n                <h3 className=\"font-semibold mb-3 text-brand-green\">Micro-wins for this section</h3>
                     <div key={plan} className="rounded-lg border bg-white p-3">
                       <p className="font-medium text-brand-orange mb-1">{plan}</p>
                       <p className="text-muted-foreground text-xs">{cadence}</p>
@@ -473,18 +466,18 @@ export default function Module0Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">How to Take This Course Effectively</h2>
               <TextDisplay content="Treat this course like a training system, not passive reading. Keep sessions short, hands-on, and consistent." />
-              <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+              <Card componentId="m0-learning-system" className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
                 <h3 className="font-semibold mb-4 text-brand-orange">Your practical system</h3>
                 <div className="grid gap-3 md:grid-cols-3 text-sm">
-                  <div className="rounded-lg border bg-white p-3">
-                    <p className="font-medium mb-1 flex items-center gap-2"><Clock3 className="h-4 w-4 text-brand-orange" /> Time</p>
+                  <Card componentId="m0-learning-system-time" className="p-3 bg-white rounded-lg mt-0.5">
+                <p className="font-medium mb-1 flex items-center gap-2"><Clock3 className="h-4 w-4 text-brand-orange" /> Time</p>
                     <p className="text-muted-foreground">20-30 minutes per session, 4-5 sessions per week.</p>
                   </div>
-                  <div className="rounded-lg border bg-white p-3">
+                  <Card componentId="m0-learning-system-pacing" className="p-3 bg-white rounded-lg mt-0.5">
                     <p className="font-medium mb-1 flex items-center gap-2"><Target className="h-4 w-4 text-brand-orange" /> Pacing</p>
                     <p className="text-muted-foreground">One section at a time. Finish interactions before moving forward.</p>
                   </div>
-                  <div className="rounded-lg border bg-white p-3">
+                  <Card componentId="m0-learning-system-mindset" className="p-3 bg-white rounded-lg mt-0.5">
                     <p className="font-medium mb-1 flex items-center gap-2"><Rocket className="h-4 w-4 text-brand-orange" /> Mindset</p>
                     <p className="text-muted-foreground">Learn by doing: prompt, test, refine, then reflect after each module.</p>
                   </div>
@@ -492,19 +485,19 @@ export default function Module0Page() {
               </Card>
               <div className="space-y-3">
                 {[
-                  { n: "1", tip: "Go in sequence", desc: "Each section compounds. Skipping fundamentals slows you down later." },
-                  { n: "2", tip: "Collect micro-wins", desc: "After each section, write one practical thing you can now do." },
-                  { n: "3", tip: "Practice immediately", desc: "Apply each concept in a real tool the same day you learn it." },
-                  { n: "4", tip: "Verify before trust", desc: "Treat AI output as a draft until key facts and context are checked." },
-                  { n: "5", tip: "Keep momentum", desc: "Consistency beats intensity. Short daily sessions win." },
-                ].map(({ n, tip, desc }) => (
-                  <Card key={n} className="p-4 flex gap-3 items-start">
+                  { n: "1", tip: "Go in sequence", desc: "Each section compounds. Skipping fundamentals slows you down later.", id: "m0-learning-tips-sequence" },
+                  { n: "2", tip: "Collect micro-wins", desc: "After each section, write one practical thing you can now do.", id: "m0-learning-tips-microwins" },
+                  { n: "3", tip: "Practice immediately", desc: "Apply each concept in a real tool the same day you learn it.", id: "m0-learning-tips-practice" },
+                  { n: "4", tip: "Verify before trust", desc: "Treat AI output as a draft until key facts and context are checked.", id: "m0-learning-tips-verify" },
+                  { n: "5", tip: "Keep momentum", desc: "Consistency beats intensity. Short daily sessions win.", id: "m0-learning-tips-momentum" },
+                ].map(({ n, tip, desc, id }) => (
+                  <Card key={n} componentId={id} className="p-4 flex gap-3 items-start">
                     <span className="bg-brand-green text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">{n}</span>
                     <div><p className="font-semibold">{tip}</p><p className="text-sm text-muted-foreground">{desc}</p></div>
                   </Card>
                 ))}
               </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m0-self-assessment-form" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold text-brand-green mb-2">Interactive self-assessment</h3>
                 <p className="text-sm text-muted-foreground mb-4">Answer all questions to reveal your current learning profile.</p>
                 <p className="text-xs text-muted-foreground mb-3">Progress: {assessmentAnsweredCount}/{selfAssessmentQuestions.length}</p>
@@ -542,7 +535,7 @@ export default function Module0Page() {
                 ) : null}
               </Card>
 
-              <Card className="p-5 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-white">
+              <Card componentId="m0-ai-touchpoints-action" className="p-5 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-white">
                 <h3 className="font-semibold text-brand-indigo mb-2">Action task: find 3 ways you already interact with AI</h3>
                 <p className="text-sm text-muted-foreground mb-4">Write one specific example in each box. Be concrete, for example: "Maps rerouting my commute".</p>
                 <div className="space-y-3">
@@ -566,7 +559,7 @@ export default function Module0Page() {
                 )}
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m0-learning-commitment" className="p-5">
                 <h3 className="font-semibold mb-3">Commit to your learning system</h3>
                 <div className="grid gap-2 md:grid-cols-2">
                   {[
@@ -604,7 +597,7 @@ export default function Module0Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Summary & Next Steps</h2>
               <TextDisplay variant="success" content="You have completed Module 0. You now have context, momentum, and a practical system for learning AI effectively." />
-              <Card className="p-6 space-y-4">
+              <Card componentId="m0-key-takeaways" className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold flex items-center gap-2"><Brain className="h-5 w-5 text-brand-orange" /> Key Takeaways</h3>
                 <ul className="space-y-2">
                   {[
@@ -670,7 +663,7 @@ export default function Module0Page() {
                   markSectionInteractionComplete(4)
                 }}
               />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m0-completion-checklist" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Module 0 completion checklist</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
