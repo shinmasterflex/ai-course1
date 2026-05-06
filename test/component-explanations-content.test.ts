@@ -42,6 +42,22 @@ function normalizeWords(value: string) {
     .filter(Boolean)
 }
 
+function normalizeQuestion(value: string) {
+  return value.replace(/\s+/g, " ").trim().toLowerCase()
+}
+
+function questionTail(value: string) {
+  const withoutFocus = value.replace(/\s*\(Focus:\s*[^)]+\)\s*$/i, "").trim()
+  const marker = "' "
+  const markerIndex = withoutFocus.lastIndexOf(marker)
+
+  if (markerIndex === -1) {
+    return normalizeQuestion(withoutFocus)
+  }
+
+  return normalizeQuestion(withoutFocus.slice(markerIndex + marker.length))
+}
+
 function firstParagraph(value: string) {
   return value
     .split(/\n\s*\n/)[0]
@@ -78,6 +94,38 @@ describe("component explanations content quality", () => {
       .map((entry) => entry.id)
 
     expect(invalid).toEqual([])
+  })
+
+  it("keeps every question prompt unique", () => {
+    const grouped = new Map<string, string[]>()
+
+    for (const entry of Object.values(COMPONENT_EXPLANATIONS)) {
+      const key = normalizeQuestion(entry.question)
+      const existing = grouped.get(key) ?? []
+      existing.push(entry.id)
+      grouped.set(key, existing)
+    }
+
+    const duplicates = Array.from(grouped.values())
+      .filter((ids) => ids.length > 1)
+      .map((ids) => ids.join(", "))
+
+    expect(duplicates).toEqual([])
+  })
+
+  it("limits near-duplicate question tail templates", () => {
+    const tails = Object.values(COMPONENT_EXPLANATIONS).map((entry) => questionTail(entry.question))
+
+    const counts = tails.reduce<Record<string, number>>((acc, tail) => {
+      acc[tail] = (acc[tail] ?? 0) + 1
+      return acc
+    }, {})
+
+    const overused = Object.entries(counts)
+      .filter(([, count]) => count > 10)
+      .map(([tail, count]) => `${count}x: ${tail}`)
+
+    expect(overused).toEqual([])
   })
 
   it("avoids banned formatting and panel-meta phrasing", () => {
