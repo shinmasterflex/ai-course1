@@ -228,11 +228,11 @@ m1-quiz next action: test AI output tied to "Separating AI categories and claims
   "m1-ai-vocabulary-cards": {
     id: "m1-ai-vocabulary-cards",
     question: "I'm confused about this part: 'Core AI vocabulary gives you labels for the moving parts you will analyze throughout the course: AI, model, training data, prompt, algorithm,...' What is the core idea here, and how would you teach it to a beginner? (Focus: m1-ai-vocabulary-cards)",
-    explanation: `m1-ai-vocabulary-cards translation: For AI work, "Core AI vocabulary gives you labels for the moving parts you will analyze throughout the course: AI, model, training data, prompt, algorithm,..." is a cue to connect concept understanding to concrete choices.
+    explanation: `Core AI vocabulary matters because each term names a different part of the system. If you mix up words like model, training data, prompt, and output, you will diagnose problems incorrectly and choose weak fixes.
 
-m1-ai-vocabulary-cards practical depth: m1-ai-vocabulary-cards reasoning layer: core AI vocabulary gives you labels for the moving parts you will analyze throughout the course: AI, model, training data, prompt, algorithm, inference, parameters, and output. Treat
+Start by reading one generated response and labeling it in sequence: prompt, model behavior, output quality, and likely data influence. That simple labeling habit teaches you where to intervene, whether by rewriting instructions, changing examples, or selecting a different tool.
 
-m1-ai-vocabulary-cards next action: for "Core AI vocabulary gives you labels for the moving parts you will analyze throughout the course: AI, model, training data, prompt, algorithm,...", validate a core assumption before AI output informs any real decision.`,
+Practice by taking one daily AI task and writing a two-line post-check: what term explains the behavior you saw, and what change you will test next. Repeating that loop turns vocabulary into operational skill instead of memorized definitions.`,
   },
 
   // MODULE 2: How Machines Learn
@@ -1275,11 +1275,11 @@ m0-success-by-week next action: use "In operational terms lesson element sets cl
   "m0-day-in-life-card": {
     id: "m0-day-in-life-card",
     question: "I'm confused about this part: 'Starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app.' Could you restate this without jargon and highlight the practical takeaway? (Focus: m0-day-in-life-card)",
-    explanation: `m0-day-in-life-card interpretation: In an AI context, "Starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app." asks for evidence-aware decision making.
+    explanation: `A normal workday uses many AI systems, not one assistant window. Search ranking, map routing, inbox filtering, recommendation feeds, and coding suggestions are separate tools with different goals and failure patterns.
 
-m0-day-in-life-card execution depth: m0-day-in-life-card decision context: Practical significance: starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app.
+Treat each touchpoint as a decision checkpoint. Ask three quick questions: what prediction is the system making, what could be wrong here, and what low-cost verification can I do before acting.
 
-m0-day-in-life-card next action: for "Starting with 7:30 AM search all the way through 4:30 PM coding, you see AI is not one app.", document what evidence raises trust and what evidence lowers trust in AI.`,
+Build one daily log for a week with columns for tool, decision, and verification result. That exercise makes hidden AI dependencies visible and trains you to apply oversight where mistakes would carry real cost.`,
   },
 
   "m0-daily-ai-search": {
@@ -1646,51 +1646,51 @@ m1-prompting-challenge next action: test AI output tied to "You" with one metric
   "m1-myths-vs-reality-card": {
     id: "m1-myths-vs-reality-card",
     question: "I'm confused about this part: 'Once you believe them, they persist even after learning this lesson element directly confronts myths: AI understands versus AI predicts text, AI...' Could you explain this as if coaching a teammate through it? (Focus: m1-myths-vs-reality-card)",
-    explanation: `m1-myths-vs-reality-card translation: For AI work, "Once you believe them, they persist even after learning this lesson element directly confronts myths: AI understands versus AI predicts text, AI..." is a cue to connect concept understanding to concrete choices.
+    explanation: `Myths persist because they feel intuitive, especially the belief that fluent text means true understanding. In practice, an AI model predicts likely next tokens from data patterns, so confident wording can still hide weak reasoning.
 
-m1-myths-vs-reality-card practical depth: m1-myths-vs-reality-card reasoning layer: misconceptions are sticky. Treat
+Coach your team to replace vague beliefs with testable statements. Instead of saying "the model understands policy," ask "can the model apply policy rules to edge cases we define in advance" and then score the results.
 
-m1-myths-vs-reality-card next action: for "Once you believe them, they persist even after learning this lesson element directly confronts myths: AI understands versus AI predicts text, AI...", validate a core assumption before AI output informs any real decision.`,
+Use a myth-to-test routine during reviews: write the claim, define evidence that would support it, then run a short adversarial prompt set. That method shifts discussion from opinions to measurable reliability.`,
   },
 
   "m1-writing-assistants-card": {
     id: "m1-writing-assistants-card",
     question: "I'm confused about this part: 'Writing assistants are concrete applications that demonstrate text generation capability without anthropomorphizing.' Can you restate this clearly and show what changes in my workflow? (Focus: m1-writing-assistants-card)",
-    explanation: `m1-writing-assistants-card plain-language view: "Writing assistants are concrete applications that demonstrate text generation capability without anthropomorphizing." marks an AI judgment moment, not just a vocabulary check.
+    explanation: `Writing assistants are best understood as pattern engines, not thinking partners. They can draft, rephrase, summarize, and tone-shift quickly, but they do not own goals, accountability, or factual responsibility.
 
-m1-writing-assistants-card mechanism depth: m1-writing-assistants-card practical meaning: writing assistants are concrete applications that demonstrate text generation capability without anthropomorphizing.
+Update your workflow by separating drafting from approving. Let the AI generate options first, then run a human pass for facts, audience fit, compliance constraints, and voice consistency before anything is sent.
 
-m1-writing-assistants-card next action: map "Writing assistants are concrete applications that demonstrate text generation capability without anthropomorphizing." to a small AI pilot, then compare benefit, effort, and failure risk.`,
+Create a repeatable prompt template with context, audience, and quality criteria, then keep an edit checklist beside it. Over time you will reduce revision cycles while maintaining control over accuracy and intent.`,
   },
 
   "m1-image-generation-card": {
     id: "m1-image-generation-card",
     question: "I'm confused about this part: 'Image generation uses the same underlying principle as text generation: predicting patterns learned from training data, applied to a new modality.' Could you unpack this in plain language and include one real-world example? (Focus: m1-image-generation-card)",
-    explanation: `m1-image-generation-card core reading: Within AI workflows, "Image generation uses the same underlying principle as text generation: predicting patterns learned from training data, applied to a new modality." means reasoning quality matters as much as output speed.
+    explanation: `Image models and text models both learn statistical patterns from large datasets and generate likely outputs from your prompt. The format changes from words to pixels, but the core behavior is still prediction rather than understanding.
 
-m1-image-generation-card risk depth: m1-image-generation-card execution view: Reasoning behind the point: image generation uses the same underlying principle as text generation: predicting patterns learned from training data, applied to a new modality.
+In a real workflow, think of generated images as fast concept drafts. For example, a marketing team can explore ad directions quickly, then pass selected outputs through brand, legal, and authenticity checks before public use.
 
-m1-image-generation-card next action: use "Image generation uses the same underlying principle as text generation: predicting patterns learned from training data, applied to a new modality." to set review gates so AI drafts and final decisions stay separated.`,
+Improve quality by iterating prompts in layers: subject, composition, style, then constraints. Keep a review rubric for factual accuracy, visual consistency, and policy risk so selection stays systematic instead of taste-only.`,
   },
 
   "m1-productivity-card": {
     id: "m1-productivity-card",
     question: "I'm confused about this part: 'AI's immediate value is augmentation, not replacement. Programmers using Copilot don't become obsolete; they become more productive.' What is the core idea here, and how would you teach it to a beginner? (Focus: m1-productivity-card)",
-    explanation: `m1-productivity-card interpretation: In an AI context, "AI" asks for evidence-aware decision making.
+    explanation: `Augmentation means AI handles parts of the workflow so people can focus on judgment-heavy work. In coding, that often looks like faster scaffolding, quick refactors, and suggestion-based exploration while humans still own architecture and correctness.
 
-m1-productivity-card execution depth: m1-productivity-card decision context: Practical significance: aI's immediate value is augmentation, not replacement.
+Teach beginners to assign AI to bounded tasks with clear acceptance criteria. Ask for one function, one test, or one explanation at a time, then verify behavior before merging anything into production.
 
-m1-productivity-card next action: for "AI", document what evidence raises trust and what evidence lowers trust in AI.`,
+Track impact with simple metrics like cycle time, defect rate, and review effort. Productivity gains are real when speed rises without sacrificing reliability, security, or maintainability.`,
   },
 
   "m1-creative-work-card": {
     id: "m1-creative-work-card",
     question: "I'm confused about this part: 'Creative AI becomes less mysterious when you ask: which parts of creativity come from pattern recombination, and which depend on human intention?' Can you translate this into everyday language and show why it matters? (Focus: m1-creative-work-card)",
-    explanation: `m1-creative-work-card practical reading: "Creative AI becomes less mysterious when you ask: which parts of creativity come from pattern recombination, and which depend on human intention?" highlights where AI assistance needs boundaries and review.
+    explanation: `Creative AI is strongest at recombining patterns it has seen in training data, while humans provide direction, taste, and intent. That distinction helps you decide when to use the model for exploration and when to rely on human authorship.
 
-m1-creative-work-card quality depth: m1-creative-work-card model insight: Execution meaning: creative AI becomes less mysterious when you ask: which parts of creativity come from pattern recombination, and which depend on human intention?
+Run creative work in two passes. First, generate broad variations for themes, structures, or visual language; second, curate and reshape outputs based on audience, brand goals, and ethical boundaries.
 
-m1-creative-work-card next action: operationalize "Creative AI becomes less mysterious when you ask: which parts of creativity come from pattern recombination, and which depend on human intention?" by defining stop conditions when AI quality degrades.`,
+When evaluating ideas, ask whether the piece expresses your message or merely imitates familiar patterns. Keeping that filter in place preserves originality while still benefiting from AI speed during ideation.`,
   },
 };
 
@@ -1742,28 +1742,392 @@ const EXPLANATION_REGISTRY: Record<string, ComponentExplanation> = {
   ...COMPONENT_EXPLANATIONS,
 }
 
+type ExplanationIntent =
+  | "plain"
+  | "contrast"
+  | "checklist"
+  | "example"
+  | "coach"
+  | "brief"
+  | "decision"
+  | "default"
+
+type GeneratedExplanationContext =
+  | {
+      kind: "scenario" | "quick-check"
+      moduleTitle: string
+      moduleDescription: string
+      sectionTitle: string
+      sectionSummary: string
+    }
+  | {
+      kind: "course-quiz"
+      moduleTitle: string
+      moduleDescription: string
+    }
+
+function normalizeWhitespace(value: string) {
+  return value.replace(/\s+/g, " ").trim()
+}
+
+function normalizeSentence(value: string) {
+  const compact = normalizeWhitespace(value).replace(/^["'`\s]+|["'`\s]+$/g, "")
+
+  if (!compact) {
+    return ""
+  }
+
+  return /[.!?]$/.test(compact) ? compact : `${compact}.`
+}
+
+function hashString(value: string) {
+  let hash = 0
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0
+  }
+
+  return hash
+}
+
+function pickVariant<T>(key: string, options: T[]) {
+  return options[hashString(key) % options.length]
+}
+
+function stripModulePrefix(value: string) {
+  return value.replace(/^Module\s+\d+:\s*/i, "").trim()
+}
+
+function inferIntent(question: string): ExplanationIntent {
+  const lowerQuestion = question.toLowerCase()
+
+  if (/good vs bad|contrast a good vs bad|contrast a good vs/i.test(lowerQuestion)) {
+    return "contrast"
+  }
+
+  if (/checklist|simple steps|use it correctly|practical checklist/i.test(lowerQuestion)) {
+    return "checklist"
+  }
+
+  if (/real-world example|concrete scenario|actionable example|analogy/i.test(lowerQuestion)) {
+    return "example"
+  }
+
+  if (/coaching a teammate|coach a teammate/i.test(lowerQuestion)) {
+    return "coach"
+  }
+
+  if (/30 seconds|quick rule/i.test(lowerQuestion)) {
+    return "brief"
+  }
+
+  if (/mistake it helps avoid|important decision it affects|imply for real decisions|changes in my workflow/i.test(lowerQuestion)) {
+    return "decision"
+  }
+
+  if (/plain language|everyday language|without jargon|simplify|translate|teach it to a beginner|zero ai background/i.test(lowerQuestion)) {
+    return "plain"
+  }
+
+  return "default"
+}
+
+function extractFocusText(question: string, explanation: string) {
+  const quotedFromExplanation = explanation.match(/"([^"]{18,})"/)
+  if (quotedFromExplanation?.[1]) {
+    return normalizeSentence(quotedFromExplanation[1])
+  }
+
+  const generatedTitleMatch = question.match(/for '([^']+)'/i)
+  if (generatedTitleMatch?.[1]) {
+    return normalizeSentence(generatedTitleMatch[1])
+  }
+
+  const trimmedQuestion = question
+    .replace(/\s*\(Focus:\s*[^)]+\)\s*$/i, "")
+    .replace(/^I'm\s+confused\s+about\s+this\s+part:\s*/i, "")
+    .replace(/^I'm\s+not\s+sure\s+how\s+to\s+reason\s+through\s+/i, "")
+
+  const questionCore = trimmedQuestion.split("?")[0] ?? trimmedQuestion
+  return normalizeSentence(questionCore)
+}
+
+function explainClaimMechanism(claim: string) {
+  const lowerClaim = claim.toLowerCase()
+
+  if (lowerClaim.includes(" because ")) {
+    const [beforeBecause, ...afterBecauseParts] = claim.split(/\bbecause\b/i)
+    const before = normalizeSentence(beforeBecause)
+    const after = normalizeSentence(afterBecauseParts.join(" because "))
+    return `${before.replace(/[.!?]$/, "")}. The reason attached to it is ${after.charAt(0).toLowerCase()}${after.slice(1)}`
+  }
+
+  if (lowerClaim.includes(" rather than ")) {
+    return "The contrast matters because the point is to choose the stronger framing instead of sliding back into the weaker one."
+  }
+
+  if (claim.includes(":")) {
+    return "The list inside the statement is there to separate the moving parts, not to give you more jargon to memorize."
+  }
+
+  if (lowerClaim.includes(" not ")) {
+    return "The negative phrasing is doing real work here: it is redirecting you away from a common but shallow interpretation."
+  }
+
+  if (claim.includes(",")) {
+    return "The examples bundled into the sentence are meant to show the same idea appearing across multiple contexts, not as an isolated case."
+  }
+
+  return "Treat it as a practical judgment rule that should change how you classify, compare, or review AI work."
+}
+
+function buildTopicConsequence(claim: string, entryId: string) {
+  const lower = `${entryId} ${claim}`.toLowerCase()
+
+  if (/(models|tools|automations|agents)/.test(lower)) {
+    return "Different categories create different expectations around cost, control, tool access, and human review, so lumping them together leads to bad buying and rollout decisions."
+  }
+
+  if (/(prompt|language model|llm|chatgpt|token)/.test(lower)) {
+    return "Small changes to context, constraints, and examples can change output quality a lot, which means prompt design is part of the operating process rather than a cosmetic extra."
+  }
+
+  if (/(data|training|label|feature|pipeline)/.test(lower)) {
+    return "Upstream data choices shape downstream behavior long before a model output appears, so teams need to inspect inputs instead of blaming the interface alone."
+  }
+
+  if (/(bias|privacy|risk|ethic|safety|governance|misinformation)/.test(lower)) {
+    return "The operational consequence is that AI can create harm at scale unless review, access control, and escalation paths are built in early."
+  }
+
+  if (/(roi|metric|impact|value|adoption|budget|cost)/.test(lower)) {
+    return "Without a business-facing view of value, teams end up rewarding visible activity instead of measurable improvement."
+  }
+
+  if (/(agent|automation|workflow|autonomy)/.test(lower)) {
+    return "Autonomy and workflow design change failure modes, monitoring needs, and who has to approve the next step."
+  }
+
+  if (/(partner|vendor|proposal|pricing|tool|provider|stack)/.test(lower)) {
+    return "The practical effect shows up in procurement and operations: fit, ownership, and integration quality matter more than surface polish."
+  }
+
+  return "In practice, the payoff is better judgment: clearer framing leads to better decisions about where AI helps, where it misleads, and where a person must stay accountable."
+}
+
+function buildAppliedParagraph(intent: ExplanationIntent, claim: string, entryId: string) {
+  const lower = `${entryId} ${claim}`.toLowerCase()
+
+  if (intent === "contrast") {
+    return "A strong answer keeps the trade-off explicit and shows what you would prefer instead. A weak answer repeats the words but never says what decision changes because of them."
+  }
+
+  if (intent === "checklist") {
+    return "A reliable way to use it is to name the claim, identify the operational trade-off, and then ask what evidence would make you revise your first answer before acting on it."
+  }
+
+  if (intent === "example") {
+    if (/(models|tools|automations|agents)/.test(lower)) {
+      return "A concrete example is comparing a chatbot model, a customer-support tool built on top of that model, a ticket-routing automation, and an agent that can decide which actions to take next. They may all look like 'AI,' but they demand different oversight and create different risks."
+    }
+
+    if (/(data|training|label|feature|pipeline)/.test(lower)) {
+      return "A practical example is a hiring or fraud system: if the training data is skewed or messy, the model learns that skew no matter how polished the interface looks later."
+    }
+
+    if (/(bias|privacy|risk|ethic|safety|governance|misinformation)/.test(lower)) {
+      return "A real-world example is an AI assistant summarizing sensitive customer data. The useful part is speed, but the real decision is whether the workflow has the permissions, review steps, and logging needed to make that safe."
+    }
+
+    return "A simple example is using AI to draft first-pass work and then reviewing it against a domain-specific standard. The value appears when the draft speeds you up without being mistaken for final judgment."
+  }
+
+  if (intent === "coach") {
+    return "If you were coaching a teammate, the key move would be to restate the claim in plain language, connect it to one decision they already make, and then show what kind of mistake the section is trying to prevent."
+  }
+
+  if (intent === "brief") {
+    return "The short version is: use the statement as a filter for better choices. If it does not change classification, oversight, cost, or risk, you probably have not extracted the real lesson yet."
+  }
+
+  if (intent === "decision") {
+    return "The decision it usually changes is not whether AI exists, but how you scope it: what category it belongs to, what level of trust it deserves, and where a human needs to stay in the loop."
+  }
+
+  if (intent === "plain") {
+    return "When you explain it simply, the goal is to replace vague hype with a claim you could defend in a real meeting. If someone asked 'so what do we do differently now?', you should be able to answer that directly."
+  }
+
+  return "Use it by turning the statement into a decision rule: identify the claim, connect it to a real workflow, and check what evidence would increase or decrease your confidence before you move on."
+}
+
+function buildManualExplanation(entry: ComponentExplanation) {
+  const claim = extractFocusText(entry.question, entry.explanation)
+  const intent = inferIntent(entry.question)
+  const opening = pickVariant(`${entry.id}:opening`, [
+    `The central idea here is ${claim}`,
+    `What this is really telling you is ${claim}`,
+    `At bottom, this question is asking you to work with ${claim}`,
+    `The statement to focus on is ${claim}`,
+  ])
+  const followThrough = explainClaimMechanism(claim)
+  const consequence = pickVariant(`${entry.id}:consequence`, [
+    `In practice, ${buildTopicConsequence(claim, entry.id)}`,
+    `The practical consequence is straightforward: ${buildTopicConsequence(claim, entry.id).charAt(0).toLowerCase()}${buildTopicConsequence(claim, entry.id).slice(1)}`,
+    `${buildTopicConsequence(claim, entry.id)}`,
+  ])
+
+  return [
+    `${opening} ${followThrough}`,
+    consequence,
+    buildAppliedParagraph(intent, claim, entry.id),
+  ]
+    .map((paragraph) => normalizeSentence(paragraph))
+    .join("\n\n")
+}
+
+function resolveGeneratedContext(componentId: string): GeneratedExplanationContext | null {
+  const scenarioOrCheckMatch = componentId.match(/^(module-\d+)-(.+)-(scenario|quick-check)$/)
+  if (scenarioOrCheckMatch) {
+    const [, moduleId, sectionId, kind] = scenarioOrCheckMatch
+    const module = courseStructure.modules.find((candidate) => candidate.id === moduleId)
+    const section = module?.sections.find((candidate) => candidate.id === sectionId)
+
+    if (!module || !section) {
+      return null
+    }
+
+    return {
+      kind: kind as "scenario" | "quick-check",
+      moduleTitle: stripModulePrefix(module.title),
+      moduleDescription: normalizeSentence(module.description ?? module.title),
+      sectionTitle: section.title,
+      sectionSummary: normalizeSentence(section.summary ?? `${section.title} matters in ${module.title}.`),
+    }
+  }
+
+  const quizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
+  if (!quizMatch) {
+    return null
+  }
+
+  const module = courseStructure.modules.find((candidate) => candidate.id === quizMatch[1])
+  if (!module) {
+    return null
+  }
+
+  return {
+    kind: "course-quiz",
+    moduleTitle: stripModulePrefix(module.title),
+    moduleDescription: normalizeSentence(module.description ?? module.title),
+  }
+}
+
+function buildGeneratedExplanation(componentId: string, context: GeneratedExplanationContext) {
+  if (context.kind === "scenario") {
+    const opening = pickVariant(`${componentId}:scenario:opening`, [
+      `${context.sectionTitle} is meant to leave you with a working explanation, not just recognition of a phrase. ${context.sectionSummary}`,
+      `This scenario is checking whether you can explain ${context.sectionTitle} in your own words. ${context.sectionSummary}`,
+      `The point of ${context.sectionTitle} is applied understanding. ${context.sectionSummary}`,
+    ])
+    const middle = pickVariant(`${componentId}:scenario:middle`, [
+      `What matters in ${context.moduleTitle} is whether you can connect that idea to a real choice, trade-off, or operating habit instead of repeating the headline back.`,
+      `Inside ${context.moduleTitle}, the goal is to turn the section's idea into judgment: you should be able to say what it changes in practice and why that change matters.`,
+      `The section only counts as learned when you can explain what the idea means for a real workflow, tool decision, or review habit in ${context.moduleTitle}.`,
+    ])
+    const closing = pickVariant(`${componentId}:scenario:closing`, [
+      `A strong response names the concept, gives one concrete example, and adds one limit or condition that would make you revise the explanation.`,
+      `If you can restate the idea, tie it to a practical example, and mention where it stops being true, you have answered the card the right way.`,
+      `The useful standard here is simple: explain the idea plainly, show where it applies, and note one boundary that keeps you from overstating it.`,
+    ])
+
+    return [opening, middle, closing].map((paragraph) => normalizeSentence(paragraph)).join("\n\n")
+  }
+
+  if (context.kind === "quick-check") {
+    const opening = pickVariant(`${componentId}:quick-check:opening`, [
+      `This quick check is testing your reasoning about ${context.sectionTitle}, not your ability to echo a definition. ${context.sectionSummary}`,
+      `The concept under test is ${context.sectionTitle}. The question is asking whether you can use the section's logic instead of guessing from surface wording.`,
+      `${context.sectionTitle} appears here as a reasoning checkpoint. ${context.sectionSummary}`,
+      `Start with the logic behind ${context.sectionTitle}. This prompt is checking whether you can explain the section's reasoning, not whether you remember a phrase.`,
+      `The fastest way into this question is to ask what ${context.sectionTitle} is trying to prove. ${context.sectionSummary}`,
+    ])
+    const middle = pickVariant(`${componentId}:quick-check:middle`, [
+      `A good answer identifies the cause-and-effect logic inside the section and rules out options that sound plausible but break that logic.`,
+      `The check becomes easier when you ask what would have to be true for an option to fit the section and what evidence would make that option collapse.`,
+      `What the panel wants from you is causal reasoning: explain why the best answer follows from the section and why the weaker answers miss the key condition.`,
+      `Your job here is to trace the mechanism: what causes the outcome in the section, and which answer actually respects that chain instead of borrowing familiar words.`,
+      `The strongest way to reason through it is to separate signal from wording. The correct option should match the section's logic, not just its vocabulary.`,
+    ])
+    const closing = pickVariant(`${componentId}:quick-check:closing`, [
+      `If you can explain the concept, point to the mechanism behind it, and name what evidence would change your mind, you are using the idea the way the course intends.`,
+      `The strongest response is the one that states the principle, connects it to the section, and stays open to different evidence instead of treating the first instinct as final.`,
+      `Think of it as a short reasoning audit: name the principle, justify the option, and say what would make you reconsider.`,
+      `A useful self-check is whether you can defend the winning answer, reject a tempting wrong one, and say what new evidence would force you to revisit the call.`,
+      `Once you can name the principle, justify the option, and say what would falsify your answer, the card has done its job.`,
+    ])
+
+    return [opening, middle, closing].map((paragraph) => normalizeSentence(paragraph)).join("\n\n")
+  }
+
+  const opening = pickVariant(`${componentId}:quiz:opening`, [
+    `This module quiz is validating whether you can use the core judgment from ${context.moduleTitle} when the answer is not obvious. ${context.moduleDescription}`,
+    `The checkpoint for ${context.moduleTitle} is about applied judgment under ambiguity, not isolated recall. ${context.moduleDescription}`,
+    `${context.moduleTitle} ends with a quiz because the real test is whether you can transfer the module's reasoning into a less scripted decision.`,
+  ])
+  const middle = pickVariant(`${componentId}:quiz:middle`, [
+    `That means comparing claims by fit, evidence, and avoidable risk instead of picking the option that merely sounds the most sophisticated.`,
+    `The right answer is usually the one that best matches the module principle while staying honest about trade-offs, ownership, and downside.`,
+    `What separates a strong answer from a weak one here is evidence discipline: you need to distinguish real support from surface plausibility.`,
+  ])
+  const closing = pickVariant(`${componentId}:quiz:closing`, [
+    `A dependable way to approach it is to name the claim being tested, map it to the module principle, and reject options that ignore obvious constraints.`,
+    `Work through it by identifying the decision, matching it to the module's core idea, and discarding answers that create unnecessary risk or hand-wave the trade-offs.`,
+    `If you can explain why one option fits the module's logic better than the others, you are treating the quiz as a judgment checkpoint rather than a memory game.`,
+  ])
+
+  return [opening, middle, closing].map((paragraph) => normalizeSentence(paragraph)).join("\n\n")
+}
+
+function resolveExplanation(entry: ComponentExplanation): ComponentExplanation {
+  const generatedContext = resolveGeneratedContext(entry.id)
+  const explanation = generatedContext
+    ? buildGeneratedExplanation(entry.id, generatedContext)
+    : buildManualExplanation(entry)
+
+  return {
+    ...entry,
+    explanation,
+  }
+}
+
 
 /**
  * Get an explanation for a component by searching the mapping.
  */
 export function getComponentExplanation(componentId: string): ComponentExplanation | undefined {
-  return EXPLANATION_REGISTRY[componentId];
+  const explanation = EXPLANATION_REGISTRY[componentId]
+  return explanation ? resolveExplanation(explanation) : undefined
 }
 
 /**
  * Get all explanations for a specific module
  */
 export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
-  const prefix = `m${moduleNumber}-`;
-  return Object.values(EXPLANATION_REGISTRY).filter((exp) => exp.id.startsWith(prefix));
+  const prefix = `m${moduleNumber}-`
+  return Object.values(EXPLANATION_REGISTRY)
+    .filter((exp) => exp.id.startsWith(prefix))
+    .map(resolveExplanation)
 }
 
 /**
  * Search for explanations by keyword
  */
 export function searchExplanations(query: string): ComponentExplanation[] {
-  const lowerQuery = query.toLowerCase();
-  return Object.values(EXPLANATION_REGISTRY).filter((exp) => exp.question.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery));
+  const lowerQuery = query.toLowerCase()
+  return Object.values(EXPLANATION_REGISTRY)
+    .map(resolveExplanation)
+    .filter((exp) => exp.question.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery))
 }
 
 

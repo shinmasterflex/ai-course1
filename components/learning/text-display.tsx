@@ -461,6 +461,106 @@ function createSectionFalseStatement(sectionTitle: string, sectionSummary: strin
   return `${sectionTitle} is mostly background theory and does not materially change AI choices, workflow design, or risk management.`
 }
 
+function createSectionTitleTrueStatement(sectionTitle: string) {
+  const normalizedTitle = sectionTitle.trim().toLowerCase()
+
+  if (normalizedTitle.includes("models, tools, automations, and agents")) {
+    return "Distinguishing models, tools, automations, and agents leads to clearer AI evaluation and procurement decisions."
+  }
+
+  if (normalizedTitle.includes("metrics")) {
+    return `Choosing the right metrics in ${normalizedTitle} changes whether teams measure real value or vanity activity.`
+  }
+
+  if (normalizedTitle.includes("workflow")) {
+    return `Getting ${normalizedTitle} right helps teams choose a better operating model instead of adding avoidable complexity.`
+  }
+
+  if (normalizedTitle.includes("agent")) {
+    return `Understanding ${normalizedTitle} helps teams match autonomy to the actual task instead of overbuilding.`
+  }
+
+  if (normalizedTitle.includes("tool")) {
+    return `Understanding ${normalizedTitle} improves tool selection by making fit, trade-offs, and constraints more explicit.`
+  }
+
+  if (normalizedTitle.includes("risk") || normalizedTitle.includes("safety") || normalizedTitle.includes("privacy")) {
+    return `Working through ${normalizedTitle} helps teams make safer AI decisions before scaling usage.`
+  }
+
+  if (/^how to /i.test(sectionTitle)) {
+    return `A repeatable approach to ${normalizedTitle.replace(/^how to\s+/i, "")} improves AI judgment more than improvising each time.`
+  }
+
+  if (/^when /i.test(sectionTitle)) {
+    return `Knowing ${normalizedTitle} prevents teams from using the same AI approach in the wrong situations.`
+  }
+
+  if (/^what /i.test(sectionTitle)) {
+    return `Clarifying ${normalizedTitle} makes AI choices easier to explain and defend in practice.`
+  }
+
+  if (/^why /i.test(sectionTitle)) {
+    return `Understanding ${normalizedTitle} helps teams make stronger AI decisions with less confusion.`
+  }
+
+  if (/^a simple /i.test(sectionTitle)) {
+    return `${sectionTitle} is meant to make AI decisions more repeatable and usable, not more abstract.`
+  }
+
+  return `${sectionTitle} is meant to improve a practical AI decision, workflow choice, or rollout judgment.`
+}
+
+function createSectionTitleFalseStatement(sectionTitle: string) {
+  const normalizedTitle = sectionTitle.trim().toLowerCase()
+
+  if (normalizedTitle.includes("models, tools, automations, and agents")) {
+    return "You can treat models, tools, automations, and agents as interchangeable without hurting AI buying decisions."
+  }
+
+  if (normalizedTitle.includes("metrics")) {
+    return "Impressive-looking AI activity metrics are usually enough on their own to prove real improvement."
+  }
+
+  if (normalizedTitle.includes("workflow")) {
+    return `Workflow design matters less than adding more AI capability, so ${normalizedTitle} rarely changes outcomes.`
+  }
+
+  if (normalizedTitle.includes("agent")) {
+    return `The most autonomous agent setup is usually the best option, so ${normalizedTitle} does not need much analysis.`
+  }
+
+  if (normalizedTitle.includes("tool")) {
+    return `Tool choice is mostly obvious from popularity, so ${normalizedTitle} adds little practical value.`
+  }
+
+  if (normalizedTitle.includes("risk") || normalizedTitle.includes("safety") || normalizedTitle.includes("privacy")) {
+    return `Risk and safety checks can usually wait until after rollout, so ${normalizedTitle} is not critical early on.`
+  }
+
+  if (/^how to /i.test(sectionTitle)) {
+    return `There is no real need to learn ${normalizedTitle.replace(/^how to\s+/i, "")}; quick intuition is usually enough.`
+  }
+
+  if (/^when /i.test(sectionTitle)) {
+    return `Teams do not need to think hard about ${normalizedTitle}; the same AI approach usually works everywhere.`
+  }
+
+  if (/^what /i.test(sectionTitle)) {
+    return `${sectionTitle} is mostly definitional and rarely changes real AI choices or trade-offs.`
+  }
+
+  if (/^why /i.test(sectionTitle)) {
+    return `The reasons behind ${normalizedTitle} matter less than moving quickly with AI adoption.`
+  }
+
+  if (/^a simple /i.test(sectionTitle)) {
+    return `${sectionTitle} is mostly optional because ad-hoc judgment is usually sufficient for AI decisions.`
+  }
+
+  return `${sectionTitle} adds little practical value because AI decisions usually work out without this level of reasoning.`
+}
+
 function createSectionStatementBank(scopeKey: string): InferentialStatement[] | null {
   const { moduleId, sectionId } = getScopeContext(scopeKey)
 
@@ -479,8 +579,20 @@ function createSectionStatementBank(scopeKey: string): InferentialStatement[] | 
   const sectionSummary = toSentence(sectionData.summary?.trim() || `This section explains ${sectionTitle.toLowerCase()}`)
   const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
   const falseStatement = createSectionFalseStatement(sectionTitle, sectionSummary)
+  const titleTrueStatement = createSectionTitleTrueStatement(sectionTitle)
+  const titleFalseStatement = createSectionTitleFalseStatement(sectionTitle)
 
   return [
+    {
+      statement: titleTrueStatement,
+      explanation: `${sectionTitle} is included to sharpen applied decision-making, not just to add background reading.`,
+      isTrue: true,
+    },
+    {
+      statement: titleFalseStatement,
+      explanation: `The lesson treats ${sectionTitle} as decision-relevant, so reducing it to intuition or popularity goes against the section's purpose.`,
+      isTrue: false,
+    },
     {
       statement: sectionSummary,
       explanation: `This statement matches the stated goal of ${sectionTitle} in ${moduleTitle}.`,
@@ -489,16 +601,6 @@ function createSectionStatementBank(scopeKey: string): InferentialStatement[] | 
     {
       statement: falseStatement,
       explanation: `The section summary points in the opposite direction. ${sectionTitle} is meant to sharpen applied judgment, not bypass it.`,
-      isTrue: false,
-    },
-    {
-      statement: `This section uses ${sectionTitle.toLowerCase()} to improve a real AI decision, operating habit, or rollout choice.`,
-      explanation: `The section summary is written around an applied takeaway, not just passive background knowledge.`,
-      isTrue: true,
-    },
-    {
-      statement: `The guidance in ${sectionTitle} matters less than quick intuition when making AI decisions or workflow choices.`,
-      explanation: `This section exists to improve judgment with clearer reasoning, not to replace it with instinct alone.`,
       isTrue: false,
     },
   ]
