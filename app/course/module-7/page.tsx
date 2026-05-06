@@ -15,7 +15,7 @@ import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
+import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight, Zap, Target, Brain, PenTool } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -28,7 +28,7 @@ export default function Module7Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-7"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
   const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
@@ -47,7 +47,7 @@ export default function Module7Page() {
 
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
-    requiredSections: [4],
+    requiredSections: [4, 8],
   })
 
   const handleSectionComplete = () => {
@@ -464,8 +464,510 @@ export default function Module7Page() {
             </div>
           )}
 
-          {/* 5: Building AI Skills */}
+          {/* 5: Real-World Workflows */}
           {currentSectionIndex === 5 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Real-World Workflows: Before vs. After AI</h2>
+              <TextDisplay content="AI does not just save time - it transforms how work flows across your day. Here are concrete workflows with before/after comparisons." />
+              
+              <div className="space-y-5">
+                {[
+                  {
+                    role: "Marketing Manager",
+                    task: "Generating 5 social media posts per week + audience analysis",
+                    before: {
+                      time: "3-4 hours",
+                      process: [
+                        "Brainstorm post ideas based on gut feeling",
+                        "Write and edit each post manually",
+                        "Research competitor posts individually",
+                        "Manually check analytics across platforms"
+                      ]
+                    },
+                    after: {
+                      time: "45 minutes",
+                      process: [
+                        "Brief ChatGPT on brand voice and share top-performing post templates",
+                        "AI generates 10 variations; pick 5 best ones + edit in 2 minutes each",
+                        "Perplexity AI summarises competitor social trends in one query",
+                        "Copy-paste data into ChatGPT for instant performance summary + recommendations"
+                      ]
+                    },
+                    tools: ["ChatGPT or Claude", "Perplexity", "Native platform analytics"],
+                    savings: "~87% time reduction | Same or better quality | More data-driven"
+                  },
+                  {
+                    role: "Sales Development Representative",
+                    task: "Personalised outreach to 30 prospects per week",
+                    before: {
+                      time: "4-5 hours",
+                      process: [
+                        "Research each prospect manually on LinkedIn and company site",
+                        "Write 30 unique custom emails from memory",
+                        "Fact-check yourself and worry about mistakes",
+                        "Track responses in spreadsheet manually"
+                      ]
+                    },
+                    after: {
+                      time: "1 hour",
+                      process: [
+                        "Paste prospect list into AI tool; get instant company/industry context summaries",
+                        "AI drafts 30 templates using prospect context; you personalize each in 30 seconds",
+                        "AI flags risky claims and common errors before sending",
+                        "Automated follow-up sequences triggered on no-response"
+                      ]
+                    },
+                    tools: ["Clay or Hunter.io (enrichment)", "ChatGPT or email copy generators", "HubSpot or Outreach"],
+                    savings: "~80% time reduction | 3x more outreach | Higher reply rates"
+                  },
+                  {
+                    role: "Customer Support Agent",
+                    task: "Handling 50 customer emails per day",
+                    before: {
+                      time: "6-7 hours",
+                      process: [
+                        "Read each ticket from start to finish",
+                        "Search internal docs for relevant info",
+                        "Compose response from scratch",
+                        "Proofread and send"
+                      ]
+                    },
+                    after: {
+                      time: "2-3 hours",
+                      process: [
+                        "AI scans ticket and categorizes issue in seconds",
+                        "AI searches docs and suggests relevant knowledge articles",
+                        "AI drafts response based on templates + ticket context",
+                        "You review and personalize in 1 minute, then send"
+                      ]
+                    },
+                    tools: ["Zendesk Copilot or Help Scout", "Internal knowledge base", "ChatGPT"],
+                    savings: "~65% time reduction | More consistent tone | Better knowledge reuse"
+                  },
+                  {
+                    role: "Software Engineer",
+                    task: "Building new API endpoint with tests",
+                    before: {
+                      time: "2-3 hours",
+                      process: [
+                        "Design endpoint structure in your head",
+                        "Type code line by line",
+                        "Manually write test cases",
+                        "Debug through trial and error",
+                        "Review and refactor"
+                      ]
+                    },
+                    after: {
+                      time: "20-30 minutes",
+                      process: [
+                        "Describe the endpoint in plain English to Copilot",
+                        "AI generates 80% of the code scaffolding",
+                        "AI generates test cases automatically",
+                        "You review, fix edge cases, and add domain logic",
+                        "AI refactors for style and efficiency"
+                      ]
+                    },
+                    tools: ["GitHub Copilot", "Cursor IDE", "ChatGPT for architecture"],
+                    savings: "~85% time reduction | Fewer bugs | Code follows team patterns"
+                  },
+                ].map(({ role, task, before, after, tools, savings }) => (
+                  <Card key={role} className="p-5 space-y-4">
+                    <div>
+                      <h3 className="font-bold text-brand-orange mb-1">{role}</h3>
+                      <p className="text-sm text-muted-foreground">{task}</p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+                        <h4 className="text-sm font-bold text-red-700 dark:text-red-400 mb-2">Without AI</h4>
+                        <p className="text-xs font-semibold text-red-600 dark:text-red-400 mb-2">{before.time}</p>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          {before.process.map((p) => <li key={p} className="flex gap-1"><span className="flex-shrink-0">•</span>{p}</li>)}
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-brand-green/10 border border-brand-green/30 rounded-lg p-3">
+                        <h4 className="text-sm font-bold text-brand-green mb-2">With AI</h4>
+                        <p className="text-xs font-semibold text-brand-green mb-2">{after.time}</p>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          {after.process.map((p) => <li key={p} className="flex gap-1"><span className="flex-shrink-0">✓</span>{p}</li>)}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 items-start bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 p-3 rounded-lg">
+                      <Zap className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div className="text-xs">
+                        <p className="font-semibold text-blue-700 dark:text-blue-400 mb-1">Impact: {savings}</p>
+                        <p className="text-muted-foreground"><span className="font-medium text-foreground">Tools:</span> {tools.join(", ")}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <QuickCheckCard
+                prompt="What is the most common pattern across these workflows?"
+                options={[
+                  { id: "a", label: "AI completely replaces the worker" },
+                  { id: "b", label: "AI handles research and drafting; humans handle review and personalization" },
+                  { id: "c", label: "AI only works for technical roles" },
+                  { id: "d", label: "AI is equally useful for all tasks" },
+                ]}
+                correctOptionId="b"
+                explanation="The pattern: AI is best at generating options and handling repetitive analysis. Humans remain essential for judgment, context, and final decisions."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 6: AI Opportunities Framework */}
+          {currentSectionIndex === 6 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">AI Opportunities Framework</h2>
+              <TextDisplay content="Not all tasks are good candidates for AI. Here is a practical framework to identify which tasks in any job should be AI-assisted, automated, or left fully human." />
+              
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-orange flex items-center gap-2"><Target className="h-5 w-5" />The Task Analysis Matrix</h3>
+                <p className="text-sm text-muted-foreground mb-4">Use these three questions to evaluate any task:</p>
+                <div className="space-y-4">
+                  {[
+                    {
+                      q: "Is it repetitive?",
+                      yes: "Same structure, similar inputs  - ideal for AI",
+                      no: "One-off, unique every time  - probably not"
+                    },
+                    {
+                      q: "Is the output easy to evaluate?",
+                      yes: "Clear right/wrong, or you spot issues quickly  - good AI candidate",
+                      no: "Requires deep domain expertise to judge  - AI needs careful review"
+                    },
+                    {
+                      q: "Is data already available in digital form?",
+                      yes: "Structured info, docs, emails  - AI can work with it",
+                      no: "Information locked in heads or paper  - AI cannot help"
+                    },
+                  ].map(({ q, yes, no }) => (
+                    <div key={q} className="border-b pb-3 last:border-0">
+                      <p className="font-semibold text-sm mb-2">{q}</p>
+                      <div className="flex gap-3 text-xs">
+                        <div className="flex gap-1"><span className="text-brand-green font-bold">✓</span><span className="text-muted-foreground">{yes}</span></div>
+                        <div className="flex gap-1"><span className="text-red-500 font-bold">✗</span><span className="text-muted-foreground">{no}</span></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <div className="space-y-4">
+                <h3 className="font-semibold text-lg">Task Categories</h3>
+                {[
+                  {
+                    category: "Pure Automation",
+                    desc: "AI can do this end-to-end; human reviews for exceptions",
+                    examples: ["Data entry from forms", "Email categorization", "Report formatting", "Social media scheduling"],
+                    color: "bg-brand-green/5 border-brand-green/30"
+                  },
+                  {
+                    category: "Augmentation (Most Common)",
+                    desc: "AI handles heavy lifting; human adds judgment, personalization, and accountability",
+                    examples: ["AI drafts email; you customize", "AI suggests insights; you decide strategy", "AI finds candidates; you interview"],
+                    color: "bg-brand-orange/5 border-brand-orange/30"
+                  },
+                  {
+                    category: "Research & Acceleration",
+                    desc: "AI synthesises info; human interprets and acts",
+                    examples: ["Competitor research", "Industry trend summaries", "Legal precedent finding", "Market data synthesis"],
+                    color: "bg-blue-500/5 border-blue-500/30"
+                  },
+                  {
+                    category: "Keep Fully Human",
+                    desc: "AI not ready or inappropriate for this work",
+                    examples: ["Client relationship building", "Strategic decision-making", "Performance reviews", "Handling crises"],
+                    color: "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+                  },
+                ].map(({ category, desc, examples, color }) => (
+                  <Card key={category} className={`p-4 border ${color}`}>
+                    <div className="flex items-start gap-3">
+                      <Brain className="h-4 w-4 text-brand-orange flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <h4 className="font-bold text-sm mb-1">{category}</h4>
+                        <p className="text-xs text-muted-foreground mb-2">{desc}</p>
+                        <div className="flex flex-wrap gap-1">
+                          {examples.map((e) => <span key={e} className="text-xs bg-background/50 px-2 py-1 rounded">{e}</span>)}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><PenTool className="h-4 w-4" />Your Turn: Apply the Framework</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Pick one task</span> from your typical week that takes 2+ hours.</p>
+                  <p><span className="font-medium text-foreground">Ask three questions:</span> Is it repetitive? Is output easy to evaluate? Is data digital?</p>
+                  <p><span className="font-medium text-foreground">Classify it:</span> Pure automation, augmentation, research, or keep human?</p>
+                  <p><span className="font-medium text-foreground">Next step:</span> If automation or augmentation, spend 30 minutes testing with a tool. If not, move to next task.</p>
+                </div>
+              </Card>
+
+              <QuickCheckCard
+                prompt="A task is done once a quarter, requires judgment about which data matters, and data is locked in old PDF reports. Is it a good AI candidate?"
+                options={[
+                  { id: "a", label: "Yes - use AI immediately" },
+                  { id: "b", label: "No - fails the repetition, evaluation, and digital data tests" },
+                  { id: "c", label: "Maybe - try AI anyway and see" },
+                  { id: "d", label: "AI can extract from PDFs, so it definitely works" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. This task fails multiple framework tests: not repetitive, requires judgment, and data is not easily accessible. Better opportunities exist for AI."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 7: Role Transformation */}
+          {currentSectionIndex === 7 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">How AI is Changing Roles (Not Just Replacing Them)</h2>
+              <TextDisplay content="The narrative 'AI will replace jobs' misses the real story. AI is redefining what specific roles entail. Some jobs shrink. Others grow. Most change shape fundamentally." />
+              
+              <div className="space-y-4">
+                {[
+                  {
+                    role: "Software Developer",
+                    shift: "From 'writing all code' to 'architecting + reviewing + problem-solving'",
+                    impact: [
+                      "Boilerplate and routine code is AI-generated; developers focus on architecture and tricky algorithms",
+                      "Code review shifts from style/correctness to logic and edge cases",
+                      "New skill: prompt engineering for code  - telling AI exactly what you need",
+                      "Demand for developers rises (5-10% more code gets written per developer) but role itself changes"
+                    ],
+                    skills_gained: ["Prompt engineering", "Systems thinking", "AI tool mastery"],
+                    skills_less_critical: ["Manual syntax", "Routine debugging"]
+                  },
+                  {
+                    role: "Lawyer",
+                    shift: "From 'research + document review' to 'strategy + judgment + client relationship'",
+                    impact: [
+                      "AI handles contract review, legal research, due diligence at scale",
+                      "Associates no longer spend weeks on document review  - done in days",
+                      "Lawyer skill becomes: ask better questions, spot what AI missed, advise clients on risks",
+                      "Fewer junior associates hired to do rote work  - but experienced lawyers become more valuable for judgment"
+                    ],
+                    skills_gained: ["AI quality assessment", "Client communication", "Strategic thinking"],
+                    skills_less_critical: ["Legal research tooling", "Manual document review"]
+                  },
+                  {
+                    role: "Marketer",
+                    shift: "From 'content creation' to 'brand strategy + audience insight + optimization'",
+                    impact: [
+                      "Blog posts, social media, ad copy are AI-drafted; marketers focus on strategy and targeting",
+                      "Personalisation at scale  - every customer sees AI-optimised messaging",
+                      "Marketing productivity increases; campaigns launch 3-5x faster",
+                      "Skill gap: marketers who cannot use AI tools become less competitive"
+                    ],
+                    skills_gained: ["AI prompt craft", "Data analysis", "Audience psychology"],
+                    skills_less_critical: ["Copywriting speed", "Manual audience research"]
+                  },
+                  {
+                    role: "Radiologist",
+                    shift: "From 'image interpretation' to 'AI validation + complex cases + patient communication'",
+                    impact: [
+                      "AI reads and flags routine imaging (X-rays, simple CT scans) faster than humans",
+                      "Radiologists focus on complex cases, multi-modality interpretation, and unusual presentations",
+                      "Work becomes less rote, more interesting, but supply of routine radiology jobs shrinks",
+                      "Radiologists who work well with AI tools remain valuable; those who resist are replaced by AI+technician teams"
+                    ],
+                    skills_gained: ["AI tool trust and skepticism", "Complex diagnosis", "Research"],
+                    skills_less_critical: ["Routine case volume", "Speed on standard cases"]
+                  },
+                ].map(({ role, shift, impact, skills_gained, skills_less_critical }) => (
+                  <Card key={role} className="p-5 space-y-3">
+                    <div>
+                      <h3 className="font-bold text-brand-orange">{role}</h3>
+                      <p className="text-sm text-muted-foreground italic">{shift}</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <p className="font-semibold text-sm">What changes:</p>
+                      <ul className="text-sm space-y-1 text-muted-foreground">
+                        {impact.map((i) => <li key={i} className="flex gap-2"><span className="flex-shrink-0">→</span>{i}</li>)}
+                      </ul>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-2">
+                      <div className="bg-brand-green/5 p-3 rounded-lg">
+                        <p className="text-xs font-bold text-brand-green mb-1">↑ Skills to build</p>
+                        <ul className="text-xs space-y-0.5 text-muted-foreground">
+                          {skills_gained.map((s) => <li key={s}>• {s}</li>)}
+                        </ul>
+                      </div>
+                      <div className="bg-amber-100/30 p-3 rounded-lg">
+                        <p className="text-xs font-bold text-amber-700 mb-1">↓ Less critical</p>
+                        <ul className="text-xs space-y-0.5 text-muted-foreground">
+                          {skills_less_critical.map((s) => <li key={s}>• {s}</li>)}
+                        </ul>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="p-5 bg-gradient-to-br from-blue-50 to-brand-green/5 dark:from-blue-950/30 dark:to-brand-green/10">
+                <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">The Pattern</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Roles are not disappearing.</span> Roles are shifting toward judgment, strategy, and creativity  - the things humans do better than AI.</p>
+                  <p><span className="font-medium text-foreground">But rote work is disappearing.</span> If your job is 80% routine and 20% judgment, that will flip  - or the routine part becomes AI+lower-wage technician work.</p>
+                  <p><span className="font-medium text-foreground">Adaptability is the key skill.</span> People who learn AI tools quickly and apply them to their domain will thrive. People who resist will struggle.</p>
+                </div>
+              </Card>
+
+              <QuickCheckCard
+                prompt="Based on this section, what career bet are you making?"
+                options={[
+                  { id: "a", label: "Hide from AI and hope my job stays the same" },
+                  { id: "b", label: "Learn to work effectively with AI tools in my specific role" },
+                  { id: "c", label: "Wait for someone else to figure out AI and copy them" },
+                  { id: "d", label: "Blame my job loss on AI instead of adapting" },
+                ]}
+                correctOptionId="b"
+                explanation="Your role will change. Your choice is whether you shape that change by learning AI tools, or get left behind."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 8: Workflow Redesign Exercise */}
+          {currentSectionIndex === 8 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Hands-On: Redesign Your Workflow</h2>
+              <TextDisplay content="This is your practical capstone. You will audit a real workflow from your job, apply the AI opportunities framework, and design a new AI-enhanced version." />
+              
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-orange flex items-center gap-2"><Zap className="h-5 w-5" />The Exercise (takes 30 minutes)</h3>
+                <div className="space-y-4">
+                  {[
+                    {
+                      step: "Step 1: Pick a workflow (5 min)",
+                      action: "Choose a work process that takes 2-4 hours per week. Something you do regularly.",
+                      examples: ["Weekly status report", "Customer outreach emails", "Code review process", "Meeting prep", "Content writing"]
+                    },
+                    {
+                      step: "Step 2: Break it down (5 min)",
+                      action: "List 5-7 sub-tasks in order. E.g., 'research company' → 'draft email' → 'review for tone' → 'send'",
+                      examples: ["Document current steps exactly as they happen, not how they should happen"]
+                    },
+                    {
+                      step: "Step 3: Apply the framework (5 min)",
+                      action: "For each sub-task, ask: repetitive? Easy to evaluate? Digital data?",
+                      examples: ["Mark each task as: Pure automation, Augmentation, Research, or Keep Human"]
+                    },
+                    {
+                      step: "Step 4: Design the AI version (10 min)",
+                      action: "For automation/augmentation tasks, write down: What AI tool? What prompt? How does human review happen?",
+                      examples: ["'ChatGPT to draft email based on prospect research, I spend 1 min personalizing, then send'"]
+                    },
+                    {
+                      step: "Step 5: Estimate impact (5 min)",
+                      action: "How much time saved? What stays the same (quality, risk, human judgment)?",
+                      examples: ["'Original: 45 min. AI version: 10 min. Same quality. I keep final approval.'"]
+                    },
+                  ].map(({ step, action, examples }) => (
+                    <div key={step} className="border-l-2 border-brand-orange pl-4">
+                      <p className="font-bold text-sm text-brand-orange mb-1">{step}</p>
+                      <p className="text-sm text-muted-foreground mb-1">{action}</p>
+                      <div className="text-xs text-muted-foreground italic">
+                        {examples.map((e) => <div key={e}>→ {e}</div>)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-3">Example: Sales Outreach Workflow Redesign</h3>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Current (45 min/week):</p>
+                    <p className="text-muted-foreground">1. Research company (LinkedIn, website) → 2. Draft email → 3. Review grammar → 4. Check CRM for prior contact → 5. Send</p>
+                  </div>
+                  
+                  <div className="border-t pt-3">
+                    <p className="font-semibold text-foreground mb-1">Framework applied:</p>
+                    <ul className="space-y-1 text-xs text-muted-foreground">
+                      <li>1. Research: <span className="font-medium">Research & Acceleration</span> (AI can do fast)</li>
+                      <li>2. Draft: <span className="font-medium">Augmentation</span> (AI drafts, you personalize)</li>
+                      <li>3. Grammar: <span className="font-medium">Pure Automation</span> (AI checks automatically)</li>
+                      <li>4. CRM check: <span className="font-medium">Keep Human</span> (relationship context)</li>
+                      <li>5. Send: <span className="font-medium">Pure Automation</span> (tool sends when approved)</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border-t pt-3">
+                    <p className="font-semibold text-foreground mb-1">Redesigned (12 min/week):</p>
+                    <p className="text-muted-foreground text-xs">Paste prospect list into Clay → Enrichment gives company background → Copy into ChatGPT prompt "Write 50 personalised outreach emails for [context]" → AI generates drafts → You spend 30 sec personalizing top 5 → Spell-check auto-runs → Check CRM relationships manually for top 3 → Send from outreach tool</p>
+                  </div>
+                  
+                  <div className="bg-background p-2 rounded border border-blue-200 dark:border-blue-800">
+                    <p className="font-bold text-xs text-blue-700 dark:text-blue-400">Result: 73% faster. Same quality. More volume.</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-green/20">
+                <h3 className="font-bold text-brand-orange mb-3">Now your turn:</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Workflow name & current time:</span> (e.g., "Weekly newsletter: 120 min")</p>
+                  <p><span className="font-medium text-foreground">Current steps (5-7 tasks):</span></p>
+                  <p><span className="font-medium text-foreground">Framework classification:</span> (which are automation/augmentation/research/human?)</p>
+                  <p><span className="font-medium text-foreground">Redesigned workflow:</span> (which tools? how does AI fit? where do humans review?)</p>
+                  <p><span className="font-medium text-foreground">Time saved:</span> (estimate %)</p>
+                  <p><span className="font-medium text-foreground">Risk or quality impact?:</span> (stays same / improves / needs careful review)</p>
+                </div>
+              </Card>
+
+              <Card className="p-5 bg-gradient-to-br from-green-50 to-brand-green/10 dark:from-green-950/20 dark:to-brand-green/5 border border-brand-green/20">
+                <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />After this exercise, you have:</h3>
+                <ul className="text-sm space-y-1 text-muted-foreground">
+                  <li>✓ A concrete AI application you can implement this week</li>
+                  <li>✓ Experience with the AI opportunities framework</li>
+                  <li>✓ Proof of concept you can share with your team or manager</li>
+                  <li>✓ A practicalway to measure ROI</li>
+                </ul>
+              </Card>
+
+              <QuickCheckCard
+                prompt="What makes a workflow redesign successful?"
+                options={[
+                  { id: "a", label: "Using the most advanced AI tool available" },
+                  { id: "b", label: "Replacing human judgment entirely" },
+                  { id: "c", label: "Keeping humans in charge while AI handles heavy lifting, with measurable time savings" },
+                  { id: "d", label: "Redesigning every workflow at once" },
+                ]}
+                correctOptionId="c"
+                explanation="Success: measurable time/effort saved, humans retain judgment and accountability, clear ROI, low risk of error."
+                onAnswered={() => {
+                  markSectionInteractionComplete(8)
+                }}
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the workflow redesign exercise to unlock the next section.</p> : null}
+
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 9: Building AI Skills */}
+          {currentSectionIndex === 9 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Building Your AI Skills</h2>
               <TextDisplay content="AI fluency is a competitive advantage right now  - and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
@@ -523,11 +1025,11 @@ export default function Module7Page() {
             </div>
           )}
 
-          {/* 6: Module Quiz */}
-          {currentSectionIndex === 6 && (
+          {/* 10: Module Quiz */}
+          {currentSectionIndex === 10 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <TextDisplay content="Three questions to lock in what you have learned. All three must be answered to complete the module." />
+              <TextDisplay content="Six questions to lock in what you have learned. All six must be answered to complete the module." />
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">

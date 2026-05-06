@@ -15,6 +15,7 @@ import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2 } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -35,6 +36,7 @@ export default function Module3Page() {
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "exercise"])
   const questions = moduleQuizData[MODULE_ID]
+  const [challengePrompt, setChallengePrompt] = useState("")
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -51,6 +53,28 @@ export default function Module3Page() {
       if (last) { markSectionComplete(MODULE_ID, last.id); setCurrentPosition(MODULE_ID, last.id) }
     }
   }, [allQuizComplete])
+
+  const challengeEvaluation = useMemo(() => {
+    const normalized = challengePrompt.trim().toLowerCase()
+    const hasRole = /\byou are\b|\bact as\b|\bas a\b/.test(normalized)
+    const hasContext = /\bcontext\b|\bi run\b|\bi am\b|\baudience\b|\bsituation\b|\bmy business\b/.test(normalized)
+    const hasTask = /\bcreate\b|\bdraft\b|\bpropose\b|\bgenerate\b|\bwrite\b|\banalyze\b|\bsummarize\b|\bsummarise\b/.test(normalized)
+    const hasConstraints = /\bunder\b|\bmax\b|\bmust\b|\bexactly\b|\blimit\b|\bdo not\b|\bno\b|\bat least\b/.test(normalized)
+    const hasExamples = /\bexample\b|\bfor example\b|\bstyle\b|\buse this format\b/.test(normalized)
+    const hasAdvanced = /\bstep by step\b|\bchain[- ]of[- ]thought\b|\bfew[- ]shot\b|\bthink step by step\b/.test(normalized)
+
+    const checklist = [
+      { id: "role", label: "Role", pass: hasRole },
+      { id: "context", label: "Context", pass: hasContext },
+      { id: "task", label: "Task", pass: hasTask },
+      { id: "constraints", label: "Constraints", pass: hasConstraints },
+      { id: "examples", label: "Examples", pass: hasExamples },
+      { id: "advanced", label: "Advanced technique", pass: hasAdvanced },
+    ]
+
+    const score = checklist.filter((item) => item.pass).length
+    return { checklist, score, hasInput: normalized.length > 0 }
+  }, [challengePrompt])
 
   const handleSectionComplete = () => {
     const current = sections[currentSectionIndex]
@@ -116,6 +140,14 @@ export default function Module3Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">What Is a Language Model?</h2>
               <TextDisplay content="A Large Language Model (LLM) is an AI trained on massive amounts of text to understand and generate human language. But to use these tools effectively - and to avoid being misled by them - you need to understand something about how they work internally." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Core mental model: a next-word prediction engine</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p>An LLM&apos;s core job is simple: given all text so far, predict the next most likely token. It does this again and again, one token at a time, until it produces a full response.</p>
+                  <p><span className="font-medium text-foreground">Analogy 1 - autocomplete on steroids:</span> your phone predicts one next word from a tiny history. An LLM predicts from a massive context window using patterns learned from internet-scale text.</p>
+                  <p><span className="font-medium text-foreground">Analogy 2 - librarian with pattern memory:</span> imagine a librarian who has read millions of books and can continue any paragraph in a plausible style, but does not inherently verify facts unless you ask for verification steps.</p>
+                </div>
+              </Card>
               <TextDisplay variant="callout" content="The word 'large' refers to the number of parameters (adjustable values) in the model - modern LLMs have hundreds of billions. The more parameters, the more nuance and complexity the model can capture." />
 
               <Card className="p-5">
@@ -368,13 +400,14 @@ export default function Module3Page() {
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">The Anatomy of a Prompt</h2>
-              <TextDisplay content="A prompt is the message you send to an AI. The quality of your prompt directly determines the quality of the response. A good prompt has four parts:" />
+              <TextDisplay content="A prompt is the message you send to an AI. The quality of your prompt directly determines the quality of the response. A high-quality prompt usually has five parts:" />
               <div className="space-y-3">
                 {[
-                  { part: "Role", example: "You are an expert nutritionist...", why: "Telling the AI what role to play dramatically improves the relevance of its response." },
-                  { part: "Context", example: "...I am a 35-year-old who runs 5km three times a week...", why: "The more context you provide, the more tailored the answer." },
-                  { part: "Task", example: "...Create a 7-day meal plan...", why: "Be specific about exactly what you want. Vague tasks get vague answers." },
-                  { part: "Format", example: "...Present it as a table with breakfast, lunch, and dinner columns.", why: "Specify how you want the output structured: list, table, paragraph, code, etc." },
+                  { part: "Role", example: "You are an expert nutrition coach...", why: "Role prompting activates the right perspective, tone, and standards." },
+                  { part: "Context", example: "I am a busy parent with 20 minutes for dinner prep...", why: "Context makes outputs tailored instead of generic." },
+                  { part: "Task", example: "Create a 7-day dinner plan...", why: "Specific tasks produce specific outputs." },
+                  { part: "Constraints", example: "Each meal under 600 calories, no shellfish, max 20 minutes...", why: "Constraints prevent unusable answers and reduce ambiguity." },
+                  { part: "Examples", example: "Here is the style I want: 'Mon: Chicken stir-fry (15 min)'...", why: "Examples calibrate style, depth, and format quickly." },
                 ].map(({ part, example, why }) => (
                   <Card key={part} className="p-4">
                     <div className="flex gap-3">
@@ -390,7 +423,7 @@ export default function Module3Page() {
               <Card className="p-4 bg-brand-green/5 border-brand-green/20">
                 <h3 className="font-semibold mb-2 text-brand-green">Full example prompt</h3>
                 <p className="text-sm font-mono bg-white p-3 rounded border italic text-gray-700">
-                  You are an expert nutritionist. I am a 35-year-old who runs 5km three times a week and wants to lose 5kg. Create a 7-day meal plan for me. Present it as a table with breakfast, lunch, and dinner columns. Keep each meal simple and under 10 minutes to prepare.
+                  You are an expert nutrition coach. I am a 35-year-old who runs 5km three times a week and wants to lose 5kg. Create a 7-day meal plan. Constraints: no shellfish, each meal under 10 minutes to prepare, and keep each day near 1,900 calories. Use this style example: &ldquo;Monday - Breakfast: Greek yogurt + berries.&rdquo; Return the result as a table with breakfast, lunch, dinner, and estimated calories.
                 </p>
               </Card>
               <div>
@@ -414,23 +447,28 @@ export default function Module3Page() {
                       answer: "A clear task tells the model exactly what success looks like, which improves relevance and reduces drift.",
                     },
                     {
-                      title: "Format",
-                      prompt: "Why specify the output format?",
-                      answer: "Format instructions turn a decent answer into a usable one by shaping the structure you actually need, like bullets, tables, or steps.",
+                      title: "Constraints",
+                      prompt: "Why define boundaries and limits?",
+                      answer: "Constraints block common failure modes like rambling, missing requirements, or invented assumptions.",
+                    },
+                    {
+                      title: "Examples",
+                      prompt: "Why include examples in prompts?",
+                      answer: "Examples are one of the fastest ways to align style and quality. The model imitates the pattern you demonstrate.",
                     },
                   ]}
                 />
               </div>
               <QuickCheckCard
-                prompt="If a prompt says 'Write a meal plan' but gives no audience, constraints, or output structure, what is it mainly missing?"
+                prompt="If a prompt says 'Write a meal plan' but gives no audience, constraints, or examples, what is it mainly missing?"
                 options={[
-                  { id: "a", label: "Mostly context and format" },
+                  { id: "a", label: "Mostly context, constraints, and examples" },
                   { id: "b", label: "Only spelling corrections" },
                   { id: "c", label: "A model update" },
                   { id: "d", label: "Internet access" },
                 ]}
                 correctOptionId="a"
-                explanation="The prompt is under-specified. Adding context and a target format usually makes the response much more useful and tailored."
+                explanation="The prompt is under-specified. Adding context, constraints, and examples usually makes the response far more useful and reliable."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
@@ -440,55 +478,60 @@ export default function Module3Page() {
           {/* 4: Prompt Techniques */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Effective Prompting Techniques</h2>
-              <TextDisplay content="Beyond the basic anatomy, here are four powerful techniques to get dramatically better results:" />
+              <h2 className="text-3xl font-bold text-brand-green">Prompting Progression: Basic to Advanced</h2>
+              <TextDisplay content="Great prompting is a skill ladder. Start simple, then add structure, then use advanced techniques when needed." />
               <div className="space-y-4">
                 {[
                   {
-                    technique: "Chain-of-Thought Prompting",
-                    how: "Ask the AI to think step by step before giving you an answer.",
-                    example: "Solve this problem step by step: A train leaves Chicago at 9am going 60mph...",
-                    why: "Forces the model to reason through the problem instead of guessing. Dramatically improves accuracy on logic and math problems.",
+                    level: "Level 1: Basic prompting",
+                    technique: "Clear task + plain language",
+                    how: "State exactly what you want in one sentence.",
+                    example: "Summarise this article in 3 bullet points.",
+                    why: "Good for fast low-stakes tasks and first drafts.",
                   },
                   {
-                    technique: "Few-Shot Prompting",
-                    how: "Give the AI 2-3 examples of what you want before asking it to do the task.",
-                    example: "Convert these sentences to formal English. Example: 'gonna' -> 'going to'. Example: 'wanna' -> 'want to'. Now convert: 'kinda'",
-                    why: "Examples calibrate exactly what format, style, and depth you expect. Works extremely well for formatting and style tasks.",
+                    level: "Level 2: Structured prompting",
+                    technique: "Role + context + constraints + format",
+                    how: "Use prompt anatomy to make outputs reliable and reusable.",
+                    example: "You are a product analyst. Summarise this article for a leadership audience in 3 bullets plus 1 risk, each under 20 words.",
+                    why: "Reduces ambiguity and improves consistency across outputs.",
                   },
                   {
-                    technique: "Iterative Refinement",
-                    how: "Start with a basic request, then follow up with specific improvements.",
-                    example: "First: 'Write a short email declining a meeting.' Then: 'Make it warmer and suggest a future date.' Then: 'Make the opening stronger.'",
-                    why: "Treats AI like a collaborator. Often yields much better results than trying to nail the perfect prompt on the first try.",
+                    level: "Level 3: Advanced prompting",
+                    technique: "Role prompting + chain-of-thought + few-shot",
+                    how: "Assign a specialist role, request explicit reasoning, and show examples when precision matters.",
+                    example: "You are a senior data scientist. Think step by step before giving your final recommendation. Use the two examples below to match style.",
+                    why: "Improves performance on complex reasoning, analysis, and high-value workflows.",
                   },
-                  {
-                    technique: "Constraint Setting",
-                    how: "Tell the AI what NOT to do, and set explicit limits.",
-                    example: "Summarise this article in 3 bullet points. Do not use jargon. Do not exceed 50 words per bullet.",
-                    why: "AI responds well to negative constraints. Explicit limits prevent rambling, off-topic content, or overly complex outputs.",
-                  },
-                  {
-                    technique: "Meta-Prompting",
-                    how: "Ask the AI to critique and improve its own output - or to help you write a better prompt.",
-                    example: "Here is my prompt: [paste your prompt]. What is wrong with it? Rewrite it to get a better result. Then use the improved version.",
-                    why: "AI can often identify what is missing or unclear in a prompt better than you can. Using AI to improve your AI prompts is one of the highest-leverage habits you can develop.",
-                  },
-                  {
-                    technique: "Structured Output Prompting",
-                    how: "Explicitly request a specific output format - JSON, markdown table, numbered list, bullet points with headers.",
-                    example: "Return your answer as a JSON object with keys: 'recommendation', 'reasoning', and 'confidence_score' (0?10).",
-                    why: "When AI output feeds into another system, a spreadsheet, or a template, having a predictable structure saves enormous time. Naming the exact format you want all but guarantees you get it.",
-                  },
-                ].map(({ technique, how, example, why }) => (
-                  <Card key={technique} className="p-5">
-                    <h3 className="font-bold text-brand-orange mb-2">{technique}</h3>
+                ].map(({ level, technique, how, example, why }) => (
+                  <Card key={level} className="p-5">
+                    <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-2">{level}</p>
+                    <h3 className="font-bold text-brand-green mb-2">{technique}</h3>
                     <p className="text-sm mb-2"><span className="font-medium">How:</span> {how}</p>
                     <p className="text-sm font-mono bg-gray-50 p-2 rounded mb-2 italic text-gray-700">{example}</p>
                     <p className="text-sm text-muted-foreground"><span className="font-medium">Why it works:</span> {why}</p>
                   </Card>
                 ))}
               </div>
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-orange/20">
+                <h3 className="font-semibold mb-4 text-brand-orange">Before vs after: same task, better prompt, better output</h3>
+                <div className="space-y-4 text-sm">
+                  <div className="border rounded-lg p-3 bg-background">
+                    <p className="font-semibold text-brand-orange mb-2">Example A: Summarising for executives</p>
+                    <p className="text-xs font-mono text-muted-foreground mb-2">Before prompt: &ldquo;Summarise this report.&rdquo;</p>
+                    <p className="text-xs text-muted-foreground mb-2">Typical output: long generic summary with no priorities.</p>
+                    <p className="text-xs font-mono text-muted-foreground mb-2">After prompt: &ldquo;You are a strategy analyst. Summarise this report for execs in 4 bullets: key finding, business impact, risk, recommended action. Max 18 words per bullet.&rdquo;</p>
+                    <p className="text-xs text-muted-foreground">Improved output: concise, decision-ready bullets with action and risk clearly separated.</p>
+                  </div>
+                  <div className="border rounded-lg p-3 bg-background">
+                    <p className="font-semibold text-brand-orange mb-2">Example B: Coding help</p>
+                    <p className="text-xs font-mono text-muted-foreground mb-2">Before prompt: &ldquo;Fix this code.&rdquo;</p>
+                    <p className="text-xs text-muted-foreground mb-2">Typical output: partial guess, missing root cause explanation.</p>
+                    <p className="text-xs font-mono text-muted-foreground mb-2">After prompt: &ldquo;Act as a senior TypeScript engineer. Debug this function. First explain root cause in one paragraph, then provide a patched version, then list 3 regression tests.&rdquo;</p>
+                    <p className="text-xs text-muted-foreground">Improved output: diagnosis + corrected code + validation plan in one response.</p>
+                  </div>
+                </div>
+              </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Spot the better prompt</h3>
                 <p className="text-sm text-muted-foreground mb-3">You want AI to help plan a team offsite. Which prompt will get the best result?</p>
@@ -559,7 +602,7 @@ export default function Module3Page() {
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Hands-On Practice</h2>
-              <TextDisplay content="Now it is your turn. For each scenario below, write a high-quality prompt using what you have learned." />
+              <TextDisplay content="Now it is your turn. For each scenario below, write a high-quality prompt using role, context, task, constraints, and examples where helpful." />
               <TextDisplay variant="callout" content="There are no wrong answers here - the goal is to practice the habit of thinking carefully about role, context, task, and format before you type your prompt." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Beginner adoption framework</h3>
@@ -593,24 +636,34 @@ export default function Module3Page() {
               <div className="space-y-4">
                 {[
                   {
-                    title: "Scenario 1: Draft a clearer client update",
+                    title: "Scenario 1: Writing - draft a clearer client update",
                     situation: "You have rough notes from a project call and need to send a concise update email to a client by the end of the day.",
                     weakPrompt: "Write an email to my client.",
                     strongPrompt: "You are a project manager. Draft a professional client update email based on the notes below. Audience: a busy client stakeholder. Goals: be clear, calm, and specific. Include 1) progress made, 2) risks or blockers, and 3) next steps by Friday. Keep it under 180 words. Notes: [paste notes].",
+                    outputShift: "Output improves from generic text to a ready-to-send update with clear structure and next steps.",
                   },
                   {
-                    title: "Scenario 2: Summarise a long article for your team",
+                    title: "Scenario 2: Summarizing - extract decision-ready takeaways",
                     situation: "You found a long industry article and want to post only the key takeaways in Slack so teammates can scan it quickly.",
                     weakPrompt: "Summarise this article.",
                     strongPrompt: "You are an analyst writing for a busy internal team. Summarise the article below in exactly 5 bullet points. Focus on implications for our team, not general background. Then add a final bullet called 'Why this matters now'. Use plain English and mention uncertainty where the article is speculative. Article: [paste article].",
+                    outputShift: "Output improves from broad recap to concise team-relevant insights with explicit urgency.",
                   },
                   {
-                    title: "Scenario 3: Turn messy notes into an action plan",
-                    situation: "You have unstructured notes from a meeting and need a usable checklist with owners and deadlines.",
-                    weakPrompt: "Organise these notes.",
-                    strongPrompt: "Act as an operations assistant. Convert the notes below into a table with columns for task, owner, deadline, and open question. If the owner or deadline is missing, mark it as 'unknown' instead of inventing one. After the table, list the top 3 decisions that still need clarification. Notes: [paste notes].",
+                    title: "Scenario 3: Coding help - debug faster",
+                    situation: "A function is throwing runtime errors. You want AI help that is diagnostic and testable, not vague.",
+                    weakPrompt: "Fix my code.",
+                    strongPrompt: "You are a senior JavaScript engineer. Analyze the code and error log below. 1) Explain the root cause in plain language, 2) provide a patched function, 3) list 3 unit tests for edge cases, 4) note any performance risks. Code: [paste code]. Error: [paste error].",
+                    outputShift: "Output improves from guesswork to root-cause analysis, concrete patch, and a verification plan.",
                   },
-                ].map(({ title, situation, weakPrompt, strongPrompt }) => (
+                  {
+                    title: "Scenario 4: Ideation - generate useful, varied ideas",
+                    situation: "You need campaign ideas for a product launch and want variety without fluff.",
+                    weakPrompt: "Give me ideas for a launch campaign.",
+                    strongPrompt: "You are a creative strategist for SaaS launches. Generate 12 campaign ideas for [product]. Constraints: at least 4 low-budget ideas, at least 3 unconventional ideas, and no repeated channels. For each idea include target audience, hook, and one measurable KPI.",
+                    outputShift: "Output improves from repetitive suggestions to diverse, execution-ready ideas with measurable outcomes.",
+                  },
+                ].map(({ title, situation, weakPrompt, strongPrompt, outputShift }) => (
                   <Card key={title} className="p-5">
                     <h3 className="font-semibold text-brand-green mb-2">{title}</h3>
                     <p className="text-sm text-muted-foreground mb-3">{situation}</p>
@@ -624,9 +677,69 @@ export default function Module3Page() {
                         <p className="text-xs font-mono text-muted-foreground leading-relaxed">{strongPrompt}</p>
                       </div>
                     </div>
+                    <p className="text-xs text-muted-foreground mt-3"><span className="font-medium text-foreground">Why this is better:</span> {outputShift}</p>
                   </Card>
                 ))}
               </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Prompt debugging: why outputs fail and how to fix them</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Failure: too generic.</span> Cause: weak context. <span className="font-medium text-foreground">Fix:</span> add audience, purpose, and situation.</p>
+                  <p><span className="font-medium text-foreground">Failure: rambling output.</span> Cause: no constraints. <span className="font-medium text-foreground">Fix:</span> set length, structure, and exclusions.</p>
+                  <p><span className="font-medium text-foreground">Failure: wrong format.</span> Cause: unspecified output shape. <span className="font-medium text-foreground">Fix:</span> demand JSON/table/bullets with required fields.</p>
+                  <p><span className="font-medium text-foreground">Failure: hallucinated details.</span> Cause: model is filling gaps. <span className="font-medium text-foreground">Fix:</span> instruct &ldquo;if unsure, say unknown&rdquo; and request assumptions explicitly.</p>
+                  <p><span className="font-medium text-foreground">Failure: shallow reasoning.</span> Cause: complex task with simple prompt. <span className="font-medium text-foreground">Fix:</span> ask for step-by-step reasoning and final recommendation.</p>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Mini challenge: upgrade a weak prompt</h3>
+                <p className="text-sm text-muted-foreground mb-3">Take this weak prompt and refine it using the full anatomy plus advanced techniques.</p>
+                <div className="rounded-lg border bg-background p-3 mb-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange mb-2">Weak prompt</p>
+                  <p className="text-sm font-mono text-muted-foreground">Tell me how to improve my business.</p>
+                </div>
+                <div className="rounded-lg border bg-background p-3 mb-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-green mb-2">Your objective</p>
+                  <p className="text-sm text-muted-foreground">Rewrite this into a high-quality prompt that includes role, context, task, constraints, examples, and one advanced technique (role prompting, few-shot, or chain-of-thought).</p>
+                </div>
+                <div className="rounded-lg border bg-background p-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-green mb-2">Sample high-quality version</p>
+                  <p className="text-xs font-mono text-muted-foreground leading-relaxed">You are a small-business growth advisor. I run a neighborhood cafe with declining weekday foot traffic. Context: average ticket is $12, marketing budget is $800/month, and I can only launch 2 initiatives this quarter. Think step by step and propose the 5 highest-impact growth ideas. For each idea include expected effort (low/medium/high), estimated cost, and one KPI. Use this output format: markdown table with columns Idea | Why it works | Cost | KPI. If information is missing, state assumptions explicitly.</p>
+                </div>
+                <div className="rounded-lg border bg-background p-3 mt-3 space-y-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-orange">Try it yourself</p>
+                  <Textarea
+                    value={challengePrompt}
+                    onChange={(e) => setChallengePrompt(e.target.value)}
+                    rows={6}
+                    placeholder="Write your improved prompt here..."
+                    className="text-sm"
+                  />
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <p className="text-xs text-muted-foreground">Checklist score: <span className="font-semibold text-foreground">{challengeEvaluation.score}/6</span></p>
+                    <Button type="button" variant="outline" size="sm" onClick={() => setChallengePrompt("")}>Reset attempt</Button>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-2 text-xs">
+                    {challengeEvaluation.checklist.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`rounded border px-2 py-1 ${item.pass ? "border-brand-green/30 bg-brand-green/5 text-brand-green" : "border-brand-orange/30 bg-brand-orange/5 text-muted-foreground"}`}
+                      >
+                        {item.pass ? "Pass" : "Missing"}: {item.label}
+                      </div>
+                    ))}
+                  </div>
+                  {challengeEvaluation.hasInput ? (
+                    <p className="text-xs text-muted-foreground">
+                      {challengeEvaluation.score >= 5
+                        ? "Strong prompt. You are close to production-ready quality."
+                        : "Keep iterating: add missing checklist items to improve precision and output quality."}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">Paste your refined prompt to get instant feedback.</p>
+                  )}
+                </div>
+              </Card>
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Simple prompt review rubric</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
@@ -634,7 +747,8 @@ export default function Module3Page() {
                     "Role: did you tell the AI what perspective to use?",
                     "Context: did you include the situation, audience, or constraints?",
                     "Task: is the requested outcome specific and concrete?",
-                    "Format: did you say how the answer should be structured?",
+                    "Constraints: did you set limits or define what to avoid?",
+                    "Examples: did you provide a style or structure sample if needed?",
                     "Guardrails: did you tell it what not to guess or invent?",
                     "Usability: could you copy the result directly into your workflow?",
                   ].map((item) => (

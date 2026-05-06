@@ -4,18 +4,18 @@
 
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
+import { Bot, Brain, Briefcase, CheckCircle2, Globe, Rocket, Shield } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -41,9 +41,11 @@ export default function Module10Page() {
   useEffect(() => {
     if (sectionParam && sections.length > 0) {
       const idx = sections.findIndex((s) => s.id === sectionParam)
-      if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
+      if (idx !== -1 && idx !== currentSectionIndex) {
+        setCurrentSectionIndex(idx)
+      }
     }
-  }, [sectionParam])
+  }, [currentSectionIndex, sectionParam, sections])
 
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
@@ -56,7 +58,11 @@ export default function Module10Page() {
     }
 
     const current = sections[currentSectionIndex]
-    if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
+    if (current) {
+      markSectionComplete(MODULE_ID, current.id)
+      setCurrentPosition(MODULE_ID, current.id)
+    }
+
     if (currentSectionIndex < totalSections - 1) {
       const next = sections[currentSectionIndex + 1]
       setCurrentSectionIndex(currentSectionIndex + 1)
@@ -70,18 +76,18 @@ export default function Module10Page() {
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 10: The Future of AI</h1>
-            <p className="text-lg text-muted-foreground mb-4">Where AI is heading  - and how to prepare for what comes next</p>
+            <p className="text-lg text-muted-foreground mb-4">A forward-looking but grounded guide to what AI may become and how you can prepare.</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
           {currentSectionIndex === 0 && (
             <ModuleHero
               eyebrow="Module 10"
-              title="Plan for the next wave of AI change"
-              description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
+              title="Think clearly about what comes next"
+              description="Explore frontier AI trends, AGI uncertainty, policy challenges, and realistic pathways to stay valuable in an AI-shaped economy."
               imageSrc="/images/modules/module-10.jpg"
               imageAlt="Future of AI and innovation"
             />
@@ -91,424 +97,427 @@ export default function Module10Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="AI is evolving faster than almost any technology in history. In this final module you will look at where the field is heading: emerging capabilities, the quest for artificial general intelligence, global governance challenges, and the career opportunities this creates for you." />
+              <TextDisplay
+                variant="callout"
+                content="This final module does not try to predict one perfect future. Instead, it helps you reason under uncertainty: what is already changing, what is still unknown, and what actions make sense either way."
+              />
               <Card className="p-5 space-y-2">
                 {[
-                  "The current frontiers pushing AI capability forward",
-                  "What AGI is  - and why experts disagree about its timeline",
-                  "How governments are responding to AI with policy and regulation",
-                  "Career paths and opportunities in the AI era",
-                  "How to orient yourself for a rapidly changing technological future",
+                  "Current frontiers: multimodal AI, agents, and robotics",
+                  "AGI explained carefully: definition, uncertainty, and practical stance",
+                  "Governance and policy challenges that shape deployment",
+                  "Career pathways in AI for technical and non-technical learners",
+                  "A stay-relevant framework plus your personal 1-3 year AI strategy",
                 ].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
+                  <div key={item} className="flex items-center gap-2 text-sm">
+                    <CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />
+                    {item}
+                  </div>
                 ))}
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Start Module
+              </Button>
             </div>
           )}
 
           {/* 1: Current Frontiers */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Current AI Frontiers</h2>
-              <TextDisplay content="The capabilities of AI systems are advancing on multiple fronts simultaneously. Understanding these frontiers helps you anticipate what AI will be able to do in the near future." />
+              <h2 className="text-3xl font-bold text-brand-orange">Current Frontiers: What Is Advancing Now</h2>
+              <TextDisplay content="Think of frontiers as edges where capability is improving quickly. You do not need to be a researcher to track them. You need simple mental models for what each frontier changes in real work." />
               <div className="space-y-4">
                 {[
                   {
                     area: "Multimodal AI",
                     icon: Brain,
-                    description: "AI systems that can process and generate text, images, audio, and video simultaneously  - not as separate models but as unified systems. GPT-4o and Gemini Ultra can see, listen, and respond in real time.",
-                    implications: "Expect AI assistants to become genuine all-purpose interfaces: describe a problem verbally, show it a photo, and get a detailed response. Professional tools will integrate this across design, medicine, and engineering.",
+                    description: "One model handles text, images, audio, and video in a single conversation. You can talk, show a screenshot, and ask for a structured output in one flow.",
+                    implications: "Work becomes more natural. AI moves closer to being an all-purpose interface instead of separate single-mode tools.",
                   },
                   {
                     area: "AI Agents",
                     icon: Rocket,
-                    description: "AI systems that do not just answer questions but take actions: browse the web, write and execute code, manage files, book appointments, and complete multi-step tasks autonomously.",
-                    implications: "Agentic AI will automate entire workflows that previously required human oversight at each step. The shift from AI as a tool to AI as a collaborator that acts on your behalf.",
+                    description: "Agents can plan and execute multi-step tasks: gather data, call tools, update files, and report progress. They are still imperfect and need guardrails.",
+                    implications: "The shift is from AI that answers once to AI that performs workflow chunks with human supervision.",
                   },
                   {
-                    area: "Scientific AI",
-                    icon: Star,
-                    description: "AlphaFold solved the 50-year protein folding problem in 2020. AI is now being used to discover new antibiotics, design novel materials, and accelerate drug development from decades to years.",
-                    implications: "AI is becoming a genuine scientific collaborator  - not just analysing existing data, but generating hypotheses and designing experiments. This will dramatically compress the timeline for major scientific breakthroughs.",
+                    area: "Robotics + AI",
+                    icon: Bot,
+                    description: "Robots are gaining stronger perception and decision-making through foundation models. Warehouses, labs, and factories are leading adoption first.",
+                    implications: "Physical-world automation grows gradually. Most near-term impact is in structured environments, not general-purpose home robots.",
                   },
                   {
-                    area: "Reasoning Models",
+                    area: "Reasoning and Planning Models",
                     icon: Brain,
-                    description: "Models like OpenAI o1 and o3, Google Gemini 2.0 Flash Thinking spend time 'thinking through' problems step by step before answering  - dramatically improving performance on complex mathematical and logical tasks.",
-                    implications: "AI moving from pattern-matching to genuine reasoning changes what tasks AI can tackle reliably. Complex analysis, strategic planning, and scientific problem-solving become increasingly AI-accessible.",
+                    description: "Some models spend extra compute to reason through harder problems, improving performance on planning, coding, and analysis tasks.",
+                    implications: "Higher reliability on complex work, but still not perfect truth machines. Verification remains essential.",
                   },
                   {
-                    area: "Open-Source & On-Device AI",
-                    icon: Star,
-                    description: "Meta's Llama series, Mistral, and DeepSeek have released models that rival closed commercial AI  - for free. Simultaneously, models are shrinking to run on laptops and phones without an internet connection. Apple Intelligence, Gemini Nano, and Copilot+ PCs all run AI entirely on-device.",
-                    implications: "Frontier AI is being democratised. Smaller companies, researchers in developing countries, and privacy-conscious users can now access powerful AI without depending on API costs or internet connectivity. The concentrated power of the first generation of AI labs is being distributed.",
+                    area: "Smaller and Local Models",
+                    icon: Shield,
+                    description: "More capable models now run on laptops and phones. That can reduce latency, lower cost, and improve privacy for sensitive tasks.",
+                    implications: "Expect a hybrid future: cloud for heavy tasks, local AI for fast or private tasks.",
                   },
                 ].map(({ area, icon: Icon, description, implications }) => (
                   <Card key={area} className="p-5">
-                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><Icon className="h-4 w-4" />{area}</h3>
+                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
+                      <Icon className="h-4 w-4" />
+                      {area}
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-2">{description}</p>
-                    <p className="text-sm"><span className="font-medium text-brand-orange">Implication: </span>{implications}</p>
+                    <p className="text-sm">
+                      <span className="font-medium text-brand-orange">Practical impact: </span>
+                      {implications}
+                    </p>
                   </Card>
                 ))}
               </div>
+
               <div>
-                <h3 className="text-xl font-semibold mb-1">Test your understanding  - flip each card</h3>
-                <p className="text-sm text-muted-foreground mb-3">Click each card to reveal what each frontier really means.</p>
+                <h3 className="text-xl font-semibold mb-1">Quick frontier recap</h3>
+                <p className="text-sm text-muted-foreground mb-3">Hover each card to connect each frontier with its real-world consequence.</p>
                 <FlipCardGrid
                   cards={[
                     {
-                      title: "Multimodal AI",
-                      prompt: "What changes when AI can work across text, image, audio, and video together?",
-                      answer: "It becomes a more general interface to real work: you can show, say, and describe the same problem in one flow instead of splitting it across tools.",
+                      title: "Multimodal",
+                      prompt: "What changes when one model handles text, image, and audio together?",
+                      answer: "AI becomes a more natural interface for real tasks, because you can combine ways of communicating in one workflow.",
                     },
                     {
-                      title: "AI agents",
-                      prompt: "What is the real frontier shift with agents?",
-                      answer: "The frontier is moving from AI that answers questions to AI that can execute multi-step workflows on your behalf.",
+                      title: "Agents",
+                      prompt: "What is the key shift with agentic AI?",
+                      answer: "The system can execute task sequences toward a goal, not only provide one-shot answers.",
                     },
                     {
-                      title: "Reasoning models",
-                      prompt: "Why do reasoning models matter?",
-                      answer: "They spend more effort working through hard problems step by step, which improves performance on planning, logic, and analysis tasks.",
+                      title: "Robotics",
+                      prompt: "Where is robotics + AI strongest in the near term?",
+                      answer: "Structured environments like logistics, manufacturing, and controlled operations.",
                     },
                     {
-                      title: "On-device AI",
-                      prompt: "Why is local AI important?",
-                      answer: "Running models on-device can improve privacy, reduce latency, and broaden access beyond constant cloud connectivity.",
+                      title: "Local models",
+                      prompt: "Why does on-device AI matter?",
+                      answer: "It can improve privacy and speed, and it reduces dependence on constant cloud access.",
                     },
                   ]}
                 />
               </div>
+
               <QuickCheckCard
-                prompt="Which frontier is most directly about AI taking actions across a workflow instead of only answering once?"
+                prompt="Which frontier most directly expands AI from digital tasks into physical-world tasks?"
                 options={[
-                  { id: "a", label: "Open-source models" },
-                  { id: "b", label: "AI agents" },
-                  { id: "c", label: "Image generation" },
-                  { id: "d", label: "Spam filtering" },
+                  { id: "a", label: "Robotics + AI" },
+                  { id: "b", label: "Prompt formatting" },
+                  { id: "c", label: "Spam filtering" },
+                  { id: "d", label: "Grammar correction" },
                 ]}
-                correctOptionId="b"
-                explanation="The module frames agents as the frontier where AI moves from one-shot responses into acting across multiple steps toward a goal."
+                correctOptionId="a"
+                explanation="Robotics + AI brings AI capability into physical systems, especially in structured environments."
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
             </div>
           )}
 
           {/* 2: AGI */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">What Is AGI?</h2>
-              <TextDisplay content="AGI  - Artificial General Intelligence  - refers to a hypothetical AI system that can perform any intellectual task that a human can, at human level or beyond. It does not exist yet. But it is the explicit goal of several major AI labs." />
+              <h2 className="text-3xl font-bold text-brand-green">AGI: Useful Concept, Uncertain Reality</h2>
+              <TextDisplay content="AGI means Artificial General Intelligence: a hypothetical system that can learn and perform most intellectual tasks at human level across domains. It is not a single feature upgrade. It would be a major shift in capability." />
+
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                <h3 className="font-semibold mb-4 text-brand-orange">Narrow AI vs. AGI</h3>
+                <h3 className="font-semibold mb-4 text-brand-orange">Narrow AI today vs AGI concept</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="font-bold mb-2 text-brand-green">Narrow AI (what exists today)</p>
+                    <p className="font-bold mb-2 text-brand-green">Narrow AI (today)</p>
                     <ul className="space-y-1 text-muted-foreground">
                       {[
-                        "Excels at specific, well-defined tasks",
-                        "Cannot generalise to tasks outside its training",
-                        "Has no genuine understanding or goals",
-                        "Is a tool  - it does what it is designed to do",
-                        "Examples: ChatGPT, AlphaFold, DALL��E",
-                      ].map((item) => <li key={item} className="flex gap-1"><span className="text-brand-green">*</span>{item}</li>)}
+                        "Strong at specific tasks with clear prompts",
+                        "Can fail outside familiar patterns",
+                        "Needs human goals, context, and checks",
+                        "Examples: coding copilots, image models, recommendation systems",
+                      ].map((item) => (
+                        <li key={item} className="flex gap-1">
+                          <span className="text-brand-green">*</span>
+                          {item}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                   <div>
                     <p className="font-bold mb-2 text-brand-orange">AGI (hypothetical)</p>
                     <ul className="space-y-1 text-muted-foreground">
                       {[
-                        "Can learn any task a human can learn",
-                        "Transfers knowledge across domains fluidly",
-                        "Potentially has genuine goals and agency",
-                        "Would represent a fundamentally different kind of AI",
-                        "Timeline: disputed  - years to decades to never",
-                      ].map((item) => <li key={item} className="flex gap-1"><span className="text-brand-orange">*</span>{item}</li>)}
+                        "General capability across many domains",
+                        "Flexible transfer of knowledge to new tasks",
+                        "More autonomous long-horizon problem solving",
+                        "Timeline and feasibility remain debated",
+                      ].map((item) => (
+                        <li key={item} className="flex gap-1">
+                          <span className="text-brand-orange">*</span>
+                          {item}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </Card>
-              <div className="space-y-3">
-                <h3 className="text-xl font-bold">What Leading Experts Believe</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  {[
-                    {
-                      view: "Near-term AGI optimists",
-                      detail: "Some leaders at frontier labs argue AGI could emerge within a few years as model capabilities compound quickly.",
-                    },
-                    {
-                      view: "Long-horizon realists",
-                      detail: "Many researchers believe current systems are still far from robust general intelligence and estimate decades, not years.",
-                    },
-                    {
-                      view: "Skeptics",
-                      detail: "Some experts question whether AGI, as commonly imagined, is achievable with current paradigms at all.",
-                    },
-                    {
-                      view: "Policy and safety focus",
-                      detail: "Another group argues timeline debates matter less than governance, safety, and responsible deployment of capabilities we already have.",
-                    },
-                  ].map(({ view, detail }) => (
-                    <Card key={view} className="p-4">
-                      <p className="font-semibold text-brand-orange mb-1">{view}</p>
-                      <p className="text-muted-foreground">{detail}</p>
-                    </Card>
-                  ))}
+
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Why uncertainty is normal (not a failure)</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Definition uncertainty:</span> People mean different things by AGI.</p>
+                  <p><span className="font-medium text-foreground">Technical uncertainty:</span> We do not know if current methods scale to full generality.</p>
+                  <p><span className="font-medium text-foreground">Measurement uncertainty:</span> Benchmarks can improve faster than real-world reliability.</p>
                 </div>
-              </div>
-              <TextDisplay variant="callout" content="The practical takeaway: you do not need to know if or when AGI will arrive to benefit from AI today. Focus on what AI can do now, not on speculative timelines." />
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">A no-hype stance you can use</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>1. Use AI that works today for real productivity.</p>
+                  <p>2. Track capabilities and risks quarterly, not hourly.</p>
+                  <p>3. Make plans that stay useful across multiple futures.</p>
+                </div>
+              </Card>
+
               <QuickCheckCard
-                prompt="What is the most practical stance for a learner today given AGI uncertainty?"
+                prompt="What is the strongest practical response to AGI uncertainty?"
                 options={[
-                  { id: "a", label: "Ignore current AI until AGI timelines are settled" },
-                  { id: "b", label: "Focus on useful current capabilities while staying informed about future risks" },
-                  { id: "c", label: "Treat AGI as already achieved" },
-                  { id: "d", label: "Build strategy only on one prediction from one expert" },
+                  { id: "a", label: "Ignore current AI until AGI is proven" },
+                  { id: "b", label: "Adopt no AI tools because predictions conflict" },
+                  { id: "c", label: "Use present-day AI while planning for multiple future scenarios" },
+                  { id: "d", label: "Assume one forecast is certainly correct" },
                 ]}
-                correctOptionId="b"
-                explanation="The robust strategy is to use present-day AI productively and responsibly while tracking future developments with healthy uncertainty."
+                correctOptionId="c"
+                explanation="A grounded approach captures current value while avoiding overcommitment to any single AGI prediction."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
             </div>
           )}
 
           {/* 3: AI Governance */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI Governance & Policy</h2>
-              <TextDisplay content="Governments, regulators, and international organisations are racing to create frameworks for AI. The rules being written now will shape how AI is developed and deployed for decades." />
+              <h2 className="text-3xl font-bold text-brand-orange">Governance and Policy Challenges</h2>
+              <TextDisplay content="AI policy is hard because innovation is global and fast, while law is local and slower. Good governance tries to reduce harm without blocking useful innovation." />
+
               <div className="space-y-4">
                 {[
                   {
-                    region: "European Union",
-                    icon: Globe,
-                    summary: "The EU AI Act (2024) is the world's first comprehensive AI law. It classifies AI systems by risk level  - from minimal risk (spam filters) to unacceptable risk (social scoring). High-risk AI in healthcare, hiring, and critical infrastructure faces strict transparency and auditing requirements.",
-                    significance: "Sets a global precedent. Companies worldwide must comply when serving EU users  - similar to GDPR's global impact on data privacy.",
+                    challenge: "Safety and reliability",
+                    detail: "How do we test frontier systems before deployment in high-stakes use cases like healthcare or infrastructure?",
+                    lever: "Pre-deployment evaluations, incident reporting, and sector-specific standards.",
                   },
                   {
-                    region: "United States",
-                    icon: Globe,
-                    summary: "The US has taken a lighter-touch, sector-by-sector approach. Biden's 2023 Executive Order on AI set safety requirements for frontier AI developers. The NIST AI Risk Management Framework provides voluntary guidelines. Congress has been slow to pass comprehensive legislation.",
-                    significance: "The US approach prioritises innovation speed over comprehensive regulation  - creating a different risk profile compared to EU-regulated markets.",
+                    challenge: "Accountability",
+                    detail: "When AI causes harm, who is responsible: model provider, integrator, or deploying organization?",
+                    lever: "Clear liability rules, audit trails, and documented human oversight.",
                   },
                   {
-                    region: "China",
-                    icon: Globe,
-                    summary: "China has enacted specific regulations on generative AI, deep synthesis (deepfakes), and recommendation algorithms. Domestic AI development is heavily state-supported, with restrictions on foreign AI services and requirements for content aligned with 'socialist core values'.",
-                    significance: "China's approach prioritises state control and domestic AI champions  - creating a bifurcated global AI landscape.",
+                    challenge: "Jobs and transition",
+                    detail: "Automation can displace tasks unevenly across sectors and regions.",
+                    lever: "Reskilling funds, transition support, and education reform for AI-era skills.",
                   },
                   {
-                    region: "International Efforts",
-                    icon: Globe,
-                    summary: "The UK's Bletchley Declaration (2023) brought 28 countries together on AI safety. The OECD AI Principles provide a framework adopted by 42 countries. The UN established an AI Advisory Body in 2023. G7 nations issued the Hiroshima AI Process principles.",
-                    significance: "Global coordination is early and fragmented. AI governance remains primarily national  - creating compliance complexity for global AI deployments.",
+                    challenge: "Power concentration",
+                    detail: "Compute, data, and top talent are concentrated in a small number of firms and countries.",
+                    lever: "Competition policy, open standards, and public-interest research access.",
                   },
-                ].map(({ region, icon: Icon, summary, significance }) => (
-                  <Card key={region} className="p-5">
-                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><Icon className="h-4 w-4" />{region}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{summary}</p>
-                    <p className="text-sm"><span className="font-medium text-brand-orange">Significance: </span>{significance}</p>
+                  {
+                    challenge: "Information integrity",
+                    detail: "Synthetic media can improve creativity but also increase fraud, deepfakes, and trust erosion.",
+                    lever: "Content provenance standards, platform safeguards, and digital literacy at scale.",
+                  },
+                ].map(({ challenge, detail, lever }) => (
+                  <Card key={challenge} className="p-5">
+                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      {challenge}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">{detail}</p>
+                    <p className="text-sm">
+                      <span className="font-medium text-brand-orange">Policy response: </span>
+                      {lever}
+                    </p>
                   </Card>
                 ))}
               </div>
+
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">What governance means for you in practice</h3>
+                <h3 className="font-semibold mb-3 text-brand-green">What this means for practitioners</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Expect more transparency requirements for high-risk AI systems in work contexts.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />If you deploy AI in business, you will likely need clearer documentation and human oversight.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Regional differences in rules can affect tool choice, rollout speed, and compliance obligations.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Expect more evidence requirements for high-risk AI use.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Design for auditability: document prompts, data sources, and human review steps.</li>
+                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Global products must handle different regional rules, not one universal policy playbook.</li>
                 </ul>
               </Card>
-              <QuickCheckCard
-                prompt="Why does AI governance remain complex for global companies?"
-                options={[
-                  { id: "a", label: "Because every major region is converging on identical rules" },
-                  { id: "b", label: "Because AI governance is primarily national and still fragmented" },
-                  { id: "c", label: "Because governance only affects open-source models" },
-                  { id: "d", label: "Because regulation has already fully stabilized" },
-                ]}
-                correctOptionId="b"
-                explanation="The section highlights a fragmented landscape: different countries and regions are regulating AI in different ways, which creates compliance complexity."
-              />
+
               <div>
-                <h3 className="text-xl font-semibold mb-1">Match each region to its governance approach</h3>
-                <p className="text-sm text-muted-foreground mb-4">Click a region on the left, then click its matching description on the right.</p>
+                <h3 className="text-xl font-semibold mb-1">Match challenge to policy response</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a challenge, then click its most direct policy lever.</p>
                 <MatchingChallenge
                   pairs={[
-                    { left: "European Union", right: "World's first comprehensive AI law classifying systems by risk level" },
-                    { left: "United States", right: "Lighter-touch, sector-by-sector approach prioritising innovation speed" },
-                    { left: "China", right: "State-directed rules with restrictions on foreign AI and content requirements" },
-                    { left: "International Bodies", right: "Early and fragmented coordination via OECD, UN, and G7 frameworks" },
+                    { left: "Safety and reliability", right: "Pre-deployment evaluations and incident reporting" },
+                    { left: "Accountability", right: "Liability rules and audit trails" },
+                    { left: "Jobs and transition", right: "Reskilling and education support" },
+                    { left: "Power concentration", right: "Competition policy and open standards" },
+                    { left: "Information integrity", right: "Provenance tools and platform safeguards" },
                   ]}
                   accentClassName="border-brand-green/20 bg-brand-green/5"
                 />
               </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+
+              <QuickCheckCard
+                prompt="Why is AI governance difficult to standardize globally?"
+                options={[
+                  { id: "a", label: "Because AI systems are already identical everywhere" },
+                  { id: "b", label: "Because innovation is global, but legal systems and values differ by region" },
+                  { id: "c", label: "Because policy applies only to startups" },
+                  { id: "d", label: "Because AI has no social impact" },
+                ]}
+                correctOptionId="b"
+                explanation="Governance complexity comes from cross-border technology combined with region-specific law, institutions, and priorities."
+              />
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
             </div>
           )}
 
-          {/* 4: AI Careers */}
+          {/* 4: Careers and Relevance */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">AI Careers & Opportunities</h2>
-              <TextDisplay content="The AI sector is creating a wide range of career opportunities  - from highly technical roles to roles that bridge AI and human expertise. You do not need to be a machine learning engineer to build a career in AI." />
+              <h2 className="text-3xl font-bold text-brand-green">Career Pathways and Staying Relevant</h2>
+              <TextDisplay content="AI careers are broader than many learners assume. The strongest path is often your existing domain expertise plus practical AI fluency, not a total reinvention overnight." />
+
               <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  {
-                    role: "AI/ML Engineer",
-                    requires: "Strong coding (Python), maths, ML frameworks",
-                    does: "Builds and trains AI models, deploys systems to production",
-                    demand: "Very high",
-                  },
-                  {
-                    role: "AI Product Manager",
-                    requires: "Product experience, AI literacy, user research skills",
-                    does: "Defines what AI products should do and why, bridges technical and business teams",
-                    demand: "Very high",
-                  },
-                  {
-                    role: "Prompt Engineer",
-                    requires: "Writing, analytical thinking, domain expertise",
-                    does: "Designs and optimises prompts for AI systems in specific domains",
-                    demand: "High (evolving role)",
-                  },
-                  {
-                    role: "AI Ethics & Policy",
-                    requires: "Policy, law, philosophy, or social science background",
-                    does: "Ensures AI systems are fair, transparent, and compliant with regulations",
-                    demand: "Growing rapidly",
-                  },
-                  {
-                    role: "Data Scientist",
-                    requires: "Statistics, Python or R, domain expertise",
-                    does: "Analyses data, builds predictive models, surfaces insights for decisions",
-                    demand: "High and stable",
-                  },
-                  {
-                    role: "AI Trainer / RLHF Specialist",
-                    requires: "Domain expertise (law, medicine, finance, etc.), careful attention to detail",
-                    does: "Evaluates AI outputs, provides feedback to improve model quality",
-                    demand: "High, especially with domain expertise",
-                  },
-                  {
-                    role: "AI-Augmented Domain Expert",
-                    requires: "Deep expertise in any field + AI fluency",
-                    does: "Applies AI to accelerate work in their domain  - the most accessible entry point",
-                    demand: "Growing across every industry",
-                  },
-                  {
-                    role: "AI Educator & Communicator",
-                    requires: "AI literacy, teaching or communication skills",
-                    does: "Helps organisations and individuals understand and adopt AI effectively",
-                    demand: "High and underserved",
-                  },
-                ].map(({ role, requires, does, demand }) => (
-                  <Card key={role} className="p-4">
-                    <h4 className="font-bold text-brand-orange mb-2">{role}</h4>
-                    <div className="space-y-1 text-xs text-muted-foreground">
-                      <p><span className="font-medium text-foreground">Requires: </span>{requires}</p>
-                      <p><span className="font-medium text-foreground">Does: </span>{does}</p>
-                      <p><span className="font-medium text-brand-green">Demand: </span>{demand}</p>
-                    </div>
-                  </Card>
-                ))}
+                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Briefcase className="h-4 w-4" />Technical pathways</h3>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><span className="font-medium text-foreground">ML Engineer:</span> model training, evaluation, and deployment.</p>
+                    <p><span className="font-medium text-foreground">AI Application Engineer:</span> building agentic and multimodal products.</p>
+                    <p><span className="font-medium text-foreground">MLOps / Platform:</span> reliability, tooling, monitoring, and cost control.</p>
+                    <p><span className="font-medium text-foreground">AI Research Support:</span> benchmarking, datasets, and experimentation pipelines.</p>
+                  </div>
+                </Card>
+
+                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Non-technical pathways</h3>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <p><span className="font-medium text-foreground">AI Product Manager:</span> aligning use cases, users, and delivery.</p>
+                    <p><span className="font-medium text-foreground">AI Policy / Governance:</span> risk controls, compliance, and accountability.</p>
+                    <p><span className="font-medium text-foreground">Operations + Automation Lead:</span> redesigning workflows with AI tools.</p>
+                    <p><span className="font-medium text-foreground">Domain AI Specialist:</span> applying AI deeply in law, health, finance, education, and more.</p>
+                  </div>
+                </Card>
               </div>
-              <TextDisplay variant="callout" content="The most accessible career move for most people: become the most AI-fluent person in your current domain. You do not need to switch careers  - you need to become the bridge between AI capability and your industry's expertise." />
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">How to stay relevant: the C-T-A framework</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">C - Continuous learning:</span> run a weekly learning loop (new capability, one test, one note, one takeaway).</p>
+                  <p><span className="font-medium text-foreground">T - Tool fluency:</span> be competent with at least one chat model, one automation tool, and one domain-specific AI workflow.</p>
+                  <p><span className="font-medium text-foreground">A - Adaptability:</span> redesign your role around higher-value decisions and collaboration, not only current tasks.</p>
+                </div>
+              </Card>
+
               <div>
-                <h3 className="text-xl font-semibold mb-1">Match each AI role to its main contribution</h3>
-                <p className="text-sm text-muted-foreground mb-4">Click a role on the left, then click what it does on the right.</p>
+                <h3 className="text-xl font-semibold mb-1">Build the monthly relevance loop</h3>
+                <p className="text-sm text-muted-foreground mb-4">Arrange the sequence that keeps your skills current and practical.</p>
                 <DragSortChallenge
                   items={[
-                    "Identify where AI creates value in your domain",
-                    "Develop deep expertise in your existing field",
-                    "Become the bridge between AI capability and your industry",
-                    "Learn to evaluate AI outputs critically",
-                    "Build AI literacy and hands-on tool skills",
+                    "Run one focused experiment with a new AI capability",
+                    "Pick one role-relevant workflow to improve",
+                    "Document what worked, failed, and why",
+                    "Apply the best change to real work",
+                    "Review impact and set next month's focus",
                   ]}
                   correctOrder={[
-                    "Develop deep expertise in your existing field",
-                    "Build AI literacy and hands-on tool skills",
-                    "Learn to evaluate AI outputs critically",
-                    "Identify where AI creates value in your domain",
-                    "Become the bridge between AI capability and your industry",
+                    "Pick one role-relevant workflow to improve",
+                    "Run one focused experiment with a new AI capability",
+                    "Document what worked, failed, and why",
+                    "Apply the best change to real work",
+                    "Review impact and set next month's focus",
                   ]}
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>
 
               <QuickCheckCard
-                prompt="What is the most accessible AI career move for most learners right now?"
+                prompt="Which strategy is most resilient for long-term AI career growth?"
                 options={[
-                  { id: "a", label: "Switch immediately to advanced model engineering regardless of background" },
-                  { id: "b", label: "Become AI-fluent in your current domain and bridge capability with real-world context" },
-                  { id: "c", label: "Focus only on AI news and avoid hands-on workflows" },
-                  { id: "d", label: "Wait for full AGI before adapting your skill set" },
+                  { id: "a", label: "Master one tool once and stop updating" },
+                  { id: "b", label: "Rely only on AI news without hands-on practice" },
+                  { id: "c", label: "Combine domain depth with continuous tool experimentation" },
+                  { id: "d", label: "Wait for certainty before building any AI skills" },
                 ]}
-                correctOptionId="b"
-                explanation="Exactly. Domain expertise plus practical AI fluency is the strongest near-term leverage path for most people."
+                correctOptionId="c"
+                explanation="Durable advantage comes from domain expertise plus repeated practical adaptation, not static tool knowledge."
                 onAnswered={() => {
                   markSectionInteractionComplete(4)
                 }}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
 
-              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the careers checkpoint to unlock the next section.</p> : null}
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the careers checkpoint to unlock the final strategy section.</p> : null}
 
-              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
             </div>
           )}
 
-          {/* 5: Your AI Future */}
+          {/* 5: Personal AI Strategy */}
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Your AI Future</h2>
-              <TextDisplay variant="success" content="You have completed the full Introduction to AI course. You now understand not just where AI is today  - but where it is heading and how to position yourself for what comes next." />
-              <Card className="p-5">
-                <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />The mindset that matters most</h3>
-                <div className="space-y-3">
-                  {[
-                    {
-                      principle: "Stay curious, not anxious",
-                      desc: "The people who will thrive in the AI era are those who approach it with curiosity rather than fear. AI is a tool  - and like every powerful tool in history, it rewards those who learn to use it well.",
-                    },
-                    {
-                      principle: "Embrace continuous learning",
-                      desc: "AI capabilities are evolving too fast for any course to stay fully current. The skill is not knowing everything about AI  - it is developing the habit of staying current and updating your mental model continuously.",
-                    },
-                    {
-                      principle: "Develop judgment, not just skills",
-                      desc: "The rarest and most valuable skill in the AI era is good judgment: knowing when to trust AI, when to override it, and how to deploy it ethically and responsibly. This cannot be automated.",
-                    },
-                    {
-                      principle: "Stay human",
-                      desc: "What makes you uniquely valuable will not be the tasks AI can do faster  - it will be your relationships, your creativity, your ethical reasoning, and your ability to bring genuine human insight to complex situations.",
-                    },
-                  ].map(({ principle, desc }) => (
-                    <div key={principle} className="border-l-2 border-brand-green pl-4">
-                      <p className="font-semibold text-brand-green">{principle}</p>
-                      <p className="text-sm text-muted-foreground">{desc}</p>
-                    </div>
-                  ))}
+              <h2 className="text-3xl font-bold text-brand-orange">Reflective Exercise: Your 1-3 Year AI Strategy</h2>
+              <TextDisplay variant="success" content="You now have the concepts. This final exercise turns them into a personal plan you can actually execute." />
+
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Part 1: Clarify your direction</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Role target:</span> What role or capability do you want to be known for in 12-36 months?</p>
+                  <p><span className="font-medium text-foreground">Value focus:</span> Which business or human problem do you want to solve better with AI?</p>
+                  <p><span className="font-medium text-foreground">Risk boundary:</span> What types of AI use are off-limits for you ethically or legally?</p>
                 </div>
               </Card>
-              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
-                <h3 className="text-2xl font-bold mb-3">The AI era belongs to the curious.</h3>
-                <p className="text-muted-foreground mb-4">You have built the foundation. Now the real learning begins  - in the real world, with real tools, on real problems.</p>
-                <p className="text-lg font-semibold text-brand-orange">Go explore what is possible.</p>
+
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Part 2: Build a timeline</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Next 90 days:</span> one concrete project, one measurable outcome, one accountability partner.</p>
+                  <p><span className="font-medium text-foreground">1 year:</span> portfolio evidence of applied AI (case study, workflow, or shipped feature).</p>
+                  <p><span className="font-medium text-foreground">3 years:</span> clear positioning as a specialist, builder, or leader in AI-enabled work.</p>
+                </div>
               </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Part 3: Define your operating cadence</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>1. Weekly: learn and test one new capability.</p>
+                  <p>2. Monthly: improve one workflow and document impact.</p>
+                  <p>3. Quarterly: update your plan based on what is changing in tools, policy, and your industry.</p>
+                </div>
+              </Card>
+
+              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
+                <h3 className="text-xl font-bold mb-2">Personal strategy prompt</h3>
+                <p className="text-muted-foreground mb-3">Complete this sentence in your own words:</p>
+                <p className="text-lg font-semibold text-brand-orange">"Over the next 1-3 years, I will use AI to create value in <span className="underline decoration-brand-green/50">[my domain]</span> by building <span className="underline decoration-brand-green/50">[specific capabilities]</span> while maintaining <span className="underline decoration-brand-green/50">[ethical and quality standards]</span>."</p>
+              </Card>
+
               <div className="flex gap-4">
-                <Button
-                  size="lg"
-                  className="bg-brand-green hover:bg-brand-green/90 text-white"
-                  onClick={handleSectionComplete}
-                >
+                <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={handleSectionComplete}>
                   Complete Module 10
                 </Button>
-                <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
-                  Back to Dashboard
-                </Button>
+                <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Back to Dashboard</Button>
               </div>
             </div>
           )}
@@ -517,17 +526,13 @@ export default function Module10Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <TextDisplay content="Test your understanding of AI's future trajectory. Choose the best answer for each question." />
+              <TextDisplay content="Test your understanding of frontier AI, AGI uncertainty, governance, and career strategy." />
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Outstanding! You have completed Module 10 and the full course. You now have a solid grounding in AI  - from the fundamentals through to the future. The real learning begins when you go apply it." />
+                  <TextDisplay variant="success" content="Excellent work. You have completed Module 10 and the full course with a practical strategy for what comes next." />
                   <div className="flex gap-4">
-                    <Button
-                      onClick={handleSectionComplete}
-                      size="lg"
-                      className="bg-brand-green hover:bg-brand-green/90 text-white"
-                    >
+                    <Button onClick={handleSectionComplete} size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white">
                       Complete Course
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
@@ -538,12 +543,8 @@ export default function Module10Page() {
               )}
             </div>
           )}
-
         </main>
       </div>
     </div>
   )
 }
-
-
-

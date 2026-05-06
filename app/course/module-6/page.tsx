@@ -15,7 +15,7 @@ import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, AlertTriangle, Shield } from "lucide-react"
+import { CheckCircle2, AlertTriangle, Shield, AlertCircle, BookOpen, Target, Lightbulb, Users } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -34,7 +34,7 @@ export default function Module6Page() {
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5"])
   const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -55,7 +55,7 @@ export default function Module6Page() {
 
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
-    requiredSections: [5],
+    requiredSections: [5, 6],
   })
 
   const handleSectionComplete = () => {
@@ -420,59 +420,323 @@ export default function Module6Page() {
           )}
 
           {/* 5: The Future */}
+          {/* 5: Ethical Dilemmas */}
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">The Future of AI</h2>
-              <TextDisplay content="AI is evolving faster than almost any technology in history. Here is what experts are currently watching:" />
-              <div className="space-y-4">
-                {[
-                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously - browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
-                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code - not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
-                  { trend: "AI in Healthcare", desc: "AI is matching or exceeding specialists in reading radiology scans, identifying skin cancers, predicting drug interactions, and discovering new molecules." },
-                  { trend: "Regulation", desc: "The EU AI Act is the first major AI regulation globally. The US, UK, China, and others are developing frameworks. This will reshape how AI is built and deployed." },
-                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs - augmenting some, displacing others. The effect will be uneven across roles and sectors." },
-                  { trend: "AI Safety Research", desc: "A growing field working on the 'alignment problem': ensuring AI systems do what humans actually intend. Organisations like Anthropic, DeepMind Safety, and MIRI are leading this work." },
-                ].map(({ trend, desc }) => (
-                  <Card key={trend} className="p-4 flex gap-3">
-                    <span className="bg-brand-green/10 text-brand-green text-xs font-bold px-2 py-1 rounded h-fit flex-shrink-0 whitespace-nowrap">{trend}</span>
-                    <p className="text-sm text-muted-foreground">{desc}</p>
-                  </Card>
-                ))}
+              <h2 className="text-3xl font-bold text-brand-orange">Ethical Dilemmas You'll Face</h2>
+              <TextDisplay content="Theory is helpful. But real ethics lives in the gray zones of trade-offs. Here are scenarios you might actually encounter. There are no perfect answers - only thoughtful ones." />
+              
+              <div className="space-y-5">
+                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                  <div className="flex gap-2 items-start mb-3">
+                    <AlertCircle className="h-5 w-5 text-brand-orange flex-shrink-0 mt-0.5" />
+                    <h3 className="font-semibold text-brand-orange">Scenario 1: The Hiring Decision</h3>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">You are a hiring manager.</span> Your company uses an AI system to screen 500 resumes and rank the top 20 candidates. You notice that the final list is 80% male in a field that is 50% female. The AI says it is just following the data - past hires were also mostly male.</p>
+                    <Card className="p-3 bg-background border-dashed">
+                      <p className="font-semibold text-sm mb-2">What do you do?</p>
+                      <ul className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">A)</span>
+                          <span>Trust the system - it knows the data better than you.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">B)</span>
+                          <span>Manually add women to the final list to hit a 50/50 ratio.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">C)</span>
+                          <span>Audit the AI's training data and decision process. Adjust the system to reduce historical bias. Then re-screen with the revised model.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">D)</span>
+                          <span>Ignore the AI entirely and hire people you personally know.</span>
+                        </li>
+                      </ul>
+                    </Card>
+                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                      <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
+                      <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">C</span> is the most defensible and ethical approach. It acknowledges the AI found a real pattern (past hiring bias) without accepting it as inevitable. You are not imposing quotas artificially - you are correcting the bias in the system itself. Options A and B are simpler but leave you either perpetuating historical discrimination or making arbitrary corrections without understanding the root cause. Option D throws away useful data entirely.</p>
+                    </Card>
+                  </div>
+                </Card>
+
+                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                  <div className="flex gap-2 items-start mb-3">
+                    <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <h3 className="font-semibold text-blue-600 dark:text-blue-400">Scenario 2: The Deepfake Video</h3>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">You receive a video of your CEO saying something completely against company values.</span> It looks authentic, the audio sounds like them, but you have a strong feeling something is off. A colleague says "I already shared it with three people." No one has fact-checked it yet.</p>
+                    <Card className="p-3 bg-background border-dashed">
+                      <p className="font-semibold text-sm mb-2">What do you do immediately?</p>
+                      <ul className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">A)</span>
+                          <span>Do nothing - it is already out there, so acting now is pointless.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">B)</span>
+                          <span>Immediately contact the CEO directly on a trusted channel to confirm, then help stop spread if it is fake.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">C)</span>
+                          <span>Tell everyone you know it is a deepfake (even though you are not 100% sure) to minimize damage.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">D)</span>
+                          <span>Assume your instinct is correct and post a rebuttal on social media.</span>
+                        </li>
+                      </ul>
+                    </Card>
+                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                      <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
+                      <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">B</span> is the move. Urgency is often a feature of misinformation, but that does not mean you do nothing. You verify through a direct, trusted channel first. If it is fake, you have the CEO's word backing you when you help stop spread. If it is real (despite your doubts), you have not spread false reassurance. Option C spreads false certainty. Option D amplifies unverified claims. Option A is passive - you have agency here.</p>
+                    </Card>
+                  </div>
+                </Card>
+
+                <Card className="p-5 border-green-500/20 bg-green-500/5">
+                  <div className="flex gap-2 items-start mb-3">
+                    <AlertCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <h3 className="font-semibold text-green-600 dark:text-green-400">Scenario 3: The Data Privacy Tension</h3>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">You work in healthcare.</span> A colleague wants to feed patient medical records into a new AI system to train a diagnostic model that could genuinely help patients. The data is anonymized (names and IDs removed), but it includes sensitive medical history. Your legal team has not approved the use of that data with external AI vendors yet - approval could take weeks.</p>
+                    <Card className="p-3 bg-background border-dashed">
+                      <p className="font-semibold text-sm mb-2">What do you recommend?</p>
+                      <ul className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">A)</span>
+                          <span>Upload the data now - it is anonymized, so privacy is not a concern.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">B)</span>
+                          <span>Wait for legal approval before proceeding.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">C)</span>
+                          <span>Start with a small, synthetic test dataset while you work with legal. Build the model prototype now to save time later.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">D)</span>
+                          <span>Use the data but do not tell legal until results are ready.</span>
+                        </li>
+                      </ul>
+                    </Card>
+                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                      <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
+                      <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">C</span> is the pragmatic ethical move. You are not waiting passively - you are making progress on the technical side while respecting the governance process. Anonymized data can still carry privacy risks (especially in re-identification attacks), so going through legal is not bureaucracy - it is due diligence. Option A downplays regulatory risk. Option D is a serious breach of trust. Option B is safe but slow. Option C moves forward responsibly.</p>
+                    </Card>
+                  </div>
+                </Card>
+
+                <Card className="p-5 border-purple-500/20 bg-purple-500/5">
+                  <div className="flex gap-2 items-start mb-3">
+                    <AlertCircle className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                    <h3 className="font-semibold text-purple-600 dark:text-purple-400">Scenario 4: The Attribution Shortcut</h3>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">You are writing a report for a client.</span> You used AI to draft an entire section. The output is good - well-researched and clearly written. No one would know it was AI-generated unless you told them. Your timeline is tight and the client has not specifically asked how you created the content.</p>
+                    <Card className="p-3 bg-background border-dashed">
+                      <p className="font-semibold text-sm mb-2">What do you do?</p>
+                      <ul className="space-y-2 text-xs text-muted-foreground">
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">A)</span>
+                          <span>Say nothing - you edited it heavily, so it is substantially your work.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">B)</span>
+                          <span>Add a footnote: "Drafted with AI assistance, verified and edited by the author."</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">C)</span>
+                          <span>Rewrite it entirely from scratch to avoid the question.</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="font-bold text-foreground">D)</span>
+                          <span>Ask the client first, then decide based on their preference.</span>
+                        </li>
+                      </ul>
+                    </Card>
+                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                      <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
+                      <p className="text-xs text-muted-foreground">The answer depends on context. In academic or journalistic work, <span className="font-medium text-foreground">B</span> or <span className="font-medium text-foreground">D</span> is expected. In creative or internal work, <span className="font-medium text-foreground">A</span> may be fine if your editing was substantial. Option D is the safest - it defers to the client's standards, which respect their trust in you. Option A assumes deception is okay as long as results are good - it is not. Option C is wasteful if the output is already strong.</p>
+                    </Card>
+                  </div>
+                </Card>
               </div>
-              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool - it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">Question 1:</span> Which human skills become more valuable as AI gets better?</p>
-                  <p><span className="font-medium text-foreground">Question 2:</span> Where in your life or work should speed never outrun judgment?</p>
-                  <p><span className="font-medium text-foreground">Question 3:</span> What rule will you personally use for deciding when AI helps and when a human must stay in charge?</p>
+
+              <QuickCheckCard
+                prompt="What is the core theme running through all of these dilemmas?"
+                options={[
+                  { id: "a", label: "Always prioritize speed over process" },
+                  { id: "b", label: "Transparency, governance, and respect for others' autonomy matter as much as the outcome" },
+                  { id: "c", label: "AI removes the need for human judgment" },
+                  { id: "d", label: "There is always one obviously correct answer" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. Each scenario involves a tension between efficiency and responsibility. The ethical move balances results with transparency and respect for legitimate process."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 6: Risk Assessment & Safeguards */}
+          {currentSectionIndex === 6 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Risk Assessment & Safeguards</h2>
+              <TextDisplay content="This is your capstone exercise: evaluate a real-world AI use case for hidden risks, then propose practical safeguards." />
+              
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Target className="h-5 w-5" />Your Exercise</h3>
+                <p className="text-sm text-muted-foreground mb-4">Read this scenario and work through the questions below.</p>
+              </Card>
+
+              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <h3 className="font-semibold text-blue-700 dark:text-blue-400 mb-3">Case: Automated Resume Screening at Scale</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">The setup:</span> A large retailer uses an AI system to screen resumes for store manager positions across 500 locations. The system ranks 50,000+ applicants per year and forwards the top 500 to human reviewers. The AI learned from the company's hiring history over the last 10 years. Retailers want to hire fast - each location needs staffing quickly.</p>
+                  <p><span className="font-medium text-foreground">The business case:</span> Faster screening means faster hiring, which reduces vacancy costs. The system is 40% more efficient than manual review.</p>
+                  <p><span className="font-medium text-foreground">The concern:</span> Three employee resource groups raised concerns: historical underrepresentation in manager roles means the AI may be perpetuating past patterns.</p>
                 </div>
               </Card>
 
+              <div className="space-y-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><AlertTriangle className="h-4 w-4" />Part 1: Identify the Risks</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Check all risks you see in this scenario:</p>
+                  <div className="space-y-2">
+                    {[
+                      { id: "bias", label: "Historical bias", checked: true, desc: "The system learned from 10 years of data that may reflect past discrimination." },
+                      { id: "speed", label: "Speed bias", checked: true, desc: "Pressure to hire fast might skip important safeguards and human review." },
+                      { id: "opacity", label: "Opacity", checked: true, desc: "Applicants rejected by AI have no visibility into why - the system is a black box." },
+                      { id: "scale", label: "Scale of impact", checked: true, desc: "50,000 people per year affected - errors compound across thousands of lives." },
+                      { id: "legal", label: "Legal/regulatory risk", checked: true, desc: "Disparate impact (unequal outcomes by protected class) can trigger EEOC investigation." },
+                    ].map(({ id, label, checked, desc }) => (
+                      <div key={id} className="flex items-start gap-3 p-3 border rounded-lg bg-background">
+                        <CheckCircle2 className="h-5 w-5 text-brand-green flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-medium text-sm">{label}</p>
+                          <p className="text-xs text-muted-foreground">{desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Shield className="h-4 w-4" />Part 2: Design Safeguards</h3>
+                  <p className="text-sm text-muted-foreground mb-4">For each risk, here are practical safeguards. Read and reflect:</p>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        risk: "Historical bias in training data",
+                        safeguards: [
+                          "Audit the training data for demographic representation - if manager roles were 70% male historically, explicitly measure bias",
+                          "Use a fairness metric like 'disparate impact ratio' - ensure AI selection rates are within 80% of the best-performing group",
+                          "Retrain the model with synthetic data that corrects for historical underrepresentation in management",
+                          "Disable the 'tenure' and 'career path' features if they just replicate past patterns",
+                        ]
+                      },
+                      {
+                        risk: "Pressure to use AI without review",
+                        safeguards: [
+                          "Require human review of all top 500 candidates - AI screens but does not decide",
+                          "Set a company policy: no hire or rejection based on AI scoring alone",
+                          "Audit: monthly review of which candidates were rejected by AI but hired by humans - look for patterns",
+                          "Slow down: do not let speed pressure override process",
+                        ]
+                      },
+                      {
+                        risk: "Applicants have no recourse",
+                        safeguards: [
+                          "Publish the criteria: tell applicants what the AI is evaluating (skills, experience, etc.)",
+                          "Offer an appeal process: rejected applicants can request human re-review with explanation",
+                          "Provide feedback: if rejected by AI, explain which factors were weighted heavily",
+                          "Transparency report: publish annual statistics on AI screening (pass rates, demographics of selected candidates)",
+                        ]
+                      },
+                      {
+                        risk: "Legal and fairness liability",
+                        safeguards: [
+                          "Partner with legal and DEI teams from the start - do not build in isolation",
+                          "Document the validation process: show regulators that you tested for bias",
+                          "Assign accountability: a named person owns the system's fairness",
+                          "Plan for regulation: assume future rules will require transparency - build it now",
+                        ]
+                      },
+                    ].map(({ risk, safeguards }) => (
+                      <Card key={risk} className="p-4 border-dashed border-brand-green/30 bg-brand-green/5">
+                        <p className="font-semibold text-sm mb-2">{risk}</p>
+                        <ul className="space-y-1">
+                          {safeguards.map((sg) => (
+                            <li key={sg} className="text-xs text-muted-foreground flex gap-2">
+                              <CheckCircle2 className="h-3 w-3 text-brand-green flex-shrink-0 mt-0.5" />
+                              {sg}
+                            </li>
+                          ))}
+                        </ul>
+                      </Card>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Lightbulb className="h-4 w-4" />Part 3: Reflect on Your Approach</h3>
+                  <div className="space-y-3 text-sm text-muted-foreground">
+                    <div>
+                      <p className="font-medium text-foreground mb-1">Question 1:</p>
+                      <p>Of all the safeguards listed, which three would have the biggest impact on fairness? Why?</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground mb-1">Question 2:</p>
+                      <p>Which safeguard would be hardest to implement in a real company? What is getting in the way?</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground mb-1">Question 3:</p>
+                      <p>Imagine you are the company's Chief People Officer. What would you tell the executive team about this approach?</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground mb-1">Question 4:</p>
+                      <p>How would you apply this same thinking to a different AI system you use or know about - healthcare, lending, content moderation, etc.?</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                  <h3 className="font-semibold mb-3 text-brand-green">Key Takeaway</h3>
+                  <p className="text-sm text-muted-foreground">The goal is not to avoid AI - it is to use it with eyes wide open. A system that is audited, transparent, and governed is far more trustworthy than one that is fast but hidden. You now know how to ask the right questions and design practical safeguards.</p>
+                </Card>
+              </div>
+
               <QuickCheckCard
-                prompt="Which principle is most future-proof as AI tools keep changing?"
+                prompt="What is the relationship between bias auditing and legal compliance?"
                 options={[
-                  { id: "a", label: "Master one current tool and stop adapting" },
-                  { id: "b", label: "Prioritize critical thinking, verification, and human judgment over tool-specific shortcuts" },
-                  { id: "c", label: "Delegate all important decisions to AI for speed" },
-                  { id: "d", label: "Ignore governance and only optimize output volume" },
+                  { id: "a", label: "They are unrelated - auditing is just nice to have" },
+                  { id: "b", label: "Auditing is how you provide evidence of due diligence to regulators" },
+                  { id: "c", label: "Legal teams handle compliance independently of AI teams" },
+                  { id: "d", label: "Compliance is only for large companies" },
                 ]}
                 correctOptionId="b"
-                explanation="Right. Tools evolve fast, but judgment, verification discipline, and adaptive learning remain durable advantages."
+                explanation="Exactly. Auditing is your legal defense. It shows regulators and courts that you knew about the risks and took steps to mitigate them."
                 onAnswered={() => {
-                  markSectionInteractionComplete(5)
+                  markSectionInteractionComplete(6)
                 }}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
 
-              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the future-readiness checkpoint to unlock the next section.</p> : null}
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the risk assessment checkpoint to unlock the final section.</p> : null}
 
               <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 6: Quiz */}
-          {currentSectionIndex === 6 && (
+          {/* 7: Quiz */}
+          {currentSectionIndex === 7 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />

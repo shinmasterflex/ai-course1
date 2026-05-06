@@ -15,7 +15,8 @@ import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain, Zap, Globe, Stethoscope, Mic } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { CheckCircle2, Sparkles, Smartphone, Car, ShoppingCart, Music, MessageSquare, Image, Brain, Zap, Globe, Stethoscope, Mic, Search, MapPinned, Users, PenSquare, Code2, Target, Clock3, Rocket } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 
@@ -34,6 +35,52 @@ export default function Module0Page() {
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
+  const selfAssessmentQuestions = useMemo(
+    () => [
+      {
+        key: "confidence",
+        prompt: "How confident are you explaining AI in plain language today?",
+        options: [
+          { id: "a", label: "Not confident yet", score: 1 },
+          { id: "b", label: "Somewhat confident", score: 2 },
+          { id: "c", label: "Confident", score: 3 },
+        ],
+      },
+      {
+        key: "habits",
+        prompt: "When an AI answer looks great, what do you usually do?",
+        options: [
+          { id: "a", label: "Use it immediately", score: 1 },
+          { id: "b", label: "Skim and sanity-check it", score: 2 },
+          { id: "c", label: "Verify important facts before using", score: 3 },
+        ],
+      },
+      {
+        key: "practice",
+        prompt: "How often do you experiment with new tools hands-on?",
+        options: [
+          { id: "a", label: "Rarely", score: 1 },
+          { id: "b", label: "Sometimes", score: 2 },
+          { id: "c", label: "Regularly", score: 3 },
+        ],
+      },
+      {
+        key: "mindset",
+        prompt: "Which mindset best matches successful AI learners?",
+        options: [
+          { id: "a", label: "Find one perfect prompt once", score: 1 },
+          { id: "b", label: "Iterate, test, and refine", score: 3 },
+          { id: "c", label: "Wait until I feel fully ready", score: 1 },
+        ],
+      },
+    ],
+    []
+  )
+
+  const [assessmentAnswers, setAssessmentAnswers] = useState<Record<string, string>>({})
+  const [aiTouchpoints, setAiTouchpoints] = useState(["", "", ""])
+  const [courseSystemChecks, setCourseSystemChecks] = useState<string[]>([])
+
   useEffect(() => {
     if (sectionParam && sections.length > 0) {
       const idx = sections.findIndex((s) => s.id === sectionParam)
@@ -41,10 +88,33 @@ export default function Module0Page() {
     }
   }, [sectionParam])
 
+  const assessmentAnsweredCount = Object.keys(assessmentAnswers).length
+  const assessmentComplete = assessmentAnsweredCount === selfAssessmentQuestions.length
+  const assessmentScore = selfAssessmentQuestions.reduce((sum, question) => {
+    const selected = question.options.find((option) => option.id === assessmentAnswers[question.key])
+    return sum + (selected?.score || 0)
+  }, 0)
+
+  const assessmentProfile =
+    assessmentScore <= 6
+      ? "Explorer profile: perfect start point. You will build confidence fast with short daily reps."
+      : assessmentScore <= 9
+        ? "Builder profile: strong habits forming. Focus on consistency and verification."
+        : "Accelerator profile: you already think like an effective AI user. Push into advanced prompts quickly."
+
+  const hasThreeTouchpoints = aiTouchpoints.every((entry) => entry.trim().length >= 8)
+  const courseSystemReady = courseSystemChecks.length >= 2
+
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
     requiredSections: [3, 4],
   })
+
+  useEffect(() => {
+    if (assessmentComplete && hasThreeTouchpoints && courseSystemReady) {
+      markSectionInteractionComplete(3)
+    }
+  }, [assessmentComplete, hasThreeTouchpoints, courseSystemReady, markSectionInteractionComplete])
 
   const handleSectionComplete = () => {
     if (!canAdvance) {
@@ -104,13 +174,21 @@ export default function Module0Page() {
 
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Welcome & Course Overview</h2>
-              <TextDisplay variant="callout" content="Welcome! You are about to learn one of the most important skills of the 21st century - and you do not need any technical background to do it." />
-              <TextDisplay content="This course is designed for curious people who want to understand what AI is, how it works, and how to use it responsibly. Whether you are a student, a professional, or just someone who keeps hearing about AI in the news - this is for you." />
+              <h2 className="text-3xl font-bold text-brand-green">Why AI Matters Right Now</h2>
+              <TextDisplay
+                variant="callout"
+                content="You are not behind. You are early enough to benefit. AI is reshaping work, creativity, and decisions, and practical AI habits built now can compound quickly."
+              />
+              <TextDisplay content="Think of this module as your launchpad: move from uncertainty to clarity, then from clarity to action. No coding background required." />
               <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> What makes this course different</h3>
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> The shift happening around you</h3>
                 <ul className="space-y-3">
-                  {["No jargon - every technical term is explained in plain language","No math - you will understand the concepts without a single equation","No coding - this is for users of AI, not builders (though we will point you there if you want)","Interactive - quizzes, flashcards, and exercises keep you engaged"].map((item) => (
+                  {[
+                    "Search is becoming answer-first instead of link-first.",
+                    "Writing is becoming draft-first instead of blank-page-first.",
+                    "Coding is becoming intent-first instead of syntax-first.",
+                    "Teams are hiring for AI fluency, not just years of experience.",
+                  ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
@@ -119,13 +197,13 @@ export default function Module0Page() {
                 </ul>
               </Card>
               <div>
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Zap className="h-5 w-5 text-brand-orange" /> Mind-blowing AI facts to get you started</h3>
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><Zap className="h-5 w-5 text-brand-orange" /> Fast reality check</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {[
-                    { stat: "100M users", detail: "ChatGPT reached 100 million users in just 2 months - faster than any product in history. Netflix took 3.5 years." },
-                    { stat: "1.8 trillion", detail: "The estimated number of parameters in GPT-4 - roughly 1,800,000,000,000 adjustable values that shape every response." },
-                    { stat: "700%", detail: "AI investment grew 700% in the decade from 2010 to 2020, and the pace has only accelerated since." },
-                    { stat: "30+ times", detail: "The average person interacts with AI over 30 times per day - most of it completely invisible in the background." },
+                    { stat: "100M users", detail: "Generative AI reached mass adoption faster than nearly any consumer software wave." },
+                    { stat: "30+ times/day", detail: "Most people already interact with AI dozens of times daily without explicitly noticing it." },
+                    { stat: "Every industry", detail: "Healthcare, law, finance, education, and retail are redesigning workflows with AI." },
+                    { stat: "Beginner edge", detail: "Learners who build prompting and verification habits now create leverage that compounds." },
                   ].map(({ stat, detail }) => (
                     <Card key={stat} className="p-4 border-l-4 border-l-brand-orange">
                       <p className="text-2xl font-black text-brand-orange mb-1">{stat}</p>
@@ -134,48 +212,29 @@ export default function Module0Page() {
                   ))}
                 </div>
               </div>
-              <FlipCardGrid
-                cards={[
-                  {
-                    title: "Pattern Recognition",
-                    prompt: "What does AI do best in daily tools?",
-                    answer: "It detects patterns in huge datasets quickly and applies them to tasks like recommendations, ranking, and prediction.",
-                  },
-                  {
-                    title: "Prediction",
-                    prompt: "What is a simple way to think about AI outputs?",
-                    answer: "Most outputs are predictions based on previous examples, not human-like understanding or intuition.",
-                  },
-                  {
-                    title: "Augmentation",
-                    prompt: "Why does AI matter for beginners?",
-                    answer: "It helps you draft, summarize, and organize faster, so you can focus on judgment and decision-making.",
-                  },
-                  {
-                    title: "Verification",
-                    prompt: "What habit keeps AI useful and safe?",
-                    answer: "Always verify important facts and claims before acting on AI output.",
-                  },
-                ]}
-              />
-              <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> Discover your AI learning style</h3>
-                <p className="text-sm text-muted-foreground mb-4">We removed the legacy Cognijin personality assessment from this course flow.</p>
-              </div>
-              <TextDisplay
-                variant="info"
-                content="You can continue directly into the course modules. Learning guidance is now built into each module section instead of a separate personality quiz."
-              />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Micro-wins in this section</h3>
+                <div className="grid gap-3 md:grid-cols-2 text-sm">
+                  {[
+                    "Micro-win 1: You can explain why AI matters now in one sentence.",
+                    "Micro-win 2: You can name one place AI is changing your future role.",
+                    "Micro-win 3: You see this course as skill-building, not theory-only.",
+                    "Micro-win 4: You have a clear reason to keep going past the hype cycle.",
+                  ].map((item) => (
+                    <div key={item} className="rounded-lg border bg-white p-3 text-muted-foreground">{item}</div>
+                  ))}
+                </div>
+              </Card>
               <QuickCheckCard
-                prompt="Before moving on, what is the best learning approach for this course?"
+                prompt="Which statement captures the biggest beginner opportunity in AI right now?"
                 options={[
-                  { id: "a", label: "Skim content quickly and skip interactions" },
-                  { id: "b", label: "Work section-by-section and complete interactive checkpoints" },
-                  { id: "c", label: "Jump straight to advanced modules first" },
-                  { id: "d", label: "Only read summaries and avoid practice" },
+                  { id: "a", label: "Wait until AI tools stop changing before learning" },
+                  { id: "b", label: "Build practical AI habits now while the field is still early" },
+                  { id: "c", label: "AI is only relevant for software engineers" },
+                  { id: "d", label: "Prompting matters less than technical jargon" },
                 ]}
                 correctOptionId="b"
-                explanation="Right. Consistent interaction plus section order is what turns this into skill, not just reading."
+                explanation="Exactly. Early practical fluency compounds and creates leverage in study and work."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Card className="p-6 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-brand-green/5">
@@ -201,8 +260,30 @@ export default function Module0Page() {
 
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI Is Already Around You</h2>
-              <TextDisplay content="Before we define AI, let us notice something: you have probably already used AI today without realising it. The average person interacts with AI over 30 times a day - most of it invisible." />
+              <h2 className="text-3xl font-bold text-brand-orange">A Day in Your Life With AI</h2>
+              <TextDisplay content="You likely used AI before breakfast. Walk through this day and notice how often AI quietly shapes decisions." />
+              <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+                <h3 className="font-semibold mb-4 text-brand-orange">From morning to night</h3>
+                <div className="space-y-3">
+                  {[
+                    { icon: Search, label: "7:30 AM - Search", detail: "You type a question, and search AI interprets intent, rewrites the query, and ranks results." },
+                    { icon: MapPinned, label: "8:10 AM - Maps", detail: "Traffic models predict congestion and reroute you before delays happen." },
+                    { icon: Users, label: "12:20 PM - Social Media", detail: "Feed ranking decides what appears first, what gets buried, and what goes viral." },
+                    { icon: PenSquare, label: "2:00 PM - Writing", detail: "Autocomplete, grammar suggestions, and rewrite tools help draft faster." },
+                    { icon: Code2, label: "4:30 PM - Coding", detail: "Coding assistants propose snippets, tests, and refactors from your context." },
+                  ].map(({ icon: Icon, label, detail }) => (
+                    <div key={label} className="flex items-start gap-3 rounded-lg border bg-white p-3">
+                      <div className="mt-0.5 rounded-md bg-brand-orange/10 p-2">
+                        <Icon className="h-4 w-4 text-brand-orange" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm">{label}</p>
+                        <p className="text-sm text-muted-foreground">{detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   { icon: Smartphone,    label: "Face ID / Fingerprint Unlock",  desc: "AI recognises your face or fingerprint in milliseconds - trained on millions of facial images to find patterns unique to you." },
@@ -222,24 +303,24 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The point: AI is not some distant science-fiction technology. It is already woven into the fabric of daily life - often invisibly. This course will help you understand exactly how it works and why it matters." />
+              <TextDisplay variant="callout" content="Key insight: AI is not one app. It is an invisible layer embedded across products you already use." />
               <MatchingChallenge
-                title="Daily AI Match"
-                description="Choose a real-world AI use and match it to what it does for users."
+                title="Day-In-The-Life Match"
+                description="Match each daily moment to the role AI plays behind the scenes."
                 pairs={[
                   {
                     id: "navigation",
-                    left: "Navigation apps",
+                    left: "Maps during commute",
                     right: "Predict traffic and suggest faster routes",
                   },
                   {
                     id: "spam",
-                    left: "Email spam filter",
+                    left: "Inbox management",
                     right: "Classify messages as likely unwanted content",
                   },
                   {
                     id: "recommendation",
-                    left: "Product recommendations",
+                    left: "Social or shopping feeds",
                     right: "Rank options based on similar behavior patterns",
                   },
                 ]}
@@ -266,8 +347,29 @@ export default function Module0Page() {
 
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">What You will Learn</h2>
-              <TextDisplay content="Here is the full journey you are embarking on. Seven modules, three phases:" />
+              <h2 className="text-3xl font-bold text-brand-green">Your Transformation Arc</h2>
+              <TextDisplay content="This course is a clear before-and-after journey: from curious beginner to practical AI user who can solve real tasks responsibly." />
+              <Card className="p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white">
+                <h3 className="font-semibold text-brand-green mb-3">Before and After</h3>
+                <div className="grid gap-3 md:grid-cols-2 text-sm">
+                  <div className="rounded-lg border bg-white p-4">
+                    <p className="font-semibold mb-2 text-brand-orange">Before this course</p>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li>AI feels impressive but confusing.</li>
+                      <li>You are unsure what to trust.</li>
+                      <li>You do not have a repeatable workflow.</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-lg border bg-white p-4">
+                    <p className="font-semibold mb-2 text-brand-green">After this course</p>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li>You can prompt clearly and iterate quickly.</li>
+                      <li>You verify outputs and reduce risk.</li>
+                      <li>You can apply AI to study, work, and projects right away.</li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
               <div className="space-y-4">
                 {[
                   { phase: "Phase 1: Understanding AI", color: "brand-green", modules: [
@@ -298,8 +400,8 @@ export default function Module0Page() {
                 ))}
               </div>
               <DragSortChallenge
-                title="Course Path Builder"
-                description="Drag each phase into the recommended learning sequence."
+                title="Transformation Sequence"
+                description="Arrange the phases in the order that creates the strongest skill growth."
                 items={[
                   "Thinking and Building",
                   "Understanding AI",
@@ -312,12 +414,12 @@ export default function Module0Page() {
                 ]}
               />
               <Card className="p-4 bg-brand-orange/5 border-brand-orange/20">
-                <h3 className="font-semibold mb-3 text-brand-orange">Estimated time</h3>
+                <h3 className="font-semibold mb-3 text-brand-orange">What you will be able to do after this course</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   {[
-                    { label: "Per module", time: "20-40 min" },
-                    { label: "Full course", time: "3-5 hours" },
-                    { label: "Weekend sprint", time: "Achievable" },
+                    { label: "Communication", time: "Explain AI concepts clearly to non-technical people" },
+                    { label: "Execution", time: "Use AI for writing, research, and workflow acceleration" },
+                    { label: "Judgment", time: "Spot weak outputs and verify before acting" },
                   ].map(({ label, time }) => (
                     <div key={label} className="text-center p-3 bg-white rounded-lg border">
                       <p className="text-muted-foreground text-xs mb-1">{label}</p>
@@ -327,12 +429,12 @@ export default function Module0Page() {
                 </div>
               </Card>
               <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">How to pace your learning</h3>
+                <h3 className="font-semibold mb-3 text-brand-green">Micro-wins for this section</h3>
                 <div className="grid md:grid-cols-3 gap-3 text-sm">
                   {[
-                    { plan: "Busy weekday", cadence: "20 minutes per day, one section at a time" },
-                    { plan: "Weekend focus", cadence: "2 x 90-minute sessions with practice breaks" },
-                    { plan: "Team cohort", cadence: "One module per week plus discussion notes" },
+                    { plan: "Micro-win 1", cadence: "You can describe your before-and-after state clearly." },
+                    { plan: "Micro-win 2", cadence: "You know the exact learning sequence across phases." },
+                    { plan: "Micro-win 3", cadence: "You can name three concrete capabilities you will gain." },
                   ].map(({ plan, cadence }) => (
                     <div key={plan} className="rounded-lg border bg-white p-3">
                       <p className="font-medium text-brand-orange mb-1">{plan}</p>
@@ -347,15 +449,32 @@ export default function Module0Page() {
 
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">How to Use This Course</h2>
-              <TextDisplay content="You will get the most out of this course if you follow a few simple guidelines:" />
+              <h2 className="text-3xl font-bold text-brand-orange">How to Take This Course Effectively</h2>
+              <TextDisplay content="Treat this course like a training system, not passive reading. Keep sessions short, hands-on, and consistent." />
+              <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+                <h3 className="font-semibold mb-4 text-brand-orange">Your practical system</h3>
+                <div className="grid gap-3 md:grid-cols-3 text-sm">
+                  <div className="rounded-lg border bg-white p-3">
+                    <p className="font-medium mb-1 flex items-center gap-2"><Clock3 className="h-4 w-4 text-brand-orange" /> Time</p>
+                    <p className="text-muted-foreground">20-30 minutes per session, 4-5 sessions per week.</p>
+                  </div>
+                  <div className="rounded-lg border bg-white p-3">
+                    <p className="font-medium mb-1 flex items-center gap-2"><Target className="h-4 w-4 text-brand-orange" /> Pacing</p>
+                    <p className="text-muted-foreground">One section at a time. Finish interactions before moving forward.</p>
+                  </div>
+                  <div className="rounded-lg border bg-white p-3">
+                    <p className="font-medium mb-1 flex items-center gap-2"><Rocket className="h-4 w-4 text-brand-orange" /> Mindset</p>
+                    <p className="text-muted-foreground">Learn by doing: prompt, test, refine, then reflect after each module.</p>
+                  </div>
+                </div>
+              </Card>
               <div className="space-y-3">
                 {[
-                  { n: "1", tip: "Go in order", desc: "Each module builds on the previous one. Start from Module 0 and work your way through." },
-                  { n: "2", tip: "Do the exercises", desc: "The quizzes and matching games are not decoration - they are how your brain actually locks in the knowledge." },
-                  { n: "3", tip: "Take your time", desc: "There is no deadline. Better to understand each module fully than to rush through." },
-                  { n: "4", tip: "Try the tools", desc: "In Module 3 and beyond, you will be encouraged to try real AI tools. Open a tab and experiment as you learn." },
-                  { n: "5", tip: "Use the sidebar", desc: "The sidebar tracks your progress and lets you jump between sections easily." },
+                  { n: "1", tip: "Go in sequence", desc: "Each section compounds. Skipping fundamentals slows you down later." },
+                  { n: "2", tip: "Collect micro-wins", desc: "After each section, write one practical thing you can now do." },
+                  { n: "3", tip: "Practice immediately", desc: "Apply each concept in a real tool the same day you learn it." },
+                  { n: "4", tip: "Verify before trust", desc: "Treat AI output as a draft until key facts and context are checked." },
+                  { n: "5", tip: "Keep momentum", desc: "Consistency beats intensity. Short daily sessions win." },
                 ].map(({ n, tip, desc }) => (
                   <Card key={n} className="p-4 flex gap-3 items-start">
                     <span className="bg-brand-green text-white text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">{n}</span>
@@ -363,21 +482,98 @@ export default function Module0Page() {
                   </Card>
                 ))}
               </div>
-              <QuickCheckCard
-                prompt="Which habit best ensures you actually learn from this course instead of skimming it?"
-                options={[
-                  { id: "a", label: "Read quickly, skip exercises, and jump modules" },
-                  { id: "b", label: "Follow module order and complete the interactive activities" },
-                  { id: "c", label: "Only read summaries and avoid hands-on practice" },
-                  { id: "d", label: "Treat quizzes as optional decoration" },
-                ]}
-                correctOptionId="b"
-                explanation="Exactly. Progress sticks when you combine sequence, interaction, and repetition instead of passive reading."
-                onAnswered={() => {
-                  markSectionInteractionComplete(3)
-                }}
-              />
-              {!canAdvance ? <p className="text-sm text-muted-foreground">Answer the quick check to unlock the next section.</p> : null}
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold text-brand-green mb-2">Interactive self-assessment</h3>
+                <p className="text-sm text-muted-foreground mb-4">Answer all questions to reveal your current learning profile.</p>
+                <p className="text-xs text-muted-foreground mb-3">Progress: {assessmentAnsweredCount}/{selfAssessmentQuestions.length}</p>
+                <div className="space-y-4">
+                  {selfAssessmentQuestions.map((question) => (
+                    <Card key={question.key} className="p-4">
+                      <p className="text-sm font-medium mb-3">{question.prompt}</p>
+                      <div className="grid gap-2 md:grid-cols-3">
+                        {question.options.map((option) => {
+                          const isSelected = assessmentAnswers[question.key] === option.id
+                          return (
+                            <Button
+                              key={option.id}
+                              type="button"
+                              variant="outline"
+                              className={isSelected ? "border-green-600 bg-green-50 text-green-900 hover:bg-green-50" : "h-auto whitespace-normal text-left"}
+                              onClick={() => {
+                                setAssessmentAnswers((prev) => ({ ...prev, [question.key]: option.id }))
+                              }}
+                            >
+                              {option.label}
+                            </Button>
+                          )
+                        })}
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+
+                {assessmentComplete ? (
+                  <div className="mt-4 rounded-lg border border-green-500/30 bg-green-50 p-4">
+                    <p className="text-sm font-semibold text-green-800">Your current profile</p>
+                    <p className="text-sm text-green-700">{assessmentProfile}</p>
+                  </div>
+                ) : null}
+              </Card>
+
+              <Card className="p-5 border-brand-indigo/20 bg-gradient-to-br from-brand-indigo/5 to-white">
+                <h3 className="font-semibold text-brand-indigo mb-2">Action task: find 3 ways you already interact with AI</h3>
+                <p className="text-sm text-muted-foreground mb-4">Write one specific example in each box. Be concrete, for example: "Maps rerouting my commute".</p>
+                <div className="space-y-3">
+                  {aiTouchpoints.map((value, index) => (
+                    <Input
+                      key={`touchpoint-${index}`}
+                      value={value}
+                      onChange={(event) => {
+                        const next = [...aiTouchpoints]
+                        next[index] = event.target.value
+                        setAiTouchpoints(next)
+                      }}
+                      placeholder={`AI touchpoint ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                {!hasThreeTouchpoints ? (
+                  <p className="mt-3 text-xs text-muted-foreground">Add three specific examples to complete this task.</p>
+                ) : (
+                  <p className="mt-3 text-xs text-green-700">Nice work. You just made AI visible in your own day.</p>
+                )}
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3">Commit to your learning system</h3>
+                <div className="grid gap-2 md:grid-cols-2">
+                  {[
+                    "I will schedule at least four 20-30 minute sessions each week.",
+                    "I will complete interactions before moving to the next section.",
+                    "I will test one real-world use case each module.",
+                    "I will verify important outputs before I trust them.",
+                  ].map((item) => {
+                    const checked = courseSystemChecks.includes(item)
+                    return (
+                      <Button
+                        key={item}
+                        type="button"
+                        variant="outline"
+                        className={checked ? "justify-start h-auto whitespace-normal border-green-600 bg-green-50 text-green-900 hover:bg-green-50" : "justify-start h-auto whitespace-normal text-left"}
+                        onClick={() => {
+                          setCourseSystemChecks((prev) =>
+                            prev.includes(item) ? prev.filter((entry) => entry !== item) : [...prev, item]
+                          )
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    )
+                  })}
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground">Select at least two commitments to unlock the next section.</p>
+              </Card>
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the self-assessment, add 3 touchpoints, and choose at least 2 commitments to continue.</p> : null}
               <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
@@ -385,15 +581,15 @@ export default function Module0Page() {
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Summary & Next Steps</h2>
-              <TextDisplay variant="success" content="You have completed Module 0! You now know what this course covers and how to use it." />
+              <TextDisplay variant="success" content="You have completed Module 0. You now have context, momentum, and a practical system for learning AI effectively." />
               <Card className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold flex items-center gap-2"><Brain className="h-5 w-5 text-brand-orange" /> Key Takeaways</h3>
                 <ul className="space-y-2">
                   {[
-                    "AI is already in your everyday life - from your phone to your email",
-                    "This course requires no math, no code, and no prior knowledge",
-                    "There are 3 phases: Understanding AI, Using AI, and Thinking Critically",
-                    "You learn best by going in order and doing the exercises",
+                    "AI already shapes your day across search, maps, social, writing, and coding",
+                    "You have a clear transformation path from beginner to practical AI user",
+                    "Your results depend on pacing, hands-on reps, and verification habits",
+                    "You have identified your own AI touchpoints and committed to a learning system",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
@@ -403,9 +599,32 @@ export default function Module0Page() {
                 </ul>
               </Card>
               <div>
-                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> Preview: Key Terms You Will Master</h3>
-                <p className="text-sm text-muted-foreground mb-4">Flip each card to get a sneak peek at the AI vocabulary you will understand by the end of this course.</p>
-                
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2"><Sparkles className="h-5 w-5 text-brand-orange" /> Preview: Your next leap</h3>
+                <p className="text-sm text-muted-foreground mb-4">Flip each card for a quick preview of concepts you will master next.</p>
+                <FlipCardGrid
+                  cards={[
+                    {
+                      title: "Definition",
+                      prompt: "What is AI, really?",
+                      answer: "In this course, AI is software that performs tasks requiring human-like intelligence such as prediction, language, and pattern recognition.",
+                    },
+                    {
+                      title: "Myth vs Reality",
+                      prompt: "What trap will you avoid?",
+                      answer: "You will learn to separate hype from capability so you can use AI with better judgment.",
+                    },
+                    {
+                      title: "Prompting",
+                      prompt: "What skill unlocks better output?",
+                      answer: "Specific context, clear constraints, and iterative follow-up prompts create dramatically better results.",
+                    },
+                    {
+                      title: "Safety",
+                      prompt: "What keeps AI useful?",
+                      answer: "Verification, privacy awareness, and responsible use habits protect you from avoidable mistakes.",
+                    },
+                  ]}
+                />
               </div>
               <TextDisplay variant="callout" content="Up next: Module 1 - What Is Artificial Intelligence? We will give AI a real definition, look at its history, and bust some popular myths." />
               <QuickCheckCard

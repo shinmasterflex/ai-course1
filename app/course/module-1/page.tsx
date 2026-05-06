@@ -281,8 +281,8 @@ export default function Module1Page() {
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Defining AI</h2>
-              <TextDisplay content="Artificial Intelligence (AI) is software that is designed to perform tasks that would normally require human intelligence." />
-              <TextDisplay variant="callout" content="Think of it this way: human intelligence lets you recognise faces, understand language, solve problems, and learn from experience. AI is software engineered to do the same kinds of things - not by thinking the way humans do, but by finding patterns in massive amounts of data." />
+              <TextDisplay content="Artificial Intelligence (AI) is software that performs specific tasks that used to require human intelligence, such as understanding language, spotting patterns, making predictions, or helping with decisions." />
+              <TextDisplay variant="callout" content="Useful analogy: think of a human expert as a seasoned chef who understands ingredients, taste, context, and tradeoffs. Think of modern AI as an extremely fast prep assistant trained on millions of recipes. It can slice, sort, and suggest at scale, but it does not truly taste, care, or understand consequences the way the chef does." />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3">Three Key Words in the Definition</h3>
                 <div className="space-y-3">
@@ -299,9 +299,23 @@ export default function Module1Page() {
                 </div>
               </Card>
 
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Two truths to hold at the same time</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-orange mb-1">Truth 1: AI is genuinely useful</p>
+                    <p className="text-muted-foreground">It can save hours on drafting, search, classification, and routine analysis when tasks are pattern-heavy and goals are clear.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-orange mb-1">Truth 2: AI is not human understanding</p>
+                    <p className="text-muted-foreground">It can sound confident while missing context, values, and real-world constraints. Human judgment is still required for quality and accountability.</p>
+                  </div>
+                </div>
+              </Card>
+
               <div>
-                <h3 className="text-xl font-semibold mb-3 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> The Five Categories of AI Capability</h3>
-                <p className="text-sm text-muted-foreground mb-4">When researchers say AI can perform "human-level tasks," they mean five broad categories. Modern AI systems are strong in some and weak in others:</p>
+                <h3 className="text-xl font-semibold mb-3 flex items-center gap-2"><Brain className="h-5 w-5 text-brand-green" /> The Five Capability Buckets</h3>
+                <p className="text-sm text-muted-foreground mb-4">When people say AI can do "intelligent tasks," they usually mean one of these five buckets. Most systems are very good in one or two buckets, not all five:</p>
                 <div className="space-y-3">
                   {[
                     { category: "Perception", examples: "Face recognition, speech recognition, reading handwriting, detecting objects in photos", how: "The AI is trained on millions of labelled examples until it can reliably identify what it sees or hears." },
@@ -322,6 +336,43 @@ export default function Module1Page() {
                   ))}
                 </div>
               </div>
+
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Three core AI categories you will see everywhere</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    {
+                      name: "Computer Vision",
+                      in: "Pixels from images or video",
+                      out: "Labels, detections, or generated visuals",
+                      examples: "Phone face unlock, quality inspection in factories, radiology image support, self-checkout cameras",
+                      limit: "Strong on repeated visual patterns; weaker when context is unusual or ambiguous.",
+                    },
+                    {
+                      name: "Natural Language Processing (NLP)",
+                      in: "Text or speech",
+                      out: "Summaries, translations, classifications, answers, drafts",
+                      examples: "Customer support chatbots, email summarizers, translation apps, contract clause extraction",
+                      limit: "Can produce fluent but incorrect statements, especially when facts are uncertain.",
+                    },
+                    {
+                      name: "Recommendation Systems",
+                      in: "Behavior data (clicks, views, purchases, likes)",
+                      out: "Ranked suggestions",
+                      examples: "Netflix watch lists, Spotify playlists, Amazon product suggestions, YouTube home feed",
+                      limit: "Can over-personalize and create filter bubbles if not designed carefully.",
+                    },
+                  ].map((item) => (
+                    <div key={item.name} className="rounded-lg border bg-background p-3">
+                      <p className="font-semibold text-brand-green mb-1">{item.name}</p>
+                      <p className="text-muted-foreground"><span className="font-medium text-foreground">Input:</span> {item.in}</p>
+                      <p className="text-muted-foreground"><span className="font-medium text-foreground">Output:</span> {item.out}</p>
+                      <p className="text-muted-foreground"><span className="font-medium text-foreground">Common examples:</span> {item.examples}</p>
+                      <p className="text-muted-foreground"><span className="font-medium text-foreground">Reality check:</span> {item.limit}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
 
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">AI vs. Traditional Software vs. Human Intelligence</h3>
@@ -355,6 +406,43 @@ export default function Module1Page() {
                   </table>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">Key takeaway: AI fills the gap between rigid traditional software and flexible human thinking - but it is not the same as human thinking.</p>
+              </Card>
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Mini case studies from the real world</h3>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  {[
+                    {
+                      title: "Hospital imaging triage",
+                      setup: "A radiology team receives thousands of scans weekly.",
+                      aiRole: "A vision model flags scans likely to need urgent review first.",
+                      humanRole: "Radiologists still make diagnosis and final clinical decision.",
+                      result: "Faster triage, but only safe with expert oversight and auditing.",
+                    },
+                    {
+                      title: "Retail recommendations",
+                      setup: "An online store has too many products for users to browse manually.",
+                      aiRole: "A recommender ranks products based on similar user behavior.",
+                      humanRole: "Teams set business rules, fairness constraints, and promotion strategy.",
+                      result: "Higher conversion rates, but risk of over-personalization.",
+                    },
+                    {
+                      title: "Support inbox summarization",
+                      setup: "A customer support team receives long multi-message threads.",
+                      aiRole: "An NLP model summarizes intent and proposes a response draft.",
+                      humanRole: "Agent verifies details, adjusts tone, and sends final answer.",
+                      result: "Shorter handling time with better consistency when reviewed.",
+                    },
+                  ].map(({ title, setup, aiRole, humanRole, result }) => (
+                    <div key={title} className="rounded-lg border p-3 bg-background">
+                      <p className="font-semibold text-brand-orange mb-2">{title}</p>
+                      <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">Situation:</span> {setup}</p>
+                      <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">AI does:</span> {aiRole}</p>
+                      <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">Humans do:</span> {humanRole}</p>
+                      <p className="text-muted-foreground"><span className="font-medium text-foreground">Outcome:</span> {result}</p>
+                    </div>
+                  ))}
+                </div>
               </Card>
 
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
@@ -636,6 +724,7 @@ export default function Module1Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Types of AI</h2>
               <TextDisplay content="Not all AI is the same. Researchers distinguish between three levels - and only one of them actually exists today." />
+              <TextDisplay variant="callout" content="Analogy: Narrow AI is like a world-class specialist with one narrow job description. AGI would be like a flexible generalist teammate who can learn and transfer skills across completely different tasks. Today we have specialists, not true generalists." />
               <div className="space-y-4">
                 <Card className="p-5 border-2 border-brand-green/40 bg-brand-green/5">
                   <h3 className="font-bold text-lg text-brand-green mb-2">Narrow AI (Weak AI) - This is real, and it exists today</h3>
@@ -652,6 +741,50 @@ export default function Module1Page() {
                   <p className="text-muted-foreground">A hypothetical AI far smarter than all humans combined. This is what science fiction movies are about. It does not exist, and most researchers consider it very far away - if it is possible at all.</p>
                 </Card>
               </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Concrete examples: narrow vs speculative</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-orange mb-1">Definitely Narrow AI today</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Credit-card fraud detection</li>
+                      <li>Speech-to-text transcription</li>
+                      <li>Image moderation filters</li>
+                      <li>Route optimization for delivery fleets</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-orange mb-1">Would suggest AGI if real</p>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>Learns a brand-new profession end-to-end without domain retraining</li>
+                      <li>Shows robust common sense across unrelated domains</li>
+                      <li>Plans long-term autonomously while aligning with human values</li>
+                      <li>Transfers learning from medicine to law to engineering like a human polymath</li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Four AI agent types emerging right now</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground">Consumer chatbots</p>
+                    <p>ChatGPT, Claude, Gemini -- cloud-based and easy to use.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground">Local/open-source agents</p>
+                    <p>OpenClaw -- runs on your own machine, but technical setup is usually required.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground">Cloud task agents</p>
+                    <p>Manus, ChatGPT Agent -- autonomous systems that run tasks in a cloud sandbox.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground">Embedded/enterprise agents</p>
+                    <p>Microsoft Copilot, Google Gemini in Workspace, Claude in Excel -- built into existing tools your team already uses.</p>
+                  </div>
+                </div>
+              </Card>
               <TextDisplay variant="callout" content="Key insight: When you read scary headlines about AI 'taking over,' they are almost always talking about AGI or superintelligence - things that do not exist. The AI you use today is Narrow AI, which is powerful but limited to specific tasks." />
               <Card className="p-5 bg-brand-orange/5 border-brand-orange/20">
                 <h3 className="font-semibold mb-3 text-brand-orange">Reality check: how to classify any AI headline</h3>
@@ -805,7 +938,7 @@ export default function Module1Page() {
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Myths vs. Reality</h2>
-              <TextDisplay content="AI gets a lot of hype - and a lot of fear. Most of it comes from misunderstanding what AI actually is. Let us set the record straight:" />
+              <TextDisplay content="AI gets a lot of hype and a lot of fear. This section is a practice lab: test each claim, challenge your first instinct, and back your conclusion with evidence." />
               <div className="space-y-4">
                 {[
                   {
@@ -831,6 +964,30 @@ export default function Module1Page() {
                   </Card>
                 ))}
               </div>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Claim Drill 1",
+                    prompt: "\"This chatbot sounds empathetic, so it truly understands my life situation.\" Myth or reality?",
+                    answer: "Myth. Fluent language can simulate empathy, but current systems do not have lived experience or human emotional understanding.",
+                  },
+                  {
+                    title: "Claim Drill 2",
+                    prompt: "\"If recommendation quality improved after collecting feedback, that is a real AI behavior.\" Myth or reality?",
+                    answer: "Reality. Learning from behavior data and feedback over time is a core AI pattern.",
+                  },
+                  {
+                    title: "Claim Drill 3",
+                    prompt: "\"Because the model is mathematical, its output is automatically unbiased.\" Myth or reality?",
+                    answer: "Myth. Models can encode dataset bias, labeling bias, and design assumptions.",
+                  },
+                  {
+                    title: "Claim Drill 4",
+                    prompt: "\"The strongest AI workflow includes verification before taking action.\" Myth or reality?",
+                    answer: "Reality. Reliable usage means draft, review, verify, and then apply.",
+                  },
+                ]}
+              />
               <MatchingChallenge
                 title="Myth Match Sprint"
                 description="Select a myth on the left, then tap its matching reality on the right."
@@ -852,7 +1009,24 @@ export default function Module1Page() {
                     left: "AI will replace every job completely",
                     right: "Near-term impact is mostly task automation and augmentation",
                   },
+                  {
+                    id: "first-answer",
+                    left: "First answer is usually good enough for important work",
+                    right: "High-quality use requires review, correction, and evidence checks",
+                  },
                 ]}
+              />
+              <QuickCheckCard
+                prompt="Scenario: A team uses AI to summarize support tickets. It saves 40% time, but occasionally misses critical details. What is the strongest response?"
+                options={[
+                  { id: "a", label: "Disable AI completely because one tool cannot be perfect" },
+                  { id: "b", label: "Use AI drafts, then require human verification for high-impact cases" },
+                  { id: "c", label: "Trust AI for all customer responses to maximize speed" },
+                  { id: "d", label: "Only use AI when customers explicitly ask for it" },
+                ]}
+                correctOptionId="b"
+                explanation="This is the realistic middle path: keep productivity gains while adding safeguards where errors matter most."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Practical takeaway</h3>
@@ -880,6 +1054,26 @@ export default function Module1Page() {
                 explanation="This course frames AI as powerful but limited: useful for support and acceleration, but still requiring human oversight and verification."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Mini case studies: myth to reality in practice</h3>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-green mb-1">Hiring screen tool</p>
+                    <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">Myth:</span> "Machine scoring is automatically fair."</p>
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">Reality:</span> Historical bias in hiring data can carry forward. Teams need bias testing, transparent criteria, and human review.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-green mb-1">Content recommendation feed</p>
+                    <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">Myth:</span> "Recommendations only show what is best for me."</p>
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">Reality:</span> Recommendations optimize for objectives like engagement, which may not equal long-term user value.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-brand-green mb-1">Medical note drafting</p>
+                    <p className="text-muted-foreground mb-1"><span className="font-medium text-foreground">Myth:</span> "If AI draft looks professional, it is clinically reliable."</p>
+                    <p className="text-muted-foreground"><span className="font-medium text-foreground">Reality:</span> Clinical use needs strict validation, source checks, and clinician accountability.</p>
+                  </div>
+                </div>
+              </Card>
               <OrderingChallenge
                 title="Build the Responsible AI Workflow"
                 description="Move each step into the strongest practical order."

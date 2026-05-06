@@ -89,21 +89,31 @@ export default function Module4Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="Every AI model is only as good as the data it was trained on. This module gives you a clear picture of what data is, how it is collected and cleaned, and how preprocessing turns raw inputs into something a model can actually learn from." />
+              <TextDisplay variant="callout" content="Every AI model is only as good as the data it was trained on. This module is a practical guide to what happens before model training: collection, cleaning, transformation, and feature engineering. If the input data is weak, the output intelligence is weak too." />
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 flex items-center gap-2"><Database className="h-4 w-4" /> What is in this module</h3>
                 <ul className="space-y-2 text-sm">
                   {[
                     "What Is Data? - structured, unstructured, and everything in between",
                     "Data Collection - sources, methods, and what to watch out for",
-                    "Data Cleaning & Quality - why dirty data ruins good models",
-                    "Preprocessing Techniques - normalisation, encoding, splitting",
-                    "Feature Engineering - turning raw data into useful model inputs",
+                    "Data Quality - missing values, duplicates, bias, and consistency checks",
+                    "Transformation & Preprocessing - normalisation, encoding categories, splitting",
+                    "Feature Engineering - turning raw fields into useful model signals",
+                    "Mini Exercise - clean a messy customer and email dataset conceptually",
                     "Module Quiz",
                   ].map((item) => (
                     <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" />{item}</li>
                   ))}
                 </ul>
+              </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">The practical pipeline you will use</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">1. Collection:</span> gather data from CRMs, forms, emails, product events, and support logs.</p>
+                  <p><span className="font-medium text-foreground">2. Cleaning:</span> fix missing values, remove duplicates, standardise formats, and audit bias.</p>
+                  <p><span className="font-medium text-foreground">3. Transformation:</span> convert fields into model-friendly representations (numbers, encoded categories, scaled ranges).</p>
+                  <p><span className="font-medium text-foreground">4. Feature engineering:</span> build better predictors from raw columns, then train and evaluate.</p>
+                </div>
               </Card>
               <QuickCheckCard
                 prompt="What is the main goal of this module?"
@@ -203,6 +213,19 @@ export default function Module4Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Data Collection</h2>
               <TextDisplay content="Before a model can be trained, someone has to gather the data. Where data comes from - and how it is collected - has a huge effect on what a model can and cannot learn." />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Relatable dataset examples</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-orange mb-1">Customer data (e-commerce)</p>
+                    <p className="text-muted-foreground">customer_id, age, country, signup_channel, last_purchase_date, total_spend, churned_yes_no</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-orange mb-1">Email campaign list</p>
+                    <p className="text-muted-foreground">email, first_name, segment, open_rate, click_rate, unsubscribed, last_contacted</p>
+                  </div>
+                </div>
+              </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-green">Common Data Sources</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -222,6 +245,16 @@ export default function Module4Page() {
                 </div>
               </Card>
               <TextDisplay variant="warning" content="Data collection is where bias often enters the pipeline. If you only collect data from one demographic, geography, or time period, the model will reflect those gaps." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">From raw data to model-ready data: one simple pipeline</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Collection:</span> Pull customer records from CRM and campaign responses from an email platform.</p>
+                  <p><span className="font-medium text-foreground">Cleaning:</span> Remove duplicate emails, fill missing country values, standardise date formats.</p>
+                  <p><span className="font-medium text-foreground">Transformation:</span> Convert segment labels into encoded columns and scale total_spend.</p>
+                  <p><span className="font-medium text-foreground">Feature engineering:</span> Create recency_days and avg_spend_per_order as new predictors.</p>
+                  <p><span className="font-medium text-foreground">Outcome:</span> Train a churn model that now sees cleaner, more meaningful patterns.</p>
+                </div>
+              </Card>
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Key Questions When Collecting Data</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -267,9 +300,53 @@ export default function Module4Page() {
           {/* 3: Data Cleaning */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Data Cleaning & Quality</h2>
+              <h2 className="text-3xl font-bold text-brand-orange">Data Quality: Garbage In, Garbage Out</h2>
               <TextDisplay content="Raw data is almost never ready to use. It contains errors, duplicates, missing values, and inconsistencies. Data cleaning is the process of finding and fixing these problems before training begins." />
-              <TextDisplay variant="callout" content="A common saying in data science: 'garbage in, garbage out.' A model trained on dirty data will produce dirty predictions - no matter how sophisticated the algorithm." />
+              <TextDisplay variant="callout" content="A common saying in data science: 'garbage in, garbage out.' A model trained on low-quality data will produce low-quality predictions, no matter how sophisticated the algorithm." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">What data quality means in practice</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 pr-4 font-semibold">Quality issue</th>
+                        <th className="text-left py-2 pr-4 font-semibold">Concrete example</th>
+                        <th className="text-left py-2 font-semibold">Likely AI outcome if ignored</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-muted-foreground">
+                      {[
+                        {
+                          issue: "Missing values",
+                          example: "30% of customers have no income field",
+                          outcome: "Churn risk model underestimates high-risk groups because key predictors are blank",
+                        },
+                        {
+                          issue: "Duplicates",
+                          example: "Same email appears 4 times after merging two lists",
+                          outcome: "Model overweights repeated behavior and campaign automation spams users",
+                        },
+                        {
+                          issue: "Bias",
+                          example: "Training set has mostly urban customers and very few rural customers",
+                          outcome: "Model performs well in cities but fails badly for rural users",
+                        },
+                        {
+                          issue: "Inconsistent format",
+                          example: "Dates stored as 03/04/25 and 2025-04-03 in same column",
+                          outcome: "Wrong recency calculations lead to unreliable predictions",
+                        },
+                      ].map(({ issue, example, outcome }) => (
+                        <tr key={issue} className="border-b last:border-0">
+                          <td className="py-2 pr-4 font-medium text-foreground">{issue}</td>
+                          <td className="py-2 pr-4">{example}</td>
+                          <td className="py-2">{outcome}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
               <Card className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Common Data Quality Problems</h3>
                 <div className="space-y-3">
@@ -288,6 +365,15 @@ export default function Module4Page() {
                   ))}
                 </div>
               </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">How poor data creates poor AI outcomes</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Loan approvals:</span> If historical approvals were biased against a group, the model learns to repeat that unfair pattern.</p>
+                  <p><span className="font-medium text-foreground">Support ticket routing:</span> If ticket labels are noisy, the model sends customer issues to the wrong team.</p>
+                  <p><span className="font-medium text-foreground">Email personalization:</span> If duplicate contacts inflate engagement stats, the model over-targets the wrong segments.</p>
+                  <p><span className="font-medium text-foreground">Forecasting:</span> If outliers from data-entry errors are kept as real values, the model predicts unrealistic demand spikes.</p>
+                </div>
+              </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A practical cleaning checklist</h3>
                 <ul className="space-y-2 text-sm">
@@ -302,6 +388,33 @@ export default function Module4Page() {
                     <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
                   ))}
                 </ul>
+              </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Mini exercise: clean this messy dataset (no coding)</h3>
+                <p className="text-sm text-muted-foreground mb-3">Imagine this is a small email-campaign dataset:</p>
+                <div className="overflow-x-auto mb-3">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 pr-3">email</th>
+                        <th className="text-left py-2 pr-3">country</th>
+                        <th className="text-left py-2 pr-3">last_contacted</th>
+                        <th className="text-left py-2">open_rate</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-muted-foreground">
+                      <tr className="border-b"><td className="py-1 pr-3">amy@example.com</td><td className="py-1 pr-3">US</td><td className="py-1 pr-3">2026-04-01</td><td className="py-1">0.42</td></tr>
+                      <tr className="border-b"><td className="py-1 pr-3">amy@example.com</td><td className="py-1 pr-3">United States</td><td className="py-1 pr-3">04/01/26</td><td className="py-1">0.42</td></tr>
+                      <tr className="border-b"><td className="py-1 pr-3">sam@example.com</td><td className="py-1 pr-3">-</td><td className="py-1 pr-3">2026-03-29</td><td className="py-1">0.05</td></tr>
+                      <tr><td className="py-1 pr-3">lee@example.com</td><td className="py-1 pr-3">UK</td><td className="py-1 pr-3">2026-13-01</td><td className="py-1">1.40</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Your task:</span> List at least 5 cleanup actions before model training.</p>
+                  <p><span className="font-medium text-foreground">Suggested answer:</span> remove duplicate email rows, standardise country labels (US/United States), treat "-" as missing country, fix invalid date format (2026-13-01), cap or investigate impossible open_rate values above 1.0.</p>
+                  <p><span className="font-medium text-foreground">Reflection:</span> If you skip these fixes, your model learns contradictions and broken patterns.</p>
+                </div>
               </Card>
               <MatchingChallenge
                 title="Problem to Fix"
@@ -331,19 +444,36 @@ export default function Module4Page() {
           {/* 4: Preprocessing Techniques */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Preprocessing Techniques</h2>
-              <TextDisplay content="Once data is clean, it usually needs to be transformed before a model can use it. Different types of data require different preprocessing steps." />
+              <h2 className="text-3xl font-bold text-brand-green">Transformation & Preprocessing Techniques</h2>
+              <TextDisplay content="Once data is clean, it still needs transformation before a model can use it effectively. Different data types require different preprocessing steps, and small decisions here can strongly affect model performance." />
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why preprocessing matters</h3>
                 <p className="text-sm text-muted-foreground">Machine learning algorithms typically work with numbers. Raw data - especially text, images, and categories - needs to be converted and scaled so that all inputs are on comparable terms. Without this, one large-valued feature can dominate the model unfairly.</p>
+              </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Simple demonstrations</h3>
+                <div className="space-y-4 text-sm">
+                  <div className="rounded-lg border p-3 bg-background">
+                    <p className="font-semibold text-brand-orange mb-1">Normalization example (total_spend)</p>
+                    <p className="text-muted-foreground mb-1">Raw values: 50, 200, 5000</p>
+                    <p className="text-muted-foreground mb-1">Min-max scaling to 0-1: (x - min) / (max - min)</p>
+                    <p className="text-muted-foreground">Scaled values: 0.00, 0.03, 1.00</p>
+                  </div>
+                  <div className="rounded-lg border p-3 bg-background">
+                    <p className="font-semibold text-brand-orange mb-1">Encoding categories example (segment)</p>
+                    <p className="text-muted-foreground mb-1">Raw category column: ["new", "vip", "new", "churn_risk"]</p>
+                    <p className="text-muted-foreground mb-1">One-hot columns: is_new, is_vip, is_churn_risk</p>
+                    <p className="text-muted-foreground">Row "vip" becomes [0, 1, 0]</p>
+                  </div>
+                </div>
               </Card>
               <div className="space-y-4">
                 {[
                   {
                     technique: "Normalisation / Scaling",
                     when: "Numerical features with very different ranges",
-                    howItWorks: "Rescales values to a standard range (e.g. 0?? or mean=0, std=1) so no feature dominates due to its scale.",
-                    example: "House prices (100,000??,000,000) and number of bedrooms (1??) are rescaled together before training.",
+                    howItWorks: "Rescales values to a standard range (e.g. 0-1) or standard score (mean=0, std=1) so no feature dominates due to its scale.",
+                    example: "House prices (100,000-2,000,000) and number of bedrooms (1-6) are rescaled together before training.",
                   },
                   {
                     technique: "One-hot encoding",

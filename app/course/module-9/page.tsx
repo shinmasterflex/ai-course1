@@ -56,6 +56,60 @@ const workflowToolGroups = [
   },
 ]
 
+const toolComparisonRows = [
+  {
+    task: "Daily drafting and iteration",
+    bestTool: "ChatGPT",
+    reason: "Fast iteration for writing, brainstorming, rewriting, and coding assistance.",
+    output: "Drafts, outlines, emails, first-pass code",
+  },
+  {
+    task: "Long document synthesis",
+    bestTool: "Claude",
+    reason: "Strong at structured analysis and careful summary of large text inputs.",
+    output: "Executive summaries, comparison memos",
+  },
+  {
+    task: "Google workspace-heavy tasks",
+    bestTool: "Gemini",
+    reason: "Fits naturally into Google-centered workflows and multimodal inputs.",
+    output: "Docs-ready summaries, collaborative updates",
+  },
+  {
+    task: "Fact-finding with citations",
+    bestTool: "Research tool (Perplexity or browsing mode)",
+    reason: "Source visibility and recency matter more than fluent prose.",
+    output: "Source-backed notes and evidence lists",
+  },
+  {
+    task: "Cross-app automation",
+    bestTool: "Zapier / Make / n8n",
+    reason: "Best for triggers, multi-step actions, and repeatable operations.",
+    output: "Automated workflows and routed outputs",
+  },
+]
+
+const assistantPromptComparisonRows = [
+  {
+    assistant: "ChatGPT",
+    bestFor: "Rapid drafts and fast iteration",
+    promptShape: "Ask for concise drafts, options, and iterations with a strict format.",
+    caution: "Can sound confident before facts are verified.",
+  },
+  {
+    assistant: "Claude",
+    bestFor: "Careful synthesis and nuanced writing",
+    promptShape: "Give clear structure, ask to separate confirmed facts from assumptions.",
+    caution: "Still requires independent verification for claims.",
+  },
+  {
+    assistant: "Gemini",
+    bestFor: "Multimodal and Google ecosystem workflows",
+    promptShape: "Specify destination format (Docs, slides, project updates) and audience.",
+    caution: "Do not treat generated text as source evidence.",
+  },
+]
+
 export default function Module9Page() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -203,6 +257,33 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Choose the Right AI Tool</h2>
               <TextDisplay content="Tool choice should follow the task. Good AI users do not ask 'What tool is trending?' They ask 'What kind of work am I actually trying to do?'" />
+
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Tool Selection Table: task - tool - why</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2 font-semibold">Task Type</th>
+                        <th className="text-left p-2 font-semibold">Best Starting Tool</th>
+                        <th className="text-left p-2 font-semibold">Why This Fit</th>
+                        <th className="text-left p-2 font-semibold">Typical Output</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {toolComparisonRows.map((row) => (
+                        <tr key={row.task} className="border-b align-top">
+                          <td className="p-2 font-medium">{row.task}</td>
+                          <td className="p-2 text-brand-orange">{row.bestTool}</td>
+                          <td className="p-2 text-muted-foreground">{row.reason}</td>
+                          <td className="p-2 text-muted-foreground">{row.output}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">A practical toolkit map</h3>
                 <div className="space-y-3 text-sm">
@@ -285,6 +366,33 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Prompt ChatGPT, Claude, and Gemini</h2>
               <TextDisplay content="The model changes, but the structure of a strong prompt stays mostly the same. Good prompting is about giving the system a clear job, useful context, constraints, and a target format." />
+
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Assistant Prompting Comparison Table</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2 font-semibold">Assistant</th>
+                        <th className="text-left p-2 font-semibold">Best For</th>
+                        <th className="text-left p-2 font-semibold">Prompt Shape That Works</th>
+                        <th className="text-left p-2 font-semibold">Watch-Out</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {assistantPromptComparisonRows.map((row) => (
+                        <tr key={row.assistant} className="border-b align-top">
+                          <td className="p-2 font-medium text-brand-orange">{row.assistant}</td>
+                          <td className="p-2">{row.bestFor}</td>
+                          <td className="p-2 text-muted-foreground">{row.promptShape}</td>
+                          <td className="p-2 text-muted-foreground">{row.caution}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+
               <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A reliable prompt structure</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -378,6 +486,31 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Bias, Privacy, and Misinformation Checks</h2>
               <TextDisplay content="Using AI well is not just about getting useful outputs. It is also about knowing when a tool could mislead you, expose sensitive data, or package bias in convincing language." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Risk Checklist (use before shipping output)</h3>
+                <div className="grid md:grid-cols-2 gap-3 text-sm text-muted-foreground">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground mb-1">Bias</p>
+                    <p>- Did the output assume stereotypes or miss key stakeholder perspectives?</p>
+                    <p>- Would this recommendation affect groups unfairly?</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground mb-1">Privacy</p>
+                    <p>- Did I include personal, confidential, or regulated data?</p>
+                    <p>- Is this tool approved for this class of information?</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground mb-1">Misinformation</p>
+                    <p>- Are key claims supported by inspectable evidence?</p>
+                    <p>- Did I verify uncertain or surprising statements with reliable sources?</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium text-foreground mb-1">Escalation Rule</p>
+                    <p>- If wrong, could this cause legal, financial, or reputational harm?</p>
+                    <p>- If yes, require human review before action.</p>
+                  </div>
+                </div>
+              </Card>
               <div className="grid md:grid-cols-3 gap-4">
                 <Card className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Bias</h3>
@@ -459,6 +592,41 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Building Simple AI Workflows</h2>
               <TextDisplay content="Now apply the earlier lessons. A good workflow starts with a real task, uses the right tool for one narrow AI step, and includes a review point if errors would matter." />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Workflow Blueprint: research -> summarize -> generate output</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2 font-semibold">Stage</th>
+                        <th className="text-left p-2 font-semibold">What You Do</th>
+                        <th className="text-left p-2 font-semibold">Recommended Tool Type</th>
+                        <th className="text-left p-2 font-semibold">Quality Check</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b align-top">
+                        <td className="p-2 font-medium">1. Research</td>
+                        <td className="p-2 text-muted-foreground">Collect source material and claims with citations.</td>
+                        <td className="p-2">Research assistant / browsing mode</td>
+                        <td className="p-2 text-muted-foreground">Confirm at least two reliable sources.</td>
+                      </tr>
+                      <tr className="border-b align-top">
+                        <td className="p-2 font-medium">2. Summarize</td>
+                        <td className="p-2 text-muted-foreground">Condense source material into key facts and uncertainties.</td>
+                        <td className="p-2">ChatGPT / Claude / Gemini</td>
+                        <td className="p-2 text-muted-foreground">Mark assumptions and unanswered questions.</td>
+                      </tr>
+                      <tr className="border-b align-top">
+                        <td className="p-2 font-medium">3. Generate Output</td>
+                        <td className="p-2 text-muted-foreground">Create final deliverable: memo, email, brief, or action plan.</td>
+                        <td className="p-2">Chat assistant or workflow automation</td>
+                        <td className="p-2 text-muted-foreground">Human review for tone, facts, and risk before sharing.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
               <Card className="p-5">
                 <h3 className="font-semibold mb-4 text-brand-green">The easiest first workflow recipe</h3>
                 <div className="space-y-3 text-sm">
@@ -540,6 +708,19 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Your First AI Mini-Project</h2>
               <TextDisplay variant="callout" content="This project now asks you to combine the whole toolkit: explain the task, choose the tool, write the prompt, check the risks, and map the workflow." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Step-by-step capstone project (real problem)</h3>
+                <p className="text-sm text-muted-foreground mb-3">Scenario: You are a team lead preparing a weekly market update for non-technical stakeholders.</p>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Step 1 - Define the outcome:</span> "Deliver a one-page weekly AI market brief with 3 verified trends and 3 actions for our team."</p>
+                  <p><span className="font-medium text-foreground">Step 2 - Choose tools:</span> Use a research tool for evidence, then ChatGPT/Claude/Gemini for summarization and drafting.</p>
+                  <p><span className="font-medium text-foreground">Step 3 - Run research prompt:</span> "Find this week's top AI business updates with links to primary sources only. Return 5 candidates with publication date and why each matters."</p>
+                  <p><span className="font-medium text-foreground">Step 4 - Run synthesis prompt:</span> "Using only the verified sources below, create a brief with: key trend, business implication, confidence level, and open risks."</p>
+                  <p><span className="font-medium text-foreground">Step 5 - Risk check:</span> Apply bias, privacy, misinformation checklist before finalizing.</p>
+                  <p><span className="font-medium text-foreground">Step 6 - Generate final output:</span> Produce a one-page summary plus a 5-bullet executive email version.</p>
+                  <p><span className="font-medium text-foreground">Step 7 - Review and measure:</span> Ask one colleague to score usefulness (1-5) and track time saved versus manual process.</p>
+                </div>
+              </Card>
               <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3">Mini-Project: Design One Safe, Useful Workflow</h3>
                 <p className="text-sm text-muted-foreground mb-4">Answer these prompts as if you had to pitch the workflow to a teammate who is smart but skeptical.</p>
