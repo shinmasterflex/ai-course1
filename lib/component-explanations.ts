@@ -15,7 +15,7 @@ export const COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> = {
   "m0-hero": {
     id: "m0-hero",
     title: "Course Welcome",
-    explanation: `This opening section defines the scope of the course: understanding what modern AI systems are, how they make predictions, where they fail, and how to use them responsibly in real work.
+    explanation: `Modern AI matters as a system, not a single app: models make predictions, shape decisions, fail in patterned ways, and still require human oversight in real work.
 
 The sequence of modules mirrors how AI decisions are made in practice. You begin with definitions and historical context, move into model behavior and prompting, then evaluate tools, data quality, risk, and organizational adoption. Each layer adds constraints that make AI judgment more realistic.
 
@@ -35,7 +35,7 @@ Understanding AI is therefore operational, not optional: it lets you evaluate cl
   "m0-why-ai-matters-check": {
     id: "m0-why-ai-matters-check",
     title: "Why AI Matters Check-In",
-    explanation: `This check asks whether you can identify the real beginner opportunity in AI: not waiting for perfect stability, but building practical fluency while the field is still taking shape.
+    explanation: `Early AI fluency creates leverage because habits of prompting, verification, and tool choice improve while the ecosystem is still changing fast.
 
 The key judgment is temporal. When a technology is changing quickly, early learners gain leverage by building habits that transfer across tools. The value is not memorizing today\'s interface but learning how to test outputs, judge claims, and integrate AI into real work.
 
@@ -45,7 +45,7 @@ A strong answer here shows you understand that AI skill compounds. People who pr
   "m0-day-in-life": {
     id: "m0-day-in-life",
     title: "A Day in Your Life With AI",
-    explanation: `This scenario shows that AI appears as many small decisions across a normal day: ranking search results, filtering inboxes, prioritizing notifications, generating drafts, and scoring risk.
+    explanation: `AI influences an ordinary day through many small predictions: ranking search results, filtering inboxes, prioritizing notifications, generating drafts, and scoring risk.
 
 Most of these systems are narrow models optimized for one objective, such as click-through, response speed, or spam reduction. They feel seamless because the model is embedded in product workflows rather than exposed as a visible AI feature.
 
@@ -55,7 +55,7 @@ Seeing these touchpoints together clarifies a core idea: AI impact is cumulative
   "m0-transformation-arc": {
     id: "m0-transformation-arc",
     title: "Your Transformation Arc",
-    explanation: `This arc tracks the progression from AI awareness to AI decision quality. Early sections establish terminology and model types; middle sections explain mechanisms and prompting; later sections cover risk, governance, and real-world adoption.
+    explanation: `Practical AI growth moves from awareness to decision quality: first you learn terms and system types, then mechanisms and prompting, then risk, governance, and adoption.
 
 That progression reflects how AI maturity develops in teams. Organizations typically fail when they jump directly to tools without shared definitions, clear limits, or evaluation criteria.
 
@@ -65,7 +65,7 @@ By moving from fundamentals to application, this module path builds the same dep
   "m0-how-to-learn": {
     id: "m0-how-to-learn",
     title: "How to Take This Course Effectively",
-    explanation: `This lesson explains how the course content is meant to build practical AI fluency: combining concept cards, worked examples, and interactive tasks so each topic is tied to decision-making rather than isolated facts.
+    explanation: `Practical AI fluency grows when concept explanations, worked examples, and interactions all change how you make decisions rather than leaving knowledge as isolated facts.
 
 The sequence matters because AI competence depends on integrating several views at once: mechanism, performance limits, risk, and business context. Skipping one layer often leads to overconfidence in another.
 
@@ -75,7 +75,7 @@ As you move through modules, use each interaction to test whether a concept chan
   "m0-self-assessment": {
     id: "m0-self-assessment",
     title: "What Do You Know Already?",
-    explanation: `This check establishes your starting model of AI: what you believe about capabilities, limits, and risk. That baseline matters because many common assumptions about AI are inaccurate but plausible.
+    explanation: `Your starting mental model of AI shapes everything that follows: what you trust, what you question, and which mistakes you are likely to make.
 
 Typical gaps include confusing automation with machine learning, overestimating model reasoning, and underestimating data-quality effects. Identifying those gaps early prevents downstream errors in tool use and interpretation.
 
@@ -85,7 +85,7 @@ Use this checkpoint as a calibration reference. When you reach later modules, co
   "m0-next-module-check": {
     id: "m0-next-module-check",
     title: "Ready for Module 1 Check-In",
-    explanation: `This checkpoint verifies that you are carrying the right mindset into Module 1: practical understanding, skepticism toward hype, and a willingness to test claims instead of memorizing slogans.
+    explanation: `Useful AI learning starts with skepticism toward hype and a commitment to test claims against real definitions and limits.
 
 That mindset matters because the next module builds conceptual foundations. If you approach AI as marketing language or distant theory, you miss the operational logic that later modules depend on. If you approach it with curiosity and critical thinking, the definitions become useful decision tools.
 
@@ -106,7 +106,7 @@ Notice the module is structured around history, definition, types, then applicat
   "m1-module-overview-check": {
     id: "m1-module-overview-check",
     title: "Module 1 Overview Check",
-    explanation: `This check confirms that you understand the purpose of Module 1: building practical conceptual foundations rather than collecting buzzwords or jumping straight into advanced engineering detail.
+    explanation: `Practical AI literacy begins with strong definitions and mental models, not buzzwords or premature technical depth.
 
 The important distinction is between vocabulary and mental models. AI literacy becomes useful only when definitions help you classify systems, question exaggerated claims, and predict where tools will succeed or fail. That is why the module emphasizes reality over hype.
 
@@ -136,7 +136,7 @@ This historical perspective inoculates you against hype. When someone claims AI 
   "m1-types-of-ai": {
     id: "m1-types-of-ai",
     title: "Types of AI: Narrow vs. General vs. Super",
-    explanation: `This lesson distinguishes between what exists now (narrow AI), what theoretically could exist (general AI), and what's pure speculation (superintelligence). These distinctions matter because the media often conflates them, creating confusion and unfounded fears.
+    explanation: `Narrow AI, general AI, and superintelligence name fundamentally different claims about capability, and confusing them distorts nearly every public AI debate.
 
 Understanding these categories is intellectually honest. We can discuss AI's current limitations without being defensive. Narrow AI can be remarkably capable at specific tasks while being unable to perform simple tasks outside its training domain. That's not a flaw; it's reality.
 
@@ -196,7 +196,7 @@ For each productivity example, the practical question is where the tool fits in 
   "m1-creative-work": {
     id: "m1-creative-work",
     title: "In Practice: AI in Creative Work",
-    explanation: `This lesson tackles an emotionally charged topic: Can AI be creative? The answer depends on how you define creativity. If creativity means "generating novel combinations," then yes. If it means "expressing human intentionality and emotion," then it's more complicated.
+    explanation: `Creative AI becomes easier to judge when you ask a sharper question than "can it create": which parts of creativity come from pattern recombination, and which depend on human intention, taste, and authorship?
 
 It pushes beyond "AI can create / AI cannot create." Current systems perform some creative sub-tasks well and others poorly. A musician using AI-generated backing tracks is augmenting process, not replacing authorship.
 
@@ -216,7 +216,7 @@ The focus is meta-strategy: select tools by task requirements, tradeoffs, and pr
   "m1-quiz": {
     id: "m1-quiz",
     title: "Module 1 Mastery Check",
-    explanation: `This checkpoint tests whether you can separate core AI categories and claims under realistic ambiguity. The key outcomes are distinguishing automation from learning systems, narrow AI from speculative AGI, and capability from marketing language.
+    explanation: `Separating AI categories and claims under ambiguity is the first real test of AI literacy.
 
 Strong performance here means you can evaluate statements about AI without relying on brand names or hype narratives. You are expected to justify why a claim is accurate, overstated, or unsupported based on definitions and historical evidence.
 
@@ -226,7 +226,7 @@ The same reasoning appears in later modules when choosing tools and setting risk
   "m1-ai-vocabulary-cards": {
     id: "m1-ai-vocabulary-cards",
     title: "Core AI Vocabulary Flashcards",
-    explanation: `These flashcards build a compact vocabulary set that will reappear throughout the course: AI, model, training data, prompt, algorithm, inference, parameters, and output.
+    explanation: `Core AI vocabulary gives you labels for the moving parts you will analyze throughout the course: AI, model, training data, prompt, algorithm, inference, parameters, and output.
 
 Each term matters because it anchors a different part of how AI systems work in practice. If you confuse models with algorithms, or prompts with outputs, later explanations become harder to interpret and tool behavior feels more mysterious than it actually is.
 
@@ -287,7 +287,7 @@ Understanding neural networks helps you reason about their limitations. They can
   "m2-what-ai-cant-do": {
     id: "m2-what-ai-cant-do",
     title: "What AI Can't Do: Important Limitations",
-    explanation: `This part is psychologically crucial: understanding limitations prevents disillusionment. Many AI disappointments come from people expecting more than is possible given current technology.
+    explanation: `Understanding AI limits prevents one of the most common beginner mistakes: expecting present-day systems to reason, generalize, and understand like humans do.
 
 AI systems are pattern-matchers. They can't reason through novel logical problems from first principles. They can't understand causation-only correlation in training data. They can't truly generalize beyond their training distribution. They can't explain their reasoning in the way humans can.
 
@@ -307,7 +307,7 @@ When you make mistakes, pay attention to them. Why did you misclassify an email?
   "m2-quiz": {
     id: "m2-quiz",
     title: "Module 2 Mastery Check",
-    explanation: `This checkpoint verifies mechanistic understanding of machine learning: how training data shapes behavior, why supervised and unsupervised approaches solve different problem types, and where model performance breaks down.
+    explanation: `Machine learning becomes easier to debug when you can trace outcomes back to data, labels, objectives, and distribution shifts.
 
 The questions are designed to test causal reasoning, not memorized terms. You should be able to trace a failure back to data coverage, label quality, objective mismatch, or distribution shift.
 
@@ -338,7 +338,7 @@ This understanding is grounding. Language models aren't thinking. They're sophis
   "m3-how-llms-work": {
     id: "m3-how-llms-work",
     title: "How ChatGPT Works: The Mechanism",
-    explanation: `This walkthrough takes the abstract concept of language models and shows the mechanism. Text goes in, gets broken into tokens, passes through neural network layers, and emerges as predicted tokens. That process repeats until the model outputs a complete response.
+    explanation: `A language model response is produced by turning text into tokens, passing them through learned network layers, and predicting the next token repeatedly until a full answer emerges.
 
 You build the ability to reason about how systems transform information. Understanding this mechanism helps you predict behavior. If the model is pattern-matching from training data, then it will be good at questions similar to its training data and bad at novel questions. If it's predicting token by token, then errors can cascade (one wrong word biases subsequent predictions).
 
@@ -358,7 +358,7 @@ You're also practicing reasoning about why structure matters. Language models pr
   "m3-prompting-techniques": {
     id: "m3-prompting-techniques",
     title: "Effective Prompting Techniques: Chain-of-Thought and Beyond",
-    explanation: `This lesson introduces techniques backed by research. Chain-of-thought prompting, for example, works because asking the model to "think step by step" produces more structured reasoning, which produces better results.
+    explanation: `Prompting techniques work when they align the model with useful reasoning patterns it has already seen in training.
 
 These techniques aren't mystical. They work because they align with patterns in the training data. Most text about complex reasoning involves showing reasoning steps. So when you ask for step-by-step thinking, the model is tapping into patterns it learned from human reasoning examples.
 
@@ -378,7 +378,7 @@ Track what works and what fails. When a prompt fails, it's usually not because t
   "m3-quiz": {
     id: "m3-quiz",
     title: "Module 3 Mastery Check",
-    explanation: `This checkpoint tests whether you can control model behavior through prompt design rather than trial-and-error guessing. Expected skills include specifying context, constraints, output format, and evaluation criteria.
+    explanation: `Reliable prompting depends on controlling context, constraints, examples, and evaluation criteria rather than guessing until something works.
 
 You should be able to diagnose weak outputs by identifying which prompt component failed: missing context, ambiguous task definition, weak constraints, or absent examples.
 
@@ -429,7 +429,7 @@ You're also building trade-off judgment. Does this tool save me time? At what co
   "m4-quiz": {
     id: "m4-quiz",
     title: "Module 4 Mastery Check",
-    explanation: `This checkpoint measures tool-selection judgment across writing, image, and productivity systems. The target is choosing based on task requirements, risk tolerance, and operational constraints rather than brand familiarity.
+    explanation: `Tool selection improves when you compare tasks by risk, privacy, speed, and review burden instead of by brand familiarity.
 
 Correct answers depend on recognizing tradeoffs: speed versus accuracy, convenience versus privacy, and output quality versus verification effort.
 
@@ -500,7 +500,7 @@ It establishes that machine learning isn't fully automated. It requires human ju
   "m5-quiz": {
     id: "m5-quiz",
     title: "Module 5 Mastery Check",
-    explanation: `This checkpoint validates whether you can reason through the data pipeline that drives model behavior: collection choices, quality controls, preprocessing, and feature construction.
+    explanation: `Data pipelines shape model behavior long before an architecture makes a prediction.
 
 The key capability is linking upstream data decisions to downstream model outcomes. A model with poor inputs, weak labels, or inconsistent preprocessing will produce unreliable predictions regardless of architecture.
 
@@ -561,7 +561,7 @@ It strengthens ethical reasoning skills. You won't agree with everyone on every 
   "m6-ethical-dilemmas": {
     id: "m6-ethical-dilemmas",
     title: "Ethical Dilemmas: Real Scenarios with Competing Values",
-    explanation: `This segment presents realistic scenarios with no clean answers. A company wants to use AI to optimize hiring; it's cheaper but introduces bias. A government wants to use facial recognition for security; it's effective but violates privacy. What do you do?
+    explanation: `Real AI ethics decisions rarely offer clean answers. A company may want AI hiring because it is cheaper even if it introduces bias, and a government may want facial recognition because it improves security even if it violates privacy.
 
 The section practices ethical reasoning. Different stakeholders value different things. Your job is to recognize the trade-offs, understand different perspectives, and make decisions aligned with your values. That's harder than following rules, but it's more honest.
 
@@ -581,7 +581,7 @@ A defensive mindset about systems is essential. What could fail? What would be t
   "m6-quiz": {
     id: "m6-quiz",
     title: "Module 6 Mastery Check",
-    explanation: `This checkpoint evaluates whether you can identify and reason through AI risk domains such as bias, privacy loss, misinformation, and unsafe automation.
+    explanation: `AI risk analysis requires you to reason across bias, privacy, misinformation, and unsafe automation at the same time.
 
 Good answers require balancing competing constraints: utility, fairness, transparency, legal exposure, and potential harm. The goal is not moral certainty but defensible reasoning under tradeoffs.
 
@@ -652,7 +652,7 @@ Studying real workflows builds transferable pattern knowledge: where AI adds val
   "m7-quiz": {
     id: "m7-quiz",
     title: "Module 7 Mastery Check",
-    explanation: `This checkpoint measures strategic AI reasoning in organizational contexts: where AI creates measurable value, what adoption barriers exist, and which capabilities remain human-critical.
+    explanation: `Strategic AI reasoning starts with business value, adoption barriers, and human-critical capabilities rather than technical novelty.
 
 You should be able to evaluate proposals by problem definition, implementation risk, data readiness, and change-management requirements rather than by technical novelty alone.
 
@@ -673,7 +673,7 @@ The module shows real examples: AI music, AI visual art, AI writing, AI-assisted
   "m8-ai-creativity": {
     id: "m8-ai-creativity",
     title: "Creativity and AI: Can Machines Be Creative?",
-    explanation: `This lesson tackles a philosophical question. Creativity means novel, valuable productions. Does AI qualify? It generates novel combinations of patterns. Is that creativity?
+    explanation: `AI and creativity become clearer when you separate novelty from intention, authorship, and taste.
 
 The answer depends on your definition. If creativity is novel pattern combination, then yes. If it requires intentionality or emotional expression, then it's complicated. Most honest assessment: AI can do some things creative humans do but lacks other essential elements of human creativity.
 
@@ -713,7 +713,7 @@ This collaborative model requires humans to understand AI limitations and streng
   "m8-quiz": {
     id: "m8-quiz",
     title: "Module 8 Mastery Check",
-    explanation: `This checkpoint tests whether you can reason about AI in creative and knowledge workflows without collapsing into either hype or dismissal.
+    explanation: `Creative and knowledge-work AI decisions are strongest when you can separate productive augmentation from empty hype.
 
 The central distinction is augmentation versus replacement: where models accelerate exploration, drafting, and synthesis, and where human intent, taste, accountability, and context remain decisive.
 
@@ -745,7 +745,7 @@ By the end of the module, you should be able to think clearly about future AI wi
   "m10-quiz": {
     id: "m10-quiz",
     title: "Module 10 Mastery Check",
-    explanation: `This checkpoint verifies that you can reason about frontier AI, AGI uncertainty, governance challenges, and long-term career adaptation without relying on simplistic forecasts.
+    explanation: `Future-facing AI judgment depends on connecting frontier capability, governance friction, and career strategy without pretending uncertainty is gone.
 
 Strong performance requires connecting present capability, policy friction, and personal strategy. You should be able to distinguish what is already actionable from what is still speculative, and choose responses that remain useful even if predictions change.
 

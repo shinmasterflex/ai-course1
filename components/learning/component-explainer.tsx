@@ -142,7 +142,6 @@ function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescript
             Explanation Panel
           </div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">{descriptor.type}</p>
-          <h3 className="text-base font-semibold leading-tight text-brand-indigo">{descriptor.title}</h3>
         </div>
 
         <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">

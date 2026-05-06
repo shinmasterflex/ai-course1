@@ -10,6 +10,10 @@ const BANNED_PATTERNS = [
 ]
 
 const AI_KEYWORDS = ["ai", "model", "data", "learning", "system", "tool"]
+const META_OPENING_PATTERNS = [
+  /^this (check|checkpoint|module|lesson|section|scenario|arc|opening section|flashcards?|walkthrough|segment|part)\b/i,
+  /^these flashcards\b/i,
+]
 
 function extractSentences(value: string) {
   return value
@@ -36,6 +40,17 @@ function normalizeWords(value: string) {
     .trim()
     .split(" ")
     .filter(Boolean)
+}
+
+function firstParagraph(value: string) {
+  return value
+    .split(/\n\s*\n/)[0]
+    ?.replace(/\s+/g, " ")
+    .trim() ?? ""
+}
+
+function openingStem(value: string, words = 5) {
+  return normalizeWords(firstParagraph(value)).slice(0, words).join(" ")
 }
 
 function fourGrams(value: string) {
@@ -104,6 +119,14 @@ describe("component explanations content quality", () => {
     expect(offTopic).toEqual([])
   })
 
+  it("opens on the concept instead of the component metadata", () => {
+    const violations = Object.values(COMPONENT_EXPLANATIONS)
+      .filter((entry) => META_OPENING_PATTERNS.some((pattern) => pattern.test(firstParagraph(entry.explanation))))
+      .map((entry) => `${entry.id}: ${firstParagraph(entry.explanation)}`)
+
+    expect(violations).toEqual([])
+  })
+
   it("avoids duplicate sentences across explanations", () => {
     const allSentences = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) =>
       extractSentences(entry.explanation).map((sentence) => ({ id: entry.id, sentence })),
@@ -140,6 +163,23 @@ describe("component explanations content quality", () => {
       .map(([starter, count]) => `${starter}: ${count}`)
 
     expect(overused).toEqual([])
+  })
+
+  it("keeps first-paragraph openings varied", () => {
+    const openings = Object.values(COMPONENT_EXPLANATIONS)
+      .map((entry) => openingStem(entry.explanation))
+      .filter((opening) => opening.length > 0)
+
+    const counts = openings.reduce<Record<string, number>>((acc, opening) => {
+      acc[opening] = (acc[opening] ?? 0) + 1
+      return acc
+    }, {})
+
+    const repeated = Object.entries(counts)
+      .filter(([, count]) => count > 3)
+      .map(([opening, count]) => `${opening}: ${count}`)
+
+    expect(repeated).toEqual([])
   })
 
   it("does not overuse 'this section' framing", () => {
