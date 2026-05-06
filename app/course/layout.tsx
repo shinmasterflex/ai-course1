@@ -1,5 +1,6 @@
 "use client"
 
+import { CourseExplainerLayout } from "@/components/learning/component-explainer"
 import { setupProgressSyncOnUnload } from "@/lib/progress-sync"
 import { useProgress } from "@/hooks/use-progress"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -46,5 +47,5 @@ export default function CourseLayout({
     setCurrentPosition(moduleId, sectionId)
   }, [currentModule, currentSection, getCourseStructure, pathname, searchParams, setCurrentPosition])
 
-  return <>{children}</>
+  return <CourseExplainerLayout>{children}</CourseExplainerLayout>
 }

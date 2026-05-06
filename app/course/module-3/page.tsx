@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -32,6 +33,7 @@ export default function Module3Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "exercise", "quiz4", "quiz5"])
@@ -87,12 +89,25 @@ export default function Module3Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 3: Large Language Models and Prompting",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 3.`
+      : "This module explains language models, prompt structure, and how to get more reliable output from chat assistants.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "The exercises here are designed to turn prompting theory into repeatable habits.",
+    ],
+    interaction: "Read the prompt guidance, test the examples, and compare outputs as you move through the module.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 3: Large Language Models & Prompting</h1>
             <p className="text-lg text-muted-foreground mb-4">Learn how ChatGPT works - and how to use it brilliantly</p>
@@ -106,6 +121,7 @@ export default function Module3Page() {
               description="Learn the mechanics behind LLMs and apply prompting patterns that produce sharper, more reliable outputs."
               imageSrc="/images/modules/module-3.jpg"
               imageAlt="Language models and conversation AI"
+              componentId="m3-hero"
             />
           )}
 
@@ -807,7 +823,7 @@ export default function Module3Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m3-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Outstanding! You now understand how LLMs work and how to prompt them effectively. Next: a tour of the best AI tools available today." />

@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -31,6 +32,7 @@ export default function Module4Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "quiz4", "quiz5"])
@@ -63,12 +65,25 @@ export default function Module4Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 4: AI Tools for Everyday Life",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 4.`
+      : "This module surveys practical AI tools for writing, images, productivity, and daily workflows.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "Expect comparisons between tools, use cases, and guidance on where each tool fits best.",
+    ],
+    interaction: "Use the panel while comparing tools so each lesson surface stays tied to its workflow purpose.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 4: Data and Preprocessing</h1>
             <p className="text-lg text-muted-foreground mb-4">Understand the fuel that powers every AI system</p>
@@ -82,6 +97,7 @@ export default function Module4Page() {
               description="Learn what data is, where it comes from, how it gets cleaned, and how preprocessing shapes what AI can learn."
               imageSrc="/images/modules/module-4.jpg"
               imageAlt="Data pipelines and preprocessing for AI"
+              componentId="m4-hero"
             />
           )}
 
@@ -664,7 +680,7 @@ export default function Module4Page() {
                   <p><span className="font-medium text-foreground">Feature engineering:</span> creating new input variables from raw data to help the model find better patterns.</p>
                 </div>
               </Card>
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m4-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now understand how data is collected, cleaned, preprocessed, and engineered for AI. Next: AI Ethics, Safety & Society." />

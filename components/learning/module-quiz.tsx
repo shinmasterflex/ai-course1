@@ -1,5 +1,6 @@
 "use client"
 
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { useMemo, useState } from "react"
 import { CheckCircle2, Circle, XCircle } from "lucide-react"
 import { Card } from "@/components/ui/card"
@@ -11,9 +12,10 @@ type ModuleQuizProps<T extends string> = {
   questions: readonly ModuleQuizQuestion<T>[]
   results: Record<T, boolean>
   onAnswer: (quizKey: T, correct: boolean) => void
+  componentId?: string
 }
 
-export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: ModuleQuizProps<T>) {
+export function ModuleQuiz<T extends string>({ questions, results, onAnswer, componentId }: ModuleQuizProps<T>) {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<T, string>>({} as Record<T, string>)
   const [attemptedQuestions, setAttemptedQuestions] = useState<Record<T, boolean>>({} as Record<T, boolean>)
   const [xp, setXp] = useState(0)
@@ -25,9 +27,18 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer }: M
   )
 
   const progressPct = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0
+  const explainerAttributes = getExplainerAttributes({
+    type: "Comprehensive assessment",
+    title: "Module mastery check",
+    explanation: `This quiz serves a specific purpose in your learning journey: consolidation. After engaging with interactive components, practicing techniques, and absorbing explanations, your brain needs a chance to retrieve all this knowledge in an integrated way. This is what a quiz does—it forces integration.
+
+Research on learning shows that quizzes are most powerful when you care about the feedback, not just the score. Each question here is designed to connect multiple concepts you've learned. When you see feedback, you're not just learning whether you were right or wrong—you're seeing how your current mental model compares to the correct model.
+
+If you struggle on certain questions, that struggle is valuable information. Those difficult questions reveal where your understanding is still forming. Return to those concepts and explore them differently. The productive struggle you experience here actually builds stronger, more flexible understanding than material that came easily.`,
+  })
 
   return (
-    <div className="space-y-6">
+    <div {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className="space-y-6">
       <Card className="p-4 border-brand-orange/20 bg-gradient-to-r from-brand-orange/10 to-brand-green/10">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm font-semibold text-brand-indigo">Quiz Mission Stats</p>

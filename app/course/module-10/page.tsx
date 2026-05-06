@@ -6,6 +6,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -34,6 +35,7 @@ export default function Module10Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -71,12 +73,25 @@ export default function Module10Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 10: The Future of AI",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 10.`
+      : "This module explores frontier AI trends, AGI uncertainty, policy questions, and realistic ways to prepare for future change.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "This module is less about prediction certainty and more about reasoning well under uncertainty.",
+    ],
+    interaction: "Use the section content to think critically about future scenarios and turn that uncertainty into practical next steps.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 max-w-4xl mx-auto p-8">
+        <main {...mainExplainerAttributes} className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 10: The Future of AI</h1>
             <p className="text-lg text-muted-foreground mb-4">A forward-looking but grounded guide to what AI may become and how you can prepare.</p>
@@ -90,6 +105,7 @@ export default function Module10Page() {
               description="Explore frontier AI trends, AGI uncertainty, policy challenges, and realistic pathways to stay valuable in an AI-shaped economy."
               imageSrc="/images/modules/module-10.jpg"
               imageAlt="Future of AI and innovation"
+              componentId="m10-hero"
             />
           )}
 
@@ -551,7 +567,7 @@ export default function Module10Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="Test your understanding of frontier AI, AGI uncertainty, governance, and career strategy." />
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m10-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work. You have completed Module 10 and the full course with a practical strategy for what comes next." />

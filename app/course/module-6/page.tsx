@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
@@ -32,6 +33,7 @@ export default function Module6Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
@@ -73,12 +75,25 @@ export default function Module6Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 6: AI Ethics, Safety, and Society",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 6.`
+      : "This module covers bias, privacy, deepfakes, misinformation, and practical guardrails for responsible AI use.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "Many surfaces here focus on tradeoffs, risk checks, and reflective decision-making rather than one fixed answer.",
+    ],
+    interaction: "Use each section to evaluate risk carefully and carry those checks into real AI workflows.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 6: AI Ethics, Safety & Society</h1>
             <p className="text-lg text-muted-foreground mb-4">Become an informed, responsible AI user</p>
@@ -92,6 +107,7 @@ export default function Module6Page() {
               description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
               imageSrc="/images/modules/module-6.jpg"
               imageAlt="Ethical technology and responsible AI"
+              componentId="m6-hero"
             />
           )}
 
@@ -775,7 +791,7 @@ export default function Module6Page() {
           {currentSectionIndex === 7 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m6-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit - where you turn safe, thoughtful AI use into practical no-code workflows." />

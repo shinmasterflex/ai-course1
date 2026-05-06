@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { FlipCardGrid, OrderingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -61,6 +62,7 @@ export default function Module2Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "quiz4", "quiz5"])
@@ -106,12 +108,25 @@ export default function Module2Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 2: How Machines Learn",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 2.`
+      : "This module explains machine learning, training data, neural networks, and limitations without heavy math.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "Use this module to turn abstract ML concepts into concrete mental models and workflows.",
+    ],
+    interaction: "Work through the analogies and practice blocks in order so later concepts build on earlier context.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 2: How Machines Learn</h1>
             <p className="text-lg text-muted-foreground mb-4">Peek inside the black box - no equations required</p>
@@ -125,6 +140,7 @@ export default function Module2Page() {
               description="Explore machine learning fundamentals with intuitive analogies that make core concepts click quickly."
               imageSrc="/images/modules/module-2.jpg"
               imageAlt="Neural networks and data visualization"
+              componentId="m2-hero"
             />
           )}
 
@@ -648,7 +664,7 @@ export default function Module2Page() {
                   ))}
                 </ul>
               </Card>
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m2-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now understand the fundamentals of how AI learns. Next up: we go hands-on with Large Language Models and learn how to communicate with AI effectively." />

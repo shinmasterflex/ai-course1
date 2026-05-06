@@ -6,6 +6,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -32,6 +33,7 @@ export default function Module5Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
@@ -82,12 +84,25 @@ export default function Module5Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 5: Coding Crash Course for AI",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 5.`
+      : "This module introduces coding concepts through AI-oriented examples such as variables, logic, loops, and debugging.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "Most explanations in this module connect code ideas back to plain-language workflow reasoning.",
+    ],
+    interaction: "Use the current section to understand the coding idea first, then reinforce it with the paired examples or quizzes.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 max-w-4xl mx-auto p-8">
+        <main {...mainExplainerAttributes} className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 5: Coding Crash Course for AI</h1>
             <p className="text-lg text-muted-foreground mb-4">Learn beginner coding through AI-flavored examples, not abstract syntax drills.</p>
@@ -101,6 +116,7 @@ export default function Module5Page() {
               description="Use plain-language analogies and short Python snippets to understand variables, logic, loops, functions, and debugging."
               imageSrc="/images/modules/module-5.jpg"
               imageAlt="Beginner-friendly coding for AI use cases"
+              componentId="m5-hero"
             />
           )}
 
@@ -428,7 +444,7 @@ else:
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
               <TextDisplay content="Answer all three questions to complete your AI Coding Crash Course." />
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m5-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Great work. You now have the beginner coding intuition to automate simple AI workflows with confidence." />

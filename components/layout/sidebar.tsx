@@ -1,4 +1,5 @@
 "use client"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { ChevronDown, BookOpen, CheckCircle2, Circle, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -75,6 +76,16 @@ export function Sidebar() {
 
   const courseStructure = getCourseStructure()
   const activeSectionFromUrl = searchParams?.get("section")
+  const sidebarAttributes = getExplainerAttributes({
+    type: "Course sidebar",
+    title: "Module and section navigation",
+    summary: "This sidebar shows the course structure, active module, and section-level progress.",
+    details: [
+      "Module rows jump to a module entry point.",
+      "Expanded section rows let the learner move directly to a specific section in the active module.",
+    ],
+    interaction: "Use the sidebar when you want to navigate by module outline instead of scrolling linearly.",
+  })
 
   const handleSectionClick = (moduleId: string, sectionId: string) => {
     setCurrentPosition(moduleId, sectionId)
@@ -95,6 +106,13 @@ export function Sidebar() {
   if (isCollapsed) {
     return (
       <button
+        {...getExplainerAttributes({
+          type: "Sidebar toggle",
+          title: "Expand sidebar",
+          summary: "This floating control restores the collapsed course menu.",
+          details: ["Use it when you need the full module outline again."],
+          interaction: "Click it to reopen the sidebar.",
+        })}
         onClick={toggleCollapsed}
         className="fixed -left-2 top-20 z-50 flex items-center gap-2 px-3 py-2 bg-card border border-border rounded-lg shadow-lg hover:bg-muted transition-all duration-300 ease-in-out group hover:left-0"
         aria-label="Expand sidebar"
@@ -107,7 +125,7 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="w-64 border-r border-border bg-card min-h-screen overflow-y-auto transition-all duration-300 ease-in-out">
+    <aside {...sidebarAttributes} className="w-64 border-r border-border bg-card min-h-screen overflow-y-auto transition-all duration-300 ease-in-out">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold flex items-center gap-2 font-heading">
@@ -115,6 +133,13 @@ export function Sidebar() {
             Course Menu
           </h2>
           <button
+            {...getExplainerAttributes({
+              type: "Sidebar toggle",
+              title: "Collapse sidebar",
+              summary: "This button hides the course menu to make more room for lesson content.",
+              details: ["Collapsing the sidebar is useful when you want a wider reading area."],
+              interaction: "Click it to collapse the sidebar into the floating menu button.",
+            })}
             onClick={toggleCollapsed}
             className="p-1 rounded hover:bg-muted transition-colors"
             aria-label="Collapse sidebar"
@@ -134,6 +159,16 @@ export function Sidebar() {
               <div key={module.id}>
                 {/* Module Header */}
                 <button
+                  {...getExplainerAttributes({
+                    type: "Module navigation",
+                    title: module.title,
+                    summary: `This button opens ${module.title} and routes to its first available section.`,
+                    details: [
+                      `This module contains ${module.sections.length} section${module.sections.length === 1 ? "" : "s"}.`,
+                      isActiveModule ? "This is the active module right now." : "This module is available as a navigation jump.",
+                    ],
+                    interaction: "Click it to move into this module and reveal its section list.",
+                  })}
                   onClick={() => handleModuleClick(module.id, module.sections)}
                   className={cn(
                     "w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium transition-colors font-heading text-left",
@@ -160,6 +195,16 @@ export function Sidebar() {
                       return (
                         <button
                           key={section.id}
+                          {...getExplainerAttributes({
+                            type: "Section navigation",
+                            title: section.title,
+                            summary: `This button opens the ${section.title} section inside ${module.title}.`,
+                            details: [
+                              isCompleted ? "This section is marked complete." : "This section is not yet complete.",
+                              isActive ? "This is the section currently shown in the main lesson area." : "Use this to jump directly to the section.",
+                            ],
+                            interaction: "Click it to navigate directly to this lesson section.",
+                          })}
                           onClick={() => handleSectionClick(module.id, section.id)}
                           className={cn(
                             "w-full flex items-center gap-2 p-2 rounded text-sm transition-colors text-left",

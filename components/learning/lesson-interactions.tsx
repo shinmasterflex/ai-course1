@@ -1,5 +1,6 @@
 "use client"
 
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { useMemo, useState } from "react"
 import { ArrowDown, ArrowUp, CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -25,10 +26,12 @@ type QuickCheckProps = {
   optionExplanations?: Record<string, string>
   accentClassName?: string
   onAnswered?: (isCorrect: boolean) => void
+  componentId?: string
 }
 
 type FlipCardGridProps = {
   cards: FlipCardItem[]
+  componentId?: string
 }
 
 type MatchingPair = {
@@ -44,6 +47,7 @@ type MatchingChallengeProps = {
   accentClassName?: string
   leftLabel?: string
   rightLabel?: string
+  componentId?: string
 }
 
 type OrderingChallengeProps = {
@@ -51,6 +55,7 @@ type OrderingChallengeProps = {
   description?: string
   items: string[]
   correctOrder: string[]
+  componentId?: string
 }
 
 type DragSortChallengeProps = {
@@ -59,6 +64,7 @@ type DragSortChallengeProps = {
   items: string[]
   correctOrder: string[]
   accentClassName?: string
+  componentId?: string
 }
 
 function hashString(value: string) {
@@ -94,11 +100,20 @@ function shuffleOptions(options: QuickCheckOption[], seedSource: string) {
   return shuffled
 }
 
-export function FlipCardGrid({ cards }: FlipCardGridProps) {
+export function FlipCardGrid({ cards, componentId }: FlipCardGridProps) {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const explainerAttributes = getExplainerAttributes({
+    type: "Recall practice",
+    title: "Quick self-test",
+    explanation: `Flip cards are one of the most effective study tools because they leverage retrieval practice. Every time you try to recall an answer before revealing it, you're strengthening that memory—far more than if you simply read the answer.
+
+This is backed by decades of learning science research. The "retrieval practice effect" shows that retrieving information from memory makes it stick better than passive exposure. Each card you struggle with—and succeed on—creates stronger neural pathways than memorizing through re-reading.
+
+Notice how the cards shuffle each time you return to them. This spacing and interleaving (mixing up the order) further strengthens your learning. Your brain has to work slightly harder, which feels less fluent, but that difficulty is actually where the learning happens. This is called "desirable difficulty."`,
+  })
 
   return (
-    <div className="grid md:grid-cols-2 gap-4">
+    <div {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className="grid md:grid-cols-2 gap-4">
       {cards.map((card) => {
         const isOpen = hoveredCard === card.title
 
@@ -143,11 +158,20 @@ export function FlipCardGrid({ cards }: FlipCardGridProps) {
   )
 }
 
-export function MatchingChallenge({ title = "Matching Challenge", description, pairs, accentClassName, leftLabel = "Terms", rightLabel = "Matches" }: MatchingChallengeProps) {
+export function MatchingChallenge({ title = "Matching Challenge", description, pairs, accentClassName, leftLabel = "Terms", rightLabel = "Matches", componentId }: MatchingChallengeProps) {
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null)
   const [matches, setMatches] = useState<Record<string, string>>({})
   const [attempts, setAttempts] = useState(0)
   const [lastIncorrectAttempt, setLastIncorrectAttempt] = useState<{ leftId: string; rightId: string } | null>(null)
+  const explainerAttributes = getExplainerAttributes({
+    type: "Relationship mapping",
+    title,
+    explanation: `Matching exercises teach you something more sophisticated than individual facts—they teach you relationships. When you connect concepts across columns, you're building an interconnected mental model rather than isolated memories.
+
+In cognitive psychology, this is called "elaboration." When you take the time to explain how two concepts connect, you integrate them into your existing knowledge structure more deeply. The left-right pairing forces you to think about why items match, not just what they are.
+
+This type of thinking mimics how experts actually think about their domain. Experts don't store isolated facts; they store webs of relationships. By doing matching exercises, you're training your brain to organize knowledge the way expert minds do.`,
+  })
 
   const normalizedPairs = pairs.map((p, i) => ({ ...p, id: p.id ?? String(i) }))
   const rightItems = [...normalizedPairs].sort((a, b) => a.right.localeCompare(b.right))
@@ -175,7 +199,7 @@ export function MatchingChallenge({ title = "Matching Challenge", description, p
   }
 
   return (
-    <Card className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5", accentClassName)}>
+    <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-brand-orange/5", accentClassName)}>
       <div className="mb-4">
         <h3 className="font-semibold text-brand-green">{title}</h3>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
@@ -274,8 +298,18 @@ export function OrderingChallenge({
   description,
   items,
   correctOrder,
+  componentId,
 }: OrderingChallengeProps) {
   const [currentOrder, setCurrentOrder] = useState(items)
+  const explainerAttributes = getExplainerAttributes({
+    type: "Process reasoning",
+    title,
+    explanation: `Ordering exercises develop your understanding of causal sequences and process logic. When you arrange steps in the correct sequence, you're not just memorizing an order—you're internalizing the logical flow that makes processes work.
+
+This taps into what psychologists call "procedural knowledge"—knowledge about how to do things and why steps connect in sequence. Procedural knowledge is more robust than declarative knowledge (knowing facts). You can forget facts, but procedures stick because they're grounded in cause-and-effect understanding.
+
+When you struggle to find the right order, that struggle is valuable. Your brain is actively testing hypotheses about why this step must come before that one. That hypothesis-testing is where deep learning happens. Even if you get stuck, the thinking process strengthens your understanding more than being told the answer would.`,
+  })
 
   const moveItem = (index: number, direction: -1 | 1) => {
     const nextIndex = index + direction
@@ -295,7 +329,7 @@ export function OrderingChallenge({
   const isCorrect = currentOrder.every((item, idx) => item === correctOrder[idx])
 
   return (
-    <Card className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
+    <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className="p-5 border-brand-orange/20 bg-gradient-to-br from-brand-orange/5 to-white">
       <div className="mb-4">
         <h3 className="font-semibold text-brand-orange">{title}</h3>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
@@ -355,11 +389,21 @@ export function DragSortChallenge({
   items,
   correctOrder,
   accentClassName,
+  componentId,
 }: DragSortChallengeProps) {
   const [currentOrder, setCurrentOrder] = useState(items)
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
   const [hasCheckedOrder, setHasCheckedOrder] = useState(false)
   const [isDone, setIsDone] = useState(false)
+  const explainerAttributes = getExplainerAttributes({
+    type: "Visual workflow ordering",
+    title,
+    explanation: `Dragging engages different cognitive systems than clicking or typing. When you physically manipulate items (even on a screen), your brain engages your visual-spatial reasoning and motor memory. This multi-modal engagement creates stronger memories than abstract ordering.
+
+This is why manipulatives work so well in mathematics and why hands-on learning outperforms lectures. Your brain is using kinesthetic memory (movement), visual memory (seeing the arrangement), and conceptual understanding simultaneously. All these memory systems reinforce each other.
+
+As you drag items into order, you're building intuition about workflow logic. Your hands and eyes are helping your brain discover why certain sequences make sense. This embodied understanding—learning through physical action—is stickier than intellectual understanding alone.`,
+  })
 
   const handleDrop = (targetItem: string) => {
     if (isDone || !draggedItem || draggedItem === targetItem) {
@@ -393,7 +437,7 @@ export function DragSortChallenge({
   }
 
   return (
-    <Card className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white", accentClassName)}>
+    <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className={cn("p-5 border-brand-green/20 bg-gradient-to-br from-brand-green/5 to-white", accentClassName)}>
       <div className="mb-4">
         <h3 className="font-semibold text-brand-green">{title}</h3>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
@@ -485,8 +529,18 @@ export function QuickCheckCard({
   optionExplanations,
   accentClassName,
   onAnswered,
+  componentId,
 }: QuickCheckProps) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
+  const explainerAttributes = getExplainerAttributes({
+    type: "Concept checkpoint",
+    title: "Test your thinking",
+    explanation: `Quick checks are designed to interrupt your reading and force you to retrieve what you just learned. This interruption might feel like a speed bump, but it's intentional. Frequent low-stakes retrieval practice—checking yourself before moving on—is scientifically proven to improve long-term retention.
+
+What makes this different from a high-stakes test is the low stakes. You're not being graded for a permanent record. You're giving your brain a chance to practice retrieving and applying concepts in real-time. This retrieval strengthens neural pathways and helps you identify gaps in understanding before moving too far ahead.
+
+If you get this wrong, don't view it as failure. Wrong answers during learning are actually beneficial—they force your brain to confront misconceptions and self-correct. The struggle to understand why you were wrong creates stronger learning than getting it right immediately.`,
+  })
   const shuffledOptions = useMemo(
     () => shuffleOptions(options, `${prompt}:${options.map((option) => `${option.id}:${option.label}`).join("|")}`),
     [options, prompt]
@@ -519,7 +573,7 @@ export function QuickCheckCard({
   }, [correctOption?.label, explanation, isCorrect, optionExplanations, selectedOption?.label, selectedOptionId])
 
   return (
-    <Card className={cn("p-5 border-brand-green/20 bg-brand-green/5", accentClassName)}>
+    <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className={cn("p-5 border-brand-green/20 bg-brand-green/5", accentClassName)}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="font-semibold mb-3 text-brand-green">Check your understanding</h3>

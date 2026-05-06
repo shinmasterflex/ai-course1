@@ -8,6 +8,7 @@
 import { useState, useEffect, useMemo } from "react"
 import NextImage from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -31,6 +32,7 @@ export default function Module0Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -134,12 +136,25 @@ export default function Module0Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 0: Welcome to AI",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 0.`
+      : "This module introduces the course structure, learning mindset, and practical reasons to study AI now.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "Clicks inside this page usually resolve either to the current lesson context or to the reusable learning component you selected.",
+    ],
+    interaction: "Work through the current section, complete the checkpoint interactions, and use the continue controls to move forward.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
 
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 0: Welcome to AI</h1>
@@ -234,6 +249,7 @@ export default function Module0Page() {
                   { id: "d", label: "Prompting matters less than technical jargon" },
                 ]}
                 correctOptionId="b"
+                componentId="m0-why-ai-matters-check"
                                 optionExplanations={{
           a: "Waiting makes things harder — the field will keep changing. Early movers build habits and advantages while others pause.",
           b: "Exactly. Early practical fluency compounds and creates leverage in study and work.",
@@ -642,6 +658,7 @@ export default function Module0Page() {
                   { id: "d", label: "Assume all AI claims are automatically true" },
                 ]}
                 correctOptionId="b"
+                componentId="m0-next-module-check"
                                 optionExplanations={{
           a: "Treating AI as pure theory means you will never build the practical skill that makes the difference.",
           b: "Perfect. The next module builds practical understanding by defining AI clearly and separating hype from reality.",

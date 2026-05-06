@@ -8,6 +8,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -51,11 +52,21 @@ export default function DashboardPage() {
   const totalCompleted = allModuleProgress.reduce((sum, p) => sum + p.completed, 0)
   const totalSections = allModuleProgress.reduce((sum, p) => sum + p.total, 0)
   const completionRate = totalSections > 0 ? Math.round((totalCompleted / totalSections) * 100) : 0
+  const dashboardExplainerAttributes = getExplainerAttributes({
+    type: "Course dashboard",
+    title: "Learning overview",
+    summary: "This page summarizes overall course progress, module status, and the quickest path back into the lesson sequence.",
+    details: [
+      `Overall completion is ${completionRate}% across ${MODULE_META.length} modules.`,
+      "Use the roadmap and module cards here to decide where to continue or which completed module to review.",
+    ],
+    interaction: "Scan your progress, then use a module card to jump straight back into the next lesson.",
+  })
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main {...dashboardExplainerAttributes} className="container mx-auto px-4 py-8">
 
         {/* Welcome */}
         <div className="mb-8">

@@ -1,5 +1,6 @@
 "use client"
 
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { useMemo, useState } from "react"
 import Image from "next/image"
 import { Card } from "@/components/ui/card"
@@ -14,6 +15,7 @@ type ModuleHeroProps = {
   objectives?: string[]
   imageSrc?: string
   imageAlt?: string
+  componentId?: string
 }
 
 export function ModuleHero({
@@ -23,6 +25,7 @@ export function ModuleHero({
   objectives,
   imageSrc = "/graphics/module-path.svg",
   imageAlt = "Visual learning path for course progression",
+  componentId,
 }: ModuleHeroProps) {
   const defaultObjectives = useMemo(
     () => objectives ?? [
@@ -36,9 +39,18 @@ export function ModuleHero({
 
   const completedCount = Object.values(completedObjectives).filter(Boolean).length
   const progressPct = defaultObjectives.length > 0 ? Math.round((completedCount / defaultObjectives.length) * 100) : 0
+  const explainerAttributes = getExplainerAttributes({
+    type: "Module roadmap",
+    title,
+    explanation: `This hero section sets the stage for the module ahead. It's not just decoration—it serves crucial functions in your learning journey. First, it activates prior knowledge by connecting new material to context you already understand. Second, it establishes learning objectives, which research shows significantly improve how you learn by directing your attention and memory.
+
+The objectives listed here are your learning roadmap. When you learn with clear goals, your brain is primed to notice and remember relevant information. This selective attention is why students who preview learning objectives before reading perform better than those who read without them.
+
+As you progress through the module, return to this section occasionally. Seeing how much you've accomplished builds motivation and consolidates your sense of progress. This momentum compounds—completion breeds confidence, which increases engagement on subsequent topics.`,
+  })
 
   return (
-    <Card className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
+    <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className="mb-8 overflow-hidden border-brand-indigo/20 bg-white/90">
       <div className="grid items-stretch lg:grid-cols-2">
         <div className="space-y-4 p-5 md:p-6">
           <p className="inline-flex rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">

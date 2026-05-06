@@ -6,6 +6,7 @@
 
 "use client"
 
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, CheckIcon, Info, XCircle } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -828,9 +829,19 @@ export function TextDisplay({
   const statementData = useMemo(() => getTrueFalseStatement(title, content, scopeKey, instanceId), [content, instanceId, scopeKey, title])
   const dragPayload = statementData.statement
   const isCorrectDrop = dropTarget === null ? null : (dropTarget === "true") === statementData.isTrue
+  const primarySummary = content?.split("\n").find((line) => line.trim().length > 0) ?? subtitle ?? title ?? "This lesson block explains the concept shown in the current section."
+  const explainerAttributes = getExplainerAttributes({
+    type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
+    title: title ?? "Learning text",
+    explanation: `This text block presents conceptual material—the ideas and principles you need to understand. Reading comprehension in learning isn't passive. Your brain needs to actively construct meaning from words.
+
+Here's how to read actively: First, scan the title and subtitle to establish context. Second, read a section and pause to ask yourself: What's the main idea? Can I explain this in my own words? If you struggle, that's a signal to read again or look for related examples. Third, look for how this concept connects to previous material you've learned. This elaboration—connecting new ideas to existing knowledge—is where deep understanding forms.
+
+${interactive ? "This section includes a check-in question. These questions interrupt passive reading and force retrieval. Even if you're not sure of your answer, the attempt to retrieve strengthens memory more than re-reading would." : "Use this as reference material while you work through the interactive components. Switching between reading and doing—called interleaving—creates stronger learning than doing only activities without conceptual grounding."} Pay attention to examples; they're not ornamental. Examples are how abstract principles become concrete in your mind.`,
+  })
 
   return (
-    <div className={cn("p-6 rounded-lg", variantStyles[variant], className)}>
+    <div {...explainerAttributes} className={cn("p-6 rounded-lg", variantStyles[variant], className)}>
       {title && (
         <div className="mb-4">
           <h3 className="text-2xl font-bold mb-1 font-heading">{title}</h3>

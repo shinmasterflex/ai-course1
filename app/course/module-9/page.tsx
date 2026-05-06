@@ -6,6 +6,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -121,6 +122,7 @@ export default function Module9Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -149,12 +151,25 @@ export default function Module9Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 9: Your AI Toolkit",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 9.`
+      : "This module focuses on practical no-code tools, workflows, and how to assemble a usable personal AI toolkit.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "The content here is oriented around workflows and tool combinations rather than theory-only explanation.",
+    ],
+    interaction: "Use the section content to decide which tools belong in your own AI workflow stack.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 max-w-4xl mx-auto p-8">
+        <main {...mainExplainerAttributes} className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 9: Your AI Toolkit</h1>
             <p className="text-lg text-muted-foreground mb-4">Turn everything you have learned so far into practical judgment, better prompting, and a workflow you can actually use.</p>
@@ -168,6 +183,7 @@ export default function Module9Page() {
               description="This capstone module ties the course together so learners can explain AI clearly, choose the right tools, use major assistants well, spot risks, and design one repeatable workflow."
               imageSrc="/images/modules/module-9.jpg"
               imageAlt="Workflow automation and AI integration"
+              componentId="m9-hero"
             />
           )}
 

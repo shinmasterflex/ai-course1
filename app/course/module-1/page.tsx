@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { DragSortChallenge, FlipCardGrid, MatchingChallenge, OrderingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
@@ -31,8 +32,19 @@ type ToolCardProps = {
 }
 
 function ToolCard({ name, url, tagline, strengths, free }: ToolCardProps) {
+  const toolCardAttributes = getExplainerAttributes({
+    type: "Tool comparison card",
+    title: name,
+    summary: tagline,
+    details: [
+      free ? "This tool offers a free tier." : "This tool is positioned as paid or more premium.",
+      `Top strengths: ${strengths.slice(0, 3).join(", ")}.`,
+    ],
+    interaction: "Read the strengths list, then use the linked product page if you want to evaluate the tool directly.",
+  })
+
   return (
-    <Card className="p-4">
+    <Card {...toolCardAttributes} className="p-4">
       <div className="flex items-start justify-between mb-2">
         <div>
           <h4 className="font-bold">{name}</h4>
@@ -65,6 +77,7 @@ export default function Module1Page() {
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = useMemo(() => module?.sections ?? [], [module])
   const totalSections = sections.length
+  const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(MODULE_ID)
   const [historyCarouselApi, setHistoryCarouselApi] = useState<CarouselApi>()
   const [historySlideIndex, setHistorySlideIndex] = useState(0)
@@ -226,12 +239,25 @@ export default function Module1Page() {
     }
   }
 
+  const mainExplainerAttributes = getExplainerAttributes({
+    type: "Module workspace",
+    title: "Module 1: What Is Artificial Intelligence?",
+    summary: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections} in Module 1.`
+      : "This module defines AI, introduces its history, compares AI types, and corrects common myths.",
+    details: [
+      `Completed sections so far: ${completedSectionIds.length} of ${totalSections}.`,
+      "This module mixes concept explanations with history, examples, and tool-selection exercises.",
+    ],
+    interaction: "Use the current section to build a practical mental model, then continue with the module controls.",
+  })
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main {...mainExplainerAttributes} className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Module 1: What Is Artificial Intelligence?</h1>
             <p className="text-lg text-muted-foreground mb-4">Cut through the hype and build a real understanding of AI</p>
@@ -245,6 +271,7 @@ export default function Module1Page() {
               description="Get clear on what AI is, where it came from, and how to separate practical reality from hype."
               imageSrc="/images/modules/module-1.jpg"
               imageAlt="Machine learning and artificial intelligence concepts"
+              componentId="m1-hero"
             />
           )}
 
@@ -270,6 +297,7 @@ export default function Module1Page() {
                   { id: "d", label: "Replace all workflows with automation immediately" },
                 ]}
                 correctOptionId="b"
+                componentId="m1-module-overview-check"
                                 optionExplanations={{
           a: "Memorising buzzwords without understanding is not the goal. Application and clear thinking matter far more.",
           b: "Exactly. This module is about useful mental models and practical clarity, not hype or heavy math.",
@@ -553,6 +581,7 @@ export default function Module1Page() {
                       answer: "The result the AI produces - a text response, an image, a prediction, a classification, or an action. Every AI maps inputs to outputs through its learned patterns.",
                     },
                   ]}
+                  componentId="m1-ai-vocabulary-cards"
                 />
               </div>
               
@@ -566,7 +595,19 @@ export default function Module1Page() {
               <h2 className="text-3xl font-bold text-brand-green">A Brief History of AI</h2>
               <TextDisplay content="AI is not new - researchers have been working on it since the 1950s. The story matters because each wave of progress came from a combination of better ideas, more data, and more computing power. Crucially, the path was not smooth - there were decades of failure, funding collapses, and near-total abandonment before the breakthroughs we see today." />
 
-              <div className="rounded-3xl border border-brand-green/20 bg-gradient-to-br from-brand-green/5 via-background to-brand-orange/5 p-4 md:p-6">
+              <div
+                {...getExplainerAttributes({
+                  type: "Interactive timeline",
+                  title: "A Brief History of AI",
+                  summary: "This timeline walks through the major breakthroughs, setbacks, and turning points that shaped modern AI.",
+                  details: [
+                    `The current slide is ${historySlideIndex + 1} of ${historyMilestones.length}.`,
+                    "Use the cards and year markers together to see how the field evolved across decades.",
+                  ],
+                  interaction: "Swipe, use the arrows, or click a year marker to move between milestones.",
+                })}
+                className="rounded-3xl border border-brand-green/20 bg-gradient-to-br from-brand-green/5 via-background to-brand-orange/5 p-4 md:p-6"
+              >
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-orange">Interactive Timeline</p>
@@ -581,7 +622,19 @@ export default function Module1Page() {
                   <CarouselContent>
                     {historyMilestones.map((milestone) => (
                       <CarouselItem key={milestone.year}>
-                        <Card className={`overflow-hidden border ${milestone.borderClassName} ${milestone.surfaceClassName}`}>
+                        <Card
+                          {...getExplainerAttributes({
+                            type: "Timeline milestone",
+                            title: `${milestone.year}: ${milestone.title}`,
+                            summary: milestone.summary,
+                            details: [
+                              `Milestone label: ${milestone.label}.`,
+                              milestone.whyItMatters,
+                            ],
+                            interaction: "Read the event summary first, then use the Why it matters note to connect it to today’s AI landscape.",
+                          })}
+                          className={`overflow-hidden border ${milestone.borderClassName} ${milestone.surfaceClassName}`}
+                        >
                           <div className="grid gap-6 p-6 md:grid-cols-[140px_minmax(0,1fr)] md:p-8">
                             <div className="space-y-3">
                               <div className={`h-2.5 w-16 rounded-full ${milestone.markerClassName}`} />
@@ -619,6 +672,16 @@ export default function Module1Page() {
                         <div key={milestone.year} className="flex min-w-[104px] flex-1 items-start last:flex-none">
                           <button
                             type="button"
+                            {...getExplainerAttributes({
+                              type: "Timeline navigation",
+                              title: `${milestone.year}`,
+                              summary: `This marker jumps to the ${milestone.year} milestone in the AI timeline.`,
+                              details: [
+                                `Milestone: ${milestone.title}.`,
+                                isActive ? "This is the timeline item currently selected." : "Use it to jump directly to this point in history.",
+                              ],
+                              interaction: "Click the year marker to navigate the carousel to this milestone.",
+                            })}
                             onClick={() => historyCarouselApi?.scrollTo(index)}
                             className="group flex flex-col items-center text-center"
                             aria-label={`Go to ${milestone.year}: ${milestone.title}`}
@@ -1470,7 +1533,7 @@ export default function Module1Page() {
                   <p><span className="font-medium text-foreground">Practice mindset:</span> use AI as support, then verify before relying on output.</p>
                 </div>
               </Card>
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
+              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} componentId="m1-quiz" />
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work! You have completed Module 1. You now have a solid foundation for understanding what AI is." />
