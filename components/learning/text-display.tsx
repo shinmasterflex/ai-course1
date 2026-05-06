@@ -595,26 +595,26 @@ function pickInferentialStatement(sourceText: string, scopeKey: string, instance
       ],
     },
     {
-      keywords: ["module 5", "variables", "conditionals", "loops", "functions", "debug"],
+      keywords: ["module 5", "roi", "business impact", "metrics", "adoption", "leverage"],
       statements: [
         {
-          statement: "Clear variable names and structure make debugging easier because you can trace what data flows where.",
-          explanation: "Good naming and organization let you isolate problems faster instead of guessing.",
+          statement: "A useful AI ROI estimate should include implementation and onboarding effort, not just subscription cost.",
+          explanation: "Ignoring adoption overhead can make weak tools look profitable.",
           isTrue: true,
         },
         {
-          statement: "More code always fixes broken automation logic.",
-          explanation: "Adding more code without understanding the problem usually makes things worse, not better.",
+          statement: "Prompt count is a reliable standalone metric for AI business value.",
+          explanation: "Prompt volume is usually a vanity metric unless tied to clear outcome improvements.",
           isTrue: false,
         },
         {
-          statement: "Functions help reduce duplication by packaging reusable logic.",
-          explanation: "Reusable function design improves maintainability and clarity.",
+          statement: "AI leverage can matter more than time savings if output quality and strategic capacity increase.",
+          explanation: "Leverage compounds when AI helps teams produce better results at larger scale.",
           isTrue: true,
         },
         {
-          statement: "Control flow is only relevant for advanced software and not for beginner scripts.",
-          explanation: "Even simple programs rely on conditionals and loops.",
+          statement: "If a tool has high expected impact, security and compliance fit can be ignored until later.",
+          explanation: "Risk controls are part of adoption quality and must be evaluated before scaling.",
           isTrue: false,
         },
       ],

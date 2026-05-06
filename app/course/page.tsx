@@ -23,7 +23,7 @@ const MODULE_META = [
   { id: "module-2", icon: Brain,        color: "brand-green",  label: "How Machines Learn",           description: "Training data, neural networks, and AI limits." },
   { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",             description: "How ChatGPT works and how to prompt effectively." },
   { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity ? a guided tour." },
-  { id: "module-5", icon: Code2,        color: "brand-green",  label: "Coding Fundamentals",          description: "Variables, logic, functions, and debugging basics." },
+  { id: "module-5", icon: Code2,        color: "brand-green",  label: "Business Impact of AI",        description: "ROI, value metrics, and adoption decisions that actually matter." },
   { id: "module-6", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
   { id: "module-7", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
   { id: "module-8", icon: Bot,          color: "brand-green",  label: "AI Agents",                    description: "How autonomous AI agents work and what they can do." },

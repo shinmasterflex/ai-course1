@@ -817,53 +817,61 @@ These transformations are not optional. Most models assume input features on com
 This is where subject-matter expertise translates into model performance. A model trained on well-engineered features often outperforms a more complex model trained on raw fields. Feature engineering is where humans teach the model what signals matter.`,
   },
 
-  // MODULE 5 (actual): Coding Crash Course for AI
+  // MODULE 5 (actual): Evaluating the Business Impact of AI
   "m5-module-overview": {
     id: "m5-module-overview",
-    title: "Module 5: Coding Crash Course Overview",
-    explanation: `This module introduces the programming concepts that appear most often in AI work: variables and data types, conditionals, loops, functions, and debugging. You do not need to become a software engineer, but understanding these building blocks lets you read, adapt, and reason about AI code.
+    title: "Module 5: Business Impact Overview",
+    explanation: `This module teaches a practical approach to evaluating whether AI tools are worth adopting. Instead of focusing on features, the learner starts with outcomes: value created, costs incurred, quality effects, and risk exposure.
 
-By the end you should be able to follow a Python script, understand what it does, and modify simple variables or conditions to change behaviour.`,
+By the end, the learner should be able to estimate AI ROI, identify misleading metrics, and make disciplined adoption decisions grounded in evidence.`,
   },
 
-  "m5-variables": {
-    id: "m5-variables",
-    title: "Variables and Data Types: The Building Blocks",
-    explanation: `A variable stores a value that a program can use and change. Data types (string, integer, float, boolean, list, dictionary) tell the program what operations are valid. Assigning the wrong type causes errors; understanding types helps you read error messages.
+  "m5-roi-basics": {
+    id: "m5-roi-basics",
+    title: "AI ROI Fundamentals",
+    explanation: `AI ROI compares the measurable value created by AI against the total cost of adoption, including software spend, setup effort, team onboarding, quality checks, and operational overhead.
 
-In AI contexts, variables hold everything from model hyperparameters to training data paths. Understanding how values are stored and typed is the first step to reading and modifying AI scripts.`,
+The key distinction in this module is between efficiency and leverage. Efficiency saves time; leverage increases strategic output and business outcomes.`,
   },
 
-  "m5-conditionals": {
-    id: "m5-conditionals",
-    title: "Conditionals: if/else Decision Logic",
-    explanation: `Conditionals (if/else, elif) let a program take different paths based on conditions. They are how AI pipelines handle edge cases, route different inputs, and implement thresholds — for example, flagging a prediction as low-confidence if the score is below 0.6.
+  "m5-leverage": {
+    id: "m5-leverage",
+    title: "AI Leverage Beyond Time Savings",
+    explanation: `Leverage means AI increases capability, not just speed. Examples include creating more high-quality outputs, improving conversion performance, accelerating learning loops, and enabling higher-value work.
 
-Reading conditional logic tells you what assumptions a system makes about its inputs and what exceptional cases it handles (or ignores).`,
+This framing prevents underestimating AI impact by only measuring hours saved.`,
   },
 
-  "m5-loops": {
-    id: "m5-loops",
-    title: "Loops: Repeating Operations Over Data",
-    explanation: `Loops (for, while) apply operations repeatedly — iterating over dataset rows, batching training examples, or running an evaluation across a test set. Most AI data processing is loop-based.
+  "m5-effectiveness": {
+    id: "m5-effectiveness",
+    title: "Measuring AI Effectiveness",
+    explanation: `Effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk reduction.
 
-Understanding loops explains how large datasets are processed: not all at once, but one item or batch at a time. This is why training takes time proportional to data size and why batching matters for memory efficiency.`,
+Activity metrics such as prompt count or model usage can be useful diagnostics, but they are weak indicators of real impact when used alone.`,
   },
 
-  "m5-functions": {
-    id: "m5-functions",
-    title: "Functions: Reusable, Modular Code",
-    explanation: `Functions package a block of code under a name so it can be reused without repetition. In AI codebases, functions encapsulate preprocessing steps, model calls, evaluation metrics, and utility operations.
+  "m5-roi-formula": {
+    id: "m5-roi-formula",
+    title: "ROI Calculation Framework",
+    explanation: `The module uses a transparent baseline formula: ROI (%) = ((Value - Cost) / Cost) * 100. This supports fast, comparable assessments across tools and workflows.
 
-Understanding functions lets you see how a pipeline is composed from smaller reusable parts. When something breaks, functions tell you where to look: the problem is in whichever function the error traces back to.`,
+Learners are encouraged to estimate value and cost with imperfect but explicit assumptions, then refine with real pilot data.`,
   },
 
-  "m5-debugging": {
-    id: "m5-debugging",
-    title: "Debugging Mindset and Mini Project",
-    explanation: `Debugging is the process of finding and fixing errors in code. The debugging mindset — read the error message, locate the failing line, check assumptions, isolate the variable — is more valuable than memorising syntax.
+  "m5-metrics": {
+    id: "m5-metrics",
+    title: "Misleading Metrics and Better Alternatives",
+    explanation: `Vanity metrics can hide poor outcomes. A strong metric stack combines efficiency, effectiveness, and risk signals so teams avoid optimizing for one dimension while harming another.
 
-In AI work, bugs are often silent: code runs without crashing but produces wrong results because a data transformation was applied incorrectly. The debugging habit of checking intermediate outputs catches these issues before they corrupt a model's training.`,
+This section teaches how to identify inflated success claims and replace them with defensible evidence.`,
+  },
+
+  "m5-adoption": {
+    id: "m5-adoption",
+    title: "Adoption Decision Scorecard",
+    explanation: `AI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to measurable value.
+
+Using a scorecard helps teams prioritize pilots and scale only when both upside and risk controls are strong.`,
   },
 
   // MODULE 6 additions (m6-module-overview and m6-future-ai)
