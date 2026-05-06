@@ -11,6 +11,47 @@ const BANNED_PATTERNS = [
 
 const AI_KEYWORDS = ["ai", "model", "data", "learning", "system", "tool"]
 
+function extractSentences(value: string) {
+  return value
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length >= 40)
+}
+
+function sentenceStarter(sentence: string) {
+  return sentence
+    .toLowerCase()
+    .replace(/^["'`\s]+/, "")
+    .split(/\s+/)
+    .slice(0, 2)
+    .join(" ")
+}
+
+function normalizeWords(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+}
+
+function fourGrams(value: string) {
+  const words = normalizeWords(value)
+  const grams: string[] = []
+
+  for (let i = 0; i <= words.length - 4; i += 1) {
+    const gram = words.slice(i, i + 4).join(" ")
+    if (gram.length >= 16) {
+      grams.push(gram)
+    }
+  }
+
+  return grams
+}
+
 describe("component explanations content quality", () => {
   it("contains many explainer entries", () => {
     expect(Object.keys(COMPONENT_EXPLANATIONS).length).toBeGreaterThan(20)
@@ -61,5 +102,73 @@ describe("component explanations content quality", () => {
       .map((entry) => entry.id)
 
     expect(offTopic).toEqual([])
+  })
+
+  it("avoids duplicate sentences across explanations", () => {
+    const allSentences = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) =>
+      extractSentences(entry.explanation).map((sentence) => ({ id: entry.id, sentence })),
+    )
+
+    const grouped = new Map<string, string[]>()
+    for (const item of allSentences) {
+      const key = item.sentence.toLowerCase()
+      const existing = grouped.get(key) ?? []
+      existing.push(item.id)
+      grouped.set(key, existing)
+    }
+
+    const duplicates = Array.from(grouped.entries())
+      .filter(([, ids]) => ids.length > 1)
+      .map(([sentence, ids]) => `${ids.join(", ")}: ${sentence}`)
+
+    expect(duplicates).toEqual([])
+  })
+
+  it("keeps sentence starters varied", () => {
+    const starters = Object.values(COMPONENT_EXPLANATIONS)
+      .flatMap((entry) => extractSentences(entry.explanation))
+      .map((sentence) => sentenceStarter(sentence))
+      .filter((starter) => starter.length > 0)
+
+    const counts = starters.reduce<Record<string, number>>((acc, starter) => {
+      acc[starter] = (acc[starter] ?? 0) + 1
+      return acc
+    }, {})
+
+    const overused = Object.entries(counts)
+      .filter(([, count]) => count > 12)
+      .map(([starter, count]) => `${starter}: ${count}`)
+
+    expect(overused).toEqual([])
+  })
+
+  it("does not overuse 'this section' framing", () => {
+    const matches = Object.values(COMPONENT_EXPLANATIONS)
+      .flatMap((entry) => extractSentences(entry.explanation))
+      .filter((sentence) => /^this section\b/i.test(sentence))
+
+    expect(matches.length).toBeLessThanOrEqual(3)
+  })
+
+  it("limits repeated 4-word phrase templates", () => {
+    const allGrams = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) => fourGrams(entry.explanation))
+
+    const counts = allGrams.reduce<Record<string, number>>((acc, gram) => {
+      acc[gram] = (acc[gram] ?? 0) + 1
+      return acc
+    }, {})
+
+    const ignored = new Set([
+      "should be able to",
+      "you should be able",
+      "what are the risks",
+      "a machine learning system",
+    ])
+
+    const repeated = Object.entries(counts)
+      .filter(([gram, count]) => count > 3 && !ignored.has(gram))
+      .map(([gram, count]) => `${gram}: ${count}`)
+
+    expect(repeated).toEqual([])
   })
 })

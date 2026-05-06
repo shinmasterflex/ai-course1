@@ -61,6 +61,57 @@ function toSentence(text: string) {
   return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`
 }
 
+function extractSentences(text: string | undefined) {
+  if (!text) {
+    return []
+  }
+
+  return text
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean)
+}
+
+function clipTitle(text: string, maxWords = 8) {
+  const words = text
+    .replace(/["']/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, maxWords)
+
+  return words.join(" ")
+}
+
+function deriveTextDisplayTitle(title: string | undefined, subtitle: string | undefined, content: string | undefined) {
+  if (title?.trim()) {
+    return title.trim()
+  }
+
+  if (subtitle?.trim()) {
+    return subtitle.trim()
+  }
+
+  const [leadSentence] = extractSentences(content)
+  if (leadSentence) {
+    return clipTitle(leadSentence.replace(/[.!?]+$/, ""))
+  }
+
+  return "Concept focus"
+}
+
+function buildTextDisplayExplanation(content: string | undefined, subtitle: string | undefined, interactive: boolean) {
+  const sentences = extractSentences(content)
+  const leadSentence = sentences[0] ?? subtitle?.trim() ?? "AI understanding becomes useful only when you can explain the idea clearly and apply it in context."
+  const supportSentence = sentences[1] ?? "In AI work, strong mental models let you predict likely behavior, notice weak outputs, and choose the right level of verification before acting."
+
+  return `${toSentence(leadSentence)} ${toSentence(supportSentence)}
+
+As you read, look for the decision rule inside the passage. Ask what pattern, limitation, tradeoff, or workflow principle the text is naming, and how that idea would change a real task such as prompting, checking an output, choosing a tool, or spotting risk.
+
+Before moving on, restate the point in your own words and test it against one concrete AI example. ${interactive ? "Use the follow-up question as retrieval practice: answer from memory first, then compare your answer to the text and revise what was missing." : "Use the surrounding exercises to see whether the idea changes how you would act in a real workflow rather than leaving it as a passive definition."}`
+}
+
 function hashString(value: string) {
   let hash = 0
 
@@ -830,14 +881,11 @@ export function TextDisplay({
   const dragPayload = statementData.statement
   const isCorrectDrop = dropTarget === null ? null : (dropTarget === "true") === statementData.isTrue
   const primarySummary = content?.split("\n").find((line) => line.trim().length > 0) ?? subtitle ?? title ?? "This lesson block explains the concept shown in the current section."
+  const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
   const explainerAttributes = getExplainerAttributes({
     type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
-    title: title ?? "Learning text",
-    explanation: `This text block presents conceptual material—the ideas and principles you need to understand. Reading comprehension in learning isn't passive. Your brain needs to actively construct meaning from words.
-
-Here's how to read actively: First, scan the title and subtitle to establish context. Second, read a section and pause to ask yourself: What's the main idea? Can I explain this in my own words? If you struggle, that's a signal to read again or look for related examples. Third, look for how this concept connects to previous material you've learned. This elaboration—connecting new ideas to existing knowledge—is where deep understanding forms.
-
-${interactive ? "This section includes a check-in question. These questions interrupt passive reading and force retrieval. Even if you're not sure of your answer, the attempt to retrieve strengthens memory more than re-reading would." : "Use this as reference material while you work through the interactive components. Switching between reading and doing—called interleaving—creates stronger learning than doing only activities without conceptual grounding."} Pay attention to examples; they're not ornamental. Examples are how abstract principles become concrete in your mind.`,
+    title: explainerTitle,
+    explanation: buildTextDisplayExplanation(content, subtitle, interactive),
   })
 
   return (
