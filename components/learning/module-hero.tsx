@@ -5,7 +5,7 @@ import { useMemo, useState } from "react"
 import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CheckCircle2, Trophy } from "lucide-react"
+import { CheckCircle2, Target } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type ModuleHeroProps = {
@@ -29,9 +29,9 @@ export function ModuleHero({
 }: ModuleHeroProps) {
   const defaultObjectives = useMemo(
     () => objectives ?? [
-      "Read the lesson goal",
-      "Complete at least one interaction",
-      "Finish the end-of-module quiz",
+      "Review the strategic objective",
+      "Complete the decision framework activity",
+      "Finish the module checkpoint",
     ],
     [objectives]
   )
@@ -61,10 +61,10 @@ As you progress through the module, return to this section occasionally. Seeing 
 
           <div className="rounded-lg border border-brand-green/20 bg-brand-green/5 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
-              <p className="text-xs font-semibold uppercase tracking-wide text-brand-indigo">Quest objectives</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-brand-indigo">Implementation objectives</p>
               <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs font-semibold text-brand-green">
-                <Trophy className="h-3 w-3" />
-                {completedCount * 10} XP
+                <Target className="h-3 w-3" />
+                {completedCount}/{defaultObjectives.length} completed
               </span>
             </div>
 

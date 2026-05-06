@@ -21,10 +21,10 @@ export function PublicHeader() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Button asChild variant="outline">
-            <Link href="/course">Course</Link>
+            <Link href="/course">Executive Program</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/demo">Try Module 0</Link>
+            <Link href="/demo">Preview Module 0</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="https://calendly.com/lfederico-cognijin/30min?month=2026-01" target="_blank" rel="noopener noreferrer">

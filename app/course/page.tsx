@@ -13,22 +13,22 @@ import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { Target, TrendingUp, Award, Brain, Cpu, MessageSquare, Zap, Shield, Wrench, BookOpen, Briefcase, Bot, Rocket, Code2 } from "lucide-react"
+import { Target, TrendingUp, Award, LineChart, Compass, BriefcaseBusiness, Layers, Handshake, Calculator, Shield, Map, Bot, Network, Telescope } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { cn } from "@/lib/utils"
 
 const MODULE_META = [
-  { id: "module-0", icon: BookOpen,     color: "brand-green",  label: "Welcome to AI",                description: "Get oriented and understand the road ahead." },
-  { id: "module-1", icon: Cpu,          color: "brand-orange", label: "What Is AI?",                  description: "A grounded definition, history, and types of AI." },
-  { id: "module-2", icon: Brain,        color: "brand-green",  label: "How Machines Learn",           description: "Training data, neural networks, and AI limits." },
-  { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",             description: "How ChatGPT works and how to prompt effectively." },
-  { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity ? a guided tour." },
-  { id: "module-5", icon: Code2,        color: "brand-green",  label: "Business Impact of AI",        description: "ROI, value metrics, and adoption decisions that actually matter." },
-  { id: "module-6", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
-  { id: "module-7", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
-  { id: "module-8", icon: Bot,          color: "brand-green",  label: "AI Agents",                    description: "How autonomous AI agents work and what they can do." },
-  { id: "module-9", icon: Wrench,       color: "brand-green",  label: "Your AI Toolkit",              description: "No-code tools, workflows, and your first project." },
-  { id: "module-10", icon: Rocket,      color: "brand-orange", label: "The Future of AI",             description: "AGI, governance, careers, and what comes next." },
+  { id: "module-0", icon: Compass,          color: "brand-green",  label: "The AI Shift",                         description: "Separate hype from reality and define your leadership posture." },
+  { id: "module-1", icon: Layers,           color: "brand-orange", label: "AI Landscape",                        description: "Models, tools, agencies, and delivery models mapped for decisions." },
+  { id: "module-2", icon: LineChart,        color: "brand-green",  label: "Business Value",                       description: "Find high-ROI use cases and prioritize opportunities with confidence." },
+  { id: "module-3", icon: BriefcaseBusiness,color: "brand-orange", label: "Tools That Matter",                   description: "Evaluate tool categories, integration fit, pricing, and security." },
+  { id: "module-4", icon: Handshake,        color: "brand-green",  label: "Agency and Partner Selection",        description: "Run vendor diligence and structure pilots that produce real evidence." },
+  { id: "module-5", icon: Calculator,       color: "brand-green",  label: "ROI Frameworks",                      description: "Build credible ROI models, prioritization matrices, and reporting." },
+  { id: "module-6", icon: Shield,           color: "brand-orange", label: "Risk and Governance",                 description: "Implement guardrails for data, reliability, compliance, and vendors." },
+  { id: "module-7", icon: Map,              color: "brand-orange", label: "Adoption Roadmap",                    description: "Translate strategy into pilots, change management, and phased rollout." },
+  { id: "module-8", icon: Bot,              color: "brand-green",  label: "Agents and Automation Systems",       description: "Design practical automation with human oversight and operational control." },
+  { id: "module-9", icon: Network,          color: "brand-green",  label: "AI Stack Design",                     description: "Avoid tool sprawl and build a maintainable, owned AI ecosystem." },
+  { id: "module-10", icon: Telescope,       color: "brand-orange", label: "Future Positioning",                  description: "Anticipate industry shifts and position for durable AI advantage." },
 ]
 
 export default function DashboardPage() {
@@ -54,13 +54,13 @@ export default function DashboardPage() {
   const completionRate = totalSections > 0 ? Math.round((totalCompleted / totalSections) * 100) : 0
   const dashboardExplainerAttributes = getExplainerAttributes({
     type: "Course dashboard",
-    title: "Learning overview",
-    summary: "This page summarizes overall course progress, module status, and the quickest path back into the lesson sequence.",
+    title: "Executive program overview",
+    summary: "This page summarizes strategic progress across the full AI adoption curriculum and provides direct access to each module.",
     details: [
       `Overall completion is ${completionRate}% across ${MODULE_META.length} modules.`,
-      "Use the roadmap and module cards here to decide where to continue or which completed module to review.",
+      "Use the roadmap and module cards to choose your next strategic focus area or revisit completed frameworks.",
     ],
-    interaction: "Scan your progress, then use a module card to jump straight back into the next lesson.",
+    interaction: "Review progress and enter the next module where your organization needs immediate decisions.",
   })
 
   return (
@@ -72,11 +72,11 @@ export default function DashboardPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">
             Welcome to{" "}
-            <span className="text-brand-orange">Introduction</span>{" "}
-            <span className="text-brand-green">to AI</span>
+            <span className="text-brand-orange">AI Strategy</span>{" "}
+            <span className="text-brand-green">for Leaders</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Your beginner-friendly journey from zero to AI-confident, one module at a time.
+            Your field guide for AI adoption, vendor decisions, ROI planning, and implementation execution.
           </p>
         </div>
 
@@ -85,16 +85,16 @@ export default function DashboardPage() {
             <div className="grid items-stretch lg:grid-cols-2">
               <div className="space-y-4 p-6 md:p-8">
                 <div className="inline-flex items-center rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-indigo">
-                  Visual Progress Center
+                  Strategic Progress Center
                 </div>
-                <h2 className="text-2xl font-semibold text-brand-indigo md:text-3xl">See your learning momentum instantly</h2>
+                <h2 className="text-2xl font-semibold text-brand-indigo md:text-3xl">Track implementation readiness at a glance</h2>
                 <p className="text-muted-foreground">
-                  Your dashboard now includes visual progress graphics to make milestones, pacing, and completion trends easier to scan.
+                  Monitor your progress through landscape analysis, tool selection, vendor diligence, governance, and rollout planning.
                 </p>
                 <div className="grid grid-cols-3 gap-3 text-center text-xs font-semibold text-brand-indigo md:text-sm">
-                  <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 p-2">Completion</div>
-                  <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 p-2">Consistency</div>
-                  <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 p-2">Retention</div>
+                  <div className="rounded-lg border border-brand-green/30 bg-brand-green/10 p-2">Prioritization</div>
+                  <div className="rounded-lg border border-brand-indigo/20 bg-brand-indigo/10 p-2">Execution</div>
+                  <div className="rounded-lg border border-brand-orange/30 bg-brand-orange/10 p-2">Governance</div>
                 </div>
               </div>
               <div className="border-t border-brand-indigo/10 bg-sky-50/70 p-4 lg:border-l lg:border-t-0">
@@ -154,7 +154,7 @@ export default function DashboardPage() {
         <Card className="mb-8 overflow-hidden border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-brand-indigo">Your Module Roadmap</CardTitle>
-            <CardDescription>Track where you are across all modules in your complete learning journey.</CardDescription>
+            <CardDescription>Track where you are across all modules in your AI adoption and implementation journey.</CardDescription>
           </CardHeader>
           <CardContent>
             <Image
@@ -172,7 +172,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-xl text-brand-indigo">All Modules</CardTitle>
-              <CardDescription>Follow the full course sequence without phase-based grouping.</CardDescription>
+              <CardDescription>Follow the full executive sequence from market context to long-term strategic positioning.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {MODULE_META.map((meta, modIndex) => {
