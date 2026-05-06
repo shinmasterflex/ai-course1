@@ -116,7 +116,7 @@ export default function Module6Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks - to yourself, to others, and to society. This module gives you that foundation." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m6-module-overview" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A simple safety operating system</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Before you paste:</span> ask whether the data is personal, confidential, or regulated.</p>
@@ -124,7 +124,7 @@ export default function Module6Page() {
                   <p><span className="font-medium text-foreground">Before you automate:</span> ask whether a human should still review the result.</p>
                 </div>
               </Card>
-              <Card className="p-5 space-y-2">
+              <Card componentId="m6-module-overview" className="p-5 space-y-2">
                 {["AI bias - how it forms and who it hurts","Privacy - what AI systems collect about you","Misinformation - deepfakes and AI-generated content","Responsible AI use - principles and practices","The future of AI - what comes next"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
@@ -158,7 +158,7 @@ export default function Module6Page() {
               <TextDisplay content="AI bias occurs when an AI system produces systematically unfair or discriminatory outcomes for certain groups of people." />
               <TextDisplay variant="warning" content="This is not a minor or theoretical problem. AI bias has denied people loans, led to wrongful arrests, screened out job applicants, and produced medical recommendations that work better for some demographics than others." />
               <div className="space-y-4">
-                <Card className="p-5">
+                <Card componentId="m6-bias-fairness" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">How AI bias forms</h3>
                   <div className="space-y-3 text-sm">
                     {[
@@ -174,7 +174,7 @@ export default function Module6Page() {
                     ))}
                   </div>
                 </Card>
-                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                <Card componentId="m6-bias-fairness" className="p-5 bg-brand-green/5 border-brand-green/20">
                   <h3 className="font-semibold mb-2 text-brand-green flex items-center gap-2"><Shield className="h-4 w-4" />What is being done about it</h3>
                   <ul className="text-sm space-y-1 text-muted-foreground">
                     <li>? Bias auditing tools that test AI systems for disparate outcomes</li>
@@ -239,7 +239,7 @@ export default function Module6Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Privacy & Your Data</h2>
               <TextDisplay content="When you use AI tools, you are sharing data - sometimes more than you realise. Understanding what is collected helps you protect yourself." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m6-privacy-data" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">Traffic-light rule for what to paste</h3>
                 <div className="space-y-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -257,7 +257,7 @@ export default function Module6Page() {
                 </div>
               </Card>
               
-              <Card className="p-5">
+              <Card componentId="m6-privacy-data" className="p-5">
                 <h3 className="font-semibold mb-3">Practical privacy guidelines</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -298,7 +298,7 @@ export default function Module6Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Misinformation & Deepfakes</h2>
               <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content - from text to images to video to audio." />
               <div className="space-y-4">
-                <Card className="p-5">
+                <Card componentId="m6-misinformation-deepfakes" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange">Types of AI-generated misinformation</h3>
                   <div className="space-y-3 text-sm">
                     {[
@@ -314,7 +314,7 @@ export default function Module6Page() {
                     ))}
                   </div>
                 </Card>
-                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                <Card componentId="m6-misinformation-deepfakes" className="p-5 bg-brand-green/5 border-brand-green/20">
                   <h3 className="font-semibold mb-3 text-brand-green">How to spot and resist AI misinformation</h3>
                   <ul className="text-sm space-y-2 text-muted-foreground">
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing - if it is surprising, check it</li>
@@ -324,7 +324,7 @@ export default function Module6Page() {
                     <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use tools like Google Fact Check, Snopes, AFP Fact Check for viral claims</li>
                   </ul>
                 </Card>
-                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <Card componentId="m6-misinformation-deepfakes" className="p-5 border-blue-500/20 bg-blue-500/5">
                   <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools - and Their Limits</h3>
                   <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful - but imperfect. Understanding both is important.</p>
                   <div className="space-y-3 text-sm">
@@ -373,7 +373,7 @@ export default function Module6Page() {
                   accentClassName="border-brand-orange/20 bg-brand-orange/5"
                 />
               </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m6-responsible-use" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Real scenario - what would you do?</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>You receive a voice note from someone who sounds like your manager asking you to urgently buy gift cards and send the codes.</p>
@@ -416,20 +416,20 @@ export default function Module6Page() {
                   { principle: "Consider impact on others", desc: "AI-generated content, images, and audio can harm real people. Think about downstream effects before you create or share AI content." },
                     { principle: "Protect privacy", desc: "Do not use AI tools to collect, analyse, or share personal information about others without consent." },
                   ].map(({ principle, desc }) => (
-                    <Card key={principle} className="p-4">
+                    <Card key={principle} componentId="m6-responsible-use" className="p-4">
                       <p className="font-semibold text-brand-orange mb-1">{principle}</p>
                       <p className="text-sm text-muted-foreground">{desc}</p>
                     </Card>
                   ))}
               </div>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m6-responsible-use" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>You used AI to draft a client-facing report. The draft is strong, but it includes a statistic you have not verified and a confident recommendation you would not personally stand behind yet.</p>
                   <p><span className="font-medium text-foreground">Responsible move:</span> check the source of the statistic, edit the recommendation to match your real judgment, and only then send the report.</p>
                 </div>
               </Card>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m6-responsible-use" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A simple checklist before you use AI output</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -467,14 +467,14 @@ export default function Module6Page() {
               <TextDisplay content="Theory is helpful. But real ethics lives in the gray zones of trade-offs. Here are scenarios you might actually encounter. There are no perfect answers - only thoughtful ones." />
               
               <div className="space-y-5">
-                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <Card componentId="m6-ethical-dilemmas" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                   <div className="flex gap-2 items-start mb-3">
                     <AlertCircle className="h-5 w-5 text-brand-orange flex-shrink-0 mt-0.5" />
                     <h3 className="font-semibold text-brand-orange">Scenario 1: The Hiring Decision</h3>
                   </div>
                   <div className="space-y-3 text-sm">
                     <p className="text-muted-foreground"><span className="font-medium text-foreground">You are a hiring manager.</span> Your company uses an AI system to screen 500 resumes and rank the top 20 candidates. You notice that the final list is 80% male in a field that is 50% female. The AI says it is just following the data - past hires were also mostly male.</p>
-                    <Card className="p-3 bg-background border-dashed">
+                      <Card componentId="m6-ethical-dilemmas" className="p-3 bg-background border-dashed">
                       <p className="font-semibold text-sm mb-2">What do you do?</p>
                       <ul className="space-y-2 text-xs text-muted-foreground">
                         <li className="flex gap-2">
@@ -495,21 +495,21 @@ export default function Module6Page() {
                         </li>
                       </ul>
                     </Card>
-                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                    <Card componentId="m6-ethical-dilemmas" className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
                       <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
                       <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">C</span> is the most defensible and ethical approach. It acknowledges the AI found a real pattern (past hiring bias) without accepting it as inevitable. You are not imposing quotas artificially - you are correcting the bias in the system itself. Options A and B are simpler but leave you either perpetuating historical discrimination or making arbitrary corrections without understanding the root cause. Option D throws away useful data entirely.</p>
                     </Card>
                   </div>
                 </Card>
 
-                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                <Card componentId="m6-ethical-dilemmas" className="p-5 border-blue-500/20 bg-blue-500/5">
                   <div className="flex gap-2 items-start mb-3">
                     <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                     <h3 className="font-semibold text-blue-600 dark:text-blue-400">Scenario 2: The Deepfake Video</h3>
                   </div>
                   <div className="space-y-3 text-sm">
                     <p className="text-muted-foreground"><span className="font-medium text-foreground">You receive a video of your CEO saying something completely against company values.</span> It looks authentic, the audio sounds like them, but you have a strong feeling something is off. A colleague says "I already shared it with three people." No one has fact-checked it yet.</p>
-                    <Card className="p-3 bg-background border-dashed">
+                      <Card componentId="m6-ethical-dilemmas" className="p-3 bg-background border-dashed">
                       <p className="font-semibold text-sm mb-2">What do you do immediately?</p>
                       <ul className="space-y-2 text-xs text-muted-foreground">
                         <li className="flex gap-2">
@@ -530,21 +530,21 @@ export default function Module6Page() {
                         </li>
                       </ul>
                     </Card>
-                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                    <Card componentId="m6-ethical-dilemmas" className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
                       <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
                       <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">B</span> is the move. Urgency is often a feature of misinformation, but that does not mean you do nothing. You verify through a direct, trusted channel first. If it is fake, you have the CEO's word backing you when you help stop spread. If it is real (despite your doubts), you have not spread false reassurance. Option C spreads false certainty. Option D amplifies unverified claims. Option A is passive - you have agency here.</p>
                     </Card>
                   </div>
                 </Card>
 
-                <Card className="p-5 border-green-500/20 bg-green-500/5">
+                <Card componentId="m6-ethical-dilemmas" className="p-5 border-green-500/20 bg-green-500/5">
                   <div className="flex gap-2 items-start mb-3">
                     <AlertCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                     <h3 className="font-semibold text-green-600 dark:text-green-400">Scenario 3: The Data Privacy Tension</h3>
                   </div>
                   <div className="space-y-3 text-sm">
                     <p className="text-muted-foreground"><span className="font-medium text-foreground">You work in healthcare.</span> A colleague wants to feed patient medical records into a new AI system to train a diagnostic model that could genuinely help patients. The data is anonymized (names and IDs removed), but it includes sensitive medical history. Your legal team has not approved the use of that data with external AI vendors yet - approval could take weeks.</p>
-                    <Card className="p-3 bg-background border-dashed">
+                      <Card componentId="m6-ethical-dilemmas" className="p-3 bg-background border-dashed">
                       <p className="font-semibold text-sm mb-2">What do you recommend?</p>
                       <ul className="space-y-2 text-xs text-muted-foreground">
                         <li className="flex gap-2">
@@ -565,21 +565,21 @@ export default function Module6Page() {
                         </li>
                       </ul>
                     </Card>
-                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                    <Card componentId="m6-ethical-dilemmas" className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
                       <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
                       <p className="text-xs text-muted-foreground"><span className="font-medium text-foreground">C</span> is the pragmatic ethical move. You are not waiting passively - you are making progress on the technical side while respecting the governance process. Anonymized data can still carry privacy risks (especially in re-identification attacks), so going through legal is not bureaucracy - it is due diligence. Option A downplays regulatory risk. Option D is a serious breach of trust. Option B is safe but slow. Option C moves forward responsibly.</p>
                     </Card>
                   </div>
                 </Card>
 
-                <Card className="p-5 border-purple-500/20 bg-purple-500/5">
+                <Card componentId="m6-ethical-dilemmas" className="p-5 border-purple-500/20 bg-purple-500/5">
                   <div className="flex gap-2 items-start mb-3">
                     <AlertCircle className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
                     <h3 className="font-semibold text-purple-600 dark:text-purple-400">Scenario 4: The Attribution Shortcut</h3>
                   </div>
                   <div className="space-y-3 text-sm">
                     <p className="text-muted-foreground"><span className="font-medium text-foreground">You are writing a report for a client.</span> You used AI to draft an entire section. The output is good - well-researched and clearly written. No one would know it was AI-generated unless you told them. Your timeline is tight and the client has not specifically asked how you created the content.</p>
-                    <Card className="p-3 bg-background border-dashed">
+                    <Card componentId="m6-ethical-dilemmas" className="p-3 bg-background border-dashed">
                       <p className="font-semibold text-sm mb-2">What do you do?</p>
                       <ul className="space-y-2 text-xs text-muted-foreground">
                         <li className="flex gap-2">
@@ -600,7 +600,7 @@ export default function Module6Page() {
                         </li>
                       </ul>
                     </Card>
-                    <Card className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+                    <Card componentId="m6-ethical-dilemmas" className="p-3 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
                       <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Why this matters</p>
                       <p className="text-xs text-muted-foreground">The answer depends on context. In academic or journalistic work, <span className="font-medium text-foreground">B</span> or <span className="font-medium text-foreground">D</span> is expected. In creative or internal work, <span className="font-medium text-foreground">A</span> may be fine if your editing was substantial. Option D is the safest - it defers to the client's standards, which respect their trust in you. Option A assumes deception is okay as long as results are good - it is not. Option C is wasteful if the output is already strong.</p>
                     </Card>
@@ -637,12 +637,12 @@ export default function Module6Page() {
               <h2 className="text-3xl font-bold text-brand-green">Risk Assessment & Safeguards</h2>
               <TextDisplay content="This is your capstone exercise: evaluate a real-world AI use case for hidden risks, then propose practical safeguards." />
               
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m6-risk-safeguards" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Target className="h-5 w-5" />Your Exercise</h3>
                 <p className="text-sm text-muted-foreground mb-4">Read this scenario and work through the questions below.</p>
               </Card>
 
-              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+              <Card componentId="m6-risk-safeguards" className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-semibold text-blue-700 dark:text-blue-400 mb-3">Case: Automated Resume Screening at Scale</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">The setup:</span> A large retailer uses an AI system to screen resumes for store manager positions across 500 locations. The system ranks 50,000+ applicants per year and forwards the top 500 to human reviewers. The AI learned from the company's hiring history over the last 10 years. Retailers want to hire fast - each location needs staffing quickly.</p>
@@ -652,7 +652,7 @@ export default function Module6Page() {
               </Card>
 
               <div className="space-y-4">
-                <Card className="p-5">
+                <Card componentId="m6-risk-safeguards" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><AlertTriangle className="h-4 w-4" />Part 1: Identify the Risks</h3>
                   <p className="text-sm text-muted-foreground mb-4">Check all risks you see in this scenario:</p>
                   <div className="space-y-2">
@@ -674,7 +674,7 @@ export default function Module6Page() {
                   </div>
                 </Card>
 
-                <Card className="p-5">
+                <Card componentId="m6-risk-safeguards" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Shield className="h-4 w-4" />Part 2: Design Safeguards</h3>
                   <p className="text-sm text-muted-foreground mb-4">For each risk, here are practical safeguards. Read and reflect:</p>
                   <div className="space-y-3">
@@ -716,7 +716,7 @@ export default function Module6Page() {
                         ]
                       },
                     ].map(({ risk, safeguards }) => (
-                      <Card key={risk} className="p-4 border-dashed border-brand-green/30 bg-brand-green/5">
+                      <Card key={risk} componentId="m6-risk-safeguards" className="p-4 border-dashed border-brand-green/30 bg-brand-green/5">
                         <p className="font-semibold text-sm mb-2">{risk}</p>
                         <ul className="space-y-1">
                           {safeguards.map((sg) => (
@@ -731,7 +731,7 @@ export default function Module6Page() {
                   </div>
                 </Card>
 
-                <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                <Card componentId="m6-risk-safeguards" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Lightbulb className="h-4 w-4" />Part 3: Reflect on Your Approach</h3>
                   <div className="space-y-3 text-sm text-muted-foreground">
                     <div>
@@ -753,7 +753,7 @@ export default function Module6Page() {
                   </div>
                 </Card>
 
-                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <Card componentId="m6-risk-safeguards" className="p-5 border-brand-green/20 bg-brand-green/5">
                   <h3 className="font-semibold mb-3 text-brand-green">Key Takeaway</h3>
                   <p className="text-sm text-muted-foreground">The goal is not to avoid AI - it is to use it with eyes wide open. A system that is audited, transparent, and governed is far more trustworthy than one that is fast but hidden. You now know how to ask the right questions and design practical safeguards.</p>
                 </Card>

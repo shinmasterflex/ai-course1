@@ -194,14 +194,14 @@ export default function Module9Page() {
                 variant="callout"
                 content="This module is now a capstone, not just a tools tour. You will revisit the core ideas of the course, apply them to real products like ChatGPT, Claude, and Gemini, and finish by designing a safe no-code workflow."
               />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m9-module-overview" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">What success looks like here</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Not:</span> memorising a random list of AI products.</p>
                   <p><span className="font-medium text-foreground">Yes:</span> being able to explain AI simply, choose tools deliberately, write stronger prompts, challenge weak claims, and design one workflow with clear guardrails.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m9-module-overview" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">What you should be able to do by the end</h3>
                 <ul className="space-y-2 text-sm">
                   {learningOutcomes.map((item) => (
@@ -222,7 +222,7 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Explain AI Clearly</h2>
               <TextDisplay content="A real sign of understanding is being able to explain AI to someone else without hiding behind jargon. Here is a simple explanation structure you can actually reuse." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m9-explain-ai" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A plain-English explanation of AI</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Artificial intelligence</span> is software trained on large amounts of data so it can recognise patterns and produce useful outputs such as predictions, recommendations, summaries, or generated content.</p>
@@ -236,13 +236,13 @@ export default function Module9Page() {
                   { title: "What happens", body: "The model detects patterns and predicts a response based on probability, not human understanding." },
                   { title: "What comes out", body: "An answer, image, classification, recommendation, or draft that still needs human judgment." },
                 ].map(({ title, body }) => (
-                  <Card key={title} className="p-4">
+                  <Card key={title} componentId="m9-explain-ai" className="p-4">
                     <p className="font-semibold text-brand-green mb-2">{title}</p>
                     <p className="text-sm text-muted-foreground">{body}</p>
                   </Card>
                 ))}
               </div>
-              <Card className="p-5">
+              <Card componentId="m9-explain-ai" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">The 30-second teach-back formula</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>1. Start with the job: AI systems recognise patterns and generate outputs.</p>
@@ -280,7 +280,7 @@ export default function Module9Page() {
               <h2 className="text-3xl font-bold text-brand-green">Choose the Right AI Tool</h2>
               <TextDisplay content="Tool choice should follow the task. Good AI users do not ask 'What tool is trending?' They ask 'What kind of work am I actually trying to do?'" />
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m9-choose-tools" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Tool Selection Table: task - tool - why</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border-collapse">
@@ -306,7 +306,7 @@ export default function Module9Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m9-choose-tools" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">A practical toolkit map</h3>
                 <div className="space-y-3 text-sm">
                   {[
@@ -325,7 +325,7 @@ export default function Module9Page() {
                 </div>
               </Card>
               <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-5">
+                <Card componentId="m9-choose-tools" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><MessageSquare className="h-4 w-4" />When to use a chat assistant</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li>Drafting, summarising, brainstorming, tutoring, rewriting, or explaining.</li>
@@ -333,7 +333,7 @@ export default function Module9Page() {
                     <li>You are still deciding what the answer should look like.</li>
                   </ul>
                 </Card>
-                <Card className="p-5">
+                <Card componentId="m9-choose-tools" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Search className="h-4 w-4" />When to use research tools</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li>You need recent facts, citations, or independent sources.</li>
@@ -344,7 +344,7 @@ export default function Module9Page() {
               </div>
               <div className="space-y-4">
                 {workflowToolGroups.map(({ category, icon: Icon, tools }) => (
-                  <Card key={category} className="p-5">
+                  <Card key={category} componentId="m9-choose-tools" className="p-5">
                     <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
                     <div className="space-y-2">
                       {tools.map(({ name, desc }) => (
@@ -395,7 +395,7 @@ export default function Module9Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Prompt ChatGPT, Claude, and Gemini</h2>
               <TextDisplay content="The model changes, but the structure of a strong prompt stays mostly the same. Good prompting is about giving the system a clear job, useful context, constraints, and a target format." />
 
-              <Card className="p-5">
+              <Card componentId="m9-prompting" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Assistant Prompting Comparison Table</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border-collapse">
@@ -421,7 +421,7 @@ export default function Module9Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m9-prompting" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">A reliable prompt structure</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Role:</span> who the assistant should act like.</p>
@@ -431,7 +431,7 @@ export default function Module9Page() {
                   <p><span className="font-medium text-foreground">Format:</span> bullets, table, email draft, checklist, JSON, and so on.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m9-prompting" className="p-5">
                 <h3 className="font-semibold mb-4 text-brand-green">One task, three assistants</h3>
                 <div className="space-y-3 text-sm">
                   {[
@@ -451,7 +451,7 @@ export default function Module9Page() {
                       prompt: "Create a summary for a Google Docs follow-up. Use headings for decisions, action items, and blockers. Write so the team can paste it directly into a project update.",
                     },
                   ].map(({ assistant, bestUse, prompt }) => (
-                    <Card key={assistant} className="p-4 bg-background">
+                    <Card key={assistant} componentId="m9-prompting" className="p-4 bg-background">
                       <div className="flex items-center justify-between gap-3 mb-2">
                         <p className="font-semibold text-brand-green">{assistant}</p>
                         <span className="text-xs rounded bg-brand-orange/10 px-2 py-1 text-brand-orange">{bestUse}</span>
@@ -461,7 +461,7 @@ export default function Module9Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m9-prompting" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Prompt upgrade example</h3>
                 <div className="space-y-3 text-sm">
                   <div className="rounded-lg border bg-background p-3">
@@ -520,7 +520,7 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Bias, Privacy, and Misinformation Checks</h2>
               <TextDisplay content="Using AI well is not just about getting useful outputs. It is also about knowing when a tool could mislead you, expose sensitive data, or package bias in convincing language." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m9-safety-checks" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Risk Checklist (use before shipping output)</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm text-muted-foreground">
                   <div className="rounded-lg border bg-background p-3">
@@ -546,20 +546,20 @@ export default function Module9Page() {
                 </div>
               </Card>
               <div className="grid md:grid-cols-3 gap-4">
-                <Card className="p-5">
+                <Card componentId="m9-safety-checks" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Bias</h3>
                   <p className="text-sm text-muted-foreground">Ask who might be missing from the data, whose perspective the model favors, and who could be harmed if the output is wrong.</p>
                 </Card>
-                <Card className="p-5">
+                <Card componentId="m9-safety-checks" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Privacy</h3>
                   <p className="text-sm text-muted-foreground">Do not paste confidential, regulated, or personally sensitive data into general AI tools without approved protections.</p>
                 </Card>
-                <Card className="p-5">
+                <Card componentId="m9-safety-checks" className="p-5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Misinformation</h3>
                   <p className="text-sm text-muted-foreground">Treat confident wording as presentation, not proof. Verify claims, especially when they are surprising, urgent, or emotionally charged.</p>
                 </Card>
               </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m9-safety-checks" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">A five-question critical thinking filter</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>1. What is the claim, exactly?</p>
@@ -569,7 +569,7 @@ export default function Module9Page() {
                   <p>5. What is the cost if this answer is wrong and I act on it?</p>
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+              <Card componentId="m9-safety-checks" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Red flags that should slow you down</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {[
@@ -632,7 +632,7 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">Building Simple AI Workflows</h2>
               <TextDisplay content="Now apply the earlier lessons. A good workflow starts with a real task, uses the right tool for one narrow AI step, and includes a review point if errors would matter." />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m9-workflows" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Workflow Blueprint: research {"->"} summarize {"->"} generate output</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border-collapse">
@@ -667,7 +667,7 @@ export default function Module9Page() {
                   </table>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m9-workflows" className="p-5">
                 <h3 className="font-semibold mb-4 text-brand-green">The easiest first workflow recipe</h3>
                 <div className="space-y-3 text-sm">
                   {[
@@ -682,7 +682,7 @@ export default function Module9Page() {
                   ))}
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m9-workflows" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">Example Workflow: Auto-summarise a newsletter</h3>
                 <div className="space-y-3">
                   {[
@@ -711,7 +711,7 @@ export default function Module9Page() {
                   { title: "Personal knowledge base", desc: "Trigger: save article to Pocket. AI creates a summary and tags. Output lands in Notion." },
                   { title: "Meeting follow-up", desc: "Trigger: transcript uploaded. AI extracts decisions and action items. Owner approves before sending." },
                 ].map(({ title, desc }) => (
-                  <Card key={title} className="p-4">
+                  <Card key={title} componentId="m9-workflows" className="p-4">
                     <p className="font-semibold text-brand-green mb-1">{title}</p>
                     <p className="text-sm text-muted-foreground">{desc}</p>
                   </Card>
@@ -754,7 +754,7 @@ export default function Module9Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Your First AI Mini-Project</h2>
               <TextDisplay variant="callout" content="This project now asks you to combine the whole toolkit: explain the task, choose the tool, write the prompt, check the risks, and map the workflow." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m9-mini-project" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Step-by-step capstone project (real problem)</h3>
                 <p className="text-sm text-muted-foreground mb-3">Scenario: You are a team lead preparing a weekly market update for non-technical stakeholders.</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
@@ -767,7 +767,7 @@ export default function Module9Page() {
                   <p><span className="font-medium text-foreground">Step 7 - Review and measure:</span> Ask one colleague to score usefulness (1-5) and track time saved versus manual process.</p>
                 </div>
               </Card>
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+              <Card componentId="m9-mini-project" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
                 <h3 className="font-semibold mb-3">Mini-Project: Design One Safe, Useful Workflow</h3>
                 <p className="text-sm text-muted-foreground mb-4">Answer these prompts as if you had to pitch the workflow to a teammate who is smart but skeptical.</p>
                 <div className="space-y-3 text-sm text-muted-foreground">
@@ -803,7 +803,7 @@ export default function Module9Page() {
                   },
                 ]}
               />
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m9-mini-project" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Three stronger starter project ideas</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Inbox helper:</span> classify incoming emails, draft a reply outline, and hold for human review.</p>
@@ -811,7 +811,7 @@ export default function Module9Page() {
                   <p><span className="font-medium text-foreground">Meeting follow-up:</span> turn notes into action items with owners and deadlines, then send for approval before distribution.</p>
                 </div>
               </Card>
-              <Card className="p-5">
+              <Card componentId="m9-mini-project" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Capstone checklist</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -860,7 +860,7 @@ export default function Module9Page() {
                 variant="success"
                 content="You now have a more complete AI toolkit: conceptual understanding, tool selection judgment, stronger prompting habits, safer evaluation habits, and a workflow design process you can reuse. Up next: The Future of AI."
               />
-              <Card className="p-5">
+              <Card componentId="m9-next-steps" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />What you can now do</h3>
                 <ul className="space-y-2 text-sm">
                   {learningOutcomes.map((item) => (
@@ -881,7 +881,7 @@ export default function Module9Page() {
                     "Week 3: build one tiny workflow with a trigger, one AI step, one output, and one review point.",
                     "Week 4: document what worked, where the risks showed up, and what you would trust AI to do next.",
                   ].map((item) => (
-                    <Card key={item} className="p-4">
+                    <Card key={item} componentId="m9-next-steps" className="p-4">
                       <p className="text-muted-foreground">{item}</p>
                     </Card>
                   ))}
@@ -932,7 +932,7 @@ export default function Module9Page() {
                       ],
                     },
                   ].map(({ category, icon: Icon, resources }) => (
-                    <Card key={category} className="p-4">
+                    <Card key={category} componentId="m9-next-steps" className="p-4">
                       <h4 className="font-bold text-brand-green mb-2 flex items-center gap-1"><Icon className="h-4 w-4" />{category}</h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         {resources.map((resource) => (
@@ -943,7 +943,7 @@ export default function Module9Page() {
                   ))}
                 </div>
               </div>
-              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
+              <Card componentId="m9-next-steps" className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
                 <h3 className="text-2xl font-bold mb-3">You are ready to use AI with judgment.</h3>
                 <p className="text-muted-foreground mb-4">That matters more than knowing the newest product name. Tools will change. The ability to explain, evaluate, prompt, and verify will keep compounding.</p>
                 <p className="text-lg font-semibold text-brand-orange">Now use it deliberately.</p>

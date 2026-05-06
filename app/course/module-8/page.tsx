@@ -109,7 +109,7 @@ export default function Module8Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="Agentic AI is the shift from single-answer chat to goal-driven execution. In this module, you will learn what makes an agent different from prompt-response systems, map the core agent loop, and design a beginner workflow you can actually build." />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m8-module-overview" className="p-5 space-y-2">
                 {[
                   "What makes an AI system an 'agent': memory, tools, and autonomy",
                   "The execution loop: input, reasoning, action, and feedback",
@@ -155,7 +155,7 @@ export default function Module8Page() {
               <h2 className="text-3xl font-bold text-brand-orange">What Are AI Agents?</h2>
               <TextDisplay content="A prompt-response AI system does one turn: you ask, it answers, it stops. An agent is goal-driven: it can keep working across multiple steps, call tools, remember context, and adapt based on results until the task is complete." />
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m8-what-are-agents" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">What makes an agent different?</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex gap-3">
@@ -231,7 +231,7 @@ export default function Module8Page() {
               <h2 className="text-3xl font-bold text-brand-green">How Agents Work</h2>
               <TextDisplay content="A beginner-friendly way to understand agents is as a loop: Input  - Reasoning  - Action  - Feedback. Memory and tools support every stage." />
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m8-how-agents-work" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">The core execution loop</h3>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   {[
@@ -275,7 +275,7 @@ export default function Module8Page() {
                     example: "Agent searches flights  - checks constraints  - retries with new dates  - proposes top 3 options  - requests user approval before booking.",
                   },
                 ].map(({ component, icon: Icon, description, example }) => (
-                  <Card key={component} className="p-5">
+                  <Card key={component} componentId="m8-how-agents-work" className="p-5">
                     <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
                       <Icon className="h-4 w-4" />{component}
                     </h3>
@@ -285,7 +285,7 @@ export default function Module8Page() {
                 ))}
               </div>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m8-how-agents-work" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">The ReAct pattern  - step through a live example</h3>
                 <p className="text-sm text-muted-foreground mb-4">Click <strong>Next Step</strong> to reveal each stage of the agent's reasoning loop. Notice how the agent thinks before every action.</p>
                 <div className="space-y-2 text-sm font-mono bg-background rounded-md p-4 border min-h-[200px]">
@@ -380,7 +380,7 @@ export default function Module8Page() {
                 />
               </div>
 
-              <Card className="p-5">
+              <Card componentId="m8-agent-types" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Multi-Agent Systems  - why they matter</h3>
                 <p className="text-sm text-muted-foreground mb-3">The most powerful agentic systems today use teams of specialised agents, not a single general-purpose agent. This mirrors how human organisations work: specialists collaborate rather than one generalist doing everything.</p>
                 <div className="space-y-2">
@@ -426,7 +426,7 @@ export default function Module8Page() {
               <h2 className="text-3xl font-bold text-brand-green">AI Agents in the Real World</h2>
               <TextDisplay content="AI agents are already useful in real operations. Two of the most common patterns are autonomous research agents and customer service agents that handle routine requests end-to-end with guardrails." />
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m8-agent-applications" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Two concrete examples</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Autonomous research agent:</span> Takes a question like "How has AI regulation changed in 2026?", searches multiple trusted sources, extracts key findings, removes duplicates, and returns a summary with citations.</p>
@@ -473,7 +473,7 @@ export default function Module8Page() {
                     impact: "Harvey (legal AI) is used by major law firms to review contracts 10x faster than junior associates. Financial analysts use AI agents to process earnings calls in minutes instead of hours.",
                   },
                 ].map(({ domain, icon: Icon, examples, impact }) => (
-                  <Card key={domain} className="p-5">
+                  <Card key={domain} componentId="m8-agent-applications" className="p-5">
                     <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
                       <Icon className="h-4 w-4" />{domain}
                     </h3>
@@ -513,7 +513,7 @@ export default function Module8Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Building Your First Agent</h2>
               <TextDisplay content="You can build a useful first agent without writing much code. Start with one workflow, one trigger, one decision, and one action. Keep it narrow, testable, and reversible." />
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m8-building-agents" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Beginner no-code guide: build your first agent in 6 steps</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">1. Choose one repetitive task.</span> Good first choice: classify inbound support emails by urgency.</p>
@@ -564,7 +564,7 @@ export default function Module8Page() {
                     getStarted: "Work through the LangChain quickstart tutorial, then explore pre-built agent templates in the hub.",
                   },
                 ].map(({ tool, level, bestFor, howItWorks, getStarted }) => (
-                  <Card key={tool} className="p-5">
+                  <Card key={tool} componentId="m8-building-agents" className="p-5">
                     <div className="flex items-center gap-3 mb-3">
                       <h4 className="font-bold text-brand-orange">{tool}</h4>
                       <span className="text-xs bg-brand-green/10 text-brand-green px-2 py-0.5 rounded-full">{level}</span>
@@ -576,7 +576,7 @@ export default function Module8Page() {
                 ))}
               </div>
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m8-building-agents" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Anatomy of a simple agent workflow</h3>
                 <p className="text-sm text-muted-foreground mb-3">Before building, map out these four elements for your agent:</p>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
@@ -596,7 +596,7 @@ export default function Module8Page() {
 
               <TextDisplay variant="callout" content="Start with the smallest useful agent, not the most ambitious one. A reliable agent that does one thing well is far more valuable than a complex agent that fails unpredictably. Expand incrementally." />
 
-              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+              <Card componentId="m8-building-agents" className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">The Emerging Standard: Model Context Protocol (MCP)</h3>
                 <p className="text-sm text-muted-foreground mb-4">Until 2024, every AI agent needed custom code to connect to every tool. Anthropic&apos;s Model Context Protocol (MCP), released in late 2024, is changing that  - and becoming the USB of AI agent tool connections.</p>
                 <div className="space-y-3 text-sm">
@@ -698,7 +698,7 @@ export default function Module8Page() {
                     mitigation: "Apply data minimisation: give agents access only to the data needed for each task. Log all agent actions for auditability. Review what data passes to third-party LLM APIs.",
                   },
                 ].map(({ risk, icon: Icon, description, mitigation }) => (
-                  <Card key={risk} className="p-5">
+                  <Card key={risk} componentId="m8-agent-risks" className="p-5">
                     <h3 className="font-bold text-brand-orange mb-2 flex items-center gap-2">
                       <Icon className="h-4 w-4" />{risk}
                     </h3>
@@ -708,7 +708,7 @@ export default function Module8Page() {
                 ))}
               </div>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m8-agent-risks" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">The Golden Rule for Agent Deployment</h3>
                 <div className="space-y-2 text-sm">
                   {[
@@ -726,7 +726,7 @@ export default function Module8Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m8-agent-risks" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Guided Exercise: Design an Agent Workflow</h3>
                 <p className="text-sm text-muted-foreground mb-3">Use this mini template to design a safe first agent. Keep each answer to one sentence.</p>
                 <div className="space-y-2 text-sm text-muted-foreground">

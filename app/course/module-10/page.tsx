@@ -117,7 +117,7 @@ export default function Module10Page() {
                 variant="callout"
                 content="This final module does not try to predict one perfect future. Instead, it helps you reason under uncertainty: what is already changing, what is still unknown, and what actions make sense either way."
               />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m10-module-overview" className="p-5 space-y-2">
                 {[
                   "Current frontiers: multimodal AI, agents, and robotics",
                   "AGI explained carefully: definition, uncertainty, and practical stance",
@@ -175,7 +175,7 @@ export default function Module10Page() {
                     implications: "Expect a hybrid future: cloud for heavy tasks, local AI for fast or private tasks.",
                   },
                 ].map(({ area, icon: Icon, description, implications }) => (
-                  <Card key={area} className="p-5">
+                  <Card key={area} componentId="m10-current-frontiers" className="p-5">
                     <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
                       <Icon className="h-4 w-4" />
                       {area}
@@ -248,7 +248,7 @@ export default function Module10Page() {
               <h2 className="text-3xl font-bold text-brand-green">AGI: Useful Concept, Uncertain Reality</h2>
               <TextDisplay content="AGI means Artificial General Intelligence: a hypothetical system that can learn and perform most intellectual tasks at human level across domains. It is not a single feature upgrade. It would be a major shift in capability." />
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m10-agi" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">Narrow AI today vs AGI concept</h3>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -286,7 +286,7 @@ export default function Module10Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m10-agi" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Why uncertainty is normal (not a failure)</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Definition uncertainty:</span> People mean different things by AGI.</p>
@@ -295,7 +295,7 @@ export default function Module10Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m10-agi" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">A no-hype stance you can use</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>1. Use AI that works today for real productivity.</p>
@@ -363,7 +363,7 @@ export default function Module10Page() {
                     lever: "Content provenance standards, platform safeguards, and digital literacy at scale.",
                   },
                 ].map(({ challenge, detail, lever }) => (
-                  <Card key={challenge} className="p-5">
+                  <Card key={challenge} componentId="m10-governance" className="p-5">
                     <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2">
                       <Globe className="h-4 w-4" />
                       {challenge}
@@ -377,7 +377,7 @@ export default function Module10Page() {
                 ))}
               </div>
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m10-governance" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">What this means for practitioners</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Expect more evidence requirements for high-risk AI use.</li>
@@ -432,7 +432,7 @@ export default function Module10Page() {
               <TextDisplay content="AI careers are broader than many learners assume. The strongest path is often your existing domain expertise plus practical AI fluency, not a total reinvention overnight." />
 
               <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <Card componentId="m10-careers" className="p-5 border-brand-green/20 bg-brand-green/5">
                   <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Briefcase className="h-4 w-4" />Technical pathways</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><span className="font-medium text-foreground">ML Engineer:</span> model training, evaluation, and deployment.</p>
@@ -442,7 +442,7 @@ export default function Module10Page() {
                   </div>
                 </Card>
 
-                <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <Card componentId="m10-careers" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                   <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Non-technical pathways</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <p><span className="font-medium text-foreground">AI Product Manager:</span> aligning use cases, users, and delivery.</p>
@@ -453,7 +453,7 @@ export default function Module10Page() {
                 </Card>
               </div>
 
-              <Card className="p-5">
+              <Card componentId="m10-careers" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-orange">How to stay relevant: the C-T-A framework</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">C - Continuous learning:</span> run a weekly learning loop (new capability, one test, one note, one takeaway).</p>
@@ -520,7 +520,7 @@ export default function Module10Page() {
               <h2 className="text-3xl font-bold text-brand-orange">Reflective Exercise: Your 1-3 Year AI Strategy</h2>
               <TextDisplay variant="success" content="You now have the concepts. This final exercise turns them into a personal plan you can actually execute." />
 
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+              <Card componentId="m10-personal-strategy" className="p-5 border-brand-green/20 bg-brand-green/5">
                 <h3 className="font-semibold mb-3 text-brand-green">Part 1: Clarify your direction</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Role target:</span> What role or capability do you want to be known for in 12-36 months?</p>
@@ -529,7 +529,7 @@ export default function Module10Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m10-personal-strategy" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Part 2: Build a timeline</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Next 90 days:</span> one concrete project, one measurable outcome, one accountability partner.</p>
@@ -538,7 +538,7 @@ export default function Module10Page() {
                 </div>
               </Card>
 
-              <Card className="p-5">
+              <Card componentId="m10-personal-strategy" className="p-5">
                 <h3 className="font-semibold mb-3 text-brand-green">Part 3: Define your operating cadence</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>1. Weekly: learn and test one new capability.</p>
@@ -547,7 +547,7 @@ export default function Module10Page() {
                 </div>
               </Card>
 
-              <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
+              <Card componentId="m10-personal-strategy" className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10">
                 <h3 className="text-xl font-bold mb-2">Personal strategy prompt</h3>
                 <p className="text-muted-foreground mb-3">Complete this sentence in your own words:</p>
                 <p className="text-lg font-semibold text-brand-orange">"Over the next 1-3 years, I will use AI to create value in <span className="underline decoration-brand-green/50">[my domain]</span> by building <span className="underline decoration-brand-green/50">[specific capabilities]</span> while maintaining <span className="underline decoration-brand-green/50">[ethical and quality standards]</span>."</p>

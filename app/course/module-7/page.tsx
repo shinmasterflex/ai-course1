@@ -108,7 +108,7 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
               <TextDisplay variant="callout" content="AI is not just a technology trend  - it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
-              <Card className="p-5 space-y-2">
+              <Card componentId="m7-module-overview" className="p-5 space-y-2">
                 {[
                   "How AI is changing the workplace right now",
                   "What AI means for jobs  - and which skills matter most",
@@ -128,7 +128,7 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
               <TextDisplay content="AI is already embedded in the tools most professionals use every day  - often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+              <Card componentId="m7-workplace-ai" className="p-5 border-brand-orange/20 bg-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange">Your first workplace use should pass this test</h3>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -171,7 +171,7 @@ export default function Module7Page() {
                     ],
                   },
                 ].map(({ category, icon: Icon, examples }) => (
-                  <Card key={category} className="p-5">
+                  <Card key={category} componentId="m7-workplace-ai" className="p-5">
                     <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
                     <div className="space-y-2">
                       {examples.map(({ name, desc }) => (
@@ -236,7 +236,7 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">AI & the Future of Jobs</h2>
               <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others  - but the transition is uneven and can be disruptive for individuals." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m7-future-jobs" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">The Three-Category Framework</h3>
                 <div className="space-y-4">
                   {[
@@ -373,7 +373,7 @@ export default function Module7Page() {
                     ],
                   },
                 ].map(({ industry, color, applications }) => (
-                  <Card key={industry} className="p-4">
+                  <Card key={industry} componentId="m7-industries" className="p-4">
                     <h4 className={`font-bold mb-2 ${color}`}>{industry}</h4>
                     <ul className="text-sm space-y-1 text-muted-foreground">
                       {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">*</span>{a}</li>)}
@@ -412,7 +412,7 @@ export default function Module7Page() {
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Building an AI Strategy</h2>
               <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy  - rather than reacting randomly to new tools  - puts you in control." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m7-business-strategy" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-4 text-brand-orange">The Individual AI Strategy Framework</h3>
                 <div className="space-y-4">
                   {[
@@ -432,7 +432,7 @@ export default function Module7Page() {
               </Card>
               <TextDisplay variant="callout" content="The biggest mistake people make with AI at work: trying every new tool that launches instead of going deep on a few tools that actually fit their workflow. Depth beats breadth." />
               
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m7-business-strategy" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-orange">How to Champion AI at Your Organisation</h3>
                 <p className="text-sm text-muted-foreground mb-4">Being the person who helps their team adopt AI well is one of the most valuable roles you can play right now. Here is how to do it without overstepping or creating resistance:</p>
                 <div className="space-y-3">
@@ -605,7 +605,7 @@ export default function Module7Page() {
                     savings: "~85% time reduction | Fewer bugs | Code follows team patterns"
                   },
                 ].map(({ role, task, before, after, tools, savings }) => (
-                  <Card key={role} className="p-5 space-y-4">
+                  <Card key={role} componentId="m7-real-workflows" className="p-5 space-y-4">
                     <div>
                       <h3 className="font-bold text-brand-orange mb-1">{role}</h3>
                       <p className="text-sm text-muted-foreground">{task}</p>
@@ -669,7 +669,7 @@ export default function Module7Page() {
               <h2 className="text-3xl font-bold text-brand-green">AI Opportunities Framework</h2>
               <TextDisplay content="Not all tasks are good candidates for AI. Here is a practical framework to identify which tasks in any job should be AI-assisted, automated, or left fully human." />
               
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m7-opportunities" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-orange flex items-center gap-2"><Target className="h-5 w-5" />The Task Analysis Matrix</h3>
                 <p className="text-sm text-muted-foreground mb-4">Use these three questions to evaluate any task:</p>
                 <div className="space-y-4">
@@ -729,7 +729,7 @@ export default function Module7Page() {
                     color: "bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
                   },
                 ].map(({ category, desc, examples, color }) => (
-                  <Card key={category} className={`p-4 border ${color}`}>
+                  <Card key={category} componentId="m7-opportunities" className={`p-4 border ${color}`}>
                     <div className="flex items-start gap-3">
                       <Brain className="h-4 w-4 text-brand-orange flex-shrink-0 mt-0.5" />
                       <div className="flex-1">
@@ -744,7 +744,7 @@ export default function Module7Page() {
                 ))}
               </div>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+              <Card componentId="m7-opportunities" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
                 <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><PenTool className="h-4 w-4" />Your Turn: Apply the Framework</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Pick one task</span> from your typical week that takes 2+ hours.</p>
@@ -834,7 +834,7 @@ export default function Module7Page() {
                     skills_less_critical: ["Routine case volume", "Speed on standard cases"]
                   },
                 ].map(({ role, shift, impact, skills_gained, skills_less_critical }) => (
-                  <Card key={role} className="p-5 space-y-3">
+                  <Card key={role} componentId="m7-role-transformation" className="p-5 space-y-3">
                     <div>
                       <h3 className="font-bold text-brand-orange">{role}</h3>
                       <p className="text-sm text-muted-foreground italic">{shift}</p>
@@ -865,7 +865,7 @@ export default function Module7Page() {
                 ))}
               </div>
 
-              <Card className="p-5 bg-gradient-to-br from-blue-50 to-brand-green/5 dark:from-blue-950/30 dark:to-brand-green/10">
+              <Card componentId="m7-role-transformation" className="p-5 bg-gradient-to-br from-blue-50 to-brand-green/5 dark:from-blue-950/30 dark:to-brand-green/10">
                 <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">The Pattern</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Roles are not disappearing.</span> Roles are shifting toward judgment, strategy, and creativity  - the things humans do better than AI.</p>
@@ -903,7 +903,7 @@ export default function Module7Page() {
               <h2 className="text-3xl font-bold text-brand-green">Hands-On: Redesign Your Workflow</h2>
               <TextDisplay content="This is your practical capstone. You will audit a real workflow from your job, apply the AI opportunities framework, and design a new AI-enhanced version." />
               
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m7-workflow-redesign" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-4 text-brand-orange flex items-center gap-2"><Zap className="h-5 w-5" />The Exercise (takes 30 minutes)</h3>
                 <div className="space-y-4">
                   {[
@@ -944,7 +944,7 @@ export default function Module7Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+              <Card componentId="m7-workflow-redesign" className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-3">Example: Sales Outreach Workflow Redesign</h3>
                 <div className="space-y-3 text-sm">
                   <div>
@@ -974,7 +974,7 @@ export default function Module7Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-green/20">
+              <Card componentId="m7-workflow-redesign" className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5 border-brand-green/20">
                 <h3 className="font-bold text-brand-orange mb-3">Now your turn:</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Workflow name & current time:</span> (e.g., "Weekly newsletter: 120 min")</p>
@@ -986,7 +986,7 @@ export default function Module7Page() {
                 </div>
               </Card>
 
-              <Card className="p-5 bg-gradient-to-br from-green-50 to-brand-green/10 dark:from-green-950/20 dark:to-brand-green/5 border border-brand-green/20">
+              <Card componentId="m7-workflow-redesign" className="p-5 bg-gradient-to-br from-green-50 to-brand-green/10 dark:from-green-950/20 dark:to-brand-green/5 border border-brand-green/20">
                 <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />After this exercise, you have:</h3>
                 <ul className="text-sm space-y-1 text-muted-foreground">
                   <li>✓ A concrete AI application you can implement this week</li>
@@ -1049,7 +1049,7 @@ export default function Module7Page() {
                       bg: "bg-blue-500/5 border-blue-500/20",
                     },
                   ].map(({ level, skills, bg }) => (
-                    <Card key={level} className={`p-4 border ${bg}`}>
+                    <Card key={level} componentId="m7-building-skills" className={`p-4 border ${bg}`}>
                       <h4 className="font-bold mb-2">{level}</h4>
                       <ul className="text-sm space-y-1 text-muted-foreground">
                         {skills.map((s) => <li key={s} className="flex gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-brand-green flex-shrink-0 mt-0.5" />{s}</li>)}
@@ -1058,7 +1058,7 @@ export default function Module7Page() {
                   ))}
                 </div>
               </div>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+              <Card componentId="m7-building-skills" className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
                 <h3 className="font-semibold mb-3 text-brand-green">A practical 90-day career plan</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><span className="font-medium text-foreground">Days 1-30:</span> pick two recurring tasks and use AI on them daily. Track time saved and output quality.</p>
