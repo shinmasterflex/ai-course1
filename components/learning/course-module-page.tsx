@@ -44,9 +44,9 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the strongest beginner takeaway from this section?",
     quickCheckOptions: [
-      { id: "a", label: "AI is mostly a future trend and can be ignored for now" },
+      { id: "a", label: "AI is important, but teams should wait for standards to stabilize before beginning" },
       { id: "b", label: "AI is moving fast, and beginners should start with practical learning" },
-      { id: "c", label: "Only technical teams need to care about AI shifts" },
+      { id: "c", label: "Begin with awareness only and defer hands-on practice to technical specialists" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "The fastest path for beginners is practical, low-risk experimentation with clear learning goals.",
@@ -68,9 +68,9 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Which question best filters hype from real value?",
     quickCheckOptions: [
-      { id: "a", label: "How exciting was the launch event?" },
+      { id: "a", label: "How polished are the demo outputs compared with competitors?" },
       { id: "b", label: "Can this improve a real workflow with measurable outcomes?" },
-      { id: "c", label: "Is it the newest AI product this month?" },
+      { id: "c", label: "How many teams have already adopted the tool this quarter?" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Real value is tied to workflow improvement and measurable outcomes, not novelty.",
@@ -117,8 +117,8 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What is the best first adoption move for beginners?",
     quickCheckOptions: [
       { id: "a", label: "Run a focused pilot with clear guardrails and review" },
-      { id: "b", label: "Automate as many workflows as possible immediately" },
-      { id: "c", label: "Delay all adoption until AI tools stop changing" },
+      { id: "b", label: "Launch pilots in several workflows at once to accelerate learning" },
+      { id: "c", label: "Wait until internal policy is fully mature before any experimentation" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "A focused pilot creates learning quickly without exposing the team to unnecessary risk.",
@@ -140,9 +140,9 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What should you leave Module 0 with?",
     quickCheckOptions: [
-      { id: "a", label: "A broad tool list with no implementation plan" },
+      { id: "a", label: "A prioritized tool shortlist with high-level notes but no execution owner" },
       { id: "b", label: "A practical 30-day starter plan with metrics and guardrails" },
-      { id: "c", label: "A decision to postpone AI learning indefinitely" },
+      { id: "c", label: "A strategy memo that recommends further research before committing to action" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Module 0 should end with an actionable beginner plan, not abstract theory.",
@@ -150,6 +150,30 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
       a: "Lists without execution plans rarely produce results.",
       b: "This is the intended outcome of the module wrap-up.",
       c: "Delaying learning increases long-term adoption risk.",
+    },
+  },
+  "module-quiz": {
+    scenarioTitle: "Foundations readiness checkpoint",
+    scenarioBody:
+      "You are finalizing Module 0 and need to show that your first AI steps are practical, low-risk, and measurable.",
+    checklistTitle: "Foundations readiness checklist",
+    checklistItems: [
+      "Define one workflow for a focused starter pilot.",
+      "Specify one measurable outcome and one risk guardrail.",
+      "Set a review date and owner for next-step decisions.",
+    ],
+    quickCheckPrompt: "What demonstrates strong Module 0 readiness?",
+    quickCheckOptions: [
+      { id: "a", label: "A broad list of tools to evaluate without ownership or metrics" },
+      { id: "b", label: "A scoped starter plan with measurable outcomes and guardrails" },
+      { id: "c", label: "A recommendation to delay experimentation until policy is fully mature" },
+    ],
+    quickCheckCorrectOptionId: "b",
+    quickCheckExplanation: "Readiness means moving from awareness to a safe, measurable first pilot plan.",
+    quickCheckOptionExplanations: {
+      a: "Lists alone do not create execution readiness.",
+      b: "This is the expected Module 0 outcome.",
+      c: "Delaying all experimentation slows learning and capability growth.",
     },
   },
 }
@@ -167,14 +191,14 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Why start Module 1 with a landscape map?",
     quickCheckOptions: [
-      { id: "a", label: "To make meetings sound more technical" },
+      { id: "a", label: "To establish a shared vocabulary for vendor conversations and internal alignment" },
       { id: "b", label: "To create shared decision language before buying tools" },
-      { id: "c", label: "To avoid evaluating any vendors" },
+      { id: "c", label: "To postpone vendor decisions until architecture standards are finalized" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Shared language prevents procurement mistakes and accelerates better decisions.",
     quickCheckOptionExplanations: {
-      a: "Jargon without clarity creates more confusion.",
+      a: "Shared vocabulary helps, but language alignment alone is not enough for tool selection quality.",
       b: "This is the core purpose of the module overview section.",
       c: "The goal is better evaluation, not avoiding decisions.",
     },
@@ -215,9 +239,9 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the strongest provider-selection approach?",
     quickCheckOptions: [
-      { id: "a", label: "Choose whichever provider trends most online" },
+      { id: "a", label: "Pick the provider with the strongest headline benchmark and broadest model catalog" },
       { id: "b", label: "Match provider strengths to your use cases and controls" },
-      { id: "c", label: "Use one provider for every possible workflow immediately" },
+      { id: "c", label: "Standardize early on one vendor to simplify procurement and integration" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Provider selection should be use-case and risk-fit driven.",
@@ -288,8 +312,8 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "When is an AI wrapper worth paying for?",
     quickCheckOptions: [
       { id: "a", label: "When it adds measurable workflow and integration value" },
-      { id: "b", label: "When it has the best landing page" },
-      { id: "c", label: "Whenever it is newer than competitors" },
+      { id: "b", label: "When it simplifies onboarding even if switching costs are not yet clear" },
+      { id: "c", label: "When it packages the same model with stronger branding and reporting" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "Wrappers should be evaluated on practical operating value, not aesthetics.",
@@ -407,9 +431,9 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What makes a tool scorecard decision-ready?",
     quickCheckOptions: [
-      { id: "a", label: "Focus mostly on product design quality" },
+      { id: "a", label: "Prioritize user adoption signals, then add technical screening in phase two" },
       { id: "b", label: "Use weighted criteria tied to business outcomes and risk" },
-      { id: "c", label: "Rank tools by popularity only" },
+      { id: "c", label: "Use an equal-weight checklist to keep scoring simple across stakeholders" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Weighted business-fit criteria create defensible shortlist decisions.",
@@ -423,7 +447,7 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Checkpoint scenario",
     scenarioBody:
       "You are about to present your Module 1 recommendations. You need to show that your classifications, vendor filters, and pilot shortlist are coherent and evidence-based.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Landscape readiness checklist",
     checklistItems: [
       "Confirm your model/tool/automation/agent distinctions are consistent.",
       "Document top 2 vendor options with rationale and risks.",
@@ -431,9 +455,9 @@ const module1SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What does strong Module 1 readiness look like?",
     quickCheckOptions: [
-      { id: "a", label: "A long vendor list with no filtering logic" },
+      { id: "a", label: "A broad shortlist with informal rationale and no explicit hold criteria" },
       { id: "b", label: "A clear classification model and defensible pilot shortlist" },
-      { id: "c", label: "A decision to postpone all evaluation" },
+      { id: "c", label: "A recommendation to run broad discovery before narrowing to pilot candidates" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness means clear reasoning, not maximum option count.",
@@ -459,8 +483,8 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What is the best starting point for AI value planning?",
     quickCheckOptions: [
       { id: "a", label: "Start with outcomes and map workflows" },
-      { id: "b", label: "Start with whichever model is newest" },
-      { id: "c", label: "Skip workflow mapping and buy tools first" },
+      { id: "b", label: "Start with high-performing foundation models, then identify suitable use cases" },
+      { id: "c", label: "Start with low-cost tools to gather usage data before defining outcomes" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "Outcome-first planning prevents random tool adoption and clarifies where AI can help.",
@@ -483,8 +507,8 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "When is augmentation usually better than full automation?",
     quickCheckOptions: [
       { id: "a", label: "When tasks involve nuance, context, or risk" },
-      { id: "b", label: "When no human review is needed" },
-      { id: "c", label: "When the objective is unclear" },
+      { id: "b", label: "When process variance is low and exception rates are predictable" },
+      { id: "c", label: "When teams are still defining quality thresholds and operating standards" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "Augmentation preserves human judgment while still improving speed and consistency.",
@@ -530,8 +554,8 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the strongest portfolio pattern for early AI adoption?",
     quickCheckOptions: [
-      { id: "a", label: "Only long-term moonshots" },
-      { id: "b", label: "Only quick wins with no strategic work" },
+      { id: "a", label: "Prioritize strategic bets first and absorb slower early ROI" },
+      { id: "b", label: "Prioritize quick wins first and defer larger transformation work" },
       { id: "c", label: "A balanced mix of quick wins and strategic bets" },
     ],
     quickCheckCorrectOptionId: "c",
@@ -578,9 +602,9 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Why use a revenue-vs-cost matrix in AI prioritization?",
     quickCheckOptions: [
-      { id: "a", label: "To ignore risk and move faster" },
+      { id: "a", label: "To simplify prioritization by focusing on upside before risk weighting" },
       { id: "b", label: "To compare growth and efficiency opportunities on one view" },
-      { id: "c", label: "To avoid selecting quick wins" },
+      { id: "c", label: "To separate near-term efficiency projects from revenue initiatives entirely" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "A unified matrix improves transparency across competing investment priorities.",
@@ -594,7 +618,7 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Prioritization checkpoint scenario",
     scenarioBody:
       "You are presenting a Module 2 recommendation to leadership. You need to show why your selected opportunities are highest value and realistically executable.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Opportunity prioritization readiness checklist",
     checklistItems: [
       "Prepare top 3 opportunities with score rationale.",
       "Document expected outcomes and ownership per opportunity.",
@@ -602,9 +626,9 @@ const module2SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 2 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "A list of ideas with no scoring logic" },
+      { id: "a", label: "A shortlist of ideas with qualitative rationale but no numeric scoring" },
       { id: "b", label: "A prioritized, scored opportunity set with measurable outcomes" },
-      { id: "c", label: "A plan to revisit value analysis next year" },
+      { id: "c", label: "A discovery roadmap that postpones selection until broader cross-team input is collected" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Strong readiness means evidence-based prioritization linked to measurable business outcomes.",
@@ -654,8 +678,8 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "When should teams stay with a general assistant?",
     quickCheckOptions: [
       { id: "a", label: "When results are acceptable and risk remains low" },
-      { id: "b", label: "Only when there are zero governance requirements" },
-      { id: "c", label: "Never, specialized tools are always better" },
+      { id: "b", label: "When governance needs are moderate and can be handled with process controls" },
+      { id: "c", label: "When scale requirements are likely to increase within the next two quarters" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "General tools are often enough for broad, low-risk, early-stage workflows.",
@@ -677,9 +701,9 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What best justifies a specialized tool purchase?",
     quickCheckOptions: [
-      { id: "a", label: "The sales demo looked impressive" },
+      { id: "a", label: "A high-quality pilot showed better user satisfaction and interface adoption" },
       { id: "b", label: "Documented workflow gaps and measurable pilot uplift" },
-      { id: "c", label: "A stakeholder prefers the interface" },
+      { id: "c", label: "Cross-functional stakeholders prefer the tool's governance and admin controls" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Specialized tool adoption should be evidence-led and workflow-specific.",
@@ -693,7 +717,7 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Scorecard design",
     scenarioBody:
       "Your team compares tools inconsistently. You need a shared scorecard so evaluations are repeatable and defendable in leadership reviews.",
-    checklistTitle: "Scorecard checklist",
+    checklistTitle: "Tool comparison scorecard checklist",
     checklistItems: [
       "Define weighted criteria: reliability, integration, security, support.",
       "Use the same test cases across all tools.",
@@ -749,9 +773,9 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the purpose of a buy-wait-pilot decision tree?",
     quickCheckOptions: [
-      { id: "a", label: "Approve tools faster without review" },
+      { id: "a", label: "Shorten procurement cycles while keeping all options active" },
       { id: "b", label: "Standardize tool decisions with clear next actions" },
-      { id: "c", label: "Eliminate all experimentation" },
+      { id: "c", label: "Reduce experimentation overhead by standardizing on one default tool" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "The decision tree creates consistent decisions and clear execution steps.",
@@ -765,7 +789,7 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Procurement readiness checkpoint",
     scenarioBody:
       "You are presenting a Module 3 recommendation to leadership. You need to show your shortlist is based on fit, risk, and measurable impact.",
-    checklistTitle: "Checkpoint checklist",
+    checklistTitle: "Procurement readiness checklist",
     checklistItems: [
       "Prepare top candidates with scorecard evidence.",
       "Include one buy, one pilot, and one wait rationale.",
@@ -773,9 +797,9 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 3 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Selecting a tool based on demo excitement" },
+      { id: "a", label: "Selecting a tool based on stakeholder enthusiasm and early usability signals" },
       { id: "b", label: "Defensible recommendations grounded in scorecard evidence" },
-      { id: "c", label: "Delaying all tool decisions until next year" },
+      { id: "c", label: "Expanding pilot discovery before issuing buy or wait recommendations" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness means evidence-backed recommendations with clear next actions.",
@@ -800,14 +824,14 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What should guide partner model choice first?",
     quickCheckOptions: [
-      { id: "a", label: "Brand awareness of the provider" },
+      { id: "a", label: "Proven category reputation and a strong portfolio of similar clients" },
       { id: "b", label: "Business outcomes, timeline, and internal capacity" },
-      { id: "c", label: "Most expensive proposal" },
+      { id: "c", label: "Fastest mobilization plan even if long-term ownership remains unclear" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Fit-to-outcome and capability constraints should drive partner decisions.",
     quickCheckOptionExplanations: {
-      a: "Awareness does not guarantee delivery fit.",
+      a: "References and reputation matter, but they are not enough without fit-to-outcome analysis.",
       b: "This is the strongest decision basis.",
       c: "Cost is one factor, not a quality proxy.",
     },
@@ -824,14 +848,14 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Which pre-signing question is most important?",
     quickCheckOptions: [
-      { id: "a", label: "How polished the pitch deck looks" },
+      { id: "a", label: "How quickly the partner can begin execution with a named team" },
       { id: "b", label: "How outcomes, scope, and accountability are defined" },
-      { id: "c", label: "How many buzzwords appear in the proposal" },
+      { id: "c", label: "How detailed their architecture narrative sounds during workshops" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Outcome, scope, and accountability clarity is foundational for delivery quality.",
     quickCheckOptionExplanations: {
-      a: "Presentation quality is not execution quality.",
+      a: "Fast mobilization is useful, but it does not replace clear scope and accountability definitions.",
       b: "This directly reduces delivery risk.",
       c: "Buzzwords are weak competence signals.",
     },
@@ -872,9 +896,9 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What makes a pilot useful for real business decisions?",
     quickCheckOptions: [
-      { id: "a", label: "Large scope with no clear success criteria" },
+      { id: "a", label: "Moderate scope with flexible goals so teams can adapt during execution" },
       { id: "b", label: "Small scope, measurable outcomes, explicit stop conditions" },
-      { id: "c", label: "Open-ended experimentation without owner" },
+      { id: "c", label: "Small scope with owner assigned but no pre-defined stop or scale thresholds" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Decision-grade pilots are constrained, measurable, and time-bound.",
@@ -896,9 +920,9 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "How should teams decide build vs buy vs partner?",
     quickCheckOptions: [
-      { id: "a", label: "Default to build for strategic optics" },
+      { id: "a", label: "Prioritize internal build when long-term differentiation is expected" },
       { id: "b", label: "Use speed, capability, and ownership trade-offs" },
-      { id: "c", label: "Always outsource to move fastest" },
+      { id: "c", label: "Prefer partner-led delivery initially to reduce early execution burden" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Trade-off analysis creates realistic execution choices.",
@@ -936,7 +960,7 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Diligence readiness checkpoint",
     scenarioBody:
       "You are presenting a partner recommendation to leadership. You need to show the shortlist and contracting approach are evidence-based and risk-aware.",
-    checklistTitle: "Checkpoint checklist",
+    checklistTitle: "Partner diligence readiness checklist",
     checklistItems: [
       "Present top partner options with risk-adjusted rationale.",
       "Include pilot structure and success thresholds.",
@@ -944,9 +968,9 @@ const module4SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 4 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Selecting a partner based on brand reputation alone" },
+      { id: "a", label: "Selecting a partner based on references and implementation velocity" },
       { id: "b", label: "Defensible recommendation with diligence evidence and pilot plan" },
-      { id: "c", label: "Approving full rollout before pilot evidence" },
+      { id: "c", label: "Approving phased expansion before pilot review milestones are completed" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Strong readiness combines partner diligence, controlled pilots, and commercial safeguards.",
@@ -971,9 +995,9 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the strongest first step in AI ROI design?",
     quickCheckOptions: [
-      { id: "a", label: "Start with prompt count dashboards" },
+      { id: "a", label: "Start with usage intensity metrics to establish adoption baselines" },
       { id: "b", label: "Set baseline outcomes and ownership first" },
-      { id: "c", label: "Report only positive outcomes" },
+      { id: "c", label: "Start with high-visibility KPI snapshots and add cost attribution later" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Baseline and ownership are required for credible ROI tracking.",
@@ -995,9 +1019,9 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Which ROI method is most credible for leadership review?",
     quickCheckOptions: [
-      { id: "a", label: "Anecdotal team feedback only" },
+      { id: "a", label: "Standardized manager assessments paired with periodic productivity sampling" },
       { id: "b", label: "Baseline-vs-post outcome measurement" },
-      { id: "c", label: "Estimated productivity without baselines" },
+      { id: "c", label: "Forecasted efficiency gains using benchmark assumptions and adoption rates" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Baseline comparison is the most defensible way to show impact.",
@@ -1019,9 +1043,9 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What improves AI prioritization quality most?",
     quickCheckOptions: [
-      { id: "a", label: "Picking whichever idea has the loudest sponsor" },
+      { id: "a", label: "Weighting projects by executive sponsorship and change readiness" },
       { id: "b", label: "Using a weighted value-effort-confidence model" },
-      { id: "c", label: "Approving all proposals equally" },
+      { id: "c", label: "Applying an equal-weight rubric across all proposals to reduce bias" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Weighted scoring improves consistency and portfolio quality.",
@@ -1043,8 +1067,8 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "How should AI budgets be structured for sustainable impact?",
     quickCheckOptions: [
-      { id: "a", label: "All budget to immediate quick wins" },
-      { id: "b", label: "All budget to long-term moonshots" },
+      { id: "a", label: "Majority budget to short-term wins, with optional funding for strategic bets" },
+      { id: "b", label: "Majority budget to long-term transformation, with minimal quick-win coverage" },
       { id: "c", label: "Balanced portfolio with stage-gated funding" },
     ],
     quickCheckCorrectOptionId: "c",
@@ -1091,9 +1115,9 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What makes AI progress reporting credible?",
     quickCheckOptions: [
-      { id: "a", label: "Only benchmark rankings and adoption anecdotes" },
+      { id: "a", label: "Adoption rates, benchmark rank shifts, and periodic success narratives" },
       { id: "b", label: "Outcome metrics, risk indicators, and explicit next decisions" },
-      { id: "c", label: "Only positive pilot results" },
+      { id: "c", label: "Quarterly success summaries with exceptions handled in separate risk reviews" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Decision-grade reporting combines value, risk, and concrete next actions.",
@@ -1107,7 +1131,7 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "ROI readiness checkpoint",
     scenarioBody:
       "You are presenting Module 5 outputs to decision-makers. You need to show that your prioritization and ROI case are measurable, realistic, and risk-aware.",
-    checklistTitle: "Checkpoint checklist",
+    checklistTitle: "ROI readiness checklist",
     checklistItems: [
       "Prepare top opportunities with scorecard and ROI assumptions.",
       "Show baseline-to-post measurement design.",
@@ -1115,9 +1139,9 @@ const module5SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 5 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "High activity metrics with no baseline" },
+      { id: "a", label: "Strong utilization and adoption trends supported by stakeholder testimonials" },
       { id: "b", label: "Defensible ROI model tied to business outcomes and risk" },
-      { id: "c", label: "A delayed plan with no decision timeline" },
+      { id: "c", label: "A staged ROI approach with assumptions to be validated after broader deployment" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness means outcome-based ROI logic with explicit governance controls.",
@@ -1142,8 +1166,8 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the minimum baseline before scaling AI use?",
     quickCheckOptions: [
-      { id: "a", label: "Let each team create independent rules" },
-      { id: "b", label: "Rely on vendor claims only" },
+      { id: "a", label: "Let each function tailor policy to its workflows with light central guidance" },
+      { id: "b", label: "Adopt vendor frameworks as a baseline and adapt internal controls over time" },
       { id: "c", label: "Policy, role-based controls, and risk review" },
     ],
     quickCheckCorrectOptionId: "c",
@@ -1167,8 +1191,8 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "How should hallucination risk be handled in high-impact workflows?",
     quickCheckOptions: [
       { id: "a", label: "Mandate human validation for material decisions" },
-      { id: "b", label: "Assume newer models remove the risk" },
-      { id: "c", label: "Ignore low-frequency errors" },
+      { id: "b", label: "Use confidence thresholds to reduce human review volume in most decisions" },
+      { id: "c", label: "Monitor low-frequency errors and intervene only when trend thresholds are exceeded" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "High-impact workflows require explicit human checkpoints.",
@@ -1190,9 +1214,9 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Which control best protects data and IP in vendor relationships?",
     quickCheckOptions: [
-      { id: "a", label: "General references to standards only" },
+      { id: "a", label: "Third-party certifications and compliance attestations as primary evidence" },
       { id: "b", label: "Explicit clauses on data rights and retention" },
-      { id: "c", label: "Verbal assurances during meetings" },
+      { id: "c", label: "Security addendums with broad language and annual review commitments" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Contract-level clarity is essential for enforceable protections.",
@@ -1214,15 +1238,15 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the best response model for AI incidents?",
     quickCheckOptions: [
-      { id: "a", label: "Handle issues ad hoc" },
-      { id: "b", label: "Wait for quarterly review" },
+      { id: "a", label: "Handle incidents with team-level playbooks and escalate only severe events" },
+      { id: "b", label: "Use weekly triage meetings before formalizing response actions" },
       { id: "c", label: "Use a documented response playbook" },
     ],
     quickCheckCorrectOptionId: "c",
     quickCheckExplanation: "Prepared playbooks improve speed, consistency, and accountability under pressure.",
     quickCheckOptionExplanations: {
       a: "Ad hoc response increases inconsistency and risk.",
-      b: "Delayed response can amplify impact.",
+      b: "Routine triage without predefined playbooks often slows containment and creates ownership confusion.",
       c: "This is the strongest operational pattern.",
     },
   },
@@ -1238,9 +1262,9 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What makes an internal AI policy usable in practice?",
     quickCheckOptions: [
-      { id: "a", label: "High-level values only" },
+      { id: "a", label: "Principle-led policy with optional role annexes developed later" },
       { id: "b", label: "Role-specific rules and clear escalation paths" },
-      { id: "c", label: "One-time policy memo with no follow-up" },
+      { id: "c", label: "A central policy with periodic reminders and manager discretion for exceptions" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Usable policy combines clarity, role fit, and operating procedures.",
@@ -1278,7 +1302,7 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Governance scorecard scenario",
     scenarioBody:
       "Leadership requests a snapshot of governance maturity. You need a lightweight scorecard that tracks posture as adoption grows.",
-    checklistTitle: "Scorecard checklist",
+    checklistTitle: "Governance posture scorecard checklist",
     checklistItems: [
       "Track policy coverage, incident readiness, and control adherence.",
       "Set threshold triggers for corrective action.",
@@ -1302,7 +1326,7 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Governance readiness checkpoint",
     scenarioBody:
       "You are presenting Module 6 outputs to leadership. You must show that policy, controls, contracts, and incident response are ready for scaled adoption.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Governance readiness checklist",
     checklistItems: [
       "Present baseline policy and approval controls.",
       "Show incident response ownership and response timelines.",
@@ -1310,9 +1334,9 @@ const module6SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 6 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Tool usage growth without governance evidence" },
+      { id: "a", label: "Rapid usage growth with quarterly governance reporting and ad hoc enforcement" },
       { id: "b", label: "Documented controls, playbooks, and risk ownership" },
-      { id: "c", label: "Policy draft with no enforcement plan" },
+      { id: "c", label: "Comprehensive policy draft with phased enforcement once adoption stabilizes" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness requires operating controls, clear ownership, and enforcement mechanisms.",
@@ -1337,14 +1361,14 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the core purpose of a Module 7 roadmap?",
     quickCheckOptions: [
-      { id: "a", label: "List all ideas without sequencing" },
+      { id: "a", label: "Capture initiatives broadly first, then sequence after stakeholder alignment" },
       { id: "b", label: "Convert strategy into phased, owned execution" },
-      { id: "c", label: "Delay implementation until full certainty" },
+      { id: "c", label: "Run readiness discovery in parallel before assigning phase ownership" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Roadmaps create execution structure, accountability, and pacing.",
     quickCheckOptionExplanations: {
-      a: "Unsequenced ideas are not operationally useful.",
+      a: "Broad discovery can help early alignment, but it does not replace phased ownership and execution sequencing.",
       b: "This is the intended outcome of the section.",
       c: "Waiting for certainty usually delays learning and impact.",
     },
@@ -1361,16 +1385,16 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What should the first 30 days focus on?",
     quickCheckOptions: [
-      { id: "a", label: "Buy multiple licenses and expand immediately" },
+      { id: "a", label: "Launch two pilots in adjacent workflows to accelerate comparative learning" },
       { id: "b", label: "Define pilot scope, metrics, and guardrails" },
-      { id: "c", label: "Pause until full enterprise architecture is ready" },
+      { id: "c", label: "Begin team training broadly, then choose pilot scope after baseline capability assessment" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Early momentum comes from scoped pilots with clear controls.",
     quickCheckOptionExplanations: {
       a: "Broad rollout before proof often creates rework.",
       b: "This is the most reliable first-month pattern.",
-      c: "This delays learning and execution momentum.",
+      c: "Training-first can help readiness, but early momentum still requires a scoped pilot with measurable guardrails.",
     },
   },
   "ai-and-jobs": {
@@ -1385,9 +1409,9 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What makes a pilot strategically useful?",
     quickCheckOptions: [
-      { id: "a", label: "High novelty regardless of business fit" },
+      { id: "a", label: "High visibility and stakeholder momentum, even with moderate business fit uncertainty" },
       { id: "b", label: "Clear value signal with realistic execution scope" },
-      { id: "c", label: "Largest possible scope for maximum visibility" },
+      { id: "c", label: "Broader pilot scope where cross-team impact can justify the added coordination load" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Strong pilots balance impact and feasibility.",
@@ -1410,8 +1434,8 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What is a common adoption failure mode?",
     quickCheckOptions: [
       { id: "a", label: "Launching tools without process and change plans" },
-      { id: "b", label: "Assigning clear owners and support channels" },
-      { id: "c", label: "Sequencing rollouts by readiness" },
+      { id: "b", label: "Assigning ownership without giving managers time for workflow redesign" },
+      { id: "c", label: "Sequencing by technical readiness while underestimating frontline adoption friction" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "Tool access without workflow and change design usually underperforms.",
@@ -1569,7 +1593,7 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Roadmap readiness checkpoint",
     scenarioBody:
       "You are presenting Module 7 to leadership. You must show a realistic, sequenced roadmap with clear ownership and change management support.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Roadmap execution readiness checklist",
     checklistItems: [
       "Present phased roadmap with value-readiness rationale.",
       "Show ownership model, champion network, and governance cadence.",
@@ -1577,9 +1601,9 @@ const module7SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 7 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Parallel rollout of all initiatives without sequencing" },
+      { id: "a", label: "Aggressive multi-phase rollout with ownership assigned as initiatives mature" },
       { id: "b", label: "Sequenced, owned roadmap with operating rhythm" },
-      { id: "c", label: "Roadmap with no change management plan" },
+      { id: "c", label: "Sequenced technical roadmap with change management to be designed after early pilots" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Strong readiness combines sequencing, ownership, and governance rhythm.",
@@ -1604,9 +1628,9 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the first goal of Module 8?",
     quickCheckOptions: [
-      { id: "a", label: "Deploy autonomous agents across all teams" },
+      { id: "a", label: "Choose a platform first, then define controls later" },
       { id: "b", label: "Clarify architecture choices and control requirements" },
-      { id: "c", label: "Prioritize novelty over operating reliability" },
+      { id: "c", label: "Treat workflows and agents as the same architecture problem" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Strong automation programs begin with clear architecture and control design.",
@@ -1677,8 +1701,8 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What causes many automation deployments to fail?",
     quickCheckOptions: [
       { id: "a", label: "No observability and no fallback plan" },
-      { id: "b", label: "Starting with one constrained workflow" },
-      { id: "c", label: "Documenting owner responsibilities" },
+      { id: "b", label: "Constrained pilot scope with strong monitoring" },
+      { id: "c", label: "Clear owners but no tested rollback path" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "Without monitoring and rollback, automation systems become brittle and costly.",
@@ -1700,9 +1724,9 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the best first step for agent adoption?",
     quickCheckOptions: [
-      { id: "a", label: "Deploy broad autonomy across departments" },
+      { id: "a", label: "Roll out to two high-visibility teams at once for faster learning" },
       { id: "b", label: "Pilot one constrained workflow with controls" },
-      { id: "c", label: "Prioritize architecture novelty over reliability" },
+      { id: "c", label: "Start with broad autonomy and add controls after the first month" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Constrained pilots create measurable evidence while limiting exposure.",
@@ -1764,7 +1788,7 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Automation design checkpoint",
     scenarioBody:
       "You are presenting Module 8 outputs. Leadership expects a practical automation plan with architecture fit, control gates, and operational safeguards.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Automation design readiness checklist",
     checklistItems: [
       "Show workflow-versus-agent rationale for the selected use case.",
       "Include human checkpoint design and exception escalation paths.",
@@ -1772,9 +1796,9 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 8 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Complex architecture with no control model" },
+      { id: "a", label: "Ambitious multi-agent design with governance to be defined in phase two" },
       { id: "b", label: "Constrained design with clear controls and operating ownership" },
-      { id: "c", label: "Autonomy expansion without fallback design" },
+      { id: "c", label: "High-autonomy rollout with manual review only for severe incidents" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness means reliable design, governance controls, and operational accountability.",
@@ -1847,8 +1871,8 @@ const module9SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Why does integration strategy matter in stack design?",
     quickCheckOptions: [
-      { id: "a", label: "Integration quality has minimal business impact" },
-      { id: "b", label: "Only IT needs to evaluate integration" },
+      { id: "a", label: "Integration can be handled later if the model output quality is high" },
+      { id: "b", label: "Integration assessment should be owned only by IT, not workflow teams" },
       { id: "c", label: "Poor integration creates manual work and inconsistency" },
     ],
     quickCheckCorrectOptionId: "c",
@@ -1871,9 +1895,9 @@ const module9SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is a practical consolidation criterion?",
     quickCheckOptions: [
-      { id: "a", label: "Consolidate based on vendor popularity" },
+      { id: "a", label: "Consolidate primarily where procurement discounts are largest" },
       { id: "b", label: "Consolidate based on overlap, cost, and maintainability" },
-      { id: "c", label: "Never consolidate to preserve optionality" },
+      { id: "c", label: "Preserve every tool to avoid any migration effort" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Consolidation should be evidence-based and tied to operating simplicity.",
@@ -1895,9 +1919,9 @@ const module9SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What is the purpose of procurement controls in AI stack design?",
     quickCheckOptions: [
-      { id: "a", label: "To slow all tool decisions regardless of context" },
+      { id: "a", label: "To force a single approval speed for all use cases" },
       { id: "b", label: "To reduce avoidable legal and operational risk" },
-      { id: "c", label: "To remove all experimentation from teams" },
+      { id: "c", label: "To centralize every experiment under one procurement cycle" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Controls create consistency and reduce downstream failure risk.",
@@ -1979,6 +2003,30 @@ const module9SectionLearningContent: Record<string, SectionLearningContent> = {
       c: "Lists are not equivalent to plans.",
     },
   },
+  "module-quiz": {
+    scenarioTitle: "Stack strategy checkpoint",
+    scenarioBody:
+      "You are presenting Module 9 recommendations and must justify stack design decisions with ownership clarity and governance controls.",
+    checklistTitle: "Stack strategy readiness checklist",
+    checklistItems: [
+      "Show keep, consolidate, and pilot decisions with rationale.",
+      "Clarify ownership for operations, governance, and vendor management.",
+      "Include integration and risk controls in the rollout plan.",
+    ],
+    quickCheckPrompt: "What demonstrates strong Module 9 readiness?",
+    quickCheckOptions: [
+      { id: "a", label: "A broad tool catalog with phased ownership to be finalized later" },
+      { id: "b", label: "A prioritized stack plan with owners, controls, and consolidation logic" },
+      { id: "c", label: "Independent team-level purchasing with optional governance reviews" },
+    ],
+    quickCheckCorrectOptionId: "b",
+    quickCheckExplanation: "Readiness requires clear operating ownership, control design, and evidence-based stack decisions.",
+    quickCheckOptionExplanations: {
+      a: "Catalogs are not enough without execution structure.",
+      b: "This is the module's expected decision-ready output.",
+      c: "Decentralized buying without controls increases sprawl risk.",
+    },
+  },
 }
 
 const module10SectionLearningContent: Record<string, SectionLearningContent> = {
@@ -1994,9 +2042,9 @@ const module10SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "Which future signal should leaders prioritize most?",
     quickCheckOptions: [
-      { id: "a", label: "Social excitement around model releases" },
+      { id: "a", label: "Audience growth and social buzz around model announcements" },
       { id: "b", label: "Shifts affecting economics and execution" },
-      { id: "c", label: "Speculative timelines with unclear relevance" },
+      { id: "c", label: "Speculative timelines without direct implication for your strategy" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Decision-relevant signals are those that materially affect margin, value, or speed.",
@@ -2019,8 +2067,8 @@ const module10SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What does model commoditization usually imply?",
     quickCheckOptions: [
       { id: "a", label: "Differentiation moves to execution and integration" },
-      { id: "b", label: "Model choice becomes the only strategy" },
-      { id: "c", label: "AI strategy no longer matters" },
+      { id: "b", label: "Differentiation should remain centered on selecting one premium model" },
+      { id: "c", label: "Lower model pricing means stack and workflow design can be deprioritized" },
     ],
     quickCheckCorrectOptionId: "a",
     quickCheckExplanation: "As core models commoditize, execution discipline becomes the main advantage source.",
@@ -2130,7 +2178,7 @@ const module10SectionLearningContent: Record<string, SectionLearningContent> = {
     scenarioTitle: "Future readiness checkpoint",
     scenarioBody:
       "You are presenting Module 10 outputs to leadership. You must show a future-aware strategy grounded in market signals, capability bets, and execution discipline.",
-    checklistTitle: "Checkpoint readiness checklist",
+    checklistTitle: "Future strategy readiness checklist",
     checklistItems: [
       "Prioritize high-impact future signals with clear implications.",
       "Present focused strategic bets and partnership choices.",
@@ -2138,9 +2186,9 @@ const module10SectionLearningContent: Record<string, SectionLearningContent> = {
     ],
     quickCheckPrompt: "What demonstrates strong Module 10 readiness?",
     quickCheckOptions: [
-      { id: "a", label: "Trend-following with no focused strategy" },
+      { id: "a", label: "Broad trend coverage with optional initiatives and evolving ownership" },
       { id: "b", label: "Focused strategic bets with execution plan and ownership" },
-      { id: "c", label: "Speculative vision without operating actions" },
+      { id: "c", label: "Compelling future narrative without near-term operating commitments" },
     ],
     quickCheckCorrectOptionId: "b",
     quickCheckExplanation: "Readiness requires strategic focus, role clarity, and actionable execution plans.",
@@ -2207,14 +2255,9 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const explainerAttributes = getExplainerAttributes({
     type: "AI adoption learning workspace",
     title: module?.title ?? "AI adoption module",
-    summary: currentSection
-      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections}.`
+    explanation: currentSection
+      ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections}. Completed sections: ${completedSectionIds.length} of ${totalSections}. Review the scenario, use the checklist, answer the checkpoint, and continue to the next section.`
       : "Work through each section to build your implementation-ready AI strategy.",
-    details: [
-      `Completed sections: ${completedSectionIds.length} of ${totalSections}.`,
-      "Each section focuses on practical business decisions, not technical theory.",
-    ],
-    interaction: "Review the section, answer the checkpoint, then continue.",
   })
 
   if (!module) {
@@ -2273,6 +2316,25 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 variant="callout"
                 content={currentSection.summary ?? "Use this section to sharpen your decision quality and implementation discipline."}
               />
+
+              {sectionLearningContent ? (
+                <Card className="p-5 border-brand-indigo/20 bg-brand-indigo/5 space-y-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Scenario</p>
+                    <p className="text-lg font-semibold text-brand-indigo">{sectionLearningContent.scenarioTitle}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{sectionLearningContent.scenarioBody}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Action Checklist</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{sectionLearningContent.checklistTitle}</p>
+                    <ul className="mt-2 space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                      {sectionLearningContent.checklistItems.map((item) => (
+                        <li key={`${moduleId}-${currentSection.id}-${item}`}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </Card>
+              ) : null}
 
               <div className="space-y-3">
                 <div>

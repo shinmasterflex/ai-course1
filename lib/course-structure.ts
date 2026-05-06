@@ -38,6 +38,7 @@ export const courseStructure: CourseStructure = {
         { id: "what-youll-learn", title: "Common Beginner Misconceptions", summary: "Identify early myths that create confusion, unrealistic expectations, and poor first adoption decisions.", completed: false },
         { id: "how-to-use-course", title: "Safe First Steps for AI Adoption", summary: "Compare doing nothing versus adopting carelessly, then choose a low-risk, high-learning starting strategy.", completed: false },
         { id: "summary", title: "Module Wrap-Up and 30-Day Starter Plan", summary: "Finish with a practical action plan: one workflow to test, one risk guardrail, and one outcome metric to track.", completed: false },
+        { id: "module-quiz", title: "Foundations Checkpoint", summary: "Validate your ability to translate beginner foundations into a practical and safe first AI pilot plan.", completed: false },
       ],
     },
     {
@@ -190,6 +191,7 @@ export const courseStructure: CourseStructure = {
         { id: "ai-workflows", title: "Keeping the Stack Manageable Over Time", summary: "Plan who maintains the tools, reviews changes, and supports the teams using them.", completed: false },
         { id: "ai-project", title: "Who Owns What Internally?", summary: "Clarify who owns strategy, tooling, day-to-day operations, and results.", completed: false },
         { id: "next-steps", title: "Your Stack Plan and Next Steps", summary: "Finish with a simple stack plan, clear priorities, named owners, and next actions.", completed: false },
+        { id: "module-quiz", title: "Stack Strategy Checkpoint", summary: "Validate your ability to design a maintainable AI stack with clear ownership, controls, and consolidation logic.", completed: false },
       ],
     },
     // Position 10

@@ -13,6 +13,52 @@ export type ModuleQuizQuestion<T extends string = string> = {
 }
 
 export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
+  "module-0": [
+    {
+      key: "quiz1",
+      prompt: "What is the best first move after finishing Module 0?",
+      explanation: "Beginners should start with a focused, low-risk pilot tied to one measurable outcome.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Adopt AI broadly across all teams immediately" },
+        { id: "b", label: "Run one scoped pilot with a metric and guardrail" },
+        { id: "c", label: "Wait until the AI market is fully stable" },
+      ],
+    },
+    {
+      key: "quiz2",
+      prompt: "Which statement best separates AI hype from practical value?",
+      explanation: "Practical value is proven by measurable workflow improvement in real operations.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "The tool has polished demos and strong social buzz" },
+        { id: "b", label: "The vendor is popular and recently funded" },
+        { id: "c", label: "The workflow impact is measurable in speed, quality, or cost" },
+      ],
+    },
+    {
+      key: "quiz3",
+      prompt: "Which beginner misconception is most dangerous?",
+      explanation: "Confident AI output can still be wrong, so verification is essential.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "If AI sounds confident, it is probably correct" },
+        { id: "b", label: "AI can help with repetitive tasks" },
+        { id: "c", label: "A small pilot is safer than broad rollout" },
+      ],
+    },
+    {
+      key: "quiz4",
+      prompt: "What should your Module 0 output include?",
+      explanation: "A decision-ready starter plan includes a use case, owner, metric, and review point.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "A long list of AI tools to evaluate later" },
+        { id: "b", label: "A 30-day starter plan with guardrails and a review date" },
+        { id: "c", label: "A strategy memo recommending no experimentation yet" },
+      ],
+    },
+  ],
   "module-1": [
     {
       key: "quiz1",
