@@ -219,8 +219,8 @@ export default function Module0Page() {
                     { stat: "30+ times/day", detail: "Most people already interact with AI dozens of times daily without explicitly noticing it." },
                     { stat: "Every industry", detail: "Healthcare, law, finance, education, and retail are redesigning workflows with AI." },
                     { stat: "Beginner edge", detail: "Learners who build prompting and verification habits now create leverage that compounds." },
-                  ].map(({ stat, detail }) => (
-                    <Card key={stat} className="p-4 border-l-4 border-l-brand-orange">
+                  ].map(({ stat, detail }, index) => (
+                    <Card key={stat} componentId={`m0-reality-check-stat-${index + 1}`} className="p-4 border-l-4 border-l-brand-orange">
                       <p className="text-2xl font-black text-brand-orange mb-1">{stat}</p>
                       <p className="text-sm text-muted-foreground">{detail}</p>
                     </Card>
@@ -319,7 +319,7 @@ export default function Module0Page() {
                   { icon: Mic,           label: "Real-time Translation",          desc: "Tools like Google Translate use neural machine translation, converting between 100+ languages almost instantly." },
                   { icon: Brain,         label: "Credit Scoring",                 desc: "When you apply for a loan or credit card, AI analyses hundreds of data points in seconds to determine your risk profile." },
                 ].map(({ icon: Icon, label, desc }) => (
-                  <Card key={label} className="p-4 flex gap-3 items-start">
+                  <Card key={label} componentId="m0-day-in-life" className="p-4 flex gap-3 items-start">
                     <div className="bg-brand-green/10 p-2 rounded-lg mt-1"><Icon className="h-5 w-5 text-brand-green" /></div>
                     <div><p className="font-semibold">{label}</p><p className="text-sm text-muted-foreground">{desc}</p></div>
                   </Card>
@@ -407,8 +407,8 @@ export default function Module0Page() {
                     { n: 5, title: "AI Ethics, Safety & Society", desc: "Bias, privacy, and responsible use", id: "m0-transformation-phase-3" },
                     { n: 6, title: "Your AI Toolkit",             desc: "No-code tools, workflows, your first project" },
                   ]},
-                ].map(({ phase, color, modules }) => (
-                  <Card key={phase} className="p-4">
+                ].map(({ phase, color, modules }, index) => (
+                  <Card key={phase} componentId={`m0-transformation-phase-${index + 1}`} className="p-4">
                     <h3 className={`font-bold text-lg mb-3 text-${color}`}>{phase}</h3>
                     <ul className="space-y-2">
                       {modules.map(({ n, title, desc }) => (
@@ -503,7 +503,7 @@ export default function Module0Page() {
                 <p className="text-xs text-muted-foreground mb-3">Progress: {assessmentAnsweredCount}/{selfAssessmentQuestions.length}</p>
                 <div className="space-y-4">
                   {selfAssessmentQuestions.map((question) => (
-                    <Card key={question.key} className="p-4">
+                    <Card key={question.key} componentId="m0-self-assessment" className="p-4">
                       <p className="text-sm font-medium mb-3">{question.prompt}</p>
                       <div className="grid gap-2 md:grid-cols-3">
                         {question.options.map((option) => {

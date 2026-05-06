@@ -29,9 +29,10 @@ type ToolCardProps = {
   tagline: string
   strengths: string[]
   free: boolean
+  componentId: string
 }
 
-function ToolCard({ name, url, tagline, strengths, free }: ToolCardProps) {
+function ToolCard({ name, url, tagline, strengths, free, componentId }: ToolCardProps) {
   const toolCardAttributes = getExplainerAttributes({
     type: "Tool comparison card",
     title: name,
@@ -44,7 +45,7 @@ function ToolCard({ name, url, tagline, strengths, free }: ToolCardProps) {
   })
 
   return (
-    <Card {...toolCardAttributes} className="p-4">
+    <Card componentId={componentId} {...toolCardAttributes} className="p-4">
       <div className="flex items-start justify-between mb-2">
         <div>
           <h4 className="font-bold">{name}</h4>
@@ -358,7 +359,7 @@ export default function Module1Page() {
                     { category: "Learning", examples: "A spam filter that improves as you mark more emails; a recommendation engine that refines over time", how: "Machine learning algorithms adjust model weights based on new data and feedback, improving performance without being reprogrammed." },
                     { category: "Action", examples: "Self-driving cars braking for a pedestrian, a robot arm sorting packages, an AI agent booking a flight", how: "Combines perception and reasoning to control physical or digital systems in real time." },
                   ].map(({ category, examples, how }) => (
-                    <Card key={category} className="p-4">
+                    <Card key={category} componentId="m1-defining-ai-five-buckets" className="p-4">
                       <div className="space-y-3">
                         <span className="inline-flex w-fit rounded bg-brand-orange px-2 py-1 text-xs font-bold text-white">{category}</span>
                         <div className="space-y-1">
@@ -939,7 +940,7 @@ export default function Module1Page() {
                     desc: "Convert messy notes into a checklist, table, timeline, or set of next steps.",
                   },
                 ].map(({ title, desc }) => (
-                  <Card key={title} className="p-4">
+                  <Card key={title} componentId="m1-first-win" className="p-4">
                     <h3 className="font-semibold text-brand-orange mb-2">{title}</h3>
                     <p className="text-sm text-muted-foreground">{desc}</p>
                   </Card>
@@ -1051,7 +1052,7 @@ export default function Module1Page() {
                     reality: "Reality: strong AI use looks like drafting, reviewing, editing, and verifying - not blind acceptance.",
                   },
                 ].map(({ myth, reality }) => (
-                  <Card key={myth} className="p-5">
+                  <Card key={myth} componentId="m1-myths-vs-reality-card" className="p-5">
                     <p className="font-semibold text-brand-orange mb-2">{myth}</p>
                     <p className="text-sm text-muted-foreground">{reality}</p>
                   </Card>
@@ -1223,6 +1224,7 @@ export default function Module1Page() {
                   url="https://chat.openai.com"
                   tagline="Most versatile general-purpose assistant"
                   free={true}
+                  componentId="m1-writing-assistants-card"
                   strengths={["Great for long-form writing and brainstorming","Strong code generation","Wide knowledge base","Plugins and GPT-4o multimodal"]}
                 />
                 <ToolCard
@@ -1230,6 +1232,7 @@ export default function Module1Page() {
                   url="https://claude.ai"
                   tagline="Best for nuanced writing and long documents"
                   free={true}
+                  componentId="m1-writing-assistants-card"
                   strengths={["Extremely long context window","Nuanced, natural tone","Excellent at following complex instructions","Strong ethical guardrails"]}
                 />
                 <ToolCard
@@ -1237,6 +1240,7 @@ export default function Module1Page() {
                   url="https://gemini.google.com"
                   tagline="Google's assistant - integrates with your apps"
                   free={true}
+                  componentId="m1-writing-assistants-card"
                   strengths={["Connects to Gmail, Docs, Drive","Real-time web search","Great for research tasks","Strong at multimodal tasks"]}
                 />
                 <ToolCard
@@ -1244,6 +1248,7 @@ export default function Module1Page() {
                   url="https://grammarly.com"
                   tagline="Grammar and writing quality assistant"
                   free={true}
+                  componentId="m1-writing-assistants-card"
                   strengths={["Real-time suggestions in any browser","Tone detection and adjustment","Best for editing, not drafting","Works inside Gmail, Docs, etc."]}
                 />
               </div>
@@ -1280,6 +1285,7 @@ export default function Module1Page() {
                   url="https://openai.com/dall-e-3"
                   tagline="Built into ChatGPT - easy to use"
                   free={false}
+                  componentId="m1-image-generation-card"
                   strengths={["Accessible via ChatGPT Plus","Great at following detailed text descriptions","Strong at photorealistic and artistic styles","No separate account needed"]}
                 />
                 <ToolCard
@@ -1287,6 +1293,7 @@ export default function Module1Page() {
                   url="https://midjourney.com"
                   tagline="Highest quality art and photorealism"
                   free={false}
+                  componentId="m1-image-generation-card"
                   strengths={["Widely considered the best aesthetic quality","Excellent for concept art and stylised images","Strong community and style library","Web interface now available"]}
                 />
                 <ToolCard
@@ -1294,6 +1301,7 @@ export default function Module1Page() {
                   url="https://firefly.adobe.com"
                   tagline="Safe for commercial use - built into Creative Cloud"
                   free={true}
+                  componentId="m1-image-generation-card"
                   strengths={["Trained on licensed content - commercially safe","Integrated into Photoshop and Illustrator","Generative Fill is incredibly powerful","Good for professional design workflows"]}
                 />
                 <ToolCard
@@ -1301,6 +1309,7 @@ export default function Module1Page() {
                   url="https://stability.ai"
                   tagline="Open-source - run it yourself"
                   free={true}
+                  componentId="m1-image-generation-card"
                   strengths={["Free and open source","Highly customisable with community models","Can run locally on your own computer","Large ecosystem of fine-tuned models"]}
                 />
               </div>
@@ -1377,7 +1386,7 @@ export default function Module1Page() {
                     { name: "ChatGPT", desc: "Excellent for explaining code, debugging, and writing scripts" },
                   ]},
                 ].map(({ category, tools }) => (
-                  <Card key={category} className="p-4">
+                  <Card key={category} componentId="m1-productivity-card" className="p-4">
                     <h3 className="font-bold text-brand-green mb-3">{category}</h3>
                     <div className="space-y-2">
                       {tools.map(({ name, desc }) => (
@@ -1424,7 +1433,7 @@ export default function Module1Page() {
                   { field: "3D & Animation", tools: "Luma AI, Meshy, Spline AI", desc: "Generate 3D models and scenes from images or text. Create animations with AI motion generation." },
                   { field: "Writing", tools: "Sudowrite, NovelAI, Jasper", desc: "Specialised writing assistants for fiction, marketing copy, and long-form content with style control." },
                 ].map(({ field, tools, desc }) => (
-                  <Card key={field} className="p-4">
+                  <Card key={field} componentId="m1-creative-work-card" className="p-4">
                     <h4 className="font-bold text-brand-orange">{field}</h4>
                     <p className="text-xs text-muted-foreground mb-1 font-mono">{tools}</p>
                     <p className="text-sm">{desc}</p>
