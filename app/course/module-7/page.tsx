@@ -28,7 +28,7 @@ export default function Module7Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-7"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6", "quiz7"])
   const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
@@ -1082,12 +1082,9 @@ export default function Module7Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: AI Agents." />
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-8")}>
-                      Continue to Module 8
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
               {!allQuizComplete && (

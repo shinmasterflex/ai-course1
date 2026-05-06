@@ -28,7 +28,7 @@ export default function Module8Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-8"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
   const questions = moduleQuizData[MODULE_ID]
   const [reactStep, setReactStep] = useState(-1)
   const courseStructure = getCourseStructure()
@@ -764,19 +764,14 @@ export default function Module8Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work  - you have completed Module 8: AI Agents. You now understand what agents are, how they work, the main types, where they are deployed, how to build them, and the risks to manage. You are equipped to think critically and practically about the most transformative shift in AI today." />
-                  
-                  <div className="flex gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-brand-orange hover:bg-brand-orange/90 text-white"
-                      onClick={() => router.push("/course/module-9")}
-                    >
-                      Continue to Module 9
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
-                      Back to Dashboard
-                    </Button>
-                  </div>
+
+                  <Button
+                    size="lg"
+                    className="bg-brand-orange hover:bg-brand-orange/90 text-white"
+                    onClick={() => router.push("/course")}
+                  >
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

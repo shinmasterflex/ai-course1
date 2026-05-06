@@ -63,7 +63,7 @@ export default function Module2Page() {
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "quiz4", "quiz5"])
   const questions = moduleQuizData[MODULE_ID]
   const [manualLabels, setManualLabels] = useState<Record<string, ManualClass>>({})
 
@@ -665,12 +665,9 @@ export default function Module2Page() {
                       ))}
                     </div>
                   </Card>
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-3")}>
-                      Continue to Module 3
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

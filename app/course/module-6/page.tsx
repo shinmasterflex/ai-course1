@@ -34,7 +34,7 @@ export default function Module6Page() {
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
   const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -779,12 +779,9 @@ export default function Module6Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit - where you turn safe, thoughtful AI use into practical no-code workflows." />
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-7")}>
-                      Continue to Module 7
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

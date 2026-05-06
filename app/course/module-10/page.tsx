@@ -28,7 +28,7 @@ export default function Module10Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-10"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "quiz4", "quiz5", "quiz6"])
   const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
@@ -555,14 +555,9 @@ export default function Module10Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Excellent work. You have completed Module 10 and the full course with a practical strategy for what comes next." />
-                  <div className="flex gap-4">
-                    <Button onClick={handleSectionComplete} size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white">
-                      Complete Course
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
-                      Back to Dashboard
-                    </Button>
-                  </div>
+                  <Button onClick={() => router.push("/course")} size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white">
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

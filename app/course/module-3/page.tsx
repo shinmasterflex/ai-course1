@@ -34,7 +34,7 @@ export default function Module3Page() {
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "exercise"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "exercise", "quiz4", "quiz5"])
   const questions = moduleQuizData[MODULE_ID]
   const [challengePrompt, setChallengePrompt] = useState("")
 
@@ -811,12 +811,9 @@ export default function Module3Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Outstanding! You now understand how LLMs work and how to prompt them effectively. Next: a tour of the best AI tools available today." />
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-4")}>
-                      Continue to Module 4
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

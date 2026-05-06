@@ -69,7 +69,7 @@ export default function Module1Page() {
   const [historyCarouselApi, setHistoryCarouselApi] = useState<CarouselApi>()
   const [historySlideIndex, setHistorySlideIndex] = useState(0)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "tools-quiz1", "tools-quiz2", "tools-quiz3", "tools-matching"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "tools-quiz1", "tools-quiz2", "tools-quiz3", "tools-matching", "tools-quiz4"])
   const questions = moduleQuizData[MODULE_ID]
   const historyMilestones = [
     {
@@ -1489,12 +1489,9 @@ export default function Module1Page() {
                       ))}
                     </div>
                   </Card>
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-2")}>
-                      Continue to Module 2
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>

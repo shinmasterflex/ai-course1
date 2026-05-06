@@ -33,7 +33,7 @@ export default function Module4Page() {
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
 
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching"])
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3", "matching", "quiz4", "quiz5"])
   const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
@@ -668,12 +668,9 @@ export default function Module4Page() {
               {allQuizComplete && (
                 <div className="space-y-4">
                   <TextDisplay variant="success" content="Well done! You now understand how data is collected, cleaned, preprocessed, and engineered for AI. Next: AI Ethics, Safety & Society." />
-                  <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-5")}>
-                      Continue to Module 5
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
-                  </div>
+                  <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course")}>
+                    Complete Module
+                  </Button>
                 </div>
               )}
             </div>
