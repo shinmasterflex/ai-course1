@@ -30,13 +30,6 @@ const MODULE_META = [
   { id: "module-10", icon: Rocket,      color: "brand-orange", label: "The Future of AI",             description: "AGI, governance, careers, and what comes next." },
 ]
 
-const PHASES = [
-  { label: "Phase 1: Understanding AI",       color: "brand-green",  moduleIds: ["module-0", "module-1", "module-2"] },
-  { label: "Phase 2: Using AI & Coding Basics", color: "brand-orange", moduleIds: ["module-3", "module-4", "module-5"] },
-  { label: "Phase 3: AI in the World",         color: "brand-green",  moduleIds: ["module-6", "module-7"] },
-  { label: "Phase 4: Thinking Critically & Building", color: "brand-orange", moduleIds: ["module-8", "module-9", "module-10"] },
-]
-
 export default function DashboardPage() {
   const router = useRouter()
   const progress = useProgress()
@@ -150,12 +143,12 @@ export default function DashboardPage() {
         <Card className="mb-8 overflow-hidden border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-brand-indigo">Your Module Roadmap</CardTitle>
-            <CardDescription>Track where you are in the complete learning arc from foundations to advanced application.</CardDescription>
+            <CardDescription>Track where you are across all modules in your complete learning journey.</CardDescription>
           </CardHeader>
           <CardContent>
             <Image
               src="/graphics/module-path.svg"
-              alt="Visual roadmap connecting module phases"
+              alt="Visual roadmap connecting course modules"
               width={960}
               height={340}
               className="h-auto w-full rounded-xl border border-brand-indigo/10 bg-white"
@@ -163,66 +156,63 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Phases & Modules */}
+        {/* Modules */}
         <div className="space-y-8">
-          {PHASES.map((phase) => (
-            <Card key={phase.label}>
-              <CardHeader>
-                <CardTitle className={cn("text-xl", `text-${phase.color}`)}>{phase.label}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {phase.moduleIds.map((moduleId, idx) => {
-                  const meta = MODULE_META.find((m) => m.id === moduleId)!
-                  const { completed, total } = getModuleProgress(moduleId)
-                  const status = getStatus(completed, total)
-                  const Icon = meta.icon
-                  const modIndex = MODULE_META.findIndex((m) => m.id === moduleId)
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl text-brand-indigo">All Modules</CardTitle>
+              <CardDescription>Follow the full course sequence without phase-based grouping.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {MODULE_META.map((meta, modIndex) => {
+                const { completed, total } = getModuleProgress(meta.id)
+                const status = getStatus(completed, total)
+                const Icon = meta.icon
 
-                  return (
-                    <Card key={moduleId} className="border hover:shadow-md transition-shadow">
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className={cn("p-2 rounded-lg", `bg-${meta.color}/10`)}>
-                              <Icon className={cn("h-5 w-5", `text-${meta.color}`)} />
-                            </div>
-                            <div>
-                              <CardTitle className="text-lg">Module {modIndex}: {meta.label}</CardTitle>
-                              <CardDescription>{meta.description}</CardDescription>
-                            </div>
+                return (
+                  <Card key={meta.id} className="border hover:shadow-md transition-shadow">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={cn("p-2 rounded-lg", `bg-${meta.color}/10`)}>
+                            <Icon className={cn("h-5 w-5", `text-${meta.color}`)} />
                           </div>
-                          <span className={cn(
-                            "text-xs font-semibold px-3 py-1 rounded-full",
-                            status === "Completed"   ? "bg-green-100 text-green-800" :
-                            status === "In Progress" ? "bg-orange-100 text-orange-800" :
-                                                       "bg-gray-100 text-gray-600"
-                          )}>
-                            {status}
-                          </span>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex-1">
-                            <ProgressBar current={mounted ? completed : 0} total={total} />
-                            <p className="text-xs text-muted-foreground mt-1">{mounted ? completed : 0} / {total} sections</p>
+                          <div>
+                            <CardTitle className="text-lg">Module {modIndex}: {meta.label}</CardTitle>
+                            <CardDescription>{meta.description}</CardDescription>
                           </div>
-                          <Button
-                            size="sm"
-                            variant={status === "Not Started" ? "default" : "outline"}
-                            className={cn(status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white")}
-                            onClick={() => router.push(`/course/${moduleId}`)}
-                          >
-                            {status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
-                          </Button>
                         </div>
-                      </CardContent>
-                    </Card>
-                  )
-                })}
-              </CardContent>
-            </Card>
-          ))}
+                        <span className={cn(
+                          "text-xs font-semibold px-3 py-1 rounded-full",
+                          status === "Completed"   ? "bg-green-100 text-green-800" :
+                          status === "In Progress" ? "bg-orange-100 text-orange-800" :
+                                                     "bg-gray-100 text-gray-600"
+                        )}>
+                          {status}
+                        </span>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <ProgressBar current={mounted ? completed : 0} total={total} />
+                          <p className="text-xs text-muted-foreground mt-1">{mounted ? completed : 0} / {total} sections</p>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant={status === "Not Started" ? "default" : "outline"}
+                          className={cn(status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white")}
+                          onClick={() => router.push(`/course/${meta.id}`)}
+                        >
+                          {status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

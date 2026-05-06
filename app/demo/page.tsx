@@ -359,20 +359,20 @@ export default function DemoPage() {
             </div>
           )}
 
-          {/* Section 6: Three-Phase Action Plan */}
+          {/* Section 6: Three-Part Action Plan */}
           {currentSectionIndex === 6 && (
             <div className="space-y-6" id="action-plan">
-              <h2 className="text-3xl font-bold text-brand-green">Three-Phase Action Plan</h2>
+              <h2 className="text-3xl font-bold text-brand-green">Three-Part Action Plan</h2>
 
               <TextDisplay
                 variant="callout"
-                content="Our comprehensive program is divided into three strategic phases to build salespeople who can override their personality defaults and operate with discipline."
+                content="Our comprehensive program is organized into three strategic parts to build salespeople who can override their personality defaults and operate with discipline."
               />
 
               <div className="space-y-6">
-                {/* Phase 1 */}
+                {/* Part 1 */}
                 <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-green/5">
-                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Phase 1: Personality Traits and Introduction to Neurobiology</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Part 1: Personality Traits and Introduction to Neurobiology</h3>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                       Understand your Big 10 traits and the neuroscience of goal-seeking and growth mindset
@@ -405,9 +405,9 @@ export default function DemoPage() {
                   </div>
                 </Card>
 
-                {/* Phase 2 */}
+                {/* Part 2 */}
                 <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-green/5">
-                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Phase 2: Systematic Negotiation</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Part 2: Systematic Negotiation</h3>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                       Master Jim Camp's "Start With No" and Chris Voss's FBI tactics to stay calm and in control
@@ -452,9 +452,9 @@ export default function DemoPage() {
                   </div>
                 </Card>
 
-                {/* Phase 3 */}
+                {/* Part 3 */}
                 <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-green/5">
-                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Phase 3: Implementation & Accountability</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-brand-green">Part 3: Implementation & Accountability</h3>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                       Build sustainable change agency and master the Participant Self-Training Model for weekly self-assessment and growth tracking

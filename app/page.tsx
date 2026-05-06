@@ -13,12 +13,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowRight, CheckCircle2, CircuitBoard, Sparkles } from "lucide-react"
 import { getCourseStructure } from "@/lib/course-structure"
 
-function modulePhase(index: number): string {
-  if (index <= 2) return "Foundations"
-  if (index <= 5) return "Practice"
-  return "Advanced"
-}
-
 export default function HomePage() {
   const modules = getCourseStructure().modules
 
@@ -176,7 +170,8 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide">
-                      <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-brand-indigo">{modulePhase(index)}</span>
+                      <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-brand-indigo">Module {index}</span>
+                      <span className="text-brand-indigo/70 normal-case tracking-normal">{module.sections.length} sections</span>
                     </div>
                     <CardTitle className="text-xl leading-snug text-brand-indigo">{module.title}</CardTitle>
                     <CardDescription className="text-base">
