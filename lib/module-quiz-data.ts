@@ -57,6 +57,50 @@ export const moduleQuizData = {
         { id: "c", label: "Most AI today is specialized for specific tasks" },
       ],
     },
+    {
+      key: "tools-quiz1",
+      prompt: "Which tool is best known as a general writing assistant?",
+      explanation: "ChatGPT is positioned as a versatile general-purpose assistant for writing and brainstorming.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "ChatGPT" },
+        { id: "b", label: "Midjourney" },
+        { id: "c", label: "Luma AI" },
+      ],
+    },
+    {
+      key: "tools-quiz2",
+      prompt: "What should you check before using AI-generated images commercially?",
+      explanation: "Commercial rights and platform terms vary significantly across image tools.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Only whether the image looks realistic" },
+        { id: "b", label: "Whether the tool has a mobile app" },
+        { id: "c", label: "Ownership and usage terms" },
+      ],
+    },
+    {
+      key: "tools-quiz3",
+      prompt: "Which tool category is best for cited research and browsing?",
+      explanation: "Research-focused AI tools emphasize source-backed answers and synthesis.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "AI music generators" },
+        { id: "b", label: "AI search and research tools" },
+        { id: "c", label: "Voice cloning tools" },
+      ],
+    },
+    {
+      key: "tools-matching",
+      prompt: "What is the best first question before choosing any AI tool?",
+      explanation: "The task definition comes first; tool choice follows the use case.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "What exact task am I trying to solve?" },
+        { id: "b", label: "Which tool has the flashiest branding?" },
+        { id: "c", label: "Which tool is newest this week?" },
+      ],
+    },
   ],
   "module-2": [
     {
@@ -153,50 +197,85 @@ export const moduleQuizData = {
   "module-4": [
     {
       key: "quiz1",
-      prompt: "Which tool is best known as a general writing assistant?",
-      explanation: "ChatGPT is positioned in this module as a versatile general-purpose assistant.",
-      correctOptionId: "a",
+      prompt: "What is the main difference between structured and unstructured data?",
+      explanation: "Structured data fits neatly into rows and columns (like a spreadsheet), while unstructured data has no fixed format (like text or images).",
+      correctOptionId: "b",
       options: [
-        { id: "a", label: "ChatGPT" },
-        { id: "b", label: "Midjourney" },
-        { id: "c", label: "Luma AI" },
+        { id: "a", label: "Structured data is always larger in size" },
+        { id: "b", label: "Structured data fits into rows and columns; unstructured data does not have a fixed format" },
+        { id: "c", label: "Unstructured data is easier for AI to process" },
       ],
     },
     {
       key: "quiz2",
-      prompt: "What should you check before using AI-generated images commercially?",
-      explanation: "Commercial rights and platform terms vary significantly across image tools.",
+      prompt: "Why is data cleaning a critical step before training an AI model?",
+      explanation: "Models learn directly from the data they are trained on. Missing values, duplicates, and errors produce unreliable patterns.",
       correctOptionId: "c",
       options: [
-        { id: "a", label: "Only whether the image looks realistic" },
-        { id: "b", label: "Whether the tool has a mobile app" },
-        { id: "c", label: "Ownership and usage terms" },
+        { id: "a", label: "It makes the dataset smaller and faster to download" },
+        { id: "b", label: "It is only needed for image data, not text" },
+        { id: "c", label: "Errors and missing values in training data lead to unreliable model outputs" },
       ],
     },
     {
       key: "quiz3",
-      prompt: "Which tool category is best for cited research and browsing?",
-      explanation: "Research-focused AI tools emphasize source-backed answers and synthesis.",
-      correctOptionId: "b",
+      prompt: "What does normalization do to numerical data?",
+      explanation: "Normalization rescales values to a common range so that no single feature dominates the model due to its scale.",
+      correctOptionId: "a",
       options: [
-        { id: "a", label: "AI music generators" },
-        { id: "b", label: "AI search and research tools" },
-        { id: "c", label: "Voice cloning tools" },
+        { id: "a", label: "Rescales values to a consistent range so features are comparable" },
+        { id: "b", label: "Removes all duplicate rows from the dataset" },
+        { id: "c", label: "Converts text data into numerical categories" },
       ],
     },
     {
       key: "matching",
-      prompt: "What is the best first question before choosing any AI tool?",
-      explanation: "The task definition comes first; tool choice follows the use case.",
-      correctOptionId: "a",
+      prompt: "Which term describes creating new input variables from raw data to improve model performance?",
+      explanation: "Feature engineering is the process of transforming raw data into more informative inputs that help the model learn better patterns.",
+      correctOptionId: "b",
       options: [
-        { id: "a", label: "What exact task am I trying to solve?" },
-        { id: "b", label: "Which tool has the flashiest branding?" },
-        { id: "c", label: "Which tool is newest this week?" },
+        { id: "a", label: "Data augmentation" },
+        { id: "b", label: "Feature engineering" },
+        { id: "c", label: "Hyperparameter tuning" },
       ],
     },
   ],
   "module-5": [
+    {
+      key: "quiz1",
+      prompt: "What is the core programming skill behind turning a big task into smaller steps?",
+      explanation: "Decomposition is the habit of breaking one complex problem into manageable parts.",
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Memorizing syntax first" },
+        { id: "b", label: "Decomposing the problem into smaller parts" },
+        { id: "c", label: "Running code without tests" },
+      ],
+    },
+    {
+      key: "quiz2",
+      prompt: "Why are variables and data types important in coding?",
+      explanation: "They make values explicit and prevent invalid operations that lead to bugs.",
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "They define what values represent and which operations make sense" },
+        { id: "b", label: "They are optional in most real programs" },
+        { id: "c", label: "They only matter in low-level languages" },
+      ],
+    },
+    {
+      key: "quiz3",
+      prompt: "What is the best first move when debugging a bug report?",
+      explanation: "Reliable reproduction helps isolate root cause and avoids random guessing.",
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Refactor multiple files immediately" },
+        { id: "b", label: "Add random delays to stabilize timing" },
+        { id: "c", label: "Reproduce the issue consistently and isolate where behavior diverges" },
+      ],
+    },
+  ],
+  "module-6": [
     {
       key: "quiz1",
       prompt: "Where does AI bias often begin?",
@@ -231,7 +310,7 @@ export const moduleQuizData = {
       ],
     },
   ],
-  "module-6": [
+  "module-7": [
     {
       key: "quiz1",
       prompt: "Which tasks are most exposed to automation risk?",
@@ -266,7 +345,7 @@ export const moduleQuizData = {
       ],
     },
   ],
-  "module-7": [
+  "module-8": [
     {
       key: "quiz1",
       prompt: "What most clearly distinguishes an agent from a simple chatbot?",
@@ -323,7 +402,7 @@ export const moduleQuizData = {
       ],
     },
   ],
-  "module-9": [
+  "module-10": [
     {
       key: "quiz1",
       prompt: "Which frontier focuses on systems that can act for you across steps?",
@@ -359,3 +438,4 @@ export const moduleQuizData = {
     },
   ],
 } as const satisfies Record<string, readonly ModuleQuizQuestion[]>
+

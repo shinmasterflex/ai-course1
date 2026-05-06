@@ -278,6 +278,57 @@ export default function Module2Page() {
                   </div>
                 </div>
               </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Common AI Model Families You Should Recognize</h3>
+                <p className="text-sm text-muted-foreground mb-4">Neural networks get most of the attention, but many real-world AI systems use smaller, more interpretable models. These are especially common in business analytics, forecasting, fraud detection, and customer segmentation.</p>
+                <div className="space-y-4 text-sm">
+                  <div className="rounded-lg border border-brand-green/20 bg-brand-green/5 p-4">
+                    <h4 className="font-semibold text-brand-green mb-2">Decision trees</h4>
+                    <p className="text-muted-foreground mb-2">A decision tree works like a flowchart. It asks a sequence of yes/no questions such as &quot;Is income above $60k?&quot; or &quot;Has the customer missed a payment before?&quot; until it reaches a final prediction.</p>
+                    <div className="space-y-1 text-muted-foreground">
+                      <p><span className="font-medium text-foreground">Best for:</span> simple classification or prediction problems where explainability matters.</p>
+                      <p><span className="font-medium text-foreground">Why people like them:</span> they are easy to visualize and easy to explain to non-technical teams.</p>
+                      <p><span className="font-medium text-foreground">Main weakness:</span> a single tree can overfit and become too sensitive to the exact training data.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-lg border border-brand-orange/20 bg-brand-orange/5 p-4">
+                    <h4 className="font-semibold text-brand-orange mb-2">Random forests</h4>
+                    <p className="text-muted-foreground mb-2">A random forest combines many different decision trees and lets them vote. Each tree sees a slightly different sample of the data, so their mistakes are less correlated.</p>
+                    <div className="space-y-1 text-muted-foreground">
+                      <p><span className="font-medium text-foreground">Best for:</span> tabular business data such as churn prediction, credit risk, or fraud scoring.</p>
+                      <p><span className="font-medium text-foreground">Why people use them:</span> they are usually more accurate and more stable than one decision tree alone.</p>
+                      <p><span className="font-medium text-foreground">Tradeoff:</span> you gain accuracy, but lose some of the step-by-step interpretability of a single tree.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4">
+                    <h4 className="font-semibold text-blue-700 dark:text-blue-400 mb-2">Gradient boosting</h4>
+                    <p className="text-muted-foreground mb-2">Gradient boosting also builds many small trees, but instead of voting independently, each new tree focuses on fixing the mistakes made by the earlier ones. The model improves stage by stage.</p>
+                    <div className="space-y-1 text-muted-foreground">
+                      <p><span className="font-medium text-foreground">Best for:</span> high-performance prediction on structured data where every percentage point matters.</p>
+                      <p><span className="font-medium text-foreground">Why it is powerful:</span> boosted trees often win machine-learning competitions on spreadsheets and database-style datasets.</p>
+                      <p><span className="font-medium text-foreground">Tradeoff:</span> they usually need more tuning and can be slower to train than random forests.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-lg border border-brand-green/20 bg-background p-4">
+                    <h4 className="font-semibold text-brand-green mb-2">Clustering with k-means</h4>
+                    <p className="text-muted-foreground mb-2">K-means is an unsupervised learning algorithm. Instead of predicting a label, it groups similar data points into <em>k</em> clusters. It works by repeatedly assigning each point to the nearest cluster center, then moving the centers until the groups stabilize.</p>
+                    <div className="space-y-1 text-muted-foreground">
+                      <p><span className="font-medium text-foreground">Best for:</span> customer segmentation, grouping similar products, or exploring patterns before labels exist.</p>
+                      <p><span className="font-medium text-foreground">Why it matters:</span> it helps you discover structure hidden inside messy datasets.</p>
+                      <p><span className="font-medium text-foreground">Main limitation:</span> you must choose the number of clusters in advance, and the algorithm assumes roughly compact, well-separated groups.</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Quick mental model</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Decision tree:</span> one expert making choices through a branching checklist.</p>
+                  <p><span className="font-medium text-foreground">Random forest:</span> many checklist-based experts voting together.</p>
+                  <p><span className="font-medium text-foreground">Gradient boosting:</span> a team of small experts where each new one studies the earlier mistakes and improves them.</p>
+                  <p><span className="font-medium text-foreground">K-means clustering:</span> a sorting system that groups similar items together without knowing the correct labels ahead of time.</p>
+                </div>
+              </Card>
               <Card className="p-5 border-blue-500/20 bg-blue-500/5">
                 <h3 className="font-semibold mb-2 text-blue-700 dark:text-blue-400">Bonus: Transfer Learning - Why Fine-Tuning Works</h3>
                 <p className="text-sm text-muted-foreground mb-3">There is a fourth concept worth understanding because it explains a huge amount of modern AI:</p>

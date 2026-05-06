@@ -1,25 +1,60 @@
-﻿/**
- * MODULE 9: THE FUTURE OF AI
+/**
+ * MODULE 9: YOUR AI TOOLKIT
  */
 
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
-import { TextDisplay } from "@/components/learning/text-display"
-import { ProgressBar } from "@/components/learning/progress-bar"
+import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { ModuleHero } from "@/components/learning/module-hero"
-import { ModuleQuiz } from "@/components/learning/module-quiz"
+import { ProgressBar } from "@/components/learning/progress-bar"
+import { TextDisplay } from "@/components/learning/text-display"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Rocket, Globe, Star, Brain } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
-import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
-import { useModuleQuiz } from "@/hooks/use-module-quiz"
-import { moduleQuizData } from "@/lib/module-quiz-data"
+import { ArrowRight, BookOpen, CheckCircle2, Code, MessageSquare, Search, Shield, Wrench, Zap } from "lucide-react"
+
+const learningOutcomes = [
+  "Explain what AI is and how it works to anyone",
+  "Use ChatGPT, Claude, and Gemini effectively with well-structured prompts",
+  "Navigate the AI tool landscape and choose the right tool for any task",
+  "Identify AI bias, misinformation, and privacy risks",
+  "Design no-code AI workflows to automate repetitive tasks",
+  "Think critically about AI claims in the media and in products",
+]
+
+const workflowToolGroups = [
+  {
+    category: "Automation & Workflows",
+    icon: Zap,
+    tools: [
+      { name: "Zapier with AI", desc: "Connect apps and add one AI step for summarising, classifying, extracting, or drafting." },
+      { name: "Make", desc: "Visual workflow builder that is stronger when you need branching logic or multi-step flows." },
+      { name: "n8n", desc: "Open-source automation with more control and lower cost if you want flexibility." },
+    ],
+  },
+  {
+    category: "No-Code App Builders",
+    icon: Wrench,
+    tools: [
+      { name: "Bubble", desc: "Build a full web app when you need a front end, database, and custom user flows." },
+      { name: "Glide", desc: "Turn spreadsheet-style data into lightweight mobile or internal apps quickly." },
+      { name: "Retool", desc: "Build internal business tools that connect to APIs and data sources." },
+    ],
+  },
+  {
+    category: "Custom Chatbots",
+    icon: BookOpen,
+    tools: [
+      { name: "Chatbase", desc: "Turn documents or a website into a support or knowledge assistant." },
+      { name: "CustomGPT.ai", desc: "Create a domain-specific chatbot around your own content." },
+      { name: "Botpress", desc: "Build more structured assistants with flows, integrations, and guardrails." },
+    ],
+  },
+]
 
 export default function Module9Page() {
   const router = useRouter()
@@ -28,8 +63,6 @@ export default function Module9Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-9"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
-  const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
@@ -41,22 +74,19 @@ export default function Module9Page() {
   useEffect(() => {
     if (sectionParam && sections.length > 0) {
       const idx = sections.findIndex((s) => s.id === sectionParam)
-      if (idx !== -1 && idx !== currentSectionIndex) setCurrentSectionIndex(idx)
+      if (idx !== -1 && idx !== currentSectionIndex) {
+        setCurrentSectionIndex(idx)
+      }
     }
-  }, [sectionParam])
-
-  const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
-    currentSectionIndex,
-    requiredSections: [4],
-  })
+  }, [currentSectionIndex, sectionParam, sections])
 
   const handleSectionComplete = () => {
-    if (!canAdvance) {
-      return
+    const current = sections[currentSectionIndex]
+    if (current) {
+      markSectionComplete(MODULE_ID, current.id)
+      setCurrentPosition(MODULE_ID, current.id)
     }
 
-    const current = sections[currentSectionIndex]
-    if (current) { markSectionComplete(MODULE_ID, current.id); setCurrentPosition(MODULE_ID, current.id) }
     if (currentSectionIndex < totalSections - 1) {
       const next = sections[currentSectionIndex + 1]
       setCurrentSectionIndex(currentSectionIndex + 1)
@@ -70,441 +100,624 @@ export default function Module9Page() {
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-8 max-w-4xl mx-auto">
+        <main className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Module 9: The Future of AI</h1>
-            <p className="text-lg text-muted-foreground mb-4">Where AI is heading  - and how to prepare for what comes next</p>
+            <h1 className="text-4xl font-bold mb-2">Module 9: Your AI Toolkit</h1>
+            <p className="text-lg text-muted-foreground mb-4">Turn everything you have learned so far into practical judgment, better prompting, and a workflow you can actually use.</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
           {currentSectionIndex === 0 && (
             <ModuleHero
               eyebrow="Module 9"
-              title="Plan for the next wave of AI change"
-              description="Evaluate future scenarios with grounded thinking and identify the skills that will stay valuable as AI evolves."
+              title="Build practical AI judgment, not just tool familiarity"
+              description="This capstone module ties the course together so learners can explain AI clearly, choose the right tools, use major assistants well, spot risks, and design one repeatable workflow."
               imageSrc="/images/modules/module-9.jpg"
-              imageAlt="Future of AI and innovation"
+              imageAlt="Workflow automation and AI integration"
             />
           )}
 
-          {/* 0: Overview */}
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="AI is evolving faster than almost any technology in history. In this final module you will look at where the field is heading: emerging capabilities, the quest for artificial general intelligence, global governance challenges, and the career opportunities this creates for you." />
-              <Card className="p-5 space-y-2">
-                {[
-                  "The current frontiers pushing AI capability forward",
-                  "What AGI is  - and why experts disagree about its timeline",
-                  "How governments are responding to AI with policy and regulation",
-                  "Career paths and opportunities in the AI era",
-                  "How to orient yourself for a rapidly changing technological future",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
-                ))}
+              <TextDisplay
+                variant="callout"
+                content="This module is now a capstone, not just a tools tour. You will revisit the core ideas of the course, apply them to real products like ChatGPT, Claude, and Gemini, and finish by designing a safe no-code workflow."
+              />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">What success looks like here</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Not:</span> memorising a random list of AI products.</p>
+                  <p><span className="font-medium text-foreground">Yes:</span> being able to explain AI simply, choose tools deliberately, write stronger prompts, challenge weak claims, and design one workflow with clear guardrails.</p>
+                </div>
               </Card>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">What you should be able to do by the end</h3>
+                <ul className="space-y-2 text-sm">
+                  {learningOutcomes.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Start Module
+              </Button>
             </div>
           )}
 
-          {/* 1: Current Frontiers */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Current AI Frontiers</h2>
-              <TextDisplay content="The capabilities of AI systems are advancing on multiple fronts simultaneously. Understanding these frontiers helps you anticipate what AI will be able to do in the near future." />
-              <div className="space-y-4">
+              <h2 className="text-3xl font-bold text-brand-orange">Explain AI Clearly</h2>
+              <TextDisplay content="A real sign of understanding is being able to explain AI to someone else without hiding behind jargon. Here is a simple explanation structure you can actually reuse." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">A plain-English explanation of AI</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Artificial intelligence</span> is software trained on large amounts of data so it can recognise patterns and produce useful outputs such as predictions, recommendations, summaries, or generated content.</p>
+                  <p><span className="font-medium text-foreground">Machine learning</span> is the method that lets systems improve from examples instead of being programmed rule by rule.</p>
+                  <p><span className="font-medium text-foreground">Large language models</span> like ChatGPT, Claude, and Gemini are trained on huge text datasets and generate responses by predicting likely next tokens based on the prompt and context.</p>
+                </div>
+              </Card>
+              <div className="grid md:grid-cols-3 gap-4">
                 {[
-                  {
-                    area: "Multimodal AI",
-                    icon: Brain,
-                    description: "AI systems that can process and generate text, images, audio, and video simultaneously  - not as separate models but as unified systems. GPT-4o and Gemini Ultra can see, listen, and respond in real time.",
-                    implications: "Expect AI assistants to become genuine all-purpose interfaces: describe a problem verbally, show it a photo, and get a detailed response. Professional tools will integrate this across design, medicine, and engineering.",
-                  },
-                  {
-                    area: "AI Agents",
-                    icon: Rocket,
-                    description: "AI systems that do not just answer questions but take actions: browse the web, write and execute code, manage files, book appointments, and complete multi-step tasks autonomously.",
-                    implications: "Agentic AI will automate entire workflows that previously required human oversight at each step. The shift from AI as a tool to AI as a collaborator that acts on your behalf.",
-                  },
-                  {
-                    area: "Scientific AI",
-                    icon: Star,
-                    description: "AlphaFold solved the 50-year protein folding problem in 2020. AI is now being used to discover new antibiotics, design novel materials, and accelerate drug development from decades to years.",
-                    implications: "AI is becoming a genuine scientific collaborator  - not just analysing existing data, but generating hypotheses and designing experiments. This will dramatically compress the timeline for major scientific breakthroughs.",
-                  },
-                  {
-                    area: "Reasoning Models",
-                    icon: Brain,
-                    description: "Models like OpenAI o1 and o3, Google Gemini 2.0 Flash Thinking spend time 'thinking through' problems step by step before answering  - dramatically improving performance on complex mathematical and logical tasks.",
-                    implications: "AI moving from pattern-matching to genuine reasoning changes what tasks AI can tackle reliably. Complex analysis, strategic planning, and scientific problem-solving become increasingly AI-accessible.",
-                  },
-                  {
-                    area: "Open-Source & On-Device AI",
-                    icon: Star,
-                    description: "Meta's Llama series, Mistral, and DeepSeek have released models that rival closed commercial AI  - for free. Simultaneously, models are shrinking to run on laptops and phones without an internet connection. Apple Intelligence, Gemini Nano, and Copilot+ PCs all run AI entirely on-device.",
-                    implications: "Frontier AI is being democratised. Smaller companies, researchers in developing countries, and privacy-conscious users can now access powerful AI without depending on API costs or internet connectivity. The concentrated power of the first generation of AI labs is being distributed.",
-                  },
-                ].map(({ area, icon: Icon, description, implications }) => (
-                  <Card key={area} className="p-5">
-                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><Icon className="h-4 w-4" />{area}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{description}</p>
-                    <p className="text-sm"><span className="font-medium text-brand-orange">Implication: </span>{implications}</p>
+                  { title: "What goes in", body: "Training data, prompts, and context. Weak inputs lead to weak outputs." },
+                  { title: "What happens", body: "The model detects patterns and predicts a response based on probability, not human understanding." },
+                  { title: "What comes out", body: "An answer, image, classification, recommendation, or draft that still needs human judgment." },
+                ].map(({ title, body }) => (
+                  <Card key={title} className="p-4">
+                    <p className="font-semibold text-brand-green mb-2">{title}</p>
+                    <p className="text-sm text-muted-foreground">{body}</p>
                   </Card>
                 ))}
               </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-1">Test your understanding  - flip each card</h3>
-                <p className="text-sm text-muted-foreground mb-3">Click each card to reveal what each frontier really means.</p>
-                <FlipCardGrid
-                  cards={[
-                    {
-                      title: "Multimodal AI",
-                      prompt: "What changes when AI can work across text, image, audio, and video together?",
-                      answer: "It becomes a more general interface to real work: you can show, say, and describe the same problem in one flow instead of splitting it across tools.",
-                    },
-                    {
-                      title: "AI agents",
-                      prompt: "What is the real frontier shift with agents?",
-                      answer: "The frontier is moving from AI that answers questions to AI that can execute multi-step workflows on your behalf.",
-                    },
-                    {
-                      title: "Reasoning models",
-                      prompt: "Why do reasoning models matter?",
-                      answer: "They spend more effort working through hard problems step by step, which improves performance on planning, logic, and analysis tasks.",
-                    },
-                    {
-                      title: "On-device AI",
-                      prompt: "Why is local AI important?",
-                      answer: "Running models on-device can improve privacy, reduce latency, and broaden access beyond constant cloud connectivity.",
-                    },
-                  ]}
-                />
-              </div>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">The 30-second teach-back formula</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>1. Start with the job: AI systems recognise patterns and generate outputs.</p>
+                  <p>2. Explain the method: they learn from examples rather than fixed rules alone.</p>
+                  <p>3. Explain the limitation: they can be wrong, biased, or overconfident if data or prompts are weak.</p>
+                  <p>4. Explain the human role: people still choose the task, check the result, and decide what to trust.</p>
+                </div>
+              </Card>
               <QuickCheckCard
-                prompt="Which frontier is most directly about AI taking actions across a workflow instead of only answering once?"
+                prompt="Which explanation of AI is strongest for a beginner audience?"
                 options={[
-                  { id: "a", label: "Open-source models" },
-                  { id: "b", label: "AI agents" },
-                  { id: "c", label: "Image generation" },
-                  { id: "d", label: "Spam filtering" },
+                  { id: "a", label: "AI is basically magic software that knows everything" },
+                  { id: "b", label: "AI is software trained on data to recognise patterns and produce outputs, but humans still need to verify and guide it" },
+                  { id: "c", label: "AI is only one technology and it always uses the same model" },
+                  { id: "d", label: "AI thinks exactly like a human brain, only faster" },
                 ]}
                 correctOptionId="b"
-                explanation="The module frames agents as the frontier where AI moves from one-shot responses into acting across multiple steps toward a goal."
+                explanation="That answer is accurate, plain-English, and includes both capability and limitation."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
             </div>
           )}
 
-          {/* 2: AGI */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">What Is AGI?</h2>
-              <TextDisplay content="AGI  - Artificial General Intelligence  - refers to a hypothetical AI system that can perform any intellectual task that a human can, at human level or beyond. It does not exist yet. But it is the explicit goal of several major AI labs." />
+              <h2 className="text-3xl font-bold text-brand-green">Choose the Right AI Tool</h2>
+              <TextDisplay content="Tool choice should follow the task. Good AI users do not ask 'What tool is trending?' They ask 'What kind of work am I actually trying to do?'" />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                <h3 className="font-semibold mb-4 text-brand-orange">Narrow AI vs. AGI</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-bold mb-2 text-brand-green">Narrow AI (what exists today)</p>
-                    <ul className="space-y-1 text-muted-foreground">
-                      {[
-                        "Excels at specific, well-defined tasks",
-                        "Cannot generalise to tasks outside its training",
-                        "Has no genuine understanding or goals",
-                        "Is a tool  - it does what it is designed to do",
-                        "Examples: ChatGPT, AlphaFold, DALL·E",
-                      ].map((item) => <li key={item} className="flex gap-1"><span className="text-brand-green">*</span>{item}</li>)}
-                    </ul>
+                <h3 className="font-semibold mb-4 text-brand-orange">A practical toolkit map</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    { tool: "ChatGPT", use: "Versatile everyday assistant", note: "Strong for drafting, brainstorming, tutoring, coding help, and general-purpose work." },
+                    { tool: "Claude", use: "Careful analysis and long documents", note: "Often a strong fit for synthesis, tone-sensitive writing, and working through lengthy material." },
+                    { tool: "Gemini", use: "Google ecosystem and multimodal tasks", note: "Useful when your work lives in Google tools or when you want broad multimodal capability." },
+                    { tool: "Perplexity or cited search tools", use: "Research with sources", note: "Best when citations, recency, and evidence matter more than pure drafting." },
+                    { tool: "Zapier, Make, or n8n", use: "Automation and workflows", note: "Best when the real goal is moving information between tools with a trigger and output." },
+                  ].map(({ tool, use, note }) => (
+                    <div key={tool} className="grid gap-1 rounded-lg border bg-background p-3 md:grid-cols-[140px_180px_1fr]">
+                      <p className="font-semibold text-foreground">{tool}</p>
+                      <p className="text-brand-green">{use}</p>
+                      <p className="text-muted-foreground">{note}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><MessageSquare className="h-4 w-4" />When to use a chat assistant</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>Drafting, summarising, brainstorming, tutoring, rewriting, or explaining.</li>
+                    <li>The task can tolerate iteration and human review.</li>
+                    <li>You are still deciding what the answer should look like.</li>
+                  </ul>
+                </Card>
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><Search className="h-4 w-4" />When to use research tools</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>You need recent facts, citations, or independent sources.</li>
+                    <li>You need evidence, not just fluent wording.</li>
+                    <li>You want to verify a claim before repeating it.</li>
+                  </ul>
+                </Card>
+              </div>
+              <div className="space-y-4">
+                {workflowToolGroups.map(({ category, icon: Icon, tools }) => (
+                  <Card key={category} className="p-5">
+                    <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
+                    <div className="space-y-2">
+                      {tools.map(({ name, desc }) => (
+                        <div key={name} className="flex gap-3 text-sm">
+                          <span className="font-medium w-36 flex-shrink-0">{name}</span>
+                          <span className="text-muted-foreground">{desc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <MatchingChallenge
+                title="Tool Selection Match"
+                description="Match the task to the best starting tool or tool category."
+                pairs={[
+                  { id: "sources", left: "Compare current options with citations", right: "Research tool" },
+                  { id: "long-doc", left: "Analyse a long report and rewrite it", right: "General chat assistant" },
+                  { id: "automation", left: "Move data between apps with one AI step", right: "Automation workflow tool" },
+                ]}
+              />
+              <QuickCheckCard
+                prompt="You need an answer you can cite in a meeting this afternoon. What is the best first move?"
+                options={[
+                  { id: "a", label: "Ask any chatbot and trust the first answer" },
+                  { id: "b", label: "Use a research tool or browsing mode that surfaces sources, then verify them" },
+                  { id: "c", label: "Pick the tool with the best marketing" },
+                  { id: "d", label: "Use an image generator to brainstorm" },
+                ]}
+                correctOptionId="b"
+                explanation="When evidence matters, source-backed research is the right tool choice."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
+            </div>
+          )}
+
+          {currentSectionIndex === 3 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Prompt ChatGPT, Claude, and Gemini</h2>
+              <TextDisplay content="The model changes, but the structure of a strong prompt stays mostly the same. Good prompting is about giving the system a clear job, useful context, constraints, and a target format." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">A reliable prompt structure</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Role:</span> who the assistant should act like.</p>
+                  <p><span className="font-medium text-foreground">Task:</span> the exact job to do.</p>
+                  <p><span className="font-medium text-foreground">Context:</span> background, audience, or source material.</p>
+                  <p><span className="font-medium text-foreground">Constraints:</span> length, tone, exclusions, and quality bar.</p>
+                  <p><span className="font-medium text-foreground">Format:</span> bullets, table, email draft, checklist, JSON, and so on.</p>
+                </div>
+              </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-4 text-brand-green">One task, three assistants</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    {
+                      assistant: "ChatGPT",
+                      bestUse: "Fast iteration and drafting",
+                      prompt: "You are an operations assistant. Summarise this 1,200-word meeting transcript into: 1) 5 bullet decisions, 2) 3 open questions, 3) an action list with owners. Keep it concise and businesslike.",
+                    },
+                    {
+                      assistant: "Claude",
+                      bestUse: "Longer documents and careful synthesis",
+                      prompt: "Review the transcript below and produce a structured summary for executives. Separate confirmed decisions from assumptions, highlight unresolved risks, and quote the most important evidence from the text.",
+                    },
+                    {
+                      assistant: "Gemini",
+                      bestUse: "Google-centered and multimodal workflows",
+                      prompt: "Create a summary for a Google Docs follow-up. Use headings for decisions, action items, and blockers. Write so the team can paste it directly into a project update.",
+                    },
+                  ].map(({ assistant, bestUse, prompt }) => (
+                    <Card key={assistant} className="p-4 bg-background">
+                      <div className="flex items-center justify-between gap-3 mb-2">
+                        <p className="font-semibold text-brand-green">{assistant}</p>
+                        <span className="text-xs rounded bg-brand-orange/10 px-2 py-1 text-brand-orange">{bestUse}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{prompt}</p>
+                    </Card>
+                  ))}
+                </div>
+              </Card>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Prompt upgrade example</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium mb-1">Weak prompt</p>
+                    <p className="text-muted-foreground">Summarise this meeting.</p>
                   </div>
-                  <div>
-                    <p className="font-bold mb-2 text-brand-orange">AGI (hypothetical)</p>
-                    <ul className="space-y-1 text-muted-foreground">
-                      {[
-                        "Can learn any task a human can learn",
-                        "Transfers knowledge across domains fluidly",
-                        "Potentially has genuine goals and agency",
-                        "Would represent a fundamentally different kind of AI",
-                        "Timeline: disputed  - years to decades to never",
-                      ].map((item) => <li key={item} className="flex gap-1"><span className="text-brand-orange">*</span>{item}</li>)}
-                    </ul>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-medium mb-1">Stronger prompt</p>
+                    <p className="text-muted-foreground">You are my chief of staff. Summarise this meeting transcript for a busy executive. Return 5 bullets, then a table with action items, owners, and deadlines. Flag any statements that sound uncertain.</p>
                   </div>
                 </div>
               </Card>
-              <div className="space-y-3">
-                <h3 className="text-xl font-bold">What Leading Experts Believe</h3>
+              <DragSortChallenge
+                title="Prompt Builder"
+                description="Put the ingredients of a strong prompt in a sensible order."
+                items={[
+                  "Specify the output format",
+                  "State the exact task",
+                  "Add useful context",
+                  "Set role or perspective",
+                  "Add constraints or quality requirements",
+                ]}
+                correctOrder={[
+                  "Set role or perspective",
+                  "State the exact task",
+                  "Add useful context",
+                  "Add constraints or quality requirements",
+                  "Specify the output format",
+                ]}
+              />
+              <QuickCheckCard
+                prompt="What most improves a prompt when you want better output from any major assistant?"
+                options={[
+                  { id: "a", label: "Using more exclamation marks" },
+                  { id: "b", label: "Giving clearer task details, context, constraints, and target format" },
+                  { id: "c", label: "Switching tools every time the first prompt is weak" },
+                  { id: "d", label: "Keeping the prompt vague so the model can be creative" },
+                ]}
+                correctOptionId="b"
+                explanation="Prompt quality usually matters more than brand choice for everyday tasks."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
+            </div>
+          )}
+
+          {currentSectionIndex === 4 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Bias, Privacy, and Misinformation Checks</h2>
+              <TextDisplay content="Using AI well is not just about getting useful outputs. It is also about knowing when a tool could mislead you, expose sensitive data, or package bias in convincing language." />
+              <div className="grid md:grid-cols-3 gap-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Bias</h3>
+                  <p className="text-sm text-muted-foreground">Ask who might be missing from the data, whose perspective the model favors, and who could be harmed if the output is wrong.</p>
+                </Card>
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Privacy</h3>
+                  <p className="text-sm text-muted-foreground">Do not paste confidential, regulated, or personally sensitive data into general AI tools without approved protections.</p>
+                </Card>
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><Shield className="h-4 w-4" />Misinformation</h3>
+                  <p className="text-sm text-muted-foreground">Treat confident wording as presentation, not proof. Verify claims, especially when they are surprising, urgent, or emotionally charged.</p>
+                </Card>
+              </div>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">A five-question critical thinking filter</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>1. What is the claim, exactly?</p>
+                  <p>2. What evidence supports it, and can I inspect that evidence myself?</p>
+                  <p>3. Could the model be hallucinating, simplifying, or reflecting bias from its training data?</p>
+                  <p>4. Is any sensitive information involved in this task?</p>
+                  <p>5. What is the cost if this answer is wrong and I act on it?</p>
+                </div>
+              </Card>
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Red flags that should slow you down</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {[
+                    "The answer sounds highly confident but gives no source or evidence.",
+                    "The task involves legal, medical, financial, or confidential decisions.",
+                    "The claim is surprising, viral, emotional, or designed to create urgency.",
+                    "The output makes assumptions about people, groups, or intent without support.",
+                    "The workflow depends on fully automated action with no review point.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+              <DragSortChallenge
+                title="Verify Before You Trust"
+                description="Arrange the safest sequence for handling an uncertain AI claim."
+                items={[
+                  "Share or act on the claim",
+                  "Check whether sensitive data or high stakes are involved",
+                  "Find evidence or source material",
+                  "Pause and define the exact claim",
+                  "Decide whether human review is required",
+                ]}
+                correctOrder={[
+                  "Pause and define the exact claim",
+                  "Check whether sensitive data or high stakes are involved",
+                  "Find evidence or source material",
+                  "Decide whether human review is required",
+                  "Share or act on the claim",
+                ]}
+              />
+              <QuickCheckCard
+                prompt="An AI tool gives you a polished answer about a breaking news event, but it provides no sources. What is the best response?"
+                options={[
+                  { id: "a", label: "Treat the polished wording as evidence that it is accurate" },
+                  { id: "b", label: "Use it as a lead, then verify the claim with reliable sources before repeating it" },
+                  { id: "c", label: "Share it quickly before the story changes" },
+                  { id: "d", label: "Paste confidential company context into the tool to get more detail" },
+                ]}
+                correctOptionId="b"
+                explanation="The right habit is to treat unsourced AI output as a draft or lead, not as proof."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
+            </div>
+          )}
+
+          {currentSectionIndex === 5 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Building Simple AI Workflows</h2>
+              <TextDisplay content="Now apply the earlier lessons. A good workflow starts with a real task, uses the right tool for one narrow AI step, and includes a review point if errors would matter." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-4 text-brand-green">The easiest first workflow recipe</h3>
+                <div className="space-y-3 text-sm">
+                  {[
+                    "1. Pick one repeatable task you already do every week.",
+                    "2. Choose a clear trigger such as a new email, saved article, form submission, or scheduled time.",
+                    "3. Add one AI action only: summarise, classify, extract, or draft.",
+                    "4. Send the result somewhere useful: Notion, Slack, email, spreadsheet, CRM.",
+                    "5. Decide whether a human should review before anything is sent externally or acted on.",
+                    "6. Test with real examples for a week before adding complexity.",
+                  ].map((step) => (
+                    <div key={step} className="rounded-lg border bg-background p-3 text-muted-foreground">{step}</div>
+                  ))}
+                </div>
+              </Card>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-4 text-brand-orange">Example Workflow: Auto-summarise a newsletter</h3>
+                <div className="space-y-3">
+                  {[
+                    { step: "Trigger", tool: "Gmail", action: "A new email arrives with the label 'Newsletter'" },
+                    { step: "Action 1", tool: "Zapier AI", action: "Summarise the email into 3 bullet points and 1 key takeaway" },
+                    { step: "Action 2", tool: "Notion", action: "Append the summary to a reading notes database" },
+                    { step: "Review", tool: "You", action: "Skim the output during your next reading block and correct anything weak" },
+                  ].map(({ step, tool, action }) => (
+                    <div key={step} className="flex items-start gap-3">
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <span className="rounded bg-brand-orange px-2 py-0.5 text-xs font-bold text-white">{step}</span>
+                        <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                      </div>
+                      <div className="text-sm">
+                        <span className="font-medium">{tool}:</span> <span className="text-muted-foreground">{action}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">Result: you save time, keep a searchable record, and still retain human quality control.</p>
+              </Card>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  { title: "Content repurposing", desc: "Trigger: new blog post published. AI rewrites it as 5 social posts. Human reviews before publishing." },
+                  { title: "Customer feedback triage", desc: "Trigger: new review arrives. AI classifies sentiment and theme. Team reviews edge cases before escalation." },
+                  { title: "Personal knowledge base", desc: "Trigger: save article to Pocket. AI creates a summary and tags. Output lands in Notion." },
+                  { title: "Meeting follow-up", desc: "Trigger: transcript uploaded. AI extracts decisions and action items. Owner approves before sending." },
+                ].map(({ title, desc }) => (
+                  <Card key={title} className="p-4">
+                    <p className="font-semibold text-brand-green mb-1">{title}</p>
+                    <p className="text-sm text-muted-foreground">{desc}</p>
+                  </Card>
+                ))}
+              </div>
+              <MatchingChallenge
+                title="Workflow Tool Match"
+                description="Match the workflow goal to the best no-code tool category."
+                pairs={[
+                  { id: "automate", left: "Connect apps and trigger actions", right: "Automation workflow tools" },
+                  { id: "app", left: "Create a front-end internal tool", right: "No-code app builder" },
+                  { id: "chatbot", left: "Answer questions from your own content", right: "Custom chatbot builder" },
+                ]}
+              />
+              <QuickCheckCard
+                prompt="What makes a strong first AI workflow?"
+                options={[
+                  { id: "a", label: "A narrow repeatable task with one clear trigger, one AI step, and an output you can evaluate" },
+                  { id: "b", label: "A fully autonomous workflow with no human review anywhere" },
+                  { id: "c", label: "A workflow that depends on many tools before you test it" },
+                  { id: "d", label: "A workflow built around confidential data in public tools" },
+                ]}
+                correctOptionId="a"
+                explanation="Good beginner workflows are small, testable, and safe enough to evaluate quickly."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
+            </div>
+          )}
+
+          {currentSectionIndex === 6 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Your First AI Mini-Project</h2>
+              <TextDisplay variant="callout" content="This project now asks you to combine the whole toolkit: explain the task, choose the tool, write the prompt, check the risks, and map the workflow." />
+              <Card className="p-5 bg-gradient-to-br from-brand-orange/5 to-brand-green/5">
+                <h3 className="font-semibold mb-3">Mini-Project: Design One Safe, Useful Workflow</h3>
+                <p className="text-sm text-muted-foreground mb-4">Answer these prompts as if you had to pitch the workflow to a teammate who is smart but skeptical.</p>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p>1. What repetitive task are you solving, and how would you explain it in plain English?</p>
+                  <p>2. Which tool is the best fit for the job: chat assistant, research tool, or automation platform?</p>
+                  <p>3. What exact prompt or AI instruction will you use?</p>
+                  <p>4. What could go wrong: bias, privacy exposure, hallucination, or misinformation?</p>
+                  <p>5. Where will human review happen before the result is used or shared?</p>
+                  <p>6. What metric will tell you after one week whether the workflow is actually useful?</p>
+                </div>
+              </Card>
+              <FlipCardGrid
+                cards={[
+                  {
+                    title: "Explain",
+                    prompt: "What should you be able to say first?",
+                    answer: "The task, the input, and the output in plain language so another person immediately understands the workflow.",
+                  },
+                  {
+                    title: "Choose",
+                    prompt: "How do you pick the tool?",
+                    answer: "Match the tool to the job: drafting, research, or automation. Do not start from the brand.",
+                  },
+                  {
+                    title: "Protect",
+                    prompt: "What safety question comes before launch?",
+                    answer: "Ask what data is involved, who could be harmed by mistakes, and where a human must review the output.",
+                  },
+                  {
+                    title: "Measure",
+                    prompt: "How do you know it worked?",
+                    answer: "Define one real metric such as time saved, response quality, reduced backlog, or fewer manual steps.",
+                  },
+                ]}
+              />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Three stronger starter project ideas</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Inbox helper:</span> classify incoming emails, draft a reply outline, and hold for human review.</p>
+                  <p><span className="font-medium text-foreground">Reading assistant:</span> summarise saved articles, extract three takeaways, and store them in a searchable notes system.</p>
+                  <p><span className="font-medium text-foreground">Meeting follow-up:</span> turn notes into action items with owners and deadlines, then send for approval before distribution.</p>
+                </div>
+              </Card>
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Capstone checklist</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "I can explain the workflow in plain English",
+                    "I chose the tool because it fits the task",
+                    "My prompt has context, constraints, and a target format",
+                    "I identified the main risk before automating anything",
+                    "There is a human review step if mistakes would matter",
+                    "I know how I will measure whether the workflow helps",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+              <QuickCheckCard
+                prompt="Which mini-project proposal best matches the learning goals of this module?"
+                options={[
+                  { id: "a", label: "A small workflow with a clear task, chosen tool, strong prompt, risk check, and success metric" },
+                  { id: "b", label: "A huge automation with no review process because speed matters most" },
+                  { id: "c", label: "A project driven only by whichever AI app is newest" },
+                  { id: "d", label: "A workflow that starts by pasting confidential data into a public chatbot" },
+                ]}
+                correctOptionId="a"
+                explanation="That option reflects the full capstone skill set, not just tool usage."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
+                Next
+              </Button>
+            </div>
+          )}
+
+          {currentSectionIndex === 7 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Next Steps & Resources</h2>
+              <TextDisplay
+                variant="success"
+                content="You now have a more complete AI toolkit: conceptual understanding, tool selection judgment, stronger prompting habits, safer evaluation habits, and a workflow design process you can reuse. Up next: The Future of AI."
+              />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />What you can now do</h3>
+                <ul className="space-y-2 text-sm">
+                  {learningOutcomes.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold">Your 30-Day AI Challenge</h3>
+                <p className="text-sm text-muted-foreground">Use the next month to turn this module from understanding into habit.</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   {[
-                    {
-                      view: "Near-term AGI optimists",
-                      detail: "Some leaders at frontier labs argue AGI could emerge within a few years as model capabilities compound quickly.",
-                    },
-                    {
-                      view: "Long-horizon realists",
-                      detail: "Many researchers believe current systems are still far from robust general intelligence and estimate decades, not years.",
-                    },
-                    {
-                      view: "Skeptics",
-                      detail: "Some experts question whether AGI, as commonly imagined, is achievable with current paradigms at all.",
-                    },
-                    {
-                      view: "Policy and safety focus",
-                      detail: "Another group argues timeline debates matter less than governance, safety, and responsible deployment of capabilities we already have.",
-                    },
-                  ].map(({ view, detail }) => (
-                    <Card key={view} className="p-4">
-                      <p className="font-semibold text-brand-orange mb-1">{view}</p>
-                      <p className="text-muted-foreground">{detail}</p>
+                    "Week 1: explain one AI concept out loud each day in plain English until it sounds natural.",
+                    "Week 2: run the same task through ChatGPT, Claude, and Gemini, then compare prompt quality and results.",
+                    "Week 3: build one tiny workflow with a trigger, one AI step, one output, and one review point.",
+                    "Week 4: document what worked, where the risks showed up, and what you would trust AI to do next.",
+                  ].map((item) => (
+                    <Card key={item} className="p-4">
+                      <p className="text-muted-foreground">{item}</p>
                     </Card>
                   ))}
                 </div>
               </div>
-              <TextDisplay variant="callout" content="The practical takeaway: you do not need to know if or when AGI will arrive to benefit from AI today. Focus on what AI can do now, not on speculative timelines." />
-              <QuickCheckCard
-                prompt="What is the most practical stance for a learner today given AGI uncertainty?"
-                options={[
-                  { id: "a", label: "Ignore current AI until AGI timelines are settled" },
-                  { id: "b", label: "Focus on useful current capabilities while staying informed about future risks" },
-                  { id: "c", label: "Treat AGI as already achieved" },
-                  { id: "d", label: "Build strategy only on one prediction from one expert" },
-                ]}
-                correctOptionId="b"
-                explanation="The robust strategy is to use present-day AI productively and responsibly while tracking future developments with healthy uncertainty."
-                accentClassName="border-brand-orange/20 bg-brand-orange/5"
-              />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 3: AI Governance */}
-          {currentSectionIndex === 3 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI Governance & Policy</h2>
-              <TextDisplay content="Governments, regulators, and international organisations are racing to create frameworks for AI. The rules being written now will shape how AI is developed and deployed for decades." />
               <div className="space-y-4">
-                {[
-                  {
-                    region: "European Union",
-                    icon: Globe,
-                    summary: "The EU AI Act (2024) is the world's first comprehensive AI law. It classifies AI systems by risk level  - from minimal risk (spam filters) to unacceptable risk (social scoring). High-risk AI in healthcare, hiring, and critical infrastructure faces strict transparency and auditing requirements.",
-                    significance: "Sets a global precedent. Companies worldwide must comply when serving EU users  - similar to GDPR's global impact on data privacy.",
-                  },
-                  {
-                    region: "United States",
-                    icon: Globe,
-                    summary: "The US has taken a lighter-touch, sector-by-sector approach. Biden's 2023 Executive Order on AI set safety requirements for frontier AI developers. The NIST AI Risk Management Framework provides voluntary guidelines. Congress has been slow to pass comprehensive legislation.",
-                    significance: "The US approach prioritises innovation speed over comprehensive regulation  - creating a different risk profile compared to EU-regulated markets.",
-                  },
-                  {
-                    region: "China",
-                    icon: Globe,
-                    summary: "China has enacted specific regulations on generative AI, deep synthesis (deepfakes), and recommendation algorithms. Domestic AI development is heavily state-supported, with restrictions on foreign AI services and requirements for content aligned with 'socialist core values'.",
-                    significance: "China's approach prioritises state control and domestic AI champions  - creating a bifurcated global AI landscape.",
-                  },
-                  {
-                    region: "International Efforts",
-                    icon: Globe,
-                    summary: "The UK's Bletchley Declaration (2023) brought 28 countries together on AI safety. The OECD AI Principles provide a framework adopted by 42 countries. The UN established an AI Advisory Body in 2023. G7 nations issued the Hiroshima AI Process principles.",
-                    significance: "Global coordination is early and fragmented. AI governance remains primarily national  - creating compliance complexity for global AI deployments.",
-                  },
-                ].map(({ region, icon: Icon, summary, significance }) => (
-                  <Card key={region} className="p-5">
-                    <h3 className="font-bold text-brand-green mb-2 flex items-center gap-2"><Icon className="h-4 w-4" />{region}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{summary}</p>
-                    <p className="text-sm"><span className="font-medium text-brand-orange">Significance: </span>{significance}</p>
-                  </Card>
-                ))}
-              </div>
-              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
-                <h3 className="font-semibold mb-3 text-brand-green">What governance means for you in practice</h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Expect more transparency requirements for high-risk AI systems in work contexts.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />If you deploy AI in business, you will likely need clearer documentation and human oversight.</li>
-                  <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Regional differences in rules can affect tool choice, rollout speed, and compliance obligations.</li>
-                </ul>
-              </Card>
-              <QuickCheckCard
-                prompt="Why does AI governance remain complex for global companies?"
-                options={[
-                  { id: "a", label: "Because every major region is converging on identical rules" },
-                  { id: "b", label: "Because AI governance is primarily national and still fragmented" },
-                  { id: "c", label: "Because governance only affects open-source models" },
-                  { id: "d", label: "Because regulation has already fully stabilized" },
-                ]}
-                correctOptionId="b"
-                explanation="The section highlights a fragmented landscape: different countries and regions are regulating AI in different ways, which creates compliance complexity."
-              />
-              <div>
-                <h3 className="text-xl font-semibold mb-1">Match each region to its governance approach</h3>
-                <p className="text-sm text-muted-foreground mb-4">Click a region on the left, then click its matching description on the right.</p>
-                <MatchingChallenge
-                  pairs={[
-                    { left: "European Union", right: "World's first comprehensive AI law classifying systems by risk level" },
-                    { left: "United States", right: "Lighter-touch, sector-by-sector approach prioritising innovation speed" },
-                    { left: "China", right: "State-directed rules with restrictions on foreign AI and content requirements" },
-                    { left: "International Bodies", right: "Early and fragmented coordination via OECD, UN, and G7 frameworks" },
-                  ]}
-                  accentClassName="border-brand-green/20 bg-brand-green/5"
-                />
-              </div>
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 4: AI Careers */}
-          {currentSectionIndex === 4 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">AI Careers & Opportunities</h2>
-              <TextDisplay content="The AI sector is creating a wide range of career opportunities  - from highly technical roles to roles that bridge AI and human expertise. You do not need to be a machine learning engineer to build a career in AI." />
-              <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  {
-                    role: "AI/ML Engineer",
-                    requires: "Strong coding (Python), maths, ML frameworks",
-                    does: "Builds and trains AI models, deploys systems to production",
-                    demand: "Very high",
-                  },
-                  {
-                    role: "AI Product Manager",
-                    requires: "Product experience, AI literacy, user research skills",
-                    does: "Defines what AI products should do and why, bridges technical and business teams",
-                    demand: "Very high",
-                  },
-                  {
-                    role: "Prompt Engineer",
-                    requires: "Writing, analytical thinking, domain expertise",
-                    does: "Designs and optimises prompts for AI systems in specific domains",
-                    demand: "High (evolving role)",
-                  },
-                  {
-                    role: "AI Ethics & Policy",
-                    requires: "Policy, law, philosophy, or social science background",
-                    does: "Ensures AI systems are fair, transparent, and compliant with regulations",
-                    demand: "Growing rapidly",
-                  },
-                  {
-                    role: "Data Scientist",
-                    requires: "Statistics, Python or R, domain expertise",
-                    does: "Analyses data, builds predictive models, surfaces insights for decisions",
-                    demand: "High and stable",
-                  },
-                  {
-                    role: "AI Trainer / RLHF Specialist",
-                    requires: "Domain expertise (law, medicine, finance, etc.), careful attention to detail",
-                    does: "Evaluates AI outputs, provides feedback to improve model quality",
-                    demand: "High, especially with domain expertise",
-                  },
-                  {
-                    role: "AI-Augmented Domain Expert",
-                    requires: "Deep expertise in any field + AI fluency",
-                    does: "Applies AI to accelerate work in their domain  - the most accessible entry point",
-                    demand: "Growing across every industry",
-                  },
-                  {
-                    role: "AI Educator & Communicator",
-                    requires: "AI literacy, teaching or communication skills",
-                    does: "Helps organisations and individuals understand and adopt AI effectively",
-                    demand: "High and underserved",
-                  },
-                ].map(({ role, requires, does, demand }) => (
-                  <Card key={role} className="p-4">
-                    <h4 className="font-bold text-brand-orange mb-2">{role}</h4>
-                    <div className="space-y-1 text-xs text-muted-foreground">
-                      <p><span className="font-medium text-foreground">Requires: </span>{requires}</p>
-                      <p><span className="font-medium text-foreground">Does: </span>{does}</p>
-                      <p><span className="font-medium text-brand-green">Demand: </span>{demand}</p>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-              <TextDisplay variant="callout" content="The most accessible career move for most people: become the most AI-fluent person in your current domain. You do not need to switch careers  - you need to become the bridge between AI capability and your industry's expertise." />
-              <div>
-                <h3 className="text-xl font-semibold mb-1">Match each AI role to its main contribution</h3>
-                <p className="text-sm text-muted-foreground mb-4">Click a role on the left, then click what it does on the right.</p>
-                <DragSortChallenge
-                  items={[
-                    "Identify where AI creates value in your domain",
-                    "Develop deep expertise in your existing field",
-                    "Become the bridge between AI capability and your industry",
-                    "Learn to evaluate AI outputs critically",
-                    "Build AI literacy and hands-on tool skills",
-                  ]}
-                  correctOrder={[
-                    "Develop deep expertise in your existing field",
-                    "Build AI literacy and hands-on tool skills",
-                    "Learn to evaluate AI outputs critically",
-                    "Identify where AI creates value in your domain",
-                    "Become the bridge between AI capability and your industry",
-                  ]}
-                  accentClassName="border-brand-orange/20 bg-brand-orange/5"
-                />
-              </div>
-
-              <QuickCheckCard
-                prompt="What is the most accessible AI career move for most learners right now?"
-                options={[
-                  { id: "a", label: "Switch immediately to advanced model engineering regardless of background" },
-                  { id: "b", label: "Become AI-fluent in your current domain and bridge capability with real-world context" },
-                  { id: "c", label: "Focus only on AI news and avoid hands-on workflows" },
-                  { id: "d", label: "Wait for full AGI before adapting your skill set" },
-                ]}
-                correctOptionId="b"
-                explanation="Exactly. Domain expertise plus practical AI fluency is the strongest near-term leverage path for most people."
-                onAnswered={() => {
-                  markSectionInteractionComplete(4)
-                }}
-                accentClassName="border-brand-green/20 bg-brand-green/5"
-              />
-
-              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the careers checkpoint to unlock the next section.</p> : null}
-
-              <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 5: Your AI Future */}
-          {currentSectionIndex === 5 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Your AI Future</h2>
-              <TextDisplay variant="success" content="You have completed the full Introduction to AI course. You now understand not just where AI is today  - but where it is heading and how to position yourself for what comes next." />
-              <Card className="p-5">
-                <h3 className="font-semibold mb-3 text-brand-green flex items-center gap-2"><CheckCircle2 className="h-4 w-4" />The mindset that matters most</h3>
-                <div className="space-y-3">
+                <h3 className="text-xl font-bold">Curated Resources for Going Deeper</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   {[
                     {
-                      principle: "Stay curious, not anxious",
-                      desc: "The people who will thrive in the AI era are those who approach it with curiosity rather than fear. AI is a tool  - and like every powerful tool in history, it rewards those who learn to use it well.",
+                      category: "Free Courses",
+                      icon: BookOpen,
+                      resources: [
+                        "Google AI Essentials",
+                        "DeepLearning.AI short courses",
+                        "AI for Everyone by Andrew Ng",
+                        "fast.ai for hands-on learners",
+                      ],
                     },
                     {
-                      principle: "Embrace continuous learning",
-                      desc: "AI capabilities are evolving too fast for any course to stay fully current. The skill is not knowing everything about AI  - it is developing the habit of staying current and updating your mental model continuously.",
+                      category: "Critical Reading",
+                      icon: Shield,
+                      resources: [
+                        "Co-Intelligence by Ethan Mollick",
+                        "Atlas of AI by Kate Crawford",
+                        "Human Compatible by Stuart Russell",
+                        "Reliable AI newsletters and fact-checking sources",
+                      ],
                     },
                     {
-                      principle: "Develop judgment, not just skills",
-                      desc: "The rarest and most valuable skill in the AI era is good judgment: knowing when to trust AI, when to override it, and how to deploy it ethically and responsibly. This cannot be automated.",
+                      category: "Stay Current",
+                      icon: Zap,
+                      resources: [
+                        "Ben's Bites",
+                        "The AI Breakdown",
+                        "Simon Willison's blog",
+                        "MIT Technology Review AI coverage",
+                      ],
                     },
                     {
-                      principle: "Stay human",
-                      desc: "What makes you uniquely valuable will not be the tasks AI can do faster  - it will be your relationships, your creativity, your ethical reasoning, and your ability to bring genuine human insight to complex situations.",
+                      category: "If You Want to Build",
+                      icon: Code,
+                      resources: [
+                        "Zapier and Make tutorials",
+                        "n8n templates and docs",
+                        "Bubble academy",
+                        "Hugging Face tutorials if you want to go deeper technically",
+                      ],
                     },
-                  ].map(({ principle, desc }) => (
-                    <div key={principle} className="border-l-2 border-brand-green pl-4">
-                      <p className="font-semibold text-brand-green">{principle}</p>
-                      <p className="text-sm text-muted-foreground">{desc}</p>
-                    </div>
+                  ].map(({ category, icon: Icon, resources }) => (
+                    <Card key={category} className="p-4">
+                      <h4 className="font-bold text-brand-green mb-2 flex items-center gap-1"><Icon className="h-4 w-4" />{category}</h4>
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        {resources.map((resource) => (
+                          <li key={resource} className="flex gap-1"><span className="text-brand-orange">-</span>{resource}</li>
+                        ))}
+                      </ul>
+                    </Card>
                   ))}
                 </div>
-              </Card>
+              </div>
               <Card className="p-6 bg-gradient-to-br from-brand-green/10 to-brand-orange/10 text-center">
-                <h3 className="text-2xl font-bold mb-3">The AI era belongs to the curious.</h3>
-                <p className="text-muted-foreground mb-4">You have built the foundation. Now the real learning begins  - in the real world, with real tools, on real problems.</p>
-                <p className="text-lg font-semibold text-brand-orange">Go explore what is possible.</p>
+                <h3 className="text-2xl font-bold mb-3">You are ready to use AI with judgment.</h3>
+                <p className="text-muted-foreground mb-4">That matters more than knowing the newest product name. Tools will change. The ability to explain, evaluate, prompt, and verify will keep compounding.</p>
+                <p className="text-lg font-semibold text-brand-orange">Now use it deliberately.</p>
               </Card>
               <div className="flex gap-4">
-                <Button
-                  size="lg"
-                  className="bg-brand-green hover:bg-brand-green/90 text-white"
-                  onClick={handleSectionComplete}
-                >
-                  Complete Module 9 ?
+                <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-10")}>
+                  Continue to Module 10
                 </Button>
                 <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
                   Back to Dashboard
@@ -512,33 +725,6 @@ export default function Module9Page() {
               </div>
             </div>
           )}
-
-          {/* 6: Module Quiz */}
-          {currentSectionIndex === 6 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <TextDisplay content="Test your understanding of AI's future trajectory. Choose the best answer for each question." />
-              <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
-              {allQuizComplete && (
-                <div className="space-y-4">
-                  <TextDisplay variant="success" content="Outstanding! You have completed Module 9 and the full course. You now have a solid grounding in AI  - from the fundamentals through to the future. The real learning begins when you go apply it." />
-                  <div className="flex gap-4">
-                    <Button
-                      onClick={handleSectionComplete}
-                      size="lg"
-                      className="bg-brand-green hover:bg-brand-green/90 text-white"
-                    >
-                      Complete Course
-                    </Button>
-                    <Button variant="outline" size="lg" onClick={() => router.push("/course")}>
-                      Back to Dashboard
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
         </main>
       </div>
     </div>

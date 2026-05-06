@@ -1,5 +1,5 @@
 /**
- * MODULE 4: AI TOOLS FOR EVERYDAY LIFE
+ * MODULE 4: DATA AND PREPROCESSING
  */
 
 "use client"
@@ -8,49 +8,17 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, ExternalLink } from "lucide-react"
+import { CheckCircle2, Database } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { moduleQuizData } from "@/lib/module-quiz-data"
-
-type ToolCardProps = {
-  name: string
-  url: string
-  tagline: string
-  strengths: string[]
-  free: boolean
-}
-
-function ToolCard({ name, url, tagline, strengths, free }: ToolCardProps) {
-  return (
-    <Card className="p-4">
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h4 className="font-bold">{name}</h4>
-          <p className="text-sm text-muted-foreground">{tagline}</p>
-        </div>
-        <span className={`text-xs px-2 py-1 rounded-full font-medium ${free ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>
-          {free ? "Free tier" : "Paid"}
-        </span>
-      </div>
-      <ul className="text-sm space-y-1">
-        {strengths.map((strength) => (
-          <li key={strength} className="flex gap-1 items-start">
-            <CheckCircle2 className="h-3 w-3 text-brand-green mt-0.5 flex-shrink-0" />
-            {strength}
-          </li>
-        ))}
-      </ul>
-    </Card>
-  )
-}
 
 export default function Module4Page() {
   const router = useRouter()
@@ -102,18 +70,18 @@ export default function Module4Page() {
         <Sidebar />
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Module 4: AI Tools for Everyday Life</h1>
-            <p className="text-lg text-muted-foreground mb-4">A guided tour of the best AI tools available today</p>
+            <h1 className="text-4xl font-bold mb-2">Module 4: Data and Preprocessing</h1>
+            <p className="text-lg text-muted-foreground mb-4">Understand the fuel that powers every AI system</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
           {currentSectionIndex === 0 && (
             <ModuleHero
               eyebrow="Module 4"
-              title="Turn AI tools into daily practical leverage"
-              description="Use-case first guidance to pick the right tool quickly for writing, research, creativity, and automation."
+              title="Data is the foundation of every AI system"
+              description="Learn what data is, where it comes from, how it gets cleaned, and how preprocessing shapes what AI can learn."
               imageSrc="/images/modules/module-4.jpg"
-              imageAlt="AI tools for creative and productive work"
+              imageAlt="Data pipelines and preprocessing for AI"
             />
           )}
 
@@ -121,383 +89,397 @@ export default function Module4Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="The AI tool landscape is growing fast. This module gives you a map - organised by use case - so you can quickly find the right tool for any task." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-4 text-brand-green">Start with the job, not the brand</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <TextDisplay variant="callout" content="Every AI model is only as good as the data it was trained on. This module gives you a clear picture of what data is, how it is collected and cleaned, and how preprocessing turns raw inputs into something a model can actually learn from." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 flex items-center gap-2"><Database className="h-4 w-4" /> What is in this module</h3>
+                <ul className="space-y-2 text-sm">
                   {[
-                    { job: "Summarise", desc: "Turn long inputs into key points, action items, or highlights." },
-                    { job: "Draft", desc: "Create a first version of an email, report, agenda, or post." },
-                    { job: "Research", desc: "Gather, compare, and synthesize information from multiple sources." },
-                    { job: "Create", desc: "Generate images, music, video, or design concepts." },
-                    { job: "Organise", desc: "Convert messy notes or data into structure, categories, or plans." },
-                    { job: "Automate", desc: "Trigger repeatable actions across tools with minimal manual work." },
-                  ].map(({ job, desc }) => (
-                    <div key={job} className="rounded-lg border bg-background p-3">
-                      <p className="font-semibold text-brand-orange mb-1">{job}</p>
-                      <p className="text-muted-foreground">{desc}</p>
-                    </div>
+                    "What Is Data? - structured, unstructured, and everything in between",
+                    "Data Collection - sources, methods, and what to watch out for",
+                    "Data Cleaning & Quality - why dirty data ruins good models",
+                    "Preprocessing Techniques - normalisation, encoding, splitting",
+                    "Feature Engineering - turning raw data into useful model inputs",
+                    "Module Quiz",
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" />{item}</li>
                   ))}
-                </div>
+                </ul>
               </Card>
-              <Card className="p-5 space-y-2">
-                {["AI writing assistants - ChatGPT, Claude, Gemini","AI image generation - Midjourney, DALL-E, Firefly","AI for productivity - Notion AI, Copilot, Grammarly","AI in creative work - music, video, design","How to choose the right tool","Module Quiz"].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
-                ))}
-              </Card>
+              <QuickCheckCard
+                prompt="What is the main goal of this module?"
+                options={[
+                  { id: "a", label: "Learn to build neural networks from scratch" },
+                  { id: "b", label: "Understand how data is collected, cleaned, and prepared for AI training" },
+                  { id: "c", label: "Memorise database query syntax" },
+                  { id: "d", label: "Install a data pipeline tool" },
+                ]}
+                correctOptionId="b"
+                explanation="This module is about understanding the data lifecycle - from raw collection through to the clean, structured inputs that machine learning models need."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
-          {/* 1: AI Writing */}
+          {/* 1: What Is Data? */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI Writing Assistants</h2>
-              <TextDisplay content="AI writing tools can draft emails, reports, essays, code, social posts, and more. Here are the main players and when to use each." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Which writing job are you trying to do?</h3>
-                <div className="grid md:grid-cols-2 gap-3 text-sm">
-                  {[
-                    "Draft something from scratch",
-                    "Rewrite something to improve tone or clarity",
-                    "Summarise a long document",
-                    "Brainstorm ideas or outlines",
-                  ].map((item) => (
-                    <div key={item} className="rounded-lg border bg-background p-3 text-muted-foreground">{item}</div>
-                  ))}
+              <h2 className="text-3xl font-bold text-brand-orange">What Is Data?</h2>
+              <TextDisplay content="In AI, data is any recorded observation that a model can learn from. It comes in many forms - numbers, text, images, audio, video, and more." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">The Two Main Categories</h3>
+                <div className="space-y-4">
+                  <div className="rounded-lg border p-4 bg-background">
+                    <p className="font-bold text-brand-green mb-1">Structured Data</p>
+                    <p className="text-sm text-muted-foreground mb-2">Organised into rows and columns with a fixed schema. Easy for computers to process directly.</p>
+                    <p className="text-xs font-medium text-foreground">Examples:</p>
+                    <p className="text-xs text-muted-foreground">Spreadsheets, SQL database tables, CSV files, financial records, sensor readings</p>
+                  </div>
+                  <div className="rounded-lg border p-4 bg-background">
+                    <p className="font-bold text-brand-orange mb-1">Unstructured Data</p>
+                    <p className="text-sm text-muted-foreground mb-2">No fixed format or schema. Requires extra processing before a model can use it.</p>
+                    <p className="text-xs font-medium text-foreground">Examples:</p>
+                    <p className="text-xs text-muted-foreground">Emails, social media posts, photos, audio recordings, PDFs, video files</p>
+                  </div>
                 </div>
               </Card>
-              <div className="grid md:grid-cols-2 gap-4">
-                <ToolCard
-                  name="ChatGPT"
-                  url="https://chat.openai.com"
-                  tagline="Most versatile general-purpose assistant"
-                  free={true}
-                  strengths={["Great for long-form writing and brainstorming","Strong code generation","Wide knowledge base","Plugins and GPT-4o multimodal"]}
-                />
-                <ToolCard
-                  name="Claude"
-                  url="https://claude.ai"
-                  tagline="Best for nuanced writing and long documents"
-                  free={true}
-                  strengths={["Extremely long context window","Nuanced, natural tone","Excellent at following complex instructions","Strong ethical guardrails"]}
-                />
-                <ToolCard
-                  name="Gemini"
-                  url="https://gemini.google.com"
-                  tagline="Google's assistant - integrates with your apps"
-                  free={true}
-                  strengths={["Connects to Gmail, Docs, Drive","Real-time web search","Great for research tasks","Strong at multimodal tasks"]}
-                />
-                <ToolCard
-                  name="Grammarly"
-                  url="https://grammarly.com"
-                  tagline="Grammar and writing quality assistant"
-                  free={true}
-                  strengths={["Real-time suggestions in any browser","Tone detection and adjustment","Best for editing, not drafting","Works inside Gmail, Docs, etc."]}
-                />
-              </div>
-              <QuickCheckCard
-                prompt="If your main task is polishing tone and grammar inside apps you already use, which tool in this section is the most direct fit?"
-                options={[
-                  { id: "a", label: "Grammarly" },
-                  { id: "b", label: "Midjourney" },
-                  { id: "c", label: "Stable Diffusion" },
-                  { id: "d", label: "Otter.ai" },
+              <TextDisplay variant="callout" content="Most of the world's data is unstructured. One of the big challenges in AI is turning unstructured data into a form that models can learn from." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Data Types at a Glance</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 pr-4 font-semibold">Type</th>
+                        <th className="text-left py-2 pr-4 font-semibold text-brand-orange">Examples</th>
+                        <th className="text-left py-2 font-semibold text-brand-green">Common AI Use</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-muted-foreground">
+                      {[
+                        { type: "Numerical", examples: "Age, price, temperature", use: "Regression, classification" },
+                        { type: "Categorical", examples: "Colour, job title, country", use: "Classification, grouping" },
+                        { type: "Text", examples: "Reviews, articles, chat logs", use: "NLP, sentiment analysis, LLMs" },
+                        { type: "Image", examples: "Photos, scans, screenshots", use: "Computer vision, generation" },
+                        { type: "Audio", examples: "Speech, music, calls", use: "Speech recognition, generation" },
+                        { type: "Time series", examples: "Stock prices, sensor logs", use: "Forecasting, anomaly detection" },
+                      ].map(({ type, examples, use }) => (
+                        <tr key={type} className="border-b last:border-0">
+                          <td className="py-2 pr-4 font-medium text-foreground">{type}</td>
+                          <td className="py-2 pr-4">{examples}</td>
+                          <td className="py-2">{use}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+              <FlipCardGrid
+                cards={[
+                  { title: "Structured", prompt: "Give an example of structured data.", answer: "A spreadsheet of customer orders with columns for date, product, quantity, and price." },
+                  { title: "Unstructured", prompt: "Give an example of unstructured data.", answer: "A folder of customer support emails in plain text with no consistent format." },
+                  { title: "Why it matters", prompt: "Why does the data type affect the AI approach?", answer: "Different types need different preprocessing steps. Text needs tokenisation; images need pixel normalisation; numbers may need scaling." },
+                  { title: "Semi-structured", prompt: "What is semi-structured data?", answer: "Data that has some structure but not a rigid schema - like JSON, XML, or HTML. It is in between structured and fully unstructured." },
                 ]}
-                correctOptionId="a"
-                explanation="Grammarly is positioned here as the editing and tone-adjustment tool, especially for improving writing inside existing workflows."
+              />
+              <QuickCheckCard
+                prompt="Which of the following is unstructured data?"
+                options={[
+                  { id: "a", label: "A spreadsheet of sales figures" },
+                  { id: "b", label: "A database table of customer records" },
+                  { id: "c", label: "A collection of product review text files" },
+                  { id: "d", label: "A CSV export of sensor readings" },
+                ]}
+                correctOptionId="c"
+                explanation="Text files with no fixed columns or schema are unstructured data. Spreadsheets, database tables, and CSVs are all structured."
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 2: AI Images */}
+          {/* 2: Data Collection */}
           {currentSectionIndex === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">AI Image Generation</h2>
-              <TextDisplay content="AI image generators create photorealistic images, illustrations, concept art, and more from a text description. They have transformed design and creative work." />
-              <div className="grid md:grid-cols-2 gap-4">
-                <ToolCard
-                  name="DALL-E 3"
-                  url="https://openai.com/dall-e-3"
-                  tagline="Built into ChatGPT - easy to use"
-                  free={false}
-                  strengths={["Accessible via ChatGPT Plus","Great at following detailed text descriptions","Strong at photorealistic and artistic styles","No separate account needed"]}
-                />
-                <ToolCard
-                  name="Midjourney"
-                  url="https://midjourney.com"
-                  tagline="Highest quality art and photorealism"
-                  free={false}
-                  strengths={["Widely considered the best aesthetic quality","Excellent for concept art and stylised images","Strong community and style library","Web interface now available"]}
-                />
-                <ToolCard
-                  name="Adobe Firefly"
-                  url="https://firefly.adobe.com"
-                  tagline="Safe for commercial use - built into Creative Cloud"
-                  free={true}
-                  strengths={["Trained on licensed content - commercially safe","Integrated into Photoshop and Illustrator","Generative Fill is incredibly powerful","Good for professional design workflows"]}
-                />
-                <ToolCard
-                  name="Stable Diffusion"
-                  url="https://stability.ai"
-                  tagline="Open-source - run it yourself"
-                  free={true}
-                  strengths={["Free and open source","Highly customisable with community models","Can run locally on your own computer","Large ecosystem of fine-tuned models"]}
-                />
-              </div>
-              <TextDisplay variant="warning" content="Important: Always check the terms of service for AI image tools before using images commercially. Ownership and rights vary significantly between platforms." />
-              <FlipCardGrid
-                cards={[
-                  {
-                    title: "Midjourney",
-                    prompt: "When is Midjourney usually the right fit?",
-                    answer: "Use it when you want striking, stylized visuals quickly and are comfortable working through Discord-based prompting.",
-                  },
-                  {
-                    title: "Adobe Firefly",
-                    prompt: "When is Firefly the safer choice?",
-                    answer: "It is a strong fit when you care about commercial workflow compatibility and tight integration with Adobe creative tools.",
-                  },
-                  {
-                    title: "Stable Diffusion",
-                    prompt: "Why would someone choose Stable Diffusion?",
-                    answer: "It offers the most flexibility for customization, local control, and community models if you are willing to manage more setup.",
-                  },
-                  {
-                    title: "Usage rights",
-                    prompt: "Why should rights be part of tool selection?",
-                    answer: "Because a good-looking result is not enough if the platform's terms or licensing rules make the image risky for commercial use.",
-                  },
-                ]}
-              />
+              <h2 className="text-3xl font-bold text-brand-green">Data Collection</h2>
+              <TextDisplay content="Before a model can be trained, someone has to gather the data. Where data comes from - and how it is collected - has a huge effect on what a model can and cannot learn." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-4 text-brand-green">Common Data Sources</h3>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  {[
+                    { source: "Internal systems", desc: "Databases, CRMs, logs, transaction records from within an organisation." },
+                    { source: "Web scraping", desc: "Automated extraction of text, images, or structured data from public websites." },
+                    { source: "APIs", desc: "Structured data feeds from services like Twitter, weather APIs, or financial data providers." },
+                    { source: "Human labelling", desc: "Crowdsourced or expert annotation - humans manually label images, transcribe audio, or tag text." },
+                    { source: "Surveys & forms", desc: "Direct input from users - structured but subject to self-reporting bias." },
+                    { source: "Sensors & IoT", desc: "Real-time streams from physical devices: cameras, microphones, temperature sensors." },
+                  ].map(({ source, desc }) => (
+                    <div key={source} className="rounded-lg border bg-background p-3">
+                      <p className="font-semibold text-brand-orange mb-1">{source}</p>
+                      <p className="text-muted-foreground">{desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <TextDisplay variant="warning" content="Data collection is where bias often enters the pipeline. If you only collect data from one demographic, geography, or time period, the model will reflect those gaps." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Key Questions When Collecting Data</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Is it representative?</span> Does the data cover the full range of situations the model will encounter in the real world?</p>
+                  <p><span className="font-medium text-foreground">Is it labelled correctly?</span> For supervised learning, labels need to be accurate. Mislabelled data teaches the model the wrong patterns.</p>
+                  <p><span className="font-medium text-foreground">Is it legal and ethical?</span> Personal data must be collected with consent and handled according to privacy laws like GDPR.</p>
+                  <p><span className="font-medium text-foreground">Is it fresh enough?</span> Stale data can produce models that are accurate for the past but miss current trends.</p>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">The labelling bottleneck</h3>
+                <p className="text-sm text-muted-foreground mb-3">Supervised learning requires labelled data - and labelling is expensive. A few approaches to deal with this:</p>
+                <div className="space-y-2 text-sm">
+                  {[
+                    { approach: "Active learning", detail: "The model identifies which unlabelled examples would be most useful to label, reducing annotation cost." },
+                    { approach: "Semi-supervised learning", detail: "Train on a small labelled set and a large unlabelled set together, letting the model infer patterns from both." },
+                    { approach: "Synthetic data", detail: "Generate artificial training examples using simulation or generative models when real data is scarce." },
+                    { approach: "Transfer learning", detail: "Start from a model pre-trained on a large dataset and fine-tune with a smaller labelled set." },
+                  ].map(({ approach, detail }) => (
+                    <div key={approach} className="flex gap-3 border-b pb-2 last:border-0">
+                      <span className="font-medium w-44 flex-shrink-0 text-brand-orange">{approach}</span>
+                      <span className="text-muted-foreground">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
               <QuickCheckCard
-                prompt="If you need commercially safer image generation inside an existing Adobe workflow, which tool is the best match from this section?"
+                prompt="Why does the source of training data matter so much?"
                 options={[
-                  { id: "a", label: "Adobe Firefly" },
-                  { id: "b", label: "Midjourney" },
-                  { id: "c", label: "Stable Diffusion with random community models" },
-                  { id: "d", label: "Any tool, because rights never matter" },
+                  { id: "a", label: "It only affects the storage cost of the dataset" },
+                  { id: "b", label: "Biases and gaps in the source data get encoded into the model's learned patterns" },
+                  { id: "c", label: "It only matters for image data, not text" },
+                  { id: "d", label: "The model automatically corrects for data source problems" },
                 ]}
-                correctOptionId="a"
-                explanation="The section positions Firefly as the strongest fit for commercially safer creative workflows tied to Adobe tools."
+                correctOptionId="b"
+                explanation="Models learn from the patterns in their training data. If the data over-represents certain groups or periods, the model inherits those biases."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 3: AI Productivity */}
+          {/* 3: Data Cleaning */}
           {currentSectionIndex === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI for Productivity</h2>
-              <TextDisplay content="AI productivity tools are embedded into the apps you already use - transforming how you write, organise, and get things done." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-3 text-brand-green">A beginner-friendly capability map</h3>
-                <div className="grid md:grid-cols-2 gap-3 text-sm">
+              <h2 className="text-3xl font-bold text-brand-orange">Data Cleaning & Quality</h2>
+              <TextDisplay content="Raw data is almost never ready to use. It contains errors, duplicates, missing values, and inconsistencies. Data cleaning is the process of finding and fixing these problems before training begins." />
+              <TextDisplay variant="callout" content="A common saying in data science: 'garbage in, garbage out.' A model trained on dirty data will produce dirty predictions - no matter how sophisticated the algorithm." />
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3 text-brand-green">Common Data Quality Problems</h3>
+                <div className="space-y-3">
                   {[
-                    { label: "Summarising", example: "Meeting transcripts, articles, long emails" },
-                    { label: "Drafting", example: "Replies, memos, proposals, slide outlines" },
-                    { label: "Researching", example: "Compare options, gather sources, build briefings" },
-                    { label: "Organising", example: "Turn notes into checklists, tables, categories" },
-                  ].map(({ label, example }) => (
-                    <div key={label} className="rounded-lg border bg-background p-3">
-                      <p className="font-semibold text-brand-orange mb-1">{label}</p>
-                      <p className="text-muted-foreground">{example}</p>
-                    </div>
+                    { problem: "Missing values", desc: "Fields left blank or recorded as null. A customer's age field may be empty because they declined to share it.", fix: "Fill with a mean/median, mark as unknown, or remove rows depending on how critical the field is." },
+                    { problem: "Duplicates", desc: "The same record appears multiple times. Common when merging data from different systems.", fix: "De-duplicate by matching on unique identifiers or combinations of fields." },
+                    { problem: "Inconsistent formatting", desc: "Dates recorded as '2024-01-15' in one system and '15/01/24' in another.", fix: "Standardise all values to a single canonical format before training." },
+                    { problem: "Outliers", desc: "Extreme values that may be errors (an age of 999) or genuine but rare events.", fix: "Investigate the cause. Remove clear errors; keep genuine outliers but consider robust scaling." },
+                    { problem: "Incorrect labels", desc: "A photo of a cat labelled as a dog. Common in large-scale human annotation tasks.", fix: "Audit a sample of labels, use inter-annotator agreement checks, or re-label flagged examples." },
+                  ].map(({ problem, desc, fix }) => (
+                    <Card key={problem} className="p-4">
+                      <p className="font-bold text-brand-orange mb-1">{problem}</p>
+                      <p className="text-sm text-muted-foreground mb-2">{desc}</p>
+                      <p className="text-xs"><span className="font-medium text-brand-green">Common fix:</span> <span className="text-muted-foreground">{fix}</span></p>
+                    </Card>
                   ))}
                 </div>
               </Card>
-              <div className="space-y-4">
-                {[
-                  { category: "Meeting & Notes", tools: [
-                    { name: "Otter.ai", desc: "Real-time meeting transcription and AI summaries" },
-                    { name: "Fireflies.ai", desc: "Records, transcribes, and summarises calls automatically" },
-                    { name: "Notion AI", desc: "AI writing and summarisation built into your Notion workspace" },
-                  ]},
-                  { category: "Office & Docs", tools: [
-                    { name: "Microsoft Copilot", desc: "AI in Word, Excel, PowerPoint, Teams, Outlook - summarise emails, draft documents, analyse data" },
-                    { name: "Google Duet AI", desc: "AI in Google Docs, Sheets, Slides, Gmail - same concept as Copilot for Google Workspace users" },
-                  ]},
-                  { category: "Research & Browsing", tools: [
-                    { name: "Perplexity AI", desc: "AI search engine that cites sources - great for research" },
-                    { name: "ChatGPT + Browse", desc: "Real-time web browsing with source citations" },
-                    { name: "Elicit", desc: "AI research tool that searches academic papers" },
-                  ]},
-                  { category: "Coding", tools: [
-                    { name: "GitHub Copilot", desc: "AI code completion and generation inside VS Code and other editors" },
-                    { name: "Cursor", desc: "AI-first code editor built around an LLM" },
-                    { name: "ChatGPT", desc: "Excellent for explaining code, debugging, and writing scripts" },
-                  ]},
-                ].map(({ category, tools }) => (
-                  <Card key={category} className="p-4">
-                    <h3 className="font-bold text-brand-green mb-3">{category}</h3>
-                    <div className="space-y-2">
-                      {tools.map(({ name, desc }) => (
-                        <div key={name} className="flex gap-3 text-sm">
-                          <span className="font-medium w-36 flex-shrink-0">{name}</span>
-                          <span className="text-muted-foreground">{desc}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                ))}
-              </div>
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Good first uses at work</h3>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A practical cleaning checklist</h3>
                 <ul className="space-y-2 text-sm">
                   {[
-                    "Summarise a meeting transcript into decisions and action items",
-                    "Turn bullet notes into a polished status update",
-                    "Research a topic and return cited pros, cons, and recommendations",
-                    "Organise survey responses or customer feedback into categories",
+                    "Check for and handle missing values in every column",
+                    "Remove or merge exact duplicates",
+                    "Standardise date, currency, and text formats",
+                    "Investigate and decide on outlier treatment",
+                    "Verify that labels or target values are correct on a sample",
+                    "Check that class distributions are balanced enough for the task",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
                   ))}
                 </ul>
               </Card>
-              <DragSortChallenge
-                title="Workflow Conveyor"
-                description="Drag tasks into a practical beginner sequence from safest to more advanced usage."
-                items={[
-                  "Automate multi-step workflows across tools",
-                  "Summarise meetings into action items",
-                  "Run cited research comparisons",
-                  "Draft and edit status updates",
+              <MatchingChallenge
+                title="Problem to Fix"
+                description="Match each data quality problem to its most common resolution."
+                pairs={[
+                  { id: "missing", left: "Missing values in a numeric column", right: "Fill with mean or median, or mark as unknown" },
+                  { id: "dup", left: "Duplicate records from a system merge", right: "De-duplicate using unique identifiers" },
+                  { id: "outlier", left: "An age value of 999 in survey data", right: "Investigate and remove if it is a clear entry error" },
                 ]}
-                correctOrder={[
-                  "Summarise meetings into action items",
-                  "Draft and edit status updates",
-                  "Run cited research comparisons",
-                  "Automate multi-step workflows across tools",
+              />
+              <QuickCheckCard
+                prompt="What does 'garbage in, garbage out' mean in the context of AI?"
+                options={[
+                  { id: "a", label: "The model produces too much output text" },
+                  { id: "b", label: "Poor-quality training data leads to poor-quality model predictions" },
+                  { id: "c", label: "The model needs to be retrained every time new data arrives" },
+                  { id: "d", label: "Garbage collection is a programming technique unrelated to AI" },
                 ]}
+                correctOptionId="b"
+                explanation="Models learn the patterns in their training data. If that data has errors, gaps, or biases, the model's predictions will reflect those flaws."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 4: AI Creative */}
+          {/* 4: Preprocessing Techniques */}
           {currentSectionIndex === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">AI in Creative Work</h2>
-              <TextDisplay content="AI has entered every creative field. Here is a quick tour of what is possible today:" />
-              <div className="grid md:grid-cols-2 gap-4">
+              <h2 className="text-3xl font-bold text-brand-green">Preprocessing Techniques</h2>
+              <TextDisplay content="Once data is clean, it usually needs to be transformed before a model can use it. Different types of data require different preprocessing steps." />
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Why preprocessing matters</h3>
+                <p className="text-sm text-muted-foreground">Machine learning algorithms typically work with numbers. Raw data - especially text, images, and categories - needs to be converted and scaled so that all inputs are on comparable terms. Without this, one large-valued feature can dominate the model unfairly.</p>
+              </Card>
+              <div className="space-y-4">
                 {[
-                  { field: "Music", tools: "Suno, Udio, Stable Audio", desc: "Generate full songs in any style from a text prompt. Suno can produce a complete song - lyrics, melody, vocals - in seconds." },
-                  { field: "Video", tools: "Sora (OpenAI), RunwayML, Pika", desc: "Generate video clips from text descriptions. Sora produces cinematic quality video. RunwayML is used by professional filmmakers." },
-                  { field: "Design / UI", tools: "Uizard, Framer AI, Locofy", desc: "Generate UI mockups, websites, and app screens from text descriptions or rough sketches." },
-                  { field: "Voice / Audio", tools: "ElevenLabs, Murf, Adobe Enhance", desc: "Clone voices, create realistic AI narration, clean up audio recordings, generate sound effects." },
-                  { field: "3D & Animation", tools: "Luma AI, Meshy, Spline AI", desc: "Generate 3D models and scenes from images or text. Create animations with AI motion generation." },
-                  { field: "Writing", tools: "Sudowrite, NovelAI, Jasper", desc: "Specialised writing assistants for fiction, marketing copy, and long-form content with style control." },
-                ].map(({ field, tools, desc }) => (
-                  <Card key={field} className="p-4">
-                    <h4 className="font-bold text-brand-orange">{field}</h4>
-                    <p className="text-xs text-muted-foreground mb-1 font-mono">{tools}</p>
-                    <p className="text-sm">{desc}</p>
+                  {
+                    technique: "Normalisation / Scaling",
+                    when: "Numerical features with very different ranges",
+                    howItWorks: "Rescales values to a standard range (e.g. 0?? or mean=0, std=1) so no feature dominates due to its scale.",
+                    example: "House prices (100,000??,000,000) and number of bedrooms (1??) are rescaled together before training.",
+                  },
+                  {
+                    technique: "One-hot encoding",
+                    when: "Categorical text labels that have no natural order",
+                    howItWorks: "Converts each category into a separate binary column (1 or 0).",
+                    example: "A 'colour' column with red/green/blue becomes three columns: is_red, is_green, is_blue.",
+                  },
+                  {
+                    technique: "Tokenisation",
+                    when: "Text data",
+                    howItWorks: "Splits text into smaller units (tokens: words, subwords, or characters) that can be mapped to numerical IDs.",
+                    example: "The sentence 'AI is useful' becomes token IDs [42, 8, 201] that the model processes.",
+                  },
+                  {
+                    technique: "Train / Validation / Test Split",
+                    when: "Every supervised learning project",
+                    howItWorks: "Divides data into a training set (to learn from), a validation set (to tune the model), and a test set (for final evaluation only).",
+                    example: "A common split: 70% train, 15% validation, 15% test. The test set is held out until the very end.",
+                  },
+                  {
+                    technique: "Data augmentation",
+                    when: "Image or audio data with limited training examples",
+                    howItWorks: "Creates new training examples by applying transformations: flipping images, adjusting brightness, adding background noise.",
+                    example: "A dataset of 1,000 chest X-rays is expanded to 5,000 by rotating and flipping each image.",
+                  },
+                ].map(({ technique, when, howItWorks, example }) => (
+                  <Card key={technique} className="p-4">
+                    <p className="font-bold text-brand-green mb-1">{technique}</p>
+                    <div className="space-y-1 text-sm">
+                      <p><span className="font-medium">When to use:</span> <span className="text-muted-foreground">{when}</span></p>
+                      <p><span className="font-medium">How it works:</span> <span className="text-muted-foreground">{howItWorks}</span></p>
+                      <p><span className="font-medium">Example:</span> <span className="text-muted-foreground">{example}</span></p>
+                    </div>
                   </Card>
                 ))}
               </div>
-              <TextDisplay variant="callout" content="The creative AI space is moving extremely fast. A tool that is state-of-the-art today may be superseded in months. Focus on learning the principles - the tools change, but the skill of knowing what to ask for, and how to evaluate outputs, stays valuable." />
+              <TextDisplay variant="callout" content="The train/validation/test split is one of the most important ideas in machine learning. Using the test set too early leads to overfitting to test data - the model appears better than it really is." />
               <QuickCheckCard
-                prompt="If you want to generate short cinematic video clips from text prompts, which category of tool is the best fit from this section?"
+                prompt="What is the purpose of the test set in a train/validation/test split?"
                 options={[
-                  { id: "a", label: "Video tools like Sora or RunwayML" },
-                  { id: "b", label: "Voice tools like ElevenLabs" },
-                  { id: "c", label: "UI tools like Uizard" },
-                  { id: "d", label: "Writing tools like Jasper" },
+                  { id: "a", label: "It is used to train the model alongside the training set" },
+                  { id: "b", label: "It is used to tune hyperparameters during development" },
+                  { id: "c", label: "It is held out for a final unbiased evaluation of the trained model" },
+                  { id: "d", label: "It is discarded after data cleaning" },
                 ]}
-                correctOptionId="a"
-                explanation="The video category is the direct fit for text-to-video generation. The section names Sora and RunwayML specifically for that use case."
+                correctOptionId="c"
+                explanation="The test set is kept completely separate until final evaluation. Using it earlier would cause you to overfit your model to those examples."
                 accentClassName="border-brand-orange/20 bg-brand-orange/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 5: Choosing Tools */}
+          {/* 5: Feature Engineering */}
           {currentSectionIndex === 5 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Choosing the Right Tool</h2>
-              <TextDisplay content="With hundreds of AI tools available, how do you decide which to use? Use this simple framework:" />
+              <h2 className="text-3xl font-bold text-brand-orange">Feature Engineering</h2>
+              <TextDisplay content="Feature engineering is the process of creating new input variables - called features - from raw data to help a model learn better patterns. It is one of the most impactful skills in applied machine learning." />
+              <TextDisplay variant="callout" content="'Coming up with features is difficult, time-consuming, and requires expert knowledge. Applied machine learning is basically feature engineering.' ??Andrew Ng" />
               <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-3 text-brand-green">The decision order that keeps beginners out of trouble</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">1. Define the job:</span> summarise, draft, research, create, organise, or automate.</p>
-                  <p><span className="font-medium text-foreground">2. Check the data:</span> if it is sensitive, stop and check policy before pasting it anywhere.</p>
-                  <p><span className="font-medium text-foreground">3. Choose the lightest tool that fits:</span> use a simple assistant before adopting a full workflow or platform.</p>
-                  <p><span className="font-medium text-foreground">4. Verify the output:</span> especially facts, numbers, citations, or anything going to a client or boss.</p>
+                <h3 className="font-semibold mb-3 text-brand-green">Why raw data is often not enough</h3>
+                <p className="text-sm text-muted-foreground mb-3">Raw data captures what happened. Feature engineering helps a model understand why and how. Consider a dataset of house sales:</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 pr-4 font-semibold text-brand-orange">Raw feature</th>
+                        <th className="text-left py-2 font-semibold text-brand-green">Engineered feature</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-muted-foreground">
+                      {[
+                        { raw: "Date of sale", eng: "Month of year (captures seasonality)" },
+                        { raw: "Listing date + sale date", eng: "Days on market (signals demand)" },
+                        { raw: "Total rooms + floor area", eng: "Area per room (captures density)" },
+                        { raw: "Postcode", eng: "Distance to nearest school (captures desirability)" },
+                      ].map(({ raw, eng }) => (
+                        <tr key={raw} className="border-b last:border-0">
+                          <td className="py-2 pr-4">{raw}</td>
+                          <td className="py-2">{eng}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </Card>
-              
               <Card className="p-5">
-                <h3 className="font-semibold mb-3">5 Questions Before Choosing an AI Tool</h3>
-                <ol className="space-y-2 text-sm list-decimal list-inside">
+                <h3 className="font-semibold mb-3 text-brand-orange">Common Feature Engineering Techniques</h3>
+                <div className="space-y-3 text-sm">
                   {[
-                    "What exactly is the task? Be specific - different tools excel at different things.",
-                    "Does it need to be free? If yes, filter your options accordingly.",
-                    "Does it need internet access? Tools like Perplexity are better for current information.",
-                    "How sensitive is the data? Avoid putting private company data into external AI tools without checking privacy policies.",
-                    "Do I need to keep the output? Some tools do not allow commercial use or have restrictions on generated content.",
-                  ].map((q, i) => <li key={i} className="text-muted-foreground">{q}</li>)}
-                </ol>
+                    { name: "Binning", desc: "Convert a continuous number into discrete buckets. Age 0-17 = 'minor', 18-64 = 'adult', 65+ = 'senior'." },
+                    { name: "Interaction features", desc: "Multiply or combine two features to capture their relationship. Height × Width = Area." },
+                    { name: "Log transformation", desc: "Apply log() to skewed numerical columns (e.g. income, house price) to make the distribution more normal." },
+                    { name: "Date/time decomposition", desc: "Extract day of week, month, quarter, is_weekend from a timestamp field." },
+                    { name: "Text-derived features", desc: "Word count, sentiment score, or keyword presence extracted from a raw text column." },
+                    { name: "Lag features", desc: "Use past values as features. 'Sales last week' predicts 'sales this week' in time-series models." },
+                  ].map(({ name, desc }) => (
+                    <div key={name} className="flex gap-3 border-b pb-2 last:border-0">
+                      <span className="font-medium w-44 flex-shrink-0 text-brand-green">{name}</span>
+                      <span className="text-muted-foreground">{desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Feature selection vs. feature engineering</h3>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-orange mb-1">Feature engineering</p>
+                    <p className="text-muted-foreground">Creating new features from raw data. You are adding information the model did not have before.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-brand-orange mb-1">Feature selection</p>
+                    <p className="text-muted-foreground">Choosing which features to keep and which to drop. Too many irrelevant features can hurt model performance.</p>
+                  </div>
+                </div>
               </Card>
               <FlipCardGrid
                 cards={[
-                  {
-                    title: "Use AI",
-                    prompt: "You need a first draft of a project update from your own notes.",
-                    answer: "Yes. This is a strong use case: low risk, easy to review, and time-saving.",
-                  },
-                  {
-                    title: "Be careful",
-                    prompt: "You want AI to summarize internal strategy notes with confidential details.",
-                    answer: "Only if your approved tools and company policy allow it. Sensitivity matters before convenience.",
-                  },
-                  {
-                    title: "Do not rely blindly",
-                    prompt: "You want AI to make the final legal or medical decision for you.",
-                    answer: "No. AI can support research or drafting, but high-stakes judgment still needs expert human review.",
-                  },
-                  {
-                    title: "Best first step",
-                    prompt: "You are unsure which tool to try first.",
-                    answer: "Start by naming the job to be done. Once you know the task clearly, tool selection becomes much easier.",
-                  },
-                ]}
-              />
-              <MatchingChallenge
-                title="Tool Selection Match"
-                description="Match the situation to the best first decision."
-                pairs={[
-                  {
-                    id: "sensitive",
-                    left: "Input contains confidential strategy",
-                    right: "Check approved tools and privacy policy before use",
-                  },
-                  {
-                    id: "unknown",
-                    left: "You do not know where to start",
-                    right: "Define the exact job-to-be-done first",
-                  },
-                  {
-                    id: "output",
-                    left: "Output is going to leadership",
-                    right: "Verify facts, numbers, and claims before sending",
-                  },
+                  { title: "Binning", prompt: "When is binning useful?", answer: "When the exact value matters less than the range. Converting exact age to age group simplifies patterns the model needs to learn." },
+                  { title: "Log transform", prompt: "Why apply a log to income data?", answer: "Income distributions are often heavily right-skewed. Log transform compresses the tail and makes the distribution more normal, which helps many algorithms." },
+                  { title: "Lag features", prompt: "When would you use a lag feature?", answer: "In time-series problems. Yesterday's temperature helps predict today's; last month's sales helps predict this month's." },
+                  { title: "Feature leakage", prompt: "What is feature leakage and why is it a problem?", answer: "Leakage happens when a feature contains information from the future or the target variable. The model seems accurate in testing but fails in production." },
                 ]}
               />
               <QuickCheckCard
-                prompt="What is the best beginner sequence for choosing an AI tool?"
+                prompt="What best describes feature engineering?"
                 options={[
-                  { id: "a", label: "Pick the newest brand, then look for a task" },
-                  { id: "b", label: "Define the task, check the data sensitivity, choose the simplest suitable tool, then verify the output" },
-                  { id: "c", label: "Always use the most advanced tool available" },
-                  { id: "d", label: "Start with automation before trying any simple use case" },
+                  { id: "a", label: "Deleting irrelevant columns from a dataset" },
+                  { id: "b", label: "Creating new informative input variables from raw data" },
+                  { id: "c", label: "Choosing which model architecture to use" },
+                  { id: "d", label: "Scaling numerical values to the same range" },
                 ]}
                 correctOptionId="b"
-                explanation="Good tool selection starts with the job, then privacy and risk, then the simplest tool that fits, followed by output verification."
-                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                explanation="Feature engineering means creating new features - transforming or combining raw data into variables that better represent the underlying patterns the model should learn."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
               />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
@@ -507,10 +489,19 @@ export default function Module4Page() {
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Before you start, sanity-check these ideas</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Data types:</span> structured vs. unstructured; numerical, categorical, text, image, time series.</p>
+                  <p><span className="font-medium text-foreground">Data quality:</span> missing values, duplicates, inconsistencies, and incorrect labels all hurt model performance.</p>
+                  <p><span className="font-medium text-foreground">Preprocessing:</span> normalisation, encoding, tokenisation, and train/test splitting prepare data for training.</p>
+                  <p><span className="font-medium text-foreground">Feature engineering:</span> creating new input variables from raw data to help the model find better patterns.</p>
+                </div>
+              </Card>
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Well done! You now have a solid map of the AI tool landscape. Next: we tackle the harder questions - AI ethics, bias, and how to be a responsible AI user." />
+                  <TextDisplay variant="success" content="Well done! You now understand how data is collected, cleaned, preprocessed, and engineered for AI. Next: AI Ethics, Safety & Society." />
                   <div className="flex gap-4">
                     <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-5")}>
                       Continue to Module 5
@@ -527,4 +518,5 @@ export default function Module4Page() {
     </div>
   )
 }
+
 

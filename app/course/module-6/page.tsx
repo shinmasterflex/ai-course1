@@ -1,5 +1,5 @@
-﻿/**
- * MODULE 6: AI FOR BUSINESS & WORK
+/**
+ * MODULE 6: AI ETHICS, SAFETY & SOCIETY
  */
 
 "use client"
@@ -8,14 +8,14 @@ import { useState, useEffect, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
-import { DragSortChallenge, FlipCardGrid, MatchingChallenge, QuickCheckCard } from "@/components/learning/lesson-interactions"
+import { FlipCardGrid, QuickCheckCard, MatchingChallenge, DragSortChallenge } from "@/components/learning/lesson-interactions"
 import { TextDisplay } from "@/components/learning/text-display"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { ModuleHero } from "@/components/learning/module-hero"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, Briefcase, TrendingUp, Users, ArrowRight } from "lucide-react"
+import { CheckCircle2, AlertTriangle, Shield } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { useSectionInteractionGate } from "@/hooks/use-section-interaction-gate"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
@@ -28,13 +28,14 @@ export default function Module6Page() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
   const MODULE_ID = "module-6"
-  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
-  const questions = moduleQuizData[MODULE_ID]
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((m) => m.id === MODULE_ID)
   const sections = module?.sections || []
   const totalSections = sections.length
   const completedSectionIds = getCompletedSections(MODULE_ID)
+
+  const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz(MODULE_ID, ["quiz1", "quiz2", "quiz3"])
+  const questions = moduleQuizData[MODULE_ID]
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
 
@@ -45,9 +46,16 @@ export default function Module6Page() {
     }
   }, [sectionParam])
 
+  useEffect(() => {
+    if (allQuizComplete && currentSectionIndex === totalSections - 1) {
+      const last = sections[totalSections - 1]
+      if (last) { markSectionComplete(MODULE_ID, last.id); setCurrentPosition(MODULE_ID, last.id) }
+    }
+  }, [allQuizComplete])
+
   const { canAdvance, markSectionInteractionComplete } = useSectionInteractionGate({
     currentSectionIndex,
-    requiredSections: [4],
+    requiredSections: [5],
   })
 
   const handleSectionComplete = () => {
@@ -72,18 +80,18 @@ export default function Module6Page() {
         <Sidebar />
         <main className="flex-1 p-8 max-w-4xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Module 6: AI for Business & Work</h1>
-            <p className="text-lg text-muted-foreground mb-4">How AI is transforming the workplace  - and how to stay ahead</p>
+            <h1 className="text-4xl font-bold mb-2">Module 6: AI Ethics, Safety & Society</h1>
+            <p className="text-lg text-muted-foreground mb-4">Become an informed, responsible AI user</p>
             <ProgressBar current={completedSectionIds.length} total={totalSections} label="Module Progress" />
           </div>
 
           {currentSectionIndex === 0 && (
             <ModuleHero
               eyebrow="Module 6"
-              title="Translate AI trends into career advantage"
-              description="Understand where AI creates value at work and shape a personal strategy for skills, impact, and adaptability."
+              title="Use AI responsibly and safely"
+              description="Build a practical safety framework for privacy, bias, verification, and human oversight in real-world usage."
               imageSrc="/images/modules/module-6.jpg"
-              imageAlt="Professional business and AI technology"
+              imageAlt="Ethical technology and responsible AI"
             />
           )}
 
@@ -91,457 +99,393 @@ export default function Module6Page() {
           {currentSectionIndex === 0 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Overview</h2>
-              <TextDisplay variant="callout" content="AI is not just a technology trend  - it is fundamentally reshaping how work gets done. In this module you will learn how AI is being applied across industries, what it means for your career, and how to build a practical AI strategy for your professional life." />
+              <TextDisplay variant="callout" content="Using AI responsibly requires more than just knowing how to operate the tools. It requires understanding the risks - to yourself, to others, and to society. This module gives you that foundation." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">A simple safety operating system</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Before you paste:</span> ask whether the data is personal, confidential, or regulated.</p>
+                  <p><span className="font-medium text-foreground">Before you trust:</span> ask what must be verified before anyone acts on the output.</p>
+                  <p><span className="font-medium text-foreground">Before you automate:</span> ask whether a human should still review the result.</p>
+                </div>
+              </Card>
               <Card className="p-5 space-y-2">
-                {[
-                  "How AI is changing the workplace right now",
-                  "What AI means for jobs  - and which skills matter most",
-                  "AI applications across major industries",
-                  "How to build your own AI strategy at work",
-                  "Practical steps to build AI skills in your career",
-                ].map((item) => (
+                {["AI bias - how it forms and who it hurts","Privacy - what AI systems collect about you","Misinformation - deepfakes and AI-generated content","Responsible AI use - principles and practices","The future of AI - what comes next"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />{item}</div>
                 ))}
               </Card>
+              <QuickCheckCard
+                prompt="Before trusting an AI output, which safety habit matters most?"
+                options={[
+                  { id: "a", label: "Assume confidence means correctness" },
+                  { id: "b", label: "Verify critical claims and keep humans in the loop for consequential use" },
+                  { id: "c", label: "Share private data so the model can personalize better" },
+                  { id: "d", label: "Skip source checks if wording looks professional" },
+                ]}
+                correctOptionId="b"
+                explanation="Right. Verification plus human oversight is the core safety baseline in real-world AI use."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
               <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Start Module</Button>
             </div>
           )}
 
-          {/* 1: AI in the Workplace */}
+          {/* 1: Bias */}
           {currentSectionIndex === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI in the Workplace</h2>
-              <TextDisplay content="AI is already embedded in the tools most professionals use every day  - often without people realising it. Email filtering, meeting transcription, document summarisation, sales forecasting, and code completion are all AI features now standard in mainstream products." />
-              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
-                <h3 className="font-semibold mb-3 text-brand-orange">Your first workplace use should pass this test</h3>
+              <h2 className="text-3xl font-bold text-brand-orange">AI Bias & Fairness</h2>
+              <TextDisplay content="AI bias occurs when an AI system produces systematically unfair or discriminatory outcomes for certain groups of people." />
+              <TextDisplay variant="warning" content="This is not a minor or theoretical problem. AI bias has denied people loans, led to wrongful arrests, screened out job applicants, and produced medical recommendations that work better for some demographics than others." />
+              <div className="space-y-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">How AI bias forms</h3>
+                  <div className="space-y-3 text-sm">
+                    {[
+                      { source: "Biased training data", desc: "If historical hiring data reflects past discrimination (e.g., fewer women in senior roles), an AI trained on it will perpetuate those patterns." },
+                      { source: "Underrepresentation", desc: "Facial recognition AI trained mostly on white male faces performs significantly worse on darker skin tones and women - because those groups were underrepresented in training data." },
+                      { source: "Feedback loops", desc: "AI that recommends content may amplify extreme or sensational content because users engage with it more - creating a feedback loop that reinforces harmful patterns." },
+                      { source: "Measurement bias", desc: "What you measure reflects your values. If a 'good employee' is defined as someone who works 60+ hours a week, the AI will disadvantage people with caregiving responsibilities." },
+                    ].map(({ source, desc }) => (
+                      <div key={source} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
+                        <AlertTriangle className="h-4 w-4 text-brand-orange mt-0.5 flex-shrink-0" />
+                        <div><p className="font-medium">{source}</p><p className="text-muted-foreground">{desc}</p></div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                  <h3 className="font-semibold mb-2 text-brand-green flex items-center gap-2"><Shield className="h-4 w-4" />What is being done about it</h3>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>? Bias auditing tools that test AI systems for disparate outcomes</li>
+                    <li>? Diverse and representative training datasets</li>
+                    <li>? Regulatory frameworks (EU AI Act) requiring bias assessment for high-risk AI</li>
+                    <li>? Fairness metrics built into model evaluation pipelines</li>
+                  </ul>
+                </Card>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Real-World AI Bias Cases - Flashcards</h3>
+                <p className="text-sm text-muted-foreground mb-4">These are real documented cases. Click each card for what happened and what we learned.</p>
+                <FlipCardGrid
+                  cards={[
+                    {
+                      title: "Hiring",
+                      prompt: "What happened when AI learned from biased historical hiring data?",
+                      answer: "It reproduced the past instead of correcting it. Systems trained on skewed hiring history can downgrade qualified candidates from underrepresented groups.",
+                    },
+                    {
+                      title: "Facial recognition",
+                      prompt: "Why did some facial recognition systems fail certain groups more often?",
+                      answer: "Because the training data underrepresented those groups, so the model learned weaker patterns for them and made more mistakes.",
+                    },
+                    {
+                      title: "Healthcare",
+                      prompt: "How can bias show up in medical AI?",
+                      answer: "If training data comes mostly from one population or care system, the model may work less well for patients outside that group.",
+                    },
+                    {
+                      title: "Key lesson",
+                      prompt: "What is the beginner takeaway from these cases?",
+                      answer: "Do not assume an AI system is fair because it is automated. Ask what data it learned from, who might be missing, and who bears the risk if it is wrong.",
+                    },
+                  ]}
+                />
+              </div>
+              <QuickCheckCard
+                prompt="What is the strongest beginner question to ask about an AI system used in hiring, lending, or healthcare?"
+                options={[
+                  { id: "a", label: "Does the interface look modern?" },
+                  { id: "b", label: "Who might be disadvantaged if the training data is incomplete or biased?" },
+                  { id: "c", label: "Is it faster than humans in every situation?" },
+                  { id: "d", label: "Does it use a large model?" },
+                ]}
+                correctOptionId="b"
+                explanation="In high-stakes contexts, the most important question is who could be harmed if the model learned from incomplete, biased, or unrepresentative data."
+                accentClassName="border-brand-orange/20 bg-brand-orange/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 2: Privacy */}
+          {currentSectionIndex === 2 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Privacy & Your Data</h2>
+              <TextDisplay content="When you use AI tools, you are sharing data - sometimes more than you realise. Understanding what is collected helps you protect yourself." />
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
+                <h3 className="font-semibold mb-3 text-brand-green">Traffic-light rule for what to paste</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-green-700 mb-1">Green: usually safe</p>
+                    <p className="text-muted-foreground">Public articles, your own generic drafts, non-sensitive brainstorming, already-public marketing copy.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-amber-700 mb-1">Yellow: pause and check policy</p>
+                    <p className="text-muted-foreground">Internal documents, client materials, unpublished strategy notes, anything covered by workplace rules.</p>
+                  </div>
+                  <div className="rounded-lg border bg-background p-3">
+                    <p className="font-semibold text-red-700 mb-1">Red: do not paste into general AI tools</p>
+                    <p className="text-muted-foreground">Passwords, financial account details, SSNs, medical records, legal secrets, regulated personal data.</p>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card className="p-5">
+                <h3 className="font-semibold mb-3">Practical privacy guidelines</h3>
                 <ul className="space-y-2 text-sm">
                   {[
-                    "The task is repetitive and low-risk",
-                    "The output is easy for you to review",
-                    "You can measure time saved in a week",
-                    "No sensitive data is shared outside approved tools",
+                    "Never enter personal information (SSN, passwords, financial data) into AI chat tools",
+                    "Read the privacy policy before using a new AI service with sensitive information",
+                    "For work-related tasks, check if your employer has approved specific AI tools",
+                    "Use the 'temporary chat' or 'no training' options if available (ChatGPT has this)",
+                    "Enterprise/paid tiers usually have stronger data protection than free tiers",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
+                  ))}
+                </ul>
+              </Card>
+              <QuickCheckCard
+                prompt="You want AI to summarize internal meeting notes that include client names and confidential plans. What is the safest default?"
+                options={[
+                  { id: "a", label: "Paste them into any public chatbot because summarization is low risk" },
+                  { id: "b", label: "Check whether your organization has approved a protected tool before using AI with that content" },
+                  { id: "c", label: "Replace only one client name and paste the rest" },
+                  { id: "d", label: "Use AI first and ask about policy later" },
+                ]}
+                correctOptionId="b"
+                explanation="Confidential internal notes are not a casual input. The safe default is to check policy and use only approved tools with the right protections."
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 3: Misinformation */}
+          {currentSectionIndex === 3 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">Misinformation & Deepfakes</h2>
+              <TextDisplay content="AI has dramatically lowered the cost of producing convincing fake content - from text to images to video to audio." />
+              <div className="space-y-4">
+                <Card className="p-5">
+                  <h3 className="font-semibold mb-3 text-brand-orange">Types of AI-generated misinformation</h3>
+                  <div className="space-y-3 text-sm">
+                    {[
+                      { type: "Deepfake video", desc: "Realistic video of a real person saying or doing things they never did. Used in political manipulation, fraud, and non-consensual content." },
+                      { type: "Voice cloning", desc: "AI can replicate any voice from just a few seconds of audio. Used in phone scams where the AI 'sounds like' a family member or executive." },
+                      { type: "AI-written disinformation", desc: "LLMs can produce thousands of realistic-sounding false news articles, social media posts, or product reviews at near-zero cost." },
+                      { type: "Synthetic images", desc: "Fake but photorealistic images of events that never happened - protests, disasters, crimes, celebrities." },
+                    ].map(({ type, desc }) => (
+                      <div key={type} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
+                        <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
+                        <div><p className="font-medium">{type}</p><p className="text-muted-foreground">{desc}</p></div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+                <Card className="p-5 bg-brand-green/5 border-brand-green/20">
+                  <h3 className="font-semibold mb-3 text-brand-green">How to spot and resist AI misinformation</h3>
+                  <ul className="text-sm space-y-2 text-muted-foreground">
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Verify with primary sources before sharing - if it is surprising, check it</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use reverse image search to check if images are authentic</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Look for watermarks, distortions, or inconsistencies in video (odd lighting, blurry edges)</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Be suspicious of unexpected calls requesting urgent action or money, even from known voices</li>
+                    <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />Use tools like Google Fact Check, Snopes, AFP Fact Check for viral claims</li>
+                  </ul>
+                </Card>
+                <Card className="p-5 border-blue-500/20 bg-blue-500/5">
+                  <h3 className="font-semibold mb-3 text-blue-700 dark:text-blue-400">AI Detection Tools - and Their Limits</h3>
+                  <p className="text-sm text-muted-foreground mb-3">A category of tools has emerged to detect AI-generated content. They are useful - but imperfect. Understanding both is important.</p>
+                  <div className="space-y-3 text-sm">
+                    {[
+                      { tool: "GPTZero", type: "Text detection", desc: "Analyses writing patterns and perplexity (how predictable the word choices are) to estimate whether text was AI-generated. Widely used by educators. Works reasonably well on clearly AI-generated text; struggles with heavily edited or mixed human/AI content." },
+                      { tool: "Originality.ai", type: "Text detection", desc: "Designed for publishers and content teams. Scans for AI content alongside plagiarism checking. Offers sentence-level highlighting to show which parts look AI-generated. Paid tool." },
+                      { tool: "Hive Moderation", type: "Image & video detection", desc: "Classifies whether images were AI-generated, with confidence scores. Used by platforms for content moderation. More reliable on images from known AI generators." },
+                      { tool: "Deepware Scanner / Reality Defender", type: "Deepfake detection", desc: "Analyses video for manipulation artefacts invisible to the human eye - inconsistent blinking, unnatural skin texture, audio-visual sync issues. Used by media organisations and governments." },
+                      { tool: "C2PA / Content Credentials", type: "Provenance standard", desc: "Not a detection tool but a prevention standard. Adobe, Microsoft, Google, and camera makers are building cryptographic provenance into images and videos - a digital signature that records how content was created and modified. Look for the 'cr' icon in supported apps." },
+                    ].map(({ tool, type, desc }) => (
+                      <div key={tool} className="flex gap-3 border-b last:border-0 pb-3 last:pb-0">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-medium">{tool}</p>
+                            <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded">{type}</span>
+                          </div>
+                          <p className="text-muted-foreground">{desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg">
+                    <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Critical limitation to understand</p>
+                    <p className="text-xs text-muted-foreground">No detection tool is reliable enough to serve as proof in high-stakes situations. They provide probability scores, not verdicts. False positives (flagging human writing as AI) are common - students have been wrongly accused. Use detection tools as one signal in a broader investigation, never as definitive evidence.</p>
+                  </div>
+                </Card>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Put the verification steps in the right order</h3>
+                <p className="text-sm text-muted-foreground mb-4">When you encounter potentially AI-generated misinformation, drag the steps into the correct sequence.</p>
+                <DragSortChallenge
+                  items={[
+                    "Only share or act after verification is complete",
+                    "Pause ??don't share or act immediately",
+                    "Find a primary source that independently confirms it",
+                    "Run a reverse image search or check a fact-checking site",
+                    "Identify the original source of the claim",
+                  ]}
+                  correctOrder={[
+                    "Pause ??don't share or act immediately",
+                    "Identify the original source of the claim",
+                    "Run a reverse image search or check a fact-checking site",
+                    "Find a primary source that independently confirms it",
+                    "Only share or act after verification is complete",
+                  ]}
+                  accentClassName="border-brand-orange/20 bg-brand-orange/5"
+                />
+              </div>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">Real scenario - what would you do?</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>You receive a voice note from someone who sounds like your manager asking you to urgently buy gift cards and send the codes.</p>
+                  <p><span className="font-medium text-foreground">Best response:</span> do not act from the voice message alone. Verify through a separate trusted channel before doing anything.</p>
+                </div>
+              </Card>
+              <QuickCheckCard
+                prompt="What is the best first move when a realistic AI-generated voice or video seems urgent and emotionally pressuring?"
+                options={[
+                  { id: "a", label: "Act quickly before the opportunity disappears" },
+                  { id: "b", label: "Verify through another trusted channel before responding" },
+                  { id: "c", label: "Forward it to friends and ask what they think" },
+                  { id: "d", label: "Assume it is real if the quality is good" },
+                ]}
+                correctOptionId="b"
+                explanation="Urgency is a classic manipulation tactic. The safest move is to slow down and verify through a separate trusted channel."
+                accentClassName="border-brand-green/20 bg-brand-green/5"
+              />
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 4: Responsible AI */}
+          {currentSectionIndex === 4 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-green">Responsible AI Use</h2>
+              <TextDisplay content="Being a responsible AI user does not mean being afraid of AI - it means using it thoughtfully, with awareness of its limitations and impact." />
+              <div className="space-y-3">
+                {[
+                  { principle: "Verify before you trust", desc: "AI can be confidently wrong. For anything important - medical, legal, financial, factual - always verify AI outputs with authoritative sources." },
+                  { principle: "Disclose when relevant", desc: "If you use AI to write something that will be presented as your own work or expertise, consider whether disclosure is appropriate. Academic, professional, and journalistic contexts often require it." },
+                  { principle: "Do not automate consequential decisions blindly", desc: "AI should augment human judgment, not replace it, for high-stakes decisions (hiring, lending, medical treatment, legal judgments)." },
+                  { principle: "Be aware of your own 'automation bias'", desc: "People tend to over-trust AI outputs because they come from computers. Actively question AI suggestions rather than accepting them by default." },
+                  { principle: "Consider impact on others", desc: "AI-generated content, images, and audio can harm real people. Think about downstream effects before you create or share AI content." },
+                    { principle: "Protect privacy", desc: "Do not use AI tools to collect, analyse, or share personal information about others without consent." },
+                  ].map(({ principle, desc }) => (
+                    <Card key={principle} className="p-4">
+                      <p className="font-semibold text-brand-orange mb-1">{principle}</p>
+                      <p className="text-sm text-muted-foreground">{desc}</p>
+                    </Card>
+                  ))}
+              </div>
+              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Responsible AI Scenario</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>You used AI to draft a client-facing report. The draft is strong, but it includes a statistic you have not verified and a confident recommendation you would not personally stand behind yet.</p>
+                  <p><span className="font-medium text-foreground">Responsible move:</span> check the source of the statistic, edit the recommendation to match your real judgment, and only then send the report.</p>
+                </div>
+              </Card>
+              <Card className="p-5 border-brand-orange/20 bg-brand-orange/5">
+                <h3 className="font-semibold mb-3 text-brand-orange">A simple checklist before you use AI output</h3>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Did I verify the important facts, numbers, and names?",
+                    "Would I still stand behind this if my name were on it?",
+                    "Did I remove or protect any sensitive data?",
+                    "Should a human review this before it affects someone else?",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green mt-0.5 flex-shrink-0" />{item}</li>
                   ))}
                 </ul>
               </Card>
+              <div>
+                <h3 className="text-xl font-semibold mb-1">Match each principle to what it actually means</h3>
+                <p className="text-sm text-muted-foreground mb-4">Click a principle on the left, then click its matching definition on the right.</p>
+                <MatchingChallenge
+                  pairs={[
+                    { left: "Verify before you trust", right: "Check important facts with authoritative sources before acting on AI outputs" },
+                    { left: "Automation bias", right: "The human tendency to over-trust outputs because they come from computers" },
+                    { left: "Disclose when relevant", right: "Telling your audience when AI generated content you present as your own work" },
+                    { left: "Least privilege", right: "Giving AI only the minimum data access needed for its specific task" },
+                  ]}
+                  accentClassName="border-brand-green/20 bg-brand-green/5"
+                />
+              </div>
+              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
+            </div>
+          )}
+
+          {/* 5: The Future */}
+          {currentSectionIndex === 5 && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold text-brand-orange">The Future of AI</h2>
+              <TextDisplay content="AI is evolving faster than almost any technology in history. Here is what experts are currently watching:" />
               <div className="space-y-4">
                 {[
-                  {
-                    category: "Communication & Collaboration",
-                    icon: Users,
-                    examples: [
-                      { name: "Meeting summaries", desc: "Tools like Otter.ai, Fireflies, and Microsoft Copilot auto-transcribe and summarise meetings, extracting action items." },
-                      { name: "Email assistance", desc: "Gmail's Smart Compose, Outlook Copilot, and Superhuman draft replies and surface important emails automatically." },
-                      { name: "Instant translation", desc: "DeepL and Google Translate now produce near-human quality for business documents and real-time conversations." },
-                    ],
-                  },
-                  {
-                    category: "Knowledge Work",
-                    icon: Briefcase,
-                    examples: [
-                      { name: "Document drafting", desc: "Claude, ChatGPT, and Notion AI draft reports, proposals, and presentations from bullet points." },
-                      { name: "Research & analysis", desc: "Perplexity and ChatGPT with web access can synthesise information from hundreds of sources in seconds." },
-                      { name: "Code generation", desc: "GitHub Copilot and Cursor write, review, and debug code - boosting developer productivity by 30-50%." },
-                    ],
-                  },
-                  {
-                    category: "Business Operations",
-                    icon: TrendingUp,
-                    examples: [
-                      { name: "Customer service", desc: "AI chatbots now handle 60-70% of tier-1 support queries, with human escalation for complex cases." },
-                      { name: "Forecasting", desc: "AI models predict sales, inventory demand, and customer churn with greater accuracy than traditional methods." },
-                      { name: "Hiring & HR", desc: "AI screens CVs, schedules interviews, and analyses employee engagement  - raising questions about bias." },
-                    ],
-                  },
-                ].map(({ category, icon: Icon, examples }) => (
-                  <Card key={category} className="p-5">
-                    <h3 className="font-bold text-brand-green mb-3 flex items-center gap-2"><Icon className="h-4 w-4" />{category}</h3>
-                    <div className="space-y-2">
-                      {examples.map(({ name, desc }) => (
-                        <div key={name} className="flex gap-3 text-sm">
-                          <span className="font-medium w-40 flex-shrink-0">{name}</span>
-                          <span className="text-muted-foreground">{desc}</span>
-                        </div>
-                      ))}
-                    </div>
+                  { trend: "AI Agents", desc: "AI that can take multi-step actions autonomously - browse the web, write code, make purchases, manage your calendar. Moving from 'chat' to 'do'." },
+                  { trend: "Multimodal AI", desc: "Models that can see, hear, speak, and code - not just text. GPT-4o, Gemini Ultra, and Claude 3.5 are already multimodal." },
+                  { trend: "AI in Healthcare", desc: "AI is matching or exceeding specialists in reading radiology scans, identifying skin cancers, predicting drug interactions, and discovering new molecules." },
+                  { trend: "Regulation", desc: "The EU AI Act is the first major AI regulation globally. The US, UK, China, and others are developing frameworks. This will reshape how AI is built and deployed." },
+                  { trend: "AI and Employment", desc: "Research suggests AI will transform most knowledge work jobs - augmenting some, displacing others. The effect will be uneven across roles and sectors." },
+                  { trend: "AI Safety Research", desc: "A growing field working on the 'alignment problem': ensuring AI systems do what humans actually intend. Organisations like Anthropic, DeepMind Safety, and MIRI are leading this work." },
+                ].map(({ trend, desc }) => (
+                  <Card key={trend} className="p-4 flex gap-3">
+                    <span className="bg-brand-green/10 text-brand-green text-xs font-bold px-2 py-1 rounded h-fit flex-shrink-0 whitespace-nowrap">{trend}</span>
+                    <p className="text-sm text-muted-foreground">{desc}</p>
                   </Card>
                 ))}
               </div>
-              <FlipCardGrid
-                cards={[
-                  {
-                    title: "Low Risk",
-                    prompt: "What work tasks are best for first AI adoption?",
-                    answer: "Repetitive, low-risk tasks with outputs you can review quickly, like summaries and draft updates.",
-                  },
-                  {
-                    title: "Human Review",
-                    prompt: "Why keep a human in the loop at work?",
-                    answer: "Because accountability, context, and final judgment remain human responsibilities in professional settings.",
-                  },
-                  {
-                    title: "Measurement",
-                    prompt: "How do teams prove AI value?",
-                    answer: "Track outcomes like hours saved, faster turnaround, and fewer repetitive manual steps.",
-                  },
-                  {
-                    title: "Scope",
-                    prompt: "Why start with small pilot workflows?",
-                    answer: "Small pilots reduce risk and create evidence for what should scale across the team.",
-                  },
-                ]}
-              />
-              <QuickCheckCard
-                prompt="What is the best first AI use for most professionals?"
-                options={[
-                  { id: "a", label: "Automate every client-facing decision immediately" },
-                  { id: "b", label: "Start with a low-risk repetitive task and keep human review" },
-                  { id: "c", label: "Adopt the newest tool first and find a task later" },
-                  { id: "d", label: "Wait until your role is fully disrupted" },
-                ]}
-                correctOptionId="b"
-                explanation="The safest high-leverage starting point is a repeatable, low-risk task where you can verify output quality and track time saved."
-                accentClassName="border-brand-green/20 bg-brand-green/5"
-              />
-              
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 2: AI & Jobs */}
-          {currentSectionIndex === 2 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">AI & the Future of Jobs</h2>
-              <TextDisplay content="The relationship between AI and employment is nuanced. History shows that major technological shifts eliminate some jobs and create many others  - but the transition is uneven and can be disruptive for individuals." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                <h3 className="font-semibold mb-4 text-brand-orange">The Three-Category Framework</h3>
-                <div className="space-y-4">
-                  {[
-                    {
-                      label: "High displacement risk",
-                      color: "text-red-500",
-                      examples: "Routine data entry, basic document review, simple customer support scripts, rote translation, basic image captioning",
-                      insight: "Tasks that are repetitive, rule-based, and text or data-driven are easiest to automate. If a task can be described as a clear procedure, AI can likely do it.",
-                    },
-                    {
-                      label: "Augmentation (most roles)",
-                      color: "text-brand-orange",
-                      examples: "Lawyers, doctors, teachers, marketers, accountants, engineers, designers, writers",
-                      insight: "AI handles research, drafting, and analysis  - humans focus on judgement, relationships, creativity, and accountability. Productivity rises; headcount may shrink modestly.",
-                    },
-                    {
-                      label: "High growth & new roles",
-                      color: "text-brand-green",
-                      examples: "AI trainers, prompt engineers, AI ethicists, AI product managers, data curators, human-AI interaction designers",
-                      insight: "New roles that did not exist five years ago are growing rapidly. Organisations need people who can bridge AI capability and human context.",
-                    },
-                  ].map(({ label, color, examples, insight }) => (
-                    <div key={label} className="border-l-2 border-muted pl-4">
-                      <p className={`font-bold mb-1 ${color}`}>{label}</p>
-                      <p className="text-sm text-muted-foreground mb-1"><span className="font-medium">Examples:</span> {examples}</p>
-                      <p className="text-sm text-muted-foreground"><span className="font-medium">Insight:</span> {insight}</p>
-                    </div>
-                  ))}
+              <TextDisplay variant="callout" content="The most important skill in an AI-driven world is not knowing how to use any specific tool - it is knowing how to think critically, adapt quickly, and use AI as a collaborator rather than a crutch." />
+              <Card className="p-5 border-brand-green/20 bg-brand-green/5">
+                <h3 className="font-semibold mb-3 text-brand-green">Think it through</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><span className="font-medium text-foreground">Question 1:</span> Which human skills become more valuable as AI gets better?</p>
+                  <p><span className="font-medium text-foreground">Question 2:</span> Where in your life or work should speed never outrun judgment?</p>
+                  <p><span className="font-medium text-foreground">Question 3:</span> What rule will you personally use for deciding when AI helps and when a human must stay in charge?</p>
                 </div>
               </Card>
-              <DragSortChallenge
-                title="Career Priority Order"
-                description="Drag these actions into a practical sequence for building AI career resilience."
-                items={[
-                  "Lead a team-wide AI initiative",
-                  "Document one workflow that works",
-                  "Apply AI to two repeatable tasks",
-                  "Measure quality and time saved",
-                ]}
-                correctOrder={[
-                  "Apply AI to two repeatable tasks",
-                  "Measure quality and time saved",
-                  "Document one workflow that works",
-                  "Lead a team-wide AI initiative",
-                ]}
-              />
-              <TextDisplay variant="callout" content="The most important career insight: AI fluency is becoming a baseline expectation across almost every professional role  - just as digital literacy and spreadsheet skills became baseline expectations in the 1990s. This is not optional." />
+
               <QuickCheckCard
-                prompt="What is the most durable career takeaway from this section?"
+                prompt="Which principle is most future-proof as AI tools keep changing?"
                 options={[
-                  { id: "a", label: "Only technical workers need AI fluency" },
-                  { id: "b", label: "AI fluency is becoming a baseline expectation across many roles" },
-                  { id: "c", label: "Career risk disappears if you ignore AI tools" },
-                  { id: "d", label: "The safest move is to wait for the market to settle" },
+                  { id: "a", label: "Master one current tool and stop adapting" },
+                  { id: "b", label: "Prioritize critical thinking, verification, and human judgment over tool-specific shortcuts" },
+                  { id: "c", label: "Delegate all important decisions to AI for speed" },
+                  { id: "d", label: "Ignore governance and only optimize output volume" },
                 ]}
                 correctOptionId="b"
-                explanation="The section's core point is that AI fluency is turning into a baseline professional skill, not a niche specialty."
-              />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 3: Industry Applications */}
-          {currentSectionIndex === 3 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">AI Across Industries</h2>
-              <TextDisplay content="AI is being deployed in every major industry. The applications vary, but the underlying pattern is the same: AI handles analysis and prediction at scale, freeing humans for higher-value work." />
-              <div className="grid md:grid-cols-2 gap-4">
-                {[
-                  {
-                    industry: "Healthcare",
-                    color: "text-blue-600",
-                    applications: [
-                      "Medical image analysis  - AI detects cancers in scans with radiologist-level accuracy",
-                      "Drug discovery  - AI reduces new drug development from decades to years",
-                      "Clinical documentation  - AI transcribes patient notes automatically",
-                      "Personalised treatment  - AI analyses genomic data to recommend targeted therapies",
-                    ],
-                  },
-                  {
-                    industry: "Finance",
-                    color: "text-green-600",
-                    applications: [
-                      "Fraud detection  - AI flags suspicious transactions in real time",
-                      "Algorithmic trading  - AI executes trades at speeds humans cannot match",
-                      "Credit scoring  - AI analyses thousands of data points beyond credit history",
-                      "Regulatory compliance  - AI monitors transactions for suspicious activity",
-                    ],
-                  },
-                  {
-                    industry: "Education",
-                    color: "text-purple-600",
-                    applications: [
-                      "Personalised learning paths  - AI adapts content to each student's pace",
-                      "Automated grading  - AI grades essays with detailed feedback",
-                      "Intelligent tutoring  - AI provides one-on-one tutoring at scale",
-                      "Early intervention  - AI identifies students at risk of falling behind",
-                    ],
-                  },
-                  {
-                    industry: "Retail & E-commerce",
-                    color: "text-orange-600",
-                    applications: [
-                      "Product recommendations  - AI drives 35% of Amazon's revenue",
-                      "Demand forecasting  - AI optimises inventory to reduce waste",
-                      "Visual search  - AI lets shoppers search by uploading photos",
-                      "Dynamic pricing  - AI adjusts prices in real time based on demand",
-                    ],
-                  },
-                  {
-                    industry: "Legal",
-                    color: "text-red-600",
-                    applications: [
-                      "Contract review  - AI reviews thousands of pages in minutes",
-                      "Legal research  - AI finds relevant precedents and case law",
-                      "Due diligence  - AI analyses documents in M&A transactions",
-                      "Litigation prediction  - AI estimates case outcomes from historical data",
-                    ],
-                  },
-                  {
-                    industry: "Manufacturing",
-                    color: "text-yellow-600",
-                    applications: [
-                      "Predictive maintenance  - AI prevents machine failures before they happen",
-                      "Quality control  - AI vision systems detect defects at speed and scale",
-                      "Supply chain optimisation  - AI reduces delays and costs",
-                      "Generative design  - AI generates optimal product designs for given constraints",
-                    ],
-                  },
-                ].map(({ industry, color, applications }) => (
-                  <Card key={industry} className="p-4">
-                    <h4 className={`font-bold mb-2 ${color}`}>{industry}</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      {applications.map((a) => <li key={a} className="flex gap-1"><span className="text-brand-orange flex-shrink-0">*</span>{a}</li>)}
-                    </ul>
-                  </Card>
-                ))}
-              </div>
-              <MatchingChallenge
-                title="Industry Match Round"
-                description="Match each industry to a representative AI application."
-                pairs={[
-                  {
-                    id: "healthcare",
-                    left: "Healthcare",
-                    right: "Medical image analysis and clinical documentation",
-                  },
-                  {
-                    id: "finance",
-                    left: "Finance",
-                    right: "Fraud detection and compliance monitoring",
-                  },
-                  {
-                    id: "manufacturing",
-                    left: "Manufacturing",
-                    right: "Predictive maintenance and quality control",
-                  },
-                ]}
-              />
-              
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-            </div>
-          )}
-
-          {/* 4: AI Strategy */}
-          {currentSectionIndex === 4 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-green">Building an AI Strategy</h2>
-              <TextDisplay content="Whether you are an individual contributor or a business leader, having a deliberate AI strategy  - rather than reacting randomly to new tools  - puts you in control." />
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5">
-                <h3 className="font-semibold mb-4 text-brand-orange">The Individual AI Strategy Framework</h3>
-                <div className="space-y-4">
-                  {[
-                    { step: "1. Audit", action: "List the top 10 tasks you spend time on each week. Estimate hours per task." },
-                    { step: "2. Identify", action: "For each task, ask: could AI do this, assist with this, or does it need to stay fully human?" },
-                    { step: "3. Experiment", action: "Pick 2-3 tasks where AI could help. Spend one week testing AI tools on those specific tasks." },
-                    { step: "4. Measure", action: "Track time saved and quality. Did AI help? If not, why not? Adjust your approach." },
-                    { step: "5. Systematise", action: "Turn your best AI workflows into repeatable habits. Document what works for your role." },
-                    { step: "6. Share", action: "Teach colleagues what you have learned. Being the person who raises AI fluency in your team is a career advantage." },
-                  ].map(({ step, action }) => (
-                    <div key={step} className="flex gap-3 items-start">
-                      <span className="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0">{step}</span>
-                      <p className="text-sm text-muted-foreground pt-0.5">{action}</p>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-              <TextDisplay variant="callout" content="The biggest mistake people make with AI at work: trying every new tool that launches instead of going deep on a few tools that actually fit their workflow. Depth beats breadth." />
-              
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-4 text-brand-orange">How to Champion AI at Your Organisation</h3>
-                <p className="text-sm text-muted-foreground mb-4">Being the person who helps their team adopt AI well is one of the most valuable roles you can play right now. Here is how to do it without overstepping or creating resistance:</p>
-                <div className="space-y-3">
-                  {[
-                    {
-                      stage: "Start with a small, visible win",
-                      detail: "Pick one task that everyone finds tedious and show how AI handles it. A 10-minute demonstration beats a 10-page proposal every time. Seeing is believing.",
-                    },
-                    {
-                      stage: "Lead with the problem, not the technology",
-                      detail: "Do not say 'We should use AI.' Say 'We spend 6 hours every week on status reports  - I found a way to cut that to 45 minutes.' People care about outcomes, not tools.",
-                    },
-                    {
-                      stage: "Address the fears directly",
-                      detail: "Colleagues often worry about job security. Acknowledge it honestly: AI is changing jobs, and learning it is the best career protection available. The goal is to free people from drudgework, not replace them.",
-                    },
-                    {
-                      stage: "Create a safe space to experiment",
-                      detail: "Share your failures alongside your successes. When people see that AI sometimes gets it wrong and that is okay, they feel safe trying it themselves. Perfection culture kills experimentation.",
-                    },
-                    {
-                      stage: "Document and share what works",
-                      detail: "Build a simple shared doc of prompts, workflows, and tools that work for your team&apos;s specific tasks. A prompt library tailored to your organisation is far more valuable than generic advice.",
-                    },
-                    {
-                      stage: "Raise the governance conversation early",
-                      detail: "Proactively ask: which tools are approved? What data can we put in AI systems? Who reviews AI-generated outputs before they go to clients? Being the person who asks these questions earns trust from leadership.",
-                    },
-                  ].map(({ stage, detail }) => (
-                    <div key={stage} className="flex gap-3 items-start">
-                      <span className="bg-brand-green text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5">*</span>
-                      <div>
-                        <p className="font-medium text-sm">{stage}</p>
-                        <p className="text-sm text-muted-foreground">{detail}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-              <QuickCheckCard
-                prompt="Your team spends six hours weekly on repetitive status updates. What is the strongest first AI strategy move?"
-                options={[
-                  { id: "a", label: "Roll out many tools at once to everyone" },
-                  { id: "b", label: "Pilot one narrow workflow, measure time saved, then document and share results" },
-                  { id: "c", label: "Wait for a perfect enterprise strategy before trying anything" },
-                  { id: "d", label: "Push adoption without governance discussion" },
-                ]}
-                correctOptionId="b"
-                explanation="Correct. Start narrow, prove measurable value, and then scale with documented workflows and guardrails."
+                explanation="Right. Tools evolve fast, but judgment, verification discipline, and adaptive learning remain durable advantages."
                 onAnswered={() => {
-                  markSectionInteractionComplete(4)
+                  markSectionInteractionComplete(5)
                 }}
                 accentClassName="border-brand-green/20 bg-brand-green/5"
               />
-              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the strategy checkpoint to unlock the next section.</p> : null}
+
+              {!canAdvance ? <p className="text-sm text-muted-foreground">Complete the future-readiness checkpoint to unlock the next section.</p> : null}
+
               <Button disabled={!canAdvance} onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
             </div>
           )}
 
-          {/* 5: Building AI Skills */}
-          {currentSectionIndex === 5 && (
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-brand-orange">Building Your AI Skills</h2>
-              <TextDisplay content="AI fluency is a competitive advantage right now  - and will be a baseline expectation within three years. The good news: you do not need a technical background to build genuinely useful AI skills." />
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold">The AI Skills Stack</h3>
-                <div className="space-y-3">
-                  {[
-                    {
-                      level: "Foundation (everyone needs this)",
-                      skills: ["Understanding what AI can and cannot do", "Effective prompting across major LLMs", "Identifying AI-generated content and misinformation", "Basic AI ethics and bias awareness"],
-                      bg: "bg-brand-green/5 border-brand-green/20",
-                    },
-                    {
-                      level: "Professional (for knowledge workers)",
-                      skills: ["Integrating AI into your specific role's workflow", "Using AI for research, analysis, and drafting", "Building simple no-code AI automations", "Evaluating AI outputs critically for your domain"],
-                      bg: "bg-brand-orange/5 border-brand-orange/20",
-                    },
-                    {
-                      level: "Advanced (for those who want to lead)",
-                      skills: ["Designing AI strategies for teams or organisations", "Understanding AI model selection and limitations in depth", "Managing AI projects and vendor relationships", "Developing AI governance policies"],
-                      bg: "bg-blue-500/5 border-blue-500/20",
-                    },
-                  ].map(({ level, skills, bg }) => (
-                    <Card key={level} className={`p-4 border ${bg}`}>
-                      <h4 className="font-bold mb-2">{level}</h4>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        {skills.map((s) => <li key={s} className="flex gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-brand-green flex-shrink-0 mt-0.5" />{s}</li>)}
-                      </ul>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-              <Card className="p-5 bg-gradient-to-br from-brand-green/5 to-brand-orange/5 border-brand-green/20">
-                <h3 className="font-semibold mb-3 text-brand-green">A practical 90-day career plan</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><span className="font-medium text-foreground">Days 1-30:</span> pick two recurring tasks and use AI on them daily. Track time saved and output quality.</p>
-                  <p><span className="font-medium text-foreground">Days 31-60:</span> standardize your best prompts and workflow steps into a mini playbook for your role.</p>
-                  <p><span className="font-medium text-foreground">Days 61-90:</span> share one documented workflow with your team and gather feedback to improve it.</p>
-                </div>
-              </Card>
-              <QuickCheckCard
-                prompt="Which approach best builds durable AI career advantage?"
-                options={[
-                  { id: "a", label: "Try every tool briefly without measuring outcomes" },
-                  { id: "b", label: "Go deep on specific tasks in your domain and document what works" },
-                  { id: "c", label: "Focus only on AI news and skip practical application" },
-                  { id: "d", label: "Avoid sharing what you learn with your team" },
-                ]}
-                correctOptionId="b"
-                explanation="Durable advantage comes from repeatable workflow skill in your actual domain, not from broad but shallow experimentation."
-                accentClassName="border-brand-orange/20 bg-brand-orange/5"
-              />
-              <Button onClick={handleSectionComplete} size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">Next</Button>
-              
-            </div>
-          )}
-
-          {/* 6: Module Quiz */}
+          {/* 6: Quiz */}
           {currentSectionIndex === 6 && (
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-brand-green">Module Quiz</h2>
-              <TextDisplay content="Three questions to lock in what you have learned. All three must be answered to complete the module." />
               <ModuleQuiz questions={questions} results={quizResults} onAnswer={handleQuizComplete} />
               {allQuizComplete && (
                 <div className="space-y-4">
-                  <TextDisplay variant="success" content="Excellent work! You now understand how AI is reshaping the workplace, which skills matter most, and how to build a deliberate AI strategy for your career. Up next: AI Agents." />
+                  <TextDisplay variant="success" content="Excellent! You are now an informed, critical AI user. Up next: Your AI Toolkit - where you turn safe, thoughtful AI use into practical no-code workflows." />
                   <div className="flex gap-4">
-                    <Button size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white" onClick={() => router.push("/course/module-7")}>
+                    <Button size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white" onClick={() => router.push("/course/module-7")}>
                       Continue to Module 7
                     </Button>
                     <Button variant="outline" size="lg" onClick={() => router.push("/course")}>Dashboard</Button>
                   </div>
                 </div>
-              )}
-              {!allQuizComplete && (
-                <p className="text-sm text-muted-foreground">Answer all three questions above to complete the module.</p>
               )}
             </div>
           )}

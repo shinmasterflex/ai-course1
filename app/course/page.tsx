@@ -12,7 +12,7 @@ import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { Target, TrendingUp, Award, Brain, Cpu, MessageSquare, Zap, Shield, Wrench, BookOpen, Briefcase, Bot, Rocket } from "lucide-react"
+import { Target, TrendingUp, Award, Brain, Cpu, MessageSquare, Zap, Shield, Wrench, BookOpen, Briefcase, Bot, Rocket, Code2 } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { cn } from "@/lib/utils"
 
@@ -22,18 +22,19 @@ const MODULE_META = [
   { id: "module-2", icon: Brain,        color: "brand-green",  label: "How Machines Learn",           description: "Training data, neural networks, and AI limits." },
   { id: "module-3", icon: MessageSquare,color: "brand-orange", label: "LLMs & Prompting",             description: "How ChatGPT works and how to prompt effectively." },
   { id: "module-4", icon: Zap,          color: "brand-green",  label: "AI Tools for Everyday Life",  description: "Writing, images, productivity ? a guided tour." },
-  { id: "module-5", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
-  { id: "module-6", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
-  { id: "module-7", icon: Bot,          color: "brand-green",  label: "AI Agents",                    description: "How autonomous AI agents work and what they can do." },
-  { id: "module-8", icon: Wrench,       color: "brand-green",  label: "Your AI Toolkit",              description: "No-code tools, workflows, and your first project." },
-  { id: "module-9", icon: Rocket,       color: "brand-orange", label: "The Future of AI",             description: "AGI, governance, careers, and what comes next." },
+  { id: "module-5", icon: Code2,        color: "brand-green",  label: "Coding Fundamentals",          description: "Variables, logic, functions, and debugging basics." },
+  { id: "module-6", icon: Shield,       color: "brand-orange", label: "AI Ethics, Safety & Society",  description: "Bias, privacy, deepfakes, and responsible use." },
+  { id: "module-7", icon: Briefcase,    color: "brand-orange", label: "AI for Business & Work",       description: "Workplace applications, industries, and career strategy." },
+  { id: "module-8", icon: Bot,          color: "brand-green",  label: "AI Agents",                    description: "How autonomous AI agents work and what they can do." },
+  { id: "module-9", icon: Wrench,       color: "brand-green",  label: "Your AI Toolkit",              description: "No-code tools, workflows, and your first project." },
+  { id: "module-10", icon: Rocket,      color: "brand-orange", label: "The Future of AI",             description: "AGI, governance, careers, and what comes next." },
 ]
 
 const PHASES = [
   { label: "Phase 1: Understanding AI",       color: "brand-green",  moduleIds: ["module-0", "module-1", "module-2"] },
-  { label: "Phase 2: Using AI",               color: "brand-orange", moduleIds: ["module-3", "module-4"] },
-  { label: "Phase 3: AI in the World",        color: "brand-green",  moduleIds: ["module-5", "module-6"] },
-  { label: "Phase 4: Thinking Critically & Building", color: "brand-orange", moduleIds: ["module-7", "module-8", "module-9"] },
+  { label: "Phase 2: Using AI & Coding Basics", color: "brand-orange", moduleIds: ["module-3", "module-4", "module-5"] },
+  { label: "Phase 3: AI in the World",         color: "brand-green",  moduleIds: ["module-6", "module-7"] },
+  { label: "Phase 4: Thinking Critically & Building", color: "brand-orange", moduleIds: ["module-8", "module-9", "module-10"] },
 ]
 
 export default function DashboardPage() {

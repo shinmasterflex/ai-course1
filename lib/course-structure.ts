@@ -48,6 +48,11 @@ export const courseStructure: CourseStructure = {
         { id: "types-of-ai", title: "Types of AI", completed: false },
         { id: "ai-in-your-life", title: "Your First Useful Win", completed: false },
         { id: "myths-vs-reality", title: "Myths vs. Reality", completed: false },
+        { id: "ai-writing", title: "AI Writing Assistants", completed: false },
+        { id: "ai-images", title: "AI Image Generation", completed: false },
+        { id: "ai-productivity", title: "AI for Productivity", completed: false },
+        { id: "ai-creative", title: "AI in Creative Work", completed: false },
+        { id: "choosing-tools", title: "Choosing the Right Tool", completed: false },
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
@@ -82,14 +87,14 @@ export const courseStructure: CourseStructure = {
     {
       id: "module-4",
       slug: "module-4",
-      title: "Module 4: AI Tools for Everyday Life",
+      title: "Module 4: Data and Preprocessing",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
-        { id: "ai-writing", title: "AI Writing Assistants", completed: false },
-        { id: "ai-images", title: "AI Image Generation", completed: false },
-        { id: "ai-productivity", title: "AI for Productivity", completed: false },
-        { id: "ai-creative", title: "AI in Creative Work", completed: false },
-        { id: "choosing-tools", title: "Choosing the Right Tool", completed: false },
+        { id: "what-is-data", title: "What Is Data?", completed: false },
+        { id: "data-collection", title: "Data Collection", completed: false },
+        { id: "data-cleaning", title: "Data Cleaning & Quality", completed: false },
+        { id: "preprocessing", title: "Preprocessing Techniques", completed: false },
+        { id: "feature-engineering", title: "Feature Engineering", completed: false },
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
@@ -97,7 +102,22 @@ export const courseStructure: CourseStructure = {
     {
       id: "module-5",
       slug: "module-5",
-      title: "Module 5: AI Ethics, Safety & Society",
+      title: "Module 5: Coding Fundamentals",
+      sections: [
+        { id: "module-overview", title: "Module Overview", completed: false },
+        { id: "programming-mindset", title: "Think Like a Programmer", completed: false },
+        { id: "variables-data", title: "Variables and Data", completed: false },
+        { id: "control-flow", title: "Control Flow", completed: false },
+        { id: "functions-reuse", title: "Functions and Reuse", completed: false },
+        { id: "debugging-fundamentals", title: "Debugging Fundamentals", completed: false },
+        { id: "module-quiz", title: "Module Quiz", completed: false },
+      ],
+    },
+    // Position 6
+    {
+      id: "module-6",
+      slug: "module-6",
+      title: "Module 6: AI Ethics, Safety & Society",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "ai-bias", title: "AI Bias & Fairness", completed: false },
@@ -108,11 +128,11 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
-    // Position 6
+    // Position 7
     {
-      id: "module-6",
-      slug: "module-6",
-      title: "Module 6: AI for Business & Work",
+      id: "module-7",
+      slug: "module-7",
+      title: "Module 7: AI for Business & Work",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "ai-in-the-workplace", title: "AI in the Workplace", completed: false },
@@ -123,11 +143,11 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
-    // Position 7
+    // Position 8
     {
-      id: "module-7",
-      slug: "module-7",
-      title: "Module 7: AI Agents",
+      id: "module-8",
+      slug: "module-8",
+      title: "Module 8: AI Agents",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "what-are-agents", title: "What Are AI Agents?", completed: false },
@@ -139,11 +159,11 @@ export const courseStructure: CourseStructure = {
         { id: "module-quiz", title: "Module Quiz", completed: false },
       ],
     },
-    // Position 8
+    // Position 9
     {
-      id: "module-8",
-      slug: "module-8",
-      title: "Module 8: Your AI Toolkit",
+      id: "module-9",
+      slug: "module-9",
+      title: "Module 9: Your AI Toolkit",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "explain-ai", title: "Explain AI Clearly", completed: false },
@@ -155,11 +175,11 @@ export const courseStructure: CourseStructure = {
         { id: "next-steps", title: "Next Steps & Resources", completed: false },
       ],
     },
-    // Position 9
+    // Position 10
     {
-      id: "module-9",
-      slug: "module-9",
-      title: "Module 9: The Future of AI",
+      id: "module-10",
+      slug: "module-10",
+      title: "Module 10: The Future of AI",
       sections: [
         { id: "module-overview", title: "Module Overview", completed: false },
         { id: "current-frontiers", title: "Current AI Frontiers", completed: false },
