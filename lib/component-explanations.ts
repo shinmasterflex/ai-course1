@@ -5,6 +5,7 @@
  */
 
 import { courseStructure } from "@/lib/course-structure"
+import { hashString, toSentence } from "@/lib/text-content-utils"
 
 export interface ComponentExplanation {
   id: string
@@ -98,21 +99,21 @@ m0-next-module-check next action: turn "Useful AI learning starts with skepticis
   "m1-hero": {
     id: "m1-hero",
     question: "I'm confused about this part: 'AI adoption decisions improve when teams distinguish models, tools, automations, and agents instead of treating everything as one category.' What is the one thing I should remember from this, in plain English? (Focus: m1-hero)",
-    explanation: `m1-hero decision lens: In AI execution, "AI adoption decisions improve when teams distinguish models, tools, automations, and agents instead of treating everything as one category." is a trigger to verify assumptions explicitly.
+    explanation: `Module 1 is about conceptual clarity before operational choice. When teams confuse models, tools, automations, and agents, they reason with unstable categories and make avoidable interpretation errors.
 
-m1-hero decision depth: m1-hero adoption meaning: Operational implication: aI adoption decisions improve when teams distinguish models, tools, automations, and agents instead of treating everything as one category.
+The key skill here is classification discipline. A model predicts, a tool packages capability for users, an automation executes predefined workflow logic, and an agent can pursue goals across steps with greater autonomy. Keeping those boundaries clear improves communication and reduces strategic noise.
 
-m1-hero next action: for "AI adoption decisions improve when teams distinguish models, tools, automations, and agents instead of treating everything as one category.", assign human ownership for approving or rejecting AI-supported outputs.`,
+Apply this by adding one language checkpoint to team discussions: before evaluating any AI claim, identify which category is being described and what capability is actually being asserted.`,
   },
 
   "m1-module-overview-check": {
     id: "m1-module-overview-check",
     question: "I'm confused about this part: 'Practical AI literacy begins with strong definitions and mental models, not buzzwords or premature technical depth.' Can you decode this with a concrete scenario I might face at work? (Focus: m1-module-overview-check)",
-    explanation: `m1-module-overview-check concept-to-action view: "Practical AI literacy begins with strong definitions and mental models, not buzzwords or premature technical depth." translates AI theory into accountable choices.
+    explanation: `Strong AI literacy starts with mental models that survive ambiguity. Buzzwords create false certainty, while clear definitions help teams reason about capability, risk, and limits using the same conceptual frame.
 
-m1-module-overview-check implementation depth: m1-module-overview-check governance angle: Why this improves AI judgment: practical AI literacy begins with strong definitions and mental models, not buzzwords or premature technical depth.
+This section is intentionally pre-procurement. The goal is to build language and interpretation quality so later decisions in Module 3 are grounded in evidence rather than marketing narratives.
 
-m1-module-overview-check next action: use "Practical AI literacy begins with strong definitions and mental models, not buzzwords or premature technical depth." to decide which AI steps are automatable and which remain judgment-heavy.`,
+A practical test is simple: if your team cannot explain a claim in plain language and place it in the correct category, the claim is not ready for operational evaluation.`,
   },
 
   "m1-defining-ai": {
@@ -208,11 +209,11 @@ m1-creative-work next action: convert "Creative AI becomes easier to judge when 
   "m1-choosing-tools": {
     id: "m1-choosing-tools",
     question: "I'm confused about this part: 'For day-to-day adoption capstone section in the applications section teaches decision-making frameworks.' Can you restate this clearly and show what changes in my workflow? (Focus: m1-choosing-tools)",
-    explanation: `m1-choosing-tools strategic interpretation: "For day-to-day adoption capstone section in the applications section teaches decision-making frameworks." in AI work supports repeatable, defensible decisions.
+    explanation: `In Module 1, tool comparison is intentionally lightweight. You are learning a foundational filter, not building a final procurement scorecard.
 
-m1-choosing-tools synthesis depth: m1-choosing-tools evaluation cue: Actionable meaning: for day-to-day adoption capstone section in the applications section teaches decision-making frameworks.
+The right question at this stage is conceptual fit: what category of tool matches the task, what limitation is obvious now, and what uncertainty must be tested later. Detailed vendor scoring, pricing analysis, and buy-pilot-wait decisions are handled in Module 3.
 
-m1-choosing-tools next action: for "For day-to-day adoption capstone section in the applications section teaches decision-making frameworks.", choose one low-risk AI use case and one non-negotiable safeguard.`,
+Use this section to prepare, not finalize. Produce a short list of categories to evaluate further and carry those candidates into the structured evaluation workflow in the next module.`,
   },
 
   "m1-quiz": {
@@ -330,21 +331,21 @@ m2-quiz next action: evaluate "Machine learning becomes easier to debug when you
   "m3-module-overview": {
     id: "m3-module-overview",
     question: "I'm confused about this part: 'You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality...' Can you reframe this as a quick rule I can apply immediately? (Focus: m3-module-overview)",
-    explanation: `m3-module-overview realistic interpretation: In AI practice, "You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality..." emphasizes tradeoffs over hype.
+    explanation: `Module 3 converts conceptual literacy into operational decision quality. The focus shifts from naming categories to running structured evaluations: baseline tests, scorecards, pilot logic, and explicit risk controls.
 
-m3-module-overview operational depth: m3-module-overview mechanism check: Mechanism-level takeaway: you will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality outputs.
+LLM understanding matters here because mechanism informs practice. Prompt design, failure analysis, and output evaluation are not isolated skills; they feed directly into how teams compare tools under real workflow constraints.
 
-m3-module-overview next action: for "You will learn what an LLM is, how ChatGPT generates responses token by token, and how to structure prompts that produce reliable, high-quality...", establish a repeatable AI evaluation routine with traceable evidence.`,
+Use a simple rule: no recommendation without comparable evidence. Every candidate should be tested against the same task set, evaluated with the same criteria, and reviewed with the same risk thresholds.`,
   },
 
   "m3-hero": {
     id: "m3-hero",
     question: "I'm confused about this part: 'Tool selection quality depends on fit, risk, and workflow impact, not launch buzz or feature count.' Could you simplify this and contrast a good vs bad way to interpret it? (Focus: m3-hero)",
-    explanation: `m3-hero execution framing: "Tool selection quality depends on fit, risk, and workflow impact, not launch buzz or feature count." indicates where AI can help and where human review must remain.
+    explanation: `Good tool selection is an evidence problem, not a trend problem. A tool is strong only when it improves a defined workflow outcome under acceptable risk and manageable integration cost.
 
-m3-hero strategic depth: m3-hero operational takeaway: Implementation lens: tool selection quality depends on fit, risk, and workflow impact, not launch buzz or feature count.
+Bad interpretation prioritizes surface signals: launch attention, feature breadth, or polished demos. Good interpretation prioritizes operational signals: reliability in your context, review burden, data handling fit, and measurable uplift over baseline.
 
-m3-hero next action: translate "Tool selection quality depends on fit, risk, and workflow impact, not launch buzz or feature count." into prompt constraints that reduce ambiguous AI behavior.`,
+Make this concrete with a weighted rubric. Assign criteria, run comparable tests, and require a written rationale for buy, pilot, or wait. If rationale cannot be defended with evidence, selection is premature.`,
   },
 
   "m3-language-models": {
@@ -400,11 +401,11 @@ m3-hands-on-practice next action: for "Now you write prompts and iterate based o
   "m3-quiz": {
     id: "m3-quiz",
     question: "I'm confused about this part: 'Reliable prompting depends on controlling context, constraints, examples, and evaluation criteria rather than guessing until something works.' Could you explain this as if coaching a teammate through it? (Focus: m3-quiz)",
-    explanation: `m3-quiz workflow reading: "Reliable prompting depends on controlling context, constraints, examples, and evaluation criteria rather than guessing until something works." identifies a step where AI output must be evaluated, not copied.
+    explanation: `The quiz is testing disciplined evaluation, not trial-and-error intuition. Reliable prompting comes from controlled inputs and explicit success criteria, the same logic used in defensible tool procurement.
 
-m3-quiz model depth: m3-quiz capability note: Workflow consequence: reliable prompting depends on controlling context, constraints, examples, and evaluation criteria rather than guessing until something works.
+When context, constraints, and examples are specified, output differences become interpretable. You can compare candidates fairly, diagnose failure causes, and decide whether issues are fixable through prompt design or require a different tool class.
 
-m3-quiz next action: convert "Reliable prompting depends on controlling context, constraints, examples, and evaluation criteria rather than guessing until something works." into a risk-weighted AI decision protocol for your workflow.`,
+Treat the checkpoint as procurement rehearsal. Show that you can define a prompt protocol, run consistent comparisons, and justify decisions using observable evidence rather than preference.`,
   },
 
   // MODULE 4: AI Tools for Everyday Life
@@ -420,42 +421,42 @@ m4-hero next action: for "Partner selection has outsized impact on AI adoption o
 
   "m4-writing-tools": {
     id: "m4-writing-tools",
-    question: "I'm confused about this part: 'Writing assistance has evolved from spell-check to generating entire paragraphs.' Could you unpack this in plain language and include one real-world example? (Focus: m4-writing-tools)",
-    explanation: `m4-writing-tools framing: In AI practice, "Writing assistance has evolved from spell-check to generating entire paragraphs." should be read as a decision prompt with explicit criteria.
+    question: "I'm confused about this part: 'Pre-contract questions should clarify scope, outcomes, staffing, and accountability before work begins.' Could you unpack this in plain language and include one practical example? (Focus: m4-writing-tools)",
+    explanation: `Partner selection quality depends on question quality before signature. Teams that skip pre-contract clarity usually discover misalignment only after budget and timeline risk has already expanded.
 
-m4-writing-tools reasoning depth: writing assistance has evolved from spell-check to generating entire paragraphs.
+Strong pre-contract questions establish execution reality: who delivers what, by when, under which constraints, and with which acceptance criteria. Without this structure, proposals remain persuasive narratives rather than accountable delivery commitments.
 
-m4-writing-tools next action: test AI output tied to "Writing assistance has evolved from spell-check to generating entire paragraphs." with one metric, one risk check, and one fallback.`,
+Apply this by creating a diligence script for partner calls. Require explicit answers on scope boundaries, staffing continuity, reporting cadence, and escalation ownership before moving to commercial negotiation.`,
   },
 
   "m4-image-tools": {
     id: "m4-image-tools",
-    question: "I'm confused about this part: 'Image generation tools let you create visuals from text descriptions. The capability is impressive, but understanding what it actually does-learning...' What is the core idea here, and how would you teach it to a beginner? (Focus: m4-image-tools)",
-    explanation: `m4-image-tools translation: For AI work, "Image generation tools let you create visuals from text descriptions. The capability is impressive, but understanding what it actually does-learning..." is a cue to connect concept understanding to concrete choices.
+    question: "I'm confused about this part: 'Strong partner pilots should be small, measurable, and tied to clear go/no-go criteria.' What is the core idea here, and how would you teach it to a beginner? (Focus: m4-image-tools)",
+    explanation: `A partner pilot is a decision instrument, not a symbolic launch. Its purpose is to generate evidence that reduces uncertainty about delivery quality, integration friction, and governance fit.
 
-m4-image-tools practical depth: m4-image-tools reasoning layer: image generation tools let you create visuals from text descriptions. Treat
+Pilot quality comes from constraint. Small scope, explicit success thresholds, and pre-defined stop conditions make results interpretable and prevent momentum from replacing evidence.
 
-m4-image-tools next action: for "Image generation tools let you create visuals from text descriptions. The capability is impressive, but understanding what it actually does-learning...", validate a core assumption before AI output informs any real decision.`,
+Use this practically by writing go/no-go criteria before kickoff. If the partner cannot commit to measurable outcomes and review dates, the pilot is unlikely to produce decision-grade evidence.`,
   },
 
   "m4-productivity-tools": {
     id: "m4-productivity-tools",
-    question: "I'm confused about this part: 'AI productivity tools include code generation, research summarization, email drafting, and more.' Can you translate this into everyday language and show why it matters? (Focus: m4-productivity-tools)",
-    explanation: `m4-productivity-tools plain-language view: "AI productivity tools include code generation, research summarization, email drafting, and more." marks an AI judgment moment, not just a vocabulary check.
+    question: "I'm confused about this part: 'Contract structure determines whether partner pricing stays predictable or drifts through vague change orders.' Can you translate this into everyday language and show why it matters? (Focus: m4-productivity-tools)",
+    explanation: `Partner pricing risk is usually a contract-design problem, not a math problem. Low entry price can be attractive, but unclear scope boundaries and change-order clauses often create hidden long-run cost.
 
-m4-productivity-tools mechanism depth: m4-productivity-tools practical meaning: aI productivity tools include code generation, research summarization, email drafting, and more.
+Predictable pricing requires explicit mechanics: what is included, what triggers extra charges, how acceptance is determined, and who approves scope adjustments. These details create governance leverage during delivery.
 
-m4-productivity-tools next action: map "AI productivity tools include code generation, research summarization, email drafting, and more." to a small AI pilot, then compare benefit, effort, and failure risk.`,
+Operationalize this by requiring a pricing stress test before signature. Model best case, expected case, and scope-change case so leadership sees total exposure before approval.`,
   },
 
   "m4-quiz": {
     id: "m4-quiz",
-    question: "I'm confused about this part: 'Tool selection improves when you compare tasks by risk, privacy, speed, and review burden instead of by brand familiarity.' Could you restate this without jargon and highlight the practical takeaway? (Focus: m4-quiz)",
-    explanation: `m4-quiz core reading: Within AI workflows, "Tool selection improves when you compare tasks by risk, privacy, speed, and review burden instead of by brand familiarity." means reasoning quality matters as much as output speed.
+    question: "I'm confused about this part: 'Partner decisions improve when proposals are compared by scope clarity, accountability, pilot evidence, and contract risk rather than by confidence in sales messaging.' Could you restate this without jargon and highlight the practical takeaway? (Focus: m4-quiz)",
+    explanation: `Module 4 evaluates delivery partners, not product demos. Strong partner judgment depends on evidence about execution capacity, governance fit, and contractual clarity.
 
-m4-quiz risk depth: m4-quiz execution view: Reasoning behind the point: tool selection improves when you compare tasks by risk, privacy, speed, and review burden instead of by brand familiarity.
+The practical rule is simple: do not reward narrative confidence without operating detail. Compare candidates on verifiable scope definition, measurable pilot outcomes, escalation design, and commercial transparency.
 
-m4-quiz next action: use "Tool selection improves when you compare tasks by risk, privacy, speed, and review burden instead of by brand familiarity." to set review gates so AI drafts and final decisions stay separated.`,
+Use the checkpoint as a diligence simulation. Present one recommendation with explicit risk controls and one rejection with documented reasons, then verify both decisions can be defended under executive scrutiny.`,
   },
 
   // MODULE 5: Data and Learning
@@ -838,12 +839,12 @@ m4-feature-engineering next action: test AI output tied to "AI partner pricing b
   // MODULE 5 (actual): Evaluating the Business Impact of AI
   "m5-module-overview": {
     id: "m5-module-overview",
-    question: "I'm confused about this part: 'At this stage module teaches a practical approach to evaluating whether AI tools are worth adopting.' What is the core idea here, and how would you teach it to a beginner? (Focus: m5-module-overview)",
-    explanation: `m5-module-overview translation: For AI work, "At this stage module teaches a practical approach to evaluating whether AI tools are worth adopting." is a cue to connect concept understanding to concrete choices.
+    question: "I'm confused about this part: 'Module 5 treats AI adoption as a measurement design problem, not a hype decision.' What does that mean in practice for a team deciding where to invest first? (Focus: m5-module-overview)",
+    explanation: `m5-module-overview translation: Module 5 is about building a defensible measurement system before scaling AI. The core move is to define outcomes, baselines, and owners first, then judge tools by observed impact.
 
-m5-module-overview practical depth: m5-module-overview reasoning layer: at this stage module teaches a practical approach to evaluating whether AI tools are worth adopting. Treat
+m5-module-overview reasoning depth: Teams often confuse activity with value. Usage metrics, demo quality, and internal excitement are not enough. This module asks: what business outcome should improve, how will we measure the change, and what evidence threshold justifies more investment?
 
-m5-module-overview next action: for "At this stage module teaches a practical approach to evaluating whether AI tools are worth adopting.", validate a core assumption before AI output informs any real decision.`,
+m5-module-overview next action: Write one ROI measurement brief for a pilot: baseline metric, target delta, cost categories, review cadence, and a stop rule if evidence is weak.`,
   },
 
   "m5-roi-basics": {
@@ -868,12 +869,12 @@ m5-leverage next action: use "Leverage means AI increases capability, not just s
 
   "m5-effectiveness": {
     id: "m5-effectiveness",
-    question: "I'm confused about this part: 'Effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk...' What does this actually mean in practice, and when should I apply it? (Focus: m5-effectiveness)",
-    explanation: `m5-effectiveness interpretation: In an AI context, "Effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk..." asks for evidence-aware decision making.
+    question: "I'm confused about this part: 'Measure outcomes, not just activity.' How do I separate useful performance signals from vanity metrics in an AI rollout? (Focus: m5-effectiveness)",
+    explanation: `m5-effectiveness interpretation: Outcome metrics track whether business performance improved; activity metrics only show that people touched the tool. Both are useful, but only outcome movement proves value.
 
-m5-effectiveness execution depth: m5-effectiveness decision context: Practical significance: effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk reduction.
+m5-effectiveness execution depth: A good metric stack uses three lenses: efficiency (time/cost), effectiveness (quality/results), and risk (error or compliance exposure). If one lens improves while another deteriorates, scale decisions should pause.
 
-m5-effectiveness next action: for "Effective AI measurement focuses on outcome metrics linked to business goals: conversion, cycle time, error rate, quality consistency, and risk...", document what evidence raises trust and what evidence lowers trust in AI.`,
+m5-effectiveness next action: For one workflow, define one metric per lens and set acceptable ranges. Review weekly and treat conflicting signals as a decision checkpoint, not a reporting footnote.`,
   },
 
   "m5-roi-formula": {
@@ -898,12 +899,12 @@ m5-metrics next action: for "A strong metric stack combines efficiency, effectiv
 
   "m5-adoption": {
     id: "m5-adoption",
-    question: "I'm confused about this part: 'AI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to...' Could you simplify this and point out the most important decision it affects? (Focus: m5-adoption)",
-    explanation: `m5-adoption applied meaning: "AI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to..." signals that AI value depends on mechanism, context, and safeguards.
+    question: "I'm confused about this part: 'Adoption criteria should be evidence-weighted.' Which criteria matter most before we commit budget to an AI initiative? (Focus: m5-adoption)",
+    explanation: `m5-adoption applied meaning: Structured criteria protect teams from chasing novelty. The strongest early criteria are measurable outcome potential, evidence quality, implementation cost clarity, and operational reliability.
 
-m5-adoption oversight depth: m5-adoption risk context: Applied interpretation: aI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to measurable value.
+m5-adoption oversight depth: Security and integration fit are required constraints, but they are not value proof. Value proof comes from whether the initiative can credibly move a business metric within a known time window.
 
-m5-adoption next action: turn "AI adoption should follow structured evaluation criteria: expected impact, security fit, integration effort, team readiness, reliability, and time to..." into an AI checklist covering context, constraints, and safety.`,
+m5-adoption next action: Build a weighted decision sheet with explicit scoring rules and required evidence for each criterion. If evidence is missing, the score should not be estimated optimistically.`,
   },
 
   // MODULE 6 additions (m6-module-overview and m6-future-ai)
@@ -930,12 +931,12 @@ m6-future-ai next action: use "AI development is accelerating across capability,
   // MODULE 7 additions
   "m7-module-overview": {
     id: "m7-module-overview",
-    question: "I'm confused about this part: 'The m7-module-overview context topic module connects AI capability to practical business and career contexts: how AI is already changing workplaces,...' Could you explain the intent behind this and the mistake it helps avoid? (Focus: m7-module-overview)",
-    explanation: `m7-module-overview operational reading: "The m7-module-overview context topic module connects AI capability to practical business and career contexts: how AI is already changing workplaces,..." frames AI output as input to judgment, not a final verdict.
+    question: "I'm confused about this part: 'Module 7 is about rollout orchestration.' How is that different from choosing tools or measuring ROI? (Focus: m7-module-overview)",
+    explanation: `m7-module-overview operational reading: Module 7 assumes you already have candidate use cases and basic value evidence. The focus shifts to execution: sequencing work, assigning owners, preparing teams, and sustaining adoption.
 
-m7-module-overview evaluation depth: m7-module-overview learning takeaway: Use-case relevance: the m7-module-overview context topic module connects AI capability to practical business and career contexts: how AI is already changing workplaces, which jobs and industries are affected first, how to build an AI strategy, and how to redesign workflows with AI assistance.
+m7-module-overview evaluation depth: This module answers deployment questions: What should launch first? Which dependencies must be complete? Who resolves blockers? How do we prevent rollout fatigue? It is less about proving value and more about delivering value reliably.
 
-m7-module-overview next action: evaluate "The m7-module-overview context topic module connects AI capability to practical business and career contexts: how AI is already changing workplaces,..." with a pre-mortem so AI failure modes are explicit early.`,
+m7-module-overview next action: Draft a phased rollout map with dependency gates, owner names, change-support actions, and weekly operating rhythm for decisions and escalation.`,
   },
 
   "m7-opportunities": {
@@ -960,12 +961,12 @@ m7-role-transformation next action: translate "AI does not simply replace jobs -
 
   "m7-workflow-redesign": {
     id: "m7-workflow-redesign",
-    question: "I'm confused about this part: 'Redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and...' How would you explain this if you only had 30 seconds? (Focus: m7-workflow-redesign)",
-    explanation: `m7-workflow-redesign quality framing: For AI decisions, "Redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and..." requires clearer standards before action.
+    question: "I'm confused about this part: 'Workflow redesign is a sequencing problem.' What exactly should be redesigned first when introducing AI into an existing process? (Focus: m7-workflow-redesign)",
+    explanation: `m7-workflow-redesign quality framing: Start by redesigning handoffs and checkpoints, not just individual tasks. AI changes where work is reviewed, approved, and corrected, so sequence design is as important as prompt quality.
 
-m7-workflow-redesign learning depth: m7-workflow-redesign implementation meaning: Risk-aware reading: redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and building feedback loops that catch errors before they compound.
+m7-workflow-redesign learning depth: A practical redesign pattern is: map current workflow, mark automation candidates, identify irreversible decisions, insert human checkpoints, and define escalation for exceptions. This prevents silent error propagation.
 
-m7-workflow-redesign next action: for "Redesigning workflows with AI means identifying which steps benefit from automation or assistance, adding appropriate verification steps, and...", compare AI recommendations against a non-AI baseline before adoption.`,
+m7-workflow-redesign next action: Redraw one target workflow with phase ownership, entry criteria, exit criteria, and exception routing. Use it as the rollout template for similar teams.`,
   },
 
   "m7-building-skills": {
@@ -1052,12 +1053,12 @@ m8-agent-risks next action: for "Agents introduce risks that single-turn models 
   // MODULE 9 (actual): Your AI Toolkit
   "m9-module-overview": {
     id: "m9-module-overview",
-    question: "I'm confused about this part: 'The m9-module-overview context topic capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the...' Can you translate this into everyday language and show why it matters? (Focus: m9-module-overview)",
-    explanation: `m9-module-overview plain-language view: "The m9-module-overview context topic capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the..." marks an AI judgment moment, not just a vocabulary check.
+    question: "I'm confused about this part: 'Module 9 is stack governance, not tool shopping.' What does a governance mindset change in day-to-day decisions? (Focus: m9-module-overview)",
+    explanation: `m9-module-overview plain-language view: Module 9 treats your AI stack as a long-lived operating system for the business. The key question is not "which tool is best today," but "which stack decisions stay reliable, affordable, and governable over time."
 
-m9-module-overview mechanism depth: m9-module-overview practical meaning: the m9-module-overview context topic capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the right tool for a task, how to prompt the major models, how to apply safety checks, and how to build simple AI workflows.
+m9-module-overview mechanism depth: Governance mindset adds lifecycle logic: who can introduce tools, how overlap is evaluated, when consolidation is required, and what retirement criteria prevent tool sprawl.
 
-m9-module-overview next action: map "The m9-module-overview context topic capstone module synthesises everything into practical judgment: how to explain AI to others, how to choose the..." to a small AI pilot, then compare benefit, effort, and failure risk.`,
+m9-module-overview next action: Define stack principles and ownership first, then run every add/retain/retire decision through the same governance rubric.`,
   },
 
   "m9-explain-ai": {
@@ -1102,12 +1103,12 @@ m9-safety-checks next action: for "Every AI output needs a minimum safety check 
 
   "m9-workflows": {
     id: "m9-workflows",
-    question: "I'm confused about this part: 'An AI workflow is a repeatable sequence of steps where AI assists with one or more stages.' Could you simplify this and point out the most important decision it affects? (Focus: m9-workflows)",
-    explanation: `m9-workflows applied meaning: "An AI workflow is a repeatable sequence of steps where AI assists with one or more stages." signals that AI value depends on mechanism, context, and safeguards.
+    question: "I'm confused about this part: 'Workflow quality depends on maintainability ownership.' Why is ownership such a big deal after a workflow already works? (Focus: m9-workflows)",
+    explanation: `m9-workflows applied meaning: A workflow that works once is not a production capability. In Module 9, the priority is maintainability: ownership for updates, monitoring, incident response, and retirement decisions.
 
-m9-workflows oversight depth: m9-workflows risk context: Applied interpretation: an AI workflow is a repeatable sequence of steps where AI assists with one or more stages.
+m9-workflows oversight depth: Without ownership, reliability degrades silently as models, integrations, and business rules drift. Governance turns one-time success into repeatable performance.
 
-m9-workflows next action: turn "An AI workflow is a repeatable sequence of steps where AI assists with one or more stages." into an AI checklist covering context, constraints, and safety.`,
+m9-workflows next action: Attach each production workflow to a named operating owner, review cadence, and deprecation trigger so lifecycle decisions are explicit rather than ad hoc.`,
   },
 
   "m9-mini-project": {
@@ -1777,17 +1778,7 @@ function normalizeSentence(value: string) {
     return ""
   }
 
-  return /[.!?]$/.test(compact) ? compact : `${compact}.`
-}
-
-function hashString(value: string) {
-  let hash = 0
-
-  for (let index = 0; index < value.length; index += 1) {
-    hash = (hash * 31 + value.charCodeAt(index)) >>> 0
-  }
-
-  return hash
+  return toSentence(compact)
 }
 
 function pickVariant<T>(key: string, options: T[]) {
@@ -2129,6 +2120,13 @@ export function searchExplanations(query: string): ComponentExplanation[] {
     .map(resolveExplanation)
     .filter((exp) => exp.question.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery))
 }
+
+// Text-display content generation lives in a dedicated module; this file re-exports the public API.
+export {
+  getTextDisplayInstructionalBriefParagraphs,
+  getTextDisplayTrueFalseStatement,
+  type InferentialStatement,
+} from "@/lib/text-display-content"
 
 
 
