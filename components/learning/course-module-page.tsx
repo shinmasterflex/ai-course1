@@ -6,7 +6,6 @@ import { Header } from "@/components/layout/header"
 import { Sidebar } from "@/components/layout/sidebar"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { TextDisplay } from "@/components/learning/text-display"
-import { QuickCheckCard } from "@/components/learning/lesson-interactions"
 import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -14,69 +13,10 @@ import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/course-content"
-import { getComponentExplanation, getSectionLearningContent } from "@/lib/course-content"
+import { getSectionLearningContent } from "@/lib/course-content"
 
 type CourseModulePageProps = {
   moduleId: string
-}
-
-type ComponentCardContent = {
-  scenario: {
-    title: string
-    body: string
-    checklistTitle: string
-    checklistItems: string[]
-    explainer: {
-      type: string
-      title: string
-      explanation: string
-    }
-  }
-  quickCheck: {
-    prompt: string
-    options: { id: string; label: string }[]
-    correctOptionId: string
-    explanation: string
-    optionExplanations: Record<string, string>
-    explainer: {
-      type: string
-      title: string
-      explanation: string
-    }
-  }
-}
-
-function buildScenarioCardExplanation(
-  moduleTitle: string,
-  sectionTitle: string,
-  scenarioTitle: string,
-  scenarioBody: string,
-  checklistTitle: string,
-  checklistItems: string[],
-  panelExplanation: string,
-) {
-  const checklistPreview = checklistItems.map((item) => `- ${item}`).join("\n")
-  return [
-    `Module: ${moduleTitle}. Section: ${sectionTitle}.`,
-    `Scenario card: ${scenarioTitle}. ${scenarioBody}`,
-    `Action checklist (${checklistTitle}):\n${checklistPreview}`,
-    panelExplanation,
-  ].join("\n\n")
-}
-
-function buildQuickCheckCardExplanation(
-  sectionTitle: string,
-  prompt: string,
-  options: { id: string; label: string }[],
-  panelExplanation: string,
-) {
-  const optionLines = options.map((option) => `${option.id.toUpperCase()}: ${option.label}`).join("\n")
-  return [
-    `Checkpoint for ${sectionTitle}.`,
-    `Prompt: ${prompt}`,
-    `Options:\n${optionLines}`,
-    panelExplanation,
-  ].join("\n\n")
 }
 
 export function CourseModulePage({ moduleId }: CourseModulePageProps) {
@@ -153,64 +93,6 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const completionReady = completedSectionIds.length === totalSections
   const content = getSectionLearningContent(moduleId, currentSection?.id)
 
-  const sectionExplainerBaseId = currentSection ? `${moduleId}-${currentSection.id}` : undefined
-  const componentCards: ComponentCardContent | null = useMemo(() => {
-    if (!currentSection || !content || !sectionExplainerBaseId) {
-      return null
-    }
-
-    const scenarioExplainerId = `${sectionExplainerBaseId}-scenario`
-    const quickCheckExplainerId = `${sectionExplainerBaseId}-quick-check`
-    const scenarioPanelExplanation = getComponentExplanation(scenarioExplainerId)?.explanation
-    const quickCheckPanelExplanation = getComponentExplanation(quickCheckExplainerId)?.explanation
-
-    const scenarioMergedExplanation = scenarioPanelExplanation
-      ? scenarioPanelExplanation
-      : `This scenario card introduces the section context for ${currentSection.title} and prepares you to apply the concept in a real workflow.`
-    const quickCheckMergedExplanation = quickCheckPanelExplanation
-      ? quickCheckPanelExplanation
-      : `This quick check validates whether you can apply ${currentSection.title} with evidence-based reasoning.`
-
-    return {
-      scenario: {
-        title: content.scenarioTitle,
-        body: content.scenarioBody,
-        checklistTitle: content.checklistTitle,
-        checklistItems: content.checklistItems,
-        explainer: {
-          type: "Scenario card",
-          title: content.scenarioTitle,
-          explanation: buildScenarioCardExplanation(
-            module.title,
-            currentSection.title,
-            content.scenarioTitle,
-            content.scenarioBody,
-            content.checklistTitle,
-            content.checklistItems,
-            scenarioMergedExplanation,
-          ),
-        },
-      },
-      quickCheck: {
-        prompt: content.quickCheckPrompt,
-        options: content.quickCheckOptions,
-        correctOptionId: content.quickCheckCorrectOptionId,
-        explanation: content.quickCheckExplanation,
-        optionExplanations: content.quickCheckOptionExplanations,
-        explainer: {
-          type: "Checkpoint card",
-          title: `Quick check: ${currentSection.title}`,
-          explanation: buildQuickCheckCardExplanation(
-            currentSection.title,
-            content.quickCheckPrompt,
-            content.quickCheckOptions,
-            quickCheckMergedExplanation,
-          ),
-        },
-      },
-    }
-  }, [currentSection, module.title, sectionExplainerBaseId, content])
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -228,55 +110,10 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               <h2 className="text-3xl font-bold text-brand-green">{currentSection.title}</h2>
               <TextDisplay
                 variant="callout"
-                content={currentSection.summary ? currentSection.summary : "Use this section to sharpen your decision quality and implementation discipline."}
+                content={currentSection.summary ? currentSection.summary : ""}
               />
 
-              {componentCards ? (
-                <Card
-                  className="p-5 border-brand-indigo/20 bg-brand-indigo/5 space-y-4"
-                  {...getExplainerAttributes(componentCards.scenario.explainer)}
-                >
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Scenario</p>
-                    <p className="text-lg font-semibold text-brand-indigo">{componentCards.scenario.title}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{componentCards.scenario.body}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Action Checklist</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{componentCards.scenario.checklistTitle}</p>
-                    <ul className="mt-2 space-y-2 text-sm text-muted-foreground list-disc pl-5">
-                      {componentCards.scenario.checklistItems.map((item) => (
-                        <li key={`${moduleId}-${currentSection.id}-${item}`}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </Card>
-              ) : null}
-
-              <div className="space-y-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-green/80">Checkpoint</p>
-                  <p className="text-sm text-muted-foreground">Use this quick check to confirm you can apply the section in a real situation.</p>
-                </div>
-                <QuickCheckCard
-                  key={`${moduleId}-${currentSection.id}-quick-check`}
-                  componentId={`${moduleId}-${currentSection.id}-quick-check`}
-                  explainerDescriptor={componentCards ? componentCards.quickCheck.explainer : undefined}
-                  prompt={componentCards ? componentCards.quickCheck.prompt : `What is the strongest next move after completing "${currentSection.title}"?`}
-                  options={componentCards ? componentCards.quickCheck.options : [
-                    { id: "a", label: "Buy a tool immediately based on a demo" },
-                    { id: "b", label: "Translate insights into a scoped decision plan with owners and metrics" },
-                    { id: "c", label: "Wait until the market is fully stable" },
-                  ]}
-                  correctOptionId={componentCards ? componentCards.quickCheck.correctOptionId : "b"}
-                  explanation={componentCards ? componentCards.quickCheck.explanation : "High-quality AI decisions require a scoped plan, clear owners, measurable outcomes, and risk controls."}
-                  optionExplanations={componentCards ? componentCards.quickCheck.optionExplanations : {
-                    a: "Demo quality alone is a weak signal. Procurement should follow structured evaluation.",
-                    b: "This is the implementation-focused, beginner-friendly approach.",
-                    c: "Delays often increase strategic risk without improving decision quality.",
-                  }}
-                />
-              </div>
+              {content ? <TextDisplay content={content} /> : null}
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button

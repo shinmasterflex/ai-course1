@@ -9,7 +9,10 @@ export type ExplainerDescriptor = {
   id?: string
   type: string
   title: string
-  explanation: string
+  explanation?: string
+  summary?: string
+  details?: string[]
+  interaction?: string
 }
 
 const DEFAULT_DESCRIPTOR: ExplainerDescriptor = {
@@ -51,11 +54,15 @@ function expandText(value: string | null | undefined) {
 }
 
 export function getExplainerAttributes(descriptor: ExplainerDescriptor) {
+  const explanation = descriptor.explanation
+    ? descriptor.explanation
+    : [descriptor.summary, ...(descriptor.details ?? []), descriptor.interaction].filter(Boolean).join(" ")
+
   const normalizedDescriptor: ExplainerDescriptor = {
     id: descriptor.id,
     type: compactText(descriptor.type, 40),
     title: compactText(descriptor.title, 90),
-    explanation: expandText(descriptor.explanation),
+    explanation,
   }
 
   return {
@@ -112,7 +119,7 @@ function resolveDescriptor(target: HTMLElement | null) {
     const componentId = current.getAttribute("data-explainer-id")
     if (componentId) {
       const customExplanation = getComponentExplanation(componentId)
-      if (customExplanation) {
+      if (customExplanation?.question && customExplanation.explanation) {
         return formatExplainerDescriptor({
           id: customExplanation.id,
           type: customExplanation.id.substring(0, customExplanation.id.indexOf("-", 2)), // Extract module prefix
@@ -128,7 +135,8 @@ function resolveDescriptor(target: HTMLElement | null) {
 }
 
 function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescriptor; history: ExplainerDescriptor[] }) {
-  const paragraphs = descriptor.explanation
+  const explanationText = descriptor.explanation ?? ""
+  const paragraphs = explanationText
     .split("\n\n")
     .map((paragraph) => paragraph.trim())
     .filter((paragraph) => paragraph.length > 0)
@@ -170,7 +178,9 @@ export function CourseExplainerLayout({ children }: { children: ReactNode }) {
     }
 
     const descriptor = resolveDescriptor(target)
-    const descriptorSignature = descriptor ? `${descriptor.id ? descriptor.id : descriptor.type}:${descriptor.title}:${descriptor.explanation.slice(0, 80)}` : ""
+    const descriptorSignature = descriptor
+      ? `${descriptor.id ? descriptor.id : descriptor.type}:${descriptor.title}:${(descriptor.explanation ?? "").slice(0, 80)}`
+      : ""
     if (descriptor && descriptorSignature !== lastDescriptorRef.current) {
       lastDescriptorRef.current = descriptorSignature
       setSelectedDescriptor(descriptor)

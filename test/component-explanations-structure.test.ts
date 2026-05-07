@@ -28,7 +28,11 @@ function normalizeWords(value: string) {
     .trim()
 }
 
-function paragraphSignature(value: string) {
+function paragraphSignature(value: string | null) {
+  if (!value) {
+    return ""
+  }
+
   return value
     .split(/\n\s*\n/)
     .map((paragraph) => normalizeWords(paragraph).split(" ").filter(Boolean).slice(0, 4).join(" "))
@@ -42,6 +46,7 @@ describe("resolved component explanation structure", () => {
       .map((id) => getComponentExplanation(id))
       .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry))
       .map((entry) => paragraphSignature(entry.explanation))
+      .filter((signature) => signature.length > 0)
 
     const counts = signatures.reduce<Record<string, number>>((acc, signature) => {
       acc[signature] = (acc[signature] ? acc[signature] : 0) + 1

@@ -39,8 +39,8 @@ function getUsedComponentIds() {
   return Array.from(ids).sort()
 }
 
-function normalizeExplanation(value: string) {
-  return value.replace(/\s+/g, " ").trim()
+function normalizeExplanation(value: string | null) {
+  return (value ?? "").replace(/\s+/g, " ").trim()
 }
 
 describe("component explanation registry coverage", () => {

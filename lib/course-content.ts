@@ -1,3014 +1,1156 @@
-﻿export type SectionLearningContent = {
-  scenarioTitle: string
-  scenarioBody: string
-  checklistTitle: string
-  checklistItems: string[]
-  quickCheckPrompt: string
-  quickCheckOptions: { id: string; label: string }[]
-  quickCheckCorrectOptionId: string
-  quickCheckExplanation: string
-  quickCheckOptionExplanations: Record<string, string>
-}
+export type SectionLearningContent = string
 
 type CardKnowledgeEntry = {
   id: string
   moduleId: string
   sectionId: string
   cardType: "section-card" | "manual-explainer"
-  content: SectionLearningContent
-  summary: string
-  question: string
-  explanation: string
+  content: SectionLearningContent | null
+  summary: string | null
+  question: string | null
+  explanation: string | null
 }
 
-const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> = 
+type ModuleBlueprint = {
+  title: string
+  description: string
+  coreThemes: string[]
+}
 
-{
-"module-0-ai-is-everywhere": {
-    id: "module-0-ai-is-everywhere",
-    moduleId: "module-0",
-    sectionId: "ai-is-everywhere",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Practical scenario",
-        scenarioBody:
-          "You are evaluating AI tools and are seeing bold claims everywhere. You need a simple way to separate truly useful capabilities from hype before spending time or money.",
-        checklistTitle: "Hype filter checklist",
-        checklistItems: [
-          "Ask what specific workflow problem the tool solves.",
-          "Check whether results are measurable in time, quality, or output.",
-          "Confirm whether the feature works in your real process, not only in demos.",
-        ],
-        quickCheckPrompt: "Which question best filters hype from real value?",
-        quickCheckOptions: [
-          { id: "a", label: "How polished are the demo outputs compared with competitors?" },
-          { id: "b", label: "Can this improve a real workflow with measurable outcomes?" },
-          { id: "c", label: "How many teams have already adopted the tool this quarter?" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Real value is tied to workflow improvement and measurable outcomes, not novelty.",
-        quickCheckOptionExplanations: {
-          a: "Marketing quality does not prove operational value.",
-          b: "This is the strongest practical filter for beginners.",
-          c: "Newness is not the same as usefulness.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-is-everywhere through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-0-ai-is-everywhere?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-0-how-to-use-course": {
-    id: "module-0-how-to-use-course",
-    moduleId: "module-0",
-    sectionId: "how-to-use-course",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Adoption strategy scenario",
-        scenarioBody:
-          "You are deciding how to run your first 2-week AI adoption sprint. The objective is to test one workflow, capture evidence, and define next decisions without overcommitting.",
-        checklistTitle: "Safe start checklist",
-        checklistItems: [
-          "Pick one repeatable workflow with clear before-and-after comparison.",
-          "Choose one existing tool and note why it fits your current constraints.",
-          "Set a 2-week test window with a single review meeting and owner.",
-        ],
-        quickCheckPrompt: "What is the best first adoption move for beginners?",
-        quickCheckOptions: [
-          { id: "a", label: "Run one short, scoped sprint in a single workflow with clear ownership" },
-          { id: "b", label: "Run parallel pilots in multiple workflows to maximize early coverage" },
-          { id: "c", label: "Delay all experiments until a full enterprise AI policy is complete" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "A single scoped sprint creates credible learning while keeping risk and coordination cost low.",
-        quickCheckOptionExplanations: {
-          a: "This is the best beginner pattern for disciplined adoption.",
-          b: "Too much scope early makes results harder to trust or compare.",
-          c: "Over-delaying slows capability building and decision confidence.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in how-to-use-course through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-0-how-to-use-course?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-0-summary": {
-    id: "module-0-summary",
-    moduleId: "module-0",
-    sectionId: "summary",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Wrap-up scenario",
-        scenarioBody:
-          "You are finishing Module 0 and preparing to brief your manager. You need a simple 30-day adoption plan that names what to test, who owns decisions, and which partner support is required.",
-        checklistTitle: "30-day starter checklist",
-        checklistItems: [
-          "Name one workflow, one tool candidate, and one contingency option.",
-          "Document selection criteria, required partner capabilities, and budget boundary.",
-          "Assign owner, success metric, and guardrail for the first 30 days.",
-        ],
-        quickCheckPrompt: "What should you leave Module 0 with?",
-        quickCheckOptions: [
-          { id: "a", label: "A ranked list of AI products without ownership, budget, or partner criteria" },
-          { id: "b", label: "A decision-ready 30-day plan with owner, tool criteria, partner path, metric, and guardrail" },
-          { id: "c", label: "A research memo that postpones decisions until the next quarter" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Module 0 should conclude with a decision-ready plan, not disconnected research or shopping lists.",
-        quickCheckOptionExplanations: {
-          a: "Lists without owners and constraints rarely move into execution.",
-          b: "This is the intended outcome of the module wrap-up.",
-          c: "Deferring decisions weakens momentum and slows validated learning.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in summary through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-0-summary?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-0-welcome": {
+const MODULE_BLUEPRINTS: Record<string, ModuleBlueprint> = {
+  "module-0": {
+    title: "Module 0: The AI Shift",
+    description: "Separate hype from reality and define your leadership posture.",
+    coreThemes: [],
+  },
+  "module-1": {
+    title: "Module 1: AI Landscape",
+    description: "Models, tools, agencies, and delivery models mapped for decisions.",
+    coreThemes: [],
+  },
+  "module-2": {
+    title: "Module 2: Business Value",
+    description: "Find high-ROI use cases and prioritize opportunities with confidence.",
+    coreThemes: [],
+  },
+  "module-3": {
+    title: "Module 3: Tools That Matter",
+    description: "Evaluate tool categories, integration fit, pricing, and security.",
+    coreThemes: [],
+  },
+  "module-4": {
+    title: "Module 4: Agency and Partner Selection",
+    description: "Run vendor diligence and structure pilots that produce real evidence.",
+    coreThemes: [],
+  },
+  "module-5": {
+    title: "Module 5: ROI Frameworks",
+    description: "Build credible ROI models, prioritization matrices, and reporting.",
+    coreThemes: [],
+  },
+  "module-6": {
+    title: "Module 6: Risk and Governance",
+    description: "Implement guardrails for data, reliability, compliance, and vendors.",
+    coreThemes: [],
+  },
+  "module-7": {
+    title: "Module 7: Adoption Roadmap",
+    description: "Translate strategy into pilots, change management, and phased rollout.",
+    coreThemes: [],
+  },
+  "module-8": {
+    title: "Module 8: Agents and Automation Systems",
+    description: "Design practical automation with human oversight and operational control.",
+    coreThemes: [],
+  },
+  "module-9": {
+    title: "Module 9: AI Stack Design",
+    description: "Avoid tool sprawl and build a maintainable, owned AI ecosystem.",
+    coreThemes: [],
+  },
+  "module-10": {
+    title: "Module 10: Future Positioning",
+    description: "Anticipate industry shifts and position for durable AI advantage.",
+    coreThemes: [],
+  },
+}
+
+const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> = {
+
+  // ─────────────────────────────────────────────
+  // MODULE 0 — The AI Shift: What's Actually Happening
+  // ─────────────────────────────────────────────
+
+  "module-0-welcome": {
     id: "module-0-welcome",
     moduleId: "module-0",
     sectionId: "welcome",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Beginner scenario",
-        scenarioBody:
-          "You are new to AI and are hearing conflicting opinions. Your goal is to build a clear mental model of what changed recently and why this wave is more practical than earlier AI hype cycles.",
-        checklistTitle: "Foundations checklist",
-        checklistItems: [
-          "Explain in one sentence what changed in AI since 2022.",
-          "List two practical outcomes AI can improve in your context.",
-          "Write one reason AI adoption matters even for beginners.",
-        ],
-        quickCheckPrompt: "What is the strongest beginner takeaway from this section?",
-        quickCheckOptions: [
-          { id: "a", label: "AI is important, but teams should wait for standards to stabilize before beginning" },
-          { id: "b", label: "AI is moving fast, and beginners should start with practical learning" },
-          { id: "c", label: "Begin with awareness only and defer hands-on practice to technical specialists" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "The fastest path for beginners is practical, low-risk experimentation with clear learning goals.",
-        quickCheckOptionExplanations: {
-          a: "Ignoring the shift increases future catch-up costs.",
-          b: "This is the right mindset for a beginner adoption journey.",
-          c: "AI affects operations, communication, and decision support across roles.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in welcome through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-0-welcome?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-0-what-youll-learn": {
+    content: "Welcome to The AI Shift. This course is designed for business leaders, operators, and decision-makers who need a realistic, no-hype understanding of what AI means for their organizations. You won't find speculation or sci-fi here — just practical frameworks for navigating one of the most significant operational shifts in modern business.",
+    summary: "This course equips leaders with a grounded, practical understanding of AI's impact on business operations.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-0-ai-is-everywhere": {
+    id: "module-0-ai-is-everywhere",
+    moduleId: "module-0",
+    sectionId: "ai-is-everywhere",
+    cardType: "section-card",
+    content: "AI is no longer a future trend — it's already embedded in business tools you use daily: CRM systems, email platforms, hiring software, financial models, and customer support. The question isn't whether AI will affect your industry. It already has. The question is whether your organization is positioned to benefit from it or fall behind.",
+    summary: "AI is already embedded in mainstream business tools and workflows, making organizational readiness a present-day imperative.",
+    question: "Which of the following best describes AI's current state in business?",
+    explanation: "AI is not a future technology waiting to arrive — it is already integrated into everyday enterprise software. Leaders who treat it as a 'future consideration' are likely already behind competitors who have operationalized it.",
+  },
+
+  "module-0-what-youll-learn": {
     id: "module-0-what-youll-learn",
     moduleId: "module-0",
     sectionId: "what-youll-learn",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Mindset scenario",
-        scenarioBody:
-          "Your team expects instant results from AI. You need to correct common misconceptions so adoption stays realistic, safe, and focused on learning.",
-        checklistTitle: "Misconception reset checklist",
-        checklistItems: [
-          "Replace 'AI will solve everything' with one clear use case.",
-          "Replace 'AI is always right' with a verification step.",
-          "Replace 'We must automate everything' with a phased approach.",
-        ],
-        quickCheckPrompt: "Which beginner misconception is most risky?",
-        quickCheckOptions: [
-          { id: "a", label: "AI outputs should always be reviewed before decisions" },
-          { id: "b", label: "AI can support work but still needs context" },
-          { id: "c", label: "If AI sounds confident, it is probably correct" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Confidence in wording is not proof of accuracy; verification is required.",
-        quickCheckOptionExplanations: {
-          a: "This is a healthy and correct beginner habit.",
-          b: "This is a realistic and useful expectation.",
-          c: "This misconception leads to preventable errors and trust issues.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-youll-learn through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-0-what-youll-learn?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-ai-creative": {
-    id: "module-1-ai-creative",
-    moduleId: "module-1",
-    sectionId: "ai-creative",
+    content: "Over 10 modules, you will learn how to evaluate AI tools, build governance frameworks, calculate ROI, design adoption roadmaps, assess vendor claims, identify high-value automation opportunities, and position your organization strategically as AI capabilities evolve. Each module is grounded in operational reality — not theory.",
+    summary: "The course covers AI tools, ROI measurement, governance, vendor evaluation, and strategic positioning across 10 modules.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-0-how-to-use-course": {
+    id: "module-0-how-to-use-course",
+    moduleId: "module-0",
+    sectionId: "how-to-use-course",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Creative evaluation scenario",
-        scenarioBody:
-          "A creative team uses AI output directly without clarifying authorship, intent, or editing standards. You need a framework for judging creative collaboration quality.",
-        checklistTitle: "Creative evaluation checklist",
-        checklistItems: [
-          "Separate ideation assistance from final authored output.",
-          "Define attribution and disclosure norms for team artifacts.",
-          "Require one human intention statement for final deliverables.",
-        ],
-        quickCheckPrompt: "What is the strongest principle for AI in creative work?",
-        quickCheckOptions: [
-          { id: "a", label: "Treat model output as final creative judgment" },
-          { id: "b", label: "Use AI as augmentation while preserving human intent and accountability" },
-          { id: "c", label: "Optimize only for novelty regardless of context" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Creative quality improves when AI supports, rather than replaces, human judgment.",
-        quickCheckOptionExplanations: {
-          a: "This removes accountability from creative decisions.",
-          b: "This is the intended collaboration model.",
-          c: "Novelty without context often degrades quality.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-creative through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-ai-creative?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-ai-images": {
-    id: "module-1-ai-images",
-    moduleId: "module-1",
-    sectionId: "ai-images",
+    content: "Each module contains concept cards, knowledge checks, and applied frameworks you can use immediately. Move at your own pace. Prioritize modules most relevant to your current role or decision-making context. The course is designed for non-linear use — if you're facing an immediate AI procurement decision, jump to Module 4. If governance is your urgent challenge, start with Module 6.",
+    summary: "The course is designed for flexible, non-linear use — learners should prioritize modules relevant to their immediate business challenges.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-0-summary": {
+    id: "module-0-summary",
+    moduleId: "module-0",
+    sectionId: "summary",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Image generation interpretation scenario",
-        scenarioBody:
-          "A generated image looks highly realistic, and a teammate assumes it is factual. You need to explain why realism and authenticity are different claims.",
-        checklistTitle: "Image reasoning checklist",
-        checklistItems: [
-          "Separate visual plausibility from source verifiability.",
-          "List one misuse risk and one responsible-use control.",
-          "Define when synthetic images require explicit disclosure.",
-        ],
-        quickCheckPrompt: "What is the most important judgment in AI image use?",
-        quickCheckOptions: [
-          { id: "a", label: "Whether an image appears realistic at first glance" },
-          { id: "b", label: "Whether authenticity claims are independently verifiable" },
-          { id: "c", label: "Whether style quality improves audience engagement" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Authenticity requires evidence beyond visual quality.",
-        quickCheckOptionExplanations: {
-          a: "Realism can be synthetic and misleading.",
-          b: "Verification is the strongest standard for authenticity claims.",
-          c: "Aesthetic quality does not establish truth.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-images through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-ai-images?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-ai-in-your-life": {
-    id: "module-1-ai-in-your-life",
-    moduleId: "module-1",
-    sectionId: "ai-in-your-life",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Everyday AI visibility scenario",
-        scenarioBody:
-          "People on your team think AI only means chatbots. You need to show how recommendation, ranking, filtering, and prediction systems already shape daily work.",
-        checklistTitle: "Visibility checklist",
-        checklistItems: [
-          "Identify three invisible AI touchpoints in a normal workday.",
-          "Describe what each system predicts or prioritizes.",
-          "Note one failure mode for each touchpoint.",
-        ],
-        quickCheckPrompt: "What is the main value of mapping AI in daily life?",
-        quickCheckOptions: [
-          { id: "a", label: "It makes hidden decision systems visible for better oversight" },
-          { id: "b", label: "It proves all workflows need full automation" },
-          { id: "c", label: "It reduces the need for human review" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Visibility is the first step toward responsible use and better judgment.",
-        quickCheckOptionExplanations: {
-          a: "This is the intended learning outcome.",
-          b: "The section is about visibility, not blanket automation.",
-          c: "Human review remains critical.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-in-your-life through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-ai-in-your-life?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-ai-productivity": {
-    id: "module-1-ai-productivity",
-    moduleId: "module-1",
-    sectionId: "ai-productivity",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Productivity framing scenario",
-        scenarioBody:
-          "A team interprets AI productivity as pure speed. You need to reframe value as improved quality-adjusted throughput with review discipline.",
-        checklistTitle: "Productivity framing checklist",
-        checklistItems: [
-          "Define the task outcome, not just time saved.",
-          "Measure rework burden after AI assistance.",
-          "Track one quality metric and one risk metric together.",
-        ],
-        quickCheckPrompt: "What is the best productivity metric pattern for AI?",
-        quickCheckOptions: [
-          { id: "a", label: "Time saved only" },
-          { id: "b", label: "Time saved plus error/rework impact" },
-          { id: "c", label: "Number of prompts generated per day" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Productivity without quality and risk measures can hide net losses.",
-        quickCheckOptionExplanations: {
-          a: "Speed alone can conceal downstream defects.",
-          b: "Balanced metrics reflect real operational value.",
-          c: "Volume metrics do not indicate outcome quality.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-productivity through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-ai-productivity?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-ai-writing": {
-    id: "module-1-ai-writing",
-    moduleId: "module-1",
-    sectionId: "ai-writing",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Writing assistant capability scenario",
-        scenarioBody:
-          "A team member treats writing output quality as proof of factual reliability. You need to distinguish fluency from truth and define responsible editing behavior.",
-        checklistTitle: "Writing assistant checklist",
-        checklistItems: [
-          "Identify where the assistant helps structure versus where facts must be verified.",
-          "Add a source-check step for claims with external consequences.",
-          "Define one red-line case where human rewrite is mandatory.",
-        ],
-        quickCheckPrompt: "What is the key risk with AI writing assistants?",
-        quickCheckOptions: [
-          { id: "a", label: "Confusing polished wording with validated accuracy" },
-          { id: "b", label: "Using templates to improve draft structure" },
-          { id: "c", label: "Reducing first-draft writing time" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Fluency is not evidence; high-impact claims still require verification.",
-        quickCheckOptionExplanations: {
-          a: "This is the most common reasoning failure.",
-          b: "This can be useful when quality controls are present.",
-          c: "Efficiency gains are beneficial but not the core risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-writing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-ai-writing?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-brief-history": {
-    id: "module-1-brief-history",
-    moduleId: "module-1",
-    sectionId: "brief-history",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "History interpretation scenario",
-        scenarioBody:
-          "Your team is overreacting to current AI hype cycles. You need a historical lens that explains why capability progress, infrastructure readiness, and adoption timing do not move at the same speed.",
-        checklistTitle: "AI history reasoning checklist",
-        checklistItems: [
-          "Identify one hype wave and one AI winter pattern.",
-          "Explain what changed in data, compute, and tooling since earlier cycles.",
-          "Describe one lesson history gives for present-day decisions.",
-        ],
-        quickCheckPrompt: "Why is AI history useful for current strategy?",
-        quickCheckOptions: [
-          { id: "a", label: "It helps distinguish durable shifts from temporary hype cycles" },
-          { id: "b", label: "It removes uncertainty by predicting exact winners" },
-          { id: "c", label: "It proves every AI wave follows the same adoption path" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Historical context improves calibration and reduces reactive decisions.",
-        quickCheckOptionExplanations: {
-          a: "This is the strongest strategic use of history.",
-          b: "History can reduce uncertainty, not eliminate it.",
-          c: "Patterns repeat partially, not mechanically.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in brief-history through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-brief-history?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-choosing-tools-section-card": {
-    id: "module-1-choosing-tools-section-card",
-    moduleId: "module-1",
-    sectionId: "choosing-tools",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "High-level comparison scenario",
-        scenarioBody:
-          "You are not ready for full procurement yet, but you need a basic way to compare categories of tools and identify what to study next.",
-        checklistTitle: "Foundational comparison checklist",
-        checklistItems: [
-          "Compare by task fit, user burden, and review requirements.",
-          "Document one clear benefit and one clear limitation per category.",
-          "Identify which category needs deeper evaluation in Module 3.",
-        ],
-        quickCheckPrompt: "What is the right level of tool comparison in Module 1?",
-        quickCheckOptions: [
-          { id: "a", label: "A foundational map of fit and constraints, not final procurement scoring" },
-          { id: "b", label: "Immediate weighted vendor scorecards with purchase recommendations" },
-          { id: "c", label: "No comparison until pilot execution is complete" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Module 1 should build conceptual clarity, while deeper selection mechanics are handled later.",
-        quickCheckOptionExplanations: {
-          a: "This matches the module's learning objective.",
-          b: "That level of rigor belongs in Module 3.",
-          c: "You still need basic comparative reasoning now.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in choosing-tools through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-choosing-tools?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-defining-ai-section-card": {
-    id: "module-1-defining-ai-section-card",
-    moduleId: "module-1",
-    sectionId: "defining-ai",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Classification scenario",
-        scenarioBody:
-          "A teammate labels every AI product an agent, even when it only generates responses. You need to classify capabilities accurately so claims match reality.",
-        checklistTitle: "Capability classification checklist",
-        checklistItems: [
-          "Separate perception, reasoning, and action capabilities.",
-          "Distinguish single-response tools from systems that execute multi-step tasks.",
-          "Document one misclassification and explain why it matters.",
-        ],
-        quickCheckPrompt: "Which distinction most improves conceptual accuracy?",
-        quickCheckOptions: [
-          { id: "a", label: "Model vs tool vs automation vs agent" },
-          { id: "b", label: "Open-source vs closed-source branding" },
-          { id: "c", label: "Desktop UI vs mobile UI" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Correct category labels prevent capability confusion and weak reasoning.",
-        quickCheckOptionExplanations: {
-          a: "This is the foundational taxonomy for the module.",
-          b: "Licensing choices do not replace capability classification.",
-          c: "Interface style is unrelated to AI system type.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in defining-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-defining-ai?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-module-overview-section-card": {
+    content: "AI represents a genuine operational and competitive shift — not another technology hype cycle. Organizations that develop a structured, realistic approach to AI adoption will build durable advantages. Those that react slowly, chase trends, or misunderstand the fundamentals will face compounding disadvantages. This course gives you the frameworks to act with clarity.",
+    summary: "AI is a structural business shift requiring clear frameworks — not hype-chasing or reactive adoption.",
+    question: "What distinguishes companies that successfully adopt AI from those that don't?",
+    explanation: "Successful AI adoption isn't primarily about having the newest tools. It comes from having a structured approach: clear use case identification, realistic ROI expectations, proper governance, and intentional change management. Most failures stem from misunderstanding the fundamentals — not from lack of access to technology.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 1 — Understanding the AI Landscape
+  // ─────────────────────────────────────────────
+
+  "module-1-module-overview-section-card": {
     id: "module-1-module-overview-section-card",
     moduleId: "module-1",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Concept map scenario",
-        scenarioBody:
-          "Your team uses AI language inconsistently, so conversations collapse into buzzwords. You need a shared conceptual map before discussing vendors, costs, or implementation plans.",
-        checklistTitle: "Concept map checklist",
-        checklistItems: [
-          "Define core layers: model, application, workflow automation, and agent behavior.",
-          "Write one plain-language definition for each layer.",
-          "Capture two terms your team currently confuses and resolve them.",
-        ],
-        quickCheckPrompt: "Why start Module 1 with a landscape map?",
-        quickCheckOptions: [
-          { id: "a", label: "To establish shared conceptual language before making downstream decisions" },
-          { id: "b", label: "To choose a preferred vendor early and align quickly" },
-          { id: "c", label: "To avoid discussing uncertainty until implementation begins" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Conceptual alignment improves judgment quality before any tool decision is made.",
-        quickCheckOptionExplanations: {
-          a: "This is the primary objective of the section.",
-          b: "Vendor choice without shared definitions increases confusion.",
-          c: "Avoiding uncertainty reduces learning quality.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-module-quiz": {
-    id: "module-1-module-quiz",
+    content: "This module cuts through AI marketing language to give you a working map of the actual AI industry. You'll learn how the ecosystem is structured — from foundational model providers to SaaS wrappers to implementation agencies — so you can make informed decisions about which layers matter for your organization.",
+    summary: "Module 1 builds a practical map of the AI ecosystem beneath the marketing language.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-1-defining-ai-section-card": {
+    id: "module-1-defining-ai-section-card",
     moduleId: "module-1",
-    sectionId: "module-quiz",
+    sectionId: "defining-ai",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Conceptual readiness checkpoint",
-        scenarioBody:
-          "You are about to brief your team on the AI landscape. You need to demonstrate clear definitions, realistic capability framing, and myth-resistant reasoning.",
-        checklistTitle: "Module 1 readiness checklist",
-        checklistItems: [
-          "Use consistent model/tool/automation/agent distinctions.",
-          "Explain one historical lesson that improves present judgment.",
-          "Demonstrate one myth correction using mechanism plus evidence.",
-        ],
-        quickCheckPrompt: "What does strong Module 1 readiness look like?",
-        quickCheckOptions: [
-          { id: "a", label: "Clear conceptual framing and evidence-based literacy checks" },
-          { id: "b", label: "Final procurement recommendation across all tool categories" },
-          { id: "c", label: "A vendor shortlist without explicit capability definitions" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Module 1 readiness is conceptual rigor, not procurement completion.",
-        quickCheckOptionExplanations: {
-          a: "This is the correct module outcome.",
-          b: "Final tool procurement belongs to later modules.",
-          c: "Shortlists without definitions are brittle.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-myths-vs-reality": {
-    id: "module-1-myths-vs-reality",
+    content: "Artificial Intelligence refers to software systems that perform tasks typically requiring human judgment — pattern recognition, language understanding, decision-making, and prediction. Modern AI is primarily powered by machine learning: systems trained on large datasets to identify patterns rather than following hand-written rules. 'AI' is a broad umbrella — most business-relevant AI today falls into a subset called generative AI and predictive ML.",
+    summary: "AI is software that performs judgment-like tasks through pattern recognition, primarily powered by machine learning.",
+    question: "What is the primary mechanism behind most modern business AI systems?",
+    explanation: "Modern AI doesn't follow explicit rules written by programmers. Instead, it learns patterns from massive datasets through a process called machine learning. This distinction matters operationally — it means AI systems can be wrong in unpredictable ways, require quality training data, and behave differently as inputs change.",
+  },
+
+  "module-1-brief-history": {
+    id: "module-1-brief-history",
     moduleId: "module-1",
-    sectionId: "myths-vs-reality",
+    sectionId: "brief-history",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Myth correction scenario",
-        scenarioBody:
-          "Your team repeats common claims like 'AI is always objective' and 'AI understands like humans.' You need a method to challenge myths using mechanism-level reasoning.",
-        checklistTitle: "Myth correction checklist",
-        checklistItems: [
-          "List two common myths and the mechanism that disproves each one.",
-          "Separate confidence in wording from evidence quality.",
-          "Write one verification step that addresses each myth.",
-        ],
-        quickCheckPrompt: "What is the strongest way to debunk AI myths?",
-        quickCheckOptions: [
-          { id: "a", label: "Use mechanism and evidence instead of slogans" },
-          { id: "b", label: "Replace old myths with optimistic new assumptions" },
-          { id: "c", label: "Avoid discussing failure modes to reduce resistance" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Reliable correction uses claims, mechanisms, and verifiable evidence.",
-        quickCheckOptionExplanations: {
-          a: "This is the core literacy method for this section.",
-          b: "Replacing one assumption with another is not analysis.",
-          c: "Ignoring failure modes weakens decisions.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in myths-vs-reality through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-myths-vs-reality?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-1-types-of-ai-section-card": {
+    content: "AI has existed as a research field since the 1950s, but practical business applications only accelerated dramatically after 2017 with the invention of the Transformer architecture. This breakthrough enabled large language models (LLMs) like GPT, Claude, and Gemini. The release of ChatGPT in late 2022 brought generative AI into mainstream business consciousness — compressing what might have been a decade of adoption into two years.",
+    summary: "The 2017 Transformer breakthrough and 2022 ChatGPT release compressed AI's business adoption timeline dramatically.",
+    question: "What architectural breakthrough enabled the current wave of large language models?",
+    explanation: "The Transformer architecture, introduced in the 2017 paper 'Attention Is All You Need,' revolutionized how AI models process sequences of data — especially language. This enabled training on vastly larger datasets with dramatically better results, leading directly to GPT, Claude, Gemini, and the current generative AI wave.",
+  },
+
+  "module-1-types-of-ai-section-card": {
     id: "module-1-types-of-ai-section-card",
     moduleId: "module-1",
     sectionId: "types-of-ai",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Capability-claim scenario",
-        scenarioBody:
-          "A discussion mixes narrow AI, AGI, and superintelligence as if they were interchangeable. You need to separate these claims so the team can reason about realistic capabilities.",
-        checklistTitle: "Capability claim checklist",
-        checklistItems: [
-          "Define narrow AI with one concrete workplace example.",
-          "Explain why AGI is a broader, unresolved capability claim.",
-          "Name one decision that changes when these categories are confused.",
-        ],
-        quickCheckPrompt: "Why does distinguishing AI types matter?",
-        quickCheckOptions: [
-          { id: "a", label: "It prevents unrealistic expectations and policy mistakes" },
-          { id: "b", label: "It mainly improves interface design choices" },
-          { id: "c", label: "It removes the need for uncertainty planning" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Category confusion leads to weak planning and distorted risk judgments.",
-        quickCheckOptionExplanations: {
-          a: "This captures the core reason the distinction matters.",
-          b: "UI choices are secondary to capability framing.",
-          c: "Uncertainty planning remains essential.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in types-of-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-1-types-of-ai?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-agi-explained": {
-    id: "module-10-agi-explained",
-    moduleId: "module-10",
-    sectionId: "agi-explained",
+    content: "Business-relevant AI falls into several categories: (1) Generative AI — creates text, images, code, audio; (2) Predictive ML — forecasts outcomes from historical data; (3) Computer Vision — analyzes images and video; (4) Speech AI — transcribes and synthesizes audio; (5) Robotic Process Automation (RPA) — automates rule-based digital tasks. Most enterprise 'AI' projects combine multiple categories. Understanding which type solves which problem prevents expensive mismatches.",
+    summary: "Business AI includes generative, predictive, vision, speech, and automation categories — each suited to different operational problems.",
+    question: "A company wants to predict which customers are likely to churn next month. Which type of AI is most appropriate?",
+    explanation: "Churn prediction is a classic predictive ML problem — the system is trained on historical customer behavior patterns and learns to predict future outcomes. Generative AI (like ChatGPT) is designed to produce content, not predict structured outcomes from data. Using the wrong AI category is one of the most common and expensive enterprise mistakes.",
+  },
+
+  "module-1-ai-in-your-life": {
+    id: "module-1-ai-in-your-life",
+    moduleId: "module-1",
+    sectionId: "ai-in-your-life",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Service model evolution scenario",
-        scenarioBody:
-          "You rely on external agencies for AI execution, but service models are changing quickly. You need to decide what capabilities to keep internal versus externalize.",
-        checklistTitle: "Service model checklist",
-        checklistItems: [
-          "Map strategic capabilities to internal ownership priorities.",
-          "Identify execution tasks suitable for external partners.",
-          "Design transition plan as tooling and agency models evolve.",
-        ],
-        quickCheckPrompt: "What is the best way to respond to changing service models?",
-        quickCheckOptions: [
-          { id: "a", label: "Outsource all strategic capabilities" },
-          { id: "b", label: "Use a hybrid model with clear capability boundaries" },
-          { id: "c", label: "Freeze capability decisions for one year" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Hybrid capability models improve adaptability while preserving strategic control.",
-        quickCheckOptionExplanations: {
-          a: "Full outsourcing can weaken long-term differentiation.",
-          b: "This is a resilient and practical response pattern.",
-          c: "Freezing decisions slows competitiveness.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in agi-explained through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-agi-explained?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-ai-careers": {
-    id: "module-10-ai-careers",
-    moduleId: "module-10",
-    sectionId: "ai-careers",
+    content: "You interact with AI systems constantly without recognizing them: spam filters, recommendation engines, fraud detection, search ranking, GPS route optimization, autocomplete, and facial recognition are all AI. This ubiquity is important context — AI is not a single product but a class of approaches embedded across digital infrastructure. The 'new' wave of generative AI sits on top of this existing foundation.",
+    summary: "AI is already ubiquitous in daily digital life — generative AI is the newest visible layer of a much broader existing infrastructure.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-1-ai-writing": {
+    id: "module-1-ai-writing",
+    moduleId: "module-1",
+    sectionId: "ai-writing",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Workforce transition scenario",
-        scenarioBody:
-          "AI adoption is changing task composition across roles. You need a workforce transition plan that addresses role evolution, capability building, and leadership expectations.",
-        checklistTitle: "Workforce transition checklist",
-        checklistItems: [
-          "Map role changes by function and decision responsibility.",
-          "Define targeted training and support pathways.",
-          "Update leadership expectations for AI-assisted performance.",
-        ],
-        quickCheckPrompt: "How should leaders approach workforce implications?",
-        quickCheckOptions: [
-          { id: "a", label: "Assume role design remains unchanged" },
-          { id: "b", label: "Delay planning until disruption is complete" },
-          { id: "c", label: "Plan role evolution, training, and decision-right updates" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Proactive workforce redesign reduces transition risk and improves adoption quality.",
-        quickCheckOptionExplanations: {
-          a: "Static role assumptions often fail under transformation.",
-          b: "Delayed planning increases disruption cost.",
-          c: "This is the strongest leadership response.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-careers through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-ai-careers?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-ai-governance": {
-    id: "module-10-ai-governance",
-    moduleId: "module-10",
-    sectionId: "ai-governance",
+    content: "AI writing tools (ChatGPT, Claude, Gemini, Jasper, Copy.ai) generate text from prompts. Business applications include drafting emails, summarizing documents, creating marketing copy, generating reports, and synthesizing research. Key limitations: AI writing requires human review for accuracy, can produce confident-sounding errors (hallucinations), and may reflect training data biases. Best used as a drafting accelerator, not a final publisher.",
+    summary: "AI writing tools accelerate drafting but require human review — they produce confident errors and should not publish autonomously.",
+    question: "What is the primary risk of using AI-generated content without human review?",
+    explanation: "AI writing tools are prone to 'hallucinations' — confidently stated information that is factually incorrect. This is a fundamental limitation of how LLMs work: they predict likely text, not verified truth. In business contexts, unreviewed AI output can create legal exposure, reputation damage, and misinformation. Human review is non-negotiable for any consequential content.",
+  },
+
+  "module-1-ai-images": {
+    id: "module-1-ai-images",
+    moduleId: "module-1",
+    sectionId: "ai-images",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "AI-native operating model scenario",
-        scenarioBody:
-          "Competitors are redesigning operations around AI-assisted decisions. You need to evaluate which operating model changes are necessary for speed and quality.",
-        checklistTitle: "Operating model checklist",
-        checklistItems: [
-          "Identify decision cycles that can be accelerated with AI.",
-          "Redesign workflow ownership for AI-assisted execution.",
-          "Align governance with faster iteration rhythms.",
-        ],
-        quickCheckPrompt: "What defines an AI-native operating model?",
-        quickCheckOptions: [
-          { id: "a", label: "Adding AI tools without process redesign" },
-          { id: "b", label: "Redesigning teams and decision flows around AI capabilities" },
-          { id: "c", label: "Keeping operating cadence unchanged" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "AI-native models require structural workflow and decision redesign, not just tooling.",
-        quickCheckOptionExplanations: {
-          a: "Tooling alone does not create operating transformation.",
-          b: "This is the module's intended strategic standard.",
-          c: "Unchanged cadence may limit realized value.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-governance through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-ai-governance?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-current-frontiers-section-card": {
-    id: "module-10-current-frontiers-section-card",
-    moduleId: "module-10",
-    sectionId: "current-frontiers",
+    content: "AI image generation tools (Midjourney, DALL-E, Stable Diffusion, Firefly) create images from text descriptions. Business uses include marketing assets, concept visualization, product mockups, and presentation graphics. Key considerations: IP ownership of AI-generated images is legally unsettled in many jurisdictions, outputs may contain biases from training data, and brand consistency requires careful prompting and curation.",
+    summary: "AI image tools have real marketing utility but carry unsettled IP risk and require careful brand governance.",
+    question: "What is a key legal consideration when using AI-generated images in commercial contexts?",
+    explanation: "The intellectual property status of AI-generated images remains legally contested in most jurisdictions. Questions about who owns the output, whether training on copyrighted images creates liability, and commercial use rights are actively being litigated and legislated. Organizations using AI-generated images commercially should have legal review and monitor regulatory developments.",
+  },
+
+  "module-1-ai-productivity": {
+    id: "module-1-ai-productivity",
+    moduleId: "module-1",
+    sectionId: "ai-productivity",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Commoditization response scenario",
-        scenarioBody:
-          "Model costs are dropping and differentiation is shifting. You need to reposition strategy toward workflow excellence and integration quality.",
-        checklistTitle: "Commoditization response checklist",
-        checklistItems: [
-          "Identify where differentiation can move up the stack.",
-          "Strengthen integration and workflow design capabilities.",
-          "Adjust vendor strategy based on pricing and portability trends.",
-        ],
-        quickCheckPrompt: "What does model commoditization usually imply?",
-        quickCheckOptions: [
-          { id: "a", label: "Differentiation moves to execution and integration" },
-          { id: "b", label: "Differentiation should remain centered on selecting one premium model" },
-          { id: "c", label: "Lower model pricing means stack and workflow design can be deprioritized" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "As core models commoditize, execution discipline becomes the main advantage source.",
-        quickCheckOptionExplanations: {
-          a: "This reflects the most likely competitive shift.",
-          b: "Model choice remains important but not sufficient.",
-          c: "Strategic positioning becomes more important, not less.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in current-frontiers through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-current-frontiers?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-module-overview-section-card": {
-    id: "module-10-module-overview-section-card",
-    moduleId: "module-10",
-    sectionId: "module-overview",
+    content: "AI productivity tools embed into existing workflows: Microsoft Copilot integrates with Office 365, Google Gemini with Workspace, Notion AI with notes, and Salesforce Einstein with CRM. These embedded tools reduce context-switching and accelerate common tasks like summarization, scheduling, search, and drafting. The productivity ceiling depends on workflow design, not just tool access — most teams underutilize embedded AI by 70–80%.",
+    summary: "Embedded AI productivity tools reduce friction in existing workflows, but most teams significantly underutilize them without deliberate workflow redesign.",
+    question: "Why do most teams fail to realize significant productivity gains from embedded AI tools?",
+    explanation: "Access to AI tools doesn't automatically change how people work. Without deliberate workflow redesign, training, and habit formation, employees use AI for marginal tasks while continuing existing processes unchanged. The organizations that capture substantial productivity gains invest in change management alongside tool deployment.",
+  },
+
+  "module-1-ai-creative": {
+    id: "module-1-ai-creative",
+    moduleId: "module-1",
+    sectionId: "ai-creative",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Future strategy kickoff",
-        scenarioBody:
-          "Leadership needs a forward-looking AI strategy, but attention is fragmented by hype cycles. You need to prioritize signals that materially affect competitiveness.",
-        checklistTitle: "Future strategy checklist",
-        checklistItems: [
-          "Identify high-impact market and capability shifts.",
-          "Separate speculative noise from decision-relevant signals.",
-          "Tie each signal to potential strategic action.",
-        ],
-        quickCheckPrompt: "Which future signal should leaders prioritize most?",
-        quickCheckOptions: [
-          { id: "a", label: "Audience growth and social buzz around model announcements" },
-          { id: "b", label: "Shifts affecting economics and execution" },
-          { id: "c", label: "Speculative timelines without direct implication for your strategy" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Decision-relevant signals are those that materially affect margin, value, or speed.",
-        quickCheckOptionExplanations: {
-          a: "Attention signals are weaker than operating impact signals.",
-          b: "This is the strongest strategic filter.",
-          c: "Speculation should not dominate planning.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-module-quiz": {
-    id: "module-10-module-quiz",
-    moduleId: "module-10",
+    content: "AI creative tools assist with music (Suno, Udio), video (Runway, Pika), design (Adobe Firefly, Canva AI), and voice (ElevenLabs). These tools are genuine force multipliers for small creative teams and individual operators. Enterprise adoption requires governance around brand standards, legal review of outputs, and clear policies on AI disclosure — especially as regulatory frameworks around AI-generated media develop.",
+    summary: "AI creative tools multiply creative capacity but require brand governance, legal review, and clear disclosure policies.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-1-myths-vs-reality": {
+    id: "module-1-myths-vs-reality",
+    moduleId: "module-1",
+    sectionId: "myths-vs-reality",
+    cardType: "section-card",
+    content: "Common AI myths in business: (1) 'AI understands what it's doing' — it predicts patterns, not meaning; (2) 'AI will replace most jobs immediately' — task automation differs from job elimination; (3) 'AI is always objective' — it reflects training data biases; (4) 'More expensive AI is always better' — fit to workflow matters more than raw capability; (5) 'We need to wait for the right moment' — inaction has compounding competitive cost.",
+    summary: "Five persistent AI myths distort business decision-making — AI predicts patterns rather than understanding, and workflow fit matters more than raw capability.",
+    question: "A manager argues that their AI system is more objective than human decision-makers because 'it's just math.' What is the critical flaw in this reasoning?",
+    explanation: "AI systems learn from historical data, which encodes the biases, inequities, and blind spots of past human decisions. An AI trained on biased hiring data will perpetuate hiring bias — often invisibly and at scale. 'Objective' is not an accurate description of any machine learning system trained on human-generated data. Governance frameworks must account for this.",
+  },
+
+  "module-1-choosing-tools-section-card": {
+    id: "module-1-choosing-tools-section-card",
+    moduleId: "module-1",
+    sectionId: "choosing-tools",
+    cardType: "section-card",
+    content: "Choosing AI tools requires matching capability to workflow need, not chasing benchmarks. Key evaluation dimensions: (1) Does it integrate with existing systems? (2) What data does it require, store, or transmit? (3) What are the total cost of ownership implications? (4) How does it handle errors or failures? (5) Is the vendor financially stable? Most tool selection mistakes happen because teams evaluate demos rather than operational fit.",
+    summary: "AI tool selection should prioritize workflow fit, integration, data governance, and operational reliability over benchmark performance.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-1-module-quiz": {
+    id: "module-1-module-quiz",
+    moduleId: "module-1",
     sectionId: "module-quiz",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Future readiness checkpoint",
-        scenarioBody:
-          "You are presenting Module 10 outputs to leadership. You must show a future-aware strategy grounded in market signals, capability bets, and execution discipline.",
-        checklistTitle: "Future strategy readiness checklist",
-        checklistItems: [
-          "Prioritize high-impact future signals with clear implications.",
-          "Present focused strategic bets and partnership choices.",
-          "Include workforce and operating model transition actions.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 10 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Broad trend coverage with optional initiatives and evolving ownership" },
-          { id: "b", label: "Focused strategic bets with execution plan and ownership" },
-          { id: "c", label: "Compelling future narrative without near-term operating commitments" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness requires strategic focus, role clarity, and actionable execution plans.",
-        quickCheckOptionExplanations: {
-          a: "Trend chasing weakens strategic coherence.",
-          b: "This is the expected outcome of the module.",
-          c: "Vision without execution is not decision-ready.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-10-your-ai-future": {
-    id: "module-10-your-ai-future",
-    moduleId: "module-10",
-    sectionId: "your-ai-future",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Strategic positioning playbook scenario",
-        scenarioBody:
-          "You need to choose where your organization should differentiate in an AI-shaped market. The plan must focus bets, partnerships, and execution priorities.",
-        checklistTitle: "Positioning playbook checklist",
-        checklistItems: [
-          "Define focused strategic bets aligned to competitive advantage.",
-          "Decide where to partner versus build capabilities internally.",
-          "Set measurable milestones for strategic execution.",
-        ],
-        quickCheckPrompt: "What defines a strong strategic positioning response to AI?",
-        quickCheckOptions: [
-          { id: "a", label: "Following every trend equally" },
-          { id: "b", label: "Selecting focused bets aligned to advantage" },
-          { id: "c", label: "Outsourcing all strategy decisions" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Focused positioning and disciplined execution create durable advantage.",
-        quickCheckOptionExplanations: {
-          a: "Diffuse bets dilute execution and competitiveness.",
-          b: "This is the strongest strategic pattern.",
-          c: "Strategy ownership cannot be fully delegated.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in your-ai-future through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-10-your-ai-future?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-module-overview-section-card": {
+    content: "Test your understanding of the AI landscape: foundational model providers, tool categories, common myths, and evaluation criteria.",
+    summary: "Module 1 knowledge check covering the AI ecosystem, tool categories, and practical evaluation principles.",
+    question: "Which of the following best describes the relationship between a foundational model (like GPT-4) and an AI SaaS product built on top of it?",
+    explanation: "Most AI SaaS products are 'wrappers' — interfaces and workflow integrations built on top of foundational models provided by companies like OpenAI, Anthropic, or Google. The underlying intelligence is the foundational model; the SaaS product adds a user interface, integration layer, and domain-specific prompting. This distinction matters for evaluating vendor differentiation and long-term pricing risk.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 2 — Where AI Actually Creates Business Value
+  // ─────────────────────────────────────────────
+
+  "module-2-module-overview-section-card": {
     id: "module-2-module-overview-section-card",
     moduleId: "module-2",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Value discovery scenario",
-        scenarioBody:
-          "Leadership wants AI value this quarter, but opportunities are scattered. You need a simple framework to find where AI can move real business outcomes.",
-        checklistTitle: "Value framework checklist",
-        checklistItems: [
-          "List top business outcomes to improve: revenue, margin, speed, or risk.",
-          "Map key workflows tied to those outcomes.",
-          "Identify where repetitive decisions or bottlenecks exist.",
-        ],
-        quickCheckPrompt: "What is the best starting point for AI value planning?",
-        quickCheckOptions: [
-          { id: "a", label: "Start with outcomes and map workflows" },
-          { id: "b", label: "Start with high-performing foundation models, then identify suitable use cases" },
-          { id: "c", label: "Start with low-cost tools to gather usage data before defining outcomes" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Outcome-first planning prevents random tool adoption and clarifies where AI can help.",
-        quickCheckOptionExplanations: {
-          a: "This creates the strongest foundation for prioritization.",
-          b: "Model novelty does not define business value.",
-          c: "Tool-first decisions often produce low-impact pilots.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-module-quiz": {
-    id: "module-2-module-quiz",
-    moduleId: "module-2",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Prioritization checkpoint scenario",
-        scenarioBody:
-          "You are presenting a Module 2 recommendation to leadership. You need to show why your selected opportunities are highest value and realistically executable.",
-        checklistTitle: "Opportunity prioritization readiness checklist",
-        checklistItems: [
-          "Prepare top 3 opportunities with score rationale.",
-          "Document expected outcomes and ownership per opportunity.",
-          "Define one pilot metric and one risk guardrail for each.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 2 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "A shortlist of ideas with qualitative rationale but no numeric scoring" },
-          { id: "b", label: "A prioritized, scored opportunity set with measurable outcomes" },
-          { id: "c", label: "A discovery roadmap that postpones selection until broader cross-team input is collected" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Strong readiness means evidence-based prioritization linked to measurable business outcomes.",
-        quickCheckOptionExplanations: {
-          a: "Unscored ideas are not decision-ready.",
-          b: "This is the expected result of the module.",
-          c: "Deferral delays learning and business value.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-neural-networks-section-card": {
-    id: "module-2-neural-networks-section-card",
-    moduleId: "module-2",
-    sectionId: "neural-networks",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Bottleneck analysis scenario",
-        scenarioBody:
-          "Operational delays are increasing, but root causes are unclear. You need to locate throughput bottlenecks where AI can reduce queue time.",
-        checklistTitle: "Throughput checklist",
-        checklistItems: [
-          "Measure where work waits longest in the process.",
-          "Identify repetitive decision or triage points.",
-          "Pilot AI on one bottleneck and track cycle-time change.",
-        ],
-        quickCheckPrompt: "Where should AI be piloted first in process-heavy operations?",
-        quickCheckOptions: [
-          { id: "a", label: "At the biggest queue bottleneck with repeatable decisions" },
-          { id: "b", label: "At random points to spread experimentation" },
-          { id: "c", label: "Only at the final reporting step" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Bottleneck-first pilots tend to generate clear, measurable value quickly.",
-        quickCheckOptionExplanations: {
-          a: "This is the highest-leverage targeting approach.",
-          b: "Random placement reduces learning quality.",
-          c: "Reporting steps may not address core throughput limits.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in neural-networks through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-neural-networks?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-supervised-unsupervised-section-card": {
-    id: "module-2-supervised-unsupervised-section-card",
-    moduleId: "module-2",
-    sectionId: "supervised-unsupervised",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Quick wins vs strategic bets scenario",
-        scenarioBody:
-          "Your roadmap has both easy wins and larger transformation bets. You need to balance short-term results with long-term capability building.",
-        checklistTitle: "Portfolio balance checklist",
-        checklistItems: [
-          "Identify initiatives that can show value in 30-90 days.",
-          "Identify strategic bets requiring process redesign.",
-          "Allocate resources across both time horizons.",
-        ],
-        quickCheckPrompt: "What is the strongest portfolio pattern for early AI adoption?",
-        quickCheckOptions: [
-          { id: "a", label: "Prioritize strategic bets first and absorb slower early ROI" },
-          { id: "b", label: "Prioritize quick wins first and defer larger transformation work" },
-          { id: "c", label: "A balanced mix of quick wins and strategic bets" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Balanced portfolios maintain momentum while building durable capability.",
-        quickCheckOptionExplanations: {
-          a: "This delays evidence and weakens support.",
-          b: "This limits long-term advantage.",
-          c: "This is the best execution balance.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in supervised-unsupervised through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-supervised-unsupervised?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-training-data-section-card": {
-    id: "module-2-training-data-section-card",
-    moduleId: "module-2",
-    sectionId: "training-data",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Opportunity scan scenario",
-        scenarioBody:
-          "You are evaluating opportunities across functions. Each department claims AI can help, but you need a structured way to compare value.",
-        checklistTitle: "Department scan checklist",
-        checklistItems: [
-          "List one high-friction workflow per department.",
-          "Estimate potential impact and implementation effort.",
-          "Rank opportunities by measurable business contribution.",
-        ],
-        quickCheckPrompt: "What makes a cross-functional AI opportunity scan useful?",
-        quickCheckOptions: [
-          { id: "a", label: "Capturing only creative ideas" },
-          { id: "b", label: "Comparing impact, effort, and owner readiness" },
-          { id: "c", label: "Prioritizing whichever team asks first" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Structured comparison supports better sequencing and budget decisions.",
-        quickCheckOptionExplanations: {
-          a: "Ideas without prioritization criteria are hard to execute.",
-          b: "This yields decision-ready portfolio inputs.",
-          c: "Request order is a weak prioritization method.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in training-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-training-data?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-what-ai-cant-do-section-card": {
-    id: "module-2-what-ai-cant-do-section-card",
-    moduleId: "module-2",
-    sectionId: "what-ai-cant-do",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Revenue vs cost matrix scenario",
-        scenarioBody:
-          "Your team is split between growth-focused and efficiency-focused initiatives. You need one matrix to evaluate both consistently.",
-        checklistTitle: "Unified scoring checklist",
-        checklistItems: [
-          "Score each opportunity on revenue impact potential.",
-          "Score each opportunity on cost reduction potential.",
-          "Add confidence and risk scores before prioritizing.",
-        ],
-        quickCheckPrompt: "Why use a revenue-vs-cost matrix in AI prioritization?",
-        quickCheckOptions: [
-          { id: "a", label: "To simplify prioritization by focusing on upside before risk weighting" },
-          { id: "b", label: "To compare growth and efficiency opportunities on one view" },
-          { id: "c", label: "To separate near-term efficiency projects from revenue initiatives entirely" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "A unified matrix improves transparency across competing investment priorities.",
-        quickCheckOptionExplanations: {
-          a: "Risk should be included, not ignored.",
-          b: "This enables balanced and defensible prioritization.",
-          c: "Quick wins can still be high-value entries in the matrix.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-ai-cant-do through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-what-ai-cant-do?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-2-what-is-ml-section-card": {
+    content: "This module focuses on where AI generates measurable operational and financial value. Rather than reviewing technical ML theory, you'll learn to identify high-ROI workflows, recognize operational bottlenecks AI can address, and distinguish between automation (replacing tasks) and augmentation (enhancing human capability). The goal is to help you prioritize intelligently.",
+    summary: "Module 2 teaches leaders to identify where AI creates measurable operational value — prioritizing high-ROI workflows over technical curiosity.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-2-what-is-ml-section-card": {
     id: "module-2-what-is-ml-section-card",
     moduleId: "module-2",
     sectionId: "what-is-ml",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Automation vs augmentation scenario",
-        scenarioBody:
-          "A team asks whether AI should replace a workflow or assist staff. You need to choose between automation and augmentation based on risk and judgment needs.",
-        checklistTitle: "Decision mode checklist",
-        checklistItems: [
-          "Identify where human judgment is mandatory.",
-          "Mark low-risk repetitive tasks suitable for automation.",
-          "Use augmentation where context and quality trade-offs matter.",
-        ],
-        quickCheckPrompt: "When is augmentation usually better than full automation?",
-        quickCheckOptions: [
-          { id: "a", label: "When tasks involve nuance, context, or risk" },
-          { id: "b", label: "When process variance is low and exception rates are predictable" },
-          { id: "c", label: "When teams are still defining quality thresholds and operating standards" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Augmentation preserves human judgment while improving speed and consistency.",
-        quickCheckOptionExplanations: {
-          a: "This is the strongest practical criterion.",
-          b: "No-review workflows are better candidates for automation.",
-          c: "Unclear objectives should be resolved before either choice.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-is-ml through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-2-what-is-ml?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-ai-creative": {
-    id: "module-3-ai-creative",
-    moduleId: "module-3",
-    sectionId: "ai-creative",
+    content: "Machine learning is the process by which AI systems learn from data rather than following explicit rules. A spam filter isn't programmed with a list of spam words — it's trained on millions of emails labeled spam or not spam, and learns to recognize patterns. This matters operationally because ML systems require quality training data, can degrade over time as data changes, and make probabilistic rather than deterministic decisions.",
+    summary: "Machine learning systems learn patterns from data rather than following rules — making data quality and distribution shift critical operational concerns.",
+    question: "An ML-based fraud detection system was trained on 2022 transaction data and starts missing new fraud patterns in 2025. What is the most likely cause?",
+    explanation: "This is called 'model drift' or 'data drift' — when real-world patterns change in ways not represented in training data, model performance degrades. Fraud patterns evolve continuously as fraudsters adapt. Production ML systems require ongoing monitoring and periodic retraining. This is a core operational cost that many organizations underestimate when deploying ML.",
+  },
+
+  "module-2-neural-networks-section-card": {
+    id: "module-2-neural-networks-section-card",
+    moduleId: "module-2",
+    sectionId: "neural-networks",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Security baseline scenario",
-        scenarioBody:
-          "Before scaling adoption, you need a minimal security baseline for data classes, approvals, and permitted usage boundaries.",
-        checklistTitle: "Security baseline checklist",
-        checklistItems: [
-          "Define approved and prohibited data classes for tool input.",
-          "Confirm retention, access, and training-use policy controls.",
-          "Assign ownership for periodic policy and vendor review.",
-        ],
-        quickCheckPrompt: "What is the right first security move before scaling usage?",
-        quickCheckOptions: [
-          { id: "a", label: "Let each team create independent usage rules" },
-          { id: "b", label: "Create a shared data-risk baseline and usage policy" },
-          { id: "c", label: "Delay controls until tooling is fully deployed" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "A shared baseline prevents inconsistent high-risk behavior.",
-        quickCheckOptionExplanations: {
-          a: "Inconsistent rules create governance gaps.",
-          b: "This is the minimum practical safeguard for scale.",
-          c: "Delayed controls increase avoidable risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-creative through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-ai-creative?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-ai-images": {
-    id: "module-3-ai-images",
-    moduleId: "module-3",
-    sectionId: "ai-images",
+    content: "Neural networks are the architectural foundation of modern AI. Loosely inspired by biological neurons, they consist of layers of mathematical operations that transform inputs into outputs. Deep learning refers to neural networks with many layers — 'deep' describes depth, not sophistication. For business leaders, the key insight is that neural networks learn representations automatically from data, which is why they excel at tasks like image recognition, language understanding, and complex pattern detection.",
+    summary: "Neural networks learn data representations automatically through layered mathematical operations — enabling complex pattern recognition without hand-coded rules.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-2-training-data-section-card": {
+    id: "module-2-training-data-section-card",
+    moduleId: "module-2",
+    sectionId: "training-data",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Maturity signal scenario",
-        scenarioBody:
-          "A vendor demo is polished, but production readiness is uncertain. You need criteria for distinguishing launch polish from operational maturity.",
-        checklistTitle: "Maturity signal checklist",
-        checklistItems: [
-          "Check reliability history and incident response behavior.",
-          "Review support quality and release discipline over time.",
-          "Validate one real workflow before broad approval.",
-        ],
-        quickCheckPrompt: "Which indicator best predicts real product maturity?",
-        quickCheckOptions: [
-          { id: "a", label: "Demo aesthetics and presentation quality" },
-          { id: "b", label: "Operational reliability and support consistency" },
-          { id: "c", label: "Social buzz and community excitement" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Operational performance indicators are stronger than launch-day impressions.",
-        quickCheckOptionExplanations: {
-          a: "Presentation quality can mask production weaknesses.",
-          b: "This is the best predictor of sustained usability.",
-          c: "Popularity is not a stability guarantee.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-images through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-ai-images?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-ai-productivity": {
-    id: "module-3-ai-productivity",
-    moduleId: "module-3",
-    sectionId: "ai-productivity",
+    content: "Training data is the foundation of any ML system. The quality, quantity, representativeness, and labeling accuracy of training data determines the ceiling of what an AI system can achieve. Common training data problems: (1) Insufficient volume; (2) Labeling errors; (3) Unrepresentative samples (e.g., only training on data from certain demographics); (4) Historical bias embedded in labels; (5) Data leakage — where test data bleeds into training, creating falsely optimistic performance metrics.",
+    summary: "Training data quality determines AI performance ceilings — volume, representativeness, label accuracy, and bias are the critical dimensions.",
+    question: "A healthcare AI system trained primarily on patient data from large urban hospitals is deployed at rural clinics. What risk is most significant?",
+    explanation: "This is a representativeness problem. Rural patient populations often have different health profiles, access patterns, and demographic characteristics than urban populations. An AI trained on non-representative data will make systematic errors on underrepresented groups. This is both an ethical risk and a patient safety risk — and a preview of how deployment context must match training context.",
+  },
+
+  "module-2-supervised-unsupervised-section-card": {
+    id: "module-2-supervised-unsupervised-section-card",
+    moduleId: "module-2",
+    sectionId: "supervised-unsupervised",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Integration fit scenario",
-        scenarioBody:
-          "A tool appears valuable, but your current systems have strict workflows and controls. You need to test integration fit before making a procurement decision.",
-        checklistTitle: "Integration fit checklist",
-        checklistItems: [
-          "Map required systems, APIs, identity, and permission boundaries.",
-          "Run one full end-to-end workflow test in your environment.",
-          "Measure manual workaround burden and failure points.",
-        ],
-        quickCheckPrompt: "What is the strongest signal that a tool fits your stack?",
-        quickCheckOptions: [
-          { id: "a", label: "Strong team enthusiasm after a demo" },
-          { id: "b", label: "Successful end-to-end workflow execution in your stack" },
-          { id: "c", label: "A broad library of prebuilt templates" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Real workflow tests reveal integration viability better than claims.",
-        quickCheckOptionExplanations: {
-          a: "Excitement is not integration evidence.",
-          b: "This is the strongest practical readiness signal.",
-          c: "Templates do not guarantee stack compatibility.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-productivity through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-ai-productivity?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-ai-writing": {
-    id: "module-3-ai-writing",
-    moduleId: "module-3",
-    sectionId: "ai-writing",
+    content: "Supervised learning trains on labeled data (input → correct output pairs): email labeled spam/not-spam, images labeled cat/dog, transactions labeled fraud/legitimate. Unsupervised learning finds structure in unlabeled data: clustering customers by behavior, detecting anomalies. Reinforcement learning trains through trial and reward signals: game-playing AI, robotics. Most business AI is supervised learning. Understanding this helps evaluate whether you have the labeled data an AI solution actually requires.",
+    summary: "Most business AI uses supervised learning, which requires labeled training data — understanding this helps assess whether proposed AI solutions are actually feasible.",
+    question: "A vendor proposes an AI system to automatically categorize your support tickets into 12 issue types. What data requirement is most critical to evaluate?",
+    explanation: "This is a supervised classification problem. The AI needs thousands of labeled examples of support tickets already correctly categorized into each of the 12 issue types. If you don't have that historical labeled data (or if your categories aren't well-defined), the model can't learn the task. Evaluating data readiness before vendor commitment is one of the highest-leverage questions in AI procurement.",
+  },
+
+  "module-2-what-ai-cant-do-section-card": {
+    id: "module-2-what-ai-cant-do-section-card",
+    moduleId: "module-2",
+    sectionId: "what-ai-cant-do",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Lock-in risk scenario",
-        scenarioBody:
-          "A candidate tool performs well in pilots, but export and migration pathways are unclear. You need to avoid lock-in that can inflate switching costs later.",
-        checklistTitle: "Lock-in prevention checklist",
-        checklistItems: [
-          "Confirm exportability for data, prompts, and workflow artifacts.",
-          "Identify any proprietary features that have no contingency path.",
-          "Define one migration trigger and one rollback option before adoption.",
-        ],
-        quickCheckPrompt: "What is the strongest early safeguard against platform lock-in?",
-        quickCheckOptions: [
-          { id: "a", label: "Rely on premium proprietary features to accelerate adoption" },
-          { id: "b", label: "Require portability and contingency architecture from the start" },
-          { id: "c", label: "Defer migration planning until after full rollout" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Portability and contingency planning preserve strategic flexibility.",
-        quickCheckOptionExplanations: {
-          a: "This can increase long-run dependency risk.",
-          b: "This is the core lock-in mitigation pattern.",
-          c: "Late planning makes migration harder and costlier.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-writing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-ai-writing?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-anatomy-of-prompt": {
-    id: "module-3-anatomy-of-prompt",
-    moduleId: "module-3",
-    sectionId: "anatomy-of-prompt",
+    content: "Current AI has clear limitations: (1) Genuine reasoning — AI mimics reasoning patterns but doesn't understand causality; (2) Novel domain generalization — AI struggles outside its training distribution; (3) Physical world interaction without specialized systems; (4) Consistent factual reliability — LLMs hallucinate; (5) Long-horizon multi-step planning — agent systems are improving but remain brittle; (6) Judgment in ethically novel situations. Knowing these limits prevents expensive AI projects built on false assumptions.",
+    summary: "AI has fundamental limits in genuine reasoning, novel domain generalization, factual consistency, and ethical judgment — understanding these prevents costly misapplication.",
+    question: "Which task is LEAST suited to current AI capabilities?",
+    explanation: "AI performs poorly at tasks requiring genuine causal understanding, ethical judgment in novel situations, or reliable performance far outside its training distribution. Pattern-recognition tasks with well-defined inputs and outputs in familiar domains are where AI creates the most reliable value. The goal is matching the task to the AI type, not trying to use AI everywhere.",
+  },
+
+  "module-2-module-quiz": {
+    id: "module-2-module-quiz",
+    moduleId: "module-2",
+    sectionId: "module-quiz",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Scorecard design",
-        scenarioBody:
-          "Your team compares tools inconsistently and reaches different conclusions from the same demo. You need a weighted scorecard that can survive leadership scrutiny.",
-        checklistTitle: "Tool comparison scorecard checklist",
-        checklistItems: [
-          "Define weighted criteria: reliability, integration fit, security posture, support quality.",
-          "Use the same test cases across all tools.",
-          "Record assumptions and unresolved risks per candidate.",
-        ],
-        quickCheckPrompt: "What makes a tool scorecard trustworthy?",
-        quickCheckOptions: [
-          { id: "a", label: "Subjective team preference ratings" },
-          { id: "b", label: "Weighted criteria and consistent test cases" },
-          { id: "c", label: "Only benchmark leaderboard results" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Weighted criteria and shared tests make decisions auditable and comparable.",
-        quickCheckOptionExplanations: {
-          a: "Preference without criteria is hard to defend.",
-          b: "This is the decision-grade approach.",
-          c: "Benchmarks alone miss operational realities.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in anatomy-of-prompt through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-anatomy-of-prompt?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-choosing-tools": {
-    id: "module-3-choosing-tools",
-    moduleId: "module-3",
-    sectionId: "choosing-tools",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Decision scorecard scenario",
-        scenarioBody:
-          "You have limited pilot capacity and multiple candidates. You need a scorecard that supports defensible prioritization decisions.",
-        checklistTitle: "Decision scorecard checklist",
-        checklistItems: [
-          "Score candidates on capability fit, risk, cost, and integration burden.",
-          "Weight criteria according to business priorities.",
-          "Define explicit buy, wait, and pilot thresholds.",
-        ],
-        quickCheckPrompt: "What makes a tool comparison framework decision-ready?",
-        quickCheckOptions: [
-          { id: "a", label: "A list of favored tools based on general team preference" },
-          { id: "b", label: "Weighted criteria tied to outcomes and risk thresholds" },
-          { id: "c", label: "An equal-weight checklist without decision thresholds" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Weighted criteria plus thresholds produce defensible selection decisions.",
-        quickCheckOptionExplanations: {
-          a: "Preference-only ranking is difficult to defend.",
-          b: "This is the strongest operational selection method.",
-          c: "Without thresholds, decisions remain ambiguous.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in choosing-tools through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-choosing-tools?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-hands-on-practice-section-card": {
-    id: "module-3-hands-on-practice-section-card",
-    moduleId: "module-3",
-    sectionId: "hands-on-practice",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Decision tree application",
-        scenarioBody:
-          "Your team has three candidate tools and limited pilot capacity. You need a clear buy-wait-pilot path tied to owners, metrics, and time-bound review checkpoints.",
-        checklistTitle: "Buy-wait-pilot checklist",
-        checklistItems: [
-          "Mark each candidate as buy, wait, or pilot using scorecard thresholds.",
-          "Assign pilot owner, metric, and timeframe for pilot options.",
-          "Document why deferred options were paused.",
-        ],
-        quickCheckPrompt: "What is the purpose of a buy-wait-pilot decision tree?",
-        quickCheckOptions: [
-          { id: "a", label: "Shorten procurement cycles while keeping all options active" },
-          { id: "b", label: "Standardize tool decisions with clear next actions" },
-          { id: "c", label: "Reduce experimentation overhead by standardizing on one default tool" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "A decision tree turns analysis into execution-ready commitments.",
-        quickCheckOptionExplanations: {
-          a: "Speed without structure increases risk.",
-          b: "This is exactly the intended outcome.",
-          c: "Pilots remain critical for evidence generation.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in hands-on-practice through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-hands-on-practice?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-how-chatgpt-works": {
-    id: "module-3-how-chatgpt-works",
-    moduleId: "module-3",
-    sectionId: "how-chatgpt-works",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Specialized tool trigger",
-        scenarioBody:
-          "You are deciding whether to move from general assistants to specialized products. The decision must be based on repeatable workflow failures, not feature excitement.",
-        checklistTitle: "Specialization trigger checklist",
-        checklistItems: [
-          "Document repeated failure modes and their business impact.",
-          "Check if specialized controls or integrations are required.",
-          "Validate incremental value through pilot comparisons.",
-        ],
-        quickCheckPrompt: "What best justifies a specialized tool purchase?",
-        quickCheckOptions: [
-          { id: "a", label: "A high-quality pilot showed better user satisfaction and interface adoption" },
-          { id: "b", label: "Documented workflow gaps and measurable pilot uplift" },
-          { id: "c", label: "Cross-functional stakeholders prefer the tool's governance and admin controls" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Specialization should be justified by measurable uplift, not perceived sophistication.",
-        quickCheckOptionExplanations: {
-          a: "Demo quality alone is insufficient.",
-          b: "This is the strongest procurement rationale.",
-          c: "Preference should not override outcome evidence.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in how-chatgpt-works through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-how-chatgpt-works?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-module-overview-section-card": {
+    content: "Test your understanding of how AI creates business value — including ML fundamentals, training data requirements, learning paradigms, and where AI breaks down.",
+    summary: "Module 2 knowledge check covering ML fundamentals, data requirements, learning paradigms, and AI limitations.",
+    question: "An organization wants to use AI to identify which sales leads are most likely to convert. They have 3 years of CRM data with outcomes. What type of ML approach is most appropriate?",
+    explanation: "This is a supervised learning classification or scoring problem — the model learns from historical labeled examples (leads that converted vs. didn't) to predict future outcomes. The 3 years of CRM data with known outcomes provides the labeled training signal required. This is one of the highest-ROI AI use cases in sales organizations when done with quality data.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 3 — AI Tools: Which Ones Matter?
+  // ─────────────────────────────────────────────
+
+  "module-3-module-overview-section-card": {
     id: "module-3-module-overview-section-card",
     moduleId: "module-3",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Operational selection kickoff",
-        scenarioBody:
-          "You already built conceptual clarity in Module 1. Now you must convert that understanding into defensible tool decisions using measurable criteria and explicit risk controls.",
-        checklistTitle: "Decision framework kickoff checklist",
-        checklistItems: [
-          "Define decision criteria before evaluating vendors.",
-          "Separate required capabilities from nice-to-have features.",
-          "Set evidence standards for buy, pilot, and wait outcomes.",
-        ],
-        quickCheckPrompt: "What is the best first move in tool selection?",
-        quickCheckOptions: [
-          { id: "a", label: "Compare all vendors at once" },
-          { id: "b", label: "Start with category-level outcome mapping" },
-          { id: "c", label: "Choose the most popular brand immediately" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Category-first evaluation creates a defensible bridge from strategy to procurement.",
-        quickCheckOptionExplanations: {
-          a: "This is usually too broad and inefficient early on.",
-          b: "This creates a clean decision structure.",
-          c: "Popularity is not a reliable fit signal.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-module-quiz": {
-    id: "module-3-module-quiz",
-    moduleId: "module-3",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Procurement readiness checkpoint",
-        scenarioBody:
-          "You are presenting a Module 3 recommendation to leadership. You need to show that recommendations are evidence-backed, risk-adjusted, and executable.",
-        checklistTitle: "Procurement readiness checklist",
-        checklistItems: [
-          "Prepare top candidates with weighted scorecard evidence.",
-          "Include one buy, one pilot, and one wait rationale with thresholds.",
-          "Define expected pilot outcomes and review criteria.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 3 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Selecting a tool based on stakeholder enthusiasm and early usability signals" },
-          { id: "b", label: "Defensible recommendations grounded in scorecard evidence" },
-          { id: "c", label: "Expanding pilot discovery before issuing buy or wait recommendations" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness means defensible recommendations and clear execution logic.",
-        quickCheckOptionExplanations: {
-          a: "Excitement is not a procurement framework.",
-          b: "This is the target outcome for Module 3.",
-          c: "Deferral without evaluation slows capability building.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-prompt-techniques": {
-    id: "module-3-prompt-techniques",
-    moduleId: "module-3",
-    sectionId: "prompt-techniques",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Commercial and security risk screening",
-        scenarioBody:
-          "A product tool appears affordable at first glance, but hidden SaaS cost drivers and data governance liabilities may emerge after rollout. You need a pre-purchase risk screen for product contracts.",
-        checklistTitle: "Risk screen checklist",
-        checklistItems: [
-          "Map seat, API, and expansion costs under realistic usage scenarios.",
-          "Review data handling, retention, access controls, and training reuse terms in product policies.",
-          "Flag dependencies that could create lock-in exposure.",
-        ],
-        quickCheckPrompt: "Which pricing pattern deserves extra scrutiny?",
-        quickCheckOptions: [
-          { id: "a", label: "Clear milestone-based pricing with terms" },
-          { id: "b", label: "Low entry cost with unclear expansion terms" },
-          { id: "c", label: "Published usage tiers with thresholds" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Opaque expansion terms are a leading indicator of long-run cost risk.",
-        quickCheckOptionExplanations: {
-          a: "This is usually more transparent.",
-          b: "This is a common hidden-cost risk pattern.",
-          c: "Documented tiers are generally easier to model.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in prompt-techniques through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-prompt-techniques?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-3-what-is-llm": {
+    content: "This module teaches strategic AI tool evaluation rather than tool chasing. You'll learn how to assess AI software categories, understand when a general-purpose assistant is sufficient versus when specialized systems are warranted, and build evaluation frameworks that account for workflow fit, governance, integration complexity, pricing traps, and vendor stability.",
+    summary: "Module 3 builds a strategic framework for AI tool evaluation — prioritizing workflow fit over feature lists and benchmark performance.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-what-is-llm": {
     id: "module-3-what-is-llm",
     moduleId: "module-3",
     sectionId: "what-is-llm",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "General assistant threshold",
-        scenarioBody:
-          "A team requests a specialized product, but an existing general assistant might already satisfy requirements. You need a threshold test that prevents premature complexity.",
-        checklistTitle: "Fit threshold checklist",
-        checklistItems: [
-          "Run a baseline trial with a general assistant.",
-          "Measure quality, speed, and review burden.",
-          "Escalate to specialized tools only if gaps are persistent.",
-        ],
-        quickCheckPrompt: "When should teams stay with a general assistant?",
-        quickCheckOptions: [
-          { id: "a", label: "When results are acceptable and risk remains low" },
-          { id: "b", label: "When governance needs are moderate and can be handled with process controls" },
-          { id: "c", label: "When scale requirements are likely to increase within the next two quarters" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "General tools should be the default baseline unless evidence shows persistent capability gaps.",
-        quickCheckOptionExplanations: {
-          a: "This is the practical baseline decision.",
-          b: "Governance can still be applied to general tools.",
-          c: "Specialization should be justified by real gaps, not assumption.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-is-llm through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-3-what-is-llm?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-data-cleaning-section-card": {
-    id: "module-4-data-cleaning-section-card",
-    moduleId: "module-4",
-    sectionId: "data-cleaning",
+    content: "Large Language Models (LLMs) are AI systems trained on vast text corpora to predict and generate human-like language. They power ChatGPT, Claude, Gemini, and most modern AI assistants. LLMs don't 'know' facts — they predict statistically likely text based on training patterns. Key business implications: they excel at drafting, summarizing, reformatting, and generating — but they hallucinate, reflect training biases, and have knowledge cutoff dates.",
+    summary: "LLMs predict statistically likely text — they excel at generative tasks but hallucinate and don't reliably 'know' facts.",
+    question: "Why can an LLM confidently state an incorrect fact?",
+    explanation: "LLMs are not databases or search engines. They generate text by predicting what tokens (words/subwords) are statistically likely to follow previous ones, based on patterns in training data. A model can generate plausible-sounding but factually wrong content because 'sounds right' and 'is right' are different criteria. This is a fundamental architectural characteristic, not a bug to be fixed with a software update.",
+  },
+
+  "module-3-how-chatgpt-works": {
+    id: "module-3-how-chatgpt-works",
+    moduleId: "module-3",
+    sectionId: "how-chatgpt-works",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Pilot structuring scenario",
-        scenarioBody:
-          "Leadership wants immediate scale, but evidence is thin. You need to structure a pilot that creates decision-grade data before broader rollout.",
-        checklistTitle: "Pilot design checklist",
-        checklistItems: [
-          "Define narrow scope, owner, baseline, and target metric.",
-          "Set explicit stop/scale criteria before launch.",
-          "Schedule pilot review with go/no-go decision date.",
-        ],
-        quickCheckPrompt: "What makes a pilot useful for real business decisions?",
-        quickCheckOptions: [
-          { id: "a", label: "Moderate scope with flexible goals so teams can adapt during execution" },
-          { id: "b", label: "Small scope, measurable outcomes, explicit stop conditions" },
-          { id: "c", label: "Small scope with owner assigned but no pre-defined stop or scale thresholds" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Decision-grade pilots are constrained, measurable, and time-bound.",
-        quickCheckOptionExplanations: {
-          a: "This increases ambiguity and risk.",
-          b: "This is the strongest pilot pattern.",
-          c: "Unowned experiments rarely produce actionable outcomes.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in data-cleaning through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-data-cleaning?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-data-collection-section-card": {
-    id: "module-4-data-collection-section-card",
-    moduleId: "module-4",
-    sectionId: "data-collection",
+    content: "ChatGPT (and similar tools) work in three stages: (1) Pre-training — the model learns language patterns from billions of text documents; (2) Fine-tuning — the model is trained to follow instructions and avoid harmful outputs; (3) RLHF (Reinforcement Learning from Human Feedback) — human raters teach the model which responses are better. Each conversation is processed without persistent memory (by default). The model doesn't 'think' between sessions.",
+    summary: "ChatGPT is trained in three stages — pre-training, fine-tuning, and RLHF — and has no persistent memory between default sessions.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-anatomy-of-prompt": {
+    id: "module-3-anatomy-of-prompt",
+    moduleId: "module-3",
+    sectionId: "anatomy-of-prompt",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Red flag detection scenario",
-        scenarioBody:
-          "A proposal sounds impressive but lacks concrete delivery mechanics. You need to detect false expertise before committing budget.",
-        checklistTitle: "Red flag checklist",
-        checklistItems: [
-          "Look for missing assumptions and vague success claims.",
-          "Request references with comparable implementation scope.",
-          "Verify technical approach can be explained in plain language.",
-        ],
-        quickCheckPrompt: "What is a high-confidence red flag in AI proposals?",
-        quickCheckOptions: [
-          { id: "a", label: "Named timeline and risk log" },
-          { id: "b", label: "Clear implementation team and governance plan" },
-          { id: "c", label: "Transformation promises without operating detail" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Bold claims without delivery detail are a common failure indicator.",
-        quickCheckOptionExplanations: {
-          a: "This is usually a positive signal.",
-          b: "This is generally a positive diligence marker.",
-          c: "This should trigger deeper verification or rejection.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in data-collection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-data-collection?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-feature-engineering-section-card": {
-    id: "module-4-feature-engineering-section-card",
-    moduleId: "module-4",
-    sectionId: "feature-engineering",
+    content: "An effective prompt typically contains: (1) Role/context — 'You are a financial analyst…'; (2) Task — what you want done; (3) Format — how the output should be structured; (4) Constraints — what to include or avoid; (5) Examples — showing desired output style. Prompt quality is the primary lever for improving AI output quality. Most users underspecify prompts and then blame the AI for poor results.",
+    summary: "Effective prompts include role, task, format, constraints, and examples — prompt quality is the primary lever for AI output quality.",
+    question: "A team member complains that AI keeps giving generic answers. Which prompt element is most likely missing?",
+    explanation: "Generic outputs typically result from generic prompts. Adding role context ('As a senior product manager reviewing a B2B SaaS feature request...'), specific constraints, and format requirements dramatically improves output specificity. The AI can only work with what you give it — the more context and constraint you provide, the more targeted the output.",
+  },
+
+  "module-3-prompt-techniques": {
+    id: "module-3-prompt-techniques",
+    moduleId: "module-3",
+    sectionId: "prompt-techniques",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Contract and pricing negotiation scenario",
-        scenarioBody:
-          "A partner proposal looks affordable at entry but scope boundaries and change-order mechanics are vague. You need to de-risk contract structure before signing.",
-        checklistTitle: "Contract review checklist",
-        checklistItems: [
-          "Break down fixed fees, variable fees, and change-order triggers.",
-          "Tie payment milestones to accepted deliverables and measurable outcomes.",
-          "Require explicit language for scope boundaries, acceptance criteria, and escalation paths.",
-        ],
-        quickCheckPrompt: "Which contract pattern deserves the closest scrutiny?",
-        quickCheckOptions: [
-          { id: "a", label: "Milestone contract with explicit acceptance criteria" },
-          { id: "b", label: "Low entry fee with unclear scope-change and expansion terms" },
-          { id: "c", label: "Fixed retainer with clearly defined included services" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Ambiguous change-order and expansion clauses are a primary source of partner cost overruns.",
-        quickCheckOptionExplanations: {
-          a: "This is usually easier to govern.",
-          b: "This is the high-risk partner contract pattern.",
-          c: "Clear service boundaries reduce ambiguity.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in feature-engineering through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-feature-engineering?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-module-overview-section-card": {
+    content: "Key prompting techniques: (1) Chain-of-thought — ask the model to reason step by step before answering; (2) Few-shot — provide 2–3 examples of desired input/output pairs; (3) Role prompting — assign a persona that frames the model's response style; (4) Iterative refinement — treat first output as a draft and prompt for specific improvements; (5) Structured output — request JSON, tables, or bullet formats for downstream processing. Each technique increases reliability for specific task types.",
+    summary: "Chain-of-thought, few-shot examples, role prompting, and structured output are the core techniques for improving AI reliability.",
+    question: "You need an AI to evaluate a legal contract and identify risks. Which prompting technique would most improve output reliability?",
+    explanation: "Chain-of-thought prompting — asking the model to reason step by step — significantly improves performance on analytical tasks that require multi-step reasoning. For contract review, you'd ask the model to first identify clause types, then evaluate each against specified risk criteria, then summarize. This structured reasoning approach catches more issues than a single 'review this contract' prompt.",
+  },
+
+  "module-3-hands-on-practice-section-card": {
+    id: "module-3-hands-on-practice-section-card",
+    moduleId: "module-3",
+    sectionId: "hands-on-practice",
+    cardType: "section-card",
+    content: "Practice is the only way to develop prompt engineering fluency. Key exercises: (1) Take a task you do weekly and write 3 different prompts for it — compare outputs; (2) Deliberately break a prompt by making it vague — observe how output degrades; (3) Add examples to a prompt and compare to the example-free version; (4) Ask an AI to improve your own prompt. Fluency comes from iteration, not theory.",
+    summary: "Prompt engineering fluency requires deliberate iteration — comparing prompt variants, studying failures, and practicing regularly.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-choosing-tools": {
+    id: "module-3-choosing-tools",
+    moduleId: "module-3",
+    sectionId: "choosing-tools",
+    cardType: "section-card",
+    content: "AI tool selection framework: (1) Define the workflow problem precisely before evaluating tools; (2) Test with real work samples, not demo data; (3) Evaluate total cost of ownership — per-seat pricing compounds; (4) Assess integration complexity with existing systems; (5) Review data handling and privacy terms; (6) Check vendor financial stability; (7) Plan for vendor lock-in risk. The tool that wins demos rarely wins production.",
+    summary: "Effective AI tool selection requires defining the problem first, testing with real work, evaluating total cost, and assessing data governance before committing.",
+    question: "An organization is evaluating two AI tools: Tool A performs better on vendor benchmarks; Tool B integrates seamlessly with existing systems. Which factor should carry more weight?",
+    explanation: "Integration with existing systems almost always outweighs benchmark performance for enterprise AI tools. A superior tool that requires manual data export/import, doesn't connect to your CRM or ERP, or creates workflow friction will be underused. The measurable business value comes from how deeply a tool embeds into actual workflows — not how it scores on controlled benchmarks.",
+  },
+
+  "module-3-ai-writing": {
+    id: "module-3-ai-writing",
+    moduleId: "module-3",
+    sectionId: "ai-writing",
+    cardType: "section-card",
+    content: "AI writing tools in business contexts are most valuable for: first drafts, email templates, meeting summaries, policy documents, sales sequences, and research synthesis. Lowest value: final customer-facing communications requiring brand voice precision, legal documents requiring verified accuracy, and content where hallucination risk is high. Build review workflows into any AI writing process — AI accelerates drafting, not publishing.",
+    summary: "AI writing tools excel at drafts and synthesis but require human review — hallucination risk makes autonomous publishing dangerous.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-ai-images": {
+    id: "module-3-ai-images",
+    moduleId: "module-3",
+    sectionId: "ai-images",
+    cardType: "section-card",
+    content: "When selecting AI image generation tools for business use, evaluate: (1) Commercial licensing terms — can outputs be used commercially?; (2) Brand consistency capability — can it maintain visual identity?; (3) Iteration speed — how quickly can you refine outputs?; (4) IP indemnification — does the vendor protect you from copyright claims?; (5) Quality for your specific use case (photography style vs illustration vs product visualization). Adobe Firefly's indemnification policy is currently the strongest in enterprise contexts.",
+    summary: "Business image AI selection requires evaluating commercial licensing, brand consistency, IP indemnification, and use-case-specific quality.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-ai-productivity": {
+    id: "module-3-ai-productivity",
+    moduleId: "module-3",
+    sectionId: "ai-productivity",
+    cardType: "section-card",
+    content: "Productivity AI tools comparison: Microsoft Copilot — strongest for Office 365 workflows, meeting summaries, email drafting; Google Gemini — strongest for Workspace integration and collaborative documents; Notion AI — strongest for knowledge management and structured note-taking; Otter.ai — strongest for meeting transcription and action item extraction. Choice should follow your existing platform ecosystem rather than chasing feature lists.",
+    summary: "Productivity AI tool selection should follow existing platform ecosystems — Copilot for Microsoft shops, Gemini for Google Workspace users.",
+    question: "An organization runs entirely on Google Workspace. Which AI productivity tool should they evaluate first?",
+    explanation: "Platform alignment is the primary selection criterion for embedded productivity AI. Google Gemini is natively integrated with Gmail, Docs, Sheets, and Meet — eliminating integration overhead and keeping data within an already-governed environment. Adopting a competing productivity AI in a single-platform environment creates unnecessary complexity and typically lower adoption rates.",
+  },
+
+  "module-3-ai-creative": {
+    id: "module-3-ai-creative",
+    moduleId: "module-3",
+    sectionId: "ai-creative",
+    cardType: "section-card",
+    content: "AI creative tool evaluation for business: assess whether the tool supports brand guidelines via style presets or reference images, what the turnaround time is for production-quality outputs, how much human curation is required, and what the content moderation policies are. For video and audio specifically, evaluate whether outputs require disclosure under current or anticipated regulatory requirements in your jurisdiction.",
+    summary: "Business creative AI evaluation requires assessing brand guideline support, production quality time, curation requirements, and disclosure obligations.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-3-module-quiz": {
+    id: "module-3-module-quiz",
+    moduleId: "module-3",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Test your ability to apply AI tool evaluation frameworks — covering LLM mechanics, prompt techniques, tool selection criteria, and practical workflow integration.",
+    summary: "Module 3 knowledge check on LLM mechanics, prompting, tool evaluation, and workflow integration.",
+    question: "A startup is choosing between building a custom AI system on top of an API (like OpenAI or Anthropic) versus buying an off-the-shelf SaaS AI product. What is the strongest argument for the API-first approach?",
+    explanation: "Building directly on foundational model APIs provides maximum flexibility, avoids SaaS markup pricing, and prevents vendor lock-in to a specific product layer. However, it requires engineering resources and ongoing maintenance. The correct answer depends on whether the organization has engineering capacity and whether any off-the-shelf product adequately solves the specific problem. For unique workflows with no good SaaS match, API-first is often the better long-term investment.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 4 — Choosing the Right AI Agency or Partner
+  // ─────────────────────────────────────────────
+
+  "module-4-module-overview-section-card": {
     id: "module-4-module-overview-section-card",
     moduleId: "module-4",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Partner selection kickoff",
-        scenarioBody:
-          "You need outside help for AI implementation but are unsure whether to use an agency, freelancer, or internal team expansion. You must choose a fit-for-stage partner model.",
-        checklistTitle: "Partner model checklist",
-        checklistItems: [
-          "Define delivery urgency and internal capability gaps.",
-          "List required outcomes for the next 90 days.",
-          "Pick partner model based on speed, control, and ownership needs.",
-        ],
-        quickCheckPrompt: "What should guide partner model choice first?",
-        quickCheckOptions: [
-          { id: "a", label: "Proven category reputation and a strong portfolio of similar clients" },
-          { id: "b", label: "Business outcomes, timeline, and internal capacity" },
-          { id: "c", label: "Fastest mobilization plan even if long-term ownership remains unclear" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Fit-to-outcome and capability constraints should drive partner decisions.",
-        quickCheckOptionExplanations: {
-          a: "References and reputation matter, but they are not enough without fit-to-outcome analysis.",
-          b: "This is the strongest decision basis.",
-          c: "Cost is one factor, not a quality proxy.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-module-quiz": {
-    id: "module-4-module-quiz",
-    moduleId: "module-4",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Diligence readiness checkpoint",
-        scenarioBody:
-          "You are defending an external delivery partner recommendation in an executive review. You need to show that diligence depth, pilot design, and contract controls are all decision-ready.",
-        checklistTitle: "Partner diligence readiness checklist",
-        checklistItems: [
-          "Present top partner options with risk-adjusted rationale.",
-          "Include pilot structure and success thresholds.",
-          "Highlight pricing and contract guardrails before approval.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 4 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Selecting a partner based on references and implementation velocity" },
-          { id: "b", label: "Defensible recommendation with diligence evidence and pilot plan" },
-          { id: "c", label: "Approving phased expansion before pilot review milestones are completed" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Strong readiness combines partner diligence, controlled pilots, and commercial safeguards.",
-        quickCheckOptionExplanations: {
-          a: "Brand alone is not sufficient decision evidence.",
-          b: "This is the expected outcome of the module.",
-          c: "Skipping pilot evidence increases execution risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-preprocessing-section-card": {
-    id: "module-4-preprocessing-section-card",
-    moduleId: "module-4",
-    sectionId: "preprocessing",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Partner operating model scenario",
-        scenarioBody:
-          "You already decided to use an external partner. Now you must choose the right operating model: advisory support, project delivery, or managed service.",
-        checklistTitle: "Partner operating model checklist",
-        checklistItems: [
-          "Assess internal staffing and governance capacity for partner oversight.",
-          "Define desired ownership boundary between your team and the partner.",
-          "Select advisory, project, or managed-service mode based on control and speed needs.",
-        ],
-        quickCheckPrompt: "How should teams choose a partner operating model?",
-        quickCheckOptions: [
-          { id: "a", label: "Pick whichever model the partner recommends first" },
-          { id: "b", label: "Match operating model to ownership, oversight, and delivery constraints" },
-          { id: "c", label: "Default to managed service for all use cases" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Operating model should fit your governance capacity and desired ownership outcomes.",
-        quickCheckOptionExplanations: {
-          a: "Partner preference alone is not a governance framework.",
-          b: "This is the most defensible operating-model method.",
-          c: "Managed service is useful in some cases, not all cases.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in preprocessing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-preprocessing?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-4-what-is-data-section-card": {
+    content: "This module helps organizations distinguish genuine AI implementation expertise from marketing-grade AI claims. As AI adoption accelerated, a wave of agencies and consultants repositioned as 'AI experts' with minimal actual implementation experience. You'll learn to evaluate partners using operational criteria, design pilot projects that reveal real capability, and structure contracts that protect your interests.",
+    summary: "Module 4 teaches leaders to distinguish genuine AI implementation expertise from repositioned consultants using operational evaluation criteria.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-4-what-is-data-section-card": {
     id: "module-4-what-is-data-section-card",
     moduleId: "module-4",
     sectionId: "what-is-data",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Pre-contract diligence scenario",
-        scenarioBody:
-          "You are evaluating proposals and need to ask high-leverage questions before signing. The goal is to prevent vague scopes and misaligned delivery.",
-        checklistTitle: "Diligence question checklist",
-        checklistItems: [
-          "Request explicit scope, timeline, and ownership model.",
-          "Ask how success will be measured and reported.",
-          "Confirm staffing plan and escalation process.",
-        ],
-        quickCheckPrompt: "Which pre-signing question is most important?",
-        quickCheckOptions: [
-          { id: "a", label: "How quickly the partner can begin execution with a named team" },
-          { id: "b", label: "How outcomes, scope, and accountability are defined" },
-          { id: "c", label: "How detailed their architecture narrative sounds during workshops" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Outcome, scope, and accountability clarity is foundational for delivery quality.",
-        quickCheckOptionExplanations: {
-          a: "Fast mobilization is useful, but it does not replace clear scope and accountability definitions.",
-          b: "This directly reduces delivery risk.",
-          c: "Buzzwords are weak competence signals.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-is-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-4-what-is-data?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-adoption-framework": {
-    id: "module-5-adoption-framework",
-    moduleId: "module-5",
-    sectionId: "adoption-framework",
+    content: "For AI implementation, data isn't just 'information' — it's the operational input that determines system behavior. Relevant data types: structured (databases, CRM records, spreadsheets), unstructured (emails, documents, audio, images), semi-structured (JSON logs, XML), and real-time streaming. Understanding what data you have, where it lives, how clean it is, and who controls access is foundational before any AI implementation conversation with a vendor.",
+    summary: "AI-relevant data includes structured, unstructured, semi-structured, and streaming types — understanding your data inventory is foundational before vendor evaluation.",
+    question: "Before engaging an AI implementation partner, what data audit should an organization conduct?",
+    explanation: "Organizations should document: what data they have, where it's stored, its quality and completeness, access controls and data governance policies, any regulatory constraints (GDPR, HIPAA), and historical depth. Without this audit, vendors will either discover problems mid-project (increasing cost) or make promises based on assumptions about data that turn out to be wrong.",
+  },
+
+  "module-4-data-collection-section-card": {
+    id: "module-4-data-collection-section-card",
+    moduleId: "module-4",
+    sectionId: "data-collection",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Progress reporting scenario",
-        scenarioBody:
-          "Leadership needs transparent updates on AI progress. Your report must show impact, uncertainty, and next decisions in one view.",
-        checklistTitle: "Reporting discipline checklist",
-        checklistItems: [
-          "Report outcomes, risks, and assumptions together.",
-          "Include continuation, pivot, or stop recommendation per initiative.",
-          "Track experiment governance and decision dates.",
-        ],
-        quickCheckPrompt: "What makes AI progress reporting credible?",
-        quickCheckOptions: [
-          { id: "a", label: "Adoption rates, benchmark rank shifts, and periodic success narratives" },
-          { id: "b", label: "Outcome metrics, risk indicators, and explicit next decisions" },
-          { id: "c", label: "Quarterly success summaries with exceptions handled in separate risk reviews" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Decision-grade reporting combines value, risk, and concrete next actions.",
-        quickCheckOptionExplanations: {
-          a: "This lacks operational decision context.",
-          b: "This is the expected governance reporting standard.",
-          c: "One-sided reporting weakens decision quality.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in adoption-framework through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-adoption-framework?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-effectiveness-metrics": {
-    id: "module-5-effectiveness-metrics",
-    moduleId: "module-5",
-    sectionId: "effectiveness-metrics",
+    content: "AI projects frequently fail because of data collection gaps identified only after contracts are signed. Key questions for vendors: (1) What data do they need, in what format, and in what volume? (2) Who is responsible for data pipeline setup? (3) What happens if data quality is lower than expected? (4) How will ongoing data flows be maintained? (5) Who owns the data infrastructure built during the engagement? Answers reveal operational seriousness.",
+    summary: "Data collection requirements revealed by vendors — format, volume, pipeline ownership, and quality contingencies — expose their operational maturity.",
+    question: "An AI vendor says they'll 'handle the data side.' What follow-up question best reveals their actual capability?",
+    explanation: "Asking 'Who on your team will build and maintain the data pipelines, and what's your approach if our data quality doesn't meet your requirements?' forces specificity. Capable vendors will name team members, describe their data engineering process, and have clear protocols for data quality issues. Vague answers indicate they may be overselling capabilities.",
+  },
+
+  "module-4-data-cleaning-section-card": {
+    id: "module-4-data-cleaning-section-card",
+    moduleId: "module-4",
+    sectionId: "data-cleaning",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Scoring and cost-benefit scenario",
-        scenarioBody:
-          "You have more AI ideas than budget. You need a measurement model that compares expected value confidence and cost of evidence generation.",
-        checklistTitle: "Prioritization scoring checklist",
-        checklistItems: [
-          "Score opportunities on expected outcome impact, measurement confidence, and implementation cost.",
-          "Use shared metric definitions so comparisons remain consistent across teams.",
-          "Prioritize initiatives with the strongest evidence-adjusted value.",
-        ],
-        quickCheckPrompt: "What improves AI prioritization quality most?",
-        quickCheckOptions: [
-          { id: "a", label: "Weighting projects by executive sponsorship and change readiness" },
-          { id: "b", label: "Using a weighted value-effort-confidence model" },
-          { id: "c", label: "Applying an equal-weight rubric across all proposals to reduce bias" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Weighted scoring improves consistency and portfolio quality.",
-        quickCheckOptionExplanations: {
-          a: "Sponsorship strength is not a value metric.",
-          b: "This is the strongest practical prioritization method.",
-          c: "Equal approval dilutes resources and impact.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in effectiveness-metrics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-effectiveness-metrics?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-misleading-metrics": {
-    id: "module-5-misleading-metrics",
-    moduleId: "module-5",
-    sectionId: "misleading-metrics",
+    content: "Real-world data is rarely AI-ready. Common data quality problems: missing values, inconsistent formatting, duplicate records, incorrect labels, stale information, and structural inconsistencies. Data cleaning is time-consuming and often accounts for 60–80% of AI project effort — yet vendors frequently underestimate or omit it from proposals. When evaluating partners, ask for their data cleaning methodology and how they handle quality issues discovered mid-project.",
+    summary: "Data cleaning accounts for 60–80% of AI project effort but is frequently underestimated in vendor proposals — making it a key evaluation criterion.",
+    question: "A vendor quotes a 3-month AI implementation timeline. You know your data is fragmented across 6 legacy systems. What risk does this timeline most likely reflect?",
+    explanation: "Fragmented legacy data almost always requires significant data cleaning, consolidation, and standardization work that vendors often underscope in initial proposals. A 3-month timeline is likely optimistic unless the vendor has accounted for full data discovery, cleaning, and pipeline development. This is a common source of project overruns. Require vendors to detail their data preparation plan specifically.",
+  },
+
+  "module-4-preprocessing-section-card": {
+    id: "module-4-preprocessing-section-card",
+    moduleId: "module-4",
+    sectionId: "preprocessing",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Vanity metric risk scenario",
-        scenarioBody:
-          "A dashboard shows rising AI activity, but business outcomes are flat. You need to identify and remove misleading metrics.",
-        checklistTitle: "Metric quality checklist",
-        checklistItems: [
-          "Flag activity-only metrics that lack outcome linkage.",
-          "Pair each metric with a business result indicator.",
-          "Drop metrics that do not influence decisions.",
-        ],
-        quickCheckPrompt: "Which metric is most likely misleading on its own?",
-        quickCheckOptions: [
-          { id: "a", label: "Cycle-time reduction on a bottleneck process" },
-          { id: "b", label: "Margin change in a target workflow" },
-          { id: "c", label: "Total AI chats across teams" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Activity without outcome linkage is a weak impact signal.",
-        quickCheckOptionExplanations: {
-          a: "This can indicate real operational improvement.",
-          b: "This can indicate measurable business value.",
-          c: "This often inflates progress without proving impact.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in misleading-metrics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-misleading-metrics?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-module-overview-section-card": {
+    content: "Data preprocessing transforms raw data into AI-ready inputs. Steps include: normalization (scaling numeric values to comparable ranges), tokenization (converting text to processable units), encoding (converting categories to numeric representations), handling missing values, and splitting data into training/validation/test sets. Partners who can't explain their preprocessing choices in operational terms are likely not equipped to handle production deployment.",
+    summary: "Preprocessing transforms raw data into AI-ready inputs — partners who can't explain their preprocessing methodology lack production readiness.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-4-feature-engineering-section-card": {
+    id: "module-4-feature-engineering-section-card",
+    moduleId: "module-4",
+    sectionId: "feature-engineering",
+    cardType: "section-card",
+    content: "Feature engineering is the process of creating meaningful input variables for AI models from raw data. Example: raw transaction data becomes 'transactions in last 30 days,' 'average transaction size,' 'days since last transaction' — features that capture behaviorally meaningful signals. Strong AI partners invest significantly in feature engineering. It often matters more than model architecture choice. Weak partners focus almost entirely on model selection.",
+    summary: "Feature engineering — creating meaningful input variables from raw data — often matters more than model choice and reveals partner sophistication.",
+    question: "What does it mean when an AI vendor says they'll 'just plug in GPT-4' to solve your workflow problem?",
+    explanation: "Most enterprise AI problems require significant data preparation, feature engineering, and system integration work before any model can be applied. A vendor who leads with 'we'll plug in GPT-4' is signaling they may not have the depth to solve the actual operational problem — they're focused on the model rather than the workflow engineering. This is a red flag for complex enterprise deployments.",
+  },
+
+  "module-4-module-quiz": {
+    id: "module-4-module-quiz",
+    moduleId: "module-4",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Test your ability to evaluate AI implementation partners — including data readiness assessment, vendor red flags, and contract structure.",
+    summary: "Module 4 knowledge check on AI partner evaluation, data readiness, and implementation risk.",
+    question: "Which of the following is the strongest red flag when evaluating an AI implementation agency?",
+    explanation: "The clearest sign of an agency without genuine implementation experience is the inability to show production-deployed case studies with measurable operational outcomes. Any agency can create demos and slide decks. Real implementation experience produces: live systems, before/after metrics, client references willing to speak in detail, and documented lessons from failures. Require this evidence before signing contracts.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 5 — AI ROI & Decision-Making Frameworks
+  // ─────────────────────────────────────────────
+
+  "module-5-module-overview-section-card": {
     id: "module-5-module-overview-section-card",
     moduleId: "module-5",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "ROI operating model kickoff",
-        scenarioBody:
-          "Leadership wants proof that AI investments are producing value. You need an operating model that tracks outcomes, costs, and risks consistently.",
-        checklistTitle: "ROI model checklist",
-        checklistItems: [
-          "Define business outcomes the ROI model must track.",
-          "Set baseline metrics before implementation starts.",
-          "Assign reporting cadence and owner accountability.",
-        ],
-        quickCheckPrompt: "What is the strongest first step in AI ROI design?",
-        quickCheckOptions: [
-          { id: "a", label: "Start with usage intensity metrics to establish adoption baselines" },
-          { id: "b", label: "Set baseline outcomes and ownership first" },
-          { id: "c", label: "Start with high-visibility KPI snapshots and add cost attribution later" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Baseline and ownership are required for credible ROI tracking.",
-        quickCheckOptionExplanations: {
-          a: "Usage metrics do not equal value outcomes.",
-          b: "This creates decision-grade measurement.",
-          c: "Selective reporting weakens trust and accuracy.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-module-quiz": {
-    id: "module-5-module-quiz",
-    moduleId: "module-5",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "ROI readiness checkpoint",
-        scenarioBody:
-          "You are presenting Module 5 outputs to decision-makers. You need to show that your prioritization and ROI case are measurable, realistic, and risk-aware.",
-        checklistTitle: "ROI readiness checklist",
-        checklistItems: [
-          "Prepare top opportunities with scorecard and ROI assumptions.",
-          "Show baseline-to-post measurement design.",
-          "Include risk-adjusted recommendation and next review date.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 5 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Strong utilization and adoption trends supported by stakeholder testimonials" },
-          { id: "b", label: "Defensible ROI model tied to business outcomes and risk" },
-          { id: "c", label: "A staged ROI approach with assumptions to be validated after broader deployment" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness means outcome-based ROI logic with explicit governance controls.",
-        quickCheckOptionExplanations: {
-          a: "Activity alone does not prove value.",
-          b: "This is the module's expected output quality.",
-          c: "Lack of timeline reduces execution accountability.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-roi-basics-section-card": {
+    content: "This module provides operational frameworks for measuring whether AI initiatives create real business value. You'll learn ROI calculation methods, cost-benefit analysis approaches, automation scoring systems, and prioritization matrices. The goal is replacing gut-feel AI investment decisions with structured, defensible analysis.",
+    summary: "Module 5 replaces gut-feel AI investment decisions with structured ROI calculation, cost-benefit analysis, and prioritization frameworks.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-5-roi-basics-section-card": {
     id: "module-5-roi-basics-section-card",
     moduleId: "module-5",
     sectionId: "roi-basics",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Calculation method scenario",
-        scenarioBody:
-          "Different teams report ROI differently, creating confusion. You need one consistent method to compare initiatives fairly.",
-        checklistTitle: "Method selection checklist",
-        checklistItems: [
-          "Choose baseline-vs-post as the primary measurement structure.",
-          "Include both direct and indirect implementation costs.",
-          "Separate assumptions from measured outcomes clearly.",
-        ],
-        quickCheckPrompt: "Which ROI method is most credible for leadership review?",
-        quickCheckOptions: [
-          { id: "a", label: "Standardized manager assessments paired with periodic productivity sampling" },
-          { id: "b", label: "Baseline-vs-post outcome measurement" },
-          { id: "c", label: "Forecasted efficiency gains using benchmark assumptions and adoption rates" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Baseline comparison is the most defensible way to show impact.",
-        quickCheckOptionExplanations: {
-          a: "Anecdotes are useful context but weak core evidence.",
-          b: "This supports transparent and repeatable reporting.",
-          c: "No baseline means no reliable attribution.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in roi-basics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-roi-basics?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-5-roi-calculation": {
+    content: "AI ROI is calculated as: ROI = ((Gain − Cost) / Cost) × 100. Gain includes labor savings, revenue acceleration, error reduction, and speed improvements. Cost includes implementation, licensing, maintenance, training, and change management. Most organizations undercount costs (ignoring change management and ongoing maintenance) and overcount gains (counting theoretical rather than realized savings). Both errors produce misleading ROI projections.",
+    summary: "AI ROI = ((Gain − Cost) / Cost) × 100 — most organizations undercount costs and overcount gains, producing misleading projections.",
+    question: "An AI system costs $50,000 to implement and $10,000/year to maintain. It saves 20 hours/week of staff time at $50/hour. What is the first-year ROI?",
+    explanation: "Annual savings = 20 hours × $50 × 52 weeks = $52,000. Total first-year cost = $50,000 (implementation) + $10,000 (maintenance) = $60,000. ROI = (($52,000 − $60,000) / $60,000) × 100 = −13.3%. The first year is ROI-negative. Year 2 ROI = (($52,000 − $10,000) / $10,000) × 100 = 320%. This multi-year view is critical for AI investment decisions.",
+  },
+
+  "module-5-roi-calculation": {
     id: "module-5-roi-calculation",
     moduleId: "module-5",
     sectionId: "roi-calculation",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Financial planning scenario",
-        scenarioBody:
-          "You need a quarterly investment plan for AI initiatives. Budget allocation must reflect payback timing, downside exposure, and uncertainty in assumptions.",
-        checklistTitle: "Financial planning checklist",
-        checklistItems: [
-          "Separate fixed implementation costs from variable operating costs.",
-          "Estimate payback windows under conservative and expected cases.",
-          "Define funding release triggers tied to measured milestones.",
-        ],
-        quickCheckPrompt: "How should AI budgets be structured for sustainable impact?",
-        quickCheckOptions: [
-          { id: "a", label: "Majority budget to short-term wins, with optional funding for strategic bets" },
-          { id: "b", label: "Majority budget to long-term transformation, with minimal quick-win coverage" },
-          { id: "c", label: "Balanced portfolio with stage-gated funding" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Balanced, stage-gated budgeting supports both momentum and strategic capability.",
-        quickCheckOptionExplanations: {
-          a: "This may limit long-term competitiveness.",
-          b: "This may delay visible progress and support.",
-          c: "This is the strongest operating pattern.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in roi-calculation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-5-roi-calculation?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-ai-bias": {
-    id: "module-6-ai-bias",
-    moduleId: "module-6",
-    sectionId: "ai-bias",
+    content: "Annual savings calculation: Annual Savings = Hours Saved × Hourly Cost × Frequency. Example: An AI that reduces report generation from 4 hours to 30 minutes saves 3.5 hours per report. If generated weekly with a $75/hour analyst: 3.5 × $75 × 52 = $13,650/year. This must be compared against full implementation and licensing costs. Build conservative, base, and optimistic scenarios — present all three to avoid commitment to a single projection.",
+    summary: "Annual Savings = Hours Saved × Hourly Cost × Frequency — always model conservative, base, and optimistic scenarios rather than a single projection.",
+    question: "Why should AI ROI calculations include three scenarios (conservative, base, optimistic) rather than a single projection?",
+    explanation: "AI implementations frequently encounter unexpected complications — data quality issues, adoption challenges, integration complexity, and performance gaps. A single 'expected' ROI projection creates false confidence and removes decision-making flexibility. Three scenarios force explicit acknowledgment of uncertainty, create decision thresholds ('we proceed if conservative case ROI exceeds X'), and protect against over-committing to optimistic assumptions.",
+  },
+
+  "module-5-effectiveness-metrics": {
+    id: "module-5-effectiveness-metrics",
+    moduleId: "module-5",
+    sectionId: "effectiveness-metrics",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Reliability and oversight scenario",
-        scenarioBody:
-          "A workflow looks efficient but occasionally produces confident errors. You need to define where human validation is mandatory and how exceptions are handled.",
-        checklistTitle: "Oversight design checklist",
-        checklistItems: [
-          "Classify workflow decisions by business impact.",
-          "Require human review for material outputs.",
-          "Define escalation path for uncertain or conflicting outputs.",
-        ],
-        quickCheckPrompt: "How should hallucination risk be handled in high-impact workflows?",
-        quickCheckOptions: [
-          { id: "a", label: "Mandate human validation for material decisions" },
-          { id: "b", label: "Use confidence thresholds to reduce human review volume in most decisions" },
-          { id: "c", label: "Monitor low-frequency errors and intervene only when trend thresholds are exceeded" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "High-impact workflows require explicit human checkpoints.",
-        quickCheckOptionExplanations: {
-          a: "This is the strongest reliability control.",
-          b: "Model upgrades reduce but do not eliminate risk.",
-          c: "Low-frequency failures can still cause severe harm.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-bias through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-ai-bias?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-ethical-dilemmas-section-card": {
-    id: "module-6-ethical-dilemmas-section-card",
-    moduleId: "module-6",
-    sectionId: "ethical-dilemmas",
+    content: "Effective AI metrics measure operational outcomes, not AI activity: (1) Time saved per task (before vs. after); (2) Error rate reduction; (3) Throughput increase (tasks per person-hour); (4) Cost per outcome; (5) Customer satisfaction delta; (6) Revenue attribution. Poor metrics measure AI inputs rather than business outputs — number of prompts sent, features used, or licenses deployed are not evidence of value creation.",
+    summary: "Effective AI metrics measure operational outcomes — time saved, error reduction, throughput — not AI usage activity like prompts sent or features used.",
+    question: "A team reports their AI tool is 'used daily by 90% of employees.' Why is this an insufficient metric for evaluating AI value?",
+    explanation: "Usage frequency measures adoption, not value creation. An AI tool used daily could be saving 5 minutes per person or creating no measurable operational benefit while adding cognitive overhead. Effective measurement requires before/after comparison on operational outcomes: task completion time, error rates, throughput, and cost per outcome. Adoption is a prerequisite for value, not evidence of it.",
+  },
+
+  "module-5-misleading-metrics": {
+    id: "module-5-misleading-metrics",
+    moduleId: "module-5",
+    sectionId: "misleading-metrics",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Vendor contract guardrail scenario",
-        scenarioBody:
-          "A vendor agreement looks favorable on price but weak on liability and data terms. You need to negotiate guardrails before signing.",
-        checklistTitle: "Contract guardrail checklist",
-        checklistItems: [
-          "Define liability and remediation obligations for failures.",
-          "Confirm restrictions on model training with your data.",
-          "Add auditability and termination clauses for risk events.",
-        ],
-        quickCheckPrompt: "What is the strongest contract safeguard pattern?",
-        quickCheckOptions: [
-          { id: "a", label: "Trust vendor standard terms without edits" },
-          { id: "b", label: "Negotiate explicit rights, limits, and accountability" },
-          { id: "c", label: "Prioritize speed over legal review" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Explicit, negotiated terms reduce downstream legal and operational exposure.",
-        quickCheckOptionExplanations: {
-          a: "Default terms may not match your risk requirements.",
-          b: "This is the strongest risk management approach.",
-          c: "Skipping review creates avoidable risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ethical-dilemmas through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-ethical-dilemmas?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-misinformation": {
-    id: "module-6-misinformation",
-    moduleId: "module-6",
-    sectionId: "misinformation",
+    content: "Common misleading AI metrics: (1) 'Hours saved' without validating those hours produced other value; (2) 'Accuracy rates' on test sets that don't reflect production data distribution; (3) User satisfaction scores that reflect novelty rather than utility; (4) 'Tasks automated' without cost comparison to previous approach; (5) Revenue 'attributed' to AI via correlation rather than controlled measurement. Each of these can make a failing AI project appear successful.",
+    summary: "Misleading AI metrics — hours saved without redeployment, test accuracy vs production, novelty satisfaction — can mask failing projects.",
+    question: "An AI system shows 95% accuracy in testing but 71% in production. What most likely explains this gap?",
+    explanation: "This is a test set distribution mismatch — the test data doesn't accurately represent real production inputs. This is one of the most common and dangerous evaluation errors. Production data has more variation, edge cases, and distribution shifts than curated test sets. Always validate AI performance on held-out production data sampled from real operational conditions before declaring a system production-ready.",
+  },
+
+  "module-5-adoption-framework": {
+    id: "module-5-adoption-framework",
+    moduleId: "module-5",
+    sectionId: "adoption-framework",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Incident response scenario",
-        scenarioBody:
-          "A model-generated output creates customer risk. The team is unsure who should act first. You need a documented incident response framework.",
-        checklistTitle: "Incident readiness checklist",
-        checklistItems: [
-          "Define incident severity levels and response timelines.",
-          "Assign owner roles for containment, comms, and remediation.",
-          "Run tabletop exercises for likely failure scenarios.",
-        ],
-        quickCheckPrompt: "What is the best response model for AI incidents?",
-        quickCheckOptions: [
-          { id: "a", label: "Handle incidents with team-level playbooks and escalate only severe events" },
-          { id: "b", label: "Use weekly triage meetings before formalizing response actions" },
-          { id: "c", label: "Use a documented response playbook" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Prepared playbooks improve speed, consistency, and accountability under pressure.",
-        quickCheckOptionExplanations: {
-          a: "Ad hoc response increases inconsistency and risk.",
-          b: "Routine triage without predefined playbooks often slows containment and creates ownership confusion.",
-          c: "This is the strongest operational pattern.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in misinformation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-misinformation?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-module-overview-section-card": {
+    content: "AI adoption framework for ROI maximization: (1) Identify highest-frequency, highest-effort tasks — these have the most savings leverage; (2) Quantify current state with time studies or system data; (3) Pilot with a constrained team for 30–60 days; (4) Measure actual vs. projected savings; (5) Calculate true per-unit cost including all overhead; (6) Decide expand, pivot, or stop based on data. Most organizations skip steps 2 and 5, making accurate evaluation impossible.",
+    summary: "A six-step AI adoption ROI framework: identify high-frequency tasks, quantify current state, pilot constrained, measure actual savings, calculate true costs, then decide.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-5-module-quiz": {
+    id: "module-5-module-quiz",
+    moduleId: "module-5",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Apply ROI frameworks, identify misleading metrics, and evaluate AI investment decisions using the tools from this module.",
+    summary: "Module 5 knowledge check on ROI calculation, metric evaluation, and structured AI investment decision-making.",
+    question: "An organization spent $200,000 on an AI implementation. After 12 months, they have documented $180,000 in realized savings. The team argues the project was 'basically a success.' What is the correct assessment?",
+    explanation: "ROI = (($180,000 − $200,000) / $200,000) × 100 = −10%. The project produced a negative first-year ROI. Whether this is acceptable depends on the multi-year projections — if Year 2 produces $180,000 in savings with minimal maintenance cost, the 2-year ROI becomes strongly positive. The team should present this in a multi-year context rather than calling Year 1 a success. The 'basically a success' framing is a warning sign of sloppy ROI thinking.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 6 — AI Risk, Compliance & Governance
+  // ─────────────────────────────────────────────
+
+  "module-6-module-overview-section-card": {
     id: "module-6-module-overview-section-card",
     moduleId: "module-6",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Governance baseline kickoff",
-        scenarioBody:
-          "AI usage is expanding, but controls are inconsistent across teams. You need a minimum governance baseline before scaling to additional workflows.",
-        checklistTitle: "Baseline governance checklist",
-        checklistItems: [
-          "Define core policy requirements for approved AI usage.",
-          "Assign risk ownership and review accountability.",
-          "Set mandatory approval gates by risk tier.",
-        ],
-        quickCheckPrompt: "What is the minimum baseline before scaling AI use?",
-        quickCheckOptions: [
-          { id: "a", label: "Let each function tailor policy to its workflows with light central guidance" },
-          { id: "b", label: "Adopt vendor frameworks as a baseline and adapt internal controls over time" },
-          { id: "c", label: "Policy, role-based controls, and risk review" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Safe scale needs explicit policy, controls, and clear ownership.",
-        quickCheckOptionExplanations: {
-          a: "Decentralized rules often create compliance gaps.",
-          b: "Vendor assurances cannot replace internal governance.",
-          c: "This is the practical minimum baseline.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-module-quiz": {
-    id: "module-6-module-quiz",
-    moduleId: "module-6",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Governance readiness checkpoint",
-        scenarioBody:
-          "You are presenting Module 6 outputs to leadership. You must show that policy, controls, contracts, and incident response are ready for scaled adoption.",
-        checklistTitle: "Governance readiness checklist",
-        checklistItems: [
-          "Present baseline policy and approval controls.",
-          "Show incident response ownership and response timelines.",
-          "Confirm contract guardrails for data, IP, and liability.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 6 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Rapid usage growth with quarterly governance reporting and ad hoc enforcement" },
-          { id: "b", label: "Documented controls, playbooks, and risk ownership" },
-          { id: "c", label: "Comprehensive policy draft with phased enforcement once adoption stabilizes" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness requires operating controls, clear ownership, and enforcement mechanisms.",
-        quickCheckOptionExplanations: {
-          a: "Adoption scale without controls increases exposure.",
-          b: "This is the expected governance maturity output.",
-          c: "Policy without execution is insufficient.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-privacy-data-section-card": {
+    content: "This module addresses practical governance rather than abstract ethics. You'll examine the operational, legal, and organizational risks of deploying AI at scale — including data privacy, shadow AI, hallucination reliability, IP exposure, and employee misuse — and build frameworks for managing these risks without creating bureaucratic paralysis.",
+    summary: "Module 6 builds practical AI governance frameworks covering data privacy, shadow AI, hallucination risk, IP exposure, and incident response.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-6-privacy-data-section-card": {
     id: "module-6-privacy-data-section-card",
     moduleId: "module-6",
     sectionId: "privacy-data",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Data control scenario",
-        scenarioBody:
-          "Teams want to move faster with AI tools, but sensitive data handling is unclear. You need enforceable controls for access, retention, and approved use.",
-        checklistTitle: "Data protection checklist",
-        checklistItems: [
-          "Define allowed and prohibited data classes for AI tools.",
-          "Require vendor evidence on retention and training-use terms.",
-          "Apply role-based access for sensitive workflows.",
-        ],
-        quickCheckPrompt: "Which control best protects data and IP in vendor relationships?",
-        quickCheckOptions: [
-          { id: "a", label: "Third-party certifications and compliance attestations as primary evidence" },
-          { id: "b", label: "Explicit clauses on data rights and retention" },
-          { id: "c", label: "Security addendums with broad language and annual review commitments" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Contract-level clarity is essential for enforceable protections.",
-        quickCheckOptionExplanations: {
-          a: "Standards language is useful but often too vague.",
-          b: "This creates concrete legal and operational safeguards.",
-          c: "Verbal assurances are not durable controls.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in privacy-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-privacy-data?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-responsible-ai": {
+    content: "Data privacy risks in AI deployments: (1) Employees entering confidential data into public AI tools (customer PII, trade secrets, financial data); (2) Vendor training on your data without explicit consent; (3) Data residency violations (GDPR, CCPA, HIPAA); (4) Inadequate data retention and deletion policies; (5) Third-party API integrations creating unauthorized data flows. Review AI vendor data processing terms before any deployment involving sensitive information.",
+    summary: "AI data privacy risks include employee data leakage into public tools, vendor training on your data, regulatory residency violations, and unauthorized API data flows.",
+    question: "An employee uses ChatGPT to summarize a confidential client contract. What is the primary governance risk?",
+    explanation: "By default, content entered into consumer AI tools may be used for model training, stored in vendor systems, and accessed by vendor employees. Inputting confidential client contracts potentially violates client NDAs, creates trade secret exposure, and may breach professional confidentiality obligations. Organizations need explicit AI acceptable use policies that specify which tools are approved for which data sensitivity levels.",
+  },
+
+  "module-6-ai-bias": {
+    id: "module-6-ai-bias",
+    moduleId: "module-6",
+    sectionId: "ai-bias",
+    cardType: "section-card",
+    content: "AI bias occurs when systems produce systematically different outcomes for different demographic groups, typically because training data reflects historical inequities. Business-critical bias risks: hiring systems that screen out protected classes, lending models that discriminate by zip code (a proxy for race), healthcare systems that perform worse for underrepresented patient populations, and content moderation systems with unequal false positive rates. Bias governance requires regular audit, not one-time review.",
+    summary: "AI bias produces systematically different outcomes across demographic groups — requiring ongoing audit processes, not one-time review, before and after deployment.",
+    question: "A company deploys an AI hiring tool that shows a statistically significant lower acceptance rate for candidates from certain universities. What is the appropriate first response?",
+    explanation: "The appropriate first response is to pause the tool and conduct a bias audit — not to assume the disparity is acceptable or performance-based. University attended can be a proxy for socioeconomic background or race, creating disparate impact liability under employment law even without intent to discriminate. Bias governance requires investigating and resolving statistical disparities before continued deployment in consequential decisions.",
+  },
+
+  "module-6-misinformation": {
+    id: "module-6-misinformation",
+    moduleId: "module-6",
+    sectionId: "misinformation",
+    cardType: "section-card",
+    content: "AI misinformation risks in business: (1) LLM hallucinations presented as facts in customer communications; (2) AI-generated reports with incorrect data cited authoritatively; (3) Deepfake content impersonating executives; (4) AI-generated phishing attacks at scale; (5) Internal AI knowledge bases contaminated with hallucinated 'facts' that propagate through the organization. Governance requires review checkpoints before AI outputs enter consequential channels.",
+    summary: "AI misinformation risks span hallucinations in customer comms, deepfake executive impersonation, AI-phishing, and hallucinated facts in internal knowledge bases.",
+    question: "An organization allows AI to automatically post responses to customer reviews. What governance control is most critical?",
+    explanation: "Human review before publication is the minimum viable control for AI-generated customer-facing content. AI responses can contain factually incorrect information, inappropriate commitments, or tone mismatches that create legal, reputational, or regulatory exposure. Automation of customer-facing communication without review is high-risk regardless of AI quality — because the consequences of errors are external and visible.",
+  },
+
+  "module-6-responsible-ai": {
     id: "module-6-responsible-ai",
     moduleId: "module-6",
     sectionId: "responsible-ai",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Internal policy scenario",
-        scenarioBody:
-          "Teams are using AI differently with unclear boundaries. You need an internal policy that is practical by role and risk tier.",
-        checklistTitle: "Policy rollout checklist",
-        checklistItems: [
-          "Define approved use cases and prohibited behaviors.",
-          "Map policy rules by role and workflow type.",
-          "Publish escalation and exception request process.",
-        ],
-        quickCheckPrompt: "What makes an internal AI policy usable in practice?",
-        quickCheckOptions: [
-          { id: "a", label: "Principle-led policy with optional role annexes developed later" },
-          { id: "b", label: "Role-specific rules and clear escalation paths" },
-          { id: "c", label: "A central policy with periodic reminders and manager discretion for exceptions" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Usable policy combines clarity, role fit, and operating procedures.",
-        quickCheckOptionExplanations: {
-          a: "Values are important but insufficient for daily decisions.",
-          b: "This is the practical implementation standard.",
-          c: "Policy adoption requires operational reinforcement.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in responsible-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-responsible-ai?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-6-risk-reflection": {
+    content: "Responsible AI in practice requires: (1) Defined use case boundaries — which decisions AI can make autonomously vs. require human oversight; (2) Explainability requirements for consequential decisions; (3) Audit trails for AI-influenced outcomes; (4) Incident response protocols for AI failures; (5) Clear accountability assignment — who is responsible when AI causes harm; (6) Regular third-party audits for high-risk deployments. Abstract principles without operational implementation are insufficient.",
+    summary: "Responsible AI requires defined use-case boundaries, explainability, audit trails, incident response, accountability, and regular audits — not just principles.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-6-ethical-dilemmas-section-card": {
+    id: "module-6-ethical-dilemmas-section-card",
+    moduleId: "module-6",
+    sectionId: "ethical-dilemmas",
+    cardType: "section-card",
+    content: "Common AI ethical dilemmas in business: (1) Surveillance vs. productivity monitoring — where does AI performance tracking become invasive?; (2) Personalization vs. manipulation — when does AI-driven content optimization cross into manipulation?; (3) Efficiency vs. employment — is rapid automation without workforce transition planning ethical?; (4) Speed vs. accuracy — is deploying an 85%-accurate AI for consequential decisions acceptable? These aren't abstract questions — they require explicit organizational policy.",
+    summary: "Business AI ethical dilemmas — surveillance, manipulation, workforce displacement, and accuracy thresholds — require explicit organizational policy, not case-by-case judgment.",
+    question: "A company wants to use AI to monitor employee email and Slack messages for productivity signals. What governance framework should be established before deployment?",
+    explanation: "Employee monitoring AI requires: legal review of consent requirements by jurisdiction, explicit disclosure to employees, defined data access controls (who sees what), retention limits, prohibition of use in performance reviews without additional oversight, and an employee grievance mechanism. Deploying surveillance AI without this framework creates legal exposure, erodes trust, and typically reduces the productivity it's meant to measure.",
+  },
+
+  "module-6-risk-reflection": {
     id: "module-6-risk-reflection",
     moduleId: "module-6",
     sectionId: "risk-reflection",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Governance scorecard scenario",
-        scenarioBody:
-          "Leadership requests a snapshot of governance maturity. You need a lightweight scorecard that tracks posture as adoption grows.",
-        checklistTitle: "Governance posture scorecard checklist",
-        checklistItems: [
-          "Track policy coverage, incident readiness, and control adherence.",
-          "Set threshold triggers for corrective action.",
-          "Review scorecard trend monthly with accountable owners.",
-        ],
-        quickCheckPrompt: "What is the best use of a governance scorecard?",
-        quickCheckOptions: [
-          { id: "a", label: "One-time audit artifact" },
-          { id: "b", label: "Recurring posture tracking with action triggers" },
-          { id: "c", label: "Public marketing collateral" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Scorecards are most valuable when used continuously to drive corrective action.",
-        quickCheckOptionExplanations: {
-          a: "Static audits miss evolving risk conditions.",
-          b: "This supports ongoing governance effectiveness.",
-          c: "Governance scorecards are operational tools, not promotional assets.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in risk-reflection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-6-risk-reflection?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-ai-and-jobs": {
-    id: "module-7-ai-and-jobs",
-    moduleId: "module-7",
-    sectionId: "ai-and-jobs",
+    content: "Risk reflection exercise: For each AI initiative, assess (1) What happens if this system fails silently? (2) Who bears the consequence of errors? (3) Is the error rate acceptable given who is affected? (4) What is the worst-case failure mode, and how quickly would we detect it? (5) What is our recovery plan? Organizations that can't answer these questions for a production AI system haven't completed their risk assessment.",
+    summary: "AI risk reflection requires assessing silent failure consequences, error bearer, acceptable error rates, worst-case detection time, and recovery plans.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-6-module-quiz": {
+    id: "module-6-module-quiz",
+    moduleId: "module-6",
+    sectionId: "module-quiz",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Pilot strategy scenario",
-        scenarioBody:
-          "You have several pilot candidates and limited resources. You need to choose pilots that are meaningful but still executable.",
-        checklistTitle: "Pilot strategy checklist",
-        checklistItems: [
-          "Prioritize pilots with visible business value and low coordination overhead.",
-          "Define stop/scale thresholds before launch.",
-          "Reserve capacity for post-pilot process integration.",
-        ],
-        quickCheckPrompt: "What makes a pilot strategically useful?",
-        quickCheckOptions: [
-          { id: "a", label: "High visibility and stakeholder momentum, even with moderate business fit uncertainty" },
-          { id: "b", label: "Clear value signal with realistic execution scope" },
-          { id: "c", label: "Broader pilot scope where cross-team impact can justify the added coordination load" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Strong pilots balance impact and feasibility.",
-        quickCheckOptionExplanations: {
-          a: "Novelty is weak without value evidence.",
-          b: "This is the most practical pilot design principle.",
-          c: "Overscoped pilots often stall and underdeliver.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-and-jobs through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-ai-and-jobs?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-ai-in-the-workplace": {
-    id: "module-7-ai-in-the-workplace",
-    moduleId: "module-7",
-    sectionId: "ai-in-the-workplace",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "First 30 days scenario",
-        scenarioBody:
-          "Leadership asks for visible progress in one month. You need a practical 30-day start plan with guardrails and measurable outcomes.",
-        checklistTitle: "30-day start checklist",
-        checklistItems: [
-          "Select one pilot workflow with clear business relevance.",
-          "Define baseline, target metric, and owner.",
-          "Set weekly review rhythm for progress and risks.",
-        ],
-        quickCheckPrompt: "What should the first 30 days focus on?",
-        quickCheckOptions: [
-          { id: "a", label: "Launch two pilots in adjacent workflows to accelerate comparative learning" },
-          { id: "b", label: "Define pilot scope, metrics, and guardrails" },
-          { id: "c", label: "Begin team training broadly, then choose pilot scope after baseline capability assessment" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Early momentum comes from scoped pilots with clear controls.",
-        quickCheckOptionExplanations: {
-          a: "Broad rollout before proof often creates rework.",
-          b: "This is the most reliable first-month pattern.",
-          c: "Training-first can help readiness, but early momentum still requires a scoped pilot with measurable guardrails.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-in-the-workplace through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-ai-in-the-workplace?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-ai-opportunities": {
-    id: "module-7-ai-opportunities",
-    moduleId: "module-7",
-    sectionId: "ai-opportunities",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Maturity model scenario",
-        scenarioBody:
-          "Leadership asks where the organization stands on AI maturity. You need a model that distinguishes experimentation from scalable operations.",
-        checklistTitle: "Maturity assessment checklist",
-        checklistItems: [
-          "Define maturity stages with observable criteria.",
-          "Score current stage by function.",
-          "Set target stage milestones for next 12 months.",
-        ],
-        quickCheckPrompt: "What is the purpose of an AI maturity model?",
-        quickCheckOptions: [
-          { id: "a", label: "Rank teams by enthusiasm" },
-          { id: "b", label: "Track capability progression toward scalable operations" },
-          { id: "c", label: "Replace roadmap planning" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Maturity models help plan capability growth with clear stage targets.",
-        quickCheckOptionExplanations: {
-          a: "Enthusiasm is not a capability measure.",
-          b: "This is the primary strategic use.",
-          c: "Maturity models inform roadmaps; they do not replace them.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-opportunities through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-ai-opportunities?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-ai-strategy": {
-    id: "module-7-ai-strategy",
-    moduleId: "module-7",
-    sectionId: "ai-strategy",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Champion network scenario",
-        scenarioBody:
-          "Central teams cannot support every workflow. You need internal champions across functions to accelerate local adoption quality.",
-        checklistTitle: "Champion network checklist",
-        checklistItems: [
-          "Nominate champions in each major function.",
-          "Define champion responsibilities and escalation path.",
-          "Set a monthly cross-champion review forum.",
-        ],
-        quickCheckPrompt: "Why build internal AI champions?",
-        quickCheckOptions: [
-          { id: "a", label: "To replace functional managers" },
-          { id: "b", label: "To drive cross-functional adoption and support" },
-          { id: "c", label: "To bypass governance processes" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Champion networks scale implementation support without losing local context.",
-        quickCheckOptionExplanations: {
-          a: "Champions support managers; they do not replace them.",
-          b: "This is the right operating purpose.",
-          c: "Champions should reinforce governance, not bypass it.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-strategy through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-ai-strategy?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-building-ai-skills": {
-    id: "module-7-building-ai-skills",
-    moduleId: "module-7",
-    sectionId: "building-ai-skills",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "12-month transformation scenario",
-        scenarioBody:
-          "You need a long-range plan that combines near-term wins with capability building. The roadmap must remain executable with current team capacity.",
-        checklistTitle: "Long-term plan checklist",
-        checklistItems: [
-          "Set quarterly capability milestones and ownership.",
-          "Balance training, tooling, and process redesign investments.",
-          "Review plan quarterly against execution evidence.",
-        ],
-        quickCheckPrompt: "What defines a strong long-term AI transformation plan?",
-        quickCheckOptions: [
-          { id: "a", label: "One-time rollout with no revision cycle" },
-          { id: "b", label: "Quarterly-updated plan tied to execution outcomes" },
-          { id: "c", label: "Tool purchasing plan only" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Long-term plans must adapt based on measured progress and constraints.",
-        quickCheckOptionExplanations: {
-          a: "Static plans usually drift from reality.",
-          b: "This is the practical transformation pattern.",
-          c: "Tooling alone does not create capability.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in building-ai-skills through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-building-ai-skills?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-industry-applications": {
-    id: "module-7-industry-applications",
-    moduleId: "module-7",
-    sectionId: "industry-applications",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Change management scenario",
-        scenarioBody:
-          "Teams are uncertain about how AI affects their roles. You need a change plan that improves adoption without creating confusion or resistance.",
-        checklistTitle: "Change management checklist",
-        checklistItems: [
-          "Clarify role impacts and decision rights early.",
-          "Provide training tied to real team workflows.",
-          "Address concerns through regular communication loops.",
-        ],
-        quickCheckPrompt: "What is a common adoption failure mode?",
-        quickCheckOptions: [
-          { id: "a", label: "Launching tools without process and change plans" },
-          { id: "b", label: "Assigning ownership without giving managers time for workflow redesign" },
-          { id: "c", label: "Sequencing by technical readiness while underestimating frontline adoption friction" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Tool access without workflow and change design usually underperforms.",
-        quickCheckOptionExplanations: {
-          a: "This is a major source of adoption failure.",
-          b: "This generally improves implementation quality.",
-          c: "Readiness sequencing is a strong practice.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in industry-applications through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-industry-applications?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-module-overview-section-card": {
+    content: "Apply AI governance frameworks — data privacy, bias assessment, misinformation controls, and responsible deployment criteria.",
+    summary: "Module 6 knowledge check on AI governance, bias, privacy risk, and responsible deployment.",
+    question: "An employee asks their manager: 'Can I use Claude to help draft proposals?' The manager says yes without additional guidance. What governance gap does this create?",
+    explanation: "Without explicit policy, the employee doesn't know: which data they can include in prompts, whether Claude's terms allow commercial use for their purposes, how to handle Claude-generated content that may contain errors, whether to disclose AI use to clients, or what to do if Claude produces problematic output. 'Yes' without governance creates liability. The answer should reference the organization's AI acceptable use policy — or flag that one needs to be created.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 7 — Building an AI Adoption Roadmap
+  // ─────────────────────────────────────────────
+
+  "module-7-module-overview-section-card": {
     id: "module-7-module-overview-section-card",
     moduleId: "module-7",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Roadmap planning kickoff",
-        scenarioBody:
-          "You have an AI strategy but no execution sequence. The priority is to turn strategy into a phased roadmap with realistic ownership and timing.",
-        checklistTitle: "Roadmap kickoff checklist",
-        checklistItems: [
-          "Define roadmap outcomes for the next two quarters.",
-          "Identify initiative dependencies and critical constraints.",
-          "Assign accountable owners by phase.",
-        ],
-        quickCheckPrompt: "What is the core purpose of a Module 7 roadmap?",
-        quickCheckOptions: [
-          { id: "a", label: "Capture initiatives broadly first, then sequence after stakeholder alignment" },
-          { id: "b", label: "Convert strategy into phased, owned execution" },
-          { id: "c", label: "Run readiness discovery in parallel before assigning phase ownership" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Roadmaps create execution structure, accountability, and pacing.",
-        quickCheckOptionExplanations: {
-          a: "Broad discovery can help early alignment, but it does not replace phased ownership and execution sequencing.",
-          b: "This is the intended outcome of the section.",
-          c: "Waiting for certainty usually delays learning and impact.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-module-quiz": {
-    id: "module-7-module-quiz",
+    content: "This module answers the question every leader asks after understanding AI: 'What do we actually do Monday morning?' You'll build a practical, sequenced adoption roadmap covering pilot design, change management, department prioritization, internal champions, employee training, and scaling criteria. The goal is structured momentum — not analysis paralysis.",
+    summary: "Module 7 answers 'what do we do Monday morning?' with a sequenced AI adoption roadmap covering pilots, change management, and scaling criteria.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-ai-and-jobs": {
+    id: "module-7-ai-and-jobs",
     moduleId: "module-7",
-    sectionId: "module-quiz",
+    sectionId: "ai-and-jobs",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Roadmap readiness checkpoint",
-        scenarioBody:
-          "You are presenting Module 7 to leadership. You must show a realistic, sequenced roadmap with clear ownership and change management support.",
-        checklistTitle: "Roadmap execution readiness checklist",
-        checklistItems: [
-          "Present phased roadmap with dependency-readiness rationale.",
-          "Show ownership model, champion network, and governance cadence.",
-          "Include 30-day actions and 12-month capability milestones.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 7 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Aggressive multi-phase rollout with ownership assigned as initiatives mature" },
-          { id: "b", label: "Sequenced, owned roadmap with operating rhythm" },
-          { id: "c", label: "Sequenced technical roadmap with change management to be designed after early pilots" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Strong readiness combines sequencing, ownership, and governance rhythm.",
-        quickCheckOptionExplanations: {
-          a: "This often exceeds execution capacity.",
-          b: "This is the expected outcome of Module 7.",
-          c: "Change planning is essential to adoption success.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-real-workflows-section-card": {
+    content: "AI's impact on jobs operates at the task level, not the job level. Most roles contain a mix of tasks: some highly automatable (data entry, scheduling, report formatting), others resistant to automation (relationship management, novel problem-solving, physical tasks requiring dexterity). AI adoption typically reshapes roles — removing repetitive tasks, shifting time to higher-value work — rather than eliminating jobs entirely in the short term. The exception is roles that are almost entirely task-automatable.",
+    summary: "AI reshapes jobs at the task level — automating repetitive tasks and shifting humans toward higher-value work — rather than eliminating most roles entirely.",
+    question: "A company is implementing AI for invoice processing. What is the most likely workforce outcome?",
+    explanation: "AI invoice processing automates data extraction, matching, and routing — the repetitive tasks in accounts payable. The likely outcome is that AP staff spend less time on manual data entry and more time on exception handling, vendor relationships, and process improvement. Headcount may not change initially, but role composition shifts. Communicating this clearly to affected employees is essential change management.",
+  },
+
+  "module-7-ai-in-the-workplace": {
+    id: "module-7-ai-in-the-workplace",
+    moduleId: "module-7",
+    sectionId: "ai-in-the-workplace",
+    cardType: "section-card",
+    content: "AI in the workplace changes how work gets done: faster drafting, automated summaries, real-time translation, intelligent search, and automated routing. But workplace AI also introduces new failure modes: over-reliance on AI outputs, skill atrophy in frequently delegated tasks, and homogenized thinking if everyone uses the same prompts. Healthy AI workplace cultures train employees to verify outputs, understand AI limitations, and maintain the judgment required to catch AI errors.",
+    summary: "AI workplace adoption creates productivity gains alongside new risks — over-reliance, skill atrophy, and homogenized thinking — requiring deliberate cultural design.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-ai-opportunities": {
+    id: "module-7-ai-opportunities",
+    moduleId: "module-7",
+    sectionId: "ai-opportunities",
+    cardType: "section-card",
+    content: "Highest-ROI AI opportunities by function: Marketing — content personalization, A/B testing acceleration, ad copy generation; Sales — lead scoring, call summarization, proposal drafting; Operations — process documentation, quality control, exception flagging; Finance — report generation, anomaly detection, forecasting; HR — resume screening, onboarding automation, policy Q&A. Prioritize functions with high task volume, clear measurability, and existing digital data.",
+    summary: "Highest-ROI AI opportunities exist in marketing, sales, operations, finance, and HR — prioritize high-volume, measurable, data-rich functions first.",
+    question: "Which organizational function typically offers the fastest AI ROI for a mid-sized company?",
+    explanation: "Customer-facing functions like sales and marketing typically show faster AI ROI because they have high-volume repetitive tasks (email drafting, content creation, lead qualification), clear measurable outcomes (conversion rates, response times), and existing digital data to work with. Internal operations AI often has longer implementation cycles and less immediately visible impact, though the long-term savings can be larger.",
+  },
+
+  "module-7-ai-strategy": {
+    id: "module-7-ai-strategy",
+    moduleId: "module-7",
+    sectionId: "ai-strategy",
+    cardType: "section-card",
+    content: "AI strategy for most organizations should follow: (1) Crawl — internal productivity tools, employee assistance, low-risk automation with human oversight; (2) Walk — department-level workflow automation, customer-facing AI with review processes; (3) Run — autonomous systems, cross-functional AI integration, AI-native process design. Most organizations try to run before they've walked — deploying autonomous customer-facing AI before they have governance, review processes, or trained employees.",
+    summary: "AI strategy follows a crawl-walk-run progression — most organizations fail by deploying autonomous systems before establishing governance and employee capability.",
+    question: "An organization with no AI governance, no AI-trained employees, and no existing AI tools wants to deploy an autonomous customer service chatbot. What is the primary risk?",
+    explanation: "Without governance frameworks, employees can't identify when the chatbot fails. Without AI-trained staff, they can't improve prompts or escalation logic. Without existing AI familiarity, they lack the judgment to evaluate chatbot quality. The likely outcome is customer-facing failures that damage relationships and reputation. The crawl phase — internal tools with trained employees — should precede any autonomous customer-facing deployment.",
+  },
+
+  "module-7-industry-applications": {
+    id: "module-7-industry-applications",
+    moduleId: "module-7",
+    sectionId: "industry-applications",
+    cardType: "section-card",
+    content: "AI applications by industry: Healthcare — clinical documentation, diagnostic support, administrative automation; Financial Services — fraud detection, compliance monitoring, customer service; Retail — demand forecasting, personalization, inventory optimization; Manufacturing — quality control, predictive maintenance, supply chain optimization; Legal — document review, contract analysis, research; Education — personalized tutoring, administrative automation, content generation. Each industry has distinct regulatory and governance considerations.",
+    summary: "AI creates value across healthcare, finance, retail, manufacturing, legal, and education — each with distinct regulatory and governance requirements.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-real-workflows-section-card": {
     id: "module-7-real-workflows-section-card",
     moduleId: "module-7",
     sectionId: "real-workflows",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Sequencing scenario",
-        scenarioBody:
-          "Multiple teams request immediate rollout. You need a sequencing model that balances value, readiness, and implementation capacity.",
-        checklistTitle: "Sequencing checklist",
-        checklistItems: [
-          "Sequence initiatives by dependency order and organizational readiness.",
-          "Limit concurrent rollout load to avoid adoption fatigue.",
-          "Publish prerequisite completion rules before each phase launch.",
-        ],
-        quickCheckPrompt: "How should roadmap sequencing be decided?",
-        quickCheckOptions: [
-          { id: "a", label: "Prioritize whichever team asks first" },
-          { id: "b", label: "Run all pilots in parallel by default" },
-          { id: "c", label: "Use value-readiness-dependency sequencing" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Sequencing with dependencies and readiness improves delivery reliability.",
-        quickCheckOptionExplanations: {
-          a: "Request order is a weak prioritization method.",
-          b: "Parallel overload often reduces quality.",
-          c: "This is the strongest rollout logic.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in real-workflows through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-real-workflows?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-role-transformation-section-card": {
+    content: "Real AI workflow examples that demonstrate measurable value: (1) Weekly report generation: analyst spends 4 hours compiling → AI aggregates data in 20 minutes, analyst reviews and adjusts in 45 minutes; (2) Customer support triage: support team manually reads and routes 500 tickets/day → AI categorizes and prioritizes in real time, human agents handle escalations; (3) Sales email personalization: reps send generic sequences → AI personalizes using CRM context, open rates increase 35–45%.",
+    summary: "Real AI workflows show measurable impact in report generation, support triage, and sales personalization — each with clear before/after metrics.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-role-transformation-section-card": {
     id: "module-7-role-transformation-section-card",
     moduleId: "module-7",
     sectionId: "role-transformation",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Role redesign scenario",
-        scenarioBody:
-          "As AI workflows go live, responsibilities become unclear. You need to redesign roles, approvals, and accountability boundaries.",
-        checklistTitle: "Role redesign checklist",
-        checklistItems: [
-          "Map existing vs future responsibilities by role.",
-          "Clarify decision rights in human-AI workflows.",
-          "Update performance expectations and support plans.",
-        ],
-        quickCheckPrompt: "What should role redesign focus on first?",
-        quickCheckOptions: [
-          { id: "a", label: "Reducing headcount targets only" },
-          { id: "b", label: "Clarifying responsibilities and decision rights" },
-          { id: "c", label: "Deferring role changes indefinitely" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Clear accountability is essential for reliable operation.",
-        quickCheckOptionExplanations: {
-          a: "This narrows transformation to a single dimension.",
-          b: "This creates execution clarity and safety.",
-          c: "Delayed clarity increases operational friction.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in role-transformation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-role-transformation?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-7-workflow-redesign-section-card": {
+    content: "AI transforms roles by shifting the mix of tasks, not eliminating roles entirely in most cases. A content writer with AI tools shifts from spending 60% on first-draft writing to spending 60% on editing, strategy, and quality judgment. A financial analyst shifts from 70% data compilation to 70% interpretation and recommendation. These shifts are positive — but require retraining, role redefinition, and sometimes compensation renegotiation as the nature of expertise changes.",
+    summary: "AI role transformation shifts task mix — reducing drafting and data compilation, increasing editing, judgment, and strategy — requiring proactive retraining.",
+    question: "How should an organization communicate AI role transformation to affected employees?",
+    explanation: "Effective communication of AI-driven role transformation should: explain specifically which tasks AI will handle and which remain human; describe what the expanded higher-value work looks like; provide training for new responsibilities; address compensation and career path implications honestly; and create a feedback mechanism for employees to flag implementation problems. Vague 'AI will help you' messaging without specifics creates anxiety and resistance.",
+  },
+
+  "module-7-workflow-redesign-section-card": {
     id: "module-7-workflow-redesign-section-card",
     moduleId: "module-7",
     sectionId: "workflow-redesign",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Cadence and governance rhythm scenario",
-        scenarioBody:
-          "Execution is active but decisions are ad hoc. You need a repeatable operating cadence for outcomes, risks, and investment adjustments.",
-        checklistTitle: "Operating cadence checklist",
-        checklistItems: [
-          "Set weekly delivery review and monthly governance review.",
-          "Track outcome and risk indicators in one operating view.",
-          "Define reinvest, pause, or pivot rules per initiative.",
-        ],
-        quickCheckPrompt: "Why establish a governance rhythm during rollout?",
-        quickCheckOptions: [
-          { id: "a", label: "To reduce visibility into results" },
-          { id: "b", label: "To support consistent decisions as conditions change" },
-          { id: "c", label: "To delay course correction" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Cadence improves decision quality and responsiveness during change.",
-        quickCheckOptionExplanations: {
-          a: "Governance should increase, not reduce, clarity.",
-          b: "This is the core value of operating rhythm.",
-          c: "Rhythm should accelerate adjustments, not delay them.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in workflow-redesign through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-7-workflow-redesign?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-building-with-agents": {
-    id: "module-8-building-with-agents",
-    moduleId: "module-8",
-    sectionId: "building-with-agents",
+    content: "Workflow redesign is the highest-leverage AI adoption activity most organizations skip. Instead of adding AI to existing workflows, redesign around AI capabilities: (1) Map current workflow steps; (2) Identify steps AI can handle with high reliability; (3) Identify handoff points requiring human judgment; (4) Design the new workflow with explicit AI/human responsibilities; (5) Build in quality checkpoints; (6) Define performance metrics for the redesigned workflow. Organizations that skip redesign capture 20–30% of available AI value.",
+    summary: "Workflow redesign around AI capabilities — not just adding AI to existing workflows — captures 3–5x more value than tool deployment alone.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-building-ai-skills": {
+    id: "module-7-building-ai-skills",
+    moduleId: "module-7",
+    sectionId: "building-ai-skills",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Multi-agent trade-off scenario",
-        scenarioBody:
-          "A vendor proposes a complex multi-agent system, but your use case may not require it. You need a decision rule for when complexity is justified.",
-        checklistTitle: "Complexity control checklist",
-        checklistItems: [
-          "Start with the simplest architecture that meets requirements.",
-          "Add agent roles only for clear functional separation needs.",
-          "Measure reliability impact before expanding architecture complexity.",
-        ],
-        quickCheckPrompt: "When should multi-agent design be considered?",
-        quickCheckOptions: [
-          { id: "a", label: "By default for all automation projects" },
-          { id: "b", label: "Only when simpler workflows cannot meet requirements" },
-          { id: "c", label: "Whenever stakeholders ask for advanced architecture" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Complexity should be added only when justified by measurable needs.",
-        quickCheckOptionExplanations: {
-          a: "Default complexity creates avoidable maintenance burden.",
-          b: "This keeps systems understandable and resilient.",
-          c: "Preference alone is not an architecture criterion.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in building-with-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-building-with-agents?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-how-agents-work-section-card": {
-    id: "module-8-how-agents-work-section-card",
-    moduleId: "module-8",
-    sectionId: "how-agents-work",
+    content: "Building organizational AI skills requires: (1) Baseline AI literacy training for all employees — what AI can and can't do; (2) Role-specific prompt engineering training — focused on each function's use cases; (3) Identification of internal AI champions — employees who develop deep expertise and coach others; (4) Ongoing learning infrastructure — AI is evolving fast enough that one-time training becomes obsolete quickly; (5) Leadership AI fluency — executives who can't evaluate AI claims make poor AI investment decisions.",
+    summary: "Organizational AI skill-building requires baseline literacy, role-specific training, internal champions, ongoing learning, and executive AI fluency.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-7-module-quiz": {
+    id: "module-7-module-quiz",
+    moduleId: "module-7",
+    sectionId: "module-quiz",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Human-in-the-loop checkpoint design",
-        scenarioBody:
-          "You are automating a process with financial and customer impact. You must place human checkpoints where risk exceeds acceptable limits.",
-        checklistTitle: "Checkpoint design checklist",
-        checklistItems: [
-          "Classify decision points by impact and reversibility.",
-          "Require human approval for high-impact outcomes.",
-          "Define escalation paths for uncertain model behavior.",
-        ],
-        quickCheckPrompt: "When is human-in-the-loop mandatory?",
-        quickCheckOptions: [
-          { id: "a", label: "Only for low-risk formatting tasks" },
-          { id: "b", label: "Never if model confidence is high" },
-          { id: "c", label: "For high-impact decisions and exception handling" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "High-impact automation must include human control for risk containment.",
-        quickCheckOptionExplanations: {
-          a: "Low-risk tasks usually need less manual intervention.",
-          b: "Confidence scores are not substitutes for governance controls.",
-          c: "This is the correct operating standard.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in how-agents-work through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-how-agents-work?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-module-overview-section-card": {
+    content: "Apply AI adoption roadmap frameworks — sequencing, change management, role transformation, and workflow redesign.",
+    summary: "Module 7 knowledge check on AI adoption sequencing, change management, and workflow redesign.",
+    question: "An organization wants to maximize AI adoption success. Which action should come FIRST?",
+    explanation: "Before deploying any AI tool, organizations should conduct a current-state workflow audit: documenting what tasks are done, by whom, at what frequency, and at what cost. Without this baseline, you can't measure improvement, can't prioritize where AI creates the most value, and can't detect whether adoption is actually changing behavior. The audit is the foundation that makes every subsequent step measurable.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 8 — AI Agents & Automation Systems
+  // ─────────────────────────────────────────────
+
+  "module-8-module-overview-section-card": {
     id: "module-8-module-overview-section-card",
     moduleId: "module-8",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Automation architecture kickoff",
-        scenarioBody:
-          "Your team wants to deploy AI agents quickly, but architecture language is inconsistent. You need a grounded view of workflows, agents, and control boundaries before building.",
-        checklistTitle: "Architecture kickoff checklist",
-        checklistItems: [
-          "Define the problem as workflow automation, autonomous behavior, or hybrid.",
-          "Document success criteria and acceptable failure thresholds.",
-          "Set control points for approval, escalation, and rollback.",
-        ],
-        quickCheckPrompt: "What is the first goal of Module 8?",
-        quickCheckOptions: [
-          { id: "a", label: "Choose a platform first, then define controls later" },
-          { id: "b", label: "Clarify architecture choices and control requirements" },
-          { id: "c", label: "Treat workflows and agents as the same architecture problem" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Strong automation programs begin with clear architecture and control design.",
-        quickCheckOptionExplanations: {
-          a: "This usually expands risk before design maturity exists.",
-          b: "This is the intended foundation for the module.",
-          c: "Reliability should come before novelty in production contexts.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-module-quiz": {
-    id: "module-8-module-quiz",
-    moduleId: "module-8",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Automation design checkpoint",
-        scenarioBody:
-          "You are presenting Module 8 outputs. Leadership expects a practical automation plan with architecture fit, control gates, and operational safeguards.",
-        checklistTitle: "Automation design readiness checklist",
-        checklistItems: [
-          "Show workflow-versus-agent rationale for the selected use case.",
-          "Include human checkpoint design and exception escalation paths.",
-          "Present production blueprint with ownership and rollback criteria.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 8 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "Ambitious multi-agent design with governance to be defined in phase two" },
-          { id: "b", label: "Constrained design with clear controls and operating ownership" },
-          { id: "c", label: "High-autonomy rollout with manual review only for severe incidents" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness means reliable design, governance controls, and operational accountability.",
-        quickCheckOptionExplanations: {
-          a: "Complexity without controls increases risk.",
-          b: "This is the expected quality bar for the module.",
-          c: "No contingency model is a major production risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-real-world-applications": {
-    id: "module-8-real-world-applications",
-    moduleId: "module-8",
-    sectionId: "real-world-applications",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Capability scoping scenario",
-        scenarioBody:
-          "Stakeholders expect full autonomy immediately. You need to scope realistic capabilities based on reversibility, exception rates, and process maturity.",
-        checklistTitle: "Capability scoping checklist",
-        checklistItems: [
-          "Pick one high-frequency workflow with measurable outcomes.",
-          "Define exception thresholds and manual handoff rules.",
-          "Set staged autonomy levels by reliability evidence.",
-        ],
-        quickCheckPrompt: "What is the best first step for agent adoption?",
-        quickCheckOptions: [
-          { id: "a", label: "Roll out to two high-visibility teams at once for faster learning" },
-          { id: "b", label: "Pilot one constrained workflow with controls" },
-          { id: "c", label: "Start with broad autonomy and add controls after the first month" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Constrained pilots create measurable evidence while limiting exposure.",
-        quickCheckOptionExplanations: {
-          a: "Broad autonomy too early often creates operational failures.",
-          b: "This is the strongest initial execution strategy.",
-          c: "Reliability should lead design decisions.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in real-world-applications through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-real-world-applications?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-risks-and-limits": {
-    id: "module-8-risks-and-limits",
-    moduleId: "module-8",
-    sectionId: "risks-and-limits",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Production blueprint scenario",
-        scenarioBody:
-          "Your pilot worked, and leadership wants production rollout. You need an operational blueprint that includes ownership, monitoring, and recovery procedures.",
-        checklistTitle: "Production blueprint checklist",
-        checklistItems: [
-          "Define runtime ownership, support SLAs, and escalation trees.",
-          "Instrument monitoring for accuracy, latency, and failure modes.",
-          "Document rollback triggers and restoration procedures.",
-        ],
-        quickCheckPrompt: "What belongs in a production-ready automation blueprint?",
-        quickCheckOptions: [
-          { id: "a", label: "Model choice only" },
-          { id: "b", label: "Ownership, observability, contingency, and incident response" },
-          { id: "c", label: "A demo script and feature list" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Production readiness depends on operating controls, not just capability.",
-        quickCheckOptionExplanations: {
-          a: "Model selection is only one part of production design.",
-          b: "This is the required operational foundation.",
-          c: "Demo materials do not establish runtime resilience.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in risks-and-limits through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-risks-and-limits?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-types-of-agents": {
-    id: "module-8-types-of-agents",
-    moduleId: "module-8",
-    sectionId: "types-of-agents",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Orchestration platform evaluation",
-        scenarioBody:
-          "Your team is comparing automation platforms. You need to evaluate observability, contingency behavior, and ownership model before deployment.",
-        checklistTitle: "Platform evaluation checklist",
-        checklistItems: [
-          "Assess workflow visibility and error tracing features.",
-          "Validate contingency paths and rollback behavior.",
-          "Confirm who owns operations, incidents, and maintenance.",
-        ],
-        quickCheckPrompt: "What causes many automation deployments to fail?",
-        quickCheckOptions: [
-          { id: "a", label: "No observability and no contingency plan" },
-          { id: "b", label: "Constrained pilot scope with strong monitoring" },
-          { id: "c", label: "Clear owners but no tested rollback path" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Without monitoring and rollback, automation systems become brittle and costly.",
-        quickCheckOptionExplanations: {
-          a: "This is a frequent root cause of production instability.",
-          b: "Constrained pilots are usually a strong start pattern.",
-          c: "Clear ownership generally improves resilience.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in types-of-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-types-of-agents?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-8-what-are-agents-section-card": {
+    content: "This module separates AI agent hype from operational reality. You'll learn what AI agents actually are, how they differ from simpler automation workflows, what orchestration systems do, and where human oversight remains essential. The goal is enabling informed decisions about agent deployment rather than being swept up in marketing narratives.",
+    summary: "Module 8 distinguishes AI agent reality from hype — covering agent mechanics, orchestration, limitations, and human oversight requirements.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-8-what-are-agents-section-card": {
     id: "module-8-what-are-agents-section-card",
     moduleId: "module-8",
     sectionId: "what-are-agents",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Workflow versus agent decision",
-        scenarioBody:
-          "A business unit requests an agent for a repeatable process that has deterministic steps. You need to decide if an agent is necessary or if a workflow is a better fit.",
-        checklistTitle: "Design choice checklist",
-        checklistItems: [
-          "Map deterministic versus open-ended decision points.",
-          "Choose workflow automation for stable repeatable steps.",
-          "Reserve true agent autonomy for high-variance tasks with safeguards.",
-        ],
-        quickCheckPrompt: "What distinction matters most when designing automation?",
-        quickCheckOptions: [
-          { id: "a", label: "Single-agent branding versus multi-agent branding" },
-          { id: "b", label: "Workflow automation versus true autonomous agents" },
-          { id: "c", label: "Open-source versus closed-source preference" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Correctly separating workflow and agent patterns avoids over-engineering.",
-        quickCheckOptionExplanations: {
-          a: "Naming style does not define architecture fit.",
-          b: "This is the primary design distinction.",
-          c: "Licensing model is secondary to behavior design.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in what-are-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-8-what-are-agents?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-ai-project": {
-    id: "module-9-ai-project",
-    moduleId: "module-9",
-    sectionId: "ai-project",
+    content: "An AI agent is a system that uses an AI model to take sequences of actions toward a goal, typically with access to tools (web search, code execution, API calls, file systems). Unlike a chatbot that responds to single prompts, an agent plans multi-step actions, executes them, observes results, and adapts. The degree of autonomy varies significantly — from 'human-in-the-loop' (approves each step) to 'fully autonomous' (runs without oversight). Most production agents today are closer to the constrained end of this spectrum.",
+    summary: "AI agents execute multi-step action sequences with tool access — distinguishable from chatbots by planning and adaptation, and from each other by autonomy level.",
+    question: "What is the primary operational difference between a chatbot and an AI agent?",
+    explanation: "A chatbot responds to prompts and returns text. An agent executes sequences of actions — calling APIs, reading files, running code, searching the web — to accomplish a multi-step goal. This distinction matters because agents can have consequential real-world effects (sending emails, modifying databases, making API calls) rather than just producing text for human action. Governance for agents is fundamentally different from governance for chatbots.",
+  },
+
+  "module-8-types-of-agents": {
+    id: "module-8-types-of-agents",
+    moduleId: "module-8",
+    sectionId: "types-of-agents",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Ownership blueprint scenario",
-        scenarioBody:
-          "Leadership asks who owns outcomes, governance, and vendor relationships. You need a clear ownership blueprint across strategic and operational layers.",
-        checklistTitle: "Ownership blueprint checklist",
-        checklistItems: [
-          "Define owners for strategy, operations, risk, and vendor management.",
-          "Map accountability handoffs across lifecycle stages.",
-          "Publish escalation and decision-right pathways.",
-        ],
-        quickCheckPrompt: "What should internal ownership clarify in an AI stack?",
-        quickCheckOptions: [
-          { id: "a", label: "Who owns outcomes, operations, risk, and vendors" },
-          { id: "b", label: "Only who signed the original purchase order" },
-          { id: "c", label: "Only which team uses the tool most" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Complete ownership models prevent delivery and governance gaps.",
-        quickCheckOptionExplanations: {
-          a: "This is the full accountability framework needed for scale.",
-          b: "Procurement ownership alone is insufficient.",
-          c: "Usage concentration does not define end-to-end accountability.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-project through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-ai-project?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-ai-workflows": {
-    id: "module-9-ai-workflows",
-    moduleId: "module-9",
-    sectionId: "ai-workflows",
+    content: "AI agent categories: (1) Task agents — complete a specific defined task (research a topic, send a report); (2) Process agents — manage ongoing workflows with recurring triggers; (3) Multi-agent systems — networks of specialized agents coordinating on complex tasks; (4) Embodied agents — AI controlling physical systems (robots, manufacturing equipment). Most business deployments today are task agents with constrained tool access. Multi-agent coordination is advancing rapidly but remains operationally complex.",
+    summary: "AI agent types include task agents, process agents, multi-agent systems, and embodied agents — with task agents being the most common current business deployment.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-8-how-agents-work-section-card": {
+    id: "module-8-how-agents-work-section-card",
+    moduleId: "module-8",
+    sectionId: "how-agents-work",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Maintainability operations scenario",
-        scenarioBody:
-          "Tools are running but no one owns upgrades, model drift checks, or support pathways. You need a maintainability model with clear responsibilities.",
-        checklistTitle: "Maintainability checklist",
-        checklistItems: [
-          "Assign ownership for updates, monitoring, and user support.",
-          "Define routine review cadence for cost, quality, and risk posture.",
-          "Document deprecation and replacement process for aging tools.",
-        ],
-        quickCheckPrompt: "What is essential for long-term stack maintainability?",
-        quickCheckOptions: [
-          { id: "a", label: "Relying on original purchase team only" },
-          { id: "b", label: "Defined operational ownership and lifecycle processes" },
-          { id: "c", label: "Avoiding all tool changes after deployment" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Durable stacks require explicit lifecycle ownership and review discipline.",
-        quickCheckOptionExplanations: {
-          a: "Purchase ownership is not enough for operations.",
-          b: "This is the required operating baseline.",
-          c: "Static stacks usually degrade over time.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in ai-workflows through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-ai-workflows?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-explain-ai-section-card": {
-    id: "module-9-explain-ai-section-card",
-    moduleId: "module-9",
-    sectionId: "explain-ai",
+    content: "AI agents follow a perceive-plan-act-observe loop: (1) Perceive — receive the goal and relevant context; (2) Plan — determine what steps to take using the LLM as a reasoning engine; (3) Act — execute steps using available tools; (4) Observe — examine results of actions; (5) Adapt — revise the plan based on observations; (6) Repeat until goal achieved or failure threshold reached. The LLM provides the reasoning; tools provide the ability to affect the real world.",
+    summary: "AI agents follow a perceive-plan-act-observe loop where the LLM provides reasoning and tools provide real-world effect capability.",
+    question: "An AI agent is tasked with scheduling a meeting with 5 stakeholders. It checks calendars, identifies a conflict, and automatically moves a previously scheduled call to resolve it. What governance concern does this raise?",
+    explanation: "The agent's autonomous action — moving an existing meeting without human approval — could conflict with priorities the agent doesn't know about, violate stakeholder expectations, or create downstream scheduling problems. This illustrates the core governance challenge of agent autonomy: the more authority the agent has to take real-world actions, the more critical it is to define what actions require human approval. Autonomous calendar modification is a low-stakes example; autonomous contract signing or financial transactions are high-stakes versions of the same problem.",
+  },
+
+  "module-8-real-world-applications": {
+    id: "module-8-real-world-applications",
+    moduleId: "module-8",
+    sectionId: "real-world-applications",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Tool sprawl containment scenario",
-        scenarioBody:
-          "Teams are buying overlapping AI products independently. You need intake and governance gates that prevent duplicate capability and fragmented risk ownership.",
-        checklistTitle: "Sprawl control checklist",
-        checklistItems: [
-          "Create a centralized intake process for new AI tool requests.",
-          "Require scoring against existing stack capabilities.",
-          "Add governance gates for legal, security, and operations.",
-        ],
-        quickCheckPrompt: "What is the strongest defense against tool sprawl?",
-        quickCheckOptions: [
-          { id: "a", label: "Centralized intake, scoring, and governance gates" },
-          { id: "b", label: "Independent team-level purchasing" },
-          { id: "c", label: "A blanket ban on new tools" },
-        ],
-        quickCheckCorrectOptionId: "a",
-        quickCheckExplanation: "Centralized intake preserves flexibility while controlling duplication and risk.",
-        quickCheckOptionExplanations: {
-          a: "This is the most practical anti-sprawl pattern.",
-          b: "Independent buying tends to increase overlap.",
-          c: "Total bans can block necessary innovation.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in explain-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-explain-ai?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-module-overview-section-card": {
+    content: "Practical AI agent applications in production today: (1) Research agents — search, synthesize, and structure information from multiple sources; (2) Code generation agents — write, test, and iterate on code with tool execution; (3) Data analysis agents — pull data, run analysis, generate reports; (4) Customer service agents — triage, respond, and escalate support requests; (5) Content pipeline agents — draft, review, format, and publish content with checkpoints. Each requires defined human oversight points.",
+    summary: "Production AI agents handle research, code generation, data analysis, customer service, and content pipelines — each requiring defined human oversight checkpoints.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-8-risks-and-limits": {
+    id: "module-8-risks-and-limits",
+    moduleId: "module-8",
+    sectionId: "risks-and-limits",
+    cardType: "section-card",
+    content: "AI agent risks: (1) Action cascades — a wrong first action compounds through subsequent steps; (2) Prompt injection — malicious content in the environment manipulates the agent's actions; (3) Tool misuse — agent uses available tools in unintended ways; (4) Goal specification errors — the agent achieves the literal goal while violating the intent; (5) Lack of common sense limits — agents may take technically correct but contextually inappropriate actions. Mitigation requires constrained tool access, mandatory approval gates for consequential actions, and comprehensive logging.",
+    summary: "AI agent risks include action cascades, prompt injection, tool misuse, goal specification errors, and context blindness — requiring constrained tools and approval gates.",
+    question: "An AI agent with access to your company's email system is asked to 'clean up old emails.' What risk does this illustrate?",
+    explanation: "This is a goal specification error risk. 'Clean up old emails' is ambiguous — does it mean archive, delete, or reorganize? An agent optimizing for the literal goal might delete emails that are legally required for retention, eliminate correspondence needed for ongoing deals, or remove emails that employees consider important. Consequential agent actions require precise goal specification, explicit exclusion criteria, and human approval before irreversible actions.",
+  },
+
+  "module-8-building-with-agents": {
+    id: "module-8-building-with-agents",
+    moduleId: "module-8",
+    sectionId: "building-with-agents",
+    cardType: "section-card",
+    content: "Building with AI agents requires: (1) Define the goal precisely with success and failure criteria; (2) Enumerate required tools and their access scopes; (3) Design the approval workflow — which actions require human confirmation; (4) Build comprehensive logging of all agent actions; (5) Implement rollback capabilities for reversible actions; (6) Start with constrained autonomy and expand as reliability is demonstrated; (7) Monitor production behavior continuously. Agents require more operational investment than chatbots.",
+    summary: "Building production AI agents requires precise goal definition, scoped tools, approval workflows, comprehensive logging, rollback capability, and continuous monitoring.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-8-module-quiz": {
+    id: "module-8-module-quiz",
+    moduleId: "module-8",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Apply AI agent evaluation frameworks — distinguishing agent types, assessing governance requirements, and identifying deployment risks.",
+    summary: "Module 8 knowledge check on AI agent mechanics, types, risks, and governance requirements.",
+    question: "A vendor claims their 'autonomous AI agent' can handle your entire procurement process without human involvement. What evaluation question should you ask first?",
+    explanation: "Ask: 'What actions can the agent take, and which of those actions are irreversible?' Irreversible actions — placing purchase orders, committing budget, signing contracts — should never be fully autonomous without human approval checkpoints. A vendor who can't clearly enumerate the action boundaries of their 'autonomous' agent doesn't have a production-ready system. The degree of claimed autonomy should always be matched by an equally detailed governance specification.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 9 — Your AI Stack & Vendor Strategy
+  // ─────────────────────────────────────────────
+
+  "module-9-module-overview-section-card": {
     id: "module-9-module-overview-section-card",
     moduleId: "module-9",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Stack strategy kickoff",
-        scenarioBody:
-          "Your organization has multiple AI tools and unclear ownership. You need stack design principles that reduce sprawl and improve long-term maintainability.",
-        checklistTitle: "Strategy kickoff checklist",
-        checklistItems: [
-          "Define stack objectives: reliability, cost control, and governance.",
-          "Document current tool overlap and ownership gaps.",
-          "Set decision criteria for keeping, replacing, or consolidating tools.",
-        ],
-        quickCheckPrompt: "What is the first objective of Module 9?",
-        quickCheckOptions: [
-          { id: "a", label: "Maximize the number of tools in use" },
-          { id: "b", label: "Define sustainable stack principles and ownership" },
-          { id: "c", label: "Decentralize every purchasing decision" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "A durable stack starts with design principles and clear accountability.",
-        quickCheckOptionExplanations: {
-          a: "Tool volume is not a strategy outcome.",
-          b: "This is the core framing for the module.",
-          c: "Uncoordinated purchasing often creates sprawl.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-module-overview?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-module-quiz": {
-    id: "module-9-module-quiz",
+    content: "This module teaches organizations to architect and manage an AI software ecosystem without creating fragmentation, security gaps, or operational chaos. You'll examine integration strategy, procurement governance, interoperability, vendor dependency management, and how to design for long-term maintainability.",
+    summary: "Module 9 teaches AI stack architecture — integration strategy, vendor dependency management, and long-term maintainability — to avoid fragmentation and chaos.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-9-ai-workflows": {
+    id: "module-9-ai-workflows",
     moduleId: "module-9",
-    sectionId: "module-quiz",
+    sectionId: "ai-workflows",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Stack lifecycle checkpoint",
-        scenarioBody:
-          "You are presenting Module 9 recommendations and must justify stack lifecycle decisions with ownership clarity and governance controls.",
-        checklistTitle: "Stack lifecycle readiness checklist",
-        checklistItems: [
-          "Show keep, consolidate, and pilot decisions with rationale.",
-          "Clarify ownership for operations, governance, and vendor management.",
-          "Include lifecycle controls for onboarding, consolidation, and retirement.",
-        ],
-        quickCheckPrompt: "What demonstrates strong Module 9 readiness?",
-        quickCheckOptions: [
-          { id: "a", label: "A broad tool catalog with phased ownership to be finalized later" },
-          { id: "b", label: "A prioritized stack plan with owners, controls, and consolidation logic" },
-          { id: "c", label: "Independent team-level purchasing with optional governance reviews" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Readiness requires clear operating ownership, control design, and evidence-based stack decisions.",
-        quickCheckOptionExplanations: {
-          a: "Catalogs are not enough without execution structure.",
-          b: "This is the module's expected decision-ready output.",
-          c: "Decentralized buying without controls increases sprawl risk.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-module-quiz?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-next-steps-section-card": {
-    id: "module-9-next-steps-section-card",
-    moduleId: "module-9",
-    sectionId: "next-steps",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Stack plan finalization scenario",
-        scenarioBody:
-          "You are finalizing your stack decisions for the next two quarters. You need a structured plan with priorities, owners, and implementation dates.",
-        checklistTitle: "Next-step planning checklist",
-        checklistItems: [
-          "Finalize keep, consolidate, and pilot decisions by tool category.",
-          "Assign owners and timelines for each stack initiative.",
-          "Schedule governance checkpoints for implementation tracking.",
-        ],
-        quickCheckPrompt: "What makes a stack decision plan actionable?",
-        quickCheckOptions: [
-          { id: "a", label: "High-level recommendations without owners" },
-          { id: "b", label: "Prioritized actions with ownership and timelines" },
-          { id: "c", label: "A vendor list without implementation plan" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Actionability depends on specific owners, sequencing, and review cadence.",
-        quickCheckOptionExplanations: {
-          a: "Without owners, execution accountability is weak.",
-          b: "This creates operational follow-through.",
-          c: "Lists are not equivalent to plans.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in next-steps through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-next-steps?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-prompting-assistants": {
-    id: "module-9-prompting-assistants",
-    moduleId: "module-9",
-    sectionId: "prompting-assistants",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Consolidation trade-off scenario",
-        scenarioBody:
-          "Your stack has overlapping tools with rising costs. You need to consolidate where sensible without reducing needed capability or resilience.",
-        checklistTitle: "Consolidation checklist",
-        checklistItems: [
-          "Identify overlap in feature sets and workflow usage.",
-          "Compare total ownership cost and support overhead.",
-          "Consolidate only when maintainability gains outweigh switching risk.",
-        ],
-        quickCheckPrompt: "What is a practical consolidation criterion?",
-        quickCheckOptions: [
-          { id: "a", label: "Consolidate primarily where procurement discounts are largest" },
-          { id: "b", label: "Consolidate based on overlap, cost, and maintainability" },
-          { id: "c", label: "Preserve every tool to avoid any migration effort" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Consolidation should be evidence-based and tied to operating simplicity.",
-        quickCheckOptionExplanations: {
-          a: "Popularity is a weak optimization criterion.",
-          b: "This is the strongest practical approach.",
-          c: "No consolidation can increase cost and complexity.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in prompting-assistants through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-prompting-assistants?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-risk-check": {
-    id: "module-9-risk-check",
-    moduleId: "module-9",
-    sectionId: "risk-check",
-    cardType: "section-card",
-    content: {
-        scenarioTitle: "Stack governance control scenario",
-        scenarioBody:
-          "Stack decisions vary by team and approvals are inconsistent. You need a unified governance framework that manages lifecycle, ownership, and control gates across the stack.",
-        checklistTitle: "Stack governance checklist",
-        checklistItems: [
-          "Standardize lifecycle controls for add, retain, consolidate, and retire decisions.",
-          "Require operating owner sign-off for stack changes, not just purchases.",
-          "Create exception process with explicit risk acceptance and sunset date.",
-        ],
-        quickCheckPrompt: "What is the purpose of procurement controls in AI stack design?",
-        quickCheckOptions: [
-          { id: "a", label: "To force a single approval speed for all use cases" },
-          { id: "b", label: "To reduce avoidable legal and operational risk" },
-          { id: "c", label: "To centralize every experiment under one procurement cycle" },
-        ],
-        quickCheckCorrectOptionId: "b",
-        quickCheckExplanation: "Controls create consistency and reduce downstream failure risk.",
-        quickCheckOptionExplanations: {
-          a: "Good controls should guide, not block, progress.",
-          b: "This is the main governance objective.",
-          c: "Experimentation should continue within guardrails.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in risk-check through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-risk-check?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
-  },"module-9-tool-selection": {
+    content: "AI workflow design determines how AI tools connect to business processes: (1) Input sources — where does data enter the workflow? (2) Processing steps — which AI tools transform data at each stage? (3) Output destinations — where do AI outputs go, and in what format? (4) Human touchpoints — where do humans review, approve, or intervene? (5) Error handling — what happens when AI output quality falls below threshold? Documenting these explicitly prevents operational chaos when multiple AI tools are in use.",
+    summary: "AI workflow design maps input sources, processing steps, output destinations, human touchpoints, and error handling — preventing chaos in multi-tool deployments.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-9-tool-selection": {
     id: "module-9-tool-selection",
     moduleId: "module-9",
     sectionId: "tool-selection",
     cardType: "section-card",
-    content: {
-        scenarioTitle: "Integration architecture scenario",
-        scenarioBody:
-          "A new tool has strong features but weak integration support. You need to decide whether adoption will reduce or increase manual operations.",
-        checklistTitle: "Integration decision checklist",
-        checklistItems: [
-          "Map data flow and API fit to existing systems.",
-          "Estimate manual workaround burden at scale.",
-          "Prioritize options with stable integration and low operational friction.",
-        ],
-        quickCheckPrompt: "Why does integration strategy matter in stack design?",
-        quickCheckOptions: [
-          { id: "a", label: "Integration can be handled later if the model output quality is high" },
-          { id: "b", label: "Integration assessment should be owned only by IT, not workflow teams" },
-          { id: "c", label: "Poor integration creates manual work and inconsistency" },
-        ],
-        quickCheckCorrectOptionId: "c",
-        quickCheckExplanation: "Integration quality determines whether AI capability becomes repeatable operational value.",
-        quickCheckOptionExplanations: {
-          a: "This underestimates long-term operating cost.",
-          b: "Integration affects business outcomes across functions.",
-          c: "This is the practical reason integration strategy is critical.",
-        },
-      },
-    summary: "Teach the learner how to apply AI concepts in tool-selection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
-    question: "What should I learn from module-9-tool-selection?",
-    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+    content: "AI stack tool selection criteria: (1) Interoperability — does it connect to your other tools via API or native integration? (2) Data ownership — who owns data stored in the tool, and can you export it? (3) Pricing structure — per-seat, usage-based, or enterprise; which scales sustainably with your usage? (4) Vendor roadmap — is the vendor investing in capabilities you'll need in 2 years? (5) Support quality — do they offer SLAs and technical support for enterprise issues? (6) Security certifications — SOC 2, GDPR compliance, etc.",
+    summary: "AI stack tool selection requires evaluating interoperability, data ownership, pricing scalability, vendor roadmap, support quality, and security certifications.",
+    question: "An organization has 8 different AI tools purchased by different departments, each with separate data stores. What is the primary operational risk?",
+    explanation: "Fragmented AI tool adoption creates data silos where tools can't share context or outputs, duplicates vendor spend, creates inconsistent governance and security policies, and makes it impossible to get a unified view of AI usage and risk. This is 'shadow AI stack' — the departmental equivalent of shadow IT. Centralized AI procurement governance with a defined tool evaluation process prevents this fragmentation from compounding.",
   },
-}
+
+  "module-9-prompting-assistants": {
+    id: "module-9-prompting-assistants",
+    moduleId: "module-9",
+    sectionId: "prompting-assistants",
+    cardType: "section-card",
+    content: "Managing AI assistants at scale requires: (1) Shared prompt libraries — documented, tested prompts for common tasks that employees can use rather than reinventing each time; (2) System prompt governance — standardized configurations for AI tools with organizational context and constraints built in; (3) Version control for prompts — treating prompts as institutional assets that evolve and require change management; (4) Quality baselines — defined standards for acceptable AI output quality by use case.",
+    summary: "AI assistant management at scale requires shared prompt libraries, system prompt governance, prompt version control, and quality baselines.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-9-ai-project": {
+    id: "module-9-ai-project",
+    moduleId: "module-9",
+    sectionId: "ai-project",
+    cardType: "section-card",
+    content: "AI project management differs from traditional software projects: (1) Requirements are often discovered through iteration, not specified upfront; (2) Performance depends on data quality, not just code quality; (3) Failure modes are probabilistic, not deterministic; (4) User expectations need calibration for AI-specific behaviors (hallucinations, inconsistency); (5) Evaluation requires ongoing monitoring, not just launch testing. Agile approaches with short feedback loops generally outperform waterfall for AI projects.",
+    summary: "AI projects require iterative requirements, data-quality focus, probabilistic failure management, user expectation calibration, and ongoing monitoring — not waterfall methodology.",
+    question: "Why does a traditional requirements-first project management approach often fail for AI implementations?",
+    explanation: "AI capabilities and limitations are often discovered through iteration with real data, not predictable from upfront requirements. What seemed feasible before data inspection may prove difficult; unexpected capabilities may emerge. Detailed upfront requirements lock in assumptions that data will invalidate. Short agile cycles — 2-week sprints with concrete measurable deliverables — allow course correction before significant investment is locked in.",
+  },
+
+  "module-9-explain-ai-section-card": {
+    id: "module-9-explain-ai-section-card",
+    moduleId: "module-9",
+    sectionId: "explain-ai",
+    cardType: "section-card",
+    content: "Explaining AI systems to stakeholders is a critical leadership skill. Effective AI communication: (1) Lead with business impact, not technical mechanism; (2) Acknowledge limitations explicitly — this builds credibility; (3) Use analogies that match the audience's experience; (4) Avoid precision theater — don't quote 'accuracy rates' without explaining what they mean in operational terms; (5) Be clear about what humans remain responsible for. Stakeholders who don't understand AI limitations make poor decisions about where to deploy it.",
+    summary: "Explaining AI to stakeholders requires leading with business impact, acknowledging limitations, using accessible analogies, and clarifying human responsibility boundaries.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-9-risk-check": {
+    id: "module-9-risk-check",
+    moduleId: "module-9",
+    sectionId: "risk-check",
+    cardType: "section-card",
+    content: "AI stack risk checklist: (1) Data governance — do you know where all AI tools store data, and who can access it? (2) Vendor concentration — what happens if your primary AI vendor has an outage or pricing change? (3) Skill dependency — do you have internal capability to manage and adjust your AI systems, or are you dependent on a single vendor or agency? (4) Compliance coverage — are all AI tools in scope for your relevant regulatory frameworks? (5) Audit trail — can you explain any AI-influenced decision?",
+    summary: "AI stack risk includes data governance gaps, vendor concentration, skill dependency, compliance coverage, and missing audit trails.",
+    question: "An organization relies entirely on a single AI vendor for all automation, analytics, and generative AI needs. What risk does this create?",
+    explanation: "Single-vendor dependency creates multiple risks: pricing leverage (vendor can increase costs once you're locked in), outage concentration (one failure affects all AI operations), roadmap alignment (vendor prioritizes features for their market, not yours), and switching cost accumulation (the longer you're locked in, the harder it is to leave). Diversification across 2–3 strategic vendors, combined with portable data practices, reduces this risk.",
+  },
+
+  "module-9-next-steps-section-card": {
+    id: "module-9-next-steps-section-card",
+    moduleId: "module-9",
+    sectionId: "next-steps",
+    cardType: "section-card",
+    content: "AI stack next steps framework: (1) Audit existing tools — catalog all AI tools in use, their costs, data handling, and usage; (2) Identify redundancy — where do multiple tools solve the same problem? (3) Define your core stack — select 3–5 primary platforms that cover 80% of needs; (4) Establish procurement governance — all new AI tools go through an evaluation process; (5) Build internal capability — ensure you can operate and adjust your stack without full vendor dependency.",
+    summary: "Building a sustainable AI stack requires auditing existing tools, eliminating redundancy, defining a core stack, establishing procurement governance, and building internal capability.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-9-module-quiz": {
+    id: "module-9-module-quiz",
+    moduleId: "module-9",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Apply AI stack architecture principles — evaluating tool selection, vendor dependency, workflow integration, and governance.",
+    summary: "Module 9 knowledge check on AI stack design, vendor risk, procurement governance, and workflow integration.",
+    question: "A CFO asks why the company needs a formal AI procurement process when department heads can evaluate tools themselves. What is the strongest argument for centralization?",
+    explanation: "Decentralized AI procurement creates inconsistent data governance (different tools with different privacy terms handling the same data types), uncontrolled vendor spend (duplicate tools purchased independently), fragmented security posture (tools approved without security review), and inability to negotiate enterprise pricing. Centralization doesn't mean slowing down procurement — it means creating a fast, clear process that includes data governance, security review, and cost governance as standard checkboxes.",
+  },
+
+  // ─────────────────────────────────────────────
+  // MODULE 10 — The Future of AI & Strategic Positioning
+  // ─────────────────────────────────────────────
+
+  "module-10-module-overview-section-card": {
+    id: "module-10-module-overview-section-card",
+    moduleId: "module-10",
+    sectionId: "module-overview",
+    cardType: "section-card",
+    content: "This final module examines where the AI industry is likely heading from a strategic and operational perspective. The focus is on organizational positioning as AI capabilities commoditize — not speculative AGI scenarios. You'll develop frameworks for maintaining competitive advantage in an environment where AI itself becomes table stakes.",
+    summary: "Module 10 focuses on strategic positioning as AI commoditizes — building sustainable advantages beyond tool access.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-10-current-frontiers-section-card": {
+    id: "module-10-current-frontiers-section-card",
+    moduleId: "module-10",
+    sectionId: "current-frontiers",
+    cardType: "section-card",
+    content: "Current AI frontiers with near-term business implications: (1) Multimodal AI — models processing text, images, audio, and video simultaneously; (2) Long-context reasoning — handling hundreds of thousands of tokens enabling document-level analysis; (3) Agentic systems — AI taking multi-step autonomous actions; (4) AI-generated code at scale — software development acceleration; (5) Real-time AI inference — low-latency applications enabling interactive AI in products. Each frontier is moving from research toward production deployment.",
+    summary: "Near-term AI frontiers — multimodal, long-context, agentic, code generation, and real-time inference — are moving from research to production deployment.",
+    question: "Which current AI capability shift most significantly changes how organizations can use AI for knowledge work?",
+    explanation: "Long-context reasoning — the ability to process and reason over very large documents — is transforming knowledge work AI applications. AI can now analyze entire legal contracts, full financial reports, complete research libraries, or lengthy correspondence threads in a single context. This eliminates the chunking limitations that previously required complex preprocessing for document analysis, making many previously impractical applications viable.",
+  },
+
+  "module-10-agi-explained": {
+    id: "module-10-agi-explained",
+    moduleId: "module-10",
+    sectionId: "agi-explained",
+    cardType: "section-card",
+    content: "AGI (Artificial General Intelligence) — AI that matches or exceeds human cognitive capability across all domains — is a debated concept with no consensus on definition, timeline, or likelihood. For business leaders, the operationally relevant question isn't 'when is AGI coming' but 'how do we build organizational capability that creates value as AI improves incrementally over the next 3–5 years?' Planning for AGI is less valuable than executing well on current AI capabilities.",
+    summary: "AGI timelines are uncertain and debated — business leaders should focus on 3–5 year incremental AI capability planning rather than AGI speculation.",
+    question: "Why should business leaders focus on near-term AI capabilities rather than AGI planning?",
+    explanation: "AGI timelines range from 'never' to '5 years' among credible researchers — the uncertainty is too high for operational planning. Meanwhile, current AI capabilities are already creating measurable competitive advantage and disadvantage. Organizations that build AI literacy, governance, and workflow integration now will be positioned to adopt more powerful capabilities as they emerge. Organizations waiting for AGI are already falling behind on current capabilities.",
+  },
+
+  "module-10-ai-governance": {
+    id: "module-10-ai-governance",
+    moduleId: "module-10",
+    sectionId: "ai-governance",
+    cardType: "section-card",
+    content: "AI governance is evolving from voluntary to regulatory. Active regulatory frameworks: EU AI Act (risk-based classification of AI systems), US executive AI guidance, emerging sector-specific rules in healthcare, finance, and employment. Organizations should: (1) Track regulatory developments in their jurisdictions; (2) Inventory AI systems by risk level; (3) Maintain explainability documentation for consequential decisions; (4) Designate AI governance ownership; (5) Build regulatory readiness into AI procurement, not just as retrofit compliance.",
+    summary: "AI regulation is shifting from voluntary to mandatory — organizations should track jurisdiction-specific frameworks and build compliance into AI procurement from the start.",
+    question: "Under risk-based AI governance frameworks like the EU AI Act, which AI application category typically faces the highest compliance burden?",
+    explanation: "High-risk AI applications — those affecting employment decisions, credit, healthcare, law enforcement, critical infrastructure, and education — face the most stringent requirements including mandatory risk assessments, human oversight, transparency documentation, and conformity assessments. Organizations deploying AI in these domains should assess their compliance obligations before deployment, not after regulatory enforcement begins.",
+  },
+
+  "module-10-ai-careers": {
+    id: "module-10-ai-careers",
+    moduleId: "module-10",
+    sectionId: "ai-careers",
+    cardType: "section-card",
+    content: "AI is reshaping career trajectories across functions. Growing roles: AI prompt engineers, AI product managers, AI governance specialists, ML engineers, AI trainers. Evolving roles: data analysts (augmented by AI), software engineers (with AI coding tools), content creators (with generative tools), customer service managers (supervising AI systems). Declining task demand: data entry, routine reporting, basic content production. The career advantage goes to professionals who can work alongside AI systems effectively, not those who resist them.",
+    summary: "AI creates new roles in governance, product, and engineering while reshaping most existing roles — career advantage goes to professionals who work effectively alongside AI.",
+    question: null,
+    explanation: null,
+  },
+
+  "module-10-your-ai-future": {
+    id: "module-10-your-ai-future",
+    moduleId: "module-10",
+    sectionId: "your-ai-future",
+    cardType: "section-card",
+    content: "Strategic positioning in an AI-driven economy: Competitive advantage will not come from access to AI tools — those will be commoditized. Advantage will come from: (1) Proprietary data — unique datasets competitors can't access; (2) Workflow integration depth — AI deeply embedded in operations rather than surface-level tools; (3) Organizational speed — the ability to experiment, learn, and adapt faster than competitors; (4) AI talent — people who can identify, implement, and improve AI applications; (5) Customer relationships — trust that persists as AI enables faster service. The race is not about AI access. It's about AI execution.",
+    summary: "AI competitive advantage comes from proprietary data, workflow integration depth, organizational speed, AI talent, and customer trust — not tool access.",
+    question: "As AI capabilities become widely accessible commodities, what will be the primary source of competitive advantage?",
+    explanation: "When every competitor has access to the same AI tools, the differentiator becomes execution: How fast do you identify valuable applications? How deeply do you integrate AI into workflows? How quickly do you build organizational learning? How well do you govern AI deployments? The organizations that win will be those that build AI execution capability as a core competency — not those that have the best AI tools in a world where AI tools are increasingly uniform.",
+  },
+
+  "module-10-module-quiz": {
+    id: "module-10-module-quiz",
+    moduleId: "module-10",
+    sectionId: "module-quiz",
+    cardType: "section-card",
+    content: "Apply strategic AI positioning frameworks — evaluating AI frontiers, governance readiness, and competitive differentiation in an AI-commoditized environment.",
+    summary: "Module 10 knowledge check on AI strategic positioning, governance readiness, and competitive differentiation.",
+    question: "A competitor announces they have deployed the same AI tools your organization uses. What is the most strategically significant response?",
+    explanation: "Tool parity means the competitive battle shifts entirely to execution: workflow integration depth, employee AI capability, governance that enables rather than blocks, and speed of continuous improvement. The response is not to find new tools — it's to go deeper with existing ones, move faster on adoption, and invest in proprietary data and workflow integration that can't be replicated by simply purchasing the same software licenses.",
+  },
+};
 
 const MODULE_SECTION_LEARNING_CONTENT: Record<string, Record<string, SectionLearningContent>> =
   Object.values(CARD_KNOWLEDGE_REGISTRY_BY_ID).reduce(
     (acc, entry) => {
       const moduleSections = acc[entry.moduleId] ?? (acc[entry.moduleId] = {})
       // Scenario and quick-check cards share section content; keep first seen value.
-      if (!moduleSections[entry.sectionId]) {
+      if (!moduleSections[entry.sectionId] && entry.content) {
         moduleSections[entry.sectionId] = entry.content
       }
 
@@ -3029,25 +1171,25 @@ export function getSectionLearningContent(moduleId: string, sectionId: string | 
 // --- Migrated component explanation content ---
 export interface ComponentExplanation {
   id: string
-  question: string
-  explanation: string
+  question: string | null
+  explanation: string | null
 }
 
 type ComponentCardMetadata = {
   moduleId?: string
   sectionId?: string
-  content?: SectionLearningContent
-  summary?: string
+  content?: SectionLearningContent | null
+  summary?: string | null
 }
 
 export class ComponentCard implements ComponentExplanation {
   id: string
-  question: string
-  explanation: string
+  question: string | null
+  explanation: string | null
   moduleId?: string
   sectionId?: string
-  content?: SectionLearningContent
-  summary?: string
+  content?: SectionLearningContent | null
+  summary?: string | null
 
   constructor(explanation: ComponentExplanation, metadata: ComponentCardMetadata = {}) {
     this.id = explanation.id
@@ -3059,7 +1201,7 @@ export class ComponentCard implements ComponentExplanation {
     this.summary = metadata.summary
   }
 
-  withExplanation(explanation: string): ComponentCard {
+  withExplanation(explanation: string | null): ComponentCard {
     return new ComponentCard(
       {
         id: this.id,
@@ -3127,7 +1269,37 @@ export function getComponentCard(componentId: string): ComponentCard | undefined
  */
 export function getComponentExplanation(componentId: string): ComponentExplanation | undefined {
   const card = getComponentCard(componentId)
-  return card ? card.toExplanation() : undefined
+  if (card) {
+    return card.toExplanation()
+  }
+
+  const sectionMatch = componentId.match(/^(module-\d+)-(.+)-(scenario|quick-check)$/)
+  if (sectionMatch) {
+    const moduleId = sectionMatch[1]
+    const sectionId = sectionMatch[2]
+    const sectionCard = Object.values(COMPONENT_CARD_REGISTRY).find(
+      (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
+    )
+    return sectionCard ? sectionCard.toExplanation() : undefined
+  }
+
+  const courseQuizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
+  if (courseQuizMatch) {
+    const moduleId = courseQuizMatch[1]
+    const moduleQuizCard = Object.values(COMPONENT_CARD_REGISTRY).find(
+      (entry) => entry.moduleId === moduleId && entry.sectionId === "module-quiz",
+    )
+    if (moduleQuizCard) {
+      return moduleQuizCard.toExplanation()
+    }
+
+    const moduleCardWithExplanation = Object.values(COMPONENT_CARD_REGISTRY).find(
+      (entry) => entry.moduleId === moduleId && entry.explanation,
+    )
+    return moduleCardWithExplanation ? moduleCardWithExplanation.toExplanation() : undefined
+  }
+
+  return undefined
 }
 
 /**
@@ -3147,7 +1319,7 @@ export function searchExplanations(query: string): ComponentExplanation[] {
   const lowerQuery = query.toLowerCase()
   return Object.values(COMPONENT_CARD_REGISTRY)
     .map((card) => card.toExplanation())
-    .filter((exp) => exp.question.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery))
+    .filter((exp) => (exp.question ?? "").toLowerCase().includes(lowerQuery) || (exp.explanation ?? "").toLowerCase().includes(lowerQuery))
 }
 
 export type Section = {
@@ -3222,9 +1394,12 @@ export function getCourseStructure(): CourseStructure {
       return {
         id: moduleId,
         slug: moduleId,
-        title: Number.isFinite(moduleNumber)
-          ? `Module ${moduleNumber}`
-          : toTitleCaseFromSlug(moduleId),
+        title: MODULE_BLUEPRINTS[moduleId]?.title ?? (
+          Number.isFinite(moduleNumber)
+            ? `Module ${moduleNumber}`
+            : toTitleCaseFromSlug(moduleId)
+        ),
+        description: MODULE_BLUEPRINTS[moduleId]?.description,
         sections: sectionIds.map((sectionId) => ({
           id: sectionId,
           title: toTitleCaseFromSlug(sectionId),
@@ -3248,7 +1423,7 @@ export type ModuleQuizOption = {
 export type ModuleQuizQuestion<T extends string = string> = {
   key: T
   prompt: string
-  explanation: string
+  explanation: string | null
   options: ModuleQuizOption[]
   correctOptionId: string
 }
@@ -3258,7 +1433,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "What is the best first move after finishing Module 0?",
-      explanation: "Beginners should start with a focused, low-risk pilot tied to one measurable outcome.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Adopt AI broadly across all teams immediately" },
@@ -3269,7 +1444,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "Which statement best separates AI hype from practical value?",
-      explanation: "Practical value is proven by measurable workflow improvement in real operations.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "The tool has polished demos and strong social buzz" },
@@ -3280,7 +1455,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "Which beginner misconception is most dangerous?",
-      explanation: "Confident AI output can still be wrong, so verification is essential.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "If AI sounds confident, it is probably correct" },
@@ -3291,7 +1466,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What should your Module 0 output include?",
-      explanation: "A decision-ready starter plan includes a use case, owner, metric, and review point.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "A long list of AI tools to evaluate later" },
@@ -3304,7 +1479,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "Which distinction is most important in AI adoption planning?",
-      explanation: "Learners need to distinguish infrastructure models from business-facing tools to avoid procurement confusion.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Color theme of each product" },
@@ -3315,7 +1490,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What does 'custom AI' most often mean in the market?",
-      explanation: "Most custom AI offers combine existing models with integration, workflow logic, and domain-specific tuning.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Integration and workflow tailoring on top of existing models" },
@@ -3326,7 +1501,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "What is the best first filter when shortlisting AI vendors?",
-      explanation: "Business-fit criteria should come before brand, hype, or novelty.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Which product launched this week" },
@@ -3337,7 +1512,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "Which option best reduces lock-in risk?",
-      explanation: "Portable workflows and clear data export terms preserve strategic flexibility.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Rely only on proprietary features with no migration plan" },
@@ -3350,7 +1525,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "Which use case is usually highest ROI early in adoption?",
-      explanation: "Repetitive, high-volume workflows with measurable outcomes usually create the fastest value.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Frequent process bottleneck with clear baseline metrics" },
@@ -3361,7 +1536,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What is the strongest way to prioritize AI opportunities?",
-      explanation: "A scoring model balancing value, effort, confidence, and risk leads to better portfolio choices.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Pick whatever the loudest stakeholder requests" },
@@ -3372,7 +1547,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "When should augmentation be favored over full automation?",
-      explanation: "Human-in-the-loop augmentation is best when judgment quality and risk controls matter.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "When no human oversight is required" },
@@ -3383,7 +1558,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "Which framing best connects AI initiatives to business goals?",
-      explanation: "Teams should tie AI initiatives to revenue, margin, speed, risk, or customer outcomes.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Map each initiative to concrete business outcomes" },
@@ -3396,7 +1571,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "When is a general assistant often enough?",
-      explanation: "General assistants fit early exploration and lightweight cross-functional tasks.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "When strict domain controls are mandatory" },
@@ -3407,7 +1582,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What is the biggest procurement trap in AI tools?",
-      explanation: "Buying from demos without evaluating operations, integration, and governance creates expensive rework.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Demo-driven buying without operational validation" },
@@ -3418,7 +1593,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "Which item belongs in a practical tool scorecard?",
-      explanation: "Decision-grade scorecards include reliability, integration effort, security posture, and support quality.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Mascot quality and marketing style" },
@@ -3429,7 +1604,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "How should teams handle shiny-object pressure?",
-      explanation: "A predefined buy-wait-pilot framework keeps teams focused on business value.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Approve every new tool request quickly" },
@@ -3442,7 +1617,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "Which agency signal is most credible?",
-      explanation: "Evidence of measurable outcomes and clear delivery mechanics matters more than buzzwords.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Frequent use of vague technical jargon" },
@@ -3453,7 +1628,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What is the best pilot design principle?",
-      explanation: "Good pilots have narrow scope, clear owners, measurable success criteria, and explicit stop conditions.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Small scope, clear metrics, clear ownership" },
@@ -3464,7 +1639,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "What is a common red flag in vendor proposals?",
-      explanation: "Lack of assumptions, governance, and delivery detail is a major warning sign.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Risk log and mitigation plan included" },
@@ -3475,7 +1650,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "Which pricing approach needs close review?",
-      explanation: "Low initial pricing with undefined change-order terms can create hidden long-term cost.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Transparent fixed scope and milestone pricing" },
@@ -3488,7 +1663,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "Which ROI approach is most trustworthy?",
-      explanation: "Baseline-vs-post measurement tied to operating outcomes is more credible than vanity metrics.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Compare baseline and post-implementation business outcomes" },
@@ -3499,7 +1674,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What is a misleading metric in AI reporting?",
-      explanation: "Activity metrics alone rarely indicate business impact.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Cycle-time reduction on a critical workflow" },
@@ -3510,7 +1685,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "How should experimentation risk be handled in budgeting?",
-      explanation: "Teams should budget by stage-gated experiments with explicit risk-adjusted thresholds.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Single annual commitment without checkpoints" },
@@ -3521,7 +1696,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What belongs in an AI progress scorecard?",
-      explanation: "Progress reporting should combine value outcomes and risk posture.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Outcome metrics, risk indicators, and next decisions" },
@@ -3534,7 +1709,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "What is the minimum governance baseline before scaling AI use?",
-      explanation: "Scaling safely requires policy, risk ownership, and approval controls.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Trust each department to self-govern informally" },
@@ -3545,7 +1720,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "How should hallucination risk be managed?",
-      explanation: "High-risk workflows require human review and escalation paths.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Mandate human validation for material decisions" },
@@ -3556,7 +1731,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "Which contract item best protects data and IP?",
-      explanation: "Clear clauses on data usage, retention, and model training rights are essential.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "General references to industry standards" },
@@ -3567,7 +1742,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What is the best response framework for AI incidents?",
-      explanation: "Teams need predefined incident handling playbooks with owners and communication paths.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Handle issues ad hoc as they appear" },
@@ -3580,7 +1755,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "What should the first 30 days of AI adoption focus on?",
-      explanation: "Early momentum comes from scoped pilots tied to business outcomes and governance.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Define pilot scope, ownership, metrics, and guardrails" },
@@ -3591,7 +1766,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What is a common adoption failure mode?",
-      explanation: "Tool access without workflow redesign and role clarity leads to low impact.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Defining clear adoption owners" },
@@ -3602,7 +1777,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "Why build internal AI champions?",
-      explanation: "Champion networks accelerate adoption and support local implementation quality.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "To replace all managers" },
@@ -3613,7 +1788,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "How should roadmap sequencing be decided?",
-      explanation: "Sequence by business value, readiness, dependency risk, and change capacity.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Use value-readiness-dependency sequencing" },
@@ -3626,7 +1801,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "What is the most practical distinction for teams designing automation?",
-      explanation: "Teams should separate deterministic workflows from autonomous agent behavior.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Single-agent vs multi-agent branding" },
@@ -3637,7 +1812,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "When is human-in-the-loop mandatory?",
-      explanation: "Material financial, legal, or customer-impact decisions need human checkpoints.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Only for low-risk formatting tasks" },
@@ -3648,7 +1823,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "What causes many automation deployments to fail?",
-      explanation: "Lack of monitoring, ownership, and rollback design creates fragile systems.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "No observability and no contingency plan" },
@@ -3659,7 +1834,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What is the best first step for agent adoption?",
-      explanation: "Start with narrow, high-frequency workflows where outcomes are measurable and reversible.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Deploy broad autonomy across departments" },
@@ -3672,7 +1847,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "What is the strongest defense against AI tool sprawl?",
-      explanation: "A clear intake and evaluation process prevents duplicate purchases and fragmented ownership.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Centralized intake, scoring, and governance gates" },
@@ -3683,7 +1858,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "Why does integration strategy matter in stack design?",
-      explanation: "Integration quality determines whether AI capability becomes repeatable operational value.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "It does not matter if tools are powerful" },
@@ -3694,7 +1869,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "What is a practical consolidation criterion?",
-      explanation: "Consolidate when tools overlap heavily and ownership can be simplified without harming outcomes.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Consolidate only based on vendor popularity" },
@@ -3705,7 +1880,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What should internal ownership clarify in an AI stack?",
-      explanation: "Clear ownership for strategy, operations, governance, and support prevents delivery gaps.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Who owns outcomes, operations, risk, and vendor management" },
@@ -3718,7 +1893,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz1",
       prompt: "Which future signal should teams prioritize most?",
-      explanation: "Teams should prioritize signals that materially affect margins, customer value, or operating speed.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Social media excitement about new model launches" },
@@ -3729,7 +1904,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz2",
       prompt: "What does model commoditization usually imply?",
-      explanation: "As models commoditize, advantage shifts toward workflow design, data leverage, and execution discipline.",
+      explanation: null,
       correctOptionId: "a",
       options: [
         { id: "a", label: "Differentiation moves up the stack to execution and integration" },
@@ -3740,7 +1915,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz3",
       prompt: "How should teams approach workforce implications?",
-      explanation: "Teams should redesign roles around AI-assisted workflows and invest in capability transitions.",
+      explanation: null,
       correctOptionId: "c",
       options: [
         { id: "a", label: "Assume role design remains unchanged" },
@@ -3751,7 +1926,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     {
       key: "quiz4",
       prompt: "What defines a strong strategic positioning response to AI?",
-      explanation: "Strong positioning combines clear market focus, capability bets, and disciplined execution.",
+      explanation: null,
       correctOptionId: "b",
       options: [
         { id: "a", label: "Following every trend equally" },
@@ -3761,5 +1936,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
     },
   ],
 }
+
+
 
 
