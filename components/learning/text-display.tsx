@@ -1510,6 +1510,27 @@ export function TextDisplay({
           </div>
 
           <div className="space-y-4">
+            <div className="rounded-md border border-brand-orange/25 bg-brand-orange/5 p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Instructional brief</p>
+              <div className="mt-2 space-y-2 text-sm text-foreground">
+                <p>
+                  This challenge evaluates inferential judgment. Your task is to classify whether a statement is warranted by the lesson's claims and evidence, not whether the wording feels familiar or persuasive.
+                </p>
+                <p>
+                  Apply a claim-evidence-reasoning method before you drop. First, identify the precise proposition being asserted. Second, locate textual evidence that either supports or contradicts that proposition. Third, evaluate whether the inference is valid or whether it introduces hidden assumptions.
+                </p>
+                <p>
+                  Mark a statement as true only when the section justifies it with direct support and consistent logic. Mark it as false when it overgeneralizes, ignores stated limits, reverses causality, or smuggles in certainty that the source material does not provide.
+                </p>
+                <p>
+                  Distinguish linguistic confidence from epistemic strength. High-confidence language can still be weakly grounded. In analytical reading, evidence hierarchy outranks rhetorical tone.
+                </p>
+                <p>
+                  The objective is disciplined reasoning under uncertainty. Use each attempt to improve calibration: align decisions more closely with what is actually justified by the text.
+                </p>
+              </div>
+            </div>
+
             <div>
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Drag this statement</p>
               <div

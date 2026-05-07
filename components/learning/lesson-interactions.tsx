@@ -450,6 +450,27 @@ As you drag items into order, you're building intuition about workflow logic. Yo
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
       </div>
 
+      <div className="mb-4 rounded-lg border border-brand-green/20 bg-brand-green/5 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-brand-green">Before you begin</p>
+        <div className="mt-2 space-y-2 text-sm text-foreground">
+          <p>
+            This challenge assesses process reasoning rather than recall. You are reconstructing a causal chain in which each step must establish the preconditions required by the next step in the workflow.
+          </p>
+          <p>
+            Use a causal-dependency framework for every placement decision. Ask four questions: What input state is required before this step can execute, what transformation happens during the step, what output state is produced, and which downstream step directly depends on that output.
+          </p>
+          <p>
+            Evaluate adjacency, not just global order. If two neighboring rows cannot be connected by a clear prerequisite relationship, the sequence is likely unstable. Continue revising until each boundary can be justified with explicit cause-and-effect logic.
+          </p>
+          <p>
+            Pay attention to failure propagation. Misplaced early steps usually create cascading downstream errors, so diagnose from the first weak transition rather than the final mismatch. This mirrors real operational debugging, where root-cause correction is more effective than superficial reordering.
+          </p>
+          <p>
+            When you click "Check order," treat the result as model validation feedback. Incorrect attempts are informative: they reveal where your mental model of sequence constraints is incomplete. Revise, retest, and iterate until the entire pipeline is coherent.
+          </p>
+        </div>
+      </div>
+
       <div className="space-y-2">
         {currentOrder.map((item, index) => (
           <div
