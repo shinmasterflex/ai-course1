@@ -4,8 +4,10 @@
  * API is the source of truth; in-memory state synced via debounced API calls
  */
 
-import { courseStructure } from "./course-content"
+import { getCourseStructure } from "./course-content"
 import { createClient } from "./supabase"
+
+const courseStructure = getCourseStructure()
 
 const STORAGE_KEY = "cognijin_progress"
 const POSITION_KEY = "cognijin_position"

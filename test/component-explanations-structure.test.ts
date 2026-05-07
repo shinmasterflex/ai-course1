@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest"
 
 import { COMPONENT_EXPLANATIONS, getComponentExplanation } from "@/lib/course-content"
-import { courseStructure } from "@/lib/course-content"
+import { getCourseStructure } from "@/lib/course-content"
+
+const courseStructure = getCourseStructure()
 
 function getAllResolvedExplanationIds() {
   const ids = new Set(Object.keys(COMPONENT_EXPLANATIONS))

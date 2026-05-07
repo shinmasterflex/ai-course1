@@ -1,5 +1,7 @@
-import { courseStructure, SECTION_KNOWLEDGE_PATTERNS, type SectionKnowledgePattern } from "@/lib/course-content"
+import { getCourseStructure } from "@/lib/course-content"
 import { hashString, toSentence } from "@/lib/text-content-utils"
+
+const courseStructure = getCourseStructure()
 
 export interface InferentialStatement {
   statement: string
@@ -110,33 +112,6 @@ function getScopeContext(scopeKey: string): ScopeContext {
     moduleId: getModuleIdFromScope(scopeKey),
     sectionId: getSectionIdFromScope(scopeKey),
   }
-}
-
-function pickSectionKnowledgePattern(normalizedContext: string) {
-  let bestPattern: SectionKnowledgePattern | null = null
-  let bestScore = 0
-
-  for (const pattern of SECTION_KNOWLEDGE_PATTERNS) {
-    const matches = pattern.keywords.filter((keyword) => normalizedContext.includes(keyword)).length
-    if (matches > bestScore) {
-      bestScore = matches
-      bestPattern = pattern
-    }
-  }
-
-  return bestScore > 0 ? bestPattern : null
-}
-
-function pickCardPattern(normalizedContext: string, cardSeed: number) {
-  const matchedPatterns = SECTION_KNOWLEDGE_PATTERNS.filter((pattern) =>
-    pattern.keywords.some((keyword) => normalizedContext.includes(keyword))
-  )
-
-  if (matchedPatterns.length === 0) {
-    return null
-  }
-
-  return matchedPatterns[cardSeed % matchedPatterns.length]
 }
 
 function createSectionFalseStatement(sectionTitle: string, sectionSummary: string) {
@@ -302,24 +277,22 @@ function createSectionTitleFalseStatement(sectionTitle: string) {
 }
 
 function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
-  const fallbackPattern = SECTION_KNOWLEDGE_PATTERNS[hashString(scopeKey) % SECTION_KNOWLEDGE_PATTERNS.length]
-
   const fallbackKnowledge: SectionCardKnowledge = {
     briefParagraphs: [
       "Section context is unavailable, so this card uses the default hardcoded course guidance.",
       "Interpret this interaction as a quick comprehension check tied to practical AI decision quality.",
-      fallbackPattern.briefParagraphs[0],
-      fallbackPattern.briefParagraphs[1],
+      "Strong AI learning focuses on clear decisions, explicit trade-offs, and responsible execution.",
+      "Use each section to improve judgment quality before scaling workflows or tooling.",
     ],
     statements: [
       {
-        statement: fallbackPattern.trueStatement,
-        explanation: fallbackPattern.trueExplanation,
+        statement: "Clear section objectives improve AI decisions by making trade-offs explicit before execution.",
+        explanation: "The course consistently emphasizes practical clarity before rollout.",
         isTrue: true,
       },
       {
-        statement: fallbackPattern.falseStatement,
-        explanation: fallbackPattern.falseExplanation,
+        statement: "AI rollout quality usually depends only on tool selection, not on workflow, ownership, or review.",
+        explanation: "The curriculum treats process design and review controls as essential implementation factors.",
         isTrue: false,
       },
       {
@@ -351,26 +324,10 @@ function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
   const sectionSummary = toSentence(rawSectionSummary)
   const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
   const cardSeed = hashString(`${moduleId}::${sectionId}`)
-  const normalizedContext = [sectionTitle, sectionSummary, moduleTitle].join(" ").toLowerCase()
-  const matchedPattern = pickSectionKnowledgePattern(normalizedContext)
-    ?? SECTION_KNOWLEDGE_PATTERNS[cardSeed % SECTION_KNOWLEDGE_PATTERNS.length]
 
   const titleTrueStatement = createSectionTitleTrueStatement(sectionTitle)
   const titleFalseStatement = createSectionTitleFalseStatement(sectionTitle)
   const summaryFalseStatement = createSectionFalseStatement(sectionTitle, sectionSummary)
-
-  const patternStatements: InferentialStatement[] = [
-    {
-      statement: matchedPattern.trueStatement,
-      explanation: matchedPattern.trueExplanation,
-      isTrue: true,
-    },
-    {
-      statement: matchedPattern.falseStatement,
-      explanation: matchedPattern.falseExplanation,
-      isTrue: false,
-    },
-  ]
 
   const statements: InferentialStatement[] = [
     {
@@ -393,13 +350,23 @@ function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
       explanation: `The section summary points in the opposite direction. ${sectionTitle} is meant to sharpen applied judgment, not bypass it.`,
       isTrue: false,
     },
-    ...patternStatements,
+    {
+      statement: `${moduleTitle} requires evidence-based AI choices that connect capability, workflow, and risk controls.`,
+      explanation: "The curriculum repeatedly links AI value to measurable outcomes and implementation discipline.",
+      isTrue: true,
+    },
+    {
+      statement: `${moduleTitle} can be completed effectively through intuition alone without explicit criteria or review.`,
+      explanation: "The course emphasizes structured evaluation and governance over ad-hoc judgment.",
+      isTrue: false,
+    },
   ]
 
   const baseBriefParagraphs = [
     `Section context: ${sectionTitle}. Core idea: ${sectionSummary}`,
     `Module context: ${moduleTitle}. Apply this section to practical choices, not abstract recall.`,
-    ...matchedPattern.briefParagraphs,
+    "Focus on turning concepts into concrete decisions with clear ownership and measurable outcomes.",
+    "Treat AI adoption as an operating model decision, not just a tool selection task.",
     `Interpret this card as applied guidance connected to ${moduleTitle}, not as isolated wording practice.`,
   ]
 

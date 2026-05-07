@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { prisma } from '@/lib/prisma'
-import { courseStructure } from '@/lib/course-content'
+import { getCourseStructure } from '@/lib/course-content'
 
 export const runtime = 'nodejs'
+
+const courseStructure = getCourseStructure()
 
 function generateId(): string {
   return crypto.randomUUID()

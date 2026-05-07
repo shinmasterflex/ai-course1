@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest"
 
-import { courseStructure } from "@/lib/course-content"
 import { getComponentExplanation } from "@/lib/course-content"
+import { getCourseStructure } from "@/lib/course-content"
+
+const courseStructure = getCourseStructure()
 
 describe("course card explainer id linkage", () => {
   it("links every section scenario card to an explanation entry", () => {

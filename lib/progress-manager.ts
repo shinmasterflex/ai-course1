@@ -4,8 +4,10 @@
  * Syncs with Prisma Progress model via /api/progress
  */
 
-import { courseStructure } from "./course-content"
+import { getCourseStructure } from "./course-content"
 import { createClient } from "./supabase"
+
+const courseStructure = getCourseStructure()
 
 // Storage key for session caching
 const STORAGE_KEY = "cognijin-progress"

@@ -1,287 +1,4 @@
-﻿/**
- * COURSE STRUCTURE
- * Centralized definition of all modules and sections.
- * This now lives in the knowledge registry alongside component content.
- */
-export interface Section {
-  id: string
-  title: string
-  summary?: string
-  completed: boolean
-}
-
-export interface Module {
-  id: string
-  slug: string
-  title: string
-  description?: string
-  sections: Section[]
-  status?: string
-  completionRate?: number
-}
-
-export interface CourseStructure {
-  modules: Module[]
-}
-
-export type SectionKnowledgePattern = {
-  keywords: string[]
-  briefParagraphs: string[]
-  trueStatement: string
-  falseStatement: string
-  trueExplanation: string
-  falseExplanation: string
-}
-
-export const SECTION_KNOWLEDGE_PATTERNS: SectionKnowledgePattern[] = [
-  {
-    keywords: ["model", "tool", "automation", "agent", "taxonomy", "category"],
-    briefParagraphs: [
-      "A rigorous taxonomy reduces category errors by separating concepts that behave differently in practice. Distinguishing model capability from product behavior is a core analytical skill.",
-      "In comparative evaluation, category clarity improves decision quality because options become commensurable across cost, control, integration burden, and risk.",
-      "This card should be read as conceptual infrastructure for later decisions, not as isolated terminology.",
-    ],
-    trueStatement: "Clear category boundaries improve AI decisions by making trade-offs explicit.",
-    falseStatement: "Different AI categories can be treated as interchangeable with little impact on decision quality.",
-    trueExplanation: "The lesson treats category distinctions as decision-critical, not cosmetic.",
-    falseExplanation: "Interchangeability hides material differences in capability, risk, and implementation effort.",
-  },
-  {
-    keywords: ["roi", "metric", "impact", "baseline", "measurement", "value"],
-    briefParagraphs: [
-      "Educationally sound ROI analysis links outcomes to baselines and context. Metrics without baseline comparison are weak evidence for improvement.",
-      "Measurement systems should include adoption effort, quality effects, and risk-adjusted outcomes to avoid overstating value.",
-      "This card contributes to evidence literacy by clarifying what counts as valid performance proof.",
-    ],
-    trueStatement: "Outcome-linked metrics with baseline comparison provide stronger evidence than activity counts alone.",
-    falseStatement: "High usage activity is usually sufficient to prove business value, even without outcome metrics.",
-    trueExplanation: "The content prioritizes evidence quality and measurement validity.",
-    falseExplanation: "Usage intensity is not equivalent to demonstrated impact.",
-  },
-  {
-    keywords: ["risk", "safety", "privacy", "bias", "misinformation", "governance"],
-    briefParagraphs: [
-      "Risk governance is a design-time responsibility. Controls are most effective when embedded before scale, not appended after incidents.",
-      "Bias, privacy, and misinformation checks address different failure modes and should be treated as complementary safeguards.",
-      "This card teaches preventive control logic: utility does not override safety obligations.",
-    ],
-    trueStatement: "Responsible AI deployment requires preventive controls for bias, privacy, and harmful output risks.",
-    falseStatement: "If AI output is useful, governance checks can usually be deferred until after rollout.",
-    trueExplanation: "The lesson emphasizes preventive control architecture.",
-    falseExplanation: "Usefulness does not replace governance duties or risk review.",
-  },
-  {
-    keywords: ["agent", "autonomy", "loop", "guardrail", "stopping", "monitoring"],
-    briefParagraphs: [
-      "Agentic systems add iterative autonomy, which expands both capability and potential failure surface.",
-      "Control design for agents requires bounded objectives, permission limits, and explicit stopping conditions.",
-      "This card positions monitoring as a structural requirement for safe agent operation.",
-    ],
-    trueStatement: "Agent workflows need bounded goals and monitoring because autonomy increases both power and risk.",
-    falseStatement: "Autonomous agents are typically safest when run without stopping conditions or ongoing monitoring.",
-    trueExplanation: "The content links autonomy to stronger control requirements.",
-    falseExplanation: "Unbounded autonomy conflicts with the lesson's guardrail model.",
-  },
-  {
-    keywords: ["workflow", "rollout", "adoption", "change", "roadmap", "execution"],
-    briefParagraphs: [
-      "Operational gains from AI depend on workflow redesign and adoption sequencing, not just tool access.",
-      "Change execution improves when review rhythms, role ownership, and support mechanisms are explicit.",
-      "This card frames implementation as a systems problem where process quality determines sustained outcomes.",
-    ],
-    trueStatement: "Sustained AI adoption depends on workflow design, ownership, and staged execution.",
-    falseStatement: "Rapid tool distribution alone is usually enough for successful AI adoption.",
-    trueExplanation: "The lesson ties implementation quality to process and governance.",
-    falseExplanation: "Tool access without process design tends to increase variance and rework.",
-  },
-]
-
-export const courseStructure: CourseStructure = {
-  modules: [
-    {
-      id: "module-0",
-      slug: "module-0",
-      title: "Module 0: AI Adoption Foundations for Beginners",
-      description: "Build a beginner-friendly foundation for AI adoption by understanding the shift, avoiding hype, and choosing safe first steps.",
-      sections: [
-        { id: "welcome", title: "Why This AI Shift Matters for Beginners", summary: "Understand why AI is moving quickly, what changed in the last few years, and why beginners can still catch up with the right learning path.", completed: false },
-        { id: "ai-is-everywhere", title: "AI Around You: Hype vs. Reality", summary: "Learn how to spot practical AI use cases in daily work and separate real capability from marketing noise.", completed: false },
-        { id: "what-youll-learn", title: "Common Beginner Misconceptions", summary: "Identify early myths that create confusion, unrealistic expectations, and poor first adoption decisions.", completed: false },
-        { id: "how-to-use-course", title: "Safe First Steps for AI Adoption", summary: "Compare doing nothing versus adopting carelessly, then choose a low-risk, high-learning starting strategy.", completed: false },
-        { id: "summary", title: "Module Wrap-Up and 30-Day Starter Plan", summary: "Finish with a practical action plan: one workflow to test, one risk guardrail, and one outcome metric to track.", completed: false },
-      ],
-    },
-    {
-      id: "module-1",
-      slug: "module-1",
-      title: "Module 1: Making Sense of the AI World",
-      description: "Learn the basics of models, tools, vendors, and service options so you can talk about AI clearly and choose wisely.",
-      sections: [
-        { id: "module-overview", title: "Your Simple Map of the AI Space", summary: "Get a clear overview so models, apps, automations, and agents stop blending together.", completed: false },
-        { id: "defining-ai", title: "Models, Tools, Automations, and Agents", summary: "Learn the basic categories so you can describe AI products in plain language.", completed: false },
-        { id: "brief-history", title: "Who the Major AI Providers Are", summary: "Compare the big players and understand where their strengths and trade-offs differ.", completed: false },
-        { id: "types-of-ai", title: "Software, Agencies, or Internal Help?", summary: "Learn when it makes sense to buy software, hire a partner, or build with your own team.", completed: false },
-        { id: "ai-in-your-life", title: "What People Mean by Custom AI", summary: "See what is truly custom and what is usually just a packaged version of standard AI tools.", completed: false },
-        { id: "myths-vs-reality", title: "What AI Wrappers Really Add", summary: "Understand when a wrapper adds helpful workflow value and when it mostly adds cost.", completed: false },
-        { id: "module-quiz", title: "Learning Checkpoint", summary: "Validate your ability to explain the AI landscape and defend procurement choices.", completed: false },
-      ],
-    },
-    {
-      id: "module-2",
-      slug: "module-2",
-      title: "Module 2: Finding Useful AI Opportunities",
-      description: "Learn where AI can save time, reduce busywork, and create clear value for your team or business.",
-      sections: [
-        { id: "module-overview", title: "A Simple Way to Spot Value", summary: "Use a practical framework to find where AI can make a measurable difference.", completed: false },
-        { id: "what-is-ml", title: "When AI Should Help vs. Do the Work", summary: "Decide when AI should assist people, automate a task, or stay out of the workflow.", completed: false },
-        { id: "training-data", title: "Scanning for Opportunities Across Teams", summary: "Look for useful AI opportunities in sales, support, operations, finance, marketing, and HR.", completed: false },
-        { id: "supervised-unsupervised", title: "Quick Wins vs. Bigger Investments", summary: "Separate small early wins from longer projects that need more time and change.", completed: false },
-        { id: "neural-networks", title: "Finding Bottlenecks and Repetitive Work", summary: "Spot slow steps, queues, and repeated decisions where AI could save time or effort.", completed: false },
-        { id: "what-ai-cant-do", title: "Comparing Growth vs. Efficiency Ideas", summary: "Balance ideas that may grow revenue with ideas that may save time or cost.", completed: false },
-        { id: "module-quiz", title: "Prioritization Checkpoint", summary: "Test your ability to pick high-value use cases and reject low-leverage initiatives.", completed: false },
-      ],
-    },
-    {
-      id: "module-3",
-      slug: "module-3",
-      title: "Module 3: Picking AI Tools Without the Hype",
-      description: "Compare tool types, avoid common buying mistakes, and choose tools that genuinely fit your team.",
-      sections: [
-        { id: "module-overview", title: "The Main Tool Categories to Know", summary: "Organize the tool market into clear buckets so it is easier to compare your options.", completed: false },
-        { id: "what-is-llm", title: "When a General AI Assistant Is Enough", summary: "Learn when a broad tool like ChatGPT may already cover your needs.", completed: false },
-        { id: "how-chatgpt-works", title: "When a Specialized Tool Is Worth It", summary: "See when a more focused tool becomes useful because of workflow, controls, or integrations.", completed: false },
-        { id: "anatomy-of-prompt", title: "A Simple Tool Scorecard", summary: "Use one repeatable checklist to compare accuracy, ease of use, support, and reliability.", completed: false },
-        { id: "prompt-techniques", title: "Common Pricing, Integration, and Security Pitfalls", summary: "Catch hidden costs and setup problems before you commit to a tool.", completed: false },
-        { id: "ai-writing", title: "How Tool Lock-In Happens", summary: "Spot the signs that a tool may become hard or expensive to replace later.", completed: false },
-        { id: "ai-images", title: "How to Tell If a Product Is Mature", summary: "Look past the demo and check for reliability, support, and steady product quality.", completed: false },
-        { id: "ai-productivity", title: "Will This Tool Fit Your Current Setup?", summary: "Check whether a tool works with your existing systems without creating extra manual steps.", completed: false },
-        { id: "ai-creative", title: "A Simple Security and Data Check", summary: "Do a basic safety review before sharing data or rolling a tool out more widely.", completed: false },
-        { id: "choosing-tools", title: "Tool Comparison Guide", summary: "Compare vendors by usefulness, cost, risk, and fit so you know what is worth testing.", completed: false },
-        { id: "hands-on-practice", title: "Buy, Wait, or Pilot?", summary: "Use a simple decision tree to avoid rushing into tools that are not ready for your needs.", completed: false },
-        { id: "module-quiz", title: "Procurement Checkpoint", summary: "Demonstrate the ability to defend a tool recommendation in a practical review.", completed: false },
-      ],
-    },
-    {
-      id: "module-4",
-      slug: "module-4",
-      title: "Module 4: Choosing an AI Partner",
-      description: "Learn how to compare agencies and partners, ask better questions, and run safer pilot projects.",
-      sections: [
-        { id: "module-overview", title: "What Kind of Partner Do You Need?", summary: "Understand when an agency, freelancer, integrator, or internal team is the best fit.", completed: false },
-        { id: "what-is-data", title: "Questions to Ask Before You Sign", summary: "Use a simple checklist to ask about scope, outcomes, staffing, and accountability.", completed: false },
-        { id: "data-collection", title: "Red Flags to Watch For", summary: "Learn how to spot weak proposals, vague claims, and fake expertise early.", completed: false },
-        { id: "data-cleaning", title: "How to Run a Safe Pilot First", summary: "Structure a pilot so you learn something useful before committing to a bigger rollout.", completed: false },
-        { id: "preprocessing", title: "Build, Buy, or Partner?", summary: "Choose the best path based on your time, internal skills, and long-term ownership goals.", completed: false },
-        { id: "feature-engineering", title: "Understanding AI Pricing", summary: "Break down retainers, usage fees, fixed-fee projects, and change-order risk in plain language.", completed: false },
-        { id: "module-quiz", title: "Vendor Diligence Checkpoint", summary: "Pressure-test your ability to evaluate an agency proposal with confidence.", completed: false },
-      ],
-    },
-    {
-      id: "module-5",
-      slug: "module-5",
-      title: "Module 5: Measuring AI Results",
-      description: "Track value, compare opportunities, and report progress with clear metrics that beginners can actually use.",
-      sections: [
-        { id: "module-overview", title: "A Simple Way to Measure Impact", summary: "Set up a practical way to estimate, track, and confirm whether AI is helping.", completed: false },
-        { id: "roi-basics", title: "Easy ROI Methods to Start With", summary: "Use simple baseline, improvement, and time-saved methods to estimate value more clearly.", completed: false },
-        { id: "effectiveness-metrics", title: "Comparing Ideas by Value and Effort", summary: "Rank opportunities by usefulness, effort, and confidence so you know what to try first.", completed: false },
-        { id: "roi-calculation", title: "Planning a Balanced Budget", summary: "Build a simple mix of quick wins and longer bets without overcommitting too early.", completed: false },
-        { id: "misleading-metrics", title: "Metrics That Can Mislead You", summary: "Avoid numbers that look impressive but do not prove real improvement.", completed: false },
-        { id: "adoption-framework", title: "Reporting Progress Clearly", summary: "Share results, risks, and assumptions in a way that is honest and easy to understand.", completed: false },
-        { id: "module-quiz", title: "ROI Decision Checkpoint", summary: "Validate your ability to defend AI investments with business-first evidence.", completed: false },
-      ],
-    },
-    {
-      id: "module-6",
-      slug: "module-6",
-      title: "Module 6: Keeping AI Safe and Responsible",
-      description: "Use simple rules and safeguards for data, vendors, and day-to-day AI use so you can adopt with more confidence.",
-      sections: [
-        { id: "module-overview", title: "Your Basic Safety Baseline", summary: "Set the minimum rules and controls you want in place before expanding AI use.", completed: false },
-        { id: "ai-bias", title: "Mistakes, Hallucinations, and Human Review", summary: "Learn when people should double-check AI output and when extra oversight is essential.", completed: false },
-        { id: "privacy-data", title: "Protecting Data and Privacy", summary: "Apply simple controls for sensitive data, access limits, and vendor handling rules.", completed: false },
-        { id: "misinformation", title: "Handling Bad Output and Incidents", summary: "Prepare for harmful responses, public mistakes, and the actions your team should take next.", completed: false },
-        { id: "responsible-ai", title: "Creating a Simple Internal AI Policy", summary: "Write clear guidance for who can use AI, how they can use it, and when to ask for help.", completed: false },
-        { id: "ethical-dilemmas", title: "Vendor Risks, IP, and Contract Basics", summary: "Understand the contract points that protect your data, content, and responsibilities.", completed: false },
-        { id: "risk-reflection", title: "A Simple Risk Scorecard", summary: "Use a lightweight scorecard to keep an eye on safety as adoption grows.", completed: false },
-        { id: "module-quiz", title: "Governance Checkpoint", summary: "Confirm your readiness to deploy AI responsibly at organization scale.", completed: false },
-      ],
-    },
-    {
-      id: "module-7",
-      slug: "module-7",
-      title: "Module 7: Building Your AI Adoption Roadmap",
-      description: "Turn early ideas into a step-by-step plan with pilots, team support, and realistic rollout milestones.",
-      sections: [
-        { id: "module-overview", title: "What a Good Roadmap Looks Like", summary: "Design a practical rollout path that matches your goals, timing, and team capacity.", completed: false },
-        { id: "ai-in-the-workplace", title: "How to Start: First 30 Days", summary: "Launch a focused start plan with scope, review cadence, and early proof points.", completed: false },
-        { id: "ai-and-jobs", title: "Choosing the Right Pilot Projects", summary: "Pick pilots that are useful enough to matter and small enough to run well.", completed: false },
-        { id: "industry-applications", title: "Helping Teams Through the Change", summary: "Reduce resistance with clearer roles, practical training, and steady communication.", completed: false },
-        { id: "ai-strategy", title: "Finding Your Internal AI Champions", summary: "Build a group of helpers across teams who can support adoption and good habits.", completed: false },
-        { id: "real-workflows", title: "Choosing What to Roll Out First", summary: "Sequence your initiatives so people are not overloaded and progress stays manageable.", completed: false },
-        { id: "ai-opportunities", title: "Tracking Your AI Maturity", summary: "See how your organization can grow from early experiments to more confident, repeatable use.", completed: false },
-        { id: "role-transformation", title: "Adjusting Roles and Processes", summary: "Update responsibilities, workflows, and decision points as AI becomes part of daily work.", completed: false },
-        { id: "workflow-redesign", title: "Setting a Review Rhythm", summary: "Create a regular cadence for checking progress, risk, and what to do next.", completed: false },
-        { id: "building-ai-skills", title: "Planning Beyond the First Few Months", summary: "Build a 12-month plan that combines early wins with longer-term skill and process growth.", completed: false },
-        { id: "module-quiz", title: "Roadmap Checkpoint", summary: "Demonstrate a realistic, sequenced plan your team can execute.", completed: false },
-      ],
-    },
-    {
-      id: "module-8",
-      slug: "module-8",
-      title: "Module 8: AI Agents and Automation Basics",
-      description: "Understand what agents can really do, where simpler workflows work better, and how to automate safely.",
-      sections: [
-        { id: "module-overview", title: "A Reality Check on AI Agents", summary: "Understand what counts as an agent, what is just a workflow, and why the difference matters.", completed: false },
-        { id: "what-are-agents", title: "Workflows vs. Real Agents", summary: "Match the problem to the right setup so you do not add more complexity than you need.", completed: false },
-        { id: "how-agents-work", title: "When Humans Should Stay in the Loop", summary: "Place review steps and escalation paths wherever mistakes could cause real harm.", completed: false },
-        { id: "types-of-agents", title: "Picking Automation Platforms", summary: "Compare automation tools by visibility, reliability, and ease of upkeep.", completed: false },
-        { id: "real-world-applications", title: "What Can Be Automated Right Now?", summary: "Use real-world limits to decide what is practical today and what is not.", completed: false },
-        { id: "building-with-agents", title: "When Simpler Automation Beats Agent Hype", summary: "See when a basic workflow is better than a more complicated multi-agent setup.", completed: false },
-        { id: "risks-and-limits", title: "Your Automation Blueprint", summary: "Build a practical rollout plan with ownership, monitoring, and a way to recover from failures.", completed: false },
-        { id: "module-quiz", title: "Automation Design Checkpoint", summary: "Validate your ability to design automation with control, resilience, and ROI.", completed: false },
-      ],
-    },
-    {
-      id: "module-9",
-      slug: "module-9",
-      title: "Module 9: Building a Simple AI Stack",
-      description: "Choose a manageable mix of tools that stays useful, affordable, and easy for your team to own.",
-      sections: [
-        { id: "module-overview", title: "What a Good AI Stack Looks Like", summary: "Learn the simple design principles behind a useful, maintainable, and cost-aware tool stack.", completed: false },
-        { id: "explain-ai", title: "How to Avoid Tool Sprawl", summary: "Prevent duplicate tools and messy ownership before your stack becomes hard to manage.", completed: false },
-        { id: "tool-selection", title: "Choosing Tools That Fit Together", summary: "Pick tools and integrations that reduce manual work instead of adding more of it.", completed: false },
-        { id: "prompting-assistants", title: "When to Consolidate Vendors", summary: "Simplify your stack where it makes sense without giving up flexibility you still need.", completed: false },
-        { id: "risk-check", title: "Simple Buying Rules and Controls", summary: "Use a repeatable checklist for legal, security, and operational approval.", completed: false },
-        { id: "ai-workflows", title: "Keeping the Stack Manageable Over Time", summary: "Plan who maintains the tools, reviews changes, and supports the teams using them.", completed: false },
-        { id: "ai-project", title: "Who Owns What Internally?", summary: "Clarify who owns strategy, tooling, day-to-day operations, and results.", completed: false },
-        { id: "next-steps", title: "Your Stack Plan and Next Steps", summary: "Finish with a simple stack plan, clear priorities, named owners, and next actions.", completed: false },
-        { id: "module-quiz", title: "Stack Strategy Checkpoint", summary: "Validate your ability to design a maintainable AI stack with clear ownership, controls, and consolidation logic.", completed: false },
-      ],
-    },
-    {
-      id: "module-10",
-      slug: "module-10",
-      title: "Module 10: Preparing for the Future of AI",
-      description: "Follow the big AI changes that matter and decide how your team should adapt over time.",
-      sections: [
-        { id: "module-overview", title: "Which Future Signals Matter Most?", summary: "Focus on the changes that are likely to affect real work and ignore distracting speculation.", completed: false },
-        { id: "current-frontiers", title: "What Happens as Models Get Cheaper?", summary: "Understand how lower model costs can change tools, vendors, and competition.", completed: false },
-        { id: "agi-explained", title: "How AI Services and Agencies May Change", summary: "Look at how outside help may evolve as tools improve and clients expect more.", completed: false },
-        { id: "ai-governance", title: "How AI Could Change the Way Teams Operate", summary: "Explore how companies may redesign workflows, decisions, and speed as AI becomes more common.", completed: false },
-        { id: "ai-careers", title: "What This Means for Teams and Roles", summary: "Plan for role changes, new skills, and shifting expectations as AI becomes part of daily work.", completed: false },
-        { id: "your-ai-future", title: "Your Long-Term AI Plan", summary: "Build a practical long-range plan for where to focus, partner, and improve over time.", completed: false },
-        { id: "module-quiz", title: "Future Strategy Checkpoint", summary: "Validate your ability to make forward-looking AI decisions with strategic clarity.", completed: false },
-      ],
-    },
-  ],
-}
-
-export function getCourseStructure(): CourseStructure {
-  return courseStructure
-}
-
-export type SectionLearningContent = {
+﻿export type SectionLearningContent = {
   scenarioTitle: string
   scenarioBody: string
   checklistTitle: string
@@ -299,13 +16,15 @@ type CardKnowledgeEntry = {
   sectionId: string
   cardType: "section-card" | "manual-explainer"
   content: SectionLearningContent
-  explanation: Omit<ComponentExplanation, "id">
+  summary: string
+  question: string
+  explanation: string
 }
 
 const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> = 
 
 {
-  "module-0-ai-is-everywhere": {
+"module-0-ai-is-everywhere": {
     id: "module-0-ai-is-everywhere",
     moduleId: "module-0",
     sectionId: "ai-is-everywhere",
@@ -334,11 +53,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Newness is not the same as usefulness.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-0-ai-is-everywhere?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-0-how-to-use-course": {
+    summary: "Teach the learner how to apply AI concepts in ai-is-everywhere through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-0-ai-is-everywhere?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-0-how-to-use-course": {
     id: "module-0-how-to-use-course",
     moduleId: "module-0",
     sectionId: "how-to-use-course",
@@ -367,11 +85,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Over-delaying slows capability building and decision confidence.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-0-how-to-use-course?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-0-summary": {
+    summary: "Teach the learner how to apply AI concepts in how-to-use-course through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-0-how-to-use-course?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-0-summary": {
     id: "module-0-summary",
     moduleId: "module-0",
     sectionId: "summary",
@@ -400,11 +117,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Deferring decisions weakens momentum and slows validated learning.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-0-summary?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-0-welcome": {
+    summary: "Teach the learner how to apply AI concepts in summary through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-0-summary?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-0-welcome": {
     id: "module-0-welcome",
     moduleId: "module-0",
     sectionId: "welcome",
@@ -433,11 +149,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "AI affects operations, communication, and decision support across roles.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-0-welcome?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-0-what-youll-learn": {
+    summary: "Teach the learner how to apply AI concepts in welcome through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-0-welcome?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-0-what-youll-learn": {
     id: "module-0-what-youll-learn",
     moduleId: "module-0",
     sectionId: "what-youll-learn",
@@ -466,11 +181,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This misconception leads to preventable errors and trust issues.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-0-what-youll-learn?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-ai-creative": {
+    summary: "Teach the learner how to apply AI concepts in what-youll-learn through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-0-what-youll-learn?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-ai-creative": {
     id: "module-1-ai-creative",
     moduleId: "module-1",
     sectionId: "ai-creative",
@@ -499,11 +213,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Novelty without context often degrades quality.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-ai-creative?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-ai-images": {
+    summary: "Teach the learner how to apply AI concepts in ai-creative through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-ai-creative?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-ai-images": {
     id: "module-1-ai-images",
     moduleId: "module-1",
     sectionId: "ai-images",
@@ -532,11 +245,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Aesthetic quality does not establish truth.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-ai-images?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-ai-in-your-life": {
+    summary: "Teach the learner how to apply AI concepts in ai-images through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-ai-images?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-ai-in-your-life": {
     id: "module-1-ai-in-your-life",
     moduleId: "module-1",
     sectionId: "ai-in-your-life",
@@ -565,11 +277,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Human review remains critical.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-ai-in-your-life?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-ai-productivity": {
+    summary: "Teach the learner how to apply AI concepts in ai-in-your-life through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-ai-in-your-life?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-ai-productivity": {
     id: "module-1-ai-productivity",
     moduleId: "module-1",
     sectionId: "ai-productivity",
@@ -598,11 +309,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Volume metrics do not indicate outcome quality.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-ai-productivity?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-ai-writing": {
+    summary: "Teach the learner how to apply AI concepts in ai-productivity through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-ai-productivity?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-ai-writing": {
     id: "module-1-ai-writing",
     moduleId: "module-1",
     sectionId: "ai-writing",
@@ -631,11 +341,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Efficiency gains are beneficial but not the core risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-ai-writing?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-brief-history": {
+    summary: "Teach the learner how to apply AI concepts in ai-writing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-ai-writing?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-brief-history": {
     id: "module-1-brief-history",
     moduleId: "module-1",
     sectionId: "brief-history",
@@ -664,11 +373,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Patterns repeat partially, not mechanically.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-brief-history?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-choosing-tools-section-card": {
+    summary: "Teach the learner how to apply AI concepts in brief-history through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-brief-history?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-choosing-tools-section-card": {
     id: "module-1-choosing-tools-section-card",
     moduleId: "module-1",
     sectionId: "choosing-tools",
@@ -697,11 +405,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "You still need basic comparative reasoning now.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-choosing-tools?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-defining-ai-section-card": {
+    summary: "Teach the learner how to apply AI concepts in choosing-tools through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-choosing-tools?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-defining-ai-section-card": {
     id: "module-1-defining-ai-section-card",
     moduleId: "module-1",
     sectionId: "defining-ai",
@@ -730,11 +437,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Interface style is unrelated to AI system type.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-defining-ai?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in defining-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-defining-ai?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-module-overview-section-card": {
     id: "module-1-module-overview-section-card",
     moduleId: "module-1",
     sectionId: "module-overview",
@@ -763,11 +469,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Avoiding uncertainty reduces learning quality.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-module-quiz": {
     id: "module-1-module-quiz",
     moduleId: "module-1",
     sectionId: "module-quiz",
@@ -796,11 +501,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Shortlists without definitions are brittle.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-myths-vs-reality": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-myths-vs-reality": {
     id: "module-1-myths-vs-reality",
     moduleId: "module-1",
     sectionId: "myths-vs-reality",
@@ -829,11 +533,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Ignoring failure modes weakens decisions.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-myths-vs-reality?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-1-types-of-ai-section-card": {
+    summary: "Teach the learner how to apply AI concepts in myths-vs-reality through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-myths-vs-reality?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-1-types-of-ai-section-card": {
     id: "module-1-types-of-ai-section-card",
     moduleId: "module-1",
     sectionId: "types-of-ai",
@@ -862,11 +565,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Uncertainty planning remains essential.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-1-types-of-ai?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-agi-explained": {
+    summary: "Teach the learner how to apply AI concepts in types-of-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-1-types-of-ai?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-agi-explained": {
     id: "module-10-agi-explained",
     moduleId: "module-10",
     sectionId: "agi-explained",
@@ -895,11 +597,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Freezing decisions slows competitiveness.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-agi-explained?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-ai-careers": {
+    summary: "Teach the learner how to apply AI concepts in agi-explained through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-agi-explained?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-ai-careers": {
     id: "module-10-ai-careers",
     moduleId: "module-10",
     sectionId: "ai-careers",
@@ -928,11 +629,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the strongest leadership response.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-ai-careers?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-ai-governance": {
+    summary: "Teach the learner how to apply AI concepts in ai-careers through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-ai-careers?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-ai-governance": {
     id: "module-10-ai-governance",
     moduleId: "module-10",
     sectionId: "ai-governance",
@@ -961,11 +661,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Unchanged cadence may limit realized value.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-ai-governance?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-current-frontiers-section-card": {
+    summary: "Teach the learner how to apply AI concepts in ai-governance through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-ai-governance?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-current-frontiers-section-card": {
     id: "module-10-current-frontiers-section-card",
     moduleId: "module-10",
     sectionId: "current-frontiers",
@@ -994,11 +693,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Strategic positioning becomes more important, not less.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-current-frontiers?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in current-frontiers through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-current-frontiers?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-module-overview-section-card": {
     id: "module-10-module-overview-section-card",
     moduleId: "module-10",
     sectionId: "module-overview",
@@ -1027,11 +725,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Speculation should not dominate planning.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-module-quiz": {
     id: "module-10-module-quiz",
     moduleId: "module-10",
     sectionId: "module-quiz",
@@ -1060,11 +757,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Vision without execution is not decision-ready.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-10-your-ai-future": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-10-your-ai-future": {
     id: "module-10-your-ai-future",
     moduleId: "module-10",
     sectionId: "your-ai-future",
@@ -1093,11 +789,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Strategy ownership cannot be fully delegated.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-10-your-ai-future?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in your-ai-future through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-10-your-ai-future?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-module-overview-section-card": {
     id: "module-2-module-overview-section-card",
     moduleId: "module-2",
     sectionId: "module-overview",
@@ -1126,11 +821,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Tool-first decisions often produce low-impact pilots.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-module-quiz": {
     id: "module-2-module-quiz",
     moduleId: "module-2",
     sectionId: "module-quiz",
@@ -1159,11 +853,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Deferral delays learning and business value.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-neural-networks-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-neural-networks-section-card": {
     id: "module-2-neural-networks-section-card",
     moduleId: "module-2",
     sectionId: "neural-networks",
@@ -1192,11 +885,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Reporting steps may not address core throughput limits.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-neural-networks?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-supervised-unsupervised-section-card": {
+    summary: "Teach the learner how to apply AI concepts in neural-networks through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-neural-networks?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-supervised-unsupervised-section-card": {
     id: "module-2-supervised-unsupervised-section-card",
     moduleId: "module-2",
     sectionId: "supervised-unsupervised",
@@ -1225,11 +917,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the best execution balance.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-supervised-unsupervised?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-training-data-section-card": {
+    summary: "Teach the learner how to apply AI concepts in supervised-unsupervised through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-supervised-unsupervised?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-training-data-section-card": {
     id: "module-2-training-data-section-card",
     moduleId: "module-2",
     sectionId: "training-data",
@@ -1258,11 +949,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Request order is a weak prioritization method.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-training-data?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-what-ai-cant-do-section-card": {
+    summary: "Teach the learner how to apply AI concepts in training-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-training-data?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-what-ai-cant-do-section-card": {
     id: "module-2-what-ai-cant-do-section-card",
     moduleId: "module-2",
     sectionId: "what-ai-cant-do",
@@ -1291,11 +981,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Quick wins can still be high-value entries in the matrix.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-what-ai-cant-do?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-2-what-is-ml-section-card": {
+    summary: "Teach the learner how to apply AI concepts in what-ai-cant-do through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-what-ai-cant-do?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-2-what-is-ml-section-card": {
     id: "module-2-what-is-ml-section-card",
     moduleId: "module-2",
     sectionId: "what-is-ml",
@@ -1324,11 +1013,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Unclear objectives should be resolved before either choice.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-2-what-is-ml?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-ai-creative": {
+    summary: "Teach the learner how to apply AI concepts in what-is-ml through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-2-what-is-ml?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-ai-creative": {
     id: "module-3-ai-creative",
     moduleId: "module-3",
     sectionId: "ai-creative",
@@ -1357,11 +1045,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Delayed controls increase avoidable risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-ai-creative?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-ai-images": {
+    summary: "Teach the learner how to apply AI concepts in ai-creative through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-ai-creative?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-ai-images": {
     id: "module-3-ai-images",
     moduleId: "module-3",
     sectionId: "ai-images",
@@ -1390,11 +1077,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Popularity is not a stability guarantee.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-ai-images?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-ai-productivity": {
+    summary: "Teach the learner how to apply AI concepts in ai-images through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-ai-images?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-ai-productivity": {
     id: "module-3-ai-productivity",
     moduleId: "module-3",
     sectionId: "ai-productivity",
@@ -1423,11 +1109,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Templates do not guarantee stack compatibility.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-ai-productivity?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-ai-writing": {
+    summary: "Teach the learner how to apply AI concepts in ai-productivity through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-ai-productivity?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-ai-writing": {
     id: "module-3-ai-writing",
     moduleId: "module-3",
     sectionId: "ai-writing",
@@ -1456,11 +1141,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Late planning makes migration harder and costlier.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-ai-writing?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-anatomy-of-prompt": {
+    summary: "Teach the learner how to apply AI concepts in ai-writing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-ai-writing?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-anatomy-of-prompt": {
     id: "module-3-anatomy-of-prompt",
     moduleId: "module-3",
     sectionId: "anatomy-of-prompt",
@@ -1489,11 +1173,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Benchmarks alone miss operational realities.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-anatomy-of-prompt?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-choosing-tools": {
+    summary: "Teach the learner how to apply AI concepts in anatomy-of-prompt through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-anatomy-of-prompt?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-choosing-tools": {
     id: "module-3-choosing-tools",
     moduleId: "module-3",
     sectionId: "choosing-tools",
@@ -1522,11 +1205,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Without thresholds, decisions remain ambiguous.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-choosing-tools?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-hands-on-practice-section-card": {
+    summary: "Teach the learner how to apply AI concepts in choosing-tools through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-choosing-tools?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-hands-on-practice-section-card": {
     id: "module-3-hands-on-practice-section-card",
     moduleId: "module-3",
     sectionId: "hands-on-practice",
@@ -1555,11 +1237,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Pilots remain critical for evidence generation.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-hands-on-practice?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-how-chatgpt-works": {
+    summary: "Teach the learner how to apply AI concepts in hands-on-practice through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-hands-on-practice?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-how-chatgpt-works": {
     id: "module-3-how-chatgpt-works",
     moduleId: "module-3",
     sectionId: "how-chatgpt-works",
@@ -1588,11 +1269,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Preference should not override outcome evidence.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-how-chatgpt-works?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in how-chatgpt-works through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-how-chatgpt-works?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-module-overview-section-card": {
     id: "module-3-module-overview-section-card",
     moduleId: "module-3",
     sectionId: "module-overview",
@@ -1621,11 +1301,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Popularity is not a reliable fit signal.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-module-quiz": {
     id: "module-3-module-quiz",
     moduleId: "module-3",
     sectionId: "module-quiz",
@@ -1654,11 +1333,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Deferral without evaluation slows capability building.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-prompt-techniques": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-prompt-techniques": {
     id: "module-3-prompt-techniques",
     moduleId: "module-3",
     sectionId: "prompt-techniques",
@@ -1687,11 +1365,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Documented tiers are generally easier to model.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-prompt-techniques?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-3-what-is-llm": {
+    summary: "Teach the learner how to apply AI concepts in prompt-techniques through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-prompt-techniques?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-3-what-is-llm": {
     id: "module-3-what-is-llm",
     moduleId: "module-3",
     sectionId: "what-is-llm",
@@ -1720,11 +1397,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Specialization should be justified by real gaps, not assumption.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-3-what-is-llm?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-data-cleaning-section-card": {
+    summary: "Teach the learner how to apply AI concepts in what-is-llm through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-3-what-is-llm?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-data-cleaning-section-card": {
     id: "module-4-data-cleaning-section-card",
     moduleId: "module-4",
     sectionId: "data-cleaning",
@@ -1753,11 +1429,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Unowned experiments rarely produce actionable outcomes.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-data-cleaning?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-data-collection-section-card": {
+    summary: "Teach the learner how to apply AI concepts in data-cleaning through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-data-cleaning?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-data-collection-section-card": {
     id: "module-4-data-collection-section-card",
     moduleId: "module-4",
     sectionId: "data-collection",
@@ -1786,11 +1461,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This should trigger deeper verification or rejection.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-data-collection?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-feature-engineering-section-card": {
+    summary: "Teach the learner how to apply AI concepts in data-collection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-data-collection?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-feature-engineering-section-card": {
     id: "module-4-feature-engineering-section-card",
     moduleId: "module-4",
     sectionId: "feature-engineering",
@@ -1819,11 +1493,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Clear service boundaries reduce ambiguity.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-feature-engineering?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in feature-engineering through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-feature-engineering?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-module-overview-section-card": {
     id: "module-4-module-overview-section-card",
     moduleId: "module-4",
     sectionId: "module-overview",
@@ -1852,11 +1525,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Cost is one factor, not a quality proxy.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-module-quiz": {
     id: "module-4-module-quiz",
     moduleId: "module-4",
     sectionId: "module-quiz",
@@ -1885,11 +1557,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Skipping pilot evidence increases execution risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-preprocessing-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-preprocessing-section-card": {
     id: "module-4-preprocessing-section-card",
     moduleId: "module-4",
     sectionId: "preprocessing",
@@ -1918,11 +1589,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Managed service is useful in some cases, not all cases.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-preprocessing?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-4-what-is-data-section-card": {
+    summary: "Teach the learner how to apply AI concepts in preprocessing through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-preprocessing?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-4-what-is-data-section-card": {
     id: "module-4-what-is-data-section-card",
     moduleId: "module-4",
     sectionId: "what-is-data",
@@ -1951,11 +1621,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Buzzwords are weak competence signals.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-4-what-is-data?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-adoption-framework": {
+    summary: "Teach the learner how to apply AI concepts in what-is-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-4-what-is-data?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-adoption-framework": {
     id: "module-5-adoption-framework",
     moduleId: "module-5",
     sectionId: "adoption-framework",
@@ -1984,11 +1653,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "One-sided reporting weakens decision quality.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-adoption-framework?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-effectiveness-metrics": {
+    summary: "Teach the learner how to apply AI concepts in adoption-framework through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-adoption-framework?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-effectiveness-metrics": {
     id: "module-5-effectiveness-metrics",
     moduleId: "module-5",
     sectionId: "effectiveness-metrics",
@@ -2017,11 +1685,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Equal approval dilutes resources and impact.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-effectiveness-metrics?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-misleading-metrics": {
+    summary: "Teach the learner how to apply AI concepts in effectiveness-metrics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-effectiveness-metrics?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-misleading-metrics": {
     id: "module-5-misleading-metrics",
     moduleId: "module-5",
     sectionId: "misleading-metrics",
@@ -2050,11 +1717,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This often inflates progress without proving impact.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-misleading-metrics?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in misleading-metrics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-misleading-metrics?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-module-overview-section-card": {
     id: "module-5-module-overview-section-card",
     moduleId: "module-5",
     sectionId: "module-overview",
@@ -2083,11 +1749,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Selective reporting weakens trust and accuracy.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-module-quiz": {
     id: "module-5-module-quiz",
     moduleId: "module-5",
     sectionId: "module-quiz",
@@ -2116,11 +1781,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Lack of timeline reduces execution accountability.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-roi-basics-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-roi-basics-section-card": {
     id: "module-5-roi-basics-section-card",
     moduleId: "module-5",
     sectionId: "roi-basics",
@@ -2149,11 +1813,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "No baseline means no reliable attribution.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-roi-basics?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-5-roi-calculation": {
+    summary: "Teach the learner how to apply AI concepts in roi-basics through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-roi-basics?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-5-roi-calculation": {
     id: "module-5-roi-calculation",
     moduleId: "module-5",
     sectionId: "roi-calculation",
@@ -2182,11 +1845,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the strongest operating pattern.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-5-roi-calculation?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-ai-bias": {
+    summary: "Teach the learner how to apply AI concepts in roi-calculation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-5-roi-calculation?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-ai-bias": {
     id: "module-6-ai-bias",
     moduleId: "module-6",
     sectionId: "ai-bias",
@@ -2215,11 +1877,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Low-frequency failures can still cause severe harm.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-ai-bias?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-ethical-dilemmas-section-card": {
+    summary: "Teach the learner how to apply AI concepts in ai-bias through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-ai-bias?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-ethical-dilemmas-section-card": {
     id: "module-6-ethical-dilemmas-section-card",
     moduleId: "module-6",
     sectionId: "ethical-dilemmas",
@@ -2248,11 +1909,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Skipping review creates avoidable risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-ethical-dilemmas?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-misinformation": {
+    summary: "Teach the learner how to apply AI concepts in ethical-dilemmas through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-ethical-dilemmas?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-misinformation": {
     id: "module-6-misinformation",
     moduleId: "module-6",
     sectionId: "misinformation",
@@ -2281,11 +1941,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the strongest operational pattern.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-misinformation?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in misinformation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-misinformation?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-module-overview-section-card": {
     id: "module-6-module-overview-section-card",
     moduleId: "module-6",
     sectionId: "module-overview",
@@ -2314,11 +1973,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the practical minimum baseline.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-module-quiz": {
     id: "module-6-module-quiz",
     moduleId: "module-6",
     sectionId: "module-quiz",
@@ -2347,11 +2005,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Policy without execution is insufficient.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-privacy-data-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-privacy-data-section-card": {
     id: "module-6-privacy-data-section-card",
     moduleId: "module-6",
     sectionId: "privacy-data",
@@ -2380,11 +2037,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Verbal assurances are not durable controls.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-privacy-data?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-responsible-ai": {
+    summary: "Teach the learner how to apply AI concepts in privacy-data through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-privacy-data?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-responsible-ai": {
     id: "module-6-responsible-ai",
     moduleId: "module-6",
     sectionId: "responsible-ai",
@@ -2413,11 +2069,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Policy adoption requires operational reinforcement.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-responsible-ai?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-6-risk-reflection": {
+    summary: "Teach the learner how to apply AI concepts in responsible-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-responsible-ai?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-6-risk-reflection": {
     id: "module-6-risk-reflection",
     moduleId: "module-6",
     sectionId: "risk-reflection",
@@ -2446,11 +2101,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Governance scorecards are operational tools, not promotional assets.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-6-risk-reflection?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-ai-and-jobs": {
+    summary: "Teach the learner how to apply AI concepts in risk-reflection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-6-risk-reflection?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-ai-and-jobs": {
     id: "module-7-ai-and-jobs",
     moduleId: "module-7",
     sectionId: "ai-and-jobs",
@@ -2479,11 +2133,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Overscoped pilots often stall and underdeliver.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-ai-and-jobs?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-ai-in-the-workplace": {
+    summary: "Teach the learner how to apply AI concepts in ai-and-jobs through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-ai-and-jobs?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-ai-in-the-workplace": {
     id: "module-7-ai-in-the-workplace",
     moduleId: "module-7",
     sectionId: "ai-in-the-workplace",
@@ -2512,11 +2165,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Training-first can help readiness, but early momentum still requires a scoped pilot with measurable guardrails.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-ai-in-the-workplace?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-ai-opportunities": {
+    summary: "Teach the learner how to apply AI concepts in ai-in-the-workplace through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-ai-in-the-workplace?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-ai-opportunities": {
     id: "module-7-ai-opportunities",
     moduleId: "module-7",
     sectionId: "ai-opportunities",
@@ -2545,11 +2197,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Maturity models inform roadmaps; they do not replace them.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-ai-opportunities?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-ai-strategy": {
+    summary: "Teach the learner how to apply AI concepts in ai-opportunities through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-ai-opportunities?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-ai-strategy": {
     id: "module-7-ai-strategy",
     moduleId: "module-7",
     sectionId: "ai-strategy",
@@ -2578,11 +2229,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Champions should reinforce governance, not bypass it.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-ai-strategy?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-building-ai-skills": {
+    summary: "Teach the learner how to apply AI concepts in ai-strategy through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-ai-strategy?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-building-ai-skills": {
     id: "module-7-building-ai-skills",
     moduleId: "module-7",
     sectionId: "building-ai-skills",
@@ -2611,11 +2261,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Tooling alone does not create capability.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-building-ai-skills?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-industry-applications": {
+    summary: "Teach the learner how to apply AI concepts in building-ai-skills through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-building-ai-skills?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-industry-applications": {
     id: "module-7-industry-applications",
     moduleId: "module-7",
     sectionId: "industry-applications",
@@ -2644,11 +2293,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Readiness sequencing is a strong practice.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-industry-applications?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in industry-applications through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-industry-applications?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-module-overview-section-card": {
     id: "module-7-module-overview-section-card",
     moduleId: "module-7",
     sectionId: "module-overview",
@@ -2677,11 +2325,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Waiting for certainty usually delays learning and impact.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-module-quiz": {
     id: "module-7-module-quiz",
     moduleId: "module-7",
     sectionId: "module-quiz",
@@ -2710,11 +2357,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Change planning is essential to adoption success.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-real-workflows-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-real-workflows-section-card": {
     id: "module-7-real-workflows-section-card",
     moduleId: "module-7",
     sectionId: "real-workflows",
@@ -2743,11 +2389,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the strongest rollout logic.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-real-workflows?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-role-transformation-section-card": {
+    summary: "Teach the learner how to apply AI concepts in real-workflows through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-real-workflows?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-role-transformation-section-card": {
     id: "module-7-role-transformation-section-card",
     moduleId: "module-7",
     sectionId: "role-transformation",
@@ -2776,11 +2421,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Delayed clarity increases operational friction.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-role-transformation?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-7-workflow-redesign-section-card": {
+    summary: "Teach the learner how to apply AI concepts in role-transformation through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-role-transformation?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-7-workflow-redesign-section-card": {
     id: "module-7-workflow-redesign-section-card",
     moduleId: "module-7",
     sectionId: "workflow-redesign",
@@ -2809,11 +2453,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Rhythm should accelerate adjustments, not delay them.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-7-workflow-redesign?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-building-with-agents": {
+    summary: "Teach the learner how to apply AI concepts in workflow-redesign through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-7-workflow-redesign?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-building-with-agents": {
     id: "module-8-building-with-agents",
     moduleId: "module-8",
     sectionId: "building-with-agents",
@@ -2842,11 +2485,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Preference alone is not an architecture criterion.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-building-with-agents?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-how-agents-work-section-card": {
+    summary: "Teach the learner how to apply AI concepts in building-with-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-building-with-agents?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-how-agents-work-section-card": {
     id: "module-8-how-agents-work-section-card",
     moduleId: "module-8",
     sectionId: "how-agents-work",
@@ -2875,11 +2517,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the correct operating standard.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-how-agents-work?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in how-agents-work through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-how-agents-work?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-module-overview-section-card": {
     id: "module-8-module-overview-section-card",
     moduleId: "module-8",
     sectionId: "module-overview",
@@ -2908,11 +2549,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Reliability should come before novelty in production contexts.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-module-quiz": {
     id: "module-8-module-quiz",
     moduleId: "module-8",
     sectionId: "module-quiz",
@@ -2941,11 +2581,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "No contingency model is a major production risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-real-world-applications": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-real-world-applications": {
     id: "module-8-real-world-applications",
     moduleId: "module-8",
     sectionId: "real-world-applications",
@@ -2974,11 +2613,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Reliability should lead design decisions.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-real-world-applications?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-risks-and-limits": {
+    summary: "Teach the learner how to apply AI concepts in real-world-applications through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-real-world-applications?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-risks-and-limits": {
     id: "module-8-risks-and-limits",
     moduleId: "module-8",
     sectionId: "risks-and-limits",
@@ -3007,11 +2645,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Demo materials do not establish runtime resilience.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-risks-and-limits?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-types-of-agents": {
+    summary: "Teach the learner how to apply AI concepts in risks-and-limits through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-risks-and-limits?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-types-of-agents": {
     id: "module-8-types-of-agents",
     moduleId: "module-8",
     sectionId: "types-of-agents",
@@ -3040,11 +2677,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Clear ownership generally improves resilience.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-types-of-agents?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-8-what-are-agents-section-card": {
+    summary: "Teach the learner how to apply AI concepts in types-of-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-types-of-agents?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-8-what-are-agents-section-card": {
     id: "module-8-what-are-agents-section-card",
     moduleId: "module-8",
     sectionId: "what-are-agents",
@@ -3073,11 +2709,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Licensing model is secondary to behavior design.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-8-what-are-agents?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-ai-project": {
+    summary: "Teach the learner how to apply AI concepts in what-are-agents through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-8-what-are-agents?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-ai-project": {
     id: "module-9-ai-project",
     moduleId: "module-9",
     sectionId: "ai-project",
@@ -3106,11 +2741,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Usage concentration does not define end-to-end accountability.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-ai-project?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-ai-workflows": {
+    summary: "Teach the learner how to apply AI concepts in ai-project through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-ai-project?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-ai-workflows": {
     id: "module-9-ai-workflows",
     moduleId: "module-9",
     sectionId: "ai-workflows",
@@ -3139,11 +2773,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Static stacks usually degrade over time.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-ai-workflows?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-explain-ai-section-card": {
+    summary: "Teach the learner how to apply AI concepts in ai-workflows through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-ai-workflows?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-explain-ai-section-card": {
     id: "module-9-explain-ai-section-card",
     moduleId: "module-9",
     sectionId: "explain-ai",
@@ -3172,11 +2805,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Total bans can block necessary innovation.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-explain-ai?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-module-overview-section-card": {
+    summary: "Teach the learner how to apply AI concepts in explain-ai through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-explain-ai?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-module-overview-section-card": {
     id: "module-9-module-overview-section-card",
     moduleId: "module-9",
     sectionId: "module-overview",
@@ -3205,11 +2837,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Uncoordinated purchasing often creates sprawl.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-module-overview?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-module-quiz": {
+    summary: "Teach the learner how to apply AI concepts in module-overview through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-module-overview?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-module-quiz": {
     id: "module-9-module-quiz",
     moduleId: "module-9",
     sectionId: "module-quiz",
@@ -3238,11 +2869,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Decentralized buying without controls increases sprawl risk.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-module-quiz?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-next-steps-section-card": {
+    summary: "Teach the learner how to apply AI concepts in module-quiz through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-module-quiz?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-next-steps-section-card": {
     id: "module-9-next-steps-section-card",
     moduleId: "module-9",
     sectionId: "next-steps",
@@ -3271,11 +2901,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Lists are not equivalent to plans.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-next-steps?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-prompting-assistants": {
+    summary: "Teach the learner how to apply AI concepts in next-steps through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-next-steps?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-prompting-assistants": {
     id: "module-9-prompting-assistants",
     moduleId: "module-9",
     sectionId: "prompting-assistants",
@@ -3304,11 +2933,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "No consolidation can increase cost and complexity.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-prompting-assistants?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-risk-check": {
+    summary: "Teach the learner how to apply AI concepts in prompting-assistants through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-prompting-assistants?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-risk-check": {
     id: "module-9-risk-check",
     moduleId: "module-9",
     sectionId: "risk-check",
@@ -3337,11 +2965,10 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "Experimentation should continue within guardrails.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-risk-check?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
-  },  "module-9-tool-selection": {
+    summary: "Teach the learner how to apply AI concepts in risk-check through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-risk-check?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
+  },"module-9-tool-selection": {
     id: "module-9-tool-selection",
     moduleId: "module-9",
     sectionId: "tool-selection",
@@ -3370,10 +2997,9 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> =
           c: "This is the practical reason integration strategy is critical.",
         },
       },
-    explanation: {
-        question: "What should I learn from module-9-tool-selection?",
-        explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic."
-      },
+    summary: "Teach the learner how to apply AI concepts in tool-selection through scenario-based reasoning, actionable checklists, and evidence-based decision making.",
+    question: "What should I learn from module-9-tool-selection?",
+    explanation: "Use the attached section learning content for scenario context, checklist actions, and quick-check logic.",
   },
 }
 
@@ -3411,6 +3037,7 @@ type ComponentCardMetadata = {
   moduleId?: string
   sectionId?: string
   content?: SectionLearningContent
+  summary?: string
 }
 
 export class ComponentCard implements ComponentExplanation {
@@ -3420,6 +3047,7 @@ export class ComponentCard implements ComponentExplanation {
   moduleId?: string
   sectionId?: string
   content?: SectionLearningContent
+  summary?: string
 
   constructor(explanation: ComponentExplanation, metadata: ComponentCardMetadata = {}) {
     this.id = explanation.id
@@ -3428,6 +3056,7 @@ export class ComponentCard implements ComponentExplanation {
     this.moduleId = metadata.moduleId
     this.sectionId = metadata.sectionId
     this.content = metadata.content
+    this.summary = metadata.summary
   }
 
   withExplanation(explanation: string): ComponentCard {
@@ -3441,6 +3070,7 @@ export class ComponentCard implements ComponentExplanation {
         moduleId: this.moduleId,
         sectionId: this.sectionId,
         content: this.content,
+        summary: this.summary,
       },
     )
   }
@@ -3459,8 +3089,8 @@ export class ComponentCard implements ComponentExplanation {
 function buildExplanationFromCardEntry(entry: CardKnowledgeEntry): ComponentExplanation {
   return {
     id: entry.id,
-    question: entry.explanation.question,
-    explanation: entry.explanation.explanation,
+    question: entry.question,
+    explanation: entry.explanation,
   }
 }
 
@@ -3474,6 +3104,7 @@ export const COMPONENT_CARD_REGISTRY: Record<string, ComponentCard> = Object.fro
         moduleId: entry.moduleId,
         sectionId: entry.sectionId,
         content: entry.content,
+        summary: entry.summary,
       }),
     ]
     }),
@@ -3517,6 +3148,92 @@ export function searchExplanations(query: string): ComponentExplanation[] {
   return Object.values(COMPONENT_CARD_REGISTRY)
     .map((card) => card.toExplanation())
     .filter((exp) => exp.question.toLowerCase().includes(lowerQuery) || exp.explanation.toLowerCase().includes(lowerQuery))
+}
+
+export type Section = {
+  id: string
+  title: string
+  summary?: string
+  completed: boolean
+}
+
+export type Module = {
+  id: string
+  slug: string
+  title: string
+  description?: string
+  sections: Section[]
+  status?: string
+  completionRate?: number
+}
+
+export type CourseStructure = {
+  modules: Module[]
+}
+
+function toTitleCaseFromSlug(value: string) {
+  return value
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function getModuleSortKey(moduleId: string) {
+  const match = moduleId.match(/module-(\d+)/)
+  return match ? Number.parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER
+}
+
+function getSectionSortKey(sectionId: string) {
+  if (sectionId === "welcome" || sectionId === "module-overview") return 0
+  if (sectionId === "module-quiz") return 9999
+  if (sectionId === "summary") return 9998
+  return 100
+}
+
+export function getCourseStructure(): CourseStructure {
+  const moduleIds = new Set<string>()
+  const moduleSectionIds = new Map<string, Set<string>>()
+
+  Object.values(CARD_KNOWLEDGE_REGISTRY_BY_ID).forEach((entry) => {
+    moduleIds.add(entry.moduleId)
+
+    const sectionIds = moduleSectionIds.get(entry.moduleId) ?? new Set<string>()
+    sectionIds.add(entry.sectionId)
+    moduleSectionIds.set(entry.moduleId, sectionIds)
+  })
+
+  Object.keys(moduleQuizData).forEach((moduleId) => {
+    moduleIds.add(moduleId)
+  })
+
+  const modules = Array.from(moduleIds)
+    .sort((a, b) => getModuleSortKey(a) - getModuleSortKey(b))
+    .map((moduleId) => {
+      const moduleNumber = getModuleSortKey(moduleId)
+      const sectionIds = Array.from(moduleSectionIds.get(moduleId) ?? [])
+        .sort((a, b) => {
+          const aKey = getSectionSortKey(a)
+          const bKey = getSectionSortKey(b)
+          if (aKey !== bKey) return aKey - bKey
+          return a.localeCompare(b)
+        })
+
+      return {
+        id: moduleId,
+        slug: moduleId,
+        title: Number.isFinite(moduleNumber)
+          ? `Module ${moduleNumber}`
+          : toTitleCaseFromSlug(moduleId),
+        sections: sectionIds.map((sectionId) => ({
+          id: sectionId,
+          title: toTitleCaseFromSlug(sectionId),
+          completed: false,
+        })),
+      }
+    })
+
+  return { modules }
 }
 
 
