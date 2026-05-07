@@ -2,7 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
 
-import { COMPONENT_EXPLANATIONS } from "@/lib/component-explanations"
+import { COMPONENT_EXPLANATIONS } from "@/lib/component-card-content"
 
 function getCoursePageFiles() {
   const courseDir = path.join(process.cwd(), "app", "course")

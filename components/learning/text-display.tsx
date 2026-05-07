@@ -7,7 +7,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { getTextDisplayInstructionalBriefParagraphs, getTextDisplayTrueFalseStatement } from "@/lib/component-explanations"
+import { getTextDisplayInstructionalBriefParagraphs, getTextDisplayTrueFalseStatement } from "@/lib/component-card-content"
 import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, CheckIcon, Info, XCircle } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"

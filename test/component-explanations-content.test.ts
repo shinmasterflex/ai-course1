@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { COMPONENT_EXPLANATIONS } from "@/lib/component-explanations"
+import { COMPONENT_EXPLANATIONS } from "@/lib/component-card-content"
 
 const BANNED_PATTERNS = [
   /\bmechanism\s*:/i,

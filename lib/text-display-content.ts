@@ -1,6 +1,77 @@
 import { courseStructure } from "@/lib/course-structure"
-import { SECTION_KNOWLEDGE_PATTERNS, type SectionKnowledgePattern } from "@/lib/component-explanations"
 import { extractSentences, hashString, toSentence } from "@/lib/text-content-utils"
+
+export type SectionKnowledgePattern = {
+  keywords: string[]
+  briefParagraphs: string[]
+  trueStatement: string
+  falseStatement: string
+  trueExplanation: string
+  falseExplanation: string
+}
+
+export const SECTION_KNOWLEDGE_PATTERNS: SectionKnowledgePattern[] = [
+  {
+    keywords: ["model", "tool", "automation", "agent", "taxonomy", "category"],
+    briefParagraphs: [
+      "A rigorous taxonomy reduces category errors by separating concepts that behave differently in practice. Distinguishing model capability from product behavior is a core analytical skill.",
+      "In comparative evaluation, category clarity improves decision quality because options become commensurable across cost, control, integration burden, and risk.",
+      "This card should be read as conceptual infrastructure for later decisions, not as isolated terminology.",
+    ],
+    trueStatement: "Clear category boundaries improve AI decisions by making trade-offs explicit.",
+    falseStatement: "Different AI categories can be treated as interchangeable with little impact on decision quality.",
+    trueExplanation: "The lesson treats category distinctions as decision-critical, not cosmetic.",
+    falseExplanation: "Interchangeability hides material differences in capability, risk, and implementation effort.",
+  },
+  {
+    keywords: ["roi", "metric", "impact", "baseline", "measurement", "value"],
+    briefParagraphs: [
+      "Educationally sound ROI analysis links outcomes to baselines and context. Metrics without baseline comparison are weak evidence for improvement.",
+      "Measurement systems should include adoption effort, quality effects, and risk-adjusted outcomes to avoid overstating value.",
+      "This card contributes to evidence literacy by clarifying what counts as valid performance proof.",
+    ],
+    trueStatement: "Outcome-linked metrics with baseline comparison provide stronger evidence than activity counts alone.",
+    falseStatement: "High usage activity is usually sufficient to prove business value, even without outcome metrics.",
+    trueExplanation: "The content prioritizes evidence quality and measurement validity.",
+    falseExplanation: "Usage intensity is not equivalent to demonstrated impact.",
+  },
+  {
+    keywords: ["risk", "safety", "privacy", "bias", "misinformation", "governance"],
+    briefParagraphs: [
+      "Risk governance is a design-time responsibility. Controls are most effective when embedded before scale, not appended after incidents.",
+      "Bias, privacy, and misinformation checks address different failure modes and should be treated as complementary safeguards.",
+      "This card teaches preventive control logic: utility does not override safety obligations.",
+    ],
+    trueStatement: "Responsible AI deployment requires preventive controls for bias, privacy, and harmful output risks.",
+    falseStatement: "If AI output is useful, governance checks can usually be deferred until after rollout.",
+    trueExplanation: "The lesson emphasizes preventive control architecture.",
+    falseExplanation: "Usefulness does not replace governance duties or risk review.",
+  },
+  {
+    keywords: ["agent", "autonomy", "loop", "guardrail", "stopping", "monitoring"],
+    briefParagraphs: [
+      "Agentic systems add iterative autonomy, which expands both capability and potential failure surface.",
+      "Control design for agents requires bounded objectives, permission limits, and explicit stopping conditions.",
+      "This card positions monitoring as a structural requirement for safe agent operation.",
+    ],
+    trueStatement: "Agent workflows need bounded goals and monitoring because autonomy increases both power and risk.",
+    falseStatement: "Autonomous agents are typically safest when run without stopping conditions or ongoing monitoring.",
+    trueExplanation: "The content links autonomy to stronger control requirements.",
+    falseExplanation: "Unbounded autonomy conflicts with the lesson's guardrail model.",
+  },
+  {
+    keywords: ["workflow", "rollout", "adoption", "change", "roadmap", "execution"],
+    briefParagraphs: [
+      "Operational gains from AI depend on workflow redesign and adoption sequencing, not just tool access.",
+      "Change execution improves when review rhythms, role ownership, and support mechanisms are explicit.",
+      "This card frames implementation as a systems problem where process quality determines sustained outcomes.",
+    ],
+    trueStatement: "Sustained AI adoption depends on workflow design, ownership, and staged execution.",
+    falseStatement: "Rapid tool distribution alone is usually enough for successful AI adoption.",
+    trueExplanation: "The lesson ties implementation quality to process and governance.",
+    falseExplanation: "Tool access without process design tends to increase variance and rework.",
+  },
+]
 
 export interface InferentialStatement {
   statement: string

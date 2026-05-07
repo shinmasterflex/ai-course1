@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { COMPONENT_EXPLANATIONS, getComponentExplanation } from "@/lib/component-explanations"
+import { COMPONENT_EXPLANATIONS, getComponentExplanation } from "@/lib/component-card-content"
 import { courseStructure } from "@/lib/course-structure"
 
 function getAllResolvedExplanationIds() {
