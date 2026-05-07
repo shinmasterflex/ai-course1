@@ -1,6 +1,6 @@
 "use client"
 
-import { getExplainerAttributes } from "@/components/learning/component-explainer"
+import { getExplainerAttributes, type ExplainerDescriptor } from "@/components/learning/component-explainer"
 import { useEffect, useMemo, useState } from "react"
 import { ArrowDown, ArrowUp, CheckCircle2, HelpCircle, RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -27,6 +27,7 @@ type QuickCheckProps = {
   accentClassName?: string
   onAnswered?: (isCorrect: boolean) => void
   componentId?: string
+  explainerDescriptor?: ExplainerDescriptor
 }
 
 type FlipCardGridProps = {
@@ -558,17 +559,22 @@ export function QuickCheckCard({
   accentClassName,
   onAnswered,
   componentId,
+  explainerDescriptor,
 }: QuickCheckProps) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
-  const explainerAttributes = getExplainerAttributes({
-    type: "Concept checkpoint",
-    title: "Test your thinking",
-    explanation: `Quick checks are designed to interrupt your reading and force you to retrieve what you just learned. This interruption might feel like a speed bump, but it's intentional. Frequent low-stakes retrieval practice—checking yourself before moving on—is scientifically proven to improve long-term retention.
+  const explainerAttributes = getExplainerAttributes(
+    explainerDescriptor
+      ? explainerDescriptor
+      : {
+          type: "Concept checkpoint",
+          title: "Test your thinking",
+          explanation: `Quick checks are designed to interrupt your reading and force you to retrieve what you just learned. This interruption might feel like a speed bump, but it's intentional. Frequent low-stakes retrieval practice—checking yourself before moving on—is scientifically proven to improve long-term retention.
 
 What makes this different from a high-stakes test is the low stakes. You're not being graded for a permanent record. You're giving your brain a chance to practice retrieving and applying concepts in real-time. This retrieval strengthens neural pathways and helps you identify gaps in understanding before moving too far ahead.
 
 If you get this wrong, don't view it as failure. Wrong answers during learning are actually beneficial—they force your brain to confront misconceptions and self-correct. The struggle to understand why you were wrong creates stronger learning than getting it right immediately.`,
-  })
+        }
+  )
   const shuffledOptions = useMemo(
     () => shuffleOptions(options, `${prompt}:${options.map((option) => `${option.id}:${option.label}`).join("|")}`),
     [options, prompt]

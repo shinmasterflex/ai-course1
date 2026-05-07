@@ -97,7 +97,17 @@ function parseDescriptor(value: string | null) {
 function resolveDescriptor(target: HTMLElement | null) {
   let current = target
 
-  // First, check if the component has an ID that maps to a custom explanation
+  // First, use explicit descriptor attributes attached directly to cards.
+  while (current) {
+    const explicitDescriptor = parseDescriptor(current.getAttribute("data-explainer"))
+    if (explicitDescriptor) {
+      return formatExplainerDescriptor(explicitDescriptor)
+    }
+    current = current.parentElement
+  }
+
+  // Then, fall back to ID-based explanation lookup.
+  current = target
   while (current) {
     const componentId = current.getAttribute("data-explainer-id")
     if (componentId) {
@@ -110,16 +120,6 @@ function resolveDescriptor(target: HTMLElement | null) {
           explanation: customExplanation.explanation,
         } satisfies ExplainerDescriptor)
       }
-    }
-    current = current.parentElement
-  }
-
-  // Use explicit descriptors when no direct card descriptor is found.
-  current = target
-  while (current) {
-    const explicitDescriptor = parseDescriptor(current.getAttribute("data-explainer"))
-    if (explicitDescriptor) {
-      return formatExplainerDescriptor(explicitDescriptor)
     }
     current = current.parentElement
   }

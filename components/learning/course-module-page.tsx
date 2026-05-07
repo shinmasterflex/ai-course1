@@ -14,6 +14,7 @@ import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/module-quiz-data"
+import { getComponentExplanation } from "@/lib/component-explanations"
 
 type CourseModulePageProps = {
   moduleId: string
@@ -29,6 +30,65 @@ type SectionLearningContent = {
   quickCheckCorrectOptionId: string
   quickCheckExplanation: string
   quickCheckOptionExplanations: Record<string, string>
+}
+
+type ComponentCardContent = {
+  scenario: {
+    title: string
+    body: string
+    checklistTitle: string
+    checklistItems: string[]
+    explainer: {
+      type: string
+      title: string
+      explanation: string
+    }
+  }
+  quickCheck: {
+    prompt: string
+    options: { id: string; label: string }[]
+    correctOptionId: string
+    explanation: string
+    optionExplanations: Record<string, string>
+    explainer: {
+      type: string
+      title: string
+      explanation: string
+    }
+  }
+}
+
+function buildScenarioCardExplanation(
+  moduleTitle: string,
+  sectionTitle: string,
+  scenarioTitle: string,
+  scenarioBody: string,
+  checklistTitle: string,
+  checklistItems: string[],
+  panelExplanation: string,
+) {
+  const checklistPreview = checklistItems.map((item) => `- ${item}`).join("\n")
+  return [
+    `Module: ${moduleTitle}. Section: ${sectionTitle}.`,
+    `Scenario card: ${scenarioTitle}. ${scenarioBody}`,
+    `Action checklist (${checklistTitle}):\n${checklistPreview}`,
+    panelExplanation,
+  ].join("\n\n")
+}
+
+function buildQuickCheckCardExplanation(
+  sectionTitle: string,
+  prompt: string,
+  options: { id: string; label: string }[],
+  panelExplanation: string,
+) {
+  const optionLines = options.map((option) => `${option.id.toUpperCase()}: ${option.label}`).join("\n")
+  return [
+    `Checkpoint for ${sectionTitle}.`,
+    `Prompt: ${prompt}`,
+    `Options:\n${optionLines}`,
+    panelExplanation,
+  ].join("\n\n")
 }
 
 const module0SectionLearningContent: Record<string, SectionLearningContent> = {
@@ -2394,6 +2454,62 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
       : undefined
 
   const sectionExplainerBaseId = currentSection ? `${moduleId}-${currentSection.id}` : undefined
+  const componentCards: ComponentCardContent | null = useMemo(() => {
+    if (!currentSection || !sectionLearningContent || !sectionExplainerBaseId) {
+      return null
+    }
+
+    const scenarioExplainerId = `${sectionExplainerBaseId}-scenario`
+    const quickCheckExplainerId = `${sectionExplainerBaseId}-quick-check`
+    const scenarioPanelExplanation = getComponentExplanation(scenarioExplainerId)?.explanation
+    const quickCheckPanelExplanation = getComponentExplanation(quickCheckExplainerId)?.explanation
+
+    const scenarioMergedExplanation = scenarioPanelExplanation
+      ? scenarioPanelExplanation
+      : `This scenario card introduces the section context for ${currentSection.title} and prepares you to apply the concept in a real workflow.`
+    const quickCheckMergedExplanation = quickCheckPanelExplanation
+      ? quickCheckPanelExplanation
+      : `This quick check validates whether you can apply ${currentSection.title} with evidence-based reasoning.`
+
+    return {
+      scenario: {
+        title: sectionLearningContent.scenarioTitle,
+        body: sectionLearningContent.scenarioBody,
+        checklistTitle: sectionLearningContent.checklistTitle,
+        checklistItems: sectionLearningContent.checklistItems,
+        explainer: {
+          type: "Scenario card",
+          title: sectionLearningContent.scenarioTitle,
+          explanation: buildScenarioCardExplanation(
+            module.title,
+            currentSection.title,
+            sectionLearningContent.scenarioTitle,
+            sectionLearningContent.scenarioBody,
+            sectionLearningContent.checklistTitle,
+            sectionLearningContent.checklistItems,
+            scenarioMergedExplanation,
+          ),
+        },
+      },
+      quickCheck: {
+        prompt: sectionLearningContent.quickCheckPrompt,
+        options: sectionLearningContent.quickCheckOptions,
+        correctOptionId: sectionLearningContent.quickCheckCorrectOptionId,
+        explanation: sectionLearningContent.quickCheckExplanation,
+        optionExplanations: sectionLearningContent.quickCheckOptionExplanations,
+        explainer: {
+          type: "Checkpoint card",
+          title: `Quick check: ${currentSection.title}`,
+          explanation: buildQuickCheckCardExplanation(
+            currentSection.title,
+            sectionLearningContent.quickCheckPrompt,
+            sectionLearningContent.quickCheckOptions,
+            quickCheckMergedExplanation,
+          ),
+        },
+      },
+    }
+  }, [currentSection, module.title, sectionExplainerBaseId, sectionLearningContent])
 
   return (
     <div className="min-h-screen bg-background">
@@ -2415,21 +2531,21 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 content={currentSection.summary ? currentSection.summary : "Use this section to sharpen your decision quality and implementation discipline."}
               />
 
-              {sectionLearningContent ? (
+              {componentCards ? (
                 <Card
                   className="p-5 border-brand-indigo/20 bg-brand-indigo/5 space-y-4"
-                  {...(sectionExplainerBaseId ? { "data-explainer-id": `${sectionExplainerBaseId}-scenario` } : {})}
+                  {...getExplainerAttributes(componentCards.scenario.explainer)}
                 >
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Scenario</p>
-                    <p className="text-lg font-semibold text-brand-indigo">{sectionLearningContent.scenarioTitle}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{sectionLearningContent.scenarioBody}</p>
+                    <p className="text-lg font-semibold text-brand-indigo">{componentCards.scenario.title}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{componentCards.scenario.body}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-indigo/80">Action Checklist</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{sectionLearningContent.checklistTitle}</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{componentCards.scenario.checklistTitle}</p>
                     <ul className="mt-2 space-y-2 text-sm text-muted-foreground list-disc pl-5">
-                      {sectionLearningContent.checklistItems.map((item) => (
+                      {componentCards.scenario.checklistItems.map((item) => (
                         <li key={`${moduleId}-${currentSection.id}-${item}`}>{item}</li>
                       ))}
                     </ul>
@@ -2445,15 +2561,16 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 <QuickCheckCard
                   key={`${moduleId}-${currentSection.id}-quick-check`}
                   componentId={`${moduleId}-${currentSection.id}-quick-check`}
-                  prompt={sectionLearningContent?.quickCheckPrompt ? sectionLearningContent.quickCheckPrompt : `What is the strongest next move after completing "${currentSection.title}"?`}
-                  options={sectionLearningContent?.quickCheckOptions ? sectionLearningContent.quickCheckOptions : [
+                  explainerDescriptor={componentCards ? componentCards.quickCheck.explainer : undefined}
+                  prompt={componentCards ? componentCards.quickCheck.prompt : `What is the strongest next move after completing "${currentSection.title}"?`}
+                  options={componentCards ? componentCards.quickCheck.options : [
                     { id: "a", label: "Buy a tool immediately based on a demo" },
                     { id: "b", label: "Translate insights into a scoped decision plan with owners and metrics" },
                     { id: "c", label: "Wait until the market is fully stable" },
                   ]}
-                  correctOptionId={sectionLearningContent?.quickCheckCorrectOptionId ? sectionLearningContent.quickCheckCorrectOptionId : "b"}
-                  explanation={sectionLearningContent?.quickCheckExplanation ? sectionLearningContent.quickCheckExplanation : "High-quality AI decisions require a scoped plan, clear owners, measurable outcomes, and risk controls."}
-                  optionExplanations={sectionLearningContent?.quickCheckOptionExplanations ? sectionLearningContent.quickCheckOptionExplanations : {
+                  correctOptionId={componentCards ? componentCards.quickCheck.correctOptionId : "b"}
+                  explanation={componentCards ? componentCards.quickCheck.explanation : "High-quality AI decisions require a scoped plan, clear owners, measurable outcomes, and risk controls."}
+                  optionExplanations={componentCards ? componentCards.quickCheck.optionExplanations : {
                     a: "Demo quality alone is a weak signal. Procurement should follow structured evaluation.",
                     b: "This is the implementation-focused, beginner-friendly approach.",
                     c: "Delays often increase strategic risk without improving decision quality.",
