@@ -27,7 +27,7 @@ async function syncExistingUsers() {
   for (const user of users) {
     if (user.email) {
       try {
-        const metadata = user.user_metadata ?? {}
+        const metadata = user.user_metadata && typeof user.user_metadata === 'object' ? user.user_metadata : {}
         const firstName = typeof metadata.first_name === 'string' ? metadata.first_name.trim() : null
         const lastName = typeof metadata.last_name === 'string' ? metadata.last_name.trim() : null
 

@@ -29,7 +29,7 @@ export function ProgressBar({ current, total, label, showPercentage = true, clas
   const percentage = Math.min(Math.max(Math.round((displayCurrent / total) * 100), 0), 100)
   const explainerAttributes = getExplainerAttributes({
     type: "Progress indicator",
-    title: label ?? "Completion tracker",
+    title: label ? label : "Completion tracker",
     explanation: `Progress visibility profoundly affects motivation and learning. When you can see how far you've come, your brain releases dopamine—the motivation neurochemical. This isn't superficial psychology; it's neurobiology. Visible progress activates the same reward circuits that reinforce learning.
 
 Progress trackers also serve a metacognitive function. They help you develop calibration—the ability to accurately assess how much you know versus how much remains. Good learners constantly check their progress and adjust their strategy accordingly. Am I learning fast enough? Do I need to slow down and deepen on this concept? The progress bar gives you data to answer these questions.

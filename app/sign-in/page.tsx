@@ -46,7 +46,7 @@ export default function SignInPage() {
         email: email.trim(),
         password,
         options: {
-          captchaToken: captchaToken ?? undefined,
+          captchaToken: captchaToken ? captchaToken : undefined,
         },
       })
 
@@ -122,7 +122,7 @@ export default function SignInPage() {
         email.trim(),
         {
           redirectTo: getAuthCallbackUrl('recovery'),
-          captchaToken: captchaToken ?? undefined,
+          captchaToken: captchaToken ? captchaToken : undefined,
         }
       )
 

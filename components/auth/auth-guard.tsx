@@ -7,7 +7,6 @@ import type React from 'react'
 type AuthGuardProps = {
   children: React.ReactNode
   redirectTo?: string
-  loadingFallback?: React.ReactNode
 }
 
 function DefaultLoadingState() {
@@ -24,12 +23,11 @@ function DefaultLoadingState() {
 export function AuthGuard({
   children,
   redirectTo,
-  loadingFallback,
 }: AuthGuardProps) {
   const { isChecking, isAuthenticated } = useAuthGuard({ redirectTo })
 
   if (isChecking || !isAuthenticated) {
-    return <>{loadingFallback ?? <DefaultLoadingState />}</>
+    return <DefaultLoadingState />
   }
 
   return <>{children}</>

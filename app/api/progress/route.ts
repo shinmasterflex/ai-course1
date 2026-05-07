@@ -40,16 +40,21 @@ async function getAuthenticatedUser() {
     return { user: null }
   }
 
+  const normalizedEmail = typeof user.email === 'string' ? user.email.trim().toLowerCase() : ''
+  if (!normalizedEmail) {
+    return { user: null }
+  }
+
   // Ensure user exists in DB
   await prisma.users.upsert({
     where: { id: user.id },
     update: {
-      email: user.email ?? `${user.id}@placeholder.local`,
+      email: normalizedEmail,
       updatedAt: new Date(),
     },
     create: {
       id: user.id,
-      email: user.email ?? `${user.id}@placeholder.local`,
+      email: normalizedEmail,
       updatedAt: new Date(),
     },
   })
@@ -131,7 +136,13 @@ async function saveProgress(request: NextRequest) {
     }
 
     const progressBody = body.progress as ProgressBody
-    const moduleUpdates = progressBody.modules || {}
+    const moduleUpdates = progressBody.modules as Record<
+      string,
+      {
+        status?: string
+        completionRate?: number
+      }
+    >
     const moduleSlugs = Object.keys(moduleUpdates)
 
     if (moduleSlugs.length === 0) {
@@ -186,6 +197,12 @@ async function saveProgress(request: NextRequest) {
 
       for (const missingSlug of missingSlugs) {
         const definition = definitionBySlug.get(missingSlug)
+        if (!definition) {
+          return NextResponse.json(
+            { error: `Unknown module slug: ${missingSlug}` },
+            { status: 400 }
+          )
+        }
 
         const moduleRecord = await prisma.modules.upsert({
           where: {
@@ -195,16 +212,16 @@ async function saveProgress(request: NextRequest) {
             },
           },
           update: {
-            title: definition?.title ?? `Module ${missingSlug}`,
-            order: definition?.order ?? 999,
+            title: definition.title,
+            order: definition.order,
             updatedAt: new Date(),
           },
           create: {
             id: generateId(),
             courseId: course.id,
-            title: definition?.title ?? `Module ${missingSlug}`,
+            title: definition.title,
             slug: missingSlug,
-            order: definition?.order ?? 999,
+            order: definition.order,
             description: 'Auto-created by progress API to support progress persistence.',
             updatedAt: new Date(),
           },
@@ -225,8 +242,22 @@ async function saveProgress(request: NextRequest) {
         continue
       }
 
-      const status = data.status || 'not-started'
-      const completionRate = typeof data.completionRate === 'number' ? Math.min(Math.max(data.completionRate, 0), 100) : 0
+      if (typeof data.status !== 'string' || data.status.trim().length === 0) {
+        return NextResponse.json(
+          { error: `Invalid status for module ${moduleSlug}` },
+          { status: 400 }
+        )
+      }
+
+      if (typeof data.completionRate !== 'number' || Number.isNaN(data.completionRate)) {
+        return NextResponse.json(
+          { error: `Invalid completionRate for module ${moduleSlug}` },
+          { status: 400 }
+        )
+      }
+
+      const status = data.status
+      const completionRate = Math.min(Math.max(data.completionRate, 0), 100)
 
       await prisma.progress.upsert({
         where: {

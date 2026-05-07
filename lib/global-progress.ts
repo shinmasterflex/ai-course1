@@ -36,7 +36,7 @@ class GlobalProgressManager {
 
   private async init() {
     this.activeUserId = await this.getCurrentUserId()
-    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ?? "anonymous")
+    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ? this.activeUserId : "anonymous")
     this.migrateLegacyKeys()
 
     const savedProgress = localStorage.getItem(this.getScopedStorageKey(STORAGE_KEY))
@@ -78,7 +78,7 @@ class GlobalProgressManager {
   private setupAuthListener() {
     const supabase = createClient()
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      const nextUserId = session?.user?.id ?? null
+      const nextUserId = session?.user?.id ? session.user.id : null
       if (nextUserId !== this.activeUserId) {
         void this.switchActiveUser(nextUserId)
       }
@@ -96,14 +96,14 @@ class GlobalProgressManager {
         data: { user },
       } = await supabase.auth.getUser()
 
-      return user?.id ?? null
+      return user?.id ? user.id : null
     } catch {
       return null
     }
   }
 
   private getScopedStorageKey(baseKey: string): string {
-    return `${baseKey}:${this.activeUserId ?? "anonymous"}`
+    return `${baseKey}:${this.activeUserId ? this.activeUserId : "anonymous"}`
   }
 
   private migrateLegacyKeys() {
@@ -141,7 +141,7 @@ class GlobalProgressManager {
 
   private async switchActiveUser(nextUserId: string | null) {
     this.activeUserId = nextUserId
-    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ?? "anonymous")
+    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ? this.activeUserId : "anonymous")
     this.migrateLegacyKeys()
     this.resetInMemoryProgressState()
     await this.init()
@@ -152,7 +152,7 @@ class GlobalProgressManager {
   }
 
   private rollbackProgressState() {
-    const rollbackSnapshot = this.pendingRollbackSnapshot ?? this.lastStableSnapshot
+    const rollbackSnapshot = this.pendingRollbackSnapshot ? this.pendingRollbackSnapshot : this.lastStableSnapshot
     this.pendingRollbackSnapshot = null
 
     if (!rollbackSnapshot) {
@@ -190,7 +190,7 @@ class GlobalProgressManager {
       })
 
       courseStructure.modules.forEach((module) => {
-        const savedModule = savedModulesBySlug.get(module.slug) ?? savedModulesById.get(module.id)
+        const savedModule = savedModulesBySlug.get(module.slug) ? savedModulesBySlug.get(module.slug) : savedModulesById.get(module.id)
         if (!savedModule) return
 
         if (typeof savedModule.status === "string") {

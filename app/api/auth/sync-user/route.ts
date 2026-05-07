@@ -50,7 +50,8 @@ async function resolveAuthenticatedUser(request: Request) {
     return { user, error: null }
   }
 
-  const authHeader = request.headers.get('authorization')?.trim() ?? ''
+  const authHeaderValue = request.headers.get('authorization')
+  const authHeader = authHeaderValue ? authHeaderValue.trim() : ''
   const bearerPrefix = 'bearer '
 
   if (!authHeader.toLowerCase().startsWith(bearerPrefix)) {
@@ -75,7 +76,7 @@ async function resolveAuthenticatedUser(request: Request) {
   } = await tokenClient.auth.getUser(accessToken)
 
   if (tokenError || !tokenData.user) {
-    return { user: null, error: tokenError ?? error }
+    return { user: null, error: tokenError ? tokenError : error }
   }
 
   return { user: tokenData.user, error: null }
@@ -105,7 +106,7 @@ async function upsertAppUser(payload: AppUserUpsertPayload) {
       .single()
 
     if (error || !data) {
-      throw new Error(error?.message ?? 'Supabase fallback upsert failed.')
+      throw new Error(error?.message ? error.message : 'Supabase upsert failed.')
     }
 
     return data
@@ -141,10 +142,10 @@ export async function POST(request: Request) {
 
   const sessionIdFromBody = getSessionIdFromBody(body)
   
-  // Get the current authenticated user from SSR cookie session, or Bearer token fallback.
+  // Get the current authenticated user from SSR cookie session or Bearer token.
   const { user, error } = await resolveAuthenticatedUser(request)
   
-  console.log('[Sync API] User:', user?.email || 'none', 'Error:', error?.message)
+  console.log('[Sync API] User:', user?.email ? user.email : 'none', 'Error:', error?.message)
   
   if (error || !user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -157,17 +158,18 @@ export async function POST(request: Request) {
 
     if (!botVerification.ok) {
       return NextResponse.json(
-        { error: botVerification.reason ?? 'Bot verification failed.' },
+        { error: botVerification.reason ? botVerification.reason : 'Bot verification failed.' },
         { status: 403 }
       )
     }
   }
 
-  const metadata = user.user_metadata ?? {}
+  const metadata = user.user_metadata && typeof user.user_metadata === 'object' ? user.user_metadata : {}
   const firstName = typeof metadata.first_name === 'string' ? metadata.first_name.trim() : null
   const lastName = typeof metadata.last_name === 'string' ? metadata.last_name.trim() : null
   const normalizedEmail = user.email!.trim().toLowerCase()
-  const sessionId = sessionIdFromBody ?? getSessionIdFromMetadata(metadata)
+  const metadataSessionId = getSessionIdFromMetadata(metadata)
+  const sessionId = sessionIdFromBody ? sessionIdFromBody : metadataSessionId
 
   try {
     const existingUser = await prisma.users.findUnique({
@@ -202,8 +204,8 @@ export async function POST(request: Request) {
       }
     }
 
-    const paidAt = existingUser?.paidAt ?? (verifiedSessionId ? new Date() : null)
-    const stripeCheckoutSessionId = existingUser?.stripeCheckoutSessionId ?? verifiedSessionId
+    const paidAt = existingUser?.paidAt ? existingUser.paidAt : (verifiedSessionId ? new Date() : null)
+    const stripeCheckoutSessionId = existingUser?.stripeCheckoutSessionId ? existingUser.stripeCheckoutSessionId : verifiedSessionId
 
     const dbUser = await upsertAppUser({
       id: user.id,

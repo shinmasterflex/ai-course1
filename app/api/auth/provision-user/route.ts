@@ -60,7 +60,7 @@ async function upsertAppUser(payload: AppUserUpsertPayload) {
       .single()
 
     if (error || !data) {
-      throw new Error(error?.message ?? 'Supabase fallback upsert failed.')
+      throw new Error(error?.message ? error.message : 'Supabase upsert failed.')
     }
 
     return data
@@ -128,7 +128,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unable to verify created user.' }, { status: 400 })
   }
 
-  const authEmail = authUserData.user.email?.trim().toLowerCase() ?? ''
+  const rawAuthEmail = authUserData.user.email
+  const authEmail = rawAuthEmail ? rawAuthEmail.trim().toLowerCase() : ''
   if (!authEmail || authEmail !== email) {
     return NextResponse.json({ error: 'Email verification mismatch.' }, { status: 400 })
   }

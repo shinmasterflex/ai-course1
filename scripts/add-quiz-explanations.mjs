@@ -743,7 +743,8 @@ for (const patch of QUIZ_PATCHES) {
 
   // Detect indentation from the explanation line
   const lineStart = src.lastIndexOf("\n", explIndex) + 1
-  const indent = src.slice(lineStart, explIndex).match(/^(\s+)/)?.[1] ?? "                "
+  const indentMatch = src.slice(lineStart, explIndex).match(/^(\s+)/)
+  const indent = indentMatch?.[1] ? indentMatch[1] : "                "
 
   const optStr = buildOptExStr(patch.optionExplanations)
     .split("\n")

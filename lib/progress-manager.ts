@@ -40,7 +40,7 @@ let authInitialized = false
 let authListenerInitialized = false
 
 function getScopedStorageKey(): string {
-  return `${STORAGE_KEY}:${activeUserId ?? "anonymous"}`
+  return `${STORAGE_KEY}:${activeUserId ? activeUserId : "anonymous"}`
 }
 
 function migrateLegacyCache() {
@@ -62,7 +62,7 @@ async function getCurrentUserId(): Promise<string | null> {
       data: { user },
     } = await supabase.auth.getUser()
 
-    return user?.id ?? null
+    return user?.id ? user.id : null
   } catch {
     return null
   }
@@ -75,10 +75,10 @@ function setupAuthListener() {
   const supabase = createClient()
 
   supabase.auth.onAuthStateChange((_event, session) => {
-    const nextUserId = session?.user?.id ?? null
+    const nextUserId = session?.user?.id ? session.user.id : null
     if (nextUserId !== activeUserId) {
       activeUserId = nextUserId
-      localStorage.setItem(ACTIVE_USER_KEY, activeUserId ?? "anonymous")
+      localStorage.setItem(ACTIVE_USER_KEY, activeUserId ? activeUserId : "anonymous")
       migrateLegacyCache()
       cachedProgress = null
     }
@@ -93,13 +93,13 @@ async function ensureUserContext(): Promise<void> {
   if (authInitialized) return
 
   activeUserId = await getCurrentUserId()
-  localStorage.setItem(ACTIVE_USER_KEY, activeUserId ?? "anonymous")
+  localStorage.setItem(ACTIVE_USER_KEY, activeUserId ? activeUserId : "anonymous")
   migrateLegacyCache()
   authInitialized = true
 }
 
 /**
- * Load progress from server (with session cache fallback)
+ * Load progress from server (with session cache recovery)
  */
 export async function loadProgress(): Promise<GlobalProgress> {
   if (typeof window === "undefined") return initializeProgress()
@@ -120,7 +120,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
 
     if (response.ok) {
       const data = await response.json()
-      const serverProgress = data.progress || initializeProgress()
+      const serverProgress = data.progress ? data.progress : initializeProgress()
       
       // Cache in memory and localStorage
       cachedProgress = serverProgress
@@ -129,7 +129,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
       return serverProgress
     }
 
-    // If unauthorized or error, fall back to localStorage cache
+    // If unauthorized or error, use localStorage cache.
     const stored = localStorage.getItem(getScopedStorageKey())
     if (stored) {
       const parsed = JSON.parse(stored) as GlobalProgress
@@ -139,7 +139,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
   } catch (error) {
     console.error("[Progress] Failed to load from server:", error)
     
-    // Fall back to localStorage
+    // Use localStorage cache
     const stored = localStorage.getItem(getScopedStorageKey())
     if (stored) {
       const parsed = JSON.parse(stored) as GlobalProgress
@@ -148,9 +148,9 @@ export async function loadProgress(): Promise<GlobalProgress> {
     }
   }
 
-  const fallback = initializeProgress()
-  cachedProgress = fallback
-  return fallback
+  const initializedProgress = initializeProgress()
+  cachedProgress = initializedProgress
+  return initializedProgress
 }
 
 /**
@@ -182,10 +182,12 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
       Object.entries(progress.modules).forEach(([moduleSlug, moduleData]) => {
         // Look up actual total sections from courseStructure
         const module = courseStructure.modules.find((m) => m.slug === moduleSlug)
-        const totalSections = module?.sections.length || 1 // Avoid divide by zero
+        const sectionCount = module?.sections.length
+        const totalSections = typeof sectionCount === "number" && sectionCount > 0 ? sectionCount : 1
 
         // Calculate actual completion rate
-        const completedCount = moduleData.completedSections?.length || 0
+        const completedSectionCount = moduleData.completedSections?.length
+        const completedCount = typeof completedSectionCount === "number" ? completedSectionCount : 0
         const completionRate = Math.round((completedCount / totalSections) * 100)
 
         const status =
@@ -255,7 +257,7 @@ export async function getModuleProgress(moduleId: string): Promise<ModuleProgres
   return {
     ...moduleData,
     completedSections: Array.isArray(moduleData.completedSections) ? moduleData.completedSections : [],
-    currentSection: moduleData.currentSection ?? 0,
+    currentSection: typeof moduleData.currentSection === "number" ? moduleData.currentSection : 0,
   }
 }
 
@@ -263,7 +265,7 @@ export async function getModuleProgress(moduleId: string): Promise<ModuleProgres
  * Synchronous version for immediate reads (uses cache)
  */
 export function getModuleProgressSync(moduleId: string): ModuleProgress {
-  const progress = cachedProgress || initializeProgress()
+  const progress = cachedProgress ? cachedProgress : initializeProgress()
 
   const moduleData = progress.modules[moduleId]
 
@@ -278,7 +280,7 @@ export function getModuleProgressSync(moduleId: string): ModuleProgress {
   return {
     ...moduleData,
     completedSections: Array.isArray(moduleData.completedSections) ? moduleData.completedSections : [],
-    currentSection: moduleData.currentSection ?? 0,
+    currentSection: typeof moduleData.currentSection === "number" ? moduleData.currentSection : 0,
   }
 }
 
@@ -344,7 +346,7 @@ export function getOverallCompletion(moduleTotals: Record<string, number>): {
   totalModules: number
   percentage: number
 } {
-  const progress = cachedProgress || initializeProgress()
+  const progress = cachedProgress ? cachedProgress : initializeProgress()
   const moduleIds = Object.keys(moduleTotals)
 
   const completedModules = moduleIds.filter((id) => isModuleComplete(id, moduleTotals[id])).length

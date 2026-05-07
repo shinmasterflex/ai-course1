@@ -7,7 +7,7 @@ export const runtime = 'nodejs'
 function maskConnectionHost(connectionString: string): string {
   try {
     const url = new URL(connectionString)
-    return `${url.protocol}//${url.hostname}:${url.port || '5432'}`
+    return `${url.protocol}//${url.hostname}:${url.port}`
   } catch {
     return 'invalid'
   }
@@ -15,7 +15,7 @@ function maskConnectionHost(connectionString: string): string {
 
 export async function GET() {
   const checks = {
-    nodeEnv: process.env.NODE_ENV ?? 'unknown',
+    nodeEnv: process.env.NODE_ENV,
     hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
     databaseHost: process.env.DATABASE_URL ? maskConnectionHost(process.env.DATABASE_URL) : 'missing',
     hasSupabaseUrl: false,

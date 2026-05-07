@@ -23,7 +23,7 @@ function collectDuplicates(moduleName: string, field: DuplicateHit["field"], val
   for (const value of values) {
     const normalized = normalizeCopy(value)
     if (!normalized) continue
-    const current = byNormalized.get(normalized) ?? []
+      const current = byNormalized.get(normalized) ? byNormalized.get(normalized)! : []
     current.push(value)
     byNormalized.set(normalized, current)
   }

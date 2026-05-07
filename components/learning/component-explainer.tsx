@@ -114,7 +114,7 @@ function resolveDescriptor(target: HTMLElement | null) {
     current = current.parentElement
   }
 
-  // Fall back to explicit descriptors
+  // Use explicit descriptors when no direct card descriptor is found.
   current = target
   while (current) {
     const explicitDescriptor = parseDescriptor(current.getAttribute("data-explainer"))
@@ -170,14 +170,14 @@ export function CourseExplainerLayout({ children }: { children: ReactNode }) {
     }
 
     const descriptor = resolveDescriptor(target)
-    const descriptorSignature = descriptor ? `${descriptor.id ?? descriptor.type}:${descriptor.title}:${descriptor.explanation.slice(0, 80)}` : ""
+    const descriptorSignature = descriptor ? `${descriptor.id ? descriptor.id : descriptor.type}:${descriptor.title}:${descriptor.explanation.slice(0, 80)}` : ""
     if (descriptor && descriptorSignature !== lastDescriptorRef.current) {
       lastDescriptorRef.current = descriptorSignature
       setSelectedDescriptor(descriptor)
       setSelectionHistory((previous) => {
         const nextHistory = previous.filter((item) => {
-          const previousKey = `${item.id ?? item.type}:${item.title}`
-          const descriptorKey = `${descriptor.id ?? descriptor.type}:${descriptor.title}`
+          const previousKey = `${item.id ? item.id : item.type}:${item.title}`
+          const descriptorKey = `${descriptor.id ? descriptor.id : descriptor.type}:${descriptor.title}`
           return previousKey !== descriptorKey
         })
         return [descriptor, ...nextHistory].slice(0, 4)

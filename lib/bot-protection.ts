@@ -11,11 +11,11 @@ export type BotVerificationResult = {
 }
 
 function getTurnstileSecretKey(): string | null {
-  return process.env.TURNSTILE_SECRET_KEY ?? null
+  return process.env.TURNSTILE_SECRET_KEY ? process.env.TURNSTILE_SECRET_KEY : null
 }
 
 export function getTurnstileSiteKey(): string | null {
-  return process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null
+  return process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY : null
 }
 
 export function isBotProtectionRequired(): boolean {
@@ -36,7 +36,8 @@ function getClientIp(request: Request | NextRequest): string | null {
     }
   }
 
-  return request.headers.get('x-real-ip') ?? null
+  const realIp = request.headers.get('x-real-ip')
+  return realIp ? realIp : null
 }
 
 export async function verifyTurnstileToken(
@@ -53,7 +54,7 @@ export async function verifyTurnstileToken(
     return { ok: false, reason: 'Bot protection is not configured.' }
   }
 
-  const normalizedToken = token?.trim() ?? ''
+  const normalizedToken = token?.trim() ? token.trim() : ''
 
   if (!normalizedToken) {
     return { ok: false, reason: 'Missing bot protection token.' }
@@ -67,7 +68,7 @@ export async function verifyTurnstileToken(
     body: new URLSearchParams({
       secret: secretKey,
       response: normalizedToken,
-      remoteip: getClientIp(request) ?? '',
+      remoteip: getClientIp(request) ? getClientIp(request)! : '',
     }),
     cache: 'no-store',
   })

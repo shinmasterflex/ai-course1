@@ -62,7 +62,7 @@ function firstParagraph(value: string) {
   return value
     .split(/\n\s*\n/)[0]
     ?.replace(/\s+/g, " ")
-    .trim() ?? ""
+    .trim() ? value.split(/\n\s*\n/)[0]!.replace(/\s+/g, " ").trim() : ""
 }
 
 function openingStem(value: string, words = 5) {
@@ -101,7 +101,7 @@ describe("component explanations content quality", () => {
 
     for (const entry of Object.values(COMPONENT_EXPLANATIONS)) {
       const key = normalizeQuestion(entry.question)
-      const existing = grouped.get(key) ?? []
+      const existing = grouped.get(key) ? grouped.get(key)! : []
       existing.push(entry.id)
       grouped.set(key, existing)
     }
@@ -117,7 +117,7 @@ describe("component explanations content quality", () => {
     const tails = Object.values(COMPONENT_EXPLANATIONS).map((entry) => questionTail(entry.question))
 
     const counts = tails.reduce<Record<string, number>>((acc, tail) => {
-      acc[tail] = (acc[tail] ?? 0) + 1
+      acc[tail] = (acc[tail] ? acc[tail] : 0) + 1
       return acc
     }, {})
 
@@ -183,7 +183,7 @@ describe("component explanations content quality", () => {
     const grouped = new Map<string, string[]>()
     for (const item of allSentences) {
       const key = item.sentence.toLowerCase()
-      const existing = grouped.get(key) ?? []
+      const existing = grouped.get(key) ? grouped.get(key)! : []
       existing.push(item.id)
       grouped.set(key, existing)
     }
@@ -202,7 +202,7 @@ describe("component explanations content quality", () => {
       .filter((starter) => starter.length > 0)
 
     const counts = starters.reduce<Record<string, number>>((acc, starter) => {
-      acc[starter] = (acc[starter] ?? 0) + 1
+      acc[starter] = (acc[starter] ? acc[starter] : 0) + 1
       return acc
     }, {})
 
@@ -219,7 +219,7 @@ describe("component explanations content quality", () => {
       .filter((opening) => opening.length > 0)
 
     const counts = openings.reduce<Record<string, number>>((acc, opening) => {
-      acc[opening] = (acc[opening] ?? 0) + 1
+      acc[opening] = (acc[opening] ? acc[opening] : 0) + 1
       return acc
     }, {})
 
@@ -242,7 +242,7 @@ describe("component explanations content quality", () => {
     const allGrams = Object.values(COMPONENT_EXPLANATIONS).flatMap((entry) => fourGrams(entry.explanation))
 
     const counts = allGrams.reduce<Record<string, number>>((acc, gram) => {
-      acc[gram] = (acc[gram] ?? 0) + 1
+      acc[gram] = (acc[gram] ? acc[gram] : 0) + 1
       return acc
     }, {})
 

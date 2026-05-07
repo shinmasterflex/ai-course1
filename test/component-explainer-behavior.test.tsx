@@ -13,7 +13,7 @@ function panelParagraphs(container: HTMLElement) {
   const panel = container.querySelector('[data-explainer-panel="true"]')
   expect(panel).not.toBeNull()
   return Array.from(panel!.querySelectorAll(".prose p"))
-    .map((node) => node.textContent?.trim() ?? "")
+    .map((node) => (node.textContent?.trim() ? node.textContent.trim() : ""))
     .filter((text) => text.length > 0)
 }
 

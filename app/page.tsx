@@ -175,7 +175,7 @@ export default function HomePage() {
                     </div>
                     <CardTitle className="text-xl leading-snug text-brand-indigo">{module.title}</CardTitle>
                     <CardDescription className="text-base">
-                      {module.description ?? "Practical frameworks, business scenarios, and implementation guidance for beginners."}
+                      {module.description}
                     </CardDescription>
                   </CardHeader>
                 </Card>

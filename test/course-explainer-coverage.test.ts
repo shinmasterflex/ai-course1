@@ -35,9 +35,12 @@ function getCoursePageFiles() {
 function collectCoverage(filePath: string): CoverageStats {
   const text = fs.readFileSync(filePath, "utf8")
   const relativeFile = path.relative(process.cwd(), filePath).replace(/\\/g, "/")
-  const getExplainerAttributes = (text.match(/getExplainerAttributes\s*\(/g) ?? []).length
-  const componentIds = (text.match(/componentId\s*=\s*"/g) ?? []).length
-  const moduleQuiz = (text.match(/<ModuleQuiz\b/g) ?? []).length
+  const getExplainerAttributesMatch = text.match(/getExplainerAttributes\s*\(/g)
+  const componentIdsMatch = text.match(/componentId\s*=\s*"/g)
+  const moduleQuizMatch = text.match(/<ModuleQuiz\b/g)
+  const getExplainerAttributes = (getExplainerAttributesMatch ? getExplainerAttributesMatch : []).length
+  const componentIds = (componentIdsMatch ? componentIdsMatch : []).length
+  const moduleQuiz = (moduleQuizMatch ? moduleQuizMatch : []).length
 
   return {
     file: relativeFile,

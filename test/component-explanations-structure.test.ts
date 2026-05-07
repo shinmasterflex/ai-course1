@@ -52,7 +52,7 @@ describe("resolved component explanation structure", () => {
       .map((entry) => paragraphSignature(entry.explanation))
 
     const counts = signatures.reduce<Record<string, number>>((acc, signature) => {
-      acc[signature] = (acc[signature] ?? 0) + 1
+      acc[signature] = (acc[signature] ? acc[signature] : 0) + 1
       return acc
     }, {})
 

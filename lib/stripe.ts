@@ -83,10 +83,10 @@ export async function verifyCheckoutSessionPayment(sessionId: string): Promise<V
   const paymentLinkId =
     typeof session.payment_link === 'string'
       ? session.payment_link
-      : session.payment_link?.id ?? null
+      : session.payment_link?.id ? session.payment_link.id : null
 
   const expectedPaymentLinkId = getExpectedPaymentLinkId()
-  const expectedPriceId = process.env.STRIPE_REGISTRATION_PRICE_ID?.trim() ?? null
+  const expectedPriceId = process.env.STRIPE_REGISTRATION_PRICE_ID?.trim()
 
   let hasExpectedPrice = false
   if (expectedPriceId) {
@@ -113,7 +113,11 @@ export async function verifyCheckoutSessionPayment(sessionId: string): Promise<V
     }
   }
 
-  const customerEmail = session.customer_details?.email ?? session.customer_email ?? null
+  const customerEmail = session.customer_details?.email
+    ? session.customer_details.email
+    : session.customer_email
+      ? session.customer_email
+      : null
   const normalizedCustomerEmail = customerEmail ? normalizeEmail(customerEmail) : null
 
   const isPaid = session.status === 'complete' && session.payment_status === 'paid'

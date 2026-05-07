@@ -57,7 +57,7 @@ describe("component explanation registry coverage", () => {
     for (const id of getUsedComponentIds()) {
       const entry = COMPONENT_EXPLANATIONS[id]
       const key = normalizeExplanation(entry.explanation)
-      const existing = duplicates.get(key) ?? []
+      const existing = duplicates.get(key) ? duplicates.get(key)! : []
       existing.push(id)
       duplicates.set(key, existing)
     }

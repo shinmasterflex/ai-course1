@@ -134,7 +134,7 @@ const module0SectionLearningContent: Record<string, SectionLearningContent> = {
       "You are finishing Module 0 and preparing to brief your manager. You need a simple 30-day adoption plan that names what to test, who owns decisions, and which partner support is required.",
     checklistTitle: "30-day starter checklist",
     checklistItems: [
-      "Name one workflow, one tool candidate, and one fallback option.",
+      "Name one workflow, one tool candidate, and one contingency option.",
       "Document selection criteria, required partner capabilities, and budget boundary.",
       "Assign owner, success metric, and guardrail for the first 30 days.",
     ],
@@ -744,17 +744,17 @@ const module3SectionLearningContent: Record<string, SectionLearningContent> = {
     checklistTitle: "Lock-in prevention checklist",
     checklistItems: [
       "Confirm exportability for data, prompts, and workflow artifacts.",
-      "Identify any proprietary features that have no fallback path.",
+      "Identify any proprietary features that have no contingency path.",
       "Define one migration trigger and one rollback option before adoption.",
     ],
     quickCheckPrompt: "What is the strongest early safeguard against platform lock-in?",
     quickCheckOptions: [
       { id: "a", label: "Rely on premium proprietary features to accelerate adoption" },
-      { id: "b", label: "Require portability and fallback architecture from the start" },
+      { id: "b", label: "Require portability and contingency architecture from the start" },
       { id: "c", label: "Defer migration planning until after full rollout" },
     ],
     quickCheckCorrectOptionId: "b",
-    quickCheckExplanation: "Portability and fallback planning preserve strategic flexibility.",
+    quickCheckExplanation: "Portability and contingency planning preserve strategic flexibility.",
     quickCheckOptionExplanations: {
       a: "This can increase long-run dependency risk.",
       b: "This is the core lock-in mitigation pattern.",
@@ -1787,16 +1787,16 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
   "types-of-agents": {
     scenarioTitle: "Orchestration platform evaluation",
     scenarioBody:
-      "Your team is comparing automation platforms. You need to evaluate observability, fallback behavior, and ownership model before deployment.",
+      "Your team is comparing automation platforms. You need to evaluate observability, contingency behavior, and ownership model before deployment.",
     checklistTitle: "Platform evaluation checklist",
     checklistItems: [
       "Assess workflow visibility and error tracing features.",
-      "Validate fallback paths and rollback behavior.",
+      "Validate contingency paths and rollback behavior.",
       "Confirm who owns operations, incidents, and maintenance.",
     ],
     quickCheckPrompt: "What causes many automation deployments to fail?",
     quickCheckOptions: [
-      { id: "a", label: "No observability and no fallback plan" },
+      { id: "a", label: "No observability and no contingency plan" },
       { id: "b", label: "Constrained pilot scope with strong monitoring" },
       { id: "c", label: "Clear owners but no tested rollback path" },
     ],
@@ -1869,7 +1869,7 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckPrompt: "What belongs in a production-ready automation blueprint?",
     quickCheckOptions: [
       { id: "a", label: "Model choice only" },
-      { id: "b", label: "Ownership, observability, fallback, and incident response" },
+      { id: "b", label: "Ownership, observability, contingency, and incident response" },
       { id: "c", label: "A demo script and feature list" },
     ],
     quickCheckCorrectOptionId: "b",
@@ -1901,7 +1901,7 @@ const module8SectionLearningContent: Record<string, SectionLearningContent> = {
     quickCheckOptionExplanations: {
       a: "Complexity without controls increases risk.",
       b: "This is the expected quality bar for the module.",
-      c: "No fallback model is a major production risk.",
+      c: "No contingency model is a major production risk.",
     },
   },
 }
@@ -2304,12 +2304,12 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const courseStructure = getCourseStructure()
   const module = courseStructure.modules.find((item) => item.id === moduleId)
-  const sections = useMemo(() => module?.sections ?? [], [module])
+  const sections = useMemo(() => (module?.sections ? module.sections : []), [module])
   const totalSections = sections.length
   const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(moduleId)
 
-  const questions = moduleQuizData[moduleId] ?? []
+  const questions = moduleQuizData[moduleId] ? moduleQuizData[moduleId] : []
   const quizKeys = useMemo(() => questions.map((question) => question.key), [questions])
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz<string>(moduleId, quizKeys)
 
@@ -2350,7 +2350,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const explainerAttributes = getExplainerAttributes({
     type: "AI adoption learning workspace",
-    title: module?.title ?? "AI adoption module",
+    title: module?.title ? module.title : "AI adoption module",
     explanation: currentSection
       ? `You are viewing ${currentSection.title}, section ${currentSectionIndex + 1} of ${totalSections}. Completed sections: ${completedSectionIds.length} of ${totalSections}. Review the scenario, use the checklist, answer the checkpoint, and continue to the next section.`
       : "Work through each section to build your implementation-ready AI strategy.",
@@ -2403,7 +2403,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
         <main {...explainerAttributes} className="flex-1 max-w-4xl mx-auto p-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">{module.title}</h1>
-            <p className="text-lg text-muted-foreground mb-4">{module.description ?? "Practical frameworks for AI adoption and confident decision-making."}</p>
+            <p className="text-lg text-muted-foreground mb-4">{module.description ? module.description : "Practical frameworks for AI adoption and confident decision-making."}</p>
             <ProgressBar current={completedSectionIds.length} total={Math.max(totalSections, 1)} label="Module Progress" />
           </div>
 
@@ -2412,7 +2412,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               <h2 className="text-3xl font-bold text-brand-green">{currentSection.title}</h2>
               <TextDisplay
                 variant="callout"
-                content={currentSection.summary ?? "Use this section to sharpen your decision quality and implementation discipline."}
+                content={currentSection.summary ? currentSection.summary : "Use this section to sharpen your decision quality and implementation discipline."}
               />
 
               {sectionLearningContent ? (
@@ -2445,15 +2445,15 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 <QuickCheckCard
                   key={`${moduleId}-${currentSection.id}-quick-check`}
                   componentId={`${moduleId}-${currentSection.id}-quick-check`}
-                  prompt={sectionLearningContent?.quickCheckPrompt ?? `What is the strongest next move after completing "${currentSection.title}"?`}
-                  options={sectionLearningContent?.quickCheckOptions ?? [
+                  prompt={sectionLearningContent?.quickCheckPrompt ? sectionLearningContent.quickCheckPrompt : `What is the strongest next move after completing "${currentSection.title}"?`}
+                  options={sectionLearningContent?.quickCheckOptions ? sectionLearningContent.quickCheckOptions : [
                     { id: "a", label: "Buy a tool immediately based on a demo" },
                     { id: "b", label: "Translate insights into a scoped decision plan with owners and metrics" },
                     { id: "c", label: "Wait until the market is fully stable" },
                   ]}
-                  correctOptionId={sectionLearningContent?.quickCheckCorrectOptionId ?? "b"}
-                  explanation={sectionLearningContent?.quickCheckExplanation ?? "High-quality AI decisions require a scoped plan, clear owners, measurable outcomes, and risk controls."}
-                  optionExplanations={sectionLearningContent?.quickCheckOptionExplanations ?? {
+                  correctOptionId={sectionLearningContent?.quickCheckCorrectOptionId ? sectionLearningContent.quickCheckCorrectOptionId : "b"}
+                  explanation={sectionLearningContent?.quickCheckExplanation ? sectionLearningContent.quickCheckExplanation : "High-quality AI decisions require a scoped plan, clear owners, measurable outcomes, and risk controls."}
+                  optionExplanations={sectionLearningContent?.quickCheckOptionExplanations ? sectionLearningContent.quickCheckOptionExplanations : {
                     a: "Demo quality alone is a weak signal. Procurement should follow structured evaluation.",
                     b: "This is the implementation-focused, beginner-friendly approach.",
                     c: "Delays often increase strategic risk without improving decision quality.",

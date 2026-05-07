@@ -126,7 +126,7 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
   }, [messages])
 
   const handleSend = async (messageText?: string) => {
-    const textToSend = messageText || input
+    const textToSend = messageText ? messageText : input
     if (!textToSend.trim() || isLoading) return
 
     const userMessage: Message = {
@@ -149,12 +149,16 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to get response")
+        throw new Error(data.error ? data.error : "Failed to get response")
+      }
+
+      if (typeof data.response !== "string") {
+        throw new Error("No response received.")
       }
 
       const assistantMessage: Message = {
         role: "assistant",
-        content: data.response ?? "No response received.",
+        content: data.response,
         timestamp: new Date(),
       }
 

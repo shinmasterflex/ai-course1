@@ -28,7 +28,7 @@ export function ModuleHero({
   componentId,
 }: ModuleHeroProps) {
   const defaultObjectives = useMemo(
-    () => objectives ?? [
+    () => objectives ? objectives : [
       "Review the strategic objective",
       "Complete the decision framework activity",
       "Finish the module checkpoint",

@@ -40,8 +40,10 @@ export default function DashboardPage() {
 
   const getModuleProgress = (moduleId: string) => {
     const mod = progress.modules?.find((m) => m.id === moduleId)
-    const completed = mod?.sections.filter((s) => s.completed).length || 0
-    const total = mod?.sections.length || 1
+    const completedCount = mod?.sections.filter((s) => s.completed).length
+    const completed = typeof completedCount === "number" ? completedCount : 0
+    const totalCount = mod?.sections.length
+    const total = typeof totalCount === "number" && totalCount > 0 ? totalCount : 1
     return { completed, total }
   }
 

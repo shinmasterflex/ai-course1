@@ -78,7 +78,7 @@ function hashString(value: string) {
 }
 
 function createSeededRandom(seed: number) {
-  let current = seed || 1
+  let current = seed === 0 ? 1 : seed
 
   return () => {
     current = (current * 1664525 + 1013904223) >>> 0
@@ -173,7 +173,7 @@ In cognitive psychology, this is called "elaboration." When you take the time to
 This type of thinking mimics how experts actually think about their domain. Experts don't store isolated facts; they store webs of relationships. By doing matching exercises, you're training your brain to organize knowledge the way expert minds do.`,
   })
 
-  const normalizedPairs = pairs.map((p, i) => ({ ...p, id: p.id ?? String(i) }))
+  const normalizedPairs = pairs.map((p, i) => ({ ...p, id: p.id ? p.id : String(i) }))
   const rightItems = [...normalizedPairs].sort((a, b) => a.right.localeCompare(b.right))
   const reverseMatches = Object.fromEntries(
     Object.entries(matches).map(([leftId, rightId]) => [rightId, leftId])
@@ -599,8 +599,8 @@ If you get this wrong, don't view it as failure. Wrong answers during learning a
     }
 
     const explanationWithoutPrefix = explanation.replace(/^Correct\.\s*/i, "")
-    const pickedAnswerText = selectedOption?.label ?? "your selected option"
-    const bestAnswerText = correctOption?.label ?? "the highlighted option"
+    const pickedAnswerText = selectedOption?.label ? selectedOption.label : "your selected option"
+    const bestAnswerText = correctOption?.label ? correctOption.label : "the highlighted option"
 
     return `Not quite. You selected: ${pickedAnswerText}. The best answer is: ${bestAnswerText}. ${explanationWithoutPrefix}`
   }, [correctOption?.label, explanation, isCorrect, optionExplanations, selectedOption?.label, selectedOptionId])

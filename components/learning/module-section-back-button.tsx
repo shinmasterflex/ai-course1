@@ -14,7 +14,7 @@ export function ModuleSectionBackButton() {
 
   const moduleId = useMemo(() => {
     const match = pathname?.match(/^\/course\/(module-\d+)$/)
-    return match?.[1] ?? null
+    return match && match[1] ? match[1] : null
   }, [pathname])
 
   const navigationTarget = useMemo(() => {
@@ -27,7 +27,7 @@ export function ModuleSectionBackButton() {
       return null
     }
 
-    const currentSectionId = searchParams?.get("section") ?? module.sections[0]?.id
+    const currentSectionId = searchParams?.get("section") ? searchParams.get("section") : module.sections[0]?.id
     const currentSectionIndex = module.sections.findIndex((section) => section.id === currentSectionId)
     const safeSectionIndex = currentSectionIndex >= 0 ? currentSectionIndex : 0
 

@@ -11,14 +11,17 @@ function getFirstDefinedEnvVar(...names: string[]): string | null {
 }
 
 function getClientSupabaseUrl(): string | null {
-  return process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? null
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return process.env.NEXT_PUBLIC_SUPABASE_URL
+  }
+  if (process.env.SUPABASE_URL) {
+    return process.env.SUPABASE_URL
+  }
+  return null
 }
 
 function getClientSupabasePublishableKey(): string | null {
-  return (
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
-    null
-  )
+  return process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY : null
 }
 
 function getRequiredEnvVar(...names: string[]): string {

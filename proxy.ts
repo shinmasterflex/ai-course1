@@ -150,7 +150,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  console.log('[Middleware] User after exchange:', user?.email || 'none')
+  console.log('[Middleware] User after exchange:', user?.email ? user.email : 'none')
 
   return supabaseResponse
 }

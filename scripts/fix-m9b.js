@@ -20,6 +20,6 @@ for (const [from, to] of fixes) {
 
 fs.writeFileSync('app/course/module-9/page.tsx', c, 'utf8');
 console.log('Applied', count, 'fixes');
-const withId = (c.match(/<Card [^>]*componentId=/g)||[]).length;
-const noId = (c.match(/<Card [^>]*className=/g)||[]).filter(m=>!m.includes('componentId')).length;
+const withId = (c.match(/<Card [^>]*componentId=/g) ? c.match(/<Card [^>]*componentId=/g) : []).length;
+const noId = (c.match(/<Card [^>]*className=/g) ? c.match(/<Card [^>]*className=/g) : []).filter(m=>!m.includes('componentId')).length;
 console.log('with:', withId, 'without:', noId);

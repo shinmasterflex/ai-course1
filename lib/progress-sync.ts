@@ -93,15 +93,19 @@ export function setupProgressSyncOnUnload(): () => void {
   if (typeof window === 'undefined') return () => {}
 
   const handler = () => {
-    // Try sendBeacon first (most reliable for unload), fall back to sync XHR
-    const activeUser = localStorage.getItem(ACTIVE_USER_KEY) ?? 'anonymous'
+    // Try sendBeacon first (most reliable for unload), then sync XHR.
+    const activeUserValue = localStorage.getItem(ACTIVE_USER_KEY)
+    const activeUser = activeUserValue ? activeUserValue : 'anonymous'
     const namespacedKey = `${STORAGE_KEY}:${activeUser}`
     const legacyNamespacedKey = `${LEGACY_STORAGE_KEY}:${activeUser}`
     const progress =
-      localStorage.getItem(namespacedKey) ??
-      localStorage.getItem(legacyNamespacedKey) ??
-      localStorage.getItem(STORAGE_KEY) ??
-      localStorage.getItem(LEGACY_STORAGE_KEY)
+      localStorage.getItem(namespacedKey)
+      ? localStorage.getItem(namespacedKey)
+      : localStorage.getItem(legacyNamespacedKey)
+        ? localStorage.getItem(legacyNamespacedKey)
+        : localStorage.getItem(STORAGE_KEY)
+          ? localStorage.getItem(STORAGE_KEY)
+          : localStorage.getItem(LEGACY_STORAGE_KEY)
 
     if (!progress) return
 
@@ -126,7 +130,7 @@ export function setupProgressSyncOnUnload(): () => void {
     const sent = navigator.sendBeacon('/api/progress', blob)
     
     if (!sent) {
-      // Fallback: synchronous fetch with keepalive
+      // Synchronous fetch with keepalive
       fetch('/api/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

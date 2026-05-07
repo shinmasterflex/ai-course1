@@ -34,13 +34,13 @@ function AvatarImage({
   )
 }
 
-function AvatarFallback({
+function AvatarPlaceholder({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: React.ComponentProps<'div'>) {
   return (
-    <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
+    <div
+      data-slot="avatar-placeholder"
       className={cn(
         'bg-muted flex size-full items-center justify-center rounded-full',
         className,
@@ -50,4 +50,4 @@ function AvatarFallback({
   )
 }
 
-export { Avatar, AvatarImage, AvatarFallback }
+export { Avatar, AvatarImage, AvatarPlaceholder }

@@ -98,13 +98,17 @@ function deriveTextDisplayTitle(title: string | undefined, subtitle: string | un
     return clipTitle(leadSentence.replace(/[.!?]+$/, ""))
   }
 
-  return "Concept focus"
+  return ""
 }
 
 function buildTextDisplayExplanation(content: string | undefined, subtitle: string | undefined, interactive: boolean) {
   const sentences = extractSentences(content)
-  const leadSentence = sentences[0] ?? subtitle?.trim() ?? "AI understanding becomes useful only when you can explain the idea clearly and apply it in context."
-  const supportSentence = sentences[1] ?? "In AI work, strong mental models let you predict likely behavior, notice weak outputs, and choose the right level of verification before acting."
+  const leadSentence = sentences[0] ? sentences[0] : subtitle?.trim()
+  const supportSentence = sentences[1]
+
+  if (!leadSentence || !supportSentence) {
+    return ""
+  }
 
   return `${toSentence(leadSentence)} ${toSentence(supportSentence)}
 
@@ -148,8 +152,10 @@ export function TextDisplay({
   const [isDragging, setIsDragging] = useState(false)
   const [dropTarget, setDropTarget] = useState<"true" | "false" | null>(null)
 
-  const sectionId = searchParams?.get("section") || "no-section"
-  const scopeKey = `${pathname || "unknown-path"}::${sectionId}`
+  const sectionId = searchParams?.get("section")
+  const safePath = pathname ? pathname : ""
+  const safeSectionId = sectionId ? sectionId : ""
+  const scopeKey = `${safePath}::${safeSectionId}`
   const statementData = useMemo(() => getTextDisplayTrueFalseStatement(title, content, scopeKey, instanceId), [content, instanceId, scopeKey, title])
   const dragPayload = statementData.statement
   const isCorrectDrop = dropTarget === null ? null : (dropTarget === "true") === statementData.isTrue

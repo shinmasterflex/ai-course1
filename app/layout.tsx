@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Outfit, Merriweather } from "next/font/google"
-import { Suspense } from "react"
 import "./globals.css"
 
 /**
@@ -50,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${merriweather.variable}`}>
       <body className="font-sans antialiased">
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        {children}
         {/* Analytics component removed due to loading errors */}
       </body>
     </html>

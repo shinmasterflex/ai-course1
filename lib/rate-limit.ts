@@ -36,7 +36,8 @@ function getClientIp(request: Request | NextRequest): string {
     }
   }
 
-  return request.headers.get('x-real-ip') ?? 'unknown'
+  const realIp = request.headers.get('x-real-ip')
+  return realIp ? realIp : 'unknown'
 }
 
 export function enforceRateLimit(
@@ -48,11 +49,11 @@ export function enforceRateLimit(
   const ip = getClientIp(request)
   const bucketKey = `${config.keyPrefix}:${ip}`
   const store = getStore()
-  const existingHits = store.get(bucketKey) ?? []
+  const existingHits = store.get(bucketKey) ? store.get(bucketKey)! : []
   const activeHits = existingHits.filter((timestamp) => timestamp > earliestAllowed)
 
   if (activeHits.length >= config.maxRequests) {
-    const oldestHit = activeHits[0] ?? now
+    const oldestHit = activeHits[0] ? activeHits[0] : now
     const retryAfterMs = Math.max(0, oldestHit + config.windowMs - now)
 
     store.set(bucketKey, activeHits)

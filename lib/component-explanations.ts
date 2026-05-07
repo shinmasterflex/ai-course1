@@ -13,6 +13,87 @@ export interface ComponentExplanation {
   explanation: string
 }
 
+export type SectionKnowledgePattern = {
+  keywords: string[]
+  briefParagraphs: string[]
+  trueStatement: string
+  falseStatement: string
+  trueExplanation: string
+  falseExplanation: string
+}
+
+export const SECTION_KNOWLEDGE_PATTERNS: SectionKnowledgePattern[] = [
+  {
+    keywords: ["model", "tool", "automation", "agent", "taxonomy", "category"],
+    briefParagraphs: [
+      "A rigorous taxonomy reduces category errors by separating concepts that behave differently in practice. Distinguishing model capability from product behavior is a core analytical skill.",
+      "In comparative evaluation, category clarity improves decision quality because options become commensurable across cost, control, integration burden, and risk.",
+      "This card should be read as conceptual infrastructure for later decisions, not as isolated terminology.",
+    ],
+    trueStatement: "Clear category boundaries improve AI decisions by making trade-offs explicit.",
+    falseStatement: "Different AI categories can be treated as interchangeable with little impact on decision quality.",
+    trueExplanation: "The lesson treats category distinctions as decision-critical, not cosmetic.",
+    falseExplanation: "Interchangeability hides material differences in capability, risk, and implementation effort.",
+  },
+  {
+    keywords: ["roi", "metric", "impact", "baseline", "measurement", "value"],
+    briefParagraphs: [
+      "Educationally sound ROI analysis links outcomes to baselines and context. Metrics without baseline comparison are weak evidence for improvement.",
+      "Measurement systems should include adoption effort, quality effects, and risk-adjusted outcomes to avoid overstating value.",
+      "This card contributes to evidence literacy by clarifying what counts as valid performance proof.",
+    ],
+    trueStatement: "Outcome-linked metrics with baseline comparison provide stronger evidence than activity counts alone.",
+    falseStatement: "High usage activity is usually sufficient to prove business value, even without outcome metrics.",
+    trueExplanation: "The content prioritizes evidence quality and measurement validity.",
+    falseExplanation: "Usage intensity is not equivalent to demonstrated impact.",
+  },
+  {
+    keywords: ["risk", "safety", "privacy", "bias", "misinformation", "governance"],
+    briefParagraphs: [
+      "Risk governance is a design-time responsibility. Controls are most effective when embedded before scale, not appended after incidents.",
+      "Bias, privacy, and misinformation checks address different failure modes and should be treated as complementary safeguards.",
+      "This card teaches preventive control logic: utility does not override safety obligations.",
+    ],
+    trueStatement: "Responsible AI deployment requires preventive controls for bias, privacy, and harmful output risks.",
+    falseStatement: "If AI output is useful, governance checks can usually be deferred until after rollout.",
+    trueExplanation: "The lesson emphasizes preventive control architecture.",
+    falseExplanation: "Usefulness does not replace governance duties or risk review.",
+  },
+  {
+    keywords: ["agent", "autonomy", "loop", "guardrail", "stopping", "monitoring"],
+    briefParagraphs: [
+      "Agentic systems add iterative autonomy, which expands both capability and potential failure surface.",
+      "Control design for agents requires bounded objectives, permission limits, and explicit stopping conditions.",
+      "This card positions monitoring as a structural requirement for safe agent operation.",
+    ],
+    trueStatement: "Agent workflows need bounded goals and monitoring because autonomy increases both power and risk.",
+    falseStatement: "Autonomous agents are typically safest when run without stopping conditions or ongoing monitoring.",
+    trueExplanation: "The content links autonomy to stronger control requirements.",
+    falseExplanation: "Unbounded autonomy conflicts with the lesson's guardrail model.",
+  },
+  {
+    keywords: ["workflow", "rollout", "adoption", "change", "roadmap", "execution"],
+    briefParagraphs: [
+      "Operational gains from AI depend on workflow redesign and adoption sequencing, not just tool access.",
+      "Change execution improves when review rhythms, role ownership, and support mechanisms are explicit.",
+      "This card frames implementation as a systems problem where process quality determines sustained outcomes.",
+    ],
+    trueStatement: "Sustained AI adoption depends on workflow design, ownership, and staged execution.",
+    falseStatement: "Rapid tool distribution alone is usually enough for successful AI adoption.",
+    trueExplanation: "The lesson ties implementation quality to process and governance.",
+    falseExplanation: "Tool access without process design tends to increase variance and rework.",
+  },
+]
+
+function requireNonEmptyValue(value: string | undefined, label: string): string {
+  const normalized = typeof value === "string" ? value.trim() : ""
+  if (!normalized) {
+    throw new Error(`[component-explanations] ${label}`)
+  }
+
+  return normalized
+}
+
 export const COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> = {
   // MODULE 0: Welcome to AI
   "m0-hero": {
@@ -22,7 +103,7 @@ export const COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> = {
 
 m0-hero reasoning depth: modern AI matters as a system, not a single app: models make predictions, shape decisions, fail in patterned ways, and still require human oversight in real work.
 
-m0-hero next action: test AI output tied to "Modern AI matters as a system, not a single app: models make predictions, shape decisions, fail in patterned ways, and still require human oversight..." with one metric, one risk check, and one fallback.`,
+m0-hero next action: test AI output tied to "Modern AI matters as a system, not a single app: models make predictions, shape decisions, fail in patterned ways, and still require human oversight..." with one metric, one risk check, and one contingency path.`,
   },
 
   "m0-why-ai-matters": {
@@ -223,7 +304,7 @@ Use this section to prepare, not finalize. Produce a short list of categories to
 
 m1-quiz reasoning depth: separating AI categories and claims under ambiguity is the first real test of AI literacy.
 
-m1-quiz next action: test AI output tied to "Separating AI categories and claims under ambiguity is the first real test of AI literacy." with one metric, one risk check, and one fallback.`,
+m1-quiz next action: test AI output tied to "Separating AI categories and claims under ambiguity is the first real test of AI literacy." with one metric, one risk check, and one contingency path.`,
   },
 
   "m1-ai-vocabulary-cards": {
@@ -629,7 +710,7 @@ m7-hero next action: for "Adoption roadmaps convert isolated AI experiments into
 
 m7-workplace-ai reasoning depth: aI isn't replacing most jobs yet.
 
-m7-workplace-ai next action: test AI output tied to "A radiologist with an AI diagnostic tool is more effective than one without." with one metric, one risk check, and one fallback.`,
+m7-workplace-ai next action: test AI output tied to "A radiologist with an AI diagnostic tool is more effective than one without." with one metric, one risk check, and one contingency path.`,
   },
 
   "m7-future-jobs": {
@@ -833,7 +914,7 @@ m4-preprocessing next action: for "Execution-model choice should reflect interna
 
 m4-feature-engineering reasoning depth: aI partner pricing becomes predictable when teams separate fixed scope fees, variable usage costs, and change-order exposure.
 
-m4-feature-engineering next action: test AI output tied to "AI partner pricing becomes predictable when teams separate fixed scope fees, variable usage costs, and change-order exposure." with one metric, one risk check, and one fallback.`,
+m4-feature-engineering next action: test AI output tied to "AI partner pricing becomes predictable when teams separate fixed scope fees, variable usage costs, and change-order exposure." with one metric, one risk check, and one contingency path.`,
   },
 
   // MODULE 5 (actual): Evaluating the Business Impact of AI
@@ -1037,7 +1118,7 @@ m8-agent-applications next action: for "AI agents are already being used for sof
 
 m8-building-agents reasoning depth: building agent systems requires choosing a framework (LangChain, AutoGen, CrewAI), defining tools the agent can call, designing prompts that guide reasoning, and implementing verification steps for high-stakes actions.
 
-m8-building-agents next action: test AI output tied to "Building agent systems requires choosing a framework (LangChain, AutoGen, CrewAI), defining tools the agent can call, designing prompts that guide..." with one metric, one risk check, and one fallback.`,
+m8-building-agents next action: test AI output tied to "Building agent systems requires choosing a framework (LangChain, AutoGen, CrewAI), defining tools the agent can call, designing prompts that guide..." with one metric, one risk check, and one contingency path.`,
   },
 
   "m8-agent-risks": {
@@ -1240,7 +1321,7 @@ m0-reality-check-stat-2 next action: for "Most people interact with AI 30+ times
 
 m0-reality-check-stat-3 reasoning depth: aI is not changing one industry; it's changing every industry.
 
-m0-reality-check-stat-3 next action: test AI output tied to "AI is not changing one industry; it" with one metric, one risk check, and one fallback.`,
+m0-reality-check-stat-3 next action: test AI output tied to "AI is not changing one industry; it" with one metric, one risk check, and one contingency path.`,
   },
 
   "m0-reality-check-stat-4": {
@@ -1300,7 +1381,7 @@ Use search AI effectively by combining convenience with verification. For conseq
 
 The key lesson is calibration, not blind trust. A prediction can be directionally useful while still wrong in edge conditions such as sudden incidents, weather changes, or atypical events. Good users interpret outputs as forecasts with confidence limits, not deterministic truths.
 
-Apply this model to other AI tools: accept predictions as decision support, then add a lightweight contingency plan. For example, choose a recommended route but keep a fallback threshold for switching if conditions diverge from expected timing.`,
+Apply this model to other AI tools: accept predictions as decision support, then add a lightweight contingency plan. For example, choose a recommended route but keep a contingency threshold for switching if conditions diverge from expected timing.`,
   },
 
   "m0-daily-ai-social": {
@@ -1440,7 +1521,7 @@ Operationalize this mindset with a simple loop: attempt, evaluate, adjust, and d
 
 m0-learning-system reasoning depth: the m0-learning-system focus lesson lesson element introduces the three pillars of effective AI learning in this course: Time (short, consistent sessions), Pacing (spaced learning), and Mindset (learn by doing).
 
-m0-learning-system next action: test AI output tied to "The m0-learning-system focus lesson lesson element introduces the three pillars of effective AI learning in this course: Time (short, consistent..." with one metric, one risk check, and one fallback.`,
+m0-learning-system next action: test AI output tied to "The m0-learning-system focus lesson lesson element introduces the three pillars of effective AI learning in this course: Time (short, consistent..." with one metric, one risk check, and one contingency path.`,
   },
 
   "m0-learning-tips-sequence": {
@@ -1641,7 +1722,7 @@ m1-ai-narrow-general-super next action: for "Narrow AI (good at specific tasks),
 
 m1-prompting-challenge reasoning depth: you'll prompt an AI system, inspect results, refine constraints, and rerun-a cycle that builds operational skill.
 
-m1-prompting-challenge next action: test AI output tied to "You" with one metric, one risk check, and one fallback.`,
+m1-prompting-challenge next action: test AI output tied to "You" with one metric, one risk check, and one contingency path.`,
   },
 
   "m1-myths-vs-reality-card": {
@@ -1698,9 +1779,17 @@ When evaluating ideas, ask whether the piece expresses your message or merely im
 const GENERATED_COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> =
   Object.fromEntries(
     courseStructure.modules.flatMap((module) => {
+      const requiredModuleDescription = requireNonEmptyValue(
+        module.description,
+        `Missing module description for ${module.id}`,
+      )
+
       const moduleEntries = module.sections.flatMap((section) => {
         const baseId = `${module.id}-${section.id}`
-        const summary = section.summary ?? `${section.title} in ${module.title}.`
+        const summary = requireNonEmptyValue(
+          section.summary,
+          `Missing section summary for ${baseId}`,
+        )
         const scenarioId = `${baseId}-scenario`
         const quickCheckId = `${baseId}-quick-check`
 
@@ -1730,7 +1819,7 @@ const GENERATED_COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> =
         {
           id: quizId,
           question: `I'm confused about the module quiz in ${module.title}. How should I interpret what this checkpoint is validating?`,
-          explanation: `Direct answer: This module quiz checks whether you can apply the core reasoning of ${module.title} under ambiguity.\n\nWhy this matters: ${module.description ?? module.title}\n\nHow to apply it: Identify the claim, map it to the module principle, and choose the option with the strongest evidence and lowest avoidable risk.`,
+          explanation: `Direct answer: This module quiz checks whether you can apply the core reasoning of ${module.title} under ambiguity.\n\nWhy this matters: ${requiredModuleDescription}\n\nHow to apply it: Identify the claim, map it to the module principle, and choose the option with the strongest evidence and lowest avoidable risk.`,
         },
       ]
 
@@ -1839,7 +1928,8 @@ function extractFocusText(question: string, explanation: string) {
     .replace(/^I'm\s+confused\s+about\s+this\s+part:\s*/i, "")
     .replace(/^I'm\s+not\s+sure\s+how\s+to\s+reason\s+through\s+/i, "")
 
-  const questionCore = trimmedQuestion.split("?")[0] ?? trimmedQuestion
+  const splitQuestion = trimmedQuestion.split("?")
+  const questionCore = splitQuestion[0] ? splitQuestion[0] : trimmedQuestion
   return normalizeSentence(questionCore)
 }
 
@@ -1991,9 +2081,13 @@ function resolveGeneratedContext(componentId: string): GeneratedExplanationConte
     return {
       kind: kind as "scenario" | "quick-check",
       moduleTitle: stripModulePrefix(module.title),
-      moduleDescription: normalizeSentence(module.description ?? module.title),
+      moduleDescription: normalizeSentence(
+        requireNonEmptyValue(module.description, `Missing module description for ${module.id}`),
+      ),
       sectionTitle: section.title,
-      sectionSummary: normalizeSentence(section.summary ?? `${section.title} matters in ${module.title}.`),
+      sectionSummary: normalizeSentence(
+        requireNonEmptyValue(section.summary, `Missing section summary for ${module.id}-${section.id}`),
+      ),
     }
   }
 
@@ -2010,7 +2104,9 @@ function resolveGeneratedContext(componentId: string): GeneratedExplanationConte
   return {
     kind: "course-quiz",
     moduleTitle: stripModulePrefix(module.title),
-    moduleDescription: normalizeSentence(module.description ?? module.title),
+    moduleDescription: normalizeSentence(
+      requireNonEmptyValue(module.description, `Missing module description for ${module.id}`),
+    ),
   }
 }
 

@@ -18,7 +18,7 @@ describe("module quiz coverage", () => {
   it("keeps non-empty quiz data for every module", () => {
     const modulesMissingQuizData = courseStructure.modules
       .filter((module) => {
-        const questions = moduleQuizData[module.id] ?? []
+        const questions = moduleQuizData[module.id] ? moduleQuizData[module.id] : []
         return questions.length === 0
       })
       .map((module) => module.id)
@@ -29,7 +29,7 @@ describe("module quiz coverage", () => {
   it("keeps quiz question keys unique within each module", () => {
     const modulesWithDuplicateKeys = courseStructure.modules
       .filter((module) => {
-        const keys = (moduleQuizData[module.id] ?? []).map((question) => question.key)
+        const keys = (moduleQuizData[module.id] ? moduleQuizData[module.id] : []).map((question) => question.key)
         return new Set(keys).size !== keys.length
       })
       .map((module) => module.id)

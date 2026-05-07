@@ -43,7 +43,7 @@ export async function GET(request: Request) {
       // Sync user to Prisma database
       try {
         console.log('[Auth] Syncing user to Prisma:', data.user.id)
-        const metadata = data.user.user_metadata ?? {}
+        const metadata = data.user.user_metadata && typeof data.user.user_metadata === 'object' ? data.user.user_metadata : {}
         const firstName = typeof metadata.first_name === 'string' ? metadata.first_name.trim() : null
         const lastName = typeof metadata.last_name === 'string' ? metadata.last_name.trim() : null
         

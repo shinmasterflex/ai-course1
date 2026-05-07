@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase"
 function getDisplayName(user: { email?: string | null; user_metadata?: Record<string, unknown> } | null) {
   if (!user) return ""
 
-  const metadata = user.user_metadata ?? {}
+  const metadata = user.user_metadata && typeof user.user_metadata === "object" ? user.user_metadata : {}
   const firstName = typeof metadata.first_name === "string" ? metadata.first_name.trim() : ""
   const lastName = typeof metadata.last_name === "string" ? metadata.last_name.trim() : ""
   const fullName = typeof metadata.full_name === "string" ? metadata.full_name.trim() : ""
@@ -21,7 +21,7 @@ function getDisplayName(user: { email?: string | null; user_metadata?: Record<st
   if (fullName) return fullName
   if (name) return name
 
-  return user.email ?? ""
+  return user.email ? user.email : ""
 }
 
 export function Sidebar() {

@@ -100,7 +100,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       correctOptionId: "b",
       options: [
         { id: "a", label: "Rely only on proprietary features with no migration plan" },
-        { id: "b", label: "Require exportability and document fallback architecture" },
+        { id: "b", label: "Require exportability and document contingency architecture" },
         { id: "c", label: "Avoid contracts and run everything ad hoc" },
       ],
     },
@@ -410,7 +410,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       explanation: "Lack of monitoring, ownership, and rollback design creates fragile systems.",
       correctOptionId: "a",
       options: [
-        { id: "a", label: "No observability and no fallback plan" },
+        { id: "a", label: "No observability and no contingency plan" },
         { id: "b", label: "Excessive documentation" },
         { id: "c", label: "Starting with one constrained workflow" },
       ],

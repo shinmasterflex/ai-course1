@@ -100,5 +100,5 @@ export async function getRelevantKnowledge(query: string): Promise<string> {
     }
   }
 
-  return knowledgeContent || "No specific knowledge base content found for this query."
+  return knowledgeContent ? knowledgeContent : "No specific knowledge base content found for this query."
 }

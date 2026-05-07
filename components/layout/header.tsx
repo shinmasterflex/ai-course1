@@ -51,7 +51,7 @@ export function Header() {
               type: "Brand navigation",
               title: "Cognijin course logo",
               summary: "This logo returns the learner to the course dashboard.",
-              details: ["Brand links are a common fallback path back to the main course overview."],
+              details: ["Brand links are a common return path back to the main course overview."],
               interaction: "Click the logo to leave the current lesson and return to the dashboard.",
             })}
             className="flex h-10 shrink-0 items-center"

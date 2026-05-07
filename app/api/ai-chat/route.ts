@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       const botVerification = await verifyTurnstileToken(request, turnstileToken)
 
       if (!botVerification.ok) {
-        return NextResponse.json({ error: botVerification.reason ?? 'Bot verification failed.' }, { status: 403 })
+        return NextResponse.json({ error: botVerification.reason ? botVerification.reason : 'Bot verification failed.' }, { status: 403 })
       }
     }
 
@@ -88,7 +88,7 @@ Please provide a helpful, accurate, and friendly response. If the question is ab
     return NextResponse.json(
       {
         error: "Failed to get response from AI. Please try again.",
-        details: error?.message || "Unknown error",
+        details: error?.message ? error.message : "Unknown error",
       },
       { status: 500 },
     )

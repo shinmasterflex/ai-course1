@@ -1,4 +1,5 @@
 import { courseStructure } from "@/lib/course-structure"
+import { SECTION_KNOWLEDGE_PATTERNS, type SectionKnowledgePattern } from "@/lib/component-explanations"
 import { extractSentences, hashString, toSentence } from "@/lib/text-content-utils"
 
 export interface InferentialStatement {
@@ -15,15 +16,6 @@ type ScopeContext = {
 type SectionCardKnowledge = {
   briefParagraphs: string[]
   statements: InferentialStatement[]
-}
-
-type SectionKnowledgePattern = {
-  keywords: string[]
-  briefParagraphs: string[]
-  trueStatement: string
-  falseStatement: string
-  trueExplanation: string
-  falseExplanation: string
 }
 
 function rotateBySeed<T>(items: T[], seed: number) {
@@ -102,78 +94,16 @@ function extractCardFocusTerms(text: string, maxTerms = 3) {
   return unique
 }
 
-const sectionKnowledgePatterns: SectionKnowledgePattern[] = [
-  {
-    keywords: ["model", "tool", "automation", "agent", "taxonomy", "category"],
-    briefParagraphs: [
-      "A rigorous taxonomy reduces category errors by separating concepts that behave differently in practice. Distinguishing model capability from product behavior is a core analytical skill.",
-      "In comparative evaluation, category clarity improves decision quality because options become commensurable across cost, control, integration burden, and risk.",
-      "This card should be read as conceptual infrastructure for later decisions, not as isolated terminology.",
-    ],
-    trueStatement: "Clear category boundaries improve AI decisions by making trade-offs explicit.",
-    falseStatement: "Different AI categories can be treated as interchangeable with little impact on decision quality.",
-    trueExplanation: "The lesson treats category distinctions as decision-critical, not cosmetic.",
-    falseExplanation: "Interchangeability hides material differences in capability, risk, and implementation effort.",
-  },
-  {
-    keywords: ["roi", "metric", "impact", "baseline", "measurement", "value"],
-    briefParagraphs: [
-      "Educationally sound ROI analysis links outcomes to baselines and context. Metrics without baseline comparison are weak evidence for improvement.",
-      "Measurement systems should include adoption effort, quality effects, and risk-adjusted outcomes to avoid overstating value.",
-      "This card contributes to evidence literacy by clarifying what counts as valid performance proof.",
-    ],
-    trueStatement: "Outcome-linked metrics with baseline comparison provide stronger evidence than activity counts alone.",
-    falseStatement: "High usage activity is usually sufficient to prove business value, even without outcome metrics.",
-    trueExplanation: "The content prioritizes evidence quality and measurement validity.",
-    falseExplanation: "Usage intensity is not equivalent to demonstrated impact.",
-  },
-  {
-    keywords: ["risk", "safety", "privacy", "bias", "misinformation", "governance"],
-    briefParagraphs: [
-      "Risk governance is a design-time responsibility. Controls are most effective when embedded before scale, not appended after incidents.",
-      "Bias, privacy, and misinformation checks address different failure modes and should be treated as complementary safeguards.",
-      "This card teaches preventive control logic: utility does not override safety obligations.",
-    ],
-    trueStatement: "Responsible AI deployment requires preventive controls for bias, privacy, and harmful output risks.",
-    falseStatement: "If AI output is useful, governance checks can usually be deferred until after rollout.",
-    trueExplanation: "The lesson emphasizes preventive control architecture.",
-    falseExplanation: "Usefulness does not replace governance duties or risk review.",
-  },
-  {
-    keywords: ["agent", "autonomy", "loop", "guardrail", "stopping", "monitoring"],
-    briefParagraphs: [
-      "Agentic systems add iterative autonomy, which expands both capability and potential failure surface.",
-      "Control design for agents requires bounded objectives, permission limits, and explicit stopping conditions.",
-      "This card positions monitoring as a structural requirement for safe agent operation.",
-    ],
-    trueStatement: "Agent workflows need bounded goals and monitoring because autonomy increases both power and risk.",
-    falseStatement: "Autonomous agents are typically safest when run without stopping conditions or ongoing monitoring.",
-    trueExplanation: "The content links autonomy to stronger control requirements.",
-    falseExplanation: "Unbounded autonomy conflicts with the lesson's guardrail model.",
-  },
-  {
-    keywords: ["workflow", "rollout", "adoption", "change", "roadmap", "execution"],
-    briefParagraphs: [
-      "Operational gains from AI depend on workflow redesign and adoption sequencing, not just tool access.",
-      "Change execution improves when review rhythms, role ownership, and support mechanisms are explicit.",
-      "This card frames implementation as a systems problem where process quality determines sustained outcomes.",
-    ],
-    trueStatement: "Sustained AI adoption depends on workflow design, ownership, and staged execution.",
-    falseStatement: "Rapid tool distribution alone is usually enough for successful AI adoption.",
-    trueExplanation: "The lesson ties implementation quality to process and governance.",
-    falseExplanation: "Tool access without process design tends to increase variance and rework.",
-  },
-]
-
 function getModuleIdFromScope(scopeKey: string) {
   const [pathFragment] = scopeKey.split("::")
   const moduleMatch = pathFragment.match(/module-\d+/)
-  return moduleMatch?.[0] ?? null
+  return moduleMatch ? moduleMatch[0] : null
 }
 
 function getSectionIdFromScope(scopeKey: string) {
   const [, sectionId] = scopeKey.split("::")
-  return sectionId?.trim() || null
+  const trimmedSectionId = sectionId?.trim()
+  return trimmedSectionId && trimmedSectionId.length > 0 ? trimmedSectionId : null
 }
 
 function getScopeContext(scopeKey: string): ScopeContext {
@@ -187,7 +117,7 @@ function pickSectionKnowledgePattern(normalizedContext: string) {
   let bestPattern: SectionKnowledgePattern | null = null
   let bestScore = 0
 
-  for (const pattern of sectionKnowledgePatterns) {
+  for (const pattern of SECTION_KNOWLEDGE_PATTERNS) {
     const matches = pattern.keywords.filter((keyword) => normalizedContext.includes(keyword)).length
     if (matches > bestScore) {
       bestScore = matches
@@ -199,7 +129,7 @@ function pickSectionKnowledgePattern(normalizedContext: string) {
 }
 
 function pickCardPattern(normalizedContext: string, cardSeed: number) {
-  const matchedPatterns = sectionKnowledgePatterns.filter((pattern) =>
+  const matchedPatterns = SECTION_KNOWLEDGE_PATTERNS.filter((pattern) =>
     pattern.keywords.some((keyword) => normalizedContext.includes(keyword))
   )
 
@@ -385,15 +315,36 @@ function buildSectionCardKnowledge(scopeKey: string, title?: string, content?: s
   }
 
   const sectionTitle = sectionData.title.trim()
-  const sectionSummary = toSentence(sectionData.summary?.trim() || `This section explains ${sectionTitle.toLowerCase()}`)
+  const rawSectionSummary = sectionData.summary?.trim()
+  if (!rawSectionSummary) {
+    return null
+  }
+
+  const sectionSummary = toSentence(rawSectionSummary)
   const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
-  const cardTitle = title?.trim() || "This component card"
-  const cardLead = extractSentences(content)[0] || sectionSummary
+  const cardTitle = title?.trim()
+  if (!cardTitle) {
+    return null
+  }
+
+  const cardLead = extractSentences(content)[0]
+  if (!cardLead) {
+    return null
+  }
+
   const cardSeed = hashString(`${scopeKey}::${cardTitle}::${cardLead}`)
   const normalizedContext = [sectionTitle, sectionSummary, cardTitle, cardLead].join(" ").toLowerCase()
-  const matchedPattern = pickCardPattern(normalizedContext, cardSeed) ?? pickSectionKnowledgePattern(normalizedContext)
+  const matchedPattern = pickCardPattern(normalizedContext, cardSeed)
+  if (!matchedPattern) {
+    return null
+  }
+
   const focusTerms = extractCardFocusTerms(`${cardTitle} ${cardLead}`)
-  const focusPhrase = focusTerms.length > 0 ? focusTerms.join(", ") : "decision criteria, evidence quality, and implementation constraints"
+  if (focusTerms.length === 0) {
+    return null
+  }
+
+  const focusPhrase = focusTerms.join(", ")
 
   const titleTrueStatement = createSectionTitleTrueStatement(sectionTitle)
   const titleFalseStatement = createSectionTitleFalseStatement(sectionTitle)
@@ -403,20 +354,18 @@ function buildSectionCardKnowledge(scopeKey: string, title?: string, content?: s
   const leadTrueStatement = `The core claim in this card is that ${toSentence(cardLead).replace(/[.!?]$/, "")}.`
   const leadFalseStatement = `${toSentence(cardLead).replace(/[.!?]$/, "")} is not important for AI decision quality.`
 
-  const patternStatements: InferentialStatement[] = matchedPattern
-    ? [
-        {
-          statement: matchedPattern.trueStatement,
-          explanation: matchedPattern.trueExplanation,
-          isTrue: true,
-        },
-        {
-          statement: matchedPattern.falseStatement,
-          explanation: matchedPattern.falseExplanation,
-          isTrue: false,
-        },
-      ]
-    : []
+  const patternStatements: InferentialStatement[] = [
+    {
+      statement: matchedPattern.trueStatement,
+      explanation: matchedPattern.trueExplanation,
+      isTrue: true,
+    },
+    {
+      statement: matchedPattern.falseStatement,
+      explanation: matchedPattern.falseExplanation,
+      isTrue: false,
+    },
+  ]
 
   const statements: InferentialStatement[] = [
     {
@@ -464,11 +413,7 @@ function buildSectionCardKnowledge(scopeKey: string, title?: string, content?: s
 
   const baseBriefParagraphs = [
     `Section context: ${sectionTitle}. Core idea: ${sectionSummary}`,
-    ...(matchedPattern?.briefParagraphs || [
-      "In formal argument analysis, statements are evaluated through claim structure, evidence relevance, and inferential validity rather than rhetorical confidence.",
-      "Strong interpretation preserves scope and conditions: limited observations cannot justify universal conclusions, and correlation alone does not establish causality.",
-      "The educational objective of this card is conceptual transfer from text to action, so claims should remain faithful to the section's stated limits and purpose.",
-    ]),
+    ...matchedPattern.briefParagraphs,
     `Card focus: ${toSentence(cardLead)} Priority concepts in this card include ${focusPhrase}.`,
     `Interpret this card as applied guidance connected to ${moduleTitle}, not as isolated wording practice.`,
   ]
@@ -507,7 +452,7 @@ function hydrateUsedStatementsFromStorage() {
       }
     }
   } catch {
-    // Ignore malformed storage and fall back to in-memory state.
+    // Ignore malformed storage and keep current in-memory state.
   }
 }
 
@@ -536,7 +481,7 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
 
   hydrateUsedStatementsFromStorage()
 
-  const usedScopeKey = scopeKey.split("::")[0] || scopeKey
+  const [usedScopeKey] = scopeKey.split("::")
 
   if (!usedStatementsByScope.has(usedScopeKey)) {
     usedStatementsByScope.set(usedScopeKey, new Set<string>())
@@ -556,226 +501,44 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
     }
   }
 
-  const fallbackCandidate = candidates[startIndex]
-  usedStatements.add(fallbackCandidate.statement)
+  usedStatements.clear()
+  const recycledCandidate = candidates[startIndex]
+  usedStatements.add(recycledCandidate.statement)
   persistUsedStatementsToStorage()
-  statementByScopeAndInstance.set(assignmentKey, fallbackCandidate)
-  return fallbackCandidate
+  statementByScopeAndInstance.set(assignmentKey, recycledCandidate)
+  return recycledCandidate
 }
 
 function pickInferentialStatement(title: string | undefined, content: string | undefined, sourceText: string, scopeKey: string, instanceKey: string) {
   const normalized = sourceText.toLowerCase()
 
-  const sectionStatements = buildSectionCardKnowledge(scopeKey, title, content)?.statements
-  if (sectionStatements) {
-    return pickUnusedStatement(sectionStatements, sourceText, scopeKey, instanceKey)
+  const sectionKnowledge = buildSectionCardKnowledge(scopeKey, title, content)
+  if (!sectionKnowledge) {
+    throw new Error("Unable to generate section knowledge without complete context.")
   }
 
-  const sectionBanks: Array<{ keywords: string[]; statements: InferentialStatement[] }> = [
-    {
-      keywords: [
-        "types of ai",
-        "types-of-ai",
-        "ani",
-        "agi",
-        "asi",
-        "three levels",
-        "narrow ai",
-        "defining ai",
-        "defining-ai",
-        "brief history",
-        "brief-history",
-      ],
-      statements: [
-        {
-          statement: "Researchers commonly distinguish narrow AI, AGI, and ASI, but only narrow AI is widely deployed today.",
-          explanation: "Current real-world systems are mostly task-specific narrow AI.",
-          isTrue: true,
-        },
-        {
-          statement: "AGI is already the default type of AI used in everyday apps.",
-          explanation: "This is not accurate. Everyday applications are mainly narrow AI.",
-          isTrue: false,
-        },
-      ],
-    },
-    {
-      keywords: ["myths", "myths vs", "myths-vs-reality", "reality", "hype"],
-      statements: [
-        {
-          statement: "Separating AI myths from reality helps teams make better implementation decisions.",
-          explanation: "Clear understanding prevents unrealistic expectations and poor planning.",
-          isTrue: true,
-        },
-        {
-          statement: "Most AI myths are harmless and do not affect business or learning choices.",
-          explanation: "Myths can distort priorities, risk assessment, and tool selection.",
-          isTrue: false,
-        },
-      ],
-    },
-    {
-      keywords: ["choosing the right tool", "choosing-tools", "tool selection", "tool-selection", "choose the right ai tool"],
-      statements: [
-        {
-          statement: "Good tool selection starts with the task requirements, not with which tool is currently trending.",
-          explanation: "Fit-for-purpose tool choice usually outperforms popularity-driven choice.",
-          isTrue: true,
-        },
-        {
-          statement: "Using one AI tool for every task is always the most effective strategy.",
-          explanation: "Different tasks benefit from different capabilities and controls.",
-          isTrue: false,
-        },
-      ],
-    },
-    {
-      keywords: [
-        "what is machine learning",
-        "what-is-ml",
-        "training data",
-        "training-data",
-        "supervised",
-        "unsupervised",
-        "supervised-unsupervised",
-        "neural networks",
-        "neural-networks",
-        "what ai can't do",
-        "what-ai-cant-do",
-        "data quality",
-        "data cleaning",
-        "data-cleaning",
-        "preprocessing",
-        "feature engineering",
-        "feature-engineering",
-      ],
-      statements: [
-        {
-          statement: "Training data quality is a major driver of model quality.",
-          explanation: "Poor data quality can limit performance regardless of model size.",
-          isTrue: true,
-        },
-        {
-          statement: "Preprocessing can be skipped safely because modern models auto-correct bad input data.",
-          explanation: "Preprocessing remains important for consistency and accuracy.",
-          isTrue: false,
-        },
-      ],
-    },
-  ]
-
-  const inferredBanks: Array<{ keywords: string[]; statements: InferentialStatement[] }> = [
-    {
-      keywords: ["module 0", "welcome", "why ai matters", "day in your life", "transformation arc", "how to take this course", "next steps"],
-      statements: [
-        {
-          statement: "AI literacy is becoming a practical workplace skill, not just a technical specialty.",
-          explanation: "The opening module frames AI as relevant to daily work and decisions.",
-          isTrue: true,
-        },
-        {
-          statement: "This course is designed only for professional developers with prior coding experience.",
-          explanation: "The welcome content is intended for broad learners, including beginners.",
-          isTrue: false,
-        },
-      ],
-    },
-    {
-      keywords: ["module 1", "defining ai", "brief history", "types of ai", "myths vs. reality", "writing assistants", "image generation", "choosing tools", "narrow ai", "agi", "asi"],
-      statements: [
-        {
-          statement: "Only one level of AI is widely deployed today, while stronger forms remain mostly theoretical.",
-          explanation: "Current systems are mainly narrow AI built for specific tasks.",
-          isTrue: true,
-        },
-        {
-          statement: "AI is a single technology category, so tool choice does not depend on the task.",
-          explanation: "Different AI tools fit different goals and constraints.",
-          isTrue: false,
-        },
-      ],
-    },
-  ]
-
-  const allBanks = [...sectionBanks, ...inferredBanks]
-  let bestScore = -1
-  let bestBankIndex = -1
-
-  for (let bankIndex = 0; bankIndex < allBanks.length; bankIndex += 1) {
-    const matchedKeywords = allBanks[bankIndex].keywords.filter((keyword) => normalized.includes(keyword))
-    const matches = matchedKeywords.length
-    const longestMatchLength = matchedKeywords.reduce((maxLength, keyword) => Math.max(maxLength, keyword.length), 0)
-    const score = matches * 100 + longestMatchLength
-
-    if (score > bestScore) {
-      bestScore = score
-      bestBankIndex = bankIndex
-    }
-  }
-
-  if (bestScore >= 100 && bestBankIndex >= 0) {
-    return pickUnusedStatement(allBanks[bestBankIndex].statements, sourceText, scopeKey, instanceKey)
-  }
-
-  const fallbackStatements: InferentialStatement[] = [
-    {
-      statement: "Reliable AI outcomes improve when teams test prompts and workflows incrementally.",
-      explanation: "Iterative testing surfaces issues early and improves consistency.",
-      isTrue: true,
-    },
-    {
-      statement: "A single impressive demo is enough to prove an AI system is ready for production.",
-      explanation: "Production readiness needs repeated validation across edge cases.",
-      isTrue: false,
-    },
-  ]
-
-  const firstSentence = sourceText
-    .split(/[.!?\n]/)
-    .map((sentence) => sentence.trim())
-    .find((sentence) => sentence.length > 20)
-
-  if (firstSentence) {
-    const cleaned = firstSentence.replace(/\s+/g, " ").trim()
-    const contextualCandidates: InferentialStatement[] = [
-      {
-        statement: `This section emphasizes that ${toSentence(cleaned).replace(/[.!?]$/, "")}.`,
-        explanation: "The statement mirrors the central claim introduced in this section.",
-        isTrue: true,
-      },
-      {
-        statement: `${toSentence(cleaned).replace(/[.!?]$/, "")} is not important when designing AI workflows.`,
-        explanation: "The section presents this idea as important, not optional.",
-        isTrue: false,
-      },
-      ...fallbackStatements,
-    ]
-
-    return pickUnusedStatement(contextualCandidates, sourceText, scopeKey, instanceKey)
-  }
-
-  return pickUnusedStatement(fallbackStatements, sourceText, scopeKey, instanceKey)
+  const sectionStatements = sectionKnowledge.statements
+  return pickUnusedStatement(sectionStatements, sourceText, scopeKey, instanceKey)
 }
 
 export function getTextDisplayInstructionalBriefParagraphs(scopeKey: string, title?: string, content?: string) {
   const knowledge = buildSectionCardKnowledge(scopeKey, title, content)
-  if (knowledge) {
-    return knowledge.briefParagraphs
+  if (!knowledge) {
+    throw new Error("Instructional brief requires complete section and card context.")
   }
 
-  return [
-    `Section context: ${title?.trim() || "the current lesson"}. Core idea: ${toSentence(extractSentences(content)[0] || "this lesson provides decision-relevant concepts for applied AI work")}`,
-    "In formal argument analysis, statements are evaluated by claim structure, evidential support, and inferential validity rather than by persuasive tone.",
-    "Reliable educational reasoning preserves scope and conditions: limited observations cannot be expanded into universal rules, and correlation cannot be presented as causation without additional support.",
-    "Treat each challenge item as a compact argument. A statement is acceptable only when its subject, conditions, mechanism, and certainty level remain consistent with the lesson text.",
-  ]
+  return knowledge.briefParagraphs
 }
 
-export function getTextDisplayTrueFalseStatement(title: string | undefined, content: string | undefined, scopeKey = "global", instanceKey = "default") {
-  const source = [title, content]
+export function getTextDisplayTrueFalseStatement(title: string | undefined, content: string | undefined, scopeKey: string, instanceKey: string) {
+  const sourceParts = [title, content]
     .filter((part): part is string => Boolean(part && part.trim().length > 0))
-    .join("\n") || "AI systems require human judgment"
-  const statementData = pickInferentialStatement(title, content, `${title ?? ""} ${source}`, scopeKey, instanceKey)
+  if (sourceParts.length === 0) {
+    throw new Error("True/false statement generation requires title or content.")
+  }
+
+  const source = sourceParts.join("\n")
+  const statementData = pickInferentialStatement(title, content, `${title ? `${title} ` : ""}${source}`, scopeKey, instanceKey)
 
   return {
     statement: toSentence(statementData.statement),

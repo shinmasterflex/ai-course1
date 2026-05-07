@@ -44,7 +44,7 @@ export default function DebugAuthPage() {
     
     setResult({
       currentSession: data.session ? 'Active session found' : 'No active session',
-      user: data.session?.user?.email || 'Not logged in',
+      user: data.session?.user?.email ? data.session.user.email : 'Not logged in',
       error: error?.message,
     })
   }
