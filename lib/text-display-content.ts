@@ -1,77 +1,5 @@
-import { courseStructure } from "@/lib/course-structure"
-import { extractSentences, hashString, toSentence } from "@/lib/text-content-utils"
-
-export type SectionKnowledgePattern = {
-  keywords: string[]
-  briefParagraphs: string[]
-  trueStatement: string
-  falseStatement: string
-  trueExplanation: string
-  falseExplanation: string
-}
-
-export const SECTION_KNOWLEDGE_PATTERNS: SectionKnowledgePattern[] = [
-  {
-    keywords: ["model", "tool", "automation", "agent", "taxonomy", "category"],
-    briefParagraphs: [
-      "A rigorous taxonomy reduces category errors by separating concepts that behave differently in practice. Distinguishing model capability from product behavior is a core analytical skill.",
-      "In comparative evaluation, category clarity improves decision quality because options become commensurable across cost, control, integration burden, and risk.",
-      "This card should be read as conceptual infrastructure for later decisions, not as isolated terminology.",
-    ],
-    trueStatement: "Clear category boundaries improve AI decisions by making trade-offs explicit.",
-    falseStatement: "Different AI categories can be treated as interchangeable with little impact on decision quality.",
-    trueExplanation: "The lesson treats category distinctions as decision-critical, not cosmetic.",
-    falseExplanation: "Interchangeability hides material differences in capability, risk, and implementation effort.",
-  },
-  {
-    keywords: ["roi", "metric", "impact", "baseline", "measurement", "value"],
-    briefParagraphs: [
-      "Educationally sound ROI analysis links outcomes to baselines and context. Metrics without baseline comparison are weak evidence for improvement.",
-      "Measurement systems should include adoption effort, quality effects, and risk-adjusted outcomes to avoid overstating value.",
-      "This card contributes to evidence literacy by clarifying what counts as valid performance proof.",
-    ],
-    trueStatement: "Outcome-linked metrics with baseline comparison provide stronger evidence than activity counts alone.",
-    falseStatement: "High usage activity is usually sufficient to prove business value, even without outcome metrics.",
-    trueExplanation: "The content prioritizes evidence quality and measurement validity.",
-    falseExplanation: "Usage intensity is not equivalent to demonstrated impact.",
-  },
-  {
-    keywords: ["risk", "safety", "privacy", "bias", "misinformation", "governance"],
-    briefParagraphs: [
-      "Risk governance is a design-time responsibility. Controls are most effective when embedded before scale, not appended after incidents.",
-      "Bias, privacy, and misinformation checks address different failure modes and should be treated as complementary safeguards.",
-      "This card teaches preventive control logic: utility does not override safety obligations.",
-    ],
-    trueStatement: "Responsible AI deployment requires preventive controls for bias, privacy, and harmful output risks.",
-    falseStatement: "If AI output is useful, governance checks can usually be deferred until after rollout.",
-    trueExplanation: "The lesson emphasizes preventive control architecture.",
-    falseExplanation: "Usefulness does not replace governance duties or risk review.",
-  },
-  {
-    keywords: ["agent", "autonomy", "loop", "guardrail", "stopping", "monitoring"],
-    briefParagraphs: [
-      "Agentic systems add iterative autonomy, which expands both capability and potential failure surface.",
-      "Control design for agents requires bounded objectives, permission limits, and explicit stopping conditions.",
-      "This card positions monitoring as a structural requirement for safe agent operation.",
-    ],
-    trueStatement: "Agent workflows need bounded goals and monitoring because autonomy increases both power and risk.",
-    falseStatement: "Autonomous agents are typically safest when run without stopping conditions or ongoing monitoring.",
-    trueExplanation: "The content links autonomy to stronger control requirements.",
-    falseExplanation: "Unbounded autonomy conflicts with the lesson's guardrail model.",
-  },
-  {
-    keywords: ["workflow", "rollout", "adoption", "change", "roadmap", "execution"],
-    briefParagraphs: [
-      "Operational gains from AI depend on workflow redesign and adoption sequencing, not just tool access.",
-      "Change execution improves when review rhythms, role ownership, and support mechanisms are explicit.",
-      "This card frames implementation as a systems problem where process quality determines sustained outcomes.",
-    ],
-    trueStatement: "Sustained AI adoption depends on workflow design, ownership, and staged execution.",
-    falseStatement: "Rapid tool distribution alone is usually enough for successful AI adoption.",
-    trueExplanation: "The lesson ties implementation quality to process and governance.",
-    falseExplanation: "Tool access without process design tends to increase variance and rework.",
-  },
-]
+import { courseStructure, SECTION_KNOWLEDGE_PATTERNS, type SectionKnowledgePattern } from "@/lib/course-content"
+import { hashString, toSentence } from "@/lib/text-content-utils"
 
 export interface InferentialStatement {
   statement: string
@@ -373,57 +301,63 @@ function createSectionTitleFalseStatement(sectionTitle: string) {
   return `${sectionTitle} adds little practical value because AI decisions usually work out without this level of reasoning.`
 }
 
-function buildSectionCardKnowledge(scopeKey: string, title?: string, content?: string): SectionCardKnowledge | null {
+function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
+  const fallbackPattern = SECTION_KNOWLEDGE_PATTERNS[hashString(scopeKey) % SECTION_KNOWLEDGE_PATTERNS.length]
+
+  const fallbackKnowledge: SectionCardKnowledge = {
+    briefParagraphs: [
+      "Section context is unavailable, so this card uses the default hardcoded course guidance.",
+      "Interpret this interaction as a quick comprehension check tied to practical AI decision quality.",
+      fallbackPattern.briefParagraphs[0],
+      fallbackPattern.briefParagraphs[1],
+    ],
+    statements: [
+      {
+        statement: fallbackPattern.trueStatement,
+        explanation: fallbackPattern.trueExplanation,
+        isTrue: true,
+      },
+      {
+        statement: fallbackPattern.falseStatement,
+        explanation: fallbackPattern.falseExplanation,
+        isTrue: false,
+      },
+      {
+        statement: "Clear section objectives improve AI decisions by making trade-offs explicit before execution.",
+        explanation: "The course consistently emphasizes practical clarity before rollout.",
+        isTrue: true,
+      },
+      {
+        statement: "AI rollout quality usually depends only on tool selection, not on workflow, ownership, or review.",
+        explanation: "The curriculum treats process design and review controls as essential implementation factors.",
+        isTrue: false,
+      },
+    ],
+  }
+
   const { moduleId, sectionId } = getScopeContext(scopeKey)
   if (!moduleId || !sectionId) {
-    return null
+    return fallbackKnowledge
   }
 
   const moduleData = courseStructure.modules.find((module) => module.id === moduleId)
   const sectionData = moduleData?.sections.find((section) => section.id === sectionId)
   if (!moduleData || !sectionData) {
-    return null
+    return fallbackKnowledge
   }
 
   const sectionTitle = sectionData.title.trim()
-  const rawSectionSummary = sectionData.summary?.trim()
-  if (!rawSectionSummary) {
-    return null
-  }
-
+  const rawSectionSummary = sectionData.summary?.trim() || `${sectionTitle} improves practical AI decision quality.`
   const sectionSummary = toSentence(rawSectionSummary)
   const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
-  const cardTitle = title?.trim()
-  if (!cardTitle) {
-    return null
-  }
-
-  const cardLead = extractSentences(content)[0]
-  if (!cardLead) {
-    return null
-  }
-
-  const cardSeed = hashString(`${scopeKey}::${cardTitle}::${cardLead}`)
-  const normalizedContext = [sectionTitle, sectionSummary, cardTitle, cardLead].join(" ").toLowerCase()
-  const matchedPattern = pickCardPattern(normalizedContext, cardSeed)
-  if (!matchedPattern) {
-    return null
-  }
-
-  const focusTerms = extractCardFocusTerms(`${cardTitle} ${cardLead}`)
-  if (focusTerms.length === 0) {
-    return null
-  }
-
-  const focusPhrase = focusTerms.join(", ")
+  const cardSeed = hashString(`${moduleId}::${sectionId}`)
+  const normalizedContext = [sectionTitle, sectionSummary, moduleTitle].join(" ").toLowerCase()
+  const matchedPattern = pickSectionKnowledgePattern(normalizedContext)
+    ?? SECTION_KNOWLEDGE_PATTERNS[cardSeed % SECTION_KNOWLEDGE_PATTERNS.length]
 
   const titleTrueStatement = createSectionTitleTrueStatement(sectionTitle)
   const titleFalseStatement = createSectionTitleFalseStatement(sectionTitle)
   const summaryFalseStatement = createSectionFalseStatement(sectionTitle, sectionSummary)
-  const cardTrueStatement = `${cardTitle} reinforces the practical meaning of ${sectionTitle.toLowerCase()} in real AI work.`
-  const cardFalseStatement = `${cardTitle} is mostly theoretical and does not materially influence implementation decisions.`
-  const leadTrueStatement = `The core claim in this card is that ${toSentence(cardLead).replace(/[.!?]$/, "")}.`
-  const leadFalseStatement = `${toSentence(cardLead).replace(/[.!?]$/, "")} is not important for AI decision quality.`
 
   const patternStatements: InferentialStatement[] = [
     {
@@ -459,33 +393,13 @@ function buildSectionCardKnowledge(scopeKey: string, title?: string, content?: s
       explanation: `The section summary points in the opposite direction. ${sectionTitle} is meant to sharpen applied judgment, not bypass it.`,
       isTrue: false,
     },
-    {
-      statement: cardTrueStatement,
-      explanation: `${cardTitle} extends the section concept into a concrete decision context.`,
-      isTrue: true,
-    },
-    {
-      statement: cardFalseStatement,
-      explanation: `The card is positioned to inform action, not to remain detached from implementation.`,
-      isTrue: false,
-    },
-    {
-      statement: leadTrueStatement,
-      explanation: "This mirrors the central emphasis of the current component card text.",
-      isTrue: true,
-    },
-    {
-      statement: leadFalseStatement,
-      explanation: "The card presents this concept as decision-relevant rather than optional.",
-      isTrue: false,
-    },
     ...patternStatements,
   ]
 
   const baseBriefParagraphs = [
     `Section context: ${sectionTitle}. Core idea: ${sectionSummary}`,
+    `Module context: ${moduleTitle}. Apply this section to practical choices, not abstract recall.`,
     ...matchedPattern.briefParagraphs,
-    `Card focus: ${toSentence(cardLead)} Priority concepts in this card include ${focusPhrase}.`,
     `Interpret this card as applied guidance connected to ${moduleTitle}, not as isolated wording practice.`,
   ]
 
@@ -581,34 +495,20 @@ function pickUnusedStatement(candidates: InferentialStatement[], sourceText: str
 }
 
 function pickInferentialStatement(title: string | undefined, content: string | undefined, sourceText: string, scopeKey: string, instanceKey: string) {
-  const normalized = sourceText.toLowerCase()
-
-  const sectionKnowledge = buildSectionCardKnowledge(scopeKey, title, content)
-  if (!sectionKnowledge) {
-    throw new Error("Unable to generate section knowledge without complete context.")
-  }
+  const sectionKnowledge = buildSectionCardKnowledge(scopeKey)
 
   const sectionStatements = sectionKnowledge.statements
   return pickUnusedStatement(sectionStatements, sourceText, scopeKey, instanceKey)
 }
 
 export function getTextDisplayInstructionalBriefParagraphs(scopeKey: string, title?: string, content?: string) {
-  const knowledge = buildSectionCardKnowledge(scopeKey, title, content)
-  if (!knowledge) {
-    throw new Error("Instructional brief requires complete section and card context.")
-  }
-
-  return knowledge.briefParagraphs
+  return buildSectionCardKnowledge(scopeKey).briefParagraphs
 }
 
 export function getTextDisplayTrueFalseStatement(title: string | undefined, content: string | undefined, scopeKey: string, instanceKey: string) {
   const sourceParts = [title, content]
     .filter((part): part is string => Boolean(part && part.trim().length > 0))
-  if (sourceParts.length === 0) {
-    throw new Error("True/false statement generation requires title or content.")
-  }
-
-  const source = sourceParts.join("\n")
+  const source = sourceParts.length > 0 ? sourceParts.join("\n") : scopeKey
   const statementData = pickInferentialStatement(title, content, `${title ? `${title} ` : ""}${source}`, scopeKey, instanceKey)
 
   return {
@@ -617,3 +517,4 @@ export function getTextDisplayTrueFalseStatement(title: string | undefined, cont
     isTrue: statementData.isTrue,
   }
 }
+

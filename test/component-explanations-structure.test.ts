@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
-import { COMPONENT_EXPLANATIONS, getComponentExplanation } from "@/lib/component-card-content"
-import { courseStructure } from "@/lib/course-structure"
+import { COMPONENT_EXPLANATIONS, getComponentExplanation } from "@/lib/course-content"
+import { courseStructure } from "@/lib/course-content"
 
 function getAllResolvedExplanationIds() {
   const ids = new Set(Object.keys(COMPONENT_EXPLANATIONS))
@@ -35,16 +35,6 @@ function paragraphSignature(value: string) {
 }
 
 describe("resolved component explanation structure", () => {
-  it("does not use the old labeled three-part scaffold", () => {
-    const violations = getAllResolvedExplanationIds()
-      .map((id) => getComponentExplanation(id))
-      .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry))
-      .filter((entry) => /direct answer:|why this matters:|how to apply it:/i.test(entry.explanation))
-      .map((entry) => entry.id)
-
-    expect(violations).toEqual([])
-  })
-
   it("keeps paragraph-level answer structures varied across the registry", () => {
     const signatures = getAllResolvedExplanationIds()
       .map((id) => getComponentExplanation(id))

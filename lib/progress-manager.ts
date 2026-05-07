@@ -4,7 +4,7 @@
  * Syncs with Prisma Progress model via /api/progress
  */
 
-import { courseStructure } from "./course-structure"
+import { courseStructure } from "./course-content"
 import { createClient } from "./supabase"
 
 // Storage key for session caching
@@ -378,3 +378,4 @@ export async function resetAllProgress(): Promise<void> {
     console.error("[Progress] Failed to reset progress:", error)
   }
 }
+

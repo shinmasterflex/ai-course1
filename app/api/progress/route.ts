@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { prisma } from '@/lib/prisma'
-import { courseStructure } from '@/lib/course-structure'
+import { courseStructure } from '@/lib/course-content'
 
 export const runtime = 'nodejs'
 

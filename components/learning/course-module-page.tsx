@@ -13,8 +13,8 @@ import { Button } from "@/components/ui/button"
 import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { moduleQuizData } from "@/lib/module-quiz-data"
-import { getComponentExplanation, getSectionLearningContent } from "@/lib/component-card-content"
+import { moduleQuizData } from "@/lib/course-content"
+import { getComponentExplanation, getSectionLearningContent } from "@/lib/course-content"
 
 type CourseModulePageProps = {
   moduleId: string
@@ -151,11 +151,11 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   }
 
   const completionReady = completedSectionIds.length === totalSections
-  const sectionLearningContent = getSectionLearningContent(moduleId, currentSection?.id)
+  const content = getSectionLearningContent(moduleId, currentSection?.id)
 
   const sectionExplainerBaseId = currentSection ? `${moduleId}-${currentSection.id}` : undefined
   const componentCards: ComponentCardContent | null = useMemo(() => {
-    if (!currentSection || !sectionLearningContent || !sectionExplainerBaseId) {
+    if (!currentSection || !content || !sectionExplainerBaseId) {
       return null
     }
 
@@ -173,43 +173,43 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
     return {
       scenario: {
-        title: sectionLearningContent.scenarioTitle,
-        body: sectionLearningContent.scenarioBody,
-        checklistTitle: sectionLearningContent.checklistTitle,
-        checklistItems: sectionLearningContent.checklistItems,
+        title: content.scenarioTitle,
+        body: content.scenarioBody,
+        checklistTitle: content.checklistTitle,
+        checklistItems: content.checklistItems,
         explainer: {
           type: "Scenario card",
-          title: sectionLearningContent.scenarioTitle,
+          title: content.scenarioTitle,
           explanation: buildScenarioCardExplanation(
             module.title,
             currentSection.title,
-            sectionLearningContent.scenarioTitle,
-            sectionLearningContent.scenarioBody,
-            sectionLearningContent.checklistTitle,
-            sectionLearningContent.checklistItems,
+            content.scenarioTitle,
+            content.scenarioBody,
+            content.checklistTitle,
+            content.checklistItems,
             scenarioMergedExplanation,
           ),
         },
       },
       quickCheck: {
-        prompt: sectionLearningContent.quickCheckPrompt,
-        options: sectionLearningContent.quickCheckOptions,
-        correctOptionId: sectionLearningContent.quickCheckCorrectOptionId,
-        explanation: sectionLearningContent.quickCheckExplanation,
-        optionExplanations: sectionLearningContent.quickCheckOptionExplanations,
+        prompt: content.quickCheckPrompt,
+        options: content.quickCheckOptions,
+        correctOptionId: content.quickCheckCorrectOptionId,
+        explanation: content.quickCheckExplanation,
+        optionExplanations: content.quickCheckOptionExplanations,
         explainer: {
           type: "Checkpoint card",
           title: `Quick check: ${currentSection.title}`,
           explanation: buildQuickCheckCardExplanation(
             currentSection.title,
-            sectionLearningContent.quickCheckPrompt,
-            sectionLearningContent.quickCheckOptions,
+            content.quickCheckPrompt,
+            content.quickCheckOptions,
             quickCheckMergedExplanation,
           ),
         },
       },
     }
-  }, [currentSection, module.title, sectionExplainerBaseId, sectionLearningContent])
+  }, [currentSection, module.title, sectionExplainerBaseId, content])
 
   return (
     <div className="min-h-screen bg-background">
@@ -319,5 +319,6 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
     </div>
   )
 }
+
 
 

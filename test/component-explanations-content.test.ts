@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { COMPONENT_EXPLANATIONS } from "@/lib/component-card-content"
+import { COMPONENT_EXPLANATIONS } from "@/lib/course-content"
 
 const BANNED_PATTERNS = [
   /\bmechanism\s*:/i,
@@ -260,3 +260,4 @@ describe("component explanations content quality", () => {
     expect(repeated).toEqual([])
   })
 })
+

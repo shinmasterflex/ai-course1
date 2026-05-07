@@ -11,7 +11,7 @@ import { PublicHeader } from "@/components/layout/public-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, CheckCircle2, CircuitBoard, Sparkles } from "lucide-react"
-import { getCourseStructure } from "@/lib/course-structure"
+import { getCourseStructure } from "@/lib/course-content"
 
 export default function HomePage() {
   const modules = getCourseStructure().modules
@@ -208,3 +208,4 @@ export default function HomePage() {
     </div>
   )
 }
+

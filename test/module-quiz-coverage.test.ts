@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
-import { courseStructure } from "@/lib/course-structure"
-import { moduleQuizData } from "@/lib/module-quiz-data"
+import { courseStructure } from "@/lib/course-content"
+import { moduleQuizData } from "@/lib/course-content"
 
 describe("module quiz coverage", () => {
   it("keeps module-quiz as the final section for modules 1-10", () => {
@@ -37,3 +37,4 @@ describe("module quiz coverage", () => {
     expect(modulesWithDuplicateKeys).toEqual([])
   })
 })
+

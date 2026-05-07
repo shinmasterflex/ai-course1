@@ -3,7 +3,7 @@
 import { useRef, useState, type PointerEvent, type ReactNode } from "react"
 import { Blocks, Clock3, Layers3, MousePointerClick, Sparkles } from "lucide-react"
 import { Card } from "@/components/ui/card"
-import { getComponentExplanation } from "@/lib/component-card-content"
+import { getComponentExplanation } from "@/lib/course-content"
 
 export type ExplainerDescriptor = {
   id?: string

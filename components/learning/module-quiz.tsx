@@ -6,7 +6,7 @@ import { CheckCircle2, Circle, XCircle } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import type { ModuleQuizQuestion } from "@/lib/module-quiz-data"
+import type { ModuleQuizQuestion } from "@/lib/course-content"
 
 type ModuleQuizProps<T extends string> = {
   questions: readonly ModuleQuizQuestion<T>[]
@@ -37,9 +37,9 @@ export function ModuleQuiz<T extends string>({ questions, results, onAnswer, com
   const explainerAttributes = getExplainerAttributes({
     type: "Comprehensive assessment",
     title: "Module mastery check",
-    explanation: `This quiz serves a specific purpose in your learning journey: consolidation. After engaging with interactive components, practicing techniques, and absorbing explanations, your brain needs a chance to retrieve all this knowledge in an integrated way. This is what a quiz doesâ€”it forces integration.
+    explanation: `This quiz serves a specific purpose in your learning journey: consolidation. After engaging with interactive components, practicing techniques, and absorbing explanations, your brain needs a chance to retrieve all this knowledge in an integrated way. This is what a quiz does?”it forces integration.
 
-Research on learning shows that quizzes are most powerful when you care about the feedback, not just the score. Each question here is designed to connect multiple concepts you've learned. When you see feedback, you're not just learning whether you were right or wrongâ€”you're seeing how your current mental model compares to the correct model.
+Research on learning shows that quizzes are most powerful when you care about the feedback, not just the score. Each question here is designed to connect multiple concepts you've learned. When you see feedback, you're not just learning whether you were right or wrong?”you're seeing how your current mental model compares to the correct model.
 
 If you struggle on certain questions, that struggle is valuable information. Those difficult questions reveal where your understanding is still forming. Return to those concepts and explore them differently. The productive struggle you experience here actually builds stronger, more flexible understanding than material that came easily.`,
   })
@@ -169,3 +169,4 @@ If you struggle on certain questions, that struggle is valuable information. Tho
     </div>
   )
 }
+

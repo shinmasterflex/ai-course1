@@ -4,7 +4,7 @@
  * API is the source of truth; in-memory state synced via debounced API calls
  */
 
-import { courseStructure } from "./course-structure"
+import { courseStructure } from "./course-content"
 import { createClient } from "./supabase"
 
 const STORAGE_KEY = "cognijin_progress"
@@ -519,3 +519,4 @@ class GlobalProgressManager {
 export const progressManager = new GlobalProgressManager()
 
 export const GlobalProgress = progressManager
+

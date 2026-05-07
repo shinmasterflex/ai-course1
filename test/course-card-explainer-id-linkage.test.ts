@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
-import { courseStructure } from "@/lib/course-structure"
-import { getComponentExplanation } from "@/lib/component-card-content"
+import { courseStructure } from "@/lib/course-content"
+import { getComponentExplanation } from "@/lib/course-content"
 
 describe("course card explainer id linkage", () => {
   it("links every section scenario card to an explanation entry", () => {
@@ -42,3 +42,4 @@ describe("course card explainer id linkage", () => {
     expect(missing).toEqual([])
   })
 })
+
