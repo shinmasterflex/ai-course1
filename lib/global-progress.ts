@@ -51,23 +51,25 @@ class GlobalProgressManager {
       }
     }
 
-    try {
-      // Load from server first
-      const response = await fetch("/api/progress", {
-        method: "GET",
-        credentials: "same-origin",
-      })
+    if (this.activeUserId) {
+      try {
+        // Load from server first for authenticated users.
+        const response = await fetch("/api/progress", {
+          method: "GET",
+          credentials: "same-origin",
+        })
 
-      if (response.ok) {
-        const data = await response.json()
-        const serverProgress = data.progress
+        if (response.ok) {
+          const data = await response.json()
+          const serverProgress = data.progress
 
-        if (serverProgress?.modules) {
-          this.mergeProgress({ modules: serverProgress.modules })
+          if (serverProgress?.modules) {
+            this.mergeProgress({ modules: serverProgress.modules })
+          }
         }
+      } catch (error) {
+        console.error("[Progress] Failed to load from server, using cache:", error)
       }
-    } catch (error) {
-      console.error("[Progress] Failed to load from server, using cache:", error)
     }
 
     // Load current position from localStorage (not critical for server sync)
@@ -335,6 +337,13 @@ class GlobalProgressManager {
   }
 
   private async syncToServer() {
+    if (!this.activeUserId) {
+      this.lastStableSnapshot = this.createSnapshot()
+      this.pendingRollbackSnapshot = null
+      localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), this.lastStableSnapshot)
+      return
+    }
+
     try {
       // Transform course structure to module-level progress
       const modules: Record<

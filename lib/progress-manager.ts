@@ -113,41 +113,34 @@ export async function loadProgress(): Promise<GlobalProgress> {
     return cachedProgress
   }
 
-  try {
-    // Try loading from server first
-    const response = await fetch("/api/progress", {
-      method: "GET",
-      credentials: "same-origin",
-    })
+  if (activeUserId) {
+    try {
+      // Try loading from server first for authenticated users.
+      const response = await fetch("/api/progress", {
+        method: "GET",
+        credentials: "same-origin",
+      })
 
-    if (response.ok) {
-      const data = await response.json()
-      const serverProgress = data.progress ? data.progress : initializeProgress()
-      
-      // Cache in memory and localStorage
-      cachedProgress = serverProgress
-      localStorage.setItem(getScopedStorageKey(), JSON.stringify(serverProgress))
-      
-      return serverProgress
+      if (response.ok) {
+        const data = await response.json()
+        const serverProgress = data.progress ? data.progress : initializeProgress()
+        
+        // Cache in memory and localStorage
+        cachedProgress = serverProgress
+        localStorage.setItem(getScopedStorageKey(), JSON.stringify(serverProgress))
+        
+        return serverProgress
+      }
+    } catch (error) {
+      console.error("[Progress] Failed to load from server:", error)
     }
+  }
 
-    // If unauthorized or error, use localStorage cache.
-    const stored = localStorage.getItem(getScopedStorageKey())
-    if (stored) {
-      const parsed = JSON.parse(stored) as GlobalProgress
-      cachedProgress = parsed
-      return parsed
-    }
-  } catch (error) {
-    console.error("[Progress] Failed to load from server:", error)
-    
-    // Use localStorage cache
-    const stored = localStorage.getItem(getScopedStorageKey())
-    if (stored) {
-      const parsed = JSON.parse(stored) as GlobalProgress
-      cachedProgress = parsed
-      return parsed
-    }
+  const stored = localStorage.getItem(getScopedStorageKey())
+  if (stored) {
+    const parsed = JSON.parse(stored) as GlobalProgress
+    cachedProgress = parsed
+    return parsed
   }
 
   const initializedProgress = initializeProgress()
@@ -174,6 +167,10 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
   }
 
   pendingSave = setTimeout(async () => {
+    if (!activeUserId) {
+      return
+    }
+
     try {
       // Transform to Prisma Progress format (module-level only)
       const modules: Record<

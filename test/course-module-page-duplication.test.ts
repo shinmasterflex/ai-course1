@@ -1,10 +1,9 @@
-import { readFileSync } from "node:fs"
-import { resolve } from "node:path"
 import { describe, expect, it } from "vitest"
+import { getCourseStructure, getSectionLearningContent } from "@/lib/course-content"
 
 type DuplicateHit = {
   moduleName: string
-  field: "scenarioBody" | "checklistItems" | "quickCheckOptions"
+  field: "sectionContent"
   normalizedValue: string
   samples: string[]
 }
@@ -39,13 +38,12 @@ function collectDuplicates(moduleName: string, field: DuplicateHit["field"], val
 }
 
 describe("course module page duplication", () => {
-  const sourcePath = resolve(process.cwd(), "components/learning/course-module-page.tsx")
-  const sourceText = readFileSync(sourcePath, "utf8")
-  const moduleBlockRegex =
-    /const (module\d+SectionLearningContent): Record<string, SectionLearningContent> = \{([\s\S]*?)\r?\n\}\r?\n\r?\n(?=const module\d+SectionLearningContent|export function CourseModulePage)/g
+  const courseStructure = getCourseStructure()
 
   it("parses all module learning-content objects", () => {
-    const moduleNames = [...sourceText.matchAll(moduleBlockRegex)].map((match) => match[1])
+    const moduleNames = courseStructure.modules
+      .filter((module) => module.sections.some((section) => Boolean(getSectionLearningContent(module.id, section.id))))
+      .map((module) => module.id)
 
     expect(moduleNames.length).toBe(11)
   })
@@ -53,21 +51,12 @@ describe("course module page duplication", () => {
   it("avoids duplicated high-signal learning copy within each module", () => {
     const duplicateHits: DuplicateHit[] = []
 
-    for (const match of sourceText.matchAll(moduleBlockRegex)) {
-      const moduleName = match[1]
-      const moduleBody = match[2]
+    for (const module of courseStructure.modules) {
+      const sectionContents = module.sections
+        .map((section) => getSectionLearningContent(module.id, section.id))
+        .filter((content): content is string => Boolean(content))
 
-      const scenarioBodies = [...moduleBody.matchAll(/scenarioBody:\s*"([^"]+)"/g)].map((hit) => hit[1])
-
-      const checklistItems = [...moduleBody.matchAll(/checklistItems:\s*\[([\s\S]*?)\]/g)]
-        .flatMap((hit) => [...hit[1].matchAll(/"([^"]+)"/g)].map((item) => item[1]))
-
-      const quickCheckOptionLabels = [...moduleBody.matchAll(/quickCheckOptions:\s*\[([\s\S]*?)\]/g)]
-        .flatMap((hit) => [...hit[1].matchAll(/label:\s*"([^"]+)"/g)].map((item) => item[1]))
-
-      duplicateHits.push(...collectDuplicates(moduleName, "scenarioBody", scenarioBodies))
-      duplicateHits.push(...collectDuplicates(moduleName, "checklistItems", checklistItems))
-      duplicateHits.push(...collectDuplicates(moduleName, "quickCheckOptions", quickCheckOptionLabels))
+      duplicateHits.push(...collectDuplicates(module.id, "sectionContent", sectionContents))
     }
 
     expect(duplicateHits).toEqual([])

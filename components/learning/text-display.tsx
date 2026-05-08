@@ -23,6 +23,7 @@ interface TextDisplayProps {
   interactive?: boolean
   xpReward?: number
   className?: string
+  scopeKey?: string
 }
 
 /**
@@ -125,6 +126,7 @@ export function TextDisplay({
   variant = "default",
   interactive = true,
   className,
+  scopeKey,
 }: TextDisplayProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -155,11 +157,11 @@ export function TextDisplay({
   const sectionId = searchParams?.get("section")
   const safePath = pathname ? pathname : ""
   const safeSectionId = sectionId ? sectionId : ""
-  const scopeKey = `${safePath}::${safeSectionId}`
-  const statementData = useMemo(() => getTextDisplayTrueFalseStatement(title, content, scopeKey, instanceId), [content, instanceId, scopeKey, title])
+  const resolvedScopeKey = scopeKey ?? `${safePath}::${safeSectionId}`
+  const statementData = useMemo(() => getTextDisplayTrueFalseStatement(title, content, resolvedScopeKey, instanceId), [content, instanceId, resolvedScopeKey, title])
   const dragPayload = statementData.statement
   const isCorrectDrop = dropTarget === null ? null : (dropTarget === "true") === statementData.isTrue
-  const instructionalBriefParagraphs = useMemo(() => getTextDisplayInstructionalBriefParagraphs(scopeKey, title, content), [content, scopeKey, title])
+  const instructionalBriefParagraphs = useMemo(() => getTextDisplayInstructionalBriefParagraphs(resolvedScopeKey, title, content), [content, resolvedScopeKey, title])
   const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
   const explainerAttributes = getExplainerAttributes({
     type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
@@ -170,7 +172,7 @@ export function TextDisplay({
   useEffect(() => {
     setDropTarget(null)
     setIsDragging(false)
-  }, [content, scopeKey, statementData.statement, title])
+  }, [content, resolvedScopeKey, statementData.statement, title])
 
   return (
     <div {...explainerAttributes} className={cn("p-6 rounded-lg", variantStyles[variant], className)}>

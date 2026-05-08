@@ -96,6 +96,8 @@ export function setupProgressSyncOnUnload(): () => void {
     // Try sendBeacon first (most reliable for unload), then sync XHR.
     const activeUserValue = localStorage.getItem(ACTIVE_USER_KEY)
     const activeUser = activeUserValue ? activeUserValue : 'anonymous'
+    if (activeUser === 'anonymous') return
+
     const namespacedKey = `${STORAGE_KEY}:${activeUser}`
     const legacyNamespacedKey = `${LEGACY_STORAGE_KEY}:${activeUser}`
     const progress =

@@ -47,6 +47,14 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
     }
   }, [currentSectionIndex, sectionParam, sections])
 
+  useEffect(() => {
+    if (sectionParam || !currentSection) {
+      return
+    }
+
+    router.replace(`/course/${moduleId}?section=${currentSection.id}`)
+  }, [currentSection, moduleId, router, sectionParam])
+
   const goToSection = (index: number) => {
     const target = sections[index]
     if (!target) return
@@ -92,6 +100,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const completionReady = completedSectionIds.length === totalSections
   const content = getSectionLearningContent(moduleId, currentSection?.id)
+  const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
 
   return (
     <div className="min-h-screen bg-background">
@@ -111,9 +120,10 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               <TextDisplay
                 variant="callout"
                 content={currentSection.summary ? currentSection.summary : ""}
+                scopeKey={currentScopeKey}
               />
 
-              {content ? <TextDisplay content={content} /> : null}
+              {content ? <TextDisplay content={content} scopeKey={currentScopeKey} /> : null}
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button

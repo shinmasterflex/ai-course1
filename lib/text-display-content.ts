@@ -1,4 +1,4 @@
-import { getCourseStructure } from "@/lib/course-content"
+import { COMPONENT_CARD_REGISTRY, getCourseStructure } from "@/lib/course-content"
 import { hashString, toSentence } from "@/lib/text-content-utils"
 
 const courseStructure = getCourseStructure()
@@ -314,13 +314,19 @@ function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
   }
 
   const moduleData = courseStructure.modules.find((module) => module.id === moduleId)
-  const sectionData = moduleData?.sections.find((section) => section.id === sectionId)
-  if (!moduleData || !sectionData) {
+  const sectionCard = Object.values(COMPONENT_CARD_REGISTRY).find(
+    (card) => card.moduleId === moduleId && card.sectionId === sectionId,
+  )
+  if (!moduleData || !sectionCard) {
     return fallbackKnowledge
   }
 
-  const sectionTitle = sectionData.title.trim()
-  const rawSectionSummary = sectionData.summary?.trim() || `${sectionTitle} improves practical AI decision quality.`
+  const sectionTitle = sectionId
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+  const rawSectionSummary = sectionCard.summary?.trim() || `${sectionTitle} improves practical AI decision quality.`
   const sectionSummary = toSentence(rawSectionSummary)
   const moduleTitle = moduleData.title.replace(/^Module\s+\d+:\s*/i, "").trim()
   const cardSeed = hashString(`${moduleId}::${sectionId}`)
@@ -379,86 +385,9 @@ function buildSectionCardKnowledge(scopeKey: string): SectionCardKnowledge {
   }
 }
 
-const usedStatementsByScope = new Map<string, Set<string>>()
-const statementByScopeAndInstance = new Map<string, InferentialStatement>()
-const USED_STATEMENTS_STORAGE_KEY = "ai-course:used-statements-by-scope:v1"
-let hasHydratedUsedStatements = false
-
-function hydrateUsedStatementsFromStorage() {
-  if (hasHydratedUsedStatements || typeof window === "undefined") {
-    return
-  }
-
-  hasHydratedUsedStatements = true
-
-  try {
-    const raw = window.sessionStorage.getItem(USED_STATEMENTS_STORAGE_KEY)
-    if (!raw) {
-      return
-    }
-
-    const parsed = JSON.parse(raw) as Record<string, string[]>
-    for (const [scope, statements] of Object.entries(parsed)) {
-      if (Array.isArray(statements) && statements.length > 0) {
-        usedStatementsByScope.set(scope, new Set(statements))
-      }
-    }
-  } catch {
-    // Ignore malformed storage and keep current in-memory state.
-  }
-}
-
-function persistUsedStatementsToStorage() {
-  if (typeof window === "undefined") {
-    return
-  }
-
-  try {
-    const serializable: Record<string, string[]> = {}
-    for (const [scope, statements] of usedStatementsByScope.entries()) {
-      serializable[scope] = [...statements]
-    }
-    window.sessionStorage.setItem(USED_STATEMENTS_STORAGE_KEY, JSON.stringify(serializable))
-  } catch {
-    // Ignore storage write failures.
-  }
-}
-
 function pickUnusedStatement(candidates: InferentialStatement[], sourceText: string, scopeKey: string, instanceKey: string) {
-  const assignmentKey = `${scopeKey}::${instanceKey}`
-  const assignedStatement = statementByScopeAndInstance.get(assignmentKey)
-  if (assignedStatement) {
-    return assignedStatement
-  }
-
-  hydrateUsedStatementsFromStorage()
-
-  const [usedScopeKey] = scopeKey.split("::")
-
-  if (!usedStatementsByScope.has(usedScopeKey)) {
-    usedStatementsByScope.set(usedScopeKey, new Set<string>())
-  }
-
-  const usedStatements = usedStatementsByScope.get(usedScopeKey)!
   const seed = hashString(`${sourceText}::${instanceKey}`)
-  const startIndex = seed % candidates.length
-
-  for (let offset = 0; offset < candidates.length; offset += 1) {
-    const candidate = candidates[(startIndex + offset) % candidates.length]
-    if (!usedStatements.has(candidate.statement)) {
-      usedStatements.add(candidate.statement)
-      persistUsedStatementsToStorage()
-      statementByScopeAndInstance.set(assignmentKey, candidate)
-      return candidate
-    }
-  }
-
-  usedStatements.clear()
-  const recycledCandidate = candidates[startIndex]
-  usedStatements.add(recycledCandidate.statement)
-  persistUsedStatementsToStorage()
-  statementByScopeAndInstance.set(assignmentKey, recycledCandidate)
-  return recycledCandidate
+  return candidates[seed % candidates.length]
 }
 
 function pickInferentialStatement(title: string | undefined, content: string | undefined, sourceText: string, scopeKey: string, instanceKey: string) {

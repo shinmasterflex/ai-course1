@@ -52,25 +52,32 @@ function collectCoverage(filePath: string): CoverageStats {
 }
 
 describe("course explainer coverage audit", () => {
-  it("keeps explicit explainer wiring on every course page", () => {
+  it("keeps explicit explainer wiring in the shared module page component", () => {
+    const sharedModulePage = path.join(process.cwd(), "components", "learning", "course-module-page.tsx")
+    const stats = collectCoverage(sharedModulePage)
+
+    expect(stats.total).toBeGreaterThanOrEqual(2)
+  })
+
+  it("keeps every module page delegated to the shared module page component", () => {
     const stats = getCoursePageFiles().map(collectCoverage)
 
     const missing = stats
-      .filter((item) => item.total === 0)
+      .filter((item) => /app\/course\/module-\d+\/page\.tsx$/.test(item.file))
+      .filter((item) => {
+        const source = fs.readFileSync(path.join(process.cwd(), item.file), "utf8")
+        return !/CourseModulePage/.test(source) || !/moduleId="module-\d+"/.test(source)
+      })
       .map((item) => item.file)
 
     expect(missing).toEqual([])
   })
 
-  it("keeps module pages above the minimum explicit coverage threshold", () => {
-    const stats = getCoursePageFiles().map(collectCoverage)
+  it("keeps the shared module page above the minimum explicit coverage threshold", () => {
+    const sharedModulePage = path.join(process.cwd(), "components", "learning", "course-module-page.tsx")
+    const stats = collectCoverage(sharedModulePage)
 
-    const underCovered = stats
-      .filter((item) => /app\/course\/module-\d+\/page\.tsx$/.test(item.file))
-      .filter((item) => item.total < 2)
-      .map((item) => `${item.file} (total=${item.total})`)
-
-    expect(underCovered).toEqual([])
+    expect(stats.total).toBeGreaterThanOrEqual(2)
   })
 
   it("keeps the course dashboard explicitly wired to explainer content", () => {
