@@ -1,6 +1,6 @@
 export type SectionLearningContent = string
 
-type CardKnowledgeEntry = {
+export type CourseContentEntry = {
   id: string
   moduleId: string
   sectionId: string
@@ -75,7 +75,7 @@ const MODULE_BLUEPRINTS: Record<string, ModuleBlueprint> = {
   },
 }
 
-const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> = {
+export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   // ─────────────────────────────────────────────
   // MODULE 0 — The AI Shift: What's Actually Happening
@@ -1145,27 +1145,22 @@ const CARD_KNOWLEDGE_REGISTRY_BY_ID: Record<string, CardKnowledgeEntry> = {
   },
 };
 
-const MODULE_SECTION_LEARNING_CONTENT: Record<string, Record<string, SectionLearningContent>> =
-  Object.values(CARD_KNOWLEDGE_REGISTRY_BY_ID).reduce(
-    (acc, entry) => {
-      const moduleSections = acc[entry.moduleId] ?? (acc[entry.moduleId] = {})
-      // Scenario and quick-check cards share section content; keep first seen value.
-      if (!moduleSections[entry.sectionId] && entry.content) {
-        moduleSections[entry.sectionId] = entry.content
-      }
-
-      return acc
-    },
-    {} as Record<string, Record<string, SectionLearningContent>>,
+function findSectionCourseContentEntry(moduleId: string, sectionId: string) {
+  return Object.values(COURSE_CONTENT_REGISTRY).find(
+    (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
   )
+}
 
-export function getSectionLearningContent(moduleId: string, sectionId: string | undefined): SectionLearningContent | undefined {
+export function getSectionCourseContentEntry(moduleId: string, sectionId: string | undefined) {
   if (!sectionId) {
     return undefined
   }
 
-  const moduleContent = MODULE_SECTION_LEARNING_CONTENT[moduleId]
-  return moduleContent ? moduleContent[sectionId] : undefined
+  return findSectionCourseContentEntry(moduleId, sectionId)
+}
+
+export function getSectionLearningContent(moduleId: string, sectionId: string | undefined): SectionLearningContent | undefined {
+  return getSectionCourseContentEntry(moduleId, sectionId)?.content ?? undefined
 }
 
 // --- Migrated component explanation content ---
@@ -1175,60 +1170,7 @@ export interface ComponentExplanation {
   explanation: string | null
 }
 
-type ComponentCardMetadata = {
-  moduleId?: string
-  sectionId?: string
-  content?: SectionLearningContent | null
-  summary?: string | null
-}
-
-export class ComponentCard implements ComponentExplanation {
-  id: string
-  question: string | null
-  explanation: string | null
-  moduleId?: string
-  sectionId?: string
-  content?: SectionLearningContent | null
-  summary?: string | null
-
-  constructor(explanation: ComponentExplanation, metadata: ComponentCardMetadata = {}) {
-    this.id = explanation.id
-    this.question = explanation.question
-    this.explanation = explanation.explanation
-    this.moduleId = metadata.moduleId
-    this.sectionId = metadata.sectionId
-    this.content = metadata.content
-    this.summary = metadata.summary
-  }
-
-  withExplanation(explanation: string | null): ComponentCard {
-    return new ComponentCard(
-      {
-        id: this.id,
-        question: this.question,
-        explanation,
-      },
-      {
-        moduleId: this.moduleId,
-        sectionId: this.sectionId,
-        content: this.content,
-        summary: this.summary,
-      },
-    )
-  }
-
-  toExplanation(): ComponentExplanation {
-    return {
-      id: this.id,
-      question: this.question,
-      explanation: this.explanation,
-    }
-  }
-}
-
-
-
-function buildExplanationFromCardEntry(entry: CardKnowledgeEntry): ComponentExplanation {
+function buildExplanationFromCardEntry(entry: CourseContentEntry): ComponentExplanation {
   return {
     id: entry.id,
     question: entry.question,
@@ -1236,31 +1178,37 @@ function buildExplanationFromCardEntry(entry: CardKnowledgeEntry): ComponentExpl
   }
 }
 
-export const COMPONENT_CARD_REGISTRY: Record<string, ComponentCard> = Object.fromEntries(
-  Object.values(CARD_KNOWLEDGE_REGISTRY_BY_ID)
-    .map((entry) => {
-    const explanation = buildExplanationFromCardEntry(entry)
-    return [
-      entry.id,
-      new ComponentCard(explanation, {
-        moduleId: entry.moduleId,
-        sectionId: entry.sectionId,
-        content: entry.content,
-        summary: entry.summary,
-      }),
-    ]
-    }),
-)
+export const COMPONENT_CARD_REGISTRY = COURSE_CONTENT_REGISTRY
 
 export const COMPONENT_EXPLANATIONS: Record<string, ComponentExplanation> = Object.fromEntries(
-  Object.entries(COMPONENT_CARD_REGISTRY).map(([componentId, card]) => [
-    componentId,
-    card.toExplanation(),
-  ]),
+  Object.values(COURSE_CONTENT_REGISTRY).map((entry) => [entry.id, buildExplanationFromCardEntry(entry)]),
 )
 
-export function getComponentCard(componentId: string): ComponentCard | undefined {
-  return COMPONENT_CARD_REGISTRY[componentId]
+export function getComponentCard(componentId: string): CourseContentEntry | undefined {
+  return COURSE_CONTENT_REGISTRY[componentId]
+}
+
+export function getCourseContentEntry(componentId: string): CourseContentEntry | undefined {
+  const directEntry = getComponentCard(componentId)
+  if (directEntry) {
+    return directEntry
+  }
+
+  const sectionMatch = componentId.match(/^(module-\d+)-(.+)-(scenario|quick-check)$/)
+  if (sectionMatch) {
+    const moduleId = sectionMatch[1]
+    const sectionId = sectionMatch[2]
+    return findSectionCourseContentEntry(moduleId, sectionId)
+  }
+
+  const courseQuizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
+  if (courseQuizMatch) {
+    const moduleId = courseQuizMatch[1]
+    return findSectionCourseContentEntry(moduleId, "module-quiz")
+      ?? Object.values(COURSE_CONTENT_REGISTRY).find((entry) => entry.moduleId === moduleId && entry.explanation)
+  }
+
+  return undefined
 }
 
 
@@ -1268,38 +1216,8 @@ export function getComponentCard(componentId: string): ComponentCard | undefined
  * Get an explanation for a component by searching the mapping.
  */
 export function getComponentExplanation(componentId: string): ComponentExplanation | undefined {
-  const card = getComponentCard(componentId)
-  if (card) {
-    return card.toExplanation()
-  }
-
-  const sectionMatch = componentId.match(/^(module-\d+)-(.+)-(scenario|quick-check)$/)
-  if (sectionMatch) {
-    const moduleId = sectionMatch[1]
-    const sectionId = sectionMatch[2]
-    const sectionCard = Object.values(COMPONENT_CARD_REGISTRY).find(
-      (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
-    )
-    return sectionCard ? sectionCard.toExplanation() : undefined
-  }
-
-  const courseQuizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
-  if (courseQuizMatch) {
-    const moduleId = courseQuizMatch[1]
-    const moduleQuizCard = Object.values(COMPONENT_CARD_REGISTRY).find(
-      (entry) => entry.moduleId === moduleId && entry.sectionId === "module-quiz",
-    )
-    if (moduleQuizCard) {
-      return moduleQuizCard.toExplanation()
-    }
-
-    const moduleCardWithExplanation = Object.values(COMPONENT_CARD_REGISTRY).find(
-      (entry) => entry.moduleId === moduleId && entry.explanation,
-    )
-    return moduleCardWithExplanation ? moduleCardWithExplanation.toExplanation() : undefined
-  }
-
-  return undefined
+  const entry = getCourseContentEntry(componentId)
+  return entry ? buildExplanationFromCardEntry(entry) : undefined
 }
 
 /**
@@ -1307,9 +1225,9 @@ export function getComponentExplanation(componentId: string): ComponentExplanati
  */
 export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
   const prefix = `module-${moduleNumber}-`
-  return Object.values(COMPONENT_CARD_REGISTRY)
-    .filter((exp) => exp.id.startsWith(prefix))
-    .map((card) => card.toExplanation())
+  return Object.values(COURSE_CONTENT_REGISTRY)
+    .filter((entry) => entry.id.startsWith(prefix))
+    .map(buildExplanationFromCardEntry)
 }
 
 /**
@@ -1317,8 +1235,8 @@ export function getModuleExplanations(moduleNumber: number): ComponentExplanatio
  */
 export function searchExplanations(query: string): ComponentExplanation[] {
   const lowerQuery = query.toLowerCase()
-  return Object.values(COMPONENT_CARD_REGISTRY)
-    .map((card) => card.toExplanation())
+  return Object.values(COURSE_CONTENT_REGISTRY)
+    .map(buildExplanationFromCardEntry)
     .filter((exp) => (exp.question ?? "").toLowerCase().includes(lowerQuery) || (exp.explanation ?? "").toLowerCase().includes(lowerQuery))
 }
 
@@ -1367,7 +1285,7 @@ export function getCourseStructure(): CourseStructure {
   const moduleIds = new Set<string>()
   const moduleSectionIds = new Map<string, Set<string>>()
 
-  Object.values(CARD_KNOWLEDGE_REGISTRY_BY_ID).forEach((entry) => {
+  Object.values(COURSE_CONTENT_REGISTRY).forEach((entry) => {
     moduleIds.add(entry.moduleId)
 
     const sectionIds = moduleSectionIds.get(entry.moduleId) ?? new Set<string>()
@@ -1403,6 +1321,7 @@ export function getCourseStructure(): CourseStructure {
         sections: sectionIds.map((sectionId) => ({
           id: sectionId,
           title: toTitleCaseFromSlug(sectionId),
+          summary: findSectionCourseContentEntry(moduleId, sectionId)?.summary ?? undefined,
           completed: false,
         })),
       }

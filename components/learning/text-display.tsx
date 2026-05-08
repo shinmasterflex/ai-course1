@@ -7,12 +7,12 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { getTextDisplayInstructionalBriefParagraphs, getTextDisplayTrueFalseStatement } from "@/lib/text-display-content"
+import { getSectionCourseContentEntry } from "@/lib/course-content"
 import { cn } from "@/lib/utils"
-import { AlertCircle, CheckCircle2, CheckIcon, Info, XCircle } from "lucide-react"
+import { AlertCircle, CheckCircle2, Info } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
-import { useEffect, useId, useMemo, useState } from "react"
+import { useMemo } from "react"
 
 interface TextDisplayProps {
   title?: string
@@ -26,10 +26,6 @@ interface TextDisplayProps {
   scopeKey?: string
 }
 
-/**
- * Parse markdown-like bold syntax (**text**) and return React elements
- * This safely handles text without XSS vulnerabilities
- */
 function parseBoldText(text: string): ReactNode[] {
   const parts: ReactNode[] = []
   const regex = /\*\*(.*?)\*\*/g
@@ -37,16 +33,14 @@ function parseBoldText(text: string): ReactNode[] {
   let match
 
   while ((match = regex.exec(text)) !== null) {
-    // Add text before the match
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index))
     }
-    // Add the bold text
+
     parts.push(<strong key={`bold-${match.index}`}>{match[1]}</strong>)
     lastIndex = regex.lastIndex
   }
 
-  // Add remaining text
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex))
   }
@@ -118,6 +112,18 @@ As you read, look for the decision rule inside the passage. Ask what pattern, li
 Before moving on, restate the point in your own words and test it against one concrete AI example. ${interactive ? "Use the follow-up question as retrieval practice: answer from memory first, then compare your answer to the text and revise what was missing." : "Use the surrounding exercises to see whether the idea changes how you would act in a real workflow rather than leaving it as a passive definition."}`
 }
 
+function getModuleIdFromScope(scopeKey: string) {
+  const [pathFragment] = scopeKey.split("::")
+  const moduleMatch = pathFragment.match(/module-\d+/)
+  return moduleMatch ? moduleMatch[0] : null
+}
+
+function getSectionIdFromScope(scopeKey: string) {
+  const [, sectionId] = scopeKey.split("::")
+  const trimmedSectionId = sectionId?.trim()
+  return trimmedSectionId && trimmedSectionId.length > 0 ? trimmedSectionId : null
+}
+
 export function TextDisplay({
   title,
   subtitle,
@@ -130,9 +136,7 @@ export function TextDisplay({
 }: TextDisplayProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const instanceId = useId()
 
-  // Icon mapping for different variants
   const icons = {
     callout: <Info className="h-5 w-5" />,
     info: <Info className="h-5 w-5" />,
@@ -140,7 +144,6 @@ export function TextDisplay({
     success: <CheckCircle2 className="h-5 w-5" />,
   }
 
-  // Style mapping for variants
   const variantStyles = {
     default: "bg-card text-card-foreground",
     callout: "bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-100 border-l-4 border-blue-500",
@@ -151,28 +154,34 @@ export function TextDisplay({
 
   const hasChildren = children !== undefined
   const hasContent = content !== undefined
-  const [isDragging, setIsDragging] = useState(false)
-  const [dropTarget, setDropTarget] = useState<"true" | "false" | null>(null)
 
   const sectionId = searchParams?.get("section")
   const safePath = pathname ? pathname : ""
   const safeSectionId = sectionId ? sectionId : ""
   const resolvedScopeKey = scopeKey ?? `${safePath}::${safeSectionId}`
-  const statementData = useMemo(() => getTextDisplayTrueFalseStatement(title, content, resolvedScopeKey, instanceId), [content, instanceId, resolvedScopeKey, title])
-  const dragPayload = statementData.statement
-  const isCorrectDrop = dropTarget === null ? null : (dropTarget === "true") === statementData.isTrue
-  const instructionalBriefParagraphs = useMemo(() => getTextDisplayInstructionalBriefParagraphs(resolvedScopeKey, title, content), [content, resolvedScopeKey, title])
-  const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
-  const explainerAttributes = getExplainerAttributes({
-    type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
-    title: explainerTitle,
-    explanation: buildTextDisplayExplanation(content, subtitle, interactive),
-  })
+  const resolvedModuleId = getModuleIdFromScope(resolvedScopeKey)
+  const resolvedSectionId = getSectionIdFromScope(resolvedScopeKey)
+  const sectionEntry = useMemo(
+    () => (resolvedModuleId && resolvedSectionId ? getSectionCourseContentEntry(resolvedModuleId, resolvedSectionId) : undefined),
+    [resolvedModuleId, resolvedSectionId],
+  )
 
-  useEffect(() => {
-    setDropTarget(null)
-    setIsDragging(false)
-  }, [content, resolvedScopeKey, statementData.statement, title])
+  const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
+  const registryExplanation = sectionEntry?.explanation?.trim()
+  const explainerAttributes = getExplainerAttributes(
+    sectionEntry && registryExplanation
+      ? {
+          id: sectionEntry.id,
+          type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
+          title: title?.trim() || subtitle?.trim() || sectionEntry.question?.trim() || explainerTitle,
+          explanation: registryExplanation,
+        }
+      : {
+          type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
+          title: explainerTitle,
+          explanation: buildTextDisplayExplanation(content, subtitle, interactive),
+        },
+  )
 
   return (
     <div {...explainerAttributes} className={cn("p-6 rounded-lg", variantStyles[variant], className)}>
@@ -193,7 +202,6 @@ export function TextDisplay({
               <div className="prose prose-sm max-w-none dark:prose-invert">
                 {content.split("\n").map((line, index) => {
                   const trimmedLine = line.trim()
-                  // Handle bullet points
                   if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
                     return (
                       <li key={`bullet-${index}`} className="ml-4">
@@ -201,7 +209,7 @@ export function TextDisplay({
                       </li>
                     )
                   }
-                  // Handle regular paragraphs with bold text support
+
                   return (
                     <p key={`para-${index}`} className="mb-2">
                       {parseBoldText(line)}
@@ -213,6 +221,7 @@ export function TextDisplay({
           </div>
         </div>
       )}
+
       {variant === "default" && (
         <>
           {hasChildren ? (
@@ -228,6 +237,7 @@ export function TextDisplay({
                     </li>
                   )
                 }
+
                 return (
                   <p key={`para-${index}`} className="mb-2">
                     {parseBoldText(line)}
@@ -237,114 +247,6 @@ export function TextDisplay({
             </div>
           ) : null}
         </>
-      )}
-
-      {interactive && (
-        <div className="mt-5 rounded-lg border border-brand-orange/20 bg-background/60 p-4">
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-2 text-sm font-semibold text-brand-orange">
-              <CheckIcon className="h-4 w-4" />
-              True or False Check
-            </p>
-            {isCorrectDrop ? <span className="text-xs font-semibold text-green-700">Corrected</span> : null}
-          </div>
-
-          <div className="space-y-4">
-            <div className="rounded-md border border-brand-orange/25 bg-brand-orange/5 p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-brand-orange">Instructional brief</p>
-              <div className="mt-2 space-y-2 text-sm text-foreground">
-                {instructionalBriefParagraphs.map((paragraph, index) => (
-                  <p key={`instructional-brief-${index}`}>{paragraph}</p>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Drag this statement</p>
-              <div
-                draggable
-                onDragStart={(event) => {
-                  event.dataTransfer.setData("text/plain", dragPayload)
-                  setIsDragging(true)
-                  setDropTarget(null)
-                }}
-                onDragEnd={() => setIsDragging(false)}
-                className={cn(
-                  "flex w-full cursor-grab items-center rounded-md border border-brand-orange/40 bg-brand-orange/10 px-3 py-2 text-sm text-foreground active:cursor-grabbing",
-                  isDragging && "opacity-70"
-                )}
-              >
-                {dragPayload}
-              </div>
-            </div>
-
-            <div className="grid gap-3 md:grid-cols-2">
-              <div
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={(event) => {
-                  event.preventDefault()
-                  if (event.dataTransfer.getData("text/plain")) {
-                    setDropTarget("true")
-                  }
-                }}
-                className={cn(
-                  "rounded-md border p-3 text-sm transition-colors",
-                  dropTarget === "true" ? "border-green-700 bg-green-200 text-green-950" : "border-green-300 bg-green-50/50"
-                )}
-              >
-                <p className="flex items-center gap-1 font-semibold">
-                  <CheckIcon className="h-4 w-4" />
-                  TRUE
-                </p>
-                <p className="text-xs">Drop here if the statement is true.</p>
-              </div>
-
-              <div
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={(event) => {
-                  event.preventDefault()
-                  if (event.dataTransfer.getData("text/plain")) {
-                    setDropTarget("false")
-                  }
-                }}
-                className={cn(
-                  "rounded-md border p-3 text-sm transition-colors",
-                  dropTarget === "false" ? "border-red-700 bg-red-200 text-red-950" : "border-red-300 bg-red-50/50"
-                )}
-              >
-                <p className="flex items-center gap-1 font-semibold">
-                  <XCircle className="h-4 w-4" />
-                  FALSE
-                </p>
-                <p className="text-xs">Drop here if the statement is false.</p>
-              </div>
-            </div>
-
-            {dropTarget !== null && (
-              <div className="space-y-3 rounded-md bg-gray-50 dark:bg-gray-900 p-3">
-                {isCorrectDrop ? (
-                  <div>
-                    <p className="flex items-center gap-1 text-sm font-semibold text-green-700 mb-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      Correct!
-                    </p>
-                    <p className="text-sm text-green-700">This statement is <strong>{statementData.isTrue ? "TRUE" : "FALSE"}</strong>.</p>
-                    <p className="text-sm text-green-600 mt-1">{statementData.explanation}</p>
-                  </div>
-                ) : (
-                  <div>
-                    <p className="flex items-center gap-1 text-sm font-semibold text-red-700 mb-2">
-                      <XCircle className="h-4 w-4" />
-                      Not quite. Try again.
-                    </p>
-                    <p className="text-sm text-gray-700">This statement is actually <strong>{statementData.isTrue ? "TRUE" : "FALSE"}</strong>.</p>
-                    <p className="text-sm text-gray-600 mt-1">{statementData.explanation}</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
       )}
     </div>
   )
