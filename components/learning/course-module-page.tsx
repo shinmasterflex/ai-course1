@@ -99,6 +99,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   }
 
   const completionReady = completedSectionIds.length === totalSections
+  const isFinalSection = currentSectionIndex === totalSections - 1
   const content = getSectionLearningContent(moduleId, currentSection?.id)
   const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
 
@@ -143,7 +144,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
             <p>No sections configured for this module yet.</p>
           )}
 
-          {completionReady && questions.length > 0 && (
+          {completionReady && isFinalSection && questions.length > 0 && (
             <div className="mt-10 space-y-5">
               <h3 className="text-2xl font-semibold text-brand-indigo">Module checkpoint</h3>
               <TextDisplay content="Use this checkpoint to validate what you learned before moving to the next module." />
