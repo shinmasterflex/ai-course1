@@ -81,7 +81,7 @@ export default function HomePage() {
               </Card>
 
               <div className="pointer-events-none absolute -left-6 -top-6 hidden rounded-xl border border-brand-green/30 bg-white/95 px-4 py-3 text-sm shadow-lg md:block">
-                <div className="font-semibold text-brand-indigo">10 Modules</div>
+                <div className="font-semibold text-brand-indigo">{modules.length} Modules</div>
                 <div className="text-xs text-muted-foreground">From market shift to practical adoption planning</div>
               </div>
 
@@ -170,7 +170,7 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide">
-                      <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-brand-indigo">Module {index}</span>
+                      <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-brand-indigo">{module.id.replace("module-", "Module ")}</span>
                       <span className="text-brand-indigo/70 normal-case tracking-normal">{module.sections.length} sections</span>
                     </div>
                     <CardTitle className="text-xl leading-snug text-brand-indigo">{module.title}</CardTitle>

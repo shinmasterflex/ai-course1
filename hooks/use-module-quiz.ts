@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect, useMemo } from "react"
+import { getCompatibleModuleIds } from "@/lib/course-module-id-map"
 
 /**
  * Custom hook for managing module quiz state
@@ -23,11 +24,20 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
 
   // Load saved quiz results from localStorage on mount
   useEffect(() => {
-    const savedQuiz = localStorage.getItem(`${moduleId}-quiz-results`)
-    if (savedQuiz) {
+    const savedQuiz = getCompatibleModuleIds(moduleId)
+      .map((compatibleModuleId) => ({
+        key: `${compatibleModuleId}-quiz-results`,
+        value: localStorage.getItem(`${compatibleModuleId}-quiz-results`),
+      }))
+      .find((entry) => entry.value)
+
+    if (savedQuiz?.value) {
       try {
-        const parsed = JSON.parse(savedQuiz)
+        const parsed = JSON.parse(savedQuiz.value)
         setQuizResults(parsed)
+        if (savedQuiz.key !== `${moduleId}-quiz-results`) {
+          localStorage.setItem(`${moduleId}-quiz-results`, savedQuiz.value)
+        }
       } catch (error) {
         console.error(`[useModuleQuiz] Failed to parse saved quiz for ${moduleId}:`, error)
       }

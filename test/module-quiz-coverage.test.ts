@@ -4,7 +4,7 @@ import { getCourseStructure, moduleQuizData } from "@/lib/course-content"
 const courseStructure = getCourseStructure()
 
 describe("module quiz coverage", () => {
-  it("keeps module-quiz as the final section for modules 1-10", () => {
+  it("keeps module-quiz as the final section for every non-intro module", () => {
     const invalidModules = courseStructure.modules
       .filter(
         (module) =>

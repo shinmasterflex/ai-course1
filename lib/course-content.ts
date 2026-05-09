@@ -1,5 +1,7 @@
 export type SectionLearningContent = string
 
+import { normalizeModuleId } from "./course-module-id-map"
+
 export type CourseContentEntry = {
   id: string
   moduleId: string
@@ -24,53 +26,23 @@ const MODULE_BLUEPRINTS: Record<string, ModuleBlueprint> = {
     coreThemes: [],
   },
   "module-1": {
-    title: "Module 1: AI Landscape",
-    description: "Models, tools, agencies, and delivery models mapped for decisions.",
+    title: "Module 1: AI Landscape, Agents, Automation and Tools",
+    description: "Models, tools, agencies, prompt workflows, and agent automation systems mapped for decisions.",
     coreThemes: [],
   },
   "module-2": {
-    title: "Module 2: Business Value",
-    description: "Find high-ROI use cases and prioritize opportunities with confidence.",
+    title: "Module 2: Business Value and ROI",
+    description: "Find high-ROI use cases, calculate value honestly, and prioritize opportunities with confidence.",
     coreThemes: [],
   },
   "module-3": {
-    title: "Module 3: Tools That Matter",
-    description: "Evaluate tool categories, integration fit, pricing, and security.",
+    title: "Module 3: Agency, Partner Selection & Future Positioning",
+    description: "Run vendor diligence, structure pilots, and position your organization for durable AI advantage.",
     coreThemes: [],
   },
   "module-4": {
-    title: "Module 4: Agency and Partner Selection",
-    description: "Run vendor diligence and structure pilots that produce real evidence.",
-    coreThemes: [],
-  },
-  "module-5": {
-    title: "Module 5: ROI Frameworks",
-    description: "Build credible ROI models, prioritization matrices, and reporting.",
-    coreThemes: [],
-  },
-  "module-6": {
-    title: "Module 6: Risk and Governance",
-    description: "Implement guardrails for data, reliability, compliance, and vendors.",
-    coreThemes: [],
-  },
-  "module-7": {
-    title: "Module 7: Adoption Roadmap",
-    description: "Translate strategy into pilots, change management, and phased rollout.",
-    coreThemes: [],
-  },
-  "module-8": {
-    title: "Module 8: Agents and Automation Systems",
-    description: "Design practical automation with human oversight and operational control.",
-    coreThemes: [],
-  },
-  "module-9": {
-    title: "Module 9: AI Stack Design",
-    description: "Avoid tool sprawl and build a maintainable, owned AI ecosystem.",
-    coreThemes: [],
-  },
-  "module-10": {
-    title: "Module 10: Future Positioning",
-    description: "Anticipate industry shifts and position for durable AI advantage.",
+    title: "Module 4: Risk, Governance & Adoption Roadmap",
+    description: "Implement guardrails for data, reliability, compliance, and vendors — then translate strategy into pilots, change management, and a maintainable AI ecosystem.",
     coreThemes: [],
   },
 }
@@ -108,8 +80,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     moduleId: "module-0",
     sectionId: "what-youll-learn",
     cardType: "section-card",
-    content: "Over 10 modules, you will learn how to evaluate AI tools, build governance frameworks, calculate ROI, design adoption roadmaps, assess vendor claims, identify high-value automation opportunities, and position your organization strategically as AI capabilities evolve. Each module is grounded in operational reality — not theory.",
-    summary: "Ten modules covering AI tool evaluation, ROI measurement, governance, vendor assessment, adoption roadmaps, and long-term strategic positioning.",
+    content: "Across 5 modules, you will learn how to evaluate AI tools, build governance frameworks, calculate ROI, design adoption roadmaps, assess vendor claims, identify high-value automation opportunities, and position your organization strategically as AI capabilities evolve. Each module is grounded in operational reality — not theory.",
+    summary: "Five modules covering AI tool evaluation, ROI measurement, governance, vendor assessment, adoption roadmaps, and long-term strategic positioning.",
     question: "What concrete skills and frameworks will I walk away with after completing this course?",
     explanation: "By the end of this course, you'll be able to do things you likely can't do confidently today: evaluate an AI vendor's claims against operational criteria rather than marketing language; calculate a defensible ROI projection for an AI initiative; design a governance policy that prevents data leakage without killing adoption; run a structured pilot that produces real evidence; prioritize automation opportunities across your organization using a weighted framework; and communicate AI strategy clearly to both technical and non-technical stakeholders. These aren't abstract competencies — each module delivers a specific tool or framework you can apply before moving to the next one.",
   },
@@ -119,10 +91,10 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     moduleId: "module-0",
     sectionId: "how-to-use-course",
     cardType: "section-card",
-    content: "Each module contains concept cards, knowledge checks, and applied frameworks you can use immediately. Move at your own pace. Prioritize modules most relevant to your current role or decision-making context. The course is designed for non-linear use — if you're facing an immediate AI procurement decision, jump to Module 4. If governance is your urgent challenge, start with Module 6.",
+    content: "Each module contains concept cards, knowledge checks, and applied frameworks you can use immediately. Move at your own pace. Prioritize modules most relevant to your current role or decision-making context. The course is designed for non-linear use — if you're facing an immediate AI procurement decision, jump to Module 3. If governance is your urgent challenge, start with Module 4.",
     summary: "The course is designed for non-linear, self-paced use — jump directly to the module most relevant to your current challenge.",
     question: "How should I navigate this course if I have an immediate AI decision to make?",
-    explanation: "This course is intentionally non-linear. Each module is self-contained and immediately applicable. If you're evaluating vendors this week, start with Module 4. If the board just asked for an AI governance policy, go to Module 6. If someone handed you an AI budget and asked for ROI projections, begin with Module 5. You don't need to complete Module 1 before Module 7 produces value for you. The recommended path for someone without an immediate pressure point is sequential — Module 0 builds the mindset that makes every subsequent module more useful. But urgency should override sequence whenever it exists.",
+    explanation: "This course is intentionally non-linear. Each module is self-contained and immediately applicable. If you're evaluating vendors this week, start with Module 3. If the board just asked for an AI governance policy, go to Module 4. If someone handed you an AI budget and asked for ROI projections, begin with Module 2. You don't need to complete Module 1 before Module 4 produces value for you. The recommended path for someone without an immediate pressure point is sequential — Module 0 builds the mindset that makes every subsequent module more useful. But urgency should override sequence whenever it exists.",
   },
 
   "module-0-summary": {
@@ -354,13 +326,13 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
   },
 
   // ─────────────────────────────────────────────
-  // MODULE 3 — AI Tools: Which Ones Matter?
+  // MODULE 3 CONTENT MERGED INTO MODULE 1 — AI Tools: Which Ones Matter?
   // ─────────────────────────────────────────────
 
   "module-3-module-overview-section-card": {
     id: "module-3-module-overview-section-card",
-    moduleId: "module-3",
-    sectionId: "module-overview",
+    moduleId: "module-1",
+    sectionId: "tools-module-overview",
     cardType: "section-card",
     content: "This module teaches strategic AI tool evaluation rather than tool chasing. You'll learn how to assess AI software categories, understand when a general-purpose assistant is sufficient versus when specialized systems are warranted, and build evaluation frameworks that account for workflow fit, governance, integration complexity, pricing traps, and vendor stability.",
     summary: "Module 3 builds a strategic AI tool evaluation framework — so you can make principled procurement decisions instead of chasing every new release.",
@@ -370,8 +342,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-what-is-llm": {
     id: "module-3-what-is-llm",
-    moduleId: "module-3",
-    sectionId: "what-is-llm",
+    moduleId: "module-1",
+    sectionId: "tools-what-is-llm",
     cardType: "section-card",
     content: "Large Language Models (LLMs) are AI systems trained on vast text corpora to predict and generate human-like language. They power ChatGPT, Claude, Gemini, and most modern AI assistants. LLMs don't 'know' facts — they predict statistically likely text based on training patterns. Key business implications: they excel at drafting, summarizing, reformatting, and generating — but they hallucinate, reflect training biases, and have knowledge cutoff dates.",
     summary: "LLMs predict statistically likely text rather than retrieving verified facts — making them excellent drafting tools but unreliable sources of factual claims without human review.",
@@ -381,8 +353,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-how-chatgpt-works": {
     id: "module-3-how-chatgpt-works",
-    moduleId: "module-3",
-    sectionId: "how-chatgpt-works",
+    moduleId: "module-1",
+    sectionId: "tools-how-chatgpt-works",
     cardType: "section-card",
     content: "ChatGPT (and similar tools) work in three stages: (1) Pre-training — the model learns language patterns from billions of text documents; (2) Fine-tuning — the model is trained to follow instructions and avoid harmful outputs; (3) RLHF (Reinforcement Learning from Human Feedback) — human raters teach the model which responses are better. Each conversation is processed without persistent memory (by default). The model doesn't 'think' between sessions.",
     summary: "ChatGPT is built through pre-training, instruction fine-tuning, and human feedback — with no default memory between conversations, meaning each session starts completely fresh.",
@@ -392,8 +364,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-anatomy-of-prompt": {
     id: "module-3-anatomy-of-prompt",
-    moduleId: "module-3",
-    sectionId: "anatomy-of-prompt",
+    moduleId: "module-1",
+    sectionId: "tools-anatomy-of-prompt",
     cardType: "section-card",
     content: "An effective prompt typically contains: (1) Role/context — 'You are a financial analyst…'; (2) Task — what you want done; (3) Format — how the output should be structured; (4) Constraints — what to include or avoid; (5) Examples — showing desired output style. Prompt quality is the primary lever for improving AI output quality. Most users underspecify prompts and then blame the AI for poor results.",
     summary: "Effective prompts include five elements — role, task, format, constraints, and examples — and prompt quality is the single biggest lever for improving AI output quality.",
@@ -403,8 +375,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-prompt-techniques": {
     id: "module-3-prompt-techniques",
-    moduleId: "module-3",
-    sectionId: "prompt-techniques",
+    moduleId: "module-1",
+    sectionId: "tools-prompt-techniques",
     cardType: "section-card",
     content: "Key prompting techniques: (1) Chain-of-thought — ask the model to reason step by step before answering; (2) Few-shot — provide 2–3 examples of desired input/output pairs; (3) Role prompting — assign a persona that frames the model's response style; (4) Iterative refinement — treat first output as a draft and prompt for specific improvements; (5) Structured output — request JSON, tables, or bullet formats for downstream processing. Each technique increases reliability for specific task types.",
     summary: "Five prompting techniques — chain-of-thought, few-shot examples, role framing, iterative refinement, and structured output — each improve reliability for specific task types.",
@@ -414,8 +386,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-hands-on-practice-section-card": {
     id: "module-3-hands-on-practice-section-card",
-    moduleId: "module-3",
-    sectionId: "hands-on-practice",
+    moduleId: "module-1",
+    sectionId: "tools-hands-on-practice",
     cardType: "section-card",
     content: "Practice is the only way to develop prompt engineering fluency. Key exercises: (1) Take a task you do weekly and write 3 different prompts for it — compare outputs; (2) Deliberately break a prompt by making it vague — observe how output degrades; (3) Add examples to a prompt and compare to the example-free version; (4) Ask an AI to improve your own prompt. Fluency comes from iteration, not theory.",
     summary: "Prompt engineering fluency only develops through deliberate practice — comparing variants, studying degradation, and iterating rapidly on real work tasks.",
@@ -425,8 +397,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-choosing-tools": {
     id: "module-3-choosing-tools",
-    moduleId: "module-3",
-    sectionId: "choosing-tools",
+    moduleId: "module-1",
+    sectionId: "tools-choosing-tools",
     cardType: "section-card",
     content: "AI tool selection framework: (1) Define the workflow problem precisely before evaluating tools; (2) Test with real work samples, not demo data; (3) Evaluate total cost of ownership — per-seat pricing compounds; (4) Assess integration complexity with existing systems; (5) Review data handling and privacy terms; (6) Check vendor financial stability; (7) Plan for vendor lock-in risk. The tool that wins demos rarely wins production.",
     summary: "Seven-step AI tool selection — define the problem, test with real data, evaluate TCO, assess integration, review data governance, check vendor stability, and plan for lock-in risk.",
@@ -436,8 +408,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-ai-writing": {
     id: "module-3-ai-writing",
-    moduleId: "module-3",
-    sectionId: "ai-writing",
+    moduleId: "module-1",
+    sectionId: "tools-ai-writing",
     cardType: "section-card",
     content: "AI writing tools in business contexts are most valuable for: first drafts, email templates, meeting summaries, policy documents, sales sequences, and research synthesis. Lowest value: final customer-facing communications requiring brand voice precision, legal documents requiring verified accuracy, and content where hallucination risk is high. Build review workflows into any AI writing process — AI accelerates drafting, not publishing.",
     summary: "AI writing tools create maximum value in first drafts, summaries, and templates — and minimum value in brand-critical, legally sensitive, or high-accuracy final outputs without human review.",
@@ -447,8 +419,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-ai-images": {
     id: "module-3-ai-images",
-    moduleId: "module-3",
-    sectionId: "ai-images",
+    moduleId: "module-1",
+    sectionId: "tools-ai-images",
     cardType: "section-card",
     content: "When selecting AI image generation tools for business use, evaluate: (1) Commercial licensing terms — can outputs be used commercially?; (2) Brand consistency capability — can it maintain visual identity?; (3) Iteration speed — how quickly can you refine outputs?; (4) IP indemnification — does the vendor protect you from copyright claims?; (5) Quality for your specific use case (photography style vs illustration vs product visualization). Adobe Firefly's indemnification policy is currently the strongest in enterprise contexts.",
     summary: "Business AI image tool selection hinges on commercial licensing clarity, brand consistency, iteration speed, and IP indemnification — with Adobe Firefly currently offering the strongest enterprise legal protection.",
@@ -458,8 +430,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-ai-productivity": {
     id: "module-3-ai-productivity",
-    moduleId: "module-3",
-    sectionId: "ai-productivity",
+    moduleId: "module-1",
+    sectionId: "tools-ai-productivity",
     cardType: "section-card",
     content: "Productivity AI tools comparison: Microsoft Copilot — strongest for Office 365 workflows, meeting summaries, email drafting; Google Gemini — strongest for Workspace integration and collaborative documents; Notion AI — strongest for knowledge management and structured note-taking; Otter.ai — strongest for meeting transcription and action item extraction. Choice should follow your existing platform ecosystem rather than chasing feature lists.",
     summary: "Productivity AI tool selection should follow your existing platform — Copilot for Microsoft shops, Gemini for Google Workspace — because ecosystem alignment eliminates integration overhead and maintains data governance.",
@@ -469,8 +441,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-ai-creative": {
     id: "module-3-ai-creative",
-    moduleId: "module-3",
-    sectionId: "ai-creative",
+    moduleId: "module-1",
+    sectionId: "tools-ai-creative",
     cardType: "section-card",
     content: "AI creative tool evaluation for business: assess whether the tool supports brand guidelines via style presets or reference images, what the turnaround time is for production-quality outputs, how much human curation is required, and what the content moderation policies are. For video and audio specifically, evaluate whether outputs require disclosure under current or anticipated regulatory requirements in your jurisdiction.",
     summary: "Business creative AI evaluation requires assessing brand guideline support, production-quality turnaround, curation effort, content moderation, and jurisdiction-specific disclosure requirements.",
@@ -480,8 +452,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-3-module-quiz": {
     id: "module-3-module-quiz",
-    moduleId: "module-3",
-    sectionId: "module-quiz",
+    moduleId: "module-1",
+    sectionId: "tools-module-quiz",
     cardType: "section-card",
     content: "Test your ability to apply AI tool evaluation frameworks — covering LLM mechanics, prompt techniques, tool selection criteria, and practical workflow integration.",
     summary: "Module 3 knowledge check — validate your ability to apply tool evaluation frameworks, select the right approach for different workflows, and avoid common procurement traps.",
@@ -498,10 +470,10 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     moduleId: "module-4",
     sectionId: "module-overview",
     cardType: "section-card",
-    content: "This module helps organizations distinguish genuine AI implementation expertise from marketing-grade AI claims. As AI adoption accelerated, a wave of agencies and consultants repositioned as 'AI experts' with minimal actual implementation experience. You'll learn to evaluate partners using operational criteria, design pilot projects that reveal real capability, and structure contracts that protect your interests.",
-    summary: "Module 4 equips you to separate genuine AI implementation expertise from marketing claims — using operational evidence, structured pilots, and protective contract terms.",
-    question: "How do I tell the difference between an AI agency with real expertise and one that rebranded overnight?",
-    explanation: "The repositioning wave in AI consulting is real — firms that were 'digital transformation consultants' in 2021 became 'AI implementation partners' in 2023 with minimal actual change in capability. Four indicators separate genuine from rebranded. First, production case studies: real expertise leaves evidence — ask for case studies with live system URLs, before/after metrics, and client references willing to describe implementation details, not just outcomes. Second, team composition: a genuine AI implementation firm has ML engineers, data engineers, and product managers with AI deployment experience — not just consultants who've taken a few AI courses. Third, failure acknowledgment: experienced implementers have failed projects and learned from them — a firm that can't describe something that went wrong and how they fixed it hasn't done enough real work. Fourth, data-first questions: the first question a capable AI partner asks is about your data, not about your budget or timeline. Capability shows in what they're curious about.",
+    content: "This module covers two interrelated strategic disciplines: choosing the right AI partners and positioning your organization for lasting competitive advantage. The first half helps you distinguish genuine AI implementation expertise from marketing-grade claims, design pilot projects that reveal real capability, and structure contracts that protect your interests. The second half shifts to future positioning — building the organizational capabilities that produce durable advantage as AI tools themselves become commoditized.",
+    summary: "Module 3 equips you to evaluate AI partners using operational evidence and structure protective pilots, then extends to strategic positioning for lasting competitive advantage as AI commoditizes.",
+    question: "What is the connection between choosing the right AI implementation partner and building long-term competitive advantage?",
+    explanation: "Partner selection and future positioning are more connected than they appear. Every implementation partner decision is also a capability-building decision: a strong partner transfers knowledge, builds internal competency, and leaves your organization better equipped to act independently. A weak partner builds dependency and leaves you further behind when the engagement ends. At the strategic level, the organizations that will maintain competitive advantage as AI commoditizes are those that have already built execution depth — and that execution depth is built, piece by piece, through the quality of every implementation decision. Who you partner with shapes what you can do next. The discipline of partner evaluation in the near term and the discipline of strategic positioning for the long term are expressions of the same underlying capability: the ability to make high-quality AI decisions under uncertainty.",
   },
 
   "module-4-what-is-data-section-card": {
@@ -564,30 +536,30 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     moduleId: "module-4",
     sectionId: "module-quiz",
     cardType: "section-card",
-    content: "Test your ability to evaluate AI implementation partners — including data readiness assessment, vendor red flags, and contract structure.",
-    summary: "Module 4 knowledge check — validate your ability to spot vendor red flags, assess data readiness, and structure contracts that protect your organization.",
+    content: "Test your ability to evaluate AI implementation partners and apply strategic positioning frameworks — including data readiness assessment, vendor red flags, contract structure, AI frontiers, governance readiness, and competitive differentiation.",
+    summary: "Module 3 knowledge check — validate your ability to spot vendor red flags, assess data readiness, structure contracts, and apply strategic AI positioning frameworks.",
     question: "An AI agency gives you a polished proposal, impressive demos, and references from well-known brands. What additional diligence should you do before signing?",
     explanation: "Brand-name references and polished proposals are the floor, not the ceiling, of vendor evaluation. Four additional diligence steps matter. First, call the references and ask specific questions: 'What went wrong during implementation and how did they handle it? Would you use them again and why? What was the actual timeline versus proposed timeline?' Vague positive references without specifics are less meaningful than detailed accounts. Second, request a technical review session where the vendor's actual implementation team — not just sales — walks through their methodology for your specific use case using your data. Third, ask for evidence of production systems: live URLs, monitoring dashboards, performance metrics from deployed systems — not just demo environments. Fourth, run a paid discovery sprint before signing a full implementation contract. A reputable vendor will agree to a scoped, compensated discovery phase; one who insists on signing a full contract first is avoiding the scrutiny that discovery would bring.",
   },
 
   // ─────────────────────────────────────────────
-  // MODULE 5 — AI ROI & Decision-Making Frameworks
+  // MODULE 2 — AI ROI & Decision-Making Frameworks (merged legacy Module 5)
   // ─────────────────────────────────────────────
 
-  "module-5-module-overview-section-card": {
-    id: "module-5-module-overview-section-card",
-    moduleId: "module-5",
+  "module-2-module-overview-roi-section-card": {
+    id: "module-2-module-overview-roi-section-card",
+    moduleId: "module-2",
     sectionId: "module-overview",
     cardType: "section-card",
     content: "This module provides operational frameworks for measuring whether AI initiatives create real business value. You'll learn ROI calculation methods, cost-benefit analysis approaches, automation scoring systems, and prioritization matrices. The goal is replacing gut-feel AI investment decisions with structured, defensible analysis.",
-    summary: "Module 5 replaces gut-feel AI investment decisions with structured ROI calculation, multi-year cost-benefit analysis, and prioritization frameworks you can defend to stakeholders.",
+    summary: "Module 2 replaces gut-feel AI investment decisions with structured ROI calculation, multi-year cost-benefit analysis, and prioritization frameworks you can defend to stakeholders.",
     question: "Why do so many AI investments fail to produce the ROI that was projected, and how do I avoid those mistakes?",
     explanation: "Most AI ROI projections fail for two interconnected reasons. On the cost side, organizations systematically undercount: they budget for implementation and licensing but ignore change management, training, ongoing maintenance, integration complexity, and the productivity dip during adoption. These uncounted costs often represent 40–60% of true project cost. On the benefit side, organizations count theoretical capacity savings rather than realized value — if AI saves 10 hours per week per employee, that only creates financial value if those 10 hours are redeployed to higher-value work rather than absorbed into unstructured time. The fix is disciplined cost accounting that includes all categories and benefit measurement that tracks realized outcomes — task completion rates, revenue metrics, cost-per-outcome — not theoretical capacity freed.",
   },
 
-  "module-5-roi-basics-section-card": {
-    id: "module-5-roi-basics-section-card",
-    moduleId: "module-5",
+  "module-2-roi-basics-section-card": {
+    id: "module-2-roi-basics-section-card",
+    moduleId: "module-2",
     sectionId: "roi-basics",
     cardType: "section-card",
     content: "AI ROI is calculated as: ROI = ((Gain − Cost) / Cost) × 100. Gain includes labor savings, revenue acceleration, error reduction, and speed improvements. Cost includes implementation, licensing, maintenance, training, and change management. Most organizations undercount costs (ignoring change management and ongoing maintenance) and overcount gains (counting theoretical rather than realized savings). Both errors produce misleading ROI projections.",
@@ -596,9 +568,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "A credible AI ROI calculation requires rigor on both the numerator and denominator. For costs: implementation (vendor fees, internal engineering time, integration work), licensing (per-seat or usage-based fees at realistic scale, not the introductory price), ongoing maintenance (model monitoring, retraining, prompt updates, vendor relationship management), training (time cost of upskilling employees, not just course fees), and change management (the organizational cost of changing workflows, which is often underestimated). For gains: be disciplined about what actually generates financial value — time savings only count if that time is verifiably redeployed, error reduction only counts if errors had a documented cost, revenue acceleration only counts if the causal link to AI is measurable. Build three versions — conservative, base, optimistic — and present all three. The conservative case should be the one you'd stake your credibility on; the optimistic case is what you're working toward. Year 1 ROI is often negative or marginal; multi-year ROI is where most AI investments justify themselves.",
   },
 
-  "module-5-roi-calculation": {
-    id: "module-5-roi-calculation",
-    moduleId: "module-5",
+  "module-2-roi-calculation": {
+    id: "module-2-roi-calculation",
+    moduleId: "module-2",
     sectionId: "roi-calculation",
     cardType: "section-card",
     content: "Annual savings calculation: Annual Savings = Hours Saved × Hourly Cost × Frequency. Example: An AI that reduces report generation from 4 hours to 30 minutes saves 3.5 hours per report. If generated weekly with a $75/hour analyst: 3.5 × $75 × 52 = $13,650/year. This must be compared against full implementation and licensing costs. Build conservative, base, and optimistic scenarios — present all three to avoid commitment to a single projection.",
@@ -607,9 +579,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "CFOs push back on AI ROI models for good reason — most of them have seen inflated projections. To present credibly, structure your model around documented assumptions rather than conclusions. For each benefit line item, show the specific calculation: how many hours per week, at what fully-loaded cost per hour, at what frequency, with what confidence level. Clearly distinguish between what's already happened (pilot results, if you have them) and what's projected. For cost line items, include categories that most proposals skip: internal time allocation from IT, engineering, and management during implementation; training and adoption investment; ongoing maintenance labor; and the 10–15% contingency that almost every AI project requires for unexpected complications. Present three scenarios with explicit sensitivity analysis — what changes if adoption is 20% lower than expected, or if implementation takes 50% longer? CFOs trust models that acknowledge uncertainty; they distrust models that present single-point precision on inherently uncertain projections.",
   },
 
-  "module-5-effectiveness-metrics": {
-    id: "module-5-effectiveness-metrics",
-    moduleId: "module-5",
+  "module-2-effectiveness-metrics": {
+    id: "module-2-effectiveness-metrics",
+    moduleId: "module-2",
     sectionId: "effectiveness-metrics",
     cardType: "section-card",
     content: "Effective AI metrics measure operational outcomes, not AI activity: (1) Time saved per task (before vs. after); (2) Error rate reduction; (3) Throughput increase (tasks per person-hour); (4) Cost per outcome; (5) Customer satisfaction delta; (6) Revenue attribution. Poor metrics measure AI inputs rather than business outputs — number of prompts sent, features used, or licenses deployed are not evidence of value creation.",
@@ -618,9 +590,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The distinction is between measuring activity (the AI is being used) and measuring outcomes (the AI is creating value). Activity metrics — number of prompts sent, daily active users, features accessed, licenses utilized — tell you adoption is occurring but nothing about whether it's changing the economics of your operations. Outcome metrics are before-versus-after comparisons on the things that actually matter: How long does it take to complete the task now versus before AI? What is the error rate now versus before? How many outputs per person-hour now versus before? What is the cost-per-customer-served now versus before? The discipline of measuring outcomes rather than activity also forces clarity about what 'value' means for each use case — which is itself a useful strategic exercise. If you can't name what operational outcome should improve because of this AI deployment, you don't have a clear enough use case to invest in yet.",
   },
 
-  "module-5-misleading-metrics": {
-    id: "module-5-misleading-metrics",
-    moduleId: "module-5",
+  "module-2-misleading-metrics": {
+    id: "module-2-misleading-metrics",
+    moduleId: "module-2",
     sectionId: "misleading-metrics",
     cardType: "section-card",
     content: "Common misleading AI metrics: (1) 'Hours saved' without validating those hours produced other value; (2) 'Accuracy rates' on test sets that don't reflect production data distribution; (3) User satisfaction scores that reflect novelty rather than utility; (4) 'Tasks automated' without cost comparison to previous approach; (5) Revenue 'attributed' to AI via correlation rather than controlled measurement. Each of these can make a failing AI project appear successful.",
@@ -629,9 +601,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The most reliable protection against misleading AI metrics is requiring a pre-established measurement protocol before deployment begins — not after, when there's pressure to show success. The protocol should include: a baseline measurement of current performance taken before AI is introduced (time-on-task measured via time studies or system logs, error rates from quality records, throughput from operational data); outcome metrics specified with their measurement method before deployment; a controlled comparison group when feasible (a team using AI versus one not, rather than before-after which confounds other changes); a minimum observation period before declaring success (at least 60–90 days to distinguish novelty effects from sustained behavior change); and a redeployment audit on claimed time savings (confirming that hours 'saved' actually shifted to measurable higher-value work, not just disappeared into unstructured time). Requiring these elements in advance makes it much harder to present misleading metrics post-hoc.",
   },
 
-  "module-5-adoption-framework": {
-    id: "module-5-adoption-framework",
-    moduleId: "module-5",
+  "module-2-adoption-framework": {
+    id: "module-2-adoption-framework",
+    moduleId: "module-2",
     sectionId: "adoption-framework",
     cardType: "section-card",
     content: "AI adoption framework for ROI maximization: (1) Identify highest-frequency, highest-effort tasks — these have the most savings leverage; (2) Quantify current state with time studies or system data; (3) Pilot with a constrained team for 30–60 days; (4) Measure actual vs. projected savings; (5) Calculate true per-unit cost including all overhead; (6) Decide expand, pivot, or stop based on data. Most organizations skip steps 2 and 5, making accurate evaluation impossible.",
@@ -640,13 +612,13 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "A reliable pilot has four non-negotiable design elements. First, a measurable baseline established before the pilot begins — using the same metrics you'll measure during the pilot. Without a pre-pilot baseline, you can't attribute performance changes to the AI. Second, a constrained but representative test group — large enough to generate meaningful data, small enough to manage carefully. Avoid the error of piloting only with enthusiastic volunteers (selection bias) or only with the most automated part of the workflow (the easiest case). Third, a control group or control period when feasible — another team doing the same work without AI, or a previous period's performance data if a parallel control isn't possible. Fourth, a structured data collection plan — not just end-of-pilot surveys, but ongoing time tracking, quality sampling, or system log analysis at regular intervals during the pilot. After 30–60 days, compare actual versus projected on your pre-specified metrics and make an explicit expand/pivot/stop decision with documented reasoning.",
   },
 
-  "module-5-module-quiz": {
-    id: "module-5-module-quiz",
-    moduleId: "module-5",
+  "module-2-module-quiz": {
+    id: "module-2-module-quiz",
+    moduleId: "module-2",
     sectionId: "module-quiz",
     cardType: "section-card",
-    content: "Apply ROI frameworks, identify misleading metrics, and evaluate AI investment decisions using the tools from this module.",
-    summary: "Module 5 knowledge check — validate your ability to calculate AI ROI accurately, identify misleading metrics, and make structured investment decisions.",
+    content: "Apply business value and ROI frameworks, identify misleading metrics, and evaluate AI investment decisions using the tools from this combined module.",
+    summary: "Module 2 knowledge check — validate your ability to identify high-value AI opportunities, calculate ROI accurately, and make structured investment decisions.",
     question: "Your AI pilot shows a 40% reduction in task completion time but adoption is at 45% of the team. How should you interpret these results and what should you do next?",
     explanation: "These results are promising but incomplete, and the right response is to diagnose before scaling. A 40% time reduction is significant if it holds up at full adoption — but the 45% adoption rate means you're currently measuring only the motivated early adopters, who are almost certainly the fastest and most capable users. When adoption expands to the full population, including reluctant users and those with different work patterns, the average time reduction will likely drop. Before scaling, diagnose why 55% of the team isn't adopting: is it a training gap, a workflow fit issue, a specific task type that doesn't benefit, or resistance? Addressing the adoption gap is more important than celebrating the performance of early adopters. Scale only after you understand what's driving non-adoption and have addressed it — otherwise you'll scale both the benefit and the adoption problem.",
   },
@@ -661,7 +633,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     sectionId: "module-overview",
     cardType: "section-card",
     content: "This module addresses practical governance rather than abstract ethics. You'll examine the operational, legal, and organizational risks of deploying AI at scale — including data privacy, shadow AI, hallucination reliability, IP exposure, and employee misuse — and build frameworks for managing these risks without creating bureaucratic paralysis.",
-    summary: "Module 6 builds practical AI governance frameworks that manage real operational risks — data privacy, shadow AI, hallucination, IP exposure — without creating bureaucratic paralysis.",
+    summary: "Module 4 builds practical AI governance frameworks that manage real operational risks — data privacy, shadow AI, hallucination, IP exposure — without creating bureaucratic paralysis.",
     question: "How do I build AI governance that actually prevents harm without making it so restrictive that no one uses AI?",
     explanation: "The governance failure mode that organizations should worry about as much as insufficient governance is governance so burdensome that employees route around it — creating shadow AI use that's unmonitored and ungoverned. Effective AI governance is risk-proportionate: high scrutiny for high-consequence uses (customer-facing AI, decisions affecting employees, legally sensitive outputs), lighter-touch approval for low-consequence uses (internal drafting tools, summarization, brainstorming). The practical structure that achieves this balance is a tiered framework: Tier 1 tools are pre-approved for general use with basic training and acceptable use policy acknowledgment. Tier 2 uses require manager approval and a brief data classification check. Tier 3 deployments (customer-facing, regulatory context, high-volume automation) require formal review. This tiering creates governance where it matters and removes friction where it doesn't.",
   },
@@ -738,7 +710,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     sectionId: "module-quiz",
     cardType: "section-card",
     content: "Apply AI governance frameworks — data privacy, bias assessment, misinformation controls, and responsible deployment criteria.",
-    summary: "Module 6 knowledge check — validate your ability to identify governance gaps, assess bias and privacy risks, and build practical AI risk controls.",
+    summary: "Module 4 knowledge check — validate your ability to identify governance gaps, assess bias and privacy risks, and build practical AI risk controls.",
     question: "Your organization has no formal AI policy, but employees are already using AI tools daily. How do you build governance without shutting down productive use?",
     explanation: "Retroactive governance — building policy after adoption has already occurred — requires a different approach than starting from scratch. The first step is an audit, not a ban: survey employees to understand what tools are being used, for what tasks, with what data. This reveals the actual risk surface rather than a theoretical one. From the audit, categorize current uses into: acceptable as-is, acceptable with minor guardrails (like a reminder not to include customer names), and genuinely problematic (confidential data entering unapproved tools). Address the genuinely problematic uses first with specific policy and approved alternatives. Create a clear, positive framework for what's permitted — a short, readable acceptable use policy with concrete examples — rather than a long list of prohibitions. Announce approved tools and use cases enthusiastically, making it easy to do the right thing. Then address the genuinely problematic use cases with targeted, specific intervention rather than blanket restrictions that drive usage underground.",
   },
@@ -749,18 +721,18 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-module-overview-section-card": {
     id: "module-7-module-overview-section-card",
-    moduleId: "module-7",
-    sectionId: "module-overview",
+    moduleId: "module-6",
+    sectionId: "adoption-overview",
     cardType: "section-card",
     content: "This module answers the question every leader asks after understanding AI: 'What do we actually do Monday morning?' You'll build a practical, sequenced adoption roadmap covering pilot design, change management, department prioritization, internal champions, employee training, and scaling criteria. The goal is structured momentum — not analysis paralysis.",
-    summary: "Module 7 translates AI understanding into a concrete adoption roadmap — pilot design, department prioritization, change management, and scaling criteria that create structured momentum.",
+    summary: "Module 4 translates AI understanding into a concrete adoption roadmap — pilot design, department prioritization, change management, and scaling criteria that create structured momentum.",
     question: "I understand AI conceptually but don't know how to actually start. What are the first three concrete steps?",
     explanation: "The three most productive first steps are specific, bounded, and immediately actionable. First, conduct a current-state workflow audit in one department: document what tasks are done, by whom, at what frequency, and how long each takes. This creates the baseline you need to measure improvement and identify AI candidates — without it, every subsequent decision is guesswork. Second, identify one high-frequency, high-effort task in that department where AI has a clear use case, run a 30-day constrained pilot with 3–5 volunteers using an approved tool, and measure time-on-task before and after. Third, document what you learned — what worked, what didn't, what the actual time savings were, what governance gaps surfaced — and use that evidence to make a go/no-go decision on broader rollout. These three steps produce real evidence rather than theoretical plans, create early organizational wins, and build the measurement discipline that makes every subsequent AI investment more credible.",
   },
 
   "module-7-ai-and-jobs": {
     id: "module-7-ai-and-jobs",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "ai-and-jobs",
     cardType: "section-card",
     content: "AI's impact on jobs operates at the task level, not the job level. Most roles contain a mix of tasks: some highly automatable (data entry, scheduling, report formatting), others resistant to automation (relationship management, novel problem-solving, physical tasks requiring dexterity). AI adoption typically reshapes roles — removing repetitive tasks, shifting time to higher-value work — rather than eliminating jobs entirely in the short term. The exception is roles that are almost entirely task-automatable.",
@@ -771,7 +743,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-ai-in-the-workplace": {
     id: "module-7-ai-in-the-workplace",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "ai-in-the-workplace",
     cardType: "section-card",
     content: "AI in the workplace changes how work gets done: faster drafting, automated summaries, real-time translation, intelligent search, and automated routing. But workplace AI also introduces new failure modes: over-reliance on AI outputs, skill atrophy in frequently delegated tasks, and homogenized thinking if everyone uses the same prompts. Healthy AI workplace cultures train employees to verify outputs, understand AI limitations, and maintain the judgment required to catch AI errors.",
@@ -782,7 +754,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-ai-opportunities": {
     id: "module-7-ai-opportunities",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "ai-opportunities",
     cardType: "section-card",
     content: "Highest-ROI AI opportunities by function: Marketing — content personalization, A/B testing acceleration, ad copy generation; Sales — lead scoring, call summarization, proposal drafting; Operations — process documentation, quality control, exception flagging; Finance — report generation, anomaly detection, forecasting; HR — resume screening, onboarding automation, policy Q&A. Prioritize functions with high task volume, clear measurability, and existing digital data.",
@@ -793,7 +765,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-ai-strategy": {
     id: "module-7-ai-strategy",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "ai-strategy",
     cardType: "section-card",
     content: "AI strategy for most organizations should follow: (1) Crawl — internal productivity tools, employee assistance, low-risk automation with human oversight; (2) Walk — department-level workflow automation, customer-facing AI with review processes; (3) Run — autonomous systems, cross-functional AI integration, AI-native process design. Most organizations try to run before they've walked — deploying autonomous customer-facing AI before they have governance, review processes, or trained employees.",
@@ -804,7 +776,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-industry-applications": {
     id: "module-7-industry-applications",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "industry-applications",
     cardType: "section-card",
     content: "AI applications by industry: Healthcare — clinical documentation, diagnostic support, administrative automation; Financial Services — fraud detection, compliance monitoring, customer service; Retail — demand forecasting, personalization, inventory optimization; Manufacturing — quality control, predictive maintenance, supply chain optimization; Legal — document review, contract analysis, research; Education — personalized tutoring, administrative automation, content generation. Each industry has distinct regulatory and governance considerations.",
@@ -815,7 +787,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-real-workflows-section-card": {
     id: "module-7-real-workflows-section-card",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "real-workflows",
     cardType: "section-card",
     content: "Real AI workflow examples that demonstrate measurable value: (1) Weekly report generation: analyst spends 4 hours compiling → AI aggregates data in 20 minutes, analyst reviews and adjusts in 45 minutes; (2) Customer support triage: support team manually reads and routes 500 tickets/day → AI categorizes and prioritizes in real time, human agents handle escalations; (3) Sales email personalization: reps send generic sequences → AI personalizes using CRM context, open rates increase 35–45%.",
@@ -826,7 +798,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-role-transformation-section-card": {
     id: "module-7-role-transformation-section-card",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "role-transformation",
     cardType: "section-card",
     content: "AI transforms roles by shifting the mix of tasks, not eliminating roles entirely in most cases. A content writer with AI tools shifts from spending 60% on first-draft writing to spending 60% on editing, strategy, and quality judgment. A financial analyst shifts from 70% data compilation to 70% interpretation and recommendation. These shifts are positive — but require retraining, role redefinition, and sometimes compensation renegotiation as the nature of expertise changes.",
@@ -837,7 +809,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-workflow-redesign-section-card": {
     id: "module-7-workflow-redesign-section-card",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "workflow-redesign",
     cardType: "section-card",
     content: "Workflow redesign is the highest-leverage AI adoption activity most organizations skip. Instead of adding AI to existing workflows, redesign around AI capabilities: (1) Map current workflow steps; (2) Identify steps AI can handle with high reliability; (3) Identify handoff points requiring human judgment; (4) Design the new workflow with explicit AI/human responsibilities; (5) Build in quality checkpoints; (6) Define performance metrics for the redesigned workflow. Organizations that skip redesign capture 20–30% of available AI value.",
@@ -848,7 +820,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-building-ai-skills": {
     id: "module-7-building-ai-skills",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "building-ai-skills",
     cardType: "section-card",
     content: "Building organizational AI skills requires: (1) Baseline AI literacy training for all employees — what AI can and can't do; (2) Role-specific prompt engineering training — focused on each function's use cases; (3) Identification of internal AI champions — employees who develop deep expertise and coach others; (4) Ongoing learning infrastructure — AI is evolving fast enough that one-time training becomes obsolete quickly; (5) Leadership AI fluency — executives who can't evaluate AI claims make poor AI investment decisions.",
@@ -859,23 +831,23 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-7-module-quiz": {
     id: "module-7-module-quiz",
-    moduleId: "module-7",
+    moduleId: "module-6",
     sectionId: "module-quiz",
     cardType: "section-card",
     content: "Apply AI adoption roadmap frameworks — sequencing, change management, role transformation, and workflow redesign.",
-    summary: "Module 7 knowledge check — validate your ability to sequence AI adoption, design effective pilots, manage role transformation, and structure workflow redesign.",
+    summary: "Module 4 knowledge check — validate your ability to sequence AI adoption, design effective pilots, manage role transformation, and structure workflow redesign.",
     question: "You've completed two successful AI pilots. The CEO is excited and wants to scale AI company-wide immediately. What risks does this enthusiasm create, and what's the right response?",
     explanation: "CEO enthusiasm after early pilots is an asset to manage carefully — it creates organizational momentum that's hard to generate, but rapid unplanned scaling is how that momentum converts into costly failures. The risks of immediate company-wide scaling are real: governance frameworks that worked for two pilots may break down at 50 simultaneous deployments; training that was hands-on with 20 people becomes impractical at 500; integration and infrastructure requirements multiply; and the organizational change management required increases non-linearly with scope. The right response is to channel the enthusiasm productively: use it to accelerate governance investment, secure training budget, build the AI team, and create the infrastructure that makes scaling safe — rather than immediately expanding deployment before those foundations exist. Present a 90-day scaling plan that includes governance expansion, training infrastructure, and three additional pilots in new departments as the next stage, with full company-wide deployment as the 12-month target. This preserves momentum while preventing the failures that would undermine it.",
   },
 
   // ─────────────────────────────────────────────
-  // MODULE 8 — AI Agents & Automation Systems
+  // MODULE 1 (continued) — AI Agents & Automation Systems (merged from Module 8)
   // ─────────────────────────────────────────────
 
-  "module-8-module-overview-section-card": {
-    id: "module-8-module-overview-section-card",
-    moduleId: "module-8",
-    sectionId: "module-overview",
+  "module-1-agent-overview-section-card": {
+    id: "module-1-agent-overview-section-card",
+    moduleId: "module-1",
+    sectionId: "agent-overview",
     cardType: "section-card",
     content: "This module separates AI agent hype from operational reality. You'll learn what AI agents actually are, how they differ from simpler automation workflows, what orchestration systems do, and where human oversight remains essential. The goal is enabling informed decisions about agent deployment rather than being swept up in marketing narratives.",
     summary: "Module 8 cuts through AI agent hype to explain what agents actually are, how they work operationally, and where human oversight is non-negotiable — enabling informed deployment decisions.",
@@ -883,9 +855,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The marketing use of 'AI agent' covers everything from sophisticated autonomous systems to a chatbot with a slightly longer context window. The operational questions that reveal real capability are: What specific actions can this agent take — can it enumerate them precisely? Which of those actions are irreversible (sending emails, modifying records, placing orders, spending budget)? What is the approval workflow for irreversible actions — is human approval required, and how is it implemented? What happens when the agent encounters an unexpected situation outside its training — does it stop and escalate, guess and continue, or fail silently? What is the monitoring and logging infrastructure — can you review every action the agent took and why? A vendor who answers all five questions specifically and credibly has a real agent system. A vendor who responds with enthusiasm but can't specify action boundaries, approval workflows, and failure handling has rebranded an existing product rather than building genuine agent capability.",
   },
 
-  "module-8-what-are-agents-section-card": {
-    id: "module-8-what-are-agents-section-card",
-    moduleId: "module-8",
+  "module-1-what-are-agents-section-card": {
+    id: "module-1-what-are-agents-section-card",
+    moduleId: "module-1",
     sectionId: "what-are-agents",
     cardType: "section-card",
     content: "An AI agent is a system that uses an AI model to take sequences of actions toward a goal, typically with access to tools (web search, code execution, API calls, file systems). Unlike a chatbot that responds to single prompts, an agent plans multi-step actions, executes them, observes results, and adapts. The degree of autonomy varies significantly — from 'human-in-the-loop' (approves each step) to 'fully autonomous' (runs without oversight). Most production agents today are closer to the constrained end of this spectrum.",
@@ -894,9 +866,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The difference between an AI assistant and an AI agent is the difference between advice and action. When you use ChatGPT or Claude to draft an email, the AI produces text and you decide what to do with it — the consequence of any action is in your hands. An AI agent takes the action itself: it doesn't just draft the email, it sends it. It doesn't just analyze the data, it modifies the spreadsheet. It doesn't just identify the meeting conflict, it reschedules the call. This real-world action capability is what makes agents qualitatively different from conversational AI tools — and what makes their governance requirements qualitatively different as well. When an AI can send emails on your behalf, modify your database, or make API calls to external services, the consequences of errors are external and potentially irreversible. This is why agent deployment requires a different level of governance scrutiny, action boundary definition, and monitoring than conversational AI tool deployment.",
   },
 
-  "module-8-types-of-agents": {
-    id: "module-8-types-of-agents",
-    moduleId: "module-8",
+  "module-1-types-of-agents": {
+    id: "module-1-types-of-agents",
+    moduleId: "module-1",
     sectionId: "types-of-agents",
     cardType: "section-card",
     content: "AI agent categories: (1) Task agents — complete a specific defined task (research a topic, send a report); (2) Process agents — manage ongoing workflows with recurring triggers; (3) Multi-agent systems — networks of specialized agents coordinating on complex tasks; (4) Embodied agents — AI controlling physical systems (robots, manufacturing equipment). Most business deployments today are task agents with constrained tool access. Multi-agent coordination is advancing rapidly but remains operationally complex.",
@@ -905,9 +877,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The most production-ready agent type today is the task agent — a system designed to complete a specific, well-defined task with constrained tool access and clear success criteria. Research compilation agents, data analysis agents, report generation agents, and single-workflow customer service routing agents fall in this category and are operating reliably in production environments. Process agents — managing ongoing workflows with recurring triggers — are viable for well-defined, lower-stakes workflows but require more robust monitoring infrastructure. Multi-agent systems — where multiple specialized AI agents coordinate to complete complex tasks — are advancing rapidly but remain operationally complex and brittle in most production environments outside of well-resourced technology organizations. Embodied agents controlling physical systems are mature only in highly specialized industrial contexts. The practical guidance: start with task agents for specific, bounded problems; build the monitoring and governance infrastructure; then evaluate whether process automation or multi-agent coordination is warranted based on demonstrated need and organizational AI maturity.",
   },
 
-  "module-8-how-agents-work-section-card": {
-    id: "module-8-how-agents-work-section-card",
-    moduleId: "module-8",
+  "module-1-how-agents-work-section-card": {
+    id: "module-1-how-agents-work-section-card",
+    moduleId: "module-1",
     sectionId: "how-agents-work",
     cardType: "section-card",
     content: "AI agents follow a perceive-plan-act-observe loop: (1) Perceive — receive the goal and relevant context; (2) Plan — determine what steps to take using the LLM as a reasoning engine; (3) Act — execute steps using available tools; (4) Observe — examine results of actions; (5) Adapt — revise the plan based on observations; (6) Repeat until goal achieved or failure threshold reached. The LLM provides the reasoning; tools provide the ability to affect the real world.",
@@ -916,9 +888,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The loop structure is what creates agents' power — and their distinctive risks. Consider a research agent tasked with gathering competitor pricing: Perceive (read the goal and available tools), Plan (search competitor websites, extract price tables, compile comparison), Act (run web searches, navigate pages, extract data), Observe (some pages blocked, some prices in images not text), Adapt (try alternative sources, use image recognition, flag gaps). This adaptive replanning is useful — but it also means the agent may take actions you didn't anticipate when you gave the original instruction. If the agent has write access to your systems, its adaptive actions could include modifying records based on partial information, sending requests to external systems, or storing data in places you didn't intend. The governance implication is clear: agents should have only the specific tool access required for their defined task, read access should be separated from write access wherever possible, and any irreversible action should require explicit human approval before execution.",
   },
 
-  "module-8-real-world-applications": {
-    id: "module-8-real-world-applications",
-    moduleId: "module-8",
+  "module-1-real-world-applications": {
+    id: "module-1-real-world-applications",
+    moduleId: "module-1",
     sectionId: "real-world-applications",
     cardType: "section-card",
     content: "Practical AI agent applications in production today: (1) Research agents — search, synthesize, and structure information from multiple sources; (2) Code generation agents — write, test, and iterate on code with tool execution; (3) Data analysis agents — pull data, run analysis, generate reports; (4) Customer service agents — triage, respond, and escalate support requests; (5) Content pipeline agents — draft, review, format, and publish content with checkpoints. Each requires defined human oversight points.",
@@ -927,9 +899,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "For a first agent deployment, the highest-impact applications share three characteristics: the task is well-defined with clear success criteria, the tool access required is narrow and mostly read-only, and there's a natural human review point before any output has external consequences. Research agents — tasked with gathering, synthesizing, and structuring information from specified sources — score well on all three. The agent searches and compiles; a human reviews and acts on the findings. Data analysis agents — pulling data from connected systems, running specified analyses, and generating report drafts — also score well, particularly for organizations where report generation consumes significant analyst time. For customer service, start with triage and routing (the agent classifies and prioritizes tickets; humans respond) rather than response generation (the agent drafts responses; the review step is harder to maintain at volume). Code generation agents are highest-impact for technology teams but require a developer familiar enough with the codebase to review generated code critically — without that, they create technical debt faster than they reduce it.",
   },
 
-  "module-8-risks-and-limits": {
-    id: "module-8-risks-and-limits",
-    moduleId: "module-8",
+  "module-1-risks-and-limits": {
+    id: "module-1-risks-and-limits",
+    moduleId: "module-1",
     sectionId: "risks-and-limits",
     cardType: "section-card",
     content: "AI agent risks: (1) Action cascades — a wrong first action compounds through subsequent steps; (2) Prompt injection — malicious content in the environment manipulates the agent's actions; (3) Tool misuse — agent uses available tools in unintended ways; (4) Goal specification errors — the agent achieves the literal goal while violating the intent; (5) Lack of common sense limits — agents may take technically correct but contextually inappropriate actions. Mitigation requires constrained tool access, mandatory approval gates for consequential actions, and comprehensive logging.",
@@ -938,9 +910,9 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The most dangerous and least visible agent failure mode is the action cascade: a wrong decision in step one that compounds through subsequent autonomous steps before anyone notices. Unlike a chatbot error that affects a single response, an agent error propagates — if the agent misclassifies a customer inquiry in step one, every subsequent action (routing, response, logging, escalation) is built on that wrong foundation. By the time a human sees the outcome, multiple irreversible actions may have occurred. The most effective control is granular logging combined with mandatory human review before any action that is irreversible or externally visible. This means designing agents where the perceive-plan-observe steps can happen autonomously, but 'send email,' 'update record,' 'place order,' or any other real-world consequence requires explicit human approval. The inconvenience of approval gates is real but temporary; the damage from a cascaded error affecting dozens of customers is permanent. As trust is established through observed reliability, approval gates can be selectively relaxed — not eliminated for high-stakes actions.",
   },
 
-  "module-8-building-with-agents": {
-    id: "module-8-building-with-agents",
-    moduleId: "module-8",
+  "module-1-building-with-agents": {
+    id: "module-1-building-with-agents",
+    moduleId: "module-1",
     sectionId: "building-with-agents",
     cardType: "section-card",
     content: "Building with AI agents requires: (1) Define the goal precisely with success and failure criteria; (2) Enumerate required tools and their access scopes; (3) Design the approval workflow — which actions require human confirmation; (4) Build comprehensive logging of all agent actions; (5) Implement rollback capabilities for reversible actions; (6) Start with constrained autonomy and expand as reliability is demonstrated; (7) Monitor production behavior continuously. Agents require more operational investment than chatbots.",
@@ -949,10 +921,10 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "First-time agent deployments most often fail from two causes: insufficient goal specification and inadequate logging. Goal specification must include not just what success looks like but what failure looks like, and what edge cases should cause the agent to stop and escalate rather than continue. 'Research competitor pricing' is an insufficient specification; 'Search the pricing pages of these five specific URLs, extract the current monthly price for plans matching these criteria, and flag if any page is inaccessible — stop and notify me if more than two pages return errors' is a deployable specification. Logging must be comprehensive enough to reconstruct exactly what the agent did, in what order, with what inputs and outputs, at every step. Without this, debugging failures is nearly impossible and establishing trustworthiness takes much longer than it should. Start with the most constrained possible version — fewest tools, most approval gates, narrowest scope — and expand only as logging demonstrates reliable behavior over real operational volume.",
   },
 
-  "module-8-module-quiz": {
-    id: "module-8-module-quiz",
-    moduleId: "module-8",
-    sectionId: "module-quiz",
+  "module-1-agents-module-quiz": {
+    id: "module-1-agents-module-quiz",
+    moduleId: "module-1",
+    sectionId: "agents-module-quiz",
     cardType: "section-card",
     content: "Apply AI agent evaluation frameworks — distinguishing agent types, assessing governance requirements, and identifying deployment risks.",
     summary: "Module 8 knowledge check — validate your ability to evaluate agent claims, assess governance requirements, and identify the key risks before deploying autonomous AI systems.",
@@ -966,8 +938,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-module-overview-section-card": {
     id: "module-9-module-overview-section-card",
-    moduleId: "module-9",
-    sectionId: "module-overview",
+    moduleId: "module-6",
+    sectionId: "ai-stack-overview",
     cardType: "section-card",
     content: "This module teaches organizations to architect and manage an AI software ecosystem without creating fragmentation, security gaps, or operational chaos. You'll examine integration strategy, procurement governance, interoperability, vendor dependency management, and how to design for long-term maintainability.",
     summary: "Module 9 teaches AI stack architecture — integration strategy, vendor dependency management, and long-term maintainability — to build a coherent ecosystem rather than an accidental collection of tools.",
@@ -977,7 +949,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-ai-workflows": {
     id: "module-9-ai-workflows",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "ai-workflows",
     cardType: "section-card",
     content: "AI workflow design determines how AI tools connect to business processes: (1) Input sources — where does data enter the workflow? (2) Processing steps — which AI tools transform data at each stage? (3) Output destinations — where do AI outputs go, and in what format? (4) Human touchpoints — where do humans review, approve, or intervene? (5) Error handling — what happens when AI output quality falls below threshold? Documenting these explicitly prevents operational chaos when multiple AI tools are in use.",
@@ -988,7 +960,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-tool-selection": {
     id: "module-9-tool-selection",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "tool-selection",
     cardType: "section-card",
     content: "AI stack tool selection criteria: (1) Interoperability — does it connect to your other tools via API or native integration? (2) Data ownership — who owns data stored in the tool, and can you export it? (3) Pricing structure — per-seat, usage-based, or enterprise; which scales sustainably with your usage? (4) Vendor roadmap — is the vendor investing in capabilities you'll need in 2 years? (5) Support quality — do they offer SLAs and technical support for enterprise issues? (6) Security certifications — SOC 2, GDPR compliance, etc.",
@@ -999,7 +971,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-prompting-assistants": {
     id: "module-9-prompting-assistants",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "prompting-assistants",
     cardType: "section-card",
     content: "Managing AI assistants at scale requires: (1) Shared prompt libraries — documented, tested prompts for common tasks that employees can use rather than reinventing each time; (2) System prompt governance — standardized configurations for AI tools with organizational context and constraints built in; (3) Version control for prompts — treating prompts as institutional assets that evolve and require change management; (4) Quality baselines — defined standards for acceptable AI output quality by use case.",
@@ -1010,7 +982,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-ai-project": {
     id: "module-9-ai-project",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "ai-project",
     cardType: "section-card",
     content: "AI project management differs from traditional software projects: (1) Requirements are often discovered through iteration, not specified upfront; (2) Performance depends on data quality, not just code quality; (3) Failure modes are probabilistic, not deterministic; (4) User expectations need calibration for AI-specific behaviors (hallucinations, inconsistency); (5) Evaluation requires ongoing monitoring, not just launch testing. Agile approaches with short feedback loops generally outperform waterfall for AI projects.",
@@ -1021,7 +993,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-explain-ai-section-card": {
     id: "module-9-explain-ai-section-card",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "explain-ai",
     cardType: "section-card",
     content: "Explaining AI systems to stakeholders is a critical leadership skill. Effective AI communication: (1) Lead with business impact, not technical mechanism; (2) Acknowledge limitations explicitly — this builds credibility; (3) Use analogies that match the audience's experience; (4) Avoid precision theater — don't quote 'accuracy rates' without explaining what they mean in operational terms; (5) Be clear about what humans remain responsible for. Stakeholders who don't understand AI limitations make poor decisions about where to deploy it.",
@@ -1032,7 +1004,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-risk-check": {
     id: "module-9-risk-check",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "risk-check",
     cardType: "section-card",
     content: "AI stack risk checklist: (1) Data governance — do you know where all AI tools store data, and who can access it? (2) Vendor concentration — what happens if your primary AI vendor has an outage or pricing change? (3) Skill dependency — do you have internal capability to manage and adjust your AI systems, or are you dependent on a single vendor or agency? (4) Compliance coverage — are all AI tools in scope for your relevant regulatory frameworks? (5) Audit trail — can you explain any AI-influenced decision?",
@@ -1043,7 +1015,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-9-next-steps-section-card": {
     id: "module-9-next-steps-section-card",
-    moduleId: "module-9",
+    moduleId: "module-6",
     sectionId: "next-steps",
     cardType: "section-card",
     content: "AI stack next steps framework: (1) Audit existing tools — catalog all AI tools in use, their costs, data handling, and usage; (2) Identify redundancy — where do multiple tools solve the same problem? (3) Define your core stack — select 3–5 primary platforms that cover 80% of needs; (4) Establish procurement governance — all new AI tools go through an evaluation process; (5) Build internal capability — ensure you can operate and adjust your stack without full vendor dependency.",
@@ -1052,35 +1024,13 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "A 90-day AI stack rationalization plan has three phases. Weeks 1–4: Discovery. Send an all-staff survey requesting disclosure of all AI tools used with usage frequency and primary purpose. Compile results into a complete tool inventory. Review data handling terms for each tool identified. Map tools to functions and identify obvious redundancy. Weeks 5–8: Analysis and decision. Categorize tools into: keep as core stack, migrate away from (timeline TBD), immediately discontinue (data risk or redundancy with no value-add), and needs further evaluation. Develop the core stack shortlist — typically 3–5 platforms covering writing, productivity, data analysis, and image generation. Draft your AI acceptable use policy and procurement governance process. Weeks 9–12: Implementation and communication. Announce the core stack, communicate the timeline for tool migrations (6–12 months for non-urgent migrations), implement the procurement governance gate, and brief all managers on the acceptable use policy. Launch a communication plan emphasizing what employees can use, not just what's restricted. This 90-day effort creates a foundation that prevents years of compounding fragmentation.",
   },
 
-  "module-9-module-quiz": {
-    id: "module-9-module-quiz",
-    moduleId: "module-9",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: "Apply AI stack architecture principles — evaluating tool selection, vendor dependency, workflow integration, and governance.",
-    summary: "Module 9 knowledge check — validate your ability to architect a coherent AI stack, manage vendor risk, and design procurement governance that prevents fragmentation.",
-    question: "A team lead wants to adopt a new AI tool that isn't on the approved list. How should a well-designed procurement governance process handle this?",
-    explanation: "A well-designed AI procurement governance process should make the right path fast and clear — not slow and bureaucratic. The team lead should have access to a simple evaluation checklist (one page, 30-minute completion time) that covers: what problem does this solve and is there an approved tool that already solves it; what data will it process and what sensitivity level is that data; what are the data handling terms; what's the annual cost at expected usage; and has IT security reviewed it. If the tool passes the checklist and addresses a gap in the approved stack, approval should follow within 5–7 business days. If it duplicates an approved tool, the response should explain the approved alternative clearly and invite discussion if the approved tool genuinely doesn't meet the need. The test of a good governance process: does the team lead feel respected and supported, or frustrated and routed around? Governance that's easier to circumvent than comply with isn't governing anything — it's creating the conditions for shadow AI stack accumulation.",
-  },
-
   // ─────────────────────────────────────────────
-  // MODULE 10 — The Future of AI & Strategic Positioning
+  // MODULE 4 (continued) — Future Positioning sections (merged from Module 10)
   // ─────────────────────────────────────────────
-
-  "module-10-module-overview-section-card": {
-    id: "module-10-module-overview-section-card",
-    moduleId: "module-10",
-    sectionId: "module-overview",
-    cardType: "section-card",
-    content: "This final module examines where the AI industry is likely heading from a strategic and operational perspective. The focus is on organizational positioning as AI capabilities commoditize — not speculative AGI scenarios. You'll develop frameworks for maintaining competitive advantage in an environment where AI itself becomes table stakes.",
-    summary: "Module 10 focuses on strategic positioning as AI commoditizes — building durable competitive advantages that persist when every competitor has access to the same AI capabilities.",
-    question: "If everyone will eventually have access to the same AI tools, what will actually determine who wins competitively?",
-    explanation: "As AI tools commoditize — and they will, following the same pattern as cloud computing, SaaS, and every previous technology wave — the differentiators shift from access to execution. Five execution dimensions will separate leaders from laggards. Proprietary data: unique datasets that competitors can't buy or replicate, built through operational history, customer relationships, or proprietary collection. Workflow integration depth: AI embedded so deeply in core processes that it produces compounding improvements over time, versus surface-level tools that could be replaced tomorrow. Organizational speed: the ability to identify, evaluate, and adopt new AI capabilities faster than competitors, built through AI literacy, governance that enables rather than blocks, and a culture of systematic experimentation. AI talent density: people who can identify high-value AI applications, build them well, and improve them continuously — a scarce resource in a market where everyone is competing for the same skills. Customer trust: the credibility to deploy AI in ways customers experience as value rather than intrusion, built through demonstrated responsible use over time.",
-  },
 
   "module-10-current-frontiers-section-card": {
     id: "module-10-current-frontiers-section-card",
-    moduleId: "module-10",
+    moduleId: "module-4",
     sectionId: "current-frontiers",
     cardType: "section-card",
     content: "Current AI frontiers with near-term business implications: (1) Multimodal AI — models processing text, images, audio, and video simultaneously; (2) Long-context reasoning — handling hundreds of thousands of tokens enabling document-level analysis; (3) Agentic systems — AI taking multi-step autonomous actions; (4) AI-generated code at scale — software development acceleration; (5) Real-time AI inference — low-latency applications enabling interactive AI in products. Each frontier is moving from research toward production deployment.",
@@ -1091,7 +1041,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-10-agi-explained": {
     id: "module-10-agi-explained",
-    moduleId: "module-10",
+    moduleId: "module-4",
     sectionId: "agi-explained",
     cardType: "section-card",
     content: "AGI (Artificial General Intelligence) — AI that matches or exceeds human cognitive capability across all domains — is a debated concept with no consensus on definition, timeline, or likelihood. For business leaders, the operationally relevant question isn't 'when is AGI coming' but 'how do we build organizational capability that creates value as AI improves incrementally over the next 3–5 years?' Planning for AGI is less valuable than executing well on current AI capabilities.",
@@ -1102,7 +1052,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-10-ai-governance": {
     id: "module-10-ai-governance",
-    moduleId: "module-10",
+    moduleId: "module-4",
     sectionId: "ai-governance",
     cardType: "section-card",
     content: "AI governance is evolving from voluntary to regulatory. Active regulatory frameworks: EU AI Act (risk-based classification of AI systems), US executive AI guidance, emerging sector-specific rules in healthcare, finance, and employment. Organizations should: (1) Track regulatory developments in their jurisdictions; (2) Inventory AI systems by risk level; (3) Maintain explainability documentation for consequential decisions; (4) Designate AI governance ownership; (5) Build regulatory readiness into AI procurement, not just as retrofit compliance.",
@@ -1113,7 +1063,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-10-ai-careers": {
     id: "module-10-ai-careers",
-    moduleId: "module-10",
+    moduleId: "module-4",
     sectionId: "ai-careers",
     cardType: "section-card",
     content: "AI is reshaping career trajectories across functions. Growing roles: AI prompt engineers, AI product managers, AI governance specialists, ML engineers, AI trainers. Evolving roles: data analysts (augmented by AI), software engineers (with AI coding tools), content creators (with generative tools), customer service managers (supervising AI systems). Declining task demand: data entry, routine reporting, basic content production. The career advantage goes to professionals who can work alongside AI systems effectively, not those who resist them.",
@@ -1124,7 +1074,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
   "module-10-your-ai-future": {
     id: "module-10-your-ai-future",
-    moduleId: "module-10",
+    moduleId: "module-4",
     sectionId: "your-ai-future",
     cardType: "section-card",
     content: "Strategic positioning in an AI-driven economy: Competitive advantage will not come from access to AI tools — those will be commoditized. Advantage will come from: (1) Proprietary data — unique datasets competitors can't access; (2) Workflow integration depth — AI deeply embedded in operations rather than surface-level tools; (3) Organizational speed — the ability to experiment, learn, and adapt faster than competitors; (4) AI talent — people who can identify, implement, and improve AI applications; (5) Customer relationships — trust that persists as AI enables faster service. The race is not about AI access. It's about AI execution.",
@@ -1133,21 +1083,13 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "The highest-leverage single investment is organizational AI learning speed — the capability to identify promising AI applications, experiment with them, measure results, and compound learning faster than competitors. This matters more than any individual tool or system because it scales: an organization that learns from AI experiments twice as fast as its competitors will perpetually be ahead, regardless of which specific capabilities either one has today. Building this capability requires three elements: a systematic experimentation process (small pilots with clear metrics and rapid evaluation cycles), a learning infrastructure (documented outcomes, accessible to decision-makers who can act on them, not siloed in the team that ran the pilot), and organizational tolerance for experiments that don't pan out (which requires leadership framing of 'this didn't work as projected, here's what we learned' as success rather than failure). Every other source of AI competitive advantage — proprietary data, workflow integration, talent density — flows downstream from an organization that learns faster. It is the capability that enables all the others.",
   },
 
-  "module-10-module-quiz": {
-    id: "module-10-module-quiz",
-    moduleId: "module-10",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: "Apply strategic AI positioning frameworks — evaluating AI frontiers, governance readiness, and competitive differentiation in an AI-commoditized environment.",
-    summary: "Module 10 knowledge check — validate your ability to apply strategic positioning frameworks and identify durable sources of AI competitive advantage as capabilities commoditize.",
-    question: "Your board asks: 'What is our AI strategy?' What answer demonstrates that you've completed this course?",
-    explanation: "An answer that demonstrates real AI strategic understanding has four components. First, a clear articulation of where you're deploying AI and why those specific use cases — connecting AI initiatives to business outcomes with quantified projections and measurement plans. Second, an honest assessment of your current maturity and the crawl-walk-run stage you're operating in, with realistic next milestones rather than aspirational claims. Third, a governance framework that ensures risk management without blocking productive use — specific policies, named owners, and measurement of both AI value and AI risk. Fourth, a competitive positioning statement that acknowledges AI will commoditize and articulates what your organization is specifically building that creates durable advantage — proprietary data strategy, workflow integration depth, organizational learning speed, or talent development. What distinguishes this answer from generic AI enthusiasm is specificity, honesty about current state, and grounding in the real dimensions of competitive advantage rather than tool ownership. The board question is an opportunity to demonstrate that your organization is approaching AI as a strategic capability to build, not a trend to follow.",
-  },
 };
 
 function findSectionCourseContentEntry(moduleId: string, sectionId: string) {
+  const normalizedModuleId = normalizeModuleId(moduleId)
+
   return Object.values(COURSE_CONTENT_REGISTRY).find(
-    (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
+    (entry) => normalizeModuleId(entry.moduleId) === normalizedModuleId && entry.sectionId === sectionId,
   )
 }
 
@@ -1224,9 +1166,8 @@ export function getComponentExplanation(componentId: string): ComponentExplanati
  * Get all explanations for a specific module
  */
 export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
-  const prefix = `module-${moduleNumber}-`
   return Object.values(COURSE_CONTENT_REGISTRY)
-    .filter((entry) => entry.id.startsWith(prefix))
+    .filter((entry) => normalizeModuleId(entry.moduleId) === `module-${moduleNumber}`)
     .map(buildExplanationFromCardEntry)
 }
 
@@ -1276,6 +1217,7 @@ function getModuleSortKey(moduleId: string) {
 
 function getSectionSortKey(sectionId: string) {
   if (sectionId === "welcome" || sectionId === "module-overview") return 0
+  if (sectionId === "ai-stack-overview") return 1
   if (sectionId === "module-quiz") return 9999
   if (sectionId === "summary") return 9998
   return 100
@@ -1286,15 +1228,16 @@ export function getCourseStructure(): CourseStructure {
   const moduleSectionIds = new Map<string, Set<string>>()
 
   Object.values(COURSE_CONTENT_REGISTRY).forEach((entry) => {
-    moduleIds.add(entry.moduleId)
+    const normalizedModuleId = normalizeModuleId(entry.moduleId)
+    moduleIds.add(normalizedModuleId)
 
-    const sectionIds = moduleSectionIds.get(entry.moduleId) ?? new Set<string>()
+    const sectionIds = moduleSectionIds.get(normalizedModuleId) ?? new Set<string>()
     sectionIds.add(entry.sectionId)
-    moduleSectionIds.set(entry.moduleId, sectionIds)
+    moduleSectionIds.set(normalizedModuleId, sectionIds)
   })
 
   Object.keys(moduleQuizData).forEach((moduleId) => {
-    moduleIds.add(moduleId)
+    moduleIds.add(normalizeModuleId(moduleId))
   })
 
   const modules = Array.from(moduleIds)
@@ -1439,6 +1382,94 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "c", label: "Avoid contracts and run everything ad hoc" },
       ],
     },
+    {
+      key: "quiz5",
+      prompt: "What is the most practical distinction for teams designing automation?",
+      explanation: null,
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Single-agent vs multi-agent branding" },
+        { id: "b", label: "Workflow automation vs true autonomous agents" },
+        { id: "c", label: "Open-source vs closed-source preference" },
+      ],
+    },
+    {
+      key: "quiz6",
+      prompt: "When is human-in-the-loop mandatory?",
+      explanation: null,
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Only for low-risk formatting tasks" },
+        { id: "b", label: "Never, if confidence is high" },
+        { id: "c", label: "For high-impact decisions and exception handling" },
+      ],
+    },
+    {
+      key: "quiz7",
+      prompt: "What causes many automation deployments to fail?",
+      explanation: null,
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "No observability and no contingency plan" },
+        { id: "b", label: "Excessive documentation" },
+        { id: "c", label: "Starting with one constrained workflow" },
+      ],
+    },
+    {
+      key: "quiz8",
+      prompt: "What is the best first step for agent adoption?",
+      explanation: null,
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Deploy broad autonomy across departments" },
+        { id: "b", label: "Pilot one constrained workflow with clear controls" },
+        { id: "c", label: "Prioritize architectural novelty over reliability" },
+      ],
+    },
+    {
+      key: "tools-quiz1",
+      prompt: "When is a general assistant often enough?",
+      explanation: null,
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "When strict domain controls are mandatory" },
+        { id: "b", label: "When deep system integration is required" },
+        { id: "c", label: "When use cases are broad and low-risk" },
+      ],
+    },
+    {
+      key: "tools-quiz2",
+      prompt: "What is the biggest procurement trap in AI tools?",
+      explanation: null,
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Demo-driven buying without operational validation" },
+        { id: "b", label: "Requiring measurable pilot outcomes" },
+        { id: "c", label: "Comparing total cost of ownership" },
+      ],
+    },
+    {
+      key: "tools-quiz3",
+      prompt: "Which item belongs in a practical tool scorecard?",
+      explanation: null,
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Mascot quality and marketing style" },
+        { id: "b", label: "Reliability, integration, security, and support" },
+        { id: "c", label: "Only headline model benchmarks" },
+      ],
+    },
+    {
+      key: "tools-quiz4",
+      prompt: "How should teams handle shiny-object pressure?",
+      explanation: null,
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Approve every new tool request quickly" },
+        { id: "b", label: "Ban all experimentation" },
+        { id: "c", label: "Use a standardized buy-wait-pilot decision tree" },
+      ],
+    },
   ],
   "module-2": [
     {
@@ -1485,54 +1516,52 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "c", label: "Focus mostly on tool popularity" },
       ],
     },
-  ],
-  "module-3": [
     {
-      key: "quiz1",
-      prompt: "When is a general assistant often enough?",
-      explanation: null,
-      correctOptionId: "c",
-      options: [
-        { id: "a", label: "When strict domain controls are mandatory" },
-        { id: "b", label: "When deep system integration is required" },
-        { id: "c", label: "When use cases are broad and low-risk" },
-      ],
-    },
-    {
-      key: "quiz2",
-      prompt: "What is the biggest procurement trap in AI tools?",
+      key: "quiz5",
+      prompt: "Which ROI approach is most trustworthy?",
       explanation: null,
       correctOptionId: "a",
       options: [
-        { id: "a", label: "Demo-driven buying without operational validation" },
-        { id: "b", label: "Requiring measurable pilot outcomes" },
-        { id: "c", label: "Comparing total cost of ownership" },
+        { id: "a", label: "Compare baseline and post-implementation business outcomes" },
+        { id: "b", label: "Count prompt volume as primary ROI" },
+        { id: "c", label: "Use only anecdotal team feedback" },
       ],
     },
     {
-      key: "quiz3",
-      prompt: "Which item belongs in a practical tool scorecard?",
-      explanation: null,
-      correctOptionId: "b",
-      options: [
-        { id: "a", label: "Mascot quality and marketing style" },
-        { id: "b", label: "Reliability, integration, security, and support" },
-        { id: "c", label: "Only headline model benchmarks" },
-      ],
-    },
-    {
-      key: "quiz4",
-      prompt: "How should teams handle shiny-object pressure?",
+      key: "quiz6",
+      prompt: "What is a misleading metric in AI reporting?",
       explanation: null,
       correctOptionId: "c",
       options: [
-        { id: "a", label: "Approve every new tool request quickly" },
-        { id: "b", label: "Ban all experimentation" },
-        { id: "c", label: "Use a standardized buy-wait-pilot decision tree" },
+        { id: "a", label: "Cycle-time reduction on a critical workflow" },
+        { id: "b", label: "Margin improvement in target function" },
+        { id: "c", label: "Total number of AI chats across teams" },
+      ],
+    },
+    {
+      key: "quiz7",
+      prompt: "How should experimentation risk be handled in budgeting?",
+      explanation: null,
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Single annual commitment without checkpoints" },
+        { id: "b", label: "Stage-gated funding with milestone reviews" },
+        { id: "c", label: "Unlimited pilot budget to maximize learning" },
+      ],
+    },
+    {
+      key: "quiz8",
+      prompt: "What belongs in an AI progress scorecard?",
+      explanation: null,
+      correctOptionId: "a",
+      options: [
+        { id: "a", label: "Outcome metrics, risk indicators, and next decisions" },
+        { id: "b", label: "Only model benchmark rankings" },
+        { id: "c", label: "Only qualitative user comments" },
       ],
     },
   ],
-  "module-4": [
+  "module-3": [
     {
       key: "quiz1",
       prompt: "Which agency signal is most credible?",
@@ -1577,54 +1606,52 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "c", label: "Usage tiers with documented thresholds" },
       ],
     },
-  ],
-  "module-5": [
     {
-      key: "quiz1",
-      prompt: "Which ROI approach is most trustworthy?",
-      explanation: null,
-      correctOptionId: "a",
-      options: [
-        { id: "a", label: "Compare baseline and post-implementation business outcomes" },
-        { id: "b", label: "Count prompt volume as primary ROI" },
-        { id: "c", label: "Use only anecdotal team feedback" },
-      ],
-    },
-    {
-      key: "quiz2",
-      prompt: "What is a misleading metric in AI reporting?",
-      explanation: null,
-      correctOptionId: "c",
-      options: [
-        { id: "a", label: "Cycle-time reduction on a critical workflow" },
-        { id: "b", label: "Margin improvement in target function" },
-        { id: "c", label: "Total number of AI chats across teams" },
-      ],
-    },
-    {
-      key: "quiz3",
-      prompt: "How should experimentation risk be handled in budgeting?",
+      key: "quiz5",
+      prompt: "Which future signal should teams prioritize most?",
       explanation: null,
       correctOptionId: "b",
       options: [
-        { id: "a", label: "Single annual commitment without checkpoints" },
-        { id: "b", label: "Stage-gated funding with milestone reviews" },
-        { id: "c", label: "Unlimited pilot budget to maximize learning" },
+        { id: "a", label: "Social media excitement about new model launches" },
+        { id: "b", label: "Shifts affecting economics, competitiveness, and execution" },
+        { id: "c", label: "Speculative timelines with no business relevance" },
       ],
     },
     {
-      key: "quiz4",
-      prompt: "What belongs in an AI progress scorecard?",
+      key: "quiz6",
+      prompt: "What does model commoditization usually imply?",
       explanation: null,
       correctOptionId: "a",
       options: [
-        { id: "a", label: "Outcome metrics, risk indicators, and next decisions" },
-        { id: "b", label: "Only model benchmark rankings" },
-        { id: "c", label: "Only qualitative user comments" },
+        { id: "a", label: "Differentiation moves up the stack to execution and integration" },
+        { id: "b", label: "Model choice becomes the only strategy" },
+        { id: "c", label: "AI strategy stops mattering" },
+      ],
+    },
+    {
+      key: "quiz7",
+      prompt: "How should teams approach workforce implications?",
+      explanation: null,
+      correctOptionId: "c",
+      options: [
+        { id: "a", label: "Assume role design remains unchanged" },
+        { id: "b", label: "Delay workforce planning until disruption is complete" },
+        { id: "c", label: "Plan role evolution, training, and decision-right updates" },
+      ],
+    },
+    {
+      key: "quiz8",
+      prompt: "What defines a strong strategic positioning response to AI?",
+      explanation: null,
+      correctOptionId: "b",
+      options: [
+        { id: "a", label: "Following every trend equally" },
+        { id: "b", label: "Selecting focused bets aligned to competitive advantage" },
+        { id: "c", label: "Outsourcing all strategic decisions to vendors" },
       ],
     },
   ],
-  "module-6": [
+  "module-4": [
     {
       key: "quiz1",
       prompt: "What is the minimum governance baseline before scaling AI use?",
@@ -1669,10 +1696,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "c", label: "Use a documented incident response playbook" },
       ],
     },
-  ],
-  "module-7": [
     {
-      key: "quiz1",
+      key: "quiz5",
       prompt: "What should the first 30 days of AI adoption focus on?",
       explanation: null,
       correctOptionId: "a",
@@ -1683,7 +1708,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz2",
+      key: "quiz6",
       prompt: "What is a common adoption failure mode?",
       explanation: null,
       correctOptionId: "c",
@@ -1694,7 +1719,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz3",
+      key: "quiz7",
       prompt: "Why build internal AI champions?",
       explanation: null,
       correctOptionId: "b",
@@ -1705,7 +1730,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz4",
+      key: "quiz8",
       prompt: "How should roadmap sequencing be decided?",
       explanation: null,
       correctOptionId: "a",
@@ -1715,56 +1740,8 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "c", label: "Run all pilots in parallel regardless of capacity" },
       ],
     },
-  ],
-  "module-8": [
     {
-      key: "quiz1",
-      prompt: "What is the most practical distinction for teams designing automation?",
-      explanation: null,
-      correctOptionId: "b",
-      options: [
-        { id: "a", label: "Single-agent vs multi-agent branding" },
-        { id: "b", label: "Workflow automation vs true autonomous agents" },
-        { id: "c", label: "Open-source vs closed-source preference" },
-      ],
-    },
-    {
-      key: "quiz2",
-      prompt: "When is human-in-the-loop mandatory?",
-      explanation: null,
-      correctOptionId: "c",
-      options: [
-        { id: "a", label: "Only for low-risk formatting tasks" },
-        { id: "b", label: "Never, if confidence is high" },
-        { id: "c", label: "For high-impact decisions and exception handling" },
-      ],
-    },
-    {
-      key: "quiz3",
-      prompt: "What causes many automation deployments to fail?",
-      explanation: null,
-      correctOptionId: "a",
-      options: [
-        { id: "a", label: "No observability and no contingency plan" },
-        { id: "b", label: "Excessive documentation" },
-        { id: "c", label: "Starting with one constrained workflow" },
-      ],
-    },
-    {
-      key: "quiz4",
-      prompt: "What is the best first step for agent adoption?",
-      explanation: null,
-      correctOptionId: "b",
-      options: [
-        { id: "a", label: "Deploy broad autonomy across departments" },
-        { id: "b", label: "Pilot one constrained workflow with clear controls" },
-        { id: "c", label: "Prioritize architectural novelty over reliability" },
-      ],
-    },
-  ],
-  "module-9": [
-    {
-      key: "quiz1",
+      key: "quiz9",
       prompt: "What is the strongest defense against AI tool sprawl?",
       explanation: null,
       correctOptionId: "a",
@@ -1775,7 +1752,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz2",
+      key: "quiz10",
       prompt: "Why does integration strategy matter in stack design?",
       explanation: null,
       correctOptionId: "c",
@@ -1786,7 +1763,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz3",
+      key: "quiz11",
       prompt: "What is a practical consolidation criterion?",
       explanation: null,
       correctOptionId: "b",
@@ -1797,7 +1774,7 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
       ],
     },
     {
-      key: "quiz4",
+      key: "quiz12",
       prompt: "What should internal ownership clarify in an AI stack?",
       explanation: null,
       correctOptionId: "a",
@@ -1805,52 +1782,6 @@ export const moduleQuizData: Record<string, ModuleQuizQuestion[]> = {
         { id: "a", label: "Who owns outcomes, operations, risk, and vendor management" },
         { id: "b", label: "Only who signed the original purchase order" },
         { id: "c", label: "Only which department uses the tool most" },
-      ],
-    },
-  ],
-  "module-10": [
-    {
-      key: "quiz1",
-      prompt: "Which future signal should teams prioritize most?",
-      explanation: null,
-      correctOptionId: "b",
-      options: [
-        { id: "a", label: "Social media excitement about new model launches" },
-        { id: "b", label: "Shifts affecting economics, competitiveness, and execution" },
-        { id: "c", label: "Speculative timelines with no business relevance" },
-      ],
-    },
-    {
-      key: "quiz2",
-      prompt: "What does model commoditization usually imply?",
-      explanation: null,
-      correctOptionId: "a",
-      options: [
-        { id: "a", label: "Differentiation moves up the stack to execution and integration" },
-        { id: "b", label: "Model choice becomes the only strategy" },
-        { id: "c", label: "AI strategy stops mattering" },
-      ],
-    },
-    {
-      key: "quiz3",
-      prompt: "How should teams approach workforce implications?",
-      explanation: null,
-      correctOptionId: "c",
-      options: [
-        { id: "a", label: "Assume role design remains unchanged" },
-        { id: "b", label: "Delay workforce planning until disruption is complete" },
-        { id: "c", label: "Plan role evolution, training, and decision-right updates" },
-      ],
-    },
-    {
-      key: "quiz4",
-      prompt: "What defines a strong strategic positioning response to AI?",
-      explanation: null,
-      correctOptionId: "b",
-      options: [
-        { id: "a", label: "Following every trend equally" },
-        { id: "b", label: "Selecting focused bets aligned to competitive advantage" },
-        { id: "c", label: "Outsourcing all strategic decisions to vendors" },
       ],
     },
   ],

@@ -14,6 +14,7 @@ import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/course-content"
 import { getSectionLearningContent } from "@/lib/course-content"
+import { getCompatibleModuleIds } from "@/lib/course-module-id-map"
 
 type CourseModulePageProps = {
   moduleId: string
@@ -32,7 +33,8 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(moduleId)
 
-  const questions = moduleQuizData[moduleId] ? moduleQuizData[moduleId] : []
+  const questions = getCompatibleModuleIds(moduleId)
+    .flatMap((compatibleModuleId) => (moduleQuizData[compatibleModuleId] ? [moduleQuizData[compatibleModuleId]] : []))[0] ?? []
   const quizKeys = useMemo(() => questions.map((question) => question.key), [questions])
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz<string>(moduleId, quizKeys)
 

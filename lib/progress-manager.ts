@@ -5,6 +5,7 @@
  */
 
 import { getCourseStructure } from "./course-content"
+import { normalizeModuleId, remapModuleRecordKeys } from "./course-module-id-map"
 import { createClient } from "./supabase"
 
 const courseStructure = getCourseStructure()
@@ -23,6 +24,13 @@ export interface ModuleProgress {
 export interface GlobalProgress {
   modules: Record<string, ModuleProgress>
   version: string
+}
+
+function normalizeProgress(progress: GlobalProgress): GlobalProgress {
+  return {
+    ...progress,
+    modules: remapModuleRecordKeys(progress.modules ?? {}),
+  }
 }
 
 /**
@@ -123,7 +131,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
 
       if (response.ok) {
         const data = await response.json()
-        const serverProgress = data.progress ? data.progress : initializeProgress()
+        const serverProgress = normalizeProgress(data.progress ? data.progress : initializeProgress())
         
         // Cache in memory and localStorage
         cachedProgress = serverProgress
@@ -138,7 +146,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
 
   const stored = localStorage.getItem(getScopedStorageKey())
   if (stored) {
-    const parsed = JSON.parse(stored) as GlobalProgress
+    const parsed = normalizeProgress(JSON.parse(stored) as GlobalProgress)
     cachedProgress = parsed
     return parsed
   }
@@ -157,9 +165,11 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
 
   await ensureUserContext()
 
+  const normalizedProgress = normalizeProgress(progress)
+
   // Optimistic update: immediately update cache
-  cachedProgress = progress
-  localStorage.setItem(getScopedStorageKey(), JSON.stringify(progress))
+  cachedProgress = normalizedProgress
+  localStorage.setItem(getScopedStorageKey(), JSON.stringify(normalizedProgress))
 
   // Debounce server saves (avoid hammering API on rapid updates)
   if (pendingSave) {
@@ -178,9 +188,10 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
         { status: string; completionRate: number }
       > = {}
 
-      Object.entries(progress.modules).forEach(([moduleSlug, moduleData]) => {
+      Object.entries(normalizedProgress.modules).forEach(([moduleSlug, moduleData]) => {
         // Look up actual total sections from courseStructure
-        const module = courseStructure.modules.find((m) => m.slug === moduleSlug)
+        const normalizedModuleSlug = normalizeModuleId(moduleSlug)
+        const module = courseStructure.modules.find((m) => m.slug === normalizedModuleSlug)
         const sectionCount = module?.sections.length
         const totalSections = typeof sectionCount === "number" && sectionCount > 0 ? sectionCount : 1
 
@@ -196,7 +207,7 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
               ? "in-progress"
               : "completed"
 
-        modules[moduleSlug] = { status, completionRate }
+        modules[normalizedModuleSlug] = { status, completionRate }
       })
 
       const response = await fetch("/api/progress", {

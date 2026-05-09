@@ -13,22 +13,16 @@ import { Header } from "@/components/layout/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ProgressBar } from "@/components/learning/progress-bar"
-import { Target, TrendingUp, Award, LineChart, Compass, BriefcaseBusiness, Layers, Handshake, Calculator, Shield, Map, Bot, Network, Telescope } from "lucide-react"
+import { Target, TrendingUp, Award, LineChart, Compass, Layers, Handshake, Calculator, Shield } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { cn } from "@/lib/utils"
 
 const MODULE_META = [
   { id: "module-0", icon: Compass,          color: "brand-green",  label: "The AI Shift",                         description: "Separate hype from reality and define your leadership posture." },
-  { id: "module-1", icon: Layers,           color: "brand-orange", label: "AI Landscape",                        description: "Models, tools, agencies, and delivery models mapped for decisions." },
-  { id: "module-2", icon: LineChart,        color: "brand-green",  label: "Business Value",                       description: "Find high-ROI use cases and prioritize opportunities with confidence." },
-  { id: "module-3", icon: BriefcaseBusiness,color: "brand-orange", label: "Tools That Matter",                   description: "Evaluate tool categories, integration fit, pricing, and security." },
-  { id: "module-4", icon: Handshake,        color: "brand-green",  label: "Agency and Partner Selection",        description: "Run vendor diligence and structure pilots that produce real evidence." },
-  { id: "module-5", icon: Calculator,       color: "brand-green",  label: "ROI Frameworks",                      description: "Build credible ROI models, prioritization matrices, and reporting." },
-  { id: "module-6", icon: Shield,           color: "brand-orange", label: "Risk and Governance",                 description: "Implement guardrails for data, reliability, compliance, and vendors." },
-  { id: "module-7", icon: Map,              color: "brand-orange", label: "Adoption Roadmap",                    description: "Translate strategy into pilots, change management, and phased rollout." },
-  { id: "module-8", icon: Bot,              color: "brand-green",  label: "Agents and Automation Systems",       description: "Design practical automation with human oversight and operational control." },
-  { id: "module-9", icon: Network,          color: "brand-green",  label: "AI Stack Design",                     description: "Avoid tool sprawl and build a maintainable, owned AI ecosystem." },
-  { id: "module-10", icon: Telescope,       color: "brand-orange", label: "Future Positioning",                  description: "Anticipate industry shifts and position for durable AI advantage." },
+  { id: "module-1", icon: Layers,           color: "brand-orange", label: "AI Landscape, Agents, Automation and Tools", description: "Models, tools, agencies, and practical agent automation systems mapped for decisions." },
+  { id: "module-2", icon: LineChart,        color: "brand-green",  label: "Business Value and ROI",               description: "Find high-ROI use cases, calculate value honestly, and prioritize opportunities with confidence." },
+  { id: "module-3", icon: Handshake,        color: "brand-green",  label: "Agency, Partner Selection & Future Positioning", description: "Run vendor diligence, structure pilots, and position for durable AI advantage." },
+  { id: "module-4", icon: Shield,           color: "brand-orange", label: "Risk, Governance & Adoption Roadmap",  description: "Implement guardrails for data, reliability, compliance, and vendors — then translate strategy into pilots, change management, and a maintainable AI ecosystem." },
 ]
 
 export default function DashboardPage() {
@@ -49,6 +43,11 @@ export default function DashboardPage() {
 
   const getStatus = (completed: number, total: number) =>
     completed === 0 ? "Not Started" : completed === total ? "Completed" : "In Progress"
+
+  const getModuleNumber = (moduleId: string) => {
+    const match = moduleId.match(/module-(\d+)/)
+    return match ? Number.parseInt(match[1], 10) : moduleId
+  }
 
   const allModuleProgress = MODULE_META.map(({ id }) => getModuleProgress(id))
   const totalCompleted = allModuleProgress.reduce((sum, p) => sum + p.completed, 0)
@@ -191,7 +190,7 @@ export default function DashboardPage() {
                             <Icon className={cn("h-5 w-5", `text-${meta.color}`)} />
                           </div>
                           <div>
-                            <CardTitle className="text-lg">Module {modIndex}: {meta.label}</CardTitle>
+                            <CardTitle className="text-lg">Module {getModuleNumber(meta.id)}: {meta.label}</CardTitle>
                             <CardDescription>{meta.description}</CardDescription>
                           </div>
                         </div>

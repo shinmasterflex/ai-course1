@@ -5,6 +5,7 @@
  */
 
 import { getCourseStructure } from "./course-content"
+import { normalizeModuleId, remapModuleRecordKeys } from "./course-module-id-map"
 import { createClient } from "./supabase"
 
 const courseStructure = getCourseStructure()
@@ -186,10 +187,10 @@ class GlobalProgressManager {
       modulesData.forEach((savedModule) => {
         if (!savedModule || typeof savedModule !== "object") return
         if (typeof savedModule.slug === "string") {
-          savedModulesBySlug.set(savedModule.slug, savedModule)
+          savedModulesBySlug.set(normalizeModuleId(savedModule.slug), savedModule)
         }
         if (typeof savedModule.id === "string") {
-          savedModulesById.set(savedModule.id, savedModule)
+          savedModulesById.set(normalizeModuleId(savedModule.id), savedModule)
         }
       })
 
@@ -233,9 +234,11 @@ class GlobalProgressManager {
 
     if (!modulesData || typeof modulesData !== "object") return
 
+    const normalizedModulesData = remapModuleRecordKeys(modulesData as Record<string, any>)
+
     courseStructure.modules.forEach((module) => {
       // Look up by module slug from the API response
-      const savedModule = savedProgress.modules?.[module.slug]
+      const savedModule = normalizedModulesData[module.slug]
 
       if (savedModule) {
         // Update module completion from API
@@ -268,16 +271,17 @@ class GlobalProgressManager {
     const saved = localStorage.getItem(this.getScopedStorageKey(POSITION_KEY))
     if (saved) {
       const { moduleId, sectionId } = JSON.parse(saved)
-      this.currentModule = moduleId
+      this.currentModule = typeof moduleId === "string" ? normalizeModuleId(moduleId) : null
       this.currentSection = sectionId
     }
   }
 
   setCurrentPosition(moduleId: string, sectionId: string) {
-    this.currentModule = moduleId
+    const normalizedModuleId = normalizeModuleId(moduleId)
+    this.currentModule = normalizedModuleId
     this.currentSection = sectionId
 
-    localStorage.setItem(this.getScopedStorageKey(POSITION_KEY), JSON.stringify({ moduleId, sectionId }))
+    localStorage.setItem(this.getScopedStorageKey(POSITION_KEY), JSON.stringify({ moduleId: normalizedModuleId, sectionId }))
     this.notifyListeners()
   }
 

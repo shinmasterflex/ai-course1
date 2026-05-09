@@ -45,7 +45,7 @@ describe("course module page duplication", () => {
       .filter((module) => module.sections.some((section) => Boolean(getSectionLearningContent(module.id, section.id))))
       .map((module) => module.id)
 
-    expect(moduleNames.length).toBe(11)
+    expect(moduleNames.length).toBe(5)
   })
 
   it("avoids duplicated high-signal learning copy within each module", () => {
