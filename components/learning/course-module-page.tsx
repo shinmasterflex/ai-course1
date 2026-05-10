@@ -151,11 +151,11 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               <h3 className="text-2xl font-semibold text-brand-indigo">Module checkpoint</h3>
               <TextDisplay content="Use this checkpoint to validate what you learned before moving to the next module." />
               <ModuleQuiz
-                key={`${moduleId}-course-quiz`}
+                key={`${moduleId}-module-quiz`}
                 questions={questions}
                 results={quizResults}
                 onAnswer={handleQuizComplete}
-                componentId={`${moduleId}-course-quiz`}
+                componentId={`${moduleId}-module-quiz`}
               />
               {allQuizComplete ? (
                 <Card className="p-4 border-brand-green/30 bg-brand-green/10 text-sm text-brand-indigo">

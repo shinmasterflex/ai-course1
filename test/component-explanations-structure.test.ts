@@ -9,11 +9,8 @@ function getAllResolvedExplanationIds() {
   const ids = new Set(Object.keys(COMPONENT_EXPLANATIONS))
 
   for (const module of courseStructure.modules) {
-    ids.add(`${module.id}-course-quiz`)
-
     for (const section of module.sections) {
-      ids.add(`${module.id}-${section.id}-scenario`)
-      ids.add(`${module.id}-${section.id}-quick-check`)
+      ids.add(`${module.id}-${section.id}`)
     }
   }
 

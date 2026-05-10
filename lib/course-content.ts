@@ -1129,26 +1129,7 @@ export function getComponentCard(componentId: string): CourseContentEntry | unde
 }
 
 export function getCourseContentEntry(componentId: string): CourseContentEntry | undefined {
-  const directEntry = getComponentCard(componentId)
-  if (directEntry) {
-    return directEntry
-  }
-
-  const sectionMatch = componentId.match(/^(module-\d+)-(.+)-(scenario|quick-check)$/)
-  if (sectionMatch) {
-    const moduleId = sectionMatch[1]
-    const sectionId = sectionMatch[2]
-    return findSectionCourseContentEntries(moduleId, sectionId)[0]
-  }
-
-  const courseQuizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
-  if (courseQuizMatch) {
-    const moduleId = courseQuizMatch[1]
-    return findSectionCourseContentEntries(moduleId, "module-quiz")[0]
-      ?? Object.values(COURSE_CONTENT_REGISTRY).find((entry) => entry.moduleId === moduleId && entry.explanation)
-  }
-
-  return undefined
+  return getComponentCard(componentId)
 }
 
 
