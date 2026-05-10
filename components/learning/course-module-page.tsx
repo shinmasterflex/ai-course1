@@ -100,7 +100,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const completionReady = completedSectionIds.length === totalSections
   const isFinalSection = currentSectionIndex === totalSections - 1
-  const sectionCards = getSectionLearningContents(moduleId, currentSection?.id, 3)
+  const sectionCards = getSectionLearningContents(moduleId, currentSection?.id)
   const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
 
   return (

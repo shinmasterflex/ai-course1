@@ -1078,20 +1078,26 @@ function findSectionCourseContentEntries(moduleId: string, sectionId: string) {
   )
 }
 
-export function getSectionCourseContentEntries(moduleId: string, sectionId: string | undefined, maxCards = 3) {
+export function getSectionCourseContentEntries(moduleId: string, sectionId: string | undefined, maxCards?: number) {
   if (!sectionId) {
     return []
   }
 
-  const safeLimit = Math.max(0, Math.min(3, maxCards))
-  if (safeLimit === 0) {
-    return []
+  const entries = findSectionCourseContentEntries(moduleId, sectionId)
+
+  if (typeof maxCards === "number") {
+    const safeLimit = Math.max(0, maxCards)
+    if (safeLimit === 0) {
+      return []
+    }
+
+    return entries.slice(0, safeLimit)
   }
 
-  return findSectionCourseContentEntries(moduleId, sectionId).slice(0, safeLimit)
+  return entries
 }
 
-export function getSectionLearningContents(moduleId: string, sectionId: string | undefined, maxCards = 3): SectionLearningContent[] {
+export function getSectionLearningContents(moduleId: string, sectionId: string | undefined, maxCards?: number): SectionLearningContent[] {
   return getSectionCourseContentEntries(moduleId, sectionId, maxCards)
     .map((entry) => entry.content)
     .filter((content): content is SectionLearningContent => typeof content === "string" && content.trim().length > 0)
