@@ -21,7 +21,6 @@ interface TextDisplayProps {
   children?: ReactNode
   variant?: "default" | "callout" | "warning" | "success" | "info"
   interactive?: boolean
-  xpReward?: number
   className?: string
   scopeKey?: string
 }
@@ -124,6 +123,25 @@ function getSectionIdFromScope(scopeKey: string) {
   return trimmedSectionId && trimmedSectionId.length > 0 ? trimmedSectionId : null
 }
 
+function renderTextDisplayBody(content: string) {
+  return content.split("\n").map((line, index) => {
+    const trimmedLine = line.trim()
+    if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
+      return (
+        <li key={`bullet-${index}`} className="ml-4">
+          {parseBoldText(trimmedLine.substring(1).trim())}
+        </li>
+      )
+    }
+
+    return (
+      <p key={`para-${index}`} className="mb-2">
+        {parseBoldText(line)}
+      </p>
+    )
+  })
+}
+
 export function TextDisplay({
   title,
   subtitle,
@@ -182,6 +200,11 @@ export function TextDisplay({
           explanation: buildTextDisplayExplanation(content, subtitle, interactive),
         },
   )
+  const bodyContent = hasChildren ? (
+    <div className="prose prose-sm max-w-none dark:prose-invert">{children}</div>
+  ) : hasContent ? (
+    <div className="prose prose-sm max-w-none dark:prose-invert">{renderTextDisplayBody(content)}</div>
+  ) : null
 
   return (
     <div {...explainerAttributes} className={cn("p-6 rounded-lg", variantStyles[variant], className)}>
@@ -195,59 +218,11 @@ export function TextDisplay({
       {variant !== "default" && (
         <div className="flex items-start gap-3">
           <div className="mt-0.5">{icons[variant]}</div>
-          <div className="flex-1">
-            {hasChildren ? (
-              <div className="prose prose-sm max-w-none dark:prose-invert">{children}</div>
-            ) : hasContent ? (
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                {content.split("\n").map((line, index) => {
-                  const trimmedLine = line.trim()
-                  if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
-                    return (
-                      <li key={`bullet-${index}`} className="ml-4">
-                        {parseBoldText(trimmedLine.substring(1).trim())}
-                      </li>
-                    )
-                  }
-
-                  return (
-                    <p key={`para-${index}`} className="mb-2">
-                      {parseBoldText(line)}
-                    </p>
-                  )
-                })}
-              </div>
-            ) : null}
-          </div>
+          <div className="flex-1">{bodyContent}</div>
         </div>
       )}
 
-      {variant === "default" && (
-        <>
-          {hasChildren ? (
-            <div className="prose prose-sm max-w-none dark:prose-invert">{children}</div>
-          ) : hasContent ? (
-            <div className="prose prose-sm max-w-none dark:prose-invert">
-              {content.split("\n").map((line, index) => {
-                const trimmedLine = line.trim()
-                if (trimmedLine.startsWith("•") || trimmedLine.startsWith("-")) {
-                  return (
-                    <li key={`bullet-${index}`} className="ml-4">
-                      {parseBoldText(trimmedLine.substring(1).trim())}
-                    </li>
-                  )
-                }
-
-                return (
-                  <p key={`para-${index}`} className="mb-2">
-                    {parseBoldText(line)}
-                  </p>
-                )
-              })}
-            </div>
-          ) : null}
-        </>
-      )}
+      {variant === "default" && bodyContent}
     </div>
   )
 }

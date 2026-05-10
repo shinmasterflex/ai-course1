@@ -3,7 +3,7 @@
  * Helper functions for managing server-first progress sync
  */
 
-import { loadProgress, saveProgress, flushProgress, type GlobalProgress } from './progress-manager'
+import { loadProgress } from './progress-manager'
 
 const STORAGE_KEY = 'cognijin_progress'
 const LEGACY_STORAGE_KEY = 'cognijin-progress'
@@ -71,18 +71,6 @@ export async function initializeProgressSync(): Promise<void> {
     await loadProgress()
   } catch (error) {
     console.error('[ProgressSync] Failed to initialize:', error)
-  }
-}
-
-/**
- * Sync progress before navigation/logout
- * Ensures all pending changes are persisted
- */
-export async function syncProgressBeforeExit(): Promise<void> {
-  try {
-    await flushProgress()
-  } catch (error) {
-    console.error('[ProgressSync] Failed to flush on exit:', error)
   }
 }
 
