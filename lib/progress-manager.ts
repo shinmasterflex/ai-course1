@@ -5,7 +5,6 @@
  */
 
 import { getCourseStructure } from "./course-content"
-import { normalizeModuleId, remapModuleRecordKeys } from "./course-module-id-map"
 import { createClient } from "./supabase"
 
 const courseStructure = getCourseStructure()
@@ -29,7 +28,7 @@ export interface GlobalProgress {
 function normalizeProgress(progress: GlobalProgress): GlobalProgress {
   return {
     ...progress,
-    modules: remapModuleRecordKeys(progress.modules ?? {}),
+    modules: progress.modules ?? {},
   }
 }
 
@@ -190,8 +189,7 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
 
       Object.entries(normalizedProgress.modules).forEach(([moduleSlug, moduleData]) => {
         // Look up actual total sections from courseStructure
-        const normalizedModuleSlug = normalizeModuleId(moduleSlug)
-        const module = courseStructure.modules.find((m) => m.slug === normalizedModuleSlug)
+        const module = courseStructure.modules.find((m) => m.slug === moduleSlug)
         const sectionCount = module?.sections.length
         const totalSections = typeof sectionCount === "number" && sectionCount > 0 ? sectionCount : 1
 
@@ -207,7 +205,7 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
               ? "in-progress"
               : "completed"
 
-        modules[normalizedModuleSlug] = { status, completionRate }
+        modules[moduleSlug] = { status, completionRate }
       })
 
       const response = await fetch("/api/progress", {

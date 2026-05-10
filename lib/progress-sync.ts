@@ -4,7 +4,6 @@
  */
 
 import { loadProgress, saveProgress, flushProgress, type GlobalProgress } from './progress-manager'
-import { normalizeModuleId, remapModuleRecordKeys } from './course-module-id-map'
 
 const STORAGE_KEY = 'cognijin_progress'
 const LEGACY_STORAGE_KEY = 'cognijin-progress'
@@ -27,7 +26,7 @@ function normalizeModulesForApi(progressJson: unknown): Record<string, { status:
   const normalized: Record<string, { status: string; completionRate: number }> = {}
 
   if (modules && typeof modules === 'object' && !Array.isArray(modules)) {
-    Object.entries(remapModuleRecordKeys(modules as Record<string, unknown>)).forEach(([moduleSlug, moduleData]) => {
+    Object.entries(modules as Record<string, unknown>).forEach(([moduleSlug, moduleData]) => {
       if (!moduleData || typeof moduleData !== 'object') {
         return
       }
@@ -36,7 +35,7 @@ function normalizeModulesForApi(progressJson: unknown): Record<string, { status:
       const status = typeof typedModuleData.status === 'string' ? typedModuleData.status : 'not-started'
       const completionRate = typeof typedModuleData.completionRate === 'number' ? typedModuleData.completionRate : 0
 
-      normalized[normalizeModuleId(moduleSlug)] = {
+      normalized[moduleSlug] = {
         status,
         completionRate: Math.min(Math.max(completionRate, 0), 100),
       }
@@ -56,7 +55,7 @@ function normalizeModulesForApi(progressJson: unknown): Record<string, { status:
       const completionRate = sections.length > 0 ? Math.round((completedCount / sections.length) * 100) : 0
       const status = completionRate === 0 ? 'not-started' : completionRate === 100 ? 'completed' : 'in-progress'
 
-      normalized[normalizeModuleId(module.slug)] = { status, completionRate }
+      normalized[module.slug] = { status, completionRate }
     })
   }
 

@@ -5,7 +5,6 @@
  */
 
 import { getCourseStructure } from "./course-content"
-import { normalizeModuleId, remapModuleRecordKeys } from "./course-module-id-map"
 import { createClient } from "./supabase"
 
 const courseStructure = getCourseStructure()
@@ -187,10 +186,10 @@ class GlobalProgressManager {
       modulesData.forEach((savedModule) => {
         if (!savedModule || typeof savedModule !== "object") return
         if (typeof savedModule.slug === "string") {
-          savedModulesBySlug.set(normalizeModuleId(savedModule.slug), savedModule)
+          savedModulesBySlug.set(savedModule.slug, savedModule)
         }
         if (typeof savedModule.id === "string") {
-          savedModulesById.set(normalizeModuleId(savedModule.id), savedModule)
+          savedModulesById.set(savedModule.id, savedModule)
         }
       })
 
@@ -234,7 +233,7 @@ class GlobalProgressManager {
 
     if (!modulesData || typeof modulesData !== "object") return
 
-    const normalizedModulesData = remapModuleRecordKeys(modulesData as Record<string, any>)
+    const normalizedModulesData = modulesData as Record<string, any>
 
     courseStructure.modules.forEach((module) => {
       // Look up by module slug from the API response
@@ -271,17 +270,16 @@ class GlobalProgressManager {
     const saved = localStorage.getItem(this.getScopedStorageKey(POSITION_KEY))
     if (saved) {
       const { moduleId, sectionId } = JSON.parse(saved)
-      this.currentModule = typeof moduleId === "string" ? normalizeModuleId(moduleId) : null
+      this.currentModule = typeof moduleId === "string" ? moduleId : null
       this.currentSection = sectionId
     }
   }
 
   setCurrentPosition(moduleId: string, sectionId: string) {
-    const normalizedModuleId = normalizeModuleId(moduleId)
-    this.currentModule = normalizedModuleId
+    this.currentModule = moduleId
     this.currentSection = sectionId
 
-    localStorage.setItem(this.getScopedStorageKey(POSITION_KEY), JSON.stringify({ moduleId: normalizedModuleId, sectionId }))
+    localStorage.setItem(this.getScopedStorageKey(POSITION_KEY), JSON.stringify({ moduleId, sectionId }))
     this.notifyListeners()
   }
 

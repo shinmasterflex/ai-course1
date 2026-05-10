@@ -1,7 +1,5 @@
 export type SectionLearningContent = string
 
-import { normalizeModuleId } from "./course-module-id-map"
-
 export type CourseContentEntry = {
   id: string
   moduleId: string
@@ -612,17 +610,6 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
     explanation: "A reliable pilot has four non-negotiable design elements. First, a measurable baseline established before the pilot begins — using the same metrics you'll measure during the pilot. Without a pre-pilot baseline, you can't attribute performance changes to the AI. Second, a constrained but representative test group — large enough to generate meaningful data, small enough to manage carefully. Avoid the error of piloting only with enthusiastic volunteers (selection bias) or only with the most automated part of the workflow (the easiest case). Third, a control group or control period when feasible — another team doing the same work without AI, or a previous period's performance data if a parallel control isn't possible. Fourth, a structured data collection plan — not just end-of-pilot surveys, but ongoing time tracking, quality sampling, or system log analysis at regular intervals during the pilot. After 30–60 days, compare actual versus projected on your pre-specified metrics and make an explicit expand/pivot/stop decision with documented reasoning.",
   },
 
-  "module-2-module-quiz": {
-    id: "module-2-module-quiz",
-    moduleId: "module-2",
-    sectionId: "module-quiz",
-    cardType: "section-card",
-    content: "Apply business value and ROI frameworks, identify misleading metrics, and evaluate AI investment decisions using the tools from this combined module.",
-    summary: "Module 2 knowledge check — validate your ability to identify high-value AI opportunities, calculate ROI accurately, and make structured investment decisions.",
-    question: "Your AI pilot shows a 40% reduction in task completion time but adoption is at 45% of the team. How should you interpret these results and what should you do next?",
-    explanation: "These results are promising but incomplete, and the right response is to diagnose before scaling. A 40% time reduction is significant if it holds up at full adoption — but the 45% adoption rate means you're currently measuring only the motivated early adopters, who are almost certainly the fastest and most capable users. When adoption expands to the full population, including reluctant users and those with different work patterns, the average time reduction will likely drop. Before scaling, diagnose why 55% of the team isn't adopting: is it a training gap, a workflow fit issue, a specific task type that doesn't benefit, or resistance? Addressing the adoption gap is more important than celebrating the performance of early adopters. Scale only after you understand what's driving non-adoption and have addressed it — otherwise you'll scale both the benefit and the adoption problem.",
-  },
-
   // ─────────────────────────────────────────────
   // MODULE 6 — AI Risk, Compliance & Governance
   // ─────────────────────────────────────────────
@@ -1086,10 +1073,8 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 };
 
 function findSectionCourseContentEntry(moduleId: string, sectionId: string) {
-  const normalizedModuleId = normalizeModuleId(moduleId)
-
   return Object.values(COURSE_CONTENT_REGISTRY).find(
-    (entry) => normalizeModuleId(entry.moduleId) === normalizedModuleId && entry.sectionId === sectionId,
+    (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
   )
 }
 
@@ -1167,7 +1152,7 @@ export function getComponentExplanation(componentId: string): ComponentExplanati
  */
 export function getModuleExplanations(moduleNumber: number): ComponentExplanation[] {
   return Object.values(COURSE_CONTENT_REGISTRY)
-    .filter((entry) => normalizeModuleId(entry.moduleId) === `module-${moduleNumber}`)
+    .filter((entry) => entry.moduleId === `module-${moduleNumber}`)
     .map(buildExplanationFromCardEntry)
 }
 
@@ -1228,16 +1213,15 @@ export function getCourseStructure(): CourseStructure {
   const moduleSectionIds = new Map<string, Set<string>>()
 
   Object.values(COURSE_CONTENT_REGISTRY).forEach((entry) => {
-    const normalizedModuleId = normalizeModuleId(entry.moduleId)
-    moduleIds.add(normalizedModuleId)
+    moduleIds.add(entry.moduleId)
 
-    const sectionIds = moduleSectionIds.get(normalizedModuleId) ?? new Set<string>()
+    const sectionIds = moduleSectionIds.get(entry.moduleId) ?? new Set<string>()
     sectionIds.add(entry.sectionId)
-    moduleSectionIds.set(normalizedModuleId, sectionIds)
+    moduleSectionIds.set(entry.moduleId, sectionIds)
   })
 
   Object.keys(moduleQuizData).forEach((moduleId) => {
-    moduleIds.add(normalizeModuleId(moduleId))
+    moduleIds.add(moduleId)
   })
 
   const modules = Array.from(moduleIds)
