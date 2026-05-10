@@ -1,19 +1,10 @@
 /**
- * PROGRESS MANAGER - Client-Side Progress Tracking
- * Tracks module/section completion state (no quiz data)
- * Syncs with Prisma Progress model via /api/progress
+ * PROGRESS MANAGER - Client-side section progress tracking.
+ * Persists to Supabase instead of localStorage.
  */
 
-import { getCourseStructure } from "./course-content"
-import { createClient } from "./supabase"
+import { loadSectionProgressState, resetSectionProgressState, saveSectionProgressState } from "./supabase-learning-state"
 
-const courseStructure = getCourseStructure()
-
-// Storage key for session caching
-const STORAGE_KEY = "cognijin-progress"
-const ACTIVE_USER_KEY = "cognijin_active_user"
-
-// Type definitions for progress data (section-level only, no quiz)
 export interface ModuleProgress {
   completedSections: number[]
   currentSection: number
@@ -32,9 +23,6 @@ function normalizeProgress(progress: GlobalProgress): GlobalProgress {
   }
 }
 
-/**
- * Initialize progress data structure
- */
 function initializeProgress(): GlobalProgress {
   return {
     modules: {},
@@ -42,191 +30,62 @@ function initializeProgress(): GlobalProgress {
   }
 }
 
-let pendingSave: NodeJS.Timeout | null = null
-let cachedProgress: GlobalProgress | null = null
-let activeUserId: string | null = null
-let authInitialized = false
-let authListenerInitialized = false
-
-function getScopedStorageKey(): string {
-  return `${STORAGE_KEY}:${activeUserId ? activeUserId : "anonymous"}`
-}
-
-function migrateLegacyCache() {
-  if (typeof window === "undefined") return
-
-  const scopedKey = getScopedStorageKey()
-  const legacyValue = localStorage.getItem(STORAGE_KEY)
-
-  if (legacyValue && !localStorage.getItem(scopedKey)) {
-    localStorage.setItem(scopedKey, legacyValue)
-    localStorage.removeItem(STORAGE_KEY)
+function normalizeSectionState(state: unknown): GlobalProgress {
+  if (!state || typeof state !== "object") {
+    return initializeProgress()
   }
-}
 
-async function getCurrentUserId(): Promise<string | null> {
-  try {
-    const supabase = createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    return user?.id ? user.id : null
-  } catch {
-    return null
-  }
-}
-
-function setupAuthListener() {
-  if (typeof window === "undefined" || authListenerInitialized) return
-
-  authListenerInitialized = true
-  const supabase = createClient()
-
-  supabase.auth.onAuthStateChange((_event, session) => {
-    const nextUserId = session?.user?.id ? session.user.id : null
-    if (nextUserId !== activeUserId) {
-      activeUserId = nextUserId
-      localStorage.setItem(ACTIVE_USER_KEY, activeUserId ? activeUserId : "anonymous")
-      migrateLegacyCache()
-      cachedProgress = null
-    }
+  const typedState = state as Partial<GlobalProgress>
+  return normalizeProgress({
+    modules: typedState.modules ?? {},
+    version: typeof typedState.version === "string" ? typedState.version : "1.0",
   })
 }
 
-async function ensureUserContext(): Promise<void> {
-  if (typeof window === "undefined") return
+let pendingSave: NodeJS.Timeout | null = null
+let cachedProgress: GlobalProgress | null = null
 
-  setupAuthListener()
-
-  if (authInitialized) return
-
-  activeUserId = await getCurrentUserId()
-  localStorage.setItem(ACTIVE_USER_KEY, activeUserId ? activeUserId : "anonymous")
-  migrateLegacyCache()
-  authInitialized = true
-}
-
-/**
- * Load progress from server (with session cache recovery)
- */
 export async function loadProgress(): Promise<GlobalProgress> {
   if (typeof window === "undefined") return initializeProgress()
 
-  await ensureUserContext()
-
-  // Return in-memory cache if available
   if (cachedProgress) {
     return cachedProgress
   }
 
-  if (activeUserId) {
-    try {
-      // Try loading from server first for authenticated users.
-      const response = await fetch("/api/progress", {
-        method: "GET",
-        credentials: "same-origin",
-      })
+  try {
+    const savedState = await loadSectionProgressState()
 
-      if (response.ok) {
-        const data = await response.json()
-        const serverProgress = normalizeProgress(data.progress ? data.progress : initializeProgress())
-        
-        // Cache in memory and localStorage
-        cachedProgress = serverProgress
-        localStorage.setItem(getScopedStorageKey(), JSON.stringify(serverProgress))
-        
-        return serverProgress
-      }
-    } catch (error) {
-      console.error("[Progress] Failed to load from server:", error)
+    if (savedState) {
+      cachedProgress = normalizeSectionState(savedState)
+      return cachedProgress
     }
+  } catch (error) {
+    console.error("[Progress] Failed to load section progress from Supabase:", error)
   }
 
-  const stored = localStorage.getItem(getScopedStorageKey())
-  if (stored) {
-    const parsed = normalizeProgress(JSON.parse(stored) as GlobalProgress)
-    cachedProgress = parsed
-    return parsed
-  }
-
-  const initializedProgress = initializeProgress()
-  cachedProgress = initializedProgress
-  return initializedProgress
+  cachedProgress = initializeProgress()
+  return cachedProgress
 }
 
-/**
- * Save progress to server (optimistic with debouncing)
- * Transforms section-level state into module-level status/completionRate
- */
 export async function saveProgress(progress: GlobalProgress): Promise<void> {
   if (typeof window === "undefined") return
 
-  await ensureUserContext()
-
   const normalizedProgress = normalizeProgress(progress)
-
-  // Optimistic update: immediately update cache
   cachedProgress = normalizedProgress
-  localStorage.setItem(getScopedStorageKey(), JSON.stringify(normalizedProgress))
 
-  // Debounce server saves (avoid hammering API on rapid updates)
   if (pendingSave) {
     clearTimeout(pendingSave)
   }
 
   pendingSave = setTimeout(async () => {
-    if (!activeUserId) {
-      return
-    }
-
     try {
-      // Transform to Prisma Progress format (module-level only)
-      const modules: Record<
-        string,
-        { status: string; completionRate: number }
-      > = {}
-
-      Object.entries(normalizedProgress.modules).forEach(([moduleSlug, moduleData]) => {
-        // Look up actual total sections from courseStructure
-        const module = courseStructure.modules.find((m) => m.slug === moduleSlug)
-        const sectionCount = module?.sections.length
-        const totalSections = typeof sectionCount === "number" && sectionCount > 0 ? sectionCount : 1
-
-        // Calculate actual completion rate
-        const completedSectionCount = moduleData.completedSections?.length
-        const completedCount = typeof completedSectionCount === "number" ? completedSectionCount : 0
-        const completionRate = Math.round((completedCount / totalSections) * 100)
-
-        const status =
-          completionRate === 0
-            ? "not-started"
-            : completionRate < 100
-              ? "in-progress"
-              : "completed"
-
-        modules[moduleSlug] = { status, completionRate }
-      })
-
-      const response = await fetch("/api/progress", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        body: JSON.stringify({ progress: { modules } }),
-      })
-
-      if (!response.ok) {
-        console.error("[Progress] Server save failed:", response.status)
-      }
+      await saveSectionProgressState(normalizedProgress)
     } catch (error) {
-      console.error("[Progress] Failed to save to server:", error)
+      console.error("[Progress] Failed to save section progress to Supabase:", error)
     }
-  }, 1000) // 1 second debounce
+  }, 1000)
 }
 
-/**
- * Force immediate server sync
- */
 export async function flushProgress(): Promise<void> {
   if (pendingSave) {
     clearTimeout(pendingSave)
@@ -235,20 +94,18 @@ export async function flushProgress(): Promise<void> {
 
   if (!cachedProgress) return
 
-  await saveProgress(cachedProgress)
+  try {
+    await saveSectionProgressState(cachedProgress)
+  } catch (error) {
+    console.error("[Progress] Failed to flush section progress to Supabase:", error)
+  }
 }
 
-/**
- * Invalidate cache and reload from server
- */
 export async function refreshProgress(): Promise<GlobalProgress> {
   cachedProgress = null
   return loadProgress()
 }
 
-/**
- * Get progress for a specific module (async)
- */
 export async function getModuleProgress(moduleId: string): Promise<ModuleProgress> {
   const progress = await loadProgress()
 
@@ -269,9 +126,6 @@ export async function getModuleProgress(moduleId: string): Promise<ModuleProgres
   }
 }
 
-/**
- * Synchronous version for immediate reads (uses cache)
- */
 export function getModuleProgressSync(moduleId: string): ModuleProgress {
   const progress = cachedProgress ? cachedProgress : initializeProgress()
 
@@ -292,9 +146,6 @@ export function getModuleProgressSync(moduleId: string): ModuleProgress {
   }
 }
 
-/**
- * Update progress for a specific module (optimistic)
- */
 export async function updateModuleProgress(moduleId: string, updates: Partial<ModuleProgress>): Promise<void> {
   const progress = await loadProgress()
 
@@ -307,9 +158,6 @@ export async function updateModuleProgress(moduleId: string, updates: Partial<Mo
   await saveProgress(progress)
 }
 
-/**
- * Mark a section as complete (optimistic)
- */
 export async function markSectionComplete(moduleId: string, sectionIndex: number): Promise<void> {
   const moduleProgress = await getModuleProgress(moduleId)
 
@@ -323,38 +171,25 @@ export async function markSectionComplete(moduleId: string, sectionIndex: number
   await updateModuleProgress(moduleId, { ...moduleProgress, completedSections })
 }
 
-/**
- * Set current section (optimistic)
- */
 export async function setCurrentSection(moduleId: string, sectionIndex: number): Promise<void> {
   await updateModuleProgress(moduleId, { currentSection: sectionIndex })
 }
 
-/**
- * Get completion percentage for a module (uses cache)
- */
 export function getModuleCompletionPercentage(moduleId: string, totalSections: number): number {
   const moduleProgress = getModuleProgressSync(moduleId)
   return Math.round((moduleProgress.completedSections.length / totalSections) * 100)
 }
 
-/**
- * Check if a module is complete (uses cache)
- */
 export function isModuleComplete(moduleId: string, totalSections: number): boolean {
   const moduleProgress = getModuleProgressSync(moduleId)
   return moduleProgress.completedSections.length >= totalSections
 }
 
-/**
- * Get overall course completion (uses cache)
- */
 export function getOverallCompletion(moduleTotals: Record<string, number>): {
   completedModules: number
   totalModules: number
   percentage: number
 } {
-  const progress = cachedProgress ? cachedProgress : initializeProgress()
   const moduleIds = Object.keys(moduleTotals)
 
   const completedModules = moduleIds.filter((id) => isModuleComplete(id, moduleTotals[id])).length
@@ -366,24 +201,19 @@ export function getOverallCompletion(moduleTotals: Record<string, number>): {
   }
 }
 
-/**
- * Reset all progress (server + cache)
- */
 export async function resetAllProgress(): Promise<void> {
   if (typeof window === "undefined") return
 
-  await ensureUserContext()
-
   try {
-    // Clear cache
-    cachedProgress = null
-    localStorage.removeItem(getScopedStorageKey())
+    if (pendingSave) {
+      clearTimeout(pendingSave)
+      pendingSave = null
+    }
 
-    // Save empty progress to server
-    await saveProgress(initializeProgress())
-    await flushProgress()
+    cachedProgress = initializeProgress()
+    await resetSectionProgressState()
+    await saveSectionProgressState(cachedProgress)
   } catch (error) {
-    console.error("[Progress] Failed to reset progress:", error)
+    console.error("[Progress] Failed to reset section progress:", error)
   }
 }
-

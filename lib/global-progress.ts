@@ -1,19 +1,13 @@
 /**
  * GLOBAL PROGRESS MANAGER
- * Server-first progress tracking with observer pattern and optimistic updates
- * API is the source of truth; in-memory state synced via debounced API calls
+ * Server-first progress tracking with observer pattern and optimistic updates.
  */
 
 import { getCourseStructure } from "./course-content"
 import { createClient } from "./supabase"
+import { loadCourseProgressState, resetAllLearningState, saveCourseProgressState } from "./supabase-learning-state"
 
 const courseStructure = getCourseStructure()
-
-const STORAGE_KEY = "cognijin_progress"
-const POSITION_KEY = "cognijin_position"
-const ACTIVE_USER_KEY = "cognijin_active_user"
-const LEGACY_STORAGE_KEY = "cognijin_progress"
-const LEGACY_POSITION_KEY = "cognijin_position"
 
 type ProgressListener = () => void
 
@@ -32,48 +26,23 @@ class GlobalProgressManager {
   constructor() {
     if (typeof window !== "undefined") {
       this.setupAuthListener()
-      this.init()
+      void this.init()
     }
   }
 
   private async init() {
     this.activeUserId = await this.getCurrentUserId()
-    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ? this.activeUserId : "anonymous")
-    this.migrateLegacyKeys()
 
-    const savedProgress = localStorage.getItem(this.getScopedStorageKey(STORAGE_KEY))
+    try {
+      const savedProgress = await loadCourseProgressState()
 
-    if (savedProgress) {
-      try {
-        this.mergeProgress(JSON.parse(savedProgress))
-      } catch (error) {
-        console.error("[Progress] Failed to parse cached progress:", error)
+      if (savedProgress) {
+        this.mergeProgress(savedProgress)
       }
+    } catch (error) {
+      console.error("[Progress] Failed to load from Supabase:", error)
     }
 
-    if (this.activeUserId) {
-      try {
-        // Load from server first for authenticated users.
-        const response = await fetch("/api/progress", {
-          method: "GET",
-          credentials: "same-origin",
-        })
-
-        if (response.ok) {
-          const data = await response.json()
-          const serverProgress = data.progress
-
-          if (serverProgress?.modules) {
-            this.mergeProgress({ modules: serverProgress.modules })
-          }
-        }
-      } catch (error) {
-        console.error("[Progress] Failed to load from server, using cache:", error)
-      }
-    }
-
-    // Load current position from localStorage (not critical for server sync)
-    this.loadCurrentPosition()
     this.lastStableSnapshot = this.createSnapshot()
     this.isInitialized = true
     this.notifyListeners()
@@ -106,29 +75,18 @@ class GlobalProgressManager {
     }
   }
 
-  private getScopedStorageKey(baseKey: string): string {
-    return `${baseKey}:${this.activeUserId ? this.activeUserId : "anonymous"}`
-  }
-
-  private migrateLegacyKeys() {
-    const scopedProgressKey = this.getScopedStorageKey(STORAGE_KEY)
-    const scopedPositionKey = this.getScopedStorageKey(POSITION_KEY)
-
-    const legacyProgress = localStorage.getItem(LEGACY_STORAGE_KEY)
-    const legacyPosition = localStorage.getItem(LEGACY_POSITION_KEY)
-
-    if (legacyProgress && !localStorage.getItem(scopedProgressKey)) {
-      localStorage.setItem(scopedProgressKey, legacyProgress)
-      localStorage.removeItem(LEGACY_STORAGE_KEY)
-    }
-
-    if (legacyPosition && !localStorage.getItem(scopedPositionKey)) {
-      localStorage.setItem(scopedPositionKey, legacyPosition)
-      localStorage.removeItem(LEGACY_POSITION_KEY)
-    }
+  private async switchActiveUser(nextUserId: string | null) {
+    this.activeUserId = nextUserId
+    this.resetInMemoryProgressState()
+    await this.init()
   }
 
   private resetInMemoryProgressState() {
+    if (saveTimeout) {
+      clearTimeout(saveTimeout)
+      saveTimeout = null
+    }
+
     courseStructure.modules.forEach((module) => {
       module.status = "not-started"
       module.completionRate = 0
@@ -143,16 +101,12 @@ class GlobalProgressManager {
     this.lastStableSnapshot = null
   }
 
-  private async switchActiveUser(nextUserId: string | null) {
-    this.activeUserId = nextUserId
-    localStorage.setItem(ACTIVE_USER_KEY, this.activeUserId ? this.activeUserId : "anonymous")
-    this.migrateLegacyKeys()
-    this.resetInMemoryProgressState()
-    await this.init()
-  }
-
   private createSnapshot() {
-    return JSON.stringify(courseStructure)
+    return JSON.stringify({
+      courseStructure,
+      currentModule: this.currentModule,
+      currentSection: this.currentSection,
+    })
   }
 
   private rollbackProgressState() {
@@ -166,7 +120,6 @@ class GlobalProgressManager {
 
     try {
       this.mergeProgress(JSON.parse(rollbackSnapshot))
-      localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), rollbackSnapshot)
       this.notifyListeners()
       console.warn("[Progress] Rolled back optimistic progress state")
     } catch (error) {
@@ -174,10 +127,20 @@ class GlobalProgressManager {
     }
   }
 
-  private mergeProgress(savedProgress: any) {
+  private mergeProgress(savedProgress: unknown) {
     if (!savedProgress || typeof savedProgress !== "object") return
 
-    const modulesData = savedProgress.modules
+    const snapshot = savedProgress as Record<string, any>
+    const courseSnapshot = snapshot.courseStructure && typeof snapshot.courseStructure === "object" ? snapshot.courseStructure : snapshot
+    const modulesData = courseSnapshot.modules
+
+    if (typeof snapshot.currentModule === "string" || snapshot.currentModule === null) {
+      this.currentModule = snapshot.currentModule
+    }
+
+    if (typeof snapshot.currentSection === "string" || snapshot.currentSection === null) {
+      this.currentSection = snapshot.currentSection
+    }
 
     if (Array.isArray(modulesData)) {
       const savedModulesBySlug = new Map<string, any>()
@@ -236,14 +199,12 @@ class GlobalProgressManager {
     const normalizedModulesData = modulesData as Record<string, any>
 
     courseStructure.modules.forEach((module) => {
-      // Look up by module slug from the API response
       const savedModule = normalizedModulesData[module.slug]
 
       if (savedModule) {
-        // Update module completion from API
-        module.status = typeof savedModule.status === 'string' ? savedModule.status : 'not-started'
-        
-        const rawCompletionRate = typeof savedModule.completionRate === 'number' && !isNaN(savedModule.completionRate)
+        module.status = typeof savedModule.status === "string" ? savedModule.status : "not-started"
+
+        const rawCompletionRate = typeof savedModule.completionRate === "number" && !isNaN(savedModule.completionRate)
           ? savedModule.completionRate
           : 0
         module.completionRate = Math.min(Math.max(rawCompletionRate, 0), 100)
@@ -266,33 +227,24 @@ class GlobalProgressManager {
     })
   }
 
-  private loadCurrentPosition() {
-    const saved = localStorage.getItem(this.getScopedStorageKey(POSITION_KEY))
-    if (saved) {
-      const { moduleId, sectionId } = JSON.parse(saved)
-      this.currentModule = typeof moduleId === "string" ? moduleId : null
-      this.currentSection = sectionId
-    }
-  }
-
   setCurrentPosition(moduleId: string, sectionId: string) {
     this.currentModule = moduleId
     this.currentSection = sectionId
 
-    localStorage.setItem(this.getScopedStorageKey(POSITION_KEY), JSON.stringify({ moduleId, sectionId }))
+    this.queuePersist()
     this.notifyListeners()
   }
 
   markSectionComplete(moduleId: string, sectionId: string) {
-    console.log('[Progress] Marking complete:', { moduleId, sectionId })
+    console.log("[Progress] Marking complete:", { moduleId, sectionId })
     const module = courseStructure.modules.find((m) => m.id === moduleId)
     if (module) {
       const section = module.sections.find((s) => s.id === sectionId)
       if (section) {
         const rollbackSnapshot = this.createSnapshot()
         section.completed = true
-        console.log('[Progress] Section marked, triggering save')
-        this.saveProgressOptimistic(rollbackSnapshot)
+        console.log("[Progress] Section marked, triggering save")
+        this.queuePersist(rollbackSnapshot)
 
         const isModuleNowComplete = module.sections.length > 0 && module.sections.every((moduleSection) => moduleSection.completed)
         if (isModuleNowComplete) {
@@ -311,30 +263,26 @@ class GlobalProgressManager {
       if (section) {
         const rollbackSnapshot = this.createSnapshot()
         section.completed = false
-        this.saveProgressOptimistic(rollbackSnapshot)
+        this.queuePersist(rollbackSnapshot)
         this.notifyListeners()
       }
     }
   }
 
-  private saveProgressOptimistic(rollbackSnapshot?: string) {
-    console.log('[Progress] Saving optimistically')
+  private queuePersist(rollbackSnapshot?: string) {
+    console.log("[Progress] Saving optimistically")
 
     if (rollbackSnapshot && !this.pendingRollbackSnapshot) {
       this.pendingRollbackSnapshot = rollbackSnapshot
     }
 
-    // Optimistic: immediately save to localStorage
-    localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), JSON.stringify(courseStructure))
-
-    // Debounce server sync
     if (saveTimeout) {
       clearTimeout(saveTimeout)
     }
 
     saveTimeout = setTimeout(() => {
-      console.log('[Progress] Debounce timeout fired, syncing to server')
-      this.syncToServer()
+      console.log("[Progress] Debounce timeout fired, syncing to Supabase")
+      void this.syncToServer()
     }, 1000)
   }
 
@@ -342,72 +290,21 @@ class GlobalProgressManager {
     if (!this.activeUserId) {
       this.lastStableSnapshot = this.createSnapshot()
       this.pendingRollbackSnapshot = null
-      localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), this.lastStableSnapshot)
       return
     }
 
     try {
-      // Transform course structure to module-level progress
-      const modules: Record<
-        string,
-        {
-          status: string
-          completionRate: number
-        }
-      > = {}
-
-      courseStructure.modules.forEach((module) => {
-        const completedCount = module.sections.filter((s) => s.completed).length
-
-        const completionRate =
-          module.sections.length > 0
-            ? Math.round((completedCount / module.sections.length) * 100)
-            : 0
-
-        const status =
-          completionRate === 0
-            ? "not-started"
-            : completionRate === 100
-              ? "completed"
-              : "in-progress"
-
-        modules[module.slug] = { status, completionRate }
+      await saveCourseProgressState({
+        courseStructure,
+        currentModule: this.currentModule,
+        currentSection: this.currentSection,
       })
 
-      console.log('[Progress] Syncing to server with payload:', { progress: { modules } })
-
-      const response = await fetch("/api/progress", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        body: JSON.stringify({ progress: { modules } }),
-      })
-
-      console.log('[Progress] Server response:', { status: response.status, ok: response.ok })
-      let responseData: unknown = null
-      const responseText = await response.text()
-
-      if (responseText) {
-        try {
-          responseData = JSON.parse(responseText)
-        } catch {
-          responseData = responseText
-        }
-      }
-
-      console.log('[Progress] Server response data:', responseData)
-
-      if (!response.ok) {
-        console.error("[Progress] Server sync failed:", response.status, responseData)
-        this.rollbackProgressState()
-      } else {
-        console.log('[Progress] Server sync successful')
-        this.lastStableSnapshot = this.createSnapshot()
-        this.pendingRollbackSnapshot = null
-        localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), this.lastStableSnapshot)
-      }
+      console.log("[Progress] Supabase sync successful")
+      this.lastStableSnapshot = this.createSnapshot()
+      this.pendingRollbackSnapshot = null
     } catch (error) {
-      console.error("[Progress] Failed to sync to server:", error)
+      console.error("[Progress] Failed to sync to Supabase:", error)
       this.rollbackProgressState()
     }
   }
@@ -453,7 +350,6 @@ class GlobalProgressManager {
     const currentModule = courseStructure.modules[currentModuleIndex]
     const currentSectionIndex = currentModule?.sections.findIndex((s) => s.id === this.currentSection)
 
-    // Next section in current module
     if (currentSectionIndex !== undefined && currentSectionIndex < currentModule.sections.length - 1) {
       return {
         moduleId: this.currentModule!,
@@ -461,7 +357,6 @@ class GlobalProgressManager {
       }
     }
 
-    // First section of next module
     if (currentModuleIndex < courseStructure.modules.length - 1) {
       const nextModule = courseStructure.modules[currentModuleIndex + 1]
       return {
@@ -470,7 +365,7 @@ class GlobalProgressManager {
       }
     }
 
-    return null // Course complete
+    return null
   }
 
   subscribe(callback: ProgressListener) {
@@ -487,27 +382,11 @@ class GlobalProgressManager {
   async resetProgress() {
     if (typeof window === "undefined") return
 
-    localStorage.removeItem(this.getScopedStorageKey(STORAGE_KEY))
-    localStorage.removeItem(this.getScopedStorageKey(POSITION_KEY))
-
-    // Reset in-memory structure
-    courseStructure.modules.forEach((module) => {
-      module.status = "not-started"
-      module.completionRate = 0
-      module.sections.forEach((section) => {
-        section.completed = false
-      })
-    })
-
-    this.currentModule = null
-    this.currentSection = null
-
+    this.resetInMemoryProgressState()
     const resetSnapshot = this.createSnapshot()
-    this.pendingRollbackSnapshot = null
     this.lastStableSnapshot = resetSnapshot
-    localStorage.setItem(this.getScopedStorageKey(STORAGE_KEY), resetSnapshot)
 
-    // Sync reset to server
+    await resetAllLearningState()
     await this.syncToServer()
     this.notifyListeners()
   }
@@ -518,18 +397,18 @@ class GlobalProgressManager {
 
   async waitForInitialization() {
     if (this.isInitialized) return
-    
-    // Poll until initialized (with timeout)
-    const maxWait = 5000
-    const startTime = Date.now()
-    
-    while (!this.isInitialized && Date.now() - startTime < maxWait) {
-      await new Promise((resolve) => setTimeout(resolve, 50))
-    }
+
+    return new Promise<void>((resolve) => {
+      const checkInit = () => {
+        if (this.isInitialized) {
+          resolve()
+        } else {
+          setTimeout(checkInit, 50)
+        }
+      }
+      checkInit()
+    })
   }
 }
 
 export const progressManager = new GlobalProgressManager()
-
-export const GlobalProgress = progressManager
-

@@ -30,9 +30,7 @@ export function Header() {
 
     setIsResetting(true)
     try {
-      localStorage.clear()
       await progressManager.resetProgress()
-      localStorage.clear()
       router.push("/course")
       router.refresh()
     } finally {
