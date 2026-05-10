@@ -35,7 +35,7 @@ User Registration/Login Flow:
 1. Double-check your email and password (case-sensitive)
 2. Make sure you confirmed your email (check spam folder)
 3. Use the "Forgot Password" link to reset
-4. Try the Debug Auth tool at `/debug-auth`
+4. Try the password reset flow from `/sign-in`
 
 ### Issue 2: "Email not confirmed"
 
@@ -81,14 +81,7 @@ User Registration/Login Flow:
 - No more generic alerts
 - Specific guidance for each error type
 
-### 3. Debug Auth Tool
-- Visit `/debug-auth` for diagnostic tools
-- Test login credentials
-- Check session status
-- Send password reset
-- See detailed error information
-
-### 4. Bot Protection (Turnstile + Rate Limiting)
+### 3. Bot Protection (Turnstile + Rate Limiting)
 - Sign-in, registration, and password reset now require a Turnstile challenge.
 - Auth-related API endpoints and AI chat endpoint now have request throttling.
 - A hidden honeypot field blocks basic scripted form submissions.
@@ -100,16 +93,11 @@ User Registration/Login Flow:
 2. Enter email and password
 3. Should redirect to `/course` on success
 
-### Method 2: Debug Tool
-1. Go to `/debug-auth`
-2. Enter credentials
-3. Click "Test Login"
-4. See detailed response (error details, user info, etc.)
-
-### Method 3: Check Session
-1. Go to `/debug-auth`
-2. Click "Check Session"
-3. See if you're already logged in
+### Method 2: Password Reset Confirmation
+1. Go to `/sign-in`
+2. Click "Forgot your password?"
+3. Request a reset email
+4. Confirm the email arrives and opens `/update-password`
 
 ## Supabase Dashboard Access
 
@@ -169,7 +157,7 @@ In Supabase Dashboard:
 - [ ] Is email_confirmed_at populated?
 - [ ] Try password reset flow
 - [ ] Check browser console for errors
-- [ ] Test with Debug Auth tool
+- [ ] Test the password reset flow from `/sign-in`
 - [ ] Verify NEXT_PUBLIC_SUPABASE_URL and keys are correct
 - [ ] Check if Supabase project is active (not paused)
 
@@ -231,7 +219,6 @@ If a redirect URL is not allow-listed in Supabase, it may fall back to Site URL 
 
 - **Supabase Auth Docs:** https://supabase.com/docs/guides/auth
 - **Password Reset Docs:** https://supabase.com/docs/guides/auth/passwords
-- **Debug Tool:** http://localhost:3000/debug-auth (in development)
 
 ## Quick Fixes Script
 

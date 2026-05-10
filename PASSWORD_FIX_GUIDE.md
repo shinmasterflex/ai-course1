@@ -22,10 +22,10 @@ The most common reason is **you forgot your password** or there's a typo. Here's
 6. Enter your new password
 7. Try logging in again
 
-### Option 2: Use the Debug Tool
-1. Go to http://localhost:3000/debug-auth
-2. Enter your email in the field
-3. Click **"Reset Password"**
+### Option 2: Re-run the Built-in Reset Flow
+1. Go to http://localhost:3000/sign-in
+2. Click **"Forgot your password?"**
+3. Enter your email again carefully
 4. Follow the email instructions
 
 ## 🔍 Troubleshoot First
@@ -48,14 +48,14 @@ Before resetting, check these common issues:
 
 ## 🧪 Test Your Login
 
-Visit http://localhost:3000/debug-auth and:
-1. Enter your email and password
-2. Click "Test Login"
-3. See the exact error message
-4. This will tell you if it's:
-   - ❌ Wrong password → Reset it
-   - ⚠️ Email not confirmed → Check your email
-   - ✅ Correct credentials but session issue → Browser problem
+Use the normal sign-in flow at http://localhost:3000/sign-in:
+1. Enter your email and password carefully
+2. If sign-in fails, use "Forgot your password?"
+3. If the reset email arrives, your account exists and mail delivery works
+4. This usually distinguishes:
+   - Wrong password
+   - Unconfirmed email
+   - Browser/session issues after sign-in
 
 ## 🚀 Start Fresh (Nuclear Option)
 
