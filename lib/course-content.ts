@@ -451,7 +451,7 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
   "module-3-module-quiz": {
     id: "module-3-module-quiz",
     moduleId: "module-3",
-    sectionId: "tools-module-quiz",
+    sectionId: "module-quiz",
     cardType: "section-card",
     content: "Test your ability to apply AI tool evaluation frameworks ??covering LLM mechanics, prompt techniques, tool selection criteria, and practical workflow integration.",
     summary: "Module 3 knowledge check ??validate your ability to apply tool evaluation frameworks, select the right approach for different workflows, and avoid common procurement traps.",
