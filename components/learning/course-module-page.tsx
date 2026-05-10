@@ -13,7 +13,7 @@ import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "@/hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/course-content"
-import { getSectionLearningContent } from "@/lib/course-content"
+import { getSectionLearningContents } from "@/lib/course-content"
 
 type CourseModulePageProps = {
   moduleId: string
@@ -100,7 +100,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const completionReady = completedSectionIds.length === totalSections
   const isFinalSection = currentSectionIndex === totalSections - 1
-  const content = getSectionLearningContent(moduleId, currentSection?.id)
+  const sectionCards = getSectionLearningContents(moduleId, currentSection?.id, 3)
   const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
 
   return (
@@ -124,7 +124,9 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 scopeKey={currentScopeKey}
               />
 
-              {content ? <TextDisplay content={content} scopeKey={currentScopeKey} /> : null}
+              {sectionCards.map((cardContent, index) => (
+                <TextDisplay key={`${currentSection.id}-card-${index}`} content={cardContent} scopeKey={currentScopeKey} />
+              ))}
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button

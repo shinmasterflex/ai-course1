@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { getCourseStructure, getSectionLearningContent } from "@/lib/course-content"
+import { getCourseStructure, getSectionLearningContents } from "@/lib/course-content"
 
 type DuplicateHit = {
   moduleName: string
@@ -42,7 +42,7 @@ describe("course module page duplication", () => {
 
   it("parses all module learning-content objects", () => {
     const moduleNames = courseStructure.modules
-      .filter((module) => module.sections.some((section) => Boolean(getSectionLearningContent(module.id, section.id))))
+      .filter((module) => module.sections.some((section) => getSectionLearningContents(module.id, section.id).length > 0))
       .map((module) => module.id)
 
     expect(moduleNames.length).toBe(5)
@@ -53,8 +53,7 @@ describe("course module page duplication", () => {
 
     for (const module of courseStructure.modules) {
       const sectionContents = module.sections
-        .map((section) => getSectionLearningContent(module.id, section.id))
-        .filter((content): content is string => Boolean(content))
+        .flatMap((section) => getSectionLearningContents(module.id, section.id))
 
       duplicateHits.push(...collectDuplicates(module.id, "sectionContent", sectionContents))
     }

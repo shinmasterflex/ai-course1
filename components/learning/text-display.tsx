@@ -7,7 +7,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
-import { getSectionCourseContentEntry } from "@/lib/course-content"
+import { getSectionCourseContentEntries } from "@/lib/course-content"
 import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, Info } from "lucide-react"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -162,7 +162,7 @@ export function TextDisplay({
   const resolvedModuleId = getModuleIdFromScope(resolvedScopeKey)
   const resolvedSectionId = getSectionIdFromScope(resolvedScopeKey)
   const sectionEntry = useMemo(
-    () => (resolvedModuleId && resolvedSectionId ? getSectionCourseContentEntry(resolvedModuleId, resolvedSectionId) : undefined),
+    () => (resolvedModuleId && resolvedSectionId ? getSectionCourseContentEntries(resolvedModuleId, resolvedSectionId, 1)[0] : undefined),
     [resolvedModuleId, resolvedSectionId],
   )
 

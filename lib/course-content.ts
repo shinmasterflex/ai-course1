@@ -1072,22 +1072,29 @@ export const COURSE_CONTENT_REGISTRY: Record<string, CourseContentEntry> = {
 
 };
 
-function findSectionCourseContentEntry(moduleId: string, sectionId: string) {
-  return Object.values(COURSE_CONTENT_REGISTRY).find(
+function findSectionCourseContentEntries(moduleId: string, sectionId: string) {
+  return Object.values(COURSE_CONTENT_REGISTRY).filter(
     (entry) => entry.moduleId === moduleId && entry.sectionId === sectionId,
   )
 }
 
-export function getSectionCourseContentEntry(moduleId: string, sectionId: string | undefined) {
+export function getSectionCourseContentEntries(moduleId: string, sectionId: string | undefined, maxCards = 3) {
   if (!sectionId) {
-    return undefined
+    return []
   }
 
-  return findSectionCourseContentEntry(moduleId, sectionId)
+  const safeLimit = Math.max(0, Math.min(3, maxCards))
+  if (safeLimit === 0) {
+    return []
+  }
+
+  return findSectionCourseContentEntries(moduleId, sectionId).slice(0, safeLimit)
 }
 
-export function getSectionLearningContent(moduleId: string, sectionId: string | undefined): SectionLearningContent | undefined {
-  return getSectionCourseContentEntry(moduleId, sectionId)?.content ?? undefined
+export function getSectionLearningContents(moduleId: string, sectionId: string | undefined, maxCards = 3): SectionLearningContent[] {
+  return getSectionCourseContentEntries(moduleId, sectionId, maxCards)
+    .map((entry) => entry.content)
+    .filter((content): content is SectionLearningContent => typeof content === "string" && content.trim().length > 0)
 }
 
 // --- Migrated component explanation content ---
@@ -1125,13 +1132,13 @@ export function getCourseContentEntry(componentId: string): CourseContentEntry |
   if (sectionMatch) {
     const moduleId = sectionMatch[1]
     const sectionId = sectionMatch[2]
-    return findSectionCourseContentEntry(moduleId, sectionId)
+    return findSectionCourseContentEntries(moduleId, sectionId)[0]
   }
 
   const courseQuizMatch = componentId.match(/^(module-\d+)-course-quiz$/)
   if (courseQuizMatch) {
     const moduleId = courseQuizMatch[1]
-    return findSectionCourseContentEntry(moduleId, "module-quiz")
+    return findSectionCourseContentEntries(moduleId, "module-quiz")[0]
       ?? Object.values(COURSE_CONTENT_REGISTRY).find((entry) => entry.moduleId === moduleId && entry.explanation)
   }
 
@@ -1248,7 +1255,7 @@ export function getCourseStructure(): CourseStructure {
         sections: sectionIds.map((sectionId) => ({
           id: sectionId,
           title: toTitleCaseFromSlug(sectionId),
-          summary: findSectionCourseContentEntry(moduleId, sectionId)?.summary ?? undefined,
+          summary: findSectionCourseContentEntries(moduleId, sectionId)[0]?.summary ?? undefined,
           completed: false,
         })),
       }
