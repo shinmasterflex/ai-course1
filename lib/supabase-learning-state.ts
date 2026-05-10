@@ -38,10 +38,8 @@ async function getAuthenticatedUserId(): Promise<string | null> {
   }
 }
 
-async function upsertStateRow(table: string, payload: Record<string, unknown>, onConflict: string) {
-  const userId = await getAuthenticatedUserId()
-  if (!userId) return
-
+async function upsertStateRow(table: string, userId: string, payload: Record<string, unknown>, onConflict: string) {
+  // userId is resolved by the caller once; we use it directly to avoid a second auth round-trip.
   const supabase = createClient()
   const { error } = await supabase.from(table).upsert(payload, { onConflict })
 
@@ -101,10 +99,13 @@ export async function loadCourseProgressState(): Promise<CourseProgressState | n
 }
 
 export async function saveCourseProgressState(state: CourseProgressState): Promise<void> {
+  const userId = await getAuthenticatedUserId()
+  if (!userId) return
   await upsertStateRow(
     COURSE_TABLE,
+    userId,
     {
-      user_id: await getAuthenticatedUserId(),
+      user_id: userId,
       course_slug: COURSE_SLUG,
       state,
     },
@@ -121,10 +122,13 @@ export async function loadSectionProgressState(): Promise<SectionProgressState |
 }
 
 export async function saveSectionProgressState(state: SectionProgressState): Promise<void> {
+  const userId = await getAuthenticatedUserId()
+  if (!userId) return
   await upsertStateRow(
     SECTION_TABLE,
+    userId,
     {
-      user_id: await getAuthenticatedUserId(),
+      user_id: userId,
       state_key: "default",
       state,
     },

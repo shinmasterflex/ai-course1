@@ -11,8 +11,6 @@ const courseStructure = getCourseStructure()
 
 type ProgressListener = () => void
 
-let saveTimeout: NodeJS.Timeout | null = null
-
 class GlobalProgressManager {
   private listeners: ProgressListener[] = []
   public currentModule: string | null = null
@@ -22,6 +20,11 @@ class GlobalProgressManager {
   private lastStableSnapshot: string | null = null
   private activeUserId: string | null = null
   private authUnsubscribe: (() => void) | null = null
+  // Moved from module scope so multiple instances (e.g. HMR) don't share a single timer.
+  private saveTimeout: NodeJS.Timeout | null = null
+  // Incremented on every user switch; in-flight syncs compare against their captured
+  // generation and silently discard results that belong to a previous session.
+  private initGeneration = 0
 
   constructor() {
     if (typeof window !== "undefined") {
@@ -76,15 +79,16 @@ class GlobalProgressManager {
   }
 
   private async switchActiveUser(nextUserId: string | null) {
+    this.initGeneration++ // invalidate any in-flight syncToServer calls from the previous session
     this.activeUserId = nextUserId
     this.resetInMemoryProgressState()
     await this.init()
   }
 
   private resetInMemoryProgressState() {
-    if (saveTimeout) {
-      clearTimeout(saveTimeout)
-      saveTimeout = null
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout)
+      this.saveTimeout = null
     }
 
     courseStructure.modules.forEach((module) => {
@@ -276,17 +280,19 @@ class GlobalProgressManager {
       this.pendingRollbackSnapshot = rollbackSnapshot
     }
 
-    if (saveTimeout) {
-      clearTimeout(saveTimeout)
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout)
     }
 
-    saveTimeout = setTimeout(() => {
+    this.saveTimeout = setTimeout(() => {
       console.log("[Progress] Debounce timeout fired, syncing to Supabase")
       void this.syncToServer()
     }, 1000)
   }
 
   private async syncToServer() {
+    const generation = this.initGeneration
+
     if (!this.activeUserId) {
       this.lastStableSnapshot = this.createSnapshot()
       this.pendingRollbackSnapshot = null
@@ -300,19 +306,24 @@ class GlobalProgressManager {
         currentSection: this.currentSection,
       })
 
+      // Discard results that arrived after a user switch.
+      if (this.initGeneration !== generation) return
+
       console.log("[Progress] Supabase sync successful")
       this.lastStableSnapshot = this.createSnapshot()
       this.pendingRollbackSnapshot = null
     } catch (error) {
       console.error("[Progress] Failed to sync to Supabase:", error)
+      // Don't roll back state that belongs to the new session.
+      if (this.initGeneration !== generation) return
       this.rollbackProgressState()
     }
   }
 
   async forceSync() {
-    if (saveTimeout) {
-      clearTimeout(saveTimeout)
-      saveTimeout = null
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout)
+      this.saveTimeout = null
     }
     await this.syncToServer()
   }

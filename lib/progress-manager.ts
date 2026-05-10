@@ -44,6 +44,16 @@ function normalizeSectionState(state: unknown): GlobalProgress {
 
 let pendingSave: NodeJS.Timeout | null = null
 let cachedProgress: GlobalProgress | null = null
+// Deduplicates concurrent calls to loadProgress() that arrive before cachedProgress is populated.
+let loadInFlight: Promise<GlobalProgress> | null = null
+// Serializes all writes so concurrent read-modify-write operations don't overwrite each other.
+let writeQueue: Promise<void> = Promise.resolve()
+
+function enqueueWrite(fn: () => Promise<void>): Promise<void> {
+  // Chain onto the tail of the queue; always advance even if fn throws.
+  writeQueue = writeQueue.then(fn, fn)
+  return writeQueue
+}
 
 export async function loadProgress(): Promise<GlobalProgress> {
   if (typeof window === "undefined") return initializeProgress()
@@ -52,19 +62,30 @@ export async function loadProgress(): Promise<GlobalProgress> {
     return cachedProgress
   }
 
-  try {
-    const savedState = await loadSectionProgressState()
-
-    if (savedState) {
-      cachedProgress = normalizeSectionState(savedState)
-      return cachedProgress
-    }
-  } catch (error) {
-    console.error("[Progress] Failed to load section progress from Supabase:", error)
+  // Return the same in-flight fetch to all concurrent callers instead of issuing N requests.
+  if (loadInFlight) {
+    return loadInFlight
   }
 
-  cachedProgress = initializeProgress()
-  return cachedProgress
+  loadInFlight = (async () => {
+    try {
+      const savedState = await loadSectionProgressState()
+
+      if (savedState) {
+        cachedProgress = normalizeSectionState(savedState)
+        return cachedProgress
+      }
+    } catch (error) {
+      console.error("[Progress] Failed to load section progress from Supabase:", error)
+    }
+
+    cachedProgress = initializeProgress()
+    return cachedProgress
+  })().finally(() => {
+    loadInFlight = null
+  })
+
+  return loadInFlight
 }
 
 export async function saveProgress(progress: GlobalProgress): Promise<void> {
@@ -147,28 +168,41 @@ export function getModuleProgressSync(moduleId: string): ModuleProgress {
 }
 
 export async function updateModuleProgress(moduleId: string, updates: Partial<ModuleProgress>): Promise<void> {
-  const progress = await loadProgress()
+  return enqueueWrite(async () => {
+    const progress = cachedProgress ?? (await loadProgress())
 
-  progress.modules[moduleId] = {
-    ...progress.modules[moduleId],
-    ...updates,
-    lastUpdated: new Date().toISOString(),
-  }
+    progress.modules[moduleId] = {
+      ...progress.modules[moduleId],
+      ...updates,
+      lastUpdated: new Date().toISOString(),
+    }
 
-  await saveProgress(progress)
+    await saveProgress(progress)
+  })
 }
 
 export async function markSectionComplete(moduleId: string, sectionIndex: number): Promise<void> {
-  const moduleProgress = await getModuleProgress(moduleId)
+  // Runs inside the write queue so it sees the latest cachedProgress
+  // without a separate read-then-update that could race with a concurrent write.
+  return enqueueWrite(async () => {
+    const progress = cachedProgress ?? (await loadProgress())
+    const moduleData = progress.modules[moduleId]
+    const completedSections = Array.isArray(moduleData?.completedSections) ? [...moduleData.completedSections] : []
 
-  const completedSections = Array.isArray(moduleProgress.completedSections) ? moduleProgress.completedSections : []
+    if (!completedSections.includes(sectionIndex)) {
+      completedSections.push(sectionIndex)
+      completedSections.sort((a, b) => a - b)
+    }
 
-  if (!completedSections.includes(sectionIndex)) {
-    completedSections.push(sectionIndex)
-    completedSections.sort((a, b) => a - b)
-  }
+    progress.modules[moduleId] = {
+      ...moduleData,
+      completedSections,
+      currentSection: moduleData?.currentSection ?? 0,
+      lastUpdated: new Date().toISOString(),
+    }
 
-  await updateModuleProgress(moduleId, { ...moduleProgress, completedSections })
+    await saveProgress(progress)
+  })
 }
 
 export async function setCurrentSection(moduleId: string, sectionIndex: number): Promise<void> {
@@ -204,16 +238,21 @@ export function getOverallCompletion(moduleTotals: Record<string, number>): {
 export async function resetAllProgress(): Promise<void> {
   if (typeof window === "undefined") return
 
-  try {
-    if (pendingSave) {
-      clearTimeout(pendingSave)
-      pendingSave = null
-    }
+  return enqueueWrite(async () => {
+    try {
+      if (pendingSave) {
+        clearTimeout(pendingSave)
+        pendingSave = null
+      }
 
-    cachedProgress = initializeProgress()
-    await resetSectionProgressState()
-    await saveSectionProgressState(cachedProgress)
-  } catch (error) {
-    console.error("[Progress] Failed to reset section progress:", error)
-  }
+      // Clear in DB first; only update the in-memory cache after the reset succeeds
+      // to prevent a window where concurrent writes run against an empty cache
+      // and get wiped by the subsequent saveSectionProgressState call.
+      await resetSectionProgressState()
+      cachedProgress = initializeProgress()
+      await saveSectionProgressState(cachedProgress)
+    } catch (error) {
+      console.error("[Progress] Failed to reset section progress:", error)
+    }
+  })
 }

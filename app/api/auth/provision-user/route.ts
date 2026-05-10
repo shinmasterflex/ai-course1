@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { enforceRateLimit } from '@/lib/rate-limit'
 import { verifyCheckoutSessionPayment } from '@/lib/stripe'
@@ -152,15 +153,26 @@ export async function POST(request: Request) {
   const firstName = normalizeOptionalName(body?.firstName)
   const lastName = normalizeOptionalName(body?.lastName)
 
-  const dbUser = await upsertAppUser({
-    id: userId,
-    email,
-    firstName,
-    lastName,
-    paidAt: new Date(),
-    stripeCheckoutSessionId: sessionId,
-    updatedAt: new Date(),
-  })
+  try {
+    const dbUser = await upsertAppUser({
+      id: userId,
+      email,
+      firstName,
+      lastName,
+      paidAt: new Date(),
+      stripeCheckoutSessionId: sessionId,
+      updatedAt: new Date(),
+    })
 
-  return NextResponse.json({ user: dbUser })
+    return NextResponse.json({ user: dbUser })
+  } catch (err: unknown) {
+    // A concurrent request claimed this session between our findFirst check and the upsert.
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Payment session is already linked to another account.' },
+        { status: 409 },
+      )
+    }
+    throw err
+  }
 }

@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { verifyCheckoutSessionPayment } from '@/lib/stripe'
 import { verifyTurnstileToken } from '@/lib/bot-protection'
@@ -207,15 +208,27 @@ export async function POST(request: Request) {
     const paidAt = existingUser?.paidAt ? existingUser.paidAt : (verifiedSessionId ? new Date() : null)
     const stripeCheckoutSessionId = existingUser?.stripeCheckoutSessionId ? existingUser.stripeCheckoutSessionId : verifiedSessionId
 
-    const dbUser = await upsertAppUser({
-      id: user.id,
-      email: normalizedEmail,
-      firstName,
-      lastName,
-      paidAt,
-      stripeCheckoutSessionId,
-      updatedAt: new Date(),
-    })
+    let dbUser
+    try {
+      dbUser = await upsertAppUser({
+        id: user.id,
+        email: normalizedEmail,
+        firstName,
+        lastName,
+        paidAt,
+        stripeCheckoutSessionId,
+        updatedAt: new Date(),
+      })
+    } catch (upsertErr: unknown) {
+      // A concurrent request claimed this session between our findFirst check and the upsert.
+      if (upsertErr instanceof Prisma.PrismaClientKnownRequestError && upsertErr.code === 'P2002') {
+        return NextResponse.json(
+          { error: 'Payment session is already linked to another account.' },
+          { status: 409 },
+        )
+      }
+      throw upsertErr
+    }
 
     console.log('[Sync API] Successfully synced user to Prisma:', user.id)
     return NextResponse.json({
