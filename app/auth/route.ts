@@ -8,8 +8,6 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
 
-  console.log('[Auth] Received request with code:', code ? 'YES' : 'NO')
-
   if (code) {
     const cookieStore = await cookies()
     const supabase = createServerClient(
@@ -32,17 +30,14 @@ export async function GET(request: Request) {
     )
     
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-    
-    console.log('[Auth] Exchange session result:', { 
-      userId: data?.user?.id, 
-      email: data?.user?.email,
-      error: error?.message 
-    })
+
+    if (error) {
+      console.error('[Auth] Failed to exchange code for session:', error.message)
+    }
 
     if (!error && data.user) {
       // Sync user to Prisma database
       try {
-        console.log('[Auth] Syncing user to Prisma:', data.user.id)
         const metadata = data.user.user_metadata && typeof data.user.user_metadata === 'object' ? data.user.user_metadata : {}
         const firstName = typeof metadata.first_name === 'string' ? metadata.first_name.trim() : null
         const lastName = typeof metadata.last_name === 'string' ? metadata.last_name.trim() : null
@@ -63,8 +58,6 @@ export async function GET(request: Request) {
             updatedAt: new Date(),
           },
         })
-        
-        console.log('[Auth] Successfully synced user to Prisma')
       } catch (syncError) {
         console.error('[Auth] Error syncing user to database:', syncError)
       }

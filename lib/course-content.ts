@@ -1169,10 +1169,18 @@ export type CourseStructure = {
 }
 
 function toTitleCaseFromSlug(value: string) {
+  const acronymMap: Record<string, string> = {
+    ai: "AI",
+    ml: "ML",
+    llm: "LLM",
+    roi: "ROI",
+    api: "API",
+  }
+
   return value
     .split("-")
     .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part) => acronymMap[part] ?? (part.charAt(0).toUpperCase() + part.slice(1)))
     .join(" ")
 }
 

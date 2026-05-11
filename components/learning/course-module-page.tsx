@@ -10,7 +10,7 @@ import { ModuleQuiz } from "@/components/learning/module-quiz"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useProgress } from "@/hooks/use-progress"
-import { useModuleQuiz } from "@/hooks/use-module-quiz"
+import { useModuleQuiz } from "../../hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/course-content"
 import { getSectionLearningContents } from "@/lib/course-content"
@@ -37,6 +37,17 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz<string>(moduleId, quizKeys)
 
   const sectionParam = useMemo(() => searchParams?.get("section"), [searchParams])
+
+  const resolveActiveSection = () => {
+    if (sectionParam) {
+      const sectionFromParam = sections.find((section) => section.id === sectionParam)
+      if (sectionFromParam) {
+        return sectionFromParam
+      }
+    }
+
+    return currentSection
+  }
 
   useEffect(() => {
     if (sectionParam && sections.length > 0) {
@@ -66,10 +77,11 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   }
 
   const handleSectionComplete = () => {
-    if (!currentSection) return
+    const sectionToComplete = resolveActiveSection()
+    if (!sectionToComplete) return
 
-    markSectionComplete(moduleId, currentSection.id)
-    setCurrentPosition(moduleId, currentSection.id)
+    markSectionComplete(moduleId, sectionToComplete.id)
+    setCurrentPosition(moduleId, sectionToComplete.id)
 
     if (currentSectionIndex < totalSections - 1) {
       goToSection(currentSectionIndex + 1)

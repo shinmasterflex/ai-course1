@@ -65,7 +65,16 @@ function getRateLimitConfig(request: NextRequest): { keyPrefix: string; maxReque
   return null
 }
 
+function isSupabaseProtectedPath(pathname: string): boolean {
+  return (
+    pathname.startsWith('/course') ||
+    pathname.startsWith('/api/auth/sync-user') ||
+    pathname.startsWith('/api/progress')
+  )
+}
+
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
   const rateLimitConfig = getRateLimitConfig(request)
 
   if (rateLimitConfig) {
@@ -85,7 +94,21 @@ export async function proxy(request: NextRequest) {
   }
 
   if (!hasSupabasePublicEnv()) {
-    console.error('[Middleware] Supabase environment variables are missing. Authentication checks are skipped.')
+    console.error('[Middleware] Supabase environment variables are missing.')
+
+    if (isSupabaseProtectedPath(pathname)) {
+      if (pathname.startsWith('/api/')) {
+        return NextResponse.json(
+          { error: 'Authentication service is not configured.' },
+          { status: 500 }
+        )
+      }
+
+      const signInUrl = new URL('/sign-in', request.url)
+      signInUrl.searchParams.set('error', 'auth_config')
+      return NextResponse.redirect(signInUrl)
+    }
+
     return NextResponse.next({ request })
   }
 
@@ -99,14 +122,16 @@ export async function proxy(request: NextRequest) {
         return request.cookies.getAll()
       },
       setAll(cookiesToSet) {
+        const isSecureCookie = request.nextUrl.protocol === 'https:' || process.env.NODE_ENV === 'production'
+
         cookiesToSet.forEach(({ name, value, options }) => {
           supabaseResponse.cookies.set({
             name,
             value,
             ...options,
-            path: '/',
-            sameSite: 'lax',
-            secure: false,
+            path: options?.path ? options.path : '/',
+            sameSite: options?.sameSite ? options.sameSite : 'lax',
+            secure: typeof options?.secure === 'boolean' ? options.secure : isSecureCookie,
           })
         })
       },
@@ -118,14 +143,12 @@ export async function proxy(request: NextRequest) {
   const code = url.searchParams.get('code')
   
   if (code) {
-    console.log('[Middleware] Auth callback with code detected')
     // Exchange code for session - this will use the PKCE verifier cookie
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-    console.log('[Middleware] Code exchange result:', {
-      userId: data?.user?.id,
-      email: data?.user?.email,
-      error: error?.message
-    })
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+
+    if (error) {
+      console.error('[Middleware] Auth code exchange failed:', error.message)
+    }
   }
 
   // Refresh session if it exists. Missing refresh tokens on public pages are expected for anonymous users.
@@ -149,8 +172,6 @@ export async function proxy(request: NextRequest) {
       console.error('[Middleware] Unexpected error while resolving auth user:', error)
     }
   }
-
-  console.log('[Middleware] User after exchange:', user?.email ? user.email : 'none')
 
   return supabaseResponse
 }

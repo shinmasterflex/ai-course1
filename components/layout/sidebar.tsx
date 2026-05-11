@@ -28,7 +28,7 @@ export function Sidebar() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const { getCourseStructure, getCompletedSections, currentModule, currentSection, setCurrentPosition } = useProgress()
+  const { getCourseStructure, currentModule, currentSection, setCurrentPosition } = useProgress()
 
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isClient, setIsClient] = useState(false)
@@ -153,7 +153,6 @@ export function Sidebar() {
         <nav className="space-y-2">
           {courseStructure.modules.map((module) => {
             const isActiveModule = pathname?.includes(module.id)
-            const completedSectionIds = getCompletedSections(module.id)
 
             return (
               <div key={module.id}>
@@ -184,7 +183,7 @@ export function Sidebar() {
                   <div className="ml-4 mt-2 space-y-1">
                     {module.sections.map((section, index) => {
                       // Don't show completion or active status until client-side hydration is complete
-                      const isCompleted = isClient && completedSectionIds.includes(section.id)
+                      const isCompleted = isClient && section.completed
                       const defaultSectionId = module.sections[0]?.id
                       const isActive =
                         isClient &&

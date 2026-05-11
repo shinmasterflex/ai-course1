@@ -146,8 +146,6 @@ export async function POST(request: Request) {
   // Get the current authenticated user from SSR cookie session or Bearer token.
   const { user, error } = await resolveAuthenticatedUser(request)
   
-  console.log('[Sync API] User:', user?.email ? user.email : 'none', 'Error:', error?.message)
-  
   if (error || !user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
@@ -230,7 +228,7 @@ export async function POST(request: Request) {
       throw upsertErr
     }
 
-    console.log('[Sync API] Successfully synced user to Prisma:', user.id)
+    console.log('[Sync API] Successfully synced authenticated user.')
     return NextResponse.json({
       user: dbUser,
       hasAccess: Boolean(dbUser.paidAt),
