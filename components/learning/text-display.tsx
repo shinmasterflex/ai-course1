@@ -185,13 +185,13 @@ export function TextDisplay({
   )
 
   const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
-  const registryExplanation = sectionEntry?.explanation?.trim()
+  const registryExplanation = sectionEntry?.explanation1?.trim()
   const explainerAttributes = getExplainerAttributes(
     sectionEntry && registryExplanation
       ? {
           id: sectionEntry.id,
           type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
-          title: title?.trim() || subtitle?.trim() || sectionEntry.question?.trim() || explainerTitle,
+          title: title?.trim() || subtitle?.trim() || sectionEntry.question1?.trim() || explainerTitle,
           explanation: registryExplanation,
         }
       : {
