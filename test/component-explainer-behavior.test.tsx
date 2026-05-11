@@ -18,6 +18,50 @@ function panelParagraphs(container: HTMLElement) {
 }
 
 describe("CourseExplainerLayout behavior", () => {
+  it("keeps an id-based descriptor selected when hovering generic container descriptors", () => {
+    render(
+      <CourseExplainerLayout>
+        <section
+          data-explainer={JSON.stringify({
+            id: "module-1-test-entry",
+            type: "Concept explanation",
+            title: "Entry with questions",
+            explanation: "First explanation",
+            questions: [
+              { question: "Q1", explanation: "A1" },
+              { question: "Q2", explanation: "A2" },
+              { question: "Q3", explanation: "A3" },
+            ],
+          })}
+          data-testid="entry-descriptor"
+        >
+          Entry content
+        </section>
+
+        <div
+          data-explainer={JSON.stringify({
+            type: "Generic container",
+            title: "Container details",
+            explanation: "Generic explanation that should not override an entry descriptor.",
+          })}
+          data-testid="generic-descriptor"
+        >
+          Generic area
+        </div>
+      </CourseExplainerLayout>,
+    )
+
+    fireEvent.pointerOver(screen.getByTestId("entry-descriptor"))
+    expect(screen.getAllByText("Pick a question").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Q1").length).toBeGreaterThan(0)
+
+    fireEvent.pointerOver(screen.getByTestId("generic-descriptor"))
+
+    expect(screen.getAllByText("Pick a question").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Q1").length).toBeGreaterThan(0)
+    expect(screen.queryByText("Generic container")).not.toBeInTheDocument()
+  })
+
   it("does not switch panel content for navigation buttons", () => {
     render(
       <CourseExplainerLayout>
@@ -28,7 +72,7 @@ describe("CourseExplainerLayout behavior", () => {
     fireEvent.pointerOver(screen.getByRole("button", { name: "Next" }))
 
     expect(screen.queryByText("Action checkpoint")).not.toBeInTheDocument()
-    expect(screen.getAllByText("Learning support").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Explanation Panel").length).toBeGreaterThan(0)
   })
 
   it("shows action explanation for non-navigation buttons", () => {
@@ -41,7 +85,7 @@ describe("CourseExplainerLayout behavior", () => {
     fireEvent.pointerOver(screen.getByRole("button", { name: "Try Prompt" }))
 
     expect(screen.queryByText("Action checkpoint")).not.toBeInTheDocument()
-    expect(screen.getAllByText("Learning support").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Explanation Panel").length).toBeGreaterThan(0)
   })
 
   it("does not synthesize explanations for uncatalogued content cards", () => {
@@ -62,7 +106,6 @@ describe("CourseExplainerLayout behavior", () => {
 
     expect(paragraphs.length).toBeGreaterThanOrEqual(3)
     expect(screen.getAllByText("Explanation Panel").length).toBeGreaterThan(0)
-    expect(screen.getAllByText("Learning support").length).toBeGreaterThan(0)
   })
 
   it("keeps default panel content for multiple uncatalogued course cards", () => {
@@ -97,7 +140,7 @@ describe("CourseExplainerLayout behavior", () => {
     }
 
     expect(new Set(outputTexts).size).toBe(1)
-    expect(screen.getAllByText("Learning support").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Explanation Panel").length).toBeGreaterThan(0)
   })
 
   it("does not generate first-paragraph summaries for uncatalogued cards", () => {
@@ -129,7 +172,7 @@ describe("CourseExplainerLayout behavior", () => {
     fireEvent.pointerOver(screen.getByText(/training data matters/i))
 
     expect(screen.queryByText("Learning text")).not.toBeInTheDocument()
-    expect(screen.getAllByText("Concept explanation").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Explanation Panel").length).toBeGreaterThan(0)
 
     const [firstParagraph] = panelParagraphs(container)
     expect(firstParagraph).toMatch(/training data matters because models learn statistical patterns/i)

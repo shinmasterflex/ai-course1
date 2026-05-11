@@ -13,7 +13,7 @@ import { useProgress } from "@/hooks/use-progress"
 import { useModuleQuiz } from "../../hooks/use-module-quiz"
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
 import { moduleQuizData } from "@/lib/course-content"
-import { getSectionLearningContents } from "@/lib/course-content"
+import { getSectionCourseContentEntries } from "@/lib/course-content"
 
 type CourseModulePageProps = {
   moduleId: string
@@ -120,7 +120,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const nonQuizSectionsComplete = sections
     .filter((section) => section.id !== "module-quiz")
     .every((section) => completedSectionIdSet.has(section.id))
-  const sectionCards = getSectionLearningContents(moduleId, currentSection?.id)
+  const sectionEntries = getSectionCourseContentEntries(moduleId, currentSection?.id)
   const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
 
   return (
@@ -144,8 +144,15 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
                 scopeKey={currentScopeKey}
               />
 
-              {sectionCards.map((cardContent, index) => (
-                <TextDisplay key={`${currentSection.id}-card-${index}`} content={cardContent} scopeKey={currentScopeKey} />
+              {sectionEntries
+                .filter((entry) => typeof entry.content === "string" && entry.content.trim().length > 0)
+                .map((entry, index) => (
+                <TextDisplay
+                  key={`${entry.id}-${index}`}
+                  content={entry.content ?? ""}
+                  scopeKey={currentScopeKey}
+                  entryId={entry.id}
+                />
               ))}
 
               <div className="flex flex-wrap gap-3 pt-2">

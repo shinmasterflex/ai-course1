@@ -7,6 +7,7 @@
 "use client"
 
 import { getExplainerAttributes } from "@/components/learning/component-explainer"
+import { COURSE_CONTENT_REGISTRY } from "@/lib/course-content"
 import { getSectionCourseContentEntries } from "@/lib/course-content"
 import { cn } from "@/lib/utils"
 import { AlertCircle, CheckCircle2, Info } from "lucide-react"
@@ -23,6 +24,7 @@ interface TextDisplayProps {
   interactive?: boolean
   className?: string
   scopeKey?: string
+  entryId?: string
 }
 
 function parseBoldText(text: string): ReactNode[] {
@@ -151,6 +153,7 @@ export function TextDisplay({
   interactive = true,
   className,
   scopeKey,
+  entryId,
 }: TextDisplayProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -183,16 +186,28 @@ export function TextDisplay({
     () => (resolvedModuleId && resolvedSectionId ? getSectionCourseContentEntries(resolvedModuleId, resolvedSectionId, 1)[0] : undefined),
     [resolvedModuleId, resolvedSectionId],
   )
+  const resolvedEntry = entryId ? COURSE_CONTENT_REGISTRY[entryId] : sectionEntry
 
   const explainerTitle = deriveTextDisplayTitle(title, subtitle, content)
-  const registryExplanation = sectionEntry?.explanation1?.trim()
+  const registryExplanation = resolvedEntry?.explanation1?.trim()
+
+  const registryQuestions = resolvedEntry
+    ? [
+        { question: resolvedEntry.question1 ?? null, explanation: resolvedEntry.explanation1 ?? null },
+        { question: resolvedEntry.question2 ?? null, explanation: resolvedEntry.explanation2 ?? null },
+        { question: resolvedEntry.question3 ?? null, explanation: resolvedEntry.explanation3 ?? null },
+      ]
+        .filter((item): item is { question: string; explanation: string } => Boolean(item.question && item.explanation))
+    : undefined
+
   const explainerAttributes = getExplainerAttributes(
-    sectionEntry && registryExplanation
+    resolvedEntry && registryExplanation
       ? {
-          id: sectionEntry.id,
+          id: resolvedEntry.id,
           type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,
-          title: title?.trim() || subtitle?.trim() || sectionEntry.question1?.trim() || explainerTitle,
+          title: title?.trim() || subtitle?.trim() || resolvedEntry.question1?.trim() || explainerTitle,
           explanation: registryExplanation,
+          questions: registryQuestions,
         }
       : {
           type: variant === "default" ? "Concept explanation" : `${variant} emphasizer`,

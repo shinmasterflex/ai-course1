@@ -67,6 +67,7 @@ export function getExplainerAttributes(descriptor: ExplainerDescriptor) {
     type: compactText(descriptor.type, 40),
     title: compactText(descriptor.title, 90),
     explanation,
+    questions: descriptor.questions,
   }
 
   return {
@@ -169,7 +170,6 @@ function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescript
             <Sparkles className="h-3.5 w-3.5 text-brand-orange" />
             Explanation Panel
           </div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">{descriptor.type}</p>
           {hasQuestionChoices ? (
             <div className="space-y-2">
               <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/80">Pick a question</p>
@@ -223,6 +223,12 @@ export function CourseExplainerLayout({ children }: { children: ReactNode }) {
     }
 
     const descriptor = resolveDescriptor(target)
+
+    // Keep card-specific explanations sticky until another card-specific target is hovered.
+    if (selectedDescriptor.id && descriptor && !descriptor.id) {
+      return
+    }
+
     const descriptorSignature = descriptor
       ? `${descriptor.id ? descriptor.id : descriptor.type}:${descriptor.title}:${(descriptor.explanation ?? "").slice(0, 80)}`
       : ""
