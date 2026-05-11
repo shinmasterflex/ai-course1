@@ -220,12 +220,40 @@ export async function POST(request: Request) {
     } catch (upsertErr: unknown) {
       // A concurrent request claimed this session between our findFirst check and the upsert.
       if (upsertErr instanceof Prisma.PrismaClientKnownRequestError && upsertErr.code === 'P2002') {
-        return NextResponse.json(
-          { error: 'Payment session is already linked to another account.' },
-          { status: 409 },
-        )
+        // Distinguish between session ID conflict vs email conflict
+        const conflictTarget = Array.isArray(upsertErr.meta?.target) ? upsertErr.meta.target : []
+        if (conflictTarget.includes('stripeCheckoutSessionId')) {
+          // Session was claimed by another user during race window
+          const sessionOwner = await prisma.users.findFirst({
+            where: { stripeCheckoutSessionId: sessionId },
+            select: { id: true },
+          })
+          if (sessionOwner?.id !== user.id) {
+            // Confirmed: another user owns this session
+            return NextResponse.json(
+              { error: 'Payment session is already linked to another account.' },
+              { status: 409 },
+            )
+          }
+          // Edge case: we own the session, query succeeded anyway (idempotent)
+          dbUser = await prisma.users.findUnique({
+            where: { id: user.id },
+          })
+          if (!dbUser) {
+            return NextResponse.json({ error: 'Failed to sync user' }, { status: 500 })
+          }
+        } else if (conflictTarget.includes('email')) {
+          // Email already linked to another account (shouldn't happen in sync-user)
+          return NextResponse.json(
+            { error: 'Email is already linked to another account.' },
+            { status: 409 },
+          )
+        } else {
+          throw upsertErr
+        }
+      } else {
+        throw upsertErr
       }
-      throw upsertErr
     }
 
     console.log('[Sync API] Successfully synced authenticated user.')

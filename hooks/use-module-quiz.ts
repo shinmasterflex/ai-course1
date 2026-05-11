@@ -1,7 +1,7 @@
 /**
  * USE MODULE QUIZ HOOK
  * Centralized quiz state management for module assessments.
- * Persists quiz results to Supabase.
+ * Persists quiz results to Supabase with unload protection.
  */
 
 import { useEffect, useMemo, useState } from "react"
@@ -21,6 +21,7 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
 
   const [quizResults, setQuizResults] = useState<Record<T, boolean>>(initialResults)
   const [isHydrated, setIsHydrated] = useState(false)
+  const [pendingSave, setPendingSave] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     let isActive = true
@@ -63,10 +64,54 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
       return
     }
 
-    void saveQuizResults(moduleId, quizResults).catch((error) => {
-      console.error(`[useModuleQuiz] Failed to save quiz for ${moduleId}:`, error)
-    })
+    // Debounce quiz saves (1s)
+    if (pendingSave) {
+      clearTimeout(pendingSave)
+    }
+
+    const timeout = setTimeout(() => {
+      void saveQuizResults(moduleId, quizResults).catch((error) => {
+        console.error(`[useModuleQuiz] Failed to save quiz for ${moduleId}:`, error)
+      })
+    }, 1000)
+
+    setPendingSave(timeout)
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
   }, [isHydrated, moduleId, quizResults])
+
+  // Flush quiz results on page unload
+  useEffect(() => {
+    const handler = async () => {
+      if (pendingSave) {
+        clearTimeout(pendingSave)
+        setPendingSave(null)
+      }
+      
+      // Attempt one final save on page close
+      try {
+        await saveQuizResults(moduleId, quizResults)
+      } catch (error) {
+        console.warn(`[useModuleQuiz] Failed to flush quiz results on page close:`, error)
+      }
+    }
+
+    if (typeof window === "undefined") {
+      return
+    }
+
+    window.addEventListener("pagehide", handler)
+    window.addEventListener("beforeunload", handler)
+
+    return () => {
+      window.removeEventListener("pagehide", handler)
+      window.removeEventListener("beforeunload", handler)
+    }
+  }, [moduleId, quizResults, pendingSave])
 
   const handleQuizComplete = (quizKey: T, correct: boolean) => {
     setQuizResults((prev) => ({

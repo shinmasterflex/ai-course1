@@ -44,7 +44,7 @@ async function upsertStateRow(table: string, userId: string, payload: Record<str
   const { error } = await supabase.from(table).upsert(payload, { onConflict })
 
   if (error) {
-    throw error
+    throw new Error(`[Supabase] ${table} upsert failed: ${error.message}`)
   }
 }
 
@@ -100,7 +100,9 @@ export async function loadCourseProgressState(): Promise<CourseProgressState | n
 
 export async function saveCourseProgressState(state: CourseProgressState): Promise<void> {
   const userId = await getAuthenticatedUserId()
-  if (!userId) return
+  if (!userId) {
+    throw new Error("[Auth] Cannot save course progress: user not authenticated")
+  }
   await upsertStateRow(
     COURSE_TABLE,
     userId,
@@ -123,7 +125,9 @@ export async function loadSectionProgressState(): Promise<SectionProgressState |
 
 export async function saveSectionProgressState(state: SectionProgressState): Promise<void> {
   const userId = await getAuthenticatedUserId()
-  if (!userId) return
+  if (!userId) {
+    throw new Error("[Auth] Cannot save progress: user not authenticated")
+  }
   await upsertStateRow(
     SECTION_TABLE,
     userId,
@@ -165,7 +169,9 @@ export async function loadQuizResults(moduleId: string): Promise<QuizResultsStat
 
 export async function saveQuizResults(moduleId: string, results: QuizResultsState): Promise<void> {
   const userId = await getAuthenticatedUserId()
-  if (!userId) return
+  if (!userId) {
+    throw new Error("[Auth] Cannot save quiz results: user not authenticated")
+  }
 
   const completed = Object.values(results).every((value) => value === true)
   const supabase = createClient()
@@ -182,7 +188,7 @@ export async function saveQuizResults(moduleId: string, results: QuizResultsStat
   )
 
   if (error) {
-    throw error
+    throw new Error(`[Supabase] Quiz results save failed for module ${moduleId}: ${error.message}`)
   }
 }
 
