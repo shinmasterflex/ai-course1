@@ -135,8 +135,10 @@ class GlobalProgressManager {
     if (!savedProgress || typeof savedProgress !== "object") return
 
     const snapshot = savedProgress as Record<string, any>
-    const courseSnapshot = snapshot.courseStructure && typeof snapshot.courseStructure === "object" ? snapshot.courseStructure : snapshot
-    const modulesData = courseSnapshot.modules
+    const courseSnapshot = snapshot.courseStructure
+    if (!courseSnapshot || typeof courseSnapshot !== "object") return
+
+    const modulesData = (courseSnapshot as { modules?: unknown }).modules
 
     if (typeof snapshot.currentModule === "string" || snapshot.currentModule === null) {
       this.currentModule = snapshot.currentModule
@@ -147,21 +149,17 @@ class GlobalProgressManager {
     }
 
     if (Array.isArray(modulesData)) {
-      const savedModulesBySlug = new Map<string, any>()
       const savedModulesById = new Map<string, any>()
 
       modulesData.forEach((savedModule) => {
         if (!savedModule || typeof savedModule !== "object") return
-        if (typeof savedModule.slug === "string") {
-          savedModulesBySlug.set(savedModule.slug, savedModule)
-        }
         if (typeof savedModule.id === "string") {
           savedModulesById.set(savedModule.id, savedModule)
         }
       })
 
       courseStructure.modules.forEach((module) => {
-        const savedModule = savedModulesBySlug.get(module.slug) ? savedModulesBySlug.get(module.slug) : savedModulesById.get(module.id)
+        const savedModule = savedModulesById.get(module.id)
         if (!savedModule) return
 
         if (typeof savedModule.status === "string") {
@@ -198,37 +196,6 @@ class GlobalProgressManager {
       return
     }
 
-    if (!modulesData || typeof modulesData !== "object") return
-
-    const normalizedModulesData = modulesData as Record<string, any>
-
-    courseStructure.modules.forEach((module) => {
-      const savedModule = normalizedModulesData[module.slug]
-
-      if (savedModule) {
-        module.status = typeof savedModule.status === "string" ? savedModule.status : "not-started"
-
-        const rawCompletionRate = typeof savedModule.completionRate === "number" && !isNaN(savedModule.completionRate)
-          ? savedModule.completionRate
-          : 0
-        module.completionRate = Math.min(Math.max(rawCompletionRate, 0), 100)
-
-        const hasAnyCompletedSection = module.sections.some((section) => section.completed)
-        const targetCompletedSections = Math.max(
-          0,
-          Math.min(
-            module.sections.length,
-            Math.round((module.completionRate / 100) * module.sections.length),
-          ),
-        )
-
-        if (!hasAnyCompletedSection && targetCompletedSections > 0) {
-          module.sections.forEach((section, index) => {
-            section.completed = index < targetCompletedSections
-          })
-        }
-      }
-    })
   }
 
   setCurrentPosition(moduleId: string, sectionId: string) {

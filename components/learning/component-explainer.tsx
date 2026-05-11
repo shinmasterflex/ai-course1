@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, type PointerEvent, type ReactNode } from "react"
+import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react"
 import { Blocks, Clock3, Layers3, MousePointerClick, Sparkles } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { getComponentExplanation } from "@/lib/course-content"
@@ -10,6 +10,10 @@ export type ExplainerDescriptor = {
   type: string
   title: string
   explanation?: string
+  questions?: Array<{
+    question: string
+    explanation: string
+  }>
   summary?: string
   details?: string[]
   interaction?: string
@@ -94,6 +98,13 @@ function parseDescriptor(value: string | null) {
       type: parsed.type,
       title: parsed.title,
       explanation: parsed.explanation,
+      questions: Array.isArray(parsed.questions)
+        ? parsed.questions
+            .filter(
+              (item): item is { question: string; explanation: string } =>
+                Boolean(item && typeof item === "object" && typeof item.question === "string" && typeof item.explanation === "string"),
+            )
+        : undefined,
     } satisfies ExplainerDescriptor
   } catch {
     return null
@@ -125,6 +136,7 @@ function resolveDescriptor(target: HTMLElement | null) {
           type: customExplanation.id.substring(0, customExplanation.id.indexOf("-", 2)), // Extract module prefix
           title: customExplanation.question,
           explanation: customExplanation.explanation,
+          questions: customExplanation.questions,
         } satisfies ExplainerDescriptor)
       }
     }
@@ -135,7 +147,15 @@ function resolveDescriptor(target: HTMLElement | null) {
 }
 
 function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescriptor; history: ExplainerDescriptor[] }) {
-  const explanationText = descriptor.explanation ?? ""
+  const hasQuestionChoices = (descriptor.questions?.length ?? 0) > 0
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0)
+
+  useEffect(() => {
+    setSelectedQuestionIndex(0)
+  }, [descriptor.id, descriptor.title])
+
+  const selectedQuestion = hasQuestionChoices ? descriptor.questions?.[selectedQuestionIndex] : null
+  const explanationText = selectedQuestion?.explanation ?? descriptor.explanation ?? ""
   const paragraphs = explanationText
     .split("\n\n")
     .map((paragraph) => paragraph.trim())
@@ -150,6 +170,31 @@ function ExplanationPanelContent({ descriptor }: { descriptor: ExplainerDescript
             Explanation Panel
           </div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">{descriptor.type}</p>
+          {hasQuestionChoices ? (
+            <div className="space-y-2">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/80">Pick a question</p>
+              <div className="grid gap-2">
+                {descriptor.questions?.map((item, index) => {
+                  const isActive = index === selectedQuestionIndex
+                  return (
+                    <button
+                      key={`${descriptor.id ?? descriptor.title}-question-${index}`}
+                      type="button"
+                      onClick={() => setSelectedQuestionIndex(index)}
+                      className={[
+                        "rounded-lg border px-3 py-2 text-left text-xs leading-relaxed transition-colors",
+                        isActive
+                          ? "border-brand-indigo/40 bg-brand-indigo/10 text-foreground"
+                          : "border-border bg-background/70 text-muted-foreground hover:border-brand-orange/40 hover:text-foreground",
+                      ].join(" ")}
+                    >
+                      {item.question}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">

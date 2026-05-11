@@ -28,30 +28,11 @@ export class SaveProgressError extends Error {
   }
 }
 
-function normalizeProgress(progress: GlobalProgress): GlobalProgress {
-  return {
-    ...progress,
-    modules: progress.modules ?? {},
-  }
-}
-
 function initializeProgress(): GlobalProgress {
   return {
     modules: {},
     version: "1.0",
   }
-}
-
-function normalizeSectionState(state: unknown): GlobalProgress {
-  if (!state || typeof state !== "object") {
-    return initializeProgress()
-  }
-
-  const typedState = state as Partial<GlobalProgress>
-  return normalizeProgress({
-    modules: typedState.modules ?? {},
-    version: typeof typedState.version === "string" ? typedState.version : "1.0",
-  })
 }
 
 /**
@@ -91,7 +72,7 @@ async function mergeProgressWithServer(localProgress: GlobalProgress): Promise<G
       return localProgress
     }
 
-    const normalizedServer = normalizeSectionState(serverState)
+    const normalizedServer = serverState as GlobalProgress
     const merged: GlobalProgress = {
       modules: {},
       version: "1.0",
@@ -146,8 +127,8 @@ export async function loadProgress(): Promise<GlobalProgress> {
     try {
       const savedState = await loadSectionProgressState()
 
-      if (savedState) {
-        cachedProgress = normalizeSectionState(savedState)
+      if (savedState && savedState.modules && typeof savedState.version === "string") {
+        cachedProgress = savedState as GlobalProgress
         return cachedProgress
       }
     } catch (error) {
@@ -166,8 +147,7 @@ export async function loadProgress(): Promise<GlobalProgress> {
 export async function saveProgress(progress: GlobalProgress): Promise<void> {
   if (typeof window === "undefined") return
 
-  const normalizedProgress = normalizeProgress(progress)
-  cachedProgress = normalizedProgress
+  cachedProgress = progress
 
   if (pendingSave) {
     clearTimeout(pendingSave)
@@ -177,7 +157,7 @@ export async function saveProgress(progress: GlobalProgress): Promise<void> {
     pendingSave = setTimeout(async () => {
       try {
         // Merge with server state before persisting to prevent cross-tab data loss
-        const mergedProgress = await mergeProgressWithServer(normalizedProgress)
+        const mergedProgress = await mergeProgressWithServer(progress)
         cachedProgress = mergedProgress
         
         await saveSectionProgressStatWithRetry(mergedProgress)
