@@ -1,4 +1,4 @@
-# Executive AI Strategy Program Blueprint
+# Beginner's AI Course Blueprint
 
 ## Program Positioning
 A business leader's field guide to AI adoption.
@@ -78,7 +78,7 @@ Sections and lesson summaries:
    - Quick risk review before pilots.
 11. Landscape Scoring Guide
    - Compare options with weighted criteria.
-12. Leadership Checkpoint
+12. Knowledge Check
    - Defend a shortlist recommendation.
 
 Resources and checklists:
@@ -345,7 +345,7 @@ Credibility strip:
 - Real-world examples
 
 Primary CTA options:
-- Start Executive Program
+- Start Beginner's AI Course
 - Build My AI Roadmap
 - Enter the AI Strategy Program
 
@@ -361,13 +361,13 @@ Replace beginner language with implementation language:
 - Learning journey -> Strategic roadmap
 - Beginner friendly -> Executive-ready
 - Hands-on activities -> Decision frameworks and scorecards
-- Module quiz -> Leadership checkpoint
+- Module quiz -> Knowledge check
 - Progress dashboard -> Strategic progress dashboard
 
 Navigation and feature labels:
-- Course -> Executive Program
+- Course -> Beginner's AI Course
 - Try Module 0 -> Preview Module 0
-- Start Learning -> Start Executive Program
+- Start Learning -> Start Beginner's AI Course
 - Open Course -> Enter the Program
 
 Module card microcopy pattern:

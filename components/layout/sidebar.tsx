@@ -4,7 +4,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { ChevronDown, BookOpen, CheckCircle2, Circle, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useProgress } from "@/hooks/use-progress"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase"
 
 function getDisplayName(user: { email?: string | null; user_metadata?: Record<string, unknown> } | null) {
@@ -75,15 +75,10 @@ export function Sidebar() {
   }
 
   const courseStructure = getCourseStructure()
-  const completedSectionIdsByModule = useMemo(() => {
-    const completedMap = new Map<string, Set<string>>()
-
-    courseStructure.modules.forEach((module) => {
-      completedMap.set(module.id, new Set(getCompletedSections(module.id)))
-    })
-
-    return completedMap
-  }, [courseStructure, getCompletedSections, currentModule, currentSection])
+  const completedSectionIdsByModule = new Map<string, Set<string>>()
+  courseStructure.modules.forEach((module) => {
+    completedSectionIdsByModule.set(module.id, new Set(getCompletedSections(module.id)))
+  })
 
   const activeSectionFromUrl = searchParams?.get("section")
   const sidebarAttributes = getExplainerAttributes({
@@ -140,7 +135,7 @@ export function Sidebar() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold flex items-center gap-2 font-heading">
             <BookOpen className="h-5 w-5 text-brand-green" />
-            Program Menu
+            Course Menu
           </h2>
           <button
             {...getExplainerAttributes({

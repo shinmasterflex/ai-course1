@@ -1573,7 +1573,7 @@ const SECTION_TITLES: Record<string, Record<string, string>> = {
     "myths-and-reality": "Myths vs Reality",
     agents: "Agents and Automation",
     "future-frontiers": "Current Frontiers",
-    "module-quiz": "Leadership Checkpoint",
+    "module-quiz": "Knowledge Check",
   },
   "module-2": {
     prompting: "Prompt Engineering",
@@ -1581,7 +1581,7 @@ const SECTION_TITLES: Record<string, Record<string, string>> = {
     "stack-management": "AI Stack Management",
     "people-and-skills": "Workforce and Skills",
     "agent-deployment": "Agent Deployment Readiness",
-    "module-quiz": "Leadership Checkpoint",
+    "module-quiz": "Knowledge Check",
   },
   "module-3": {
     overview: "Adoption Overview",
@@ -1589,14 +1589,14 @@ const SECTION_TITLES: Record<string, Record<string, string>> = {
     "data-readiness": "Data Foundation and Readiness",
     "governance-and-risk": "Governance, Risk, and Responsible AI",
     "adoption-roadmap": "Adoption and Scale Roadmap",
-    "module-quiz": "Leadership Checkpoint",
+    "module-quiz": "Knowledge Check",
   },
   "module-4": {
     overview: "Value Measurement Overview",
     "roi-fundamentals": "ROI and Business Case Fundamentals",
     metrics: "Effectiveness and KPI Metrics",
     "strategic-positioning": "Strategic Positioning and Long-Term Value",
-    "module-quiz": "Leadership Checkpoint",
+    "module-quiz": "Knowledge Check",
   },
 }
 

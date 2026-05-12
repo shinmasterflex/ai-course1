@@ -283,7 +283,9 @@ class GlobalProgressManager {
       console.error("[Progress] Failed to sync to Supabase:", error)
       // Don't roll back state that belongs to the new session.
       if (this.initGeneration !== generation) return
-      this.rollbackProgressState()
+      // Keep optimistic progress in memory so section completion remains stable in the UI.
+      this.lastStableSnapshot = this.createSnapshot()
+      this.pendingRollbackSnapshot = null
     }
   }
 

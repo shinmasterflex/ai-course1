@@ -1,6 +1,6 @@
 /**
  * DASHBOARD PAGE
- * Executive AI strategy course dashboard
+ * Beginner AI course dashboard
  */
 
 "use client"
@@ -71,7 +71,7 @@ export default function DashboardPage() {
             <span className="text-brand-green">Strategic</span> <span className="text-brand-orange">AI</span> <span className="text-brand-indigo">Progress</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Follow the executive curriculum across landscape mapping, system optimization, adoption governance, and ROI.
+            Follow the beginner-friendly curriculum across AI foundations, practical workflows, adoption, and measurable value.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-3xl font-bold text-brand-orange">{mounted ? completionRate : 0}%</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {!mounted || completionRate === 0 ? "Start the program today" : completionRate === 100 ? "Program complete" : "Keep executing"}
+                {!mounted || completionRate === 0 ? "Start learning today" : completionRate === 100 ? "Course complete" : "Keep learning"}
               </p>
             </CardContent>
           </Card>
@@ -106,8 +106,8 @@ export default function DashboardPage() {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-brand-indigo">Program Modules</CardTitle>
-              <CardDescription>Navigate the updated program modules and continue where you left off.</CardDescription>
+              <CardTitle className="text-xl text-brand-indigo">Course Modules</CardTitle>
+              <CardDescription>Navigate the updated course modules and continue where you left off.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {courseModules.map((module) => {

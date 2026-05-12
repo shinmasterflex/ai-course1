@@ -93,15 +93,15 @@ export function Header() {
           <Button
             {...getExplainerAttributes({
               type: "Navigation",
-              title: "Strategy Hub",
-              summary: "This button returns to the program progress hub.",
-              details: ["Use it to navigate back to the main program overview."],
-              interaction: "Click Strategy Hub to return to the program dashboard.",
+              title: "Course Dashboard",
+              summary: "This button returns to the course progress dashboard.",
+              details: ["Use it to navigate back to the main course overview."],
+              interaction: "Click Course Dashboard to return to the course dashboard.",
             })}
             asChild
             className="bg-brand-green hover:bg-[#143d31] text-white"
           >
-            <Link href="/course">Strategy Hub</Link>
+            <Link href="/course">Course Dashboard</Link>
           </Button>
         </div>
       </div>
