@@ -1,6 +1,6 @@
 /**
  * DASHBOARD PAGE
- * Introduction to AI beginner course dashboard
+ * Executive AI strategy course dashboard
  */
 
 "use client"
@@ -14,20 +14,22 @@ import { Button } from "@/components/ui/button"
 import { ProgressBar } from "@/components/learning/progress-bar"
 import { Lightbulb, Brain, Zap, Lock, Workflow } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
+import { getCourseStructure } from "@/lib/course-content"
 import { cn } from "@/lib/utils"
 
-const MODULE_META = [
-  { id: "module-0", icon: Lightbulb, color: "brand-green",  label: "What is AI?",                  description: "Understand the basics: what AI is, how it works, and what it can do." },
-  { id: "module-1", icon: Brain,     color: "brand-orange", label: "AI Tools and Models",         description: "Explore different types of AI models and tools used today." },
-  { id: "module-2", icon: Zap,       color: "brand-green",  label: "Practical AI Use Cases",      description: "Learn real-world examples of how AI solves everyday problems." },
-  { id: "module-3", icon: Workflow,  color: "brand-green",  label: "Getting Started with AI",    description: "Hands-on tips for using AI tools and prompts effectively." },
-  { id: "module-4", icon: Lock,      color: "brand-orange", label: "AI Safety and Ethics",       description: "Understand responsible AI use and important considerations." },
-]
+const MODULE_VISUALS = {
+  "module-0": { icon: Lightbulb, color: "brand-green" },
+  "module-1": { icon: Brain, color: "brand-orange" },
+  "module-2": { icon: Zap, color: "brand-green" },
+  "module-3": { icon: Workflow, color: "brand-green" },
+  "module-4": { icon: Lock, color: "brand-orange" },
+} as const
 
 export default function DashboardPage() {
   const router = useRouter()
   const progress = useProgress()
   const [mounted, setMounted] = useState(false)
+  const courseModules = getCourseStructure().modules
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -43,21 +45,16 @@ export default function DashboardPage() {
   const getStatus = (completed: number, total: number) =>
     completed === 0 ? "Not Started" : completed === total ? "Completed" : "In Progress"
 
-  const getModuleNumber = (moduleId: string) => {
-    const match = moduleId.match(/module-(\d+)/)
-    return match ? Number.parseInt(match[1], 10) : moduleId
-  }
-
-  const allModuleProgress = MODULE_META.map(({ id }) => getModuleProgress(id))
+  const allModuleProgress = courseModules.map((module) => getModuleProgress(module.id))
   const totalCompleted = allModuleProgress.reduce((sum, p) => sum + p.completed, 0)
   const totalSections = allModuleProgress.reduce((sum, p) => sum + p.total, 0)
   const completionRate = totalSections > 0 ? Math.round((totalCompleted / totalSections) * 100) : 0
   const dashboardExplainerAttributes = getExplainerAttributes({
     type: "Course dashboard",
-    title: "Introduction to AI dashboard",
-    summary: "Welcome to your AI learning journey. Track your progress through beginner-friendly modules and learn at your own pace.",
+    title: "AI strategy dashboard",
+    summary: "Track your progress through practical AI execution modules covering adoption, governance, and measurable value.",
     details: [
-      `You've completed ${completionRate}% of the course across ${MODULE_META.length} modules.`,
+      `You've completed ${completionRate}% of the course across ${courseModules.length} modules.`,
       "Start with any module or continue where you left off.",
     ],
     interaction: "Select a module to begin learning or continue your progress.",
@@ -71,10 +68,10 @@ export default function DashboardPage() {
         {/* Welcome */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">
-            <span className="text-brand-green">Learn</span> <span className="text-brand-orange">AI</span> <span className="text-brand-indigo">Basics</span>
+            <span className="text-brand-green">Strategic</span> <span className="text-brand-orange">AI</span> <span className="text-brand-indigo">Progress</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            A beginner's guide to artificial intelligence. Learn what AI is, how it works, and how to use it.
+            Follow the executive curriculum across landscape mapping, system optimization, adoption governance, and ROI.
           </p>
         </div>
 
@@ -87,7 +84,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-3xl font-bold text-brand-orange">{mounted ? completionRate : 0}%</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {!mounted || completionRate === 0 ? "Start learning today" : completionRate === 100 ? "🎉 Course complete!" : "Keep going!"}
+                {!mounted || completionRate === 0 ? "Start the program today" : completionRate === 100 ? "Program complete" : "Keep executing"}
               </p>
             </CardContent>
           </Card>
@@ -98,7 +95,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-brand-green">
-                {mounted ? allModuleProgress.filter((p) => p.completed === p.total).length : 0} / {MODULE_META.length}
+                {mounted ? allModuleProgress.filter((p) => p.completed === p.total).length : 0} / {courseModules.length}
               </div>
               <p className="text-xs text-muted-foreground mt-1">modules finished</p>
             </CardContent>
@@ -109,26 +106,27 @@ export default function DashboardPage() {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-brand-indigo">Course Modules</CardTitle>
-              <CardDescription>Learn AI fundamentals at your own pace. Start with any module.</CardDescription>
+              <CardTitle className="text-xl text-brand-indigo">Program Modules</CardTitle>
+              <CardDescription>Navigate the updated program modules and continue where you left off.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {MODULE_META.map((meta, modIndex) => {
-                const { completed, total } = getModuleProgress(meta.id)
+              {courseModules.map((module) => {
+                const { completed, total } = getModuleProgress(module.id)
                 const status = getStatus(completed, total)
-                const Icon = meta.icon
+                const visual = MODULE_VISUALS[module.id as keyof typeof MODULE_VISUALS] ?? { icon: Workflow, color: "brand-indigo" }
+                const Icon = visual.icon
 
                 return (
-                  <Card key={meta.id} className="border hover:shadow-md transition-shadow">
+                  <Card key={module.id} className="border hover:shadow-md transition-shadow">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className={cn("p-2 rounded-lg", `bg-${meta.color}/10`)}>
-                            <Icon className={cn("h-5 w-5", `text-${meta.color}`)} />
+                          <div className={cn("p-2 rounded-lg", `bg-${visual.color}/10`)}>
+                            <Icon className={cn("h-5 w-5", `text-${visual.color}`)} />
                           </div>
                           <div>
-                            <CardTitle className="text-lg">Module {getModuleNumber(meta.id)}: {meta.label}</CardTitle>
-                            <CardDescription>{meta.description}</CardDescription>
+                            <CardTitle className="text-lg">{module.title}</CardTitle>
+                            <CardDescription>{module.description ?? "Practical AI implementation lessons for leadership teams."}</CardDescription>
                           </div>
                         </div>
                         <span className={cn(
@@ -151,7 +149,7 @@ export default function DashboardPage() {
                           size="sm"
                           variant={status === "Not Started" ? "default" : "outline"}
                           className={cn(status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white")}
-                          onClick={() => router.push(`/course/${meta.id}`)}
+                          onClick={() => router.push(`/course/${module.id}`)}
                         >
                           {status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
                         </Button>

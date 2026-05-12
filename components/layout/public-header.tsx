@@ -21,7 +21,7 @@ export function PublicHeader() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Button asChild variant="outline">
-            <Link href="/course">AI Adoption Beginner's Course</Link>
+            <Link href="/course">Executive AI Strategy Program</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/demo">Preview Module 0</Link>

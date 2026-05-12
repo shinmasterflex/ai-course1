@@ -1,6 +1,6 @@
 /**
  * PUBLIC HOMEPAGE
- * Landing page for the AI Adoption Beginner's Course
+ * Landing page for the executive AI strategy course
  */
 
 "use client"
@@ -30,24 +30,24 @@ export default function HomePage() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-green/30 bg-white/80 px-4 py-2 text-sm font-semibold text-brand-indigo">
                 <Sparkles className="h-4 w-4 text-brand-orange" />
-                Beginner's AI Course
+                Executive AI Strategy Course
               </div>
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
-                <span className="text-brand-indigo">Learn AI</span>{" "}
-                <span className="brand-wordmark text-brand-orange">the Right Way</span>
+                <span className="text-brand-indigo">Lead AI</span>{" "}
+                <span className="brand-wordmark text-brand-orange">with Clarity</span>
               </h1>
               <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
-                Understand artificial intelligence from the ground up. Perfect for beginners who want to learn what AI is, how it works, and how to use it responsibly.
+                Practical frameworks for leaders making AI decisions across tools, operations, governance, and ROI.
               </p>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/course">Start Learning</Link>
+                  <Link href="/course">Enter Executive Program</Link>
                 </Button>
               </div>
               <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">
                 <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> 5 Core Modules</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Hands-on Learning</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Learn at Your Pace</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Decision Frameworks</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Executive Pace</span>
               </div>
             </div>
 
@@ -56,28 +56,28 @@ export default function HomePage() {
                 <CardContent className="space-y-5 p-6 md:p-8">
                   <h3 className="text-2xl font-semibold text-brand-indigo">What You'll Learn</h3>
                   <p className="text-muted-foreground">
-                    Master the fundamentals of AI with clear explanations and practical examples.
+                    Build decision-ready AI capability with structured modules and practical implementation guidance.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">What is AI and how does it work?</span>
+                      <span className="text-sm">Navigate the AI landscape with operational clarity</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Different types of AI models and tools</span>
+                      <span className="text-sm">Optimize prompts, workflows, and your AI stack</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Real-world AI use cases</span>
+                      <span className="text-sm">Evaluate partners and reduce deployment risk</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">How to use AI tools effectively</span>
+                      <span className="text-sm">Build adoption roadmaps and governance controls</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">AI safety and responsible use</span>
+                      <span className="text-sm">Measure ROI and strategic business value</span>
                     </div>
                   </div>
                 </CardContent>
@@ -92,31 +92,31 @@ export default function HomePage() {
           <div className="grid gap-6 lg:grid-cols-3">
             <Card className="overflow-hidden border-brand-indigo/20 bg-white/90">
               <CardHeader>
-                <CardTitle className="text-brand-indigo">Beginner Friendly</CardTitle>
-                <CardDescription>No prior AI knowledge needed. We explain everything from the ground up.</CardDescription>
+                <CardTitle className="text-brand-indigo">Executive Ready</CardTitle>
+                <CardDescription>Built for operators and leaders making real AI decisions under business constraints.</CardDescription>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                Start with the fundamentals and build your understanding step by step.
+                Move from strategy to execution with frameworks you can apply immediately.
               </CardContent>
             </Card>
 
             <Card className="overflow-hidden border-brand-green/20 bg-white/90">
               <CardHeader>
-                <CardTitle className="text-brand-indigo">Learn by Doing</CardTitle>
-                <CardDescription>Practical lessons with real-world examples and hands-on exercises.</CardDescription>
+                <CardTitle className="text-brand-indigo">Decision Frameworks</CardTitle>
+                <CardDescription>Use structured scorecards, checkpoints, and implementation patterns.</CardDescription>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                Get practical skills you can use right away in your work and life.
+                Reduce guesswork when evaluating tools, partners, and rollout plans.
               </CardContent>
             </Card>
 
             <Card className="overflow-hidden border-brand-orange/20 bg-white/90">
               <CardHeader>
-                <CardTitle className="text-brand-indigo">Your Pace</CardTitle>
-                <CardDescription>Learn whenever and wherever you want. Complete modules at your own speed.</CardDescription>
+                <CardTitle className="text-brand-indigo">Outcome Focused</CardTitle>
+                <CardDescription>Designed around adoption, governance, and measurable business value.</CardDescription>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                No deadlines or time pressure. Learn at a pace that works for you.
+                Track progress through high-impact modules and leadership checkpoints.
               </CardContent>
             </Card>
           </div>
@@ -130,21 +130,20 @@ export default function HomePage() {
             <div className="text-center space-y-4">
               <h2 className="text-4xl font-bold text-brand-indigo">Course Structure</h2>
               <p className="text-xl text-muted-foreground">
-                Five beginner-friendly modules that build your AI knowledge from the ground up.
+                Five modules for strategic AI execution across assessment, adoption, and value realization.
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
               {modules.map((module) => {
-                const moduleNum = module.id.replace("module-", "");
-                const titles = ["What is AI?", "AI Tools and Models", "AI Use Cases", "Getting Started", "Safety & Ethics"];
-                const title = titles[parseInt(moduleNum)] || module.title;
+                const moduleNum = module.id.replace("module-", "")
+                const moduleLabel = module.title.includes(":") ? module.title.split(":").slice(1).join(":").trim() : module.title
                 
                 return (
                   <Card key={module.id} className="group overflow-hidden border-brand-green/20 hover:border-brand-orange/40 hover:shadow-md transition-all">
                     <CardHeader className="space-y-2">
                       <div className="text-sm font-semibold text-brand-orange">Module {moduleNum}</div>
-                      <CardTitle className="text-lg leading-snug text-brand-indigo">{title}</CardTitle>
+                      <CardTitle className="text-lg leading-snug text-brand-indigo">{moduleLabel}</CardTitle>
                       <CardDescription className="text-sm">
                         {module.sections.length} lessons
                       </CardDescription>
@@ -155,14 +154,14 @@ export default function HomePage() {
             </div>
 
             <div className="rounded-2xl border border-brand-orange/20 bg-gradient-to-r from-brand-green/10 via-white to-brand-orange/10 p-8 text-center">
-              <h3 className="text-2xl font-bold text-brand-indigo">Ready to Learn?</h3>
+              <h3 className="text-2xl font-bold text-brand-indigo">Ready to Execute?</h3>
               <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-                Start learning AI fundamentals today. Work through the modules at your own pace and master the basics.
+                Enter the program and build a durable AI operating approach for your organization.
               </p>
               <div className="mt-6 flex flex-col justify-center gap-4 sm:flex-row">
                 <Button asChild size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                   <Link href="/course" className="inline-flex items-center gap-2">
-                    Start Course
+                    Start Executive Program
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>

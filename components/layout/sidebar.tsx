@@ -140,7 +140,7 @@ export function Sidebar() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold flex items-center gap-2 font-heading">
             <BookOpen className="h-5 w-5 text-brand-green" />
-            Course Menu
+            Program Menu
           </h2>
           <button
             {...getExplainerAttributes({

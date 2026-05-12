@@ -170,7 +170,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
           {isModuleQuizSection && questions.length > 0 && (
             <div className="mt-10 space-y-5">
-              <h3 className="text-2xl font-semibold text-brand-indigo">Module checkpoint</h3>
+              <h3 className="text-2xl font-semibold text-brand-indigo">Leadership checkpoint</h3>
               <TextDisplay content="Use this checkpoint to validate what you learned before moving to the next module." />
               <ModuleQuiz
                 key={`${moduleId}-module-quiz`}
@@ -181,7 +181,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
               />
               {allQuizComplete ? (
                 <Card className="p-4 border-brand-green/30 bg-brand-green/10 text-sm text-brand-indigo">
-                  Checkpoint complete. You have validated readiness to apply this module in real business decisions.
+                  Checkpoint complete. You have validated readiness to apply this module in strategic decisions.
                 </Card>
               ) : null}
             </div>
