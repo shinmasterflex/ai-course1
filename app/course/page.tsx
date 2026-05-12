@@ -68,10 +68,10 @@ export default function DashboardPage() {
         {/* Welcome */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">
-            <span className="text-brand-green">Strategic</span> <span className="text-brand-orange">AI</span> <span className="text-brand-indigo">Progress</span>
+            <span className="text-brand-green">Overview of AI</span> <span className="text-brand-orange">for Business</span> <span className="text-brand-indigo">Leaders</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Follow the beginner-friendly curriculum across AI foundations, practical workflows, adoption, and measurable value.
+            Follow this course across AI foundations, practical workflows, adoption, and measurable value.
           </p>
         </div>
 

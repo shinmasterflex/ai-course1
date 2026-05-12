@@ -1,4 +1,4 @@
-# Beginner's AI Course Blueprint
+# Overview of AI for Business Leaders Blueprint
 
 ## Program Positioning
 A business leader's field guide to AI adoption.
@@ -345,7 +345,7 @@ Credibility strip:
 - Real-world examples
 
 Primary CTA options:
-- Start Beginner's AI Course
+- Start Overview of AI for Business Leaders
 - Build My AI Roadmap
 - Enter the AI Strategy Program
 
@@ -365,9 +365,9 @@ Replace beginner language with implementation language:
 - Progress dashboard -> Strategic progress dashboard
 
 Navigation and feature labels:
-- Course -> Beginner's AI Course
+- Course -> Overview of AI for Business Leaders
 - Try Module 0 -> Preview Module 0
-- Start Learning -> Start Beginner's AI Course
+- Start Learning -> Start Overview of AI for Business Leaders
 - Open Course -> Enter the Program
 
 Module card microcopy pattern:

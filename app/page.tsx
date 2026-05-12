@@ -30,7 +30,7 @@ export default function HomePage() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-green/30 bg-white/80 px-4 py-2 text-sm font-semibold text-brand-indigo">
                 <Sparkles className="h-4 w-4 text-brand-orange" />
-                Beginner's AI Course
+                Overview of AI for Business Leaders
               </div>
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
                 <span className="text-brand-indigo">Lead AI</span>{" "}
@@ -41,7 +41,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/course">Start Beginner's AI Course</Link>
+                  <Link href="/course">Start Overview of AI for Business Leaders</Link>
                 </Button>
               </div>
               <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">
@@ -161,7 +161,7 @@ export default function HomePage() {
               <div className="mt-6 flex flex-col justify-center gap-4 sm:flex-row">
                 <Button asChild size="lg" className="bg-brand-orange hover:bg-brand-orange/90 text-white">
                   <Link href="/course" className="inline-flex items-center gap-2">
-                    Start Beginner's AI Course
+                    Start Overview of AI for Business Leaders
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
