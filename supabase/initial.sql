@@ -1,33 +1,139 @@
--- Initial Supabase schema for persisted learning state.
--- Run this in the Supabase SQL editor before deploying the client-side persistence changes.
+-- ============================================================================
+-- AI Course Schema: Learning State Persistence
+-- ============================================================================
+-- 5-Module AI for Business Leaders Course
+--   Module 0 (The AI Shift): 3 sections + quiz
+--   Module 1 (AI Landscape & Agents): 9 sections + quiz
+--   Module 2 (Optimize Existing Systems): 6 sections + quiz
+--   Module 3 (Adopt New Systems): 6 sections + quiz
+--   Module 4 (Measure Business Value): 5 sections + quiz
+--
+-- Data Flow:
+--   user_course_enrollments (entry) → user_course_progress (aggregate)
+--   user_module_progress (module-level) + user_section_state (section-level)
+--   user_quiz_attempts (quiz history per module)
+-- ============================================================================
 
-CREATE TABLE IF NOT EXISTS public.user_course_progress_snapshots (
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  course_slug TEXT NOT NULL DEFAULT 'swift-course',
-  state JSONB NOT NULL DEFAULT '{}'::jsonb,
+-- ────────────────────────────────────────────────────────────────────────────
+-- 1. ENROLLMENTS & ACCESS CONTROL
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.user_course_enrollments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
+  course_slug TEXT NOT NULL DEFAULT 'ai-course',
+  has_paid BOOLEAN NOT NULL DEFAULT FALSE,
+  enrolled_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (user_id, course_slug)
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS public.user_section_progress_states (
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  state_key TEXT NOT NULL DEFAULT 'default',
-  state JSONB NOT NULL DEFAULT '{}'::jsonb,
+COMMENT ON TABLE public.user_course_enrollments IS
+  'Links users to course enrollments. Synced with Stripe payment status via users.paidAt.';
+COMMENT ON COLUMN public.user_course_enrollments.has_paid IS
+  'Reflects sync status with Stripe; primary source of truth is users.paidAt in Prisma DB.';
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 2. PROGRESS SUMMARIES
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.user_course_progress (
+  user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  course_slug TEXT NOT NULL DEFAULT 'ai-course',
+  current_module TEXT,
+  current_section TEXT,
+  modules_completed INTEGER DEFAULT 0,
+  total_modules INTEGER DEFAULT 5,
+  completion_percentage NUMERIC(5,2) DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (user_id, state_key)
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS public.user_module_quiz_results (
+COMMENT ON TABLE public.user_course_progress IS
+  'Aggregate course-level progress snapshot. Updated when user changes position.';
+COMMENT ON COLUMN public.user_course_progress.total_modules IS
+  'Always 5 for this course (Module 0 through Module 4). Included for future multi-course support.';
+COMMENT ON COLUMN public.user_course_progress.completion_percentage IS
+  'Calculated: (modules_completed / 5) * 100. Denormalized for quick dashboard queries.';
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 3. MODULE-LEVEL TRACKING
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.user_module_progress (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
-  results JSONB NOT NULL DEFAULT '{}'::jsonb,
-  completed BOOLEAN NOT NULL DEFAULT FALSE,
+  status TEXT NOT NULL DEFAULT 'not_started',
+  sections_completed INTEGER DEFAULT 0,
+  total_sections INTEGER,
+  quiz_passed BOOLEAN DEFAULT FALSE,
+  quiz_score INTEGER,
+  quiz_attempts INTEGER DEFAULT 0,
+  started_at TIMESTAMPTZ,
+  completed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (user_id, module_id)
+  UNIQUE(user_id, module_id)
 );
+
+COMMENT ON TABLE public.user_module_progress IS
+  'Per-module progress: status, section completion, quiz results.';
+COMMENT ON COLUMN public.user_module_progress.status IS
+  'not_started | in_progress | completed. Updated when sections are marked complete or quiz passed.';
+COMMENT ON COLUMN public.user_module_progress.total_sections IS
+  'Total sections in module (varies by module: M0=3, M1=9, M2=6, M3=6, M4=5). Set on initial record creation, used for progress calculations.';
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 4. SECTION-LEVEL STATE
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.user_section_state (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  module_id TEXT NOT NULL,
+  section_id TEXT NOT NULL,
+  is_completed BOOLEAN DEFAULT FALSE,
+  time_spent_seconds INTEGER DEFAULT 0,
+  last_viewed_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(user_id, module_id, section_id)
+);
+
+COMMENT ON TABLE public.user_section_state IS
+  'Section-level tracking: completion, engagement (time spent), last access time.';
+COMMENT ON COLUMN public.user_section_state.time_spent_seconds IS
+  'Cumulative time user spent on section. Can be approximated from timestamps if not explicitly tracked.';
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 5. QUIZ SUBMISSIONS & RESULTS
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.user_quiz_attempts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  module_id TEXT NOT NULL,
+  attempt_number INTEGER NOT NULL DEFAULT 1,
+  score INTEGER NOT NULL,
+  total_questions INTEGER NOT NULL,
+  passed BOOLEAN NOT NULL DEFAULT FALSE,
+  answers JSONB NOT NULL DEFAULT '{}'::jsonb,
+  attempted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE public.user_quiz_attempts IS
+  'Complete history of quiz attempts per module. Each row = one submission.';
+COMMENT ON COLUMN public.user_quiz_attempts.answers IS
+  'JSON: { question_key: selected_option_id, ... }. Allows audit trail and review.';
+COMMENT ON COLUMN public.user_quiz_attempts.passed IS
+  'Derived from: score >= (total_questions * 0.8). Threshold may be configurable.';
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 6. TRIGGERS FOR TIMESTAMP AUTOMATION
+-- ────────────────────────────────────────────────────────────────────────────
 
 CREATE OR REPLACE FUNCTION public.set_updated_at_timestamp()
 RETURNS TRIGGER
@@ -39,99 +145,100 @@ BEGIN
 END;
 $$;
 
-DROP TRIGGER IF EXISTS set_user_course_progress_snapshots_updated_at ON public.user_course_progress_snapshots;
-CREATE TRIGGER set_user_course_progress_snapshots_updated_at
-BEFORE UPDATE ON public.user_course_progress_snapshots
-FOR EACH ROW
-EXECUTE FUNCTION public.set_updated_at_timestamp();
+DROP TRIGGER IF EXISTS set_user_course_enrollments_updated_at ON public.user_course_enrollments;
+CREATE TRIGGER set_user_course_enrollments_updated_at
+BEFORE UPDATE ON public.user_course_enrollments
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
-DROP TRIGGER IF EXISTS set_user_section_progress_states_updated_at ON public.user_section_progress_states;
-CREATE TRIGGER set_user_section_progress_states_updated_at
-BEFORE UPDATE ON public.user_section_progress_states
-FOR EACH ROW
-EXECUTE FUNCTION public.set_updated_at_timestamp();
+DROP TRIGGER IF EXISTS set_user_course_progress_updated_at ON public.user_course_progress;
+CREATE TRIGGER set_user_course_progress_updated_at
+BEFORE UPDATE ON public.user_course_progress
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
-DROP TRIGGER IF EXISTS set_user_module_quiz_results_updated_at ON public.user_module_quiz_results;
-CREATE TRIGGER set_user_module_quiz_results_updated_at
-BEFORE UPDATE ON public.user_module_quiz_results
-FOR EACH ROW
-EXECUTE FUNCTION public.set_updated_at_timestamp();
+DROP TRIGGER IF EXISTS set_user_module_progress_updated_at ON public.user_module_progress;
+CREATE TRIGGER set_user_module_progress_updated_at
+BEFORE UPDATE ON public.user_module_progress
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
-ALTER TABLE public.user_course_progress_snapshots ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.user_section_progress_states ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.user_module_quiz_results ENABLE ROW LEVEL SECURITY;
+DROP TRIGGER IF EXISTS set_user_section_state_updated_at ON public.user_section_state;
+CREATE TRIGGER set_user_section_state_updated_at
+BEFORE UPDATE ON public.user_section_state
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
-DROP POLICY IF EXISTS "Users can read their course progress" ON public.user_course_progress_snapshots;
-CREATE POLICY "Users can read their course progress"
-ON public.user_course_progress_snapshots
-FOR SELECT
-USING (auth.uid() = user_id);
+DROP TRIGGER IF EXISTS set_user_quiz_attempts_updated_at ON public.user_quiz_attempts;
+CREATE TRIGGER set_user_quiz_attempts_updated_at
+BEFORE UPDATE ON public.user_quiz_attempts
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
-DROP POLICY IF EXISTS "Users can insert their course progress" ON public.user_course_progress_snapshots;
-CREATE POLICY "Users can insert their course progress"
-ON public.user_course_progress_snapshots
-FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+-- ────────────────────────────────────────────────────────────────────────────
+-- 7. ROW-LEVEL SECURITY
+-- ────────────────────────────────────────────────────────────────────────────
 
-DROP POLICY IF EXISTS "Users can update their course progress" ON public.user_course_progress_snapshots;
-CREATE POLICY "Users can update their course progress"
-ON public.user_course_progress_snapshots
-FOR UPDATE
-USING (auth.uid() = user_id)
-WITH CHECK (auth.uid() = user_id);
+ALTER TABLE public.user_course_enrollments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_course_progress ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_module_progress ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_section_state ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_quiz_attempts ENABLE ROW LEVEL SECURITY;
 
-DROP POLICY IF EXISTS "Users can delete their course progress" ON public.user_course_progress_snapshots;
-CREATE POLICY "Users can delete their course progress"
-ON public.user_course_progress_snapshots
-FOR DELETE
-USING (auth.uid() = user_id);
+-- Enable RLS policies: users can only see/modify their own data
+DROP POLICY IF EXISTS "user_isolation" ON public.user_course_enrollments;
+CREATE POLICY "user_isolation" ON public.user_course_enrollments
+  FOR ALL USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can read their section progress" ON public.user_section_progress_states;
-CREATE POLICY "Users can read their section progress"
-ON public.user_section_progress_states
-FOR SELECT
-USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "user_isolation" ON public.user_course_progress;
+CREATE POLICY "user_isolation" ON public.user_course_progress
+  FOR ALL USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can insert their section progress" ON public.user_section_progress_states;
-CREATE POLICY "Users can insert their section progress"
-ON public.user_section_progress_states
-FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+DROP POLICY IF EXISTS "user_isolation" ON public.user_module_progress;
+CREATE POLICY "user_isolation" ON public.user_module_progress
+  FOR ALL USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can update their section progress" ON public.user_section_progress_states;
-CREATE POLICY "Users can update their section progress"
-ON public.user_section_progress_states
-FOR UPDATE
-USING (auth.uid() = user_id)
-WITH CHECK (auth.uid() = user_id);
+DROP POLICY IF EXISTS "user_isolation" ON public.user_section_state;
+CREATE POLICY "user_isolation" ON public.user_section_state
+  FOR ALL USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can delete their section progress" ON public.user_section_progress_states;
-CREATE POLICY "Users can delete their section progress"
-ON public.user_section_progress_states
-FOR DELETE
-USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "user_isolation" ON public.user_quiz_attempts;
+CREATE POLICY "user_isolation" ON public.user_quiz_attempts
+  FOR ALL USING (auth.uid() = user_id);
 
-DROP POLICY IF EXISTS "Users can read their quiz results" ON public.user_module_quiz_results;
-CREATE POLICY "Users can read their quiz results"
-ON public.user_module_quiz_results
-FOR SELECT
-USING (auth.uid() = user_id);
+-- ────────────────────────────────────────────────────────────────────────────
+-- 8. INDEXES FOR QUERY PERFORMANCE
+-- ────────────────────────────────────────────────────────────────────────────
 
-DROP POLICY IF EXISTS "Users can insert their quiz results" ON public.user_module_quiz_results;
-CREATE POLICY "Users can insert their quiz results"
-ON public.user_module_quiz_results
-FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+CREATE INDEX IF NOT EXISTS idx_user_course_progress_user_id
+  ON public.user_course_progress(user_id);
 
-DROP POLICY IF EXISTS "Users can update their quiz results" ON public.user_module_quiz_results;
-CREATE POLICY "Users can update their quiz results"
-ON public.user_module_quiz_results
-FOR UPDATE
-USING (auth.uid() = user_id)
-WITH CHECK (auth.uid() = user_id);
+CREATE INDEX IF NOT EXISTS idx_user_module_progress_user_id_module_id
+  ON public.user_module_progress(user_id, module_id);
 
-DROP POLICY IF EXISTS "Users can delete their quiz results" ON public.user_module_quiz_results;
-CREATE POLICY "Users can delete their quiz results"
-ON public.user_module_quiz_results
-FOR DELETE
-USING (auth.uid() = user_id);
+CREATE INDEX IF NOT EXISTS idx_user_module_progress_status
+  ON public.user_module_progress(user_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_user_section_state_user_module
+  ON public.user_section_state(user_id, module_id);
+
+CREATE INDEX IF NOT EXISTS idx_user_section_state_completed
+  ON public.user_section_state(user_id, module_id, is_completed);
+
+CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_user_module
+  ON public.user_quiz_attempts(user_id, module_id);
+
+CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
+  ON public.user_quiz_attempts(user_id, attempted_at DESC);
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 9. REFERENCE: MODULE & SECTION STRUCTURE
+-- ────────────────────────────────────────────────────────────────────────────
+-- This schema is designed for the 5-module AI for Business Leaders course.
+-- Module section names for reference (used in application course-content.ts):
+--
+-- Module 0: welcome | overview | summary
+-- Module 1: overview | ai-fundamentals | ml-foundations | llm-mechanics | 
+--           ai-tools-survey | myths-and-reality | agents | future-frontiers | module-quiz
+-- Module 2: prompting | workflow-optimization | stack-management | people-and-skills | 
+--           agent-deployment | module-quiz
+-- Module 3: overview | evaluation | data-readiness | governance-and-risk | 
+--           adoption-roadmap | module-quiz
+-- Module 4: overview | roi-fundamentals | metrics | strategic-positioning | module-quiz
+--
+-- When implementing migrations or adding courses, update this reference section.

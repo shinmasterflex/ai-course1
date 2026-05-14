@@ -3,6 +3,7 @@
 import { CourseExplainerLayout } from "@/components/learning/component-explainer"
 import { setupProgressSyncOnUnload } from "@/lib/progress-sync"
 import { useProgress } from "@/hooks/use-progress"
+import { AuthGuard } from "@/components/auth/auth-guard"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 import type React from "react"
@@ -11,6 +12,10 @@ import type React from "react"
  * COURSE LAYOUT
  * Nested layout for /course routes
  * Inherits all styles and fonts from root layout
+ * 
+ * ⚠️ PAYMENT GATING: AuthGuard enforces payment verification before showing course content
+ * - Authenticated users without payment are redirected to /register?paymentRequired=1
+ * - This ensures only paid users can access course materials
  */
 export default function CourseLayout({
   children,
@@ -47,5 +52,9 @@ export default function CourseLayout({
     setCurrentPosition(moduleId, sectionId)
   }, [currentModule, currentSection, getCourseStructure, pathname, searchParams, setCurrentPosition])
 
-  return <CourseExplainerLayout>{children}</CourseExplainerLayout>
+  return (
+    <AuthGuard redirectTo="/register?paymentRequired=1">
+      <CourseExplainerLayout>{children}</CourseExplainerLayout>
+    </AuthGuard>
+  )
 }

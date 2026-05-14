@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
 import { Prisma } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
 import { enforceRateLimit } from '@/lib/rate-limit'
 import { verifyCheckoutSessionPayment } from '@/lib/stripe'
-import { getSupabaseSecretKey, getSupabaseUrl } from '@/lib/supabase-env'
+import { upsertAppUser, findUserById, findUserBySessionId } from '@/lib/user-db-ops'
 
 type ProvisionBody = {
   userId?: string
@@ -25,47 +23,6 @@ function normalizeOptionalName(value: unknown): string | null {
 
 async function wait(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-type AppUserUpsertPayload = {
-  id: string
-  email: string
-  firstName: string | null
-  lastName: string | null
-  paidAt: Date | null
-  stripeCheckoutSessionId: string | null
-  updatedAt: Date
-}
-
-async function upsertAppUser(payload: AppUserUpsertPayload) {
-  try {
-    return await prisma.users.upsert({
-      where: { id: payload.id },
-      update: payload,
-      create: payload,
-    })
-  } catch (prismaError) {
-    console.error('[Provision API] Prisma upsert failed. Falling back to Supabase service-role upsert:', prismaError)
-
-    const adminClient = createClient(getSupabaseUrl(), getSupabaseSecretKey(), {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    })
-
-    const { data, error } = await adminClient
-      .from('users')
-      .upsert(payload, { onConflict: 'id' })
-      .select('*')
-      .single()
-
-    if (error || !data) {
-      throw new Error(error?.message ? error.message : 'Supabase upsert failed.')
-    }
-
-    return data
-  }
 }
 
 export async function POST(request: Request) {
@@ -141,10 +98,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Payment session could not be verified for this user.' }, { status: 403 })
   }
 
-  const existingSessionOwner = await prisma.users.findFirst({
-    where: { stripeCheckoutSessionId: sessionId },
-    select: { id: true },
-  })
+  const existingSessionOwner = await findUserBySessionId(sessionId)
 
   if (existingSessionOwner && existingSessionOwner.id !== userId) {
     return NextResponse.json({ error: 'Payment session is already linked to another account.' }, { status: 409 })
@@ -172,10 +126,7 @@ export async function POST(request: Request) {
       const conflictTarget = Array.isArray(err.meta?.target) ? err.meta.target : []
       if (conflictTarget.includes('stripeCheckoutSessionId')) {
         // Session was claimed by another user during race window
-        const sessionOwner = await prisma.users.findFirst({
-          where: { stripeCheckoutSessionId: sessionId },
-          select: { id: true },
-        })
+        const sessionOwner = await findUserBySessionId(sessionId)
         if (sessionOwner?.id !== userId) {
           // Confirmed: another user owns this session
           return NextResponse.json(
@@ -184,9 +135,7 @@ export async function POST(request: Request) {
           )
         }
         // We own it; query succeeded anyway (idempotent)
-        const dbUser = await prisma.users.findUnique({
-          where: { id: userId },
-        })
+        const dbUser = await findUserById(userId)
         if (!dbUser) {
           return NextResponse.json({ error: 'Failed to provision user' }, { status: 500 })
         }

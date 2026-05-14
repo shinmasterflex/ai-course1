@@ -1,25 +1,15 @@
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { Prisma } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
 import { verifyCheckoutSessionPayment } from '@/lib/stripe'
 import { verifyTurnstileToken } from '@/lib/bot-protection'
 import { enforceRateLimit } from '@/lib/rate-limit'
-import { getSupabasePublishableKey, getSupabaseSecretKey, getSupabaseUrl } from '@/lib/supabase-env'
+import { upsertAppUser, findUserById, findUserBySessionId } from '@/lib/user-db-ops'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+import { getSupabaseUrl, getSupabasePublishableKey } from '@/lib/supabase-env'
 import { NextResponse } from 'next/server'
 
 type SyncBody = {
   sessionId?: string
-}
-
-type AppUserUpsertPayload = {
-  id: string
-  email: string
-  firstName: string | null
-  lastName: string | null
-  paidAt: Date | null
-  stripeCheckoutSessionId: string | null
-  updatedAt: Date
 }
 
 function getSessionIdFromBody(body: SyncBody | null): string | null {
@@ -83,37 +73,6 @@ async function resolveAuthenticatedUser(request: Request) {
   return { user: tokenData.user, error: null }
 }
 
-async function upsertAppUser(payload: AppUserUpsertPayload) {
-  try {
-    return await prisma.users.upsert({
-      where: { id: payload.id },
-      update: payload,
-      create: payload,
-    })
-  } catch (prismaError) {
-    console.error('[Sync API] Prisma upsert failed. Falling back to Supabase service-role upsert:', prismaError)
-
-    const adminClient = createSupabaseClient(getSupabaseUrl(), getSupabaseSecretKey(), {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    })
-
-    const { data, error } = await adminClient
-      .from('users')
-      .upsert(payload, { onConflict: 'id' })
-      .select('*')
-      .single()
-
-    if (error || !data) {
-      throw new Error(error?.message ? error.message : 'Supabase upsert failed.')
-    }
-
-    return data
-  }
-}
-
 export async function POST(request: Request) {
   const rateLimit = enforceRateLimit(request, {
     keyPrefix: 'api-auth-sync-user',
@@ -171,13 +130,7 @@ export async function POST(request: Request) {
   const sessionId = sessionIdFromBody ? sessionIdFromBody : metadataSessionId
 
   try {
-    const existingUser = await prisma.users.findUnique({
-      where: { id: user.id },
-      select: {
-        paidAt: true,
-        stripeCheckoutSessionId: true,
-      },
-    })
+    const existingUser = await findUserById(user.id)
 
     let verifiedSessionId: string | null = null
 
@@ -189,10 +142,7 @@ export async function POST(request: Request) {
           verification.isPaid &&
           verification.normalizedCustomerEmail === normalizedEmail
         ) {
-          const existingSessionOwner = await prisma.users.findFirst({
-            where: { stripeCheckoutSessionId: sessionId },
-            select: { id: true },
-          })
+          const existingSessionOwner = await findUserBySessionId(sessionId)
 
           if (!existingSessionOwner || existingSessionOwner.id === user.id) {
             verifiedSessionId = sessionId
@@ -224,10 +174,7 @@ export async function POST(request: Request) {
         const conflictTarget = Array.isArray(upsertErr.meta?.target) ? upsertErr.meta.target : []
         if (conflictTarget.includes('stripeCheckoutSessionId')) {
           // Session was claimed by another user during race window
-          const sessionOwner = await prisma.users.findFirst({
-            where: { stripeCheckoutSessionId: sessionId },
-            select: { id: true },
-          })
+          const sessionOwner = await findUserBySessionId(sessionId)
           if (sessionOwner?.id !== user.id) {
             // Confirmed: another user owns this session
             return NextResponse.json(
@@ -236,9 +183,7 @@ export async function POST(request: Request) {
             )
           }
           // Edge case: we own the session, query succeeded anyway (idempotent)
-          dbUser = await prisma.users.findUnique({
-            where: { id: user.id },
-          })
+          dbUser = await findUserById(user.id)
           if (!dbUser) {
             return NextResponse.json({ error: 'Failed to sync user' }, { status: 500 })
           }

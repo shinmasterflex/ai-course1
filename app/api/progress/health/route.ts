@@ -22,6 +22,14 @@ export async function GET() {
     hasSupabasePublishableKey: false,
     prismaQueryOk: false,
     prismaError: null as string | null,
+    learningStateTables: {
+      userCourseEnrollments: false,
+      userCourseProgress: false,
+      userModuleProgress: false,
+      userSectionState: false,
+      userQuizAttempts: false,
+    },
+    tablesError: null as string | null,
   }
 
   try {
@@ -46,11 +54,35 @@ export async function GET() {
     checks.prismaError = error instanceof Error ? error.message : 'Unknown Prisma error'
   }
 
+  // Check for learning state tables
+  try {
+    const tables = await prisma.$queryRaw<any[]>`
+      SELECT table_name FROM information_schema.tables 
+      WHERE table_schema = 'public' 
+      AND table_name IN (
+        'user_course_enrollments',
+        'user_course_progress', 
+        'user_module_progress',
+        'user_section_state',
+        'user_quiz_attempts'
+      )
+    `
+    const tableNames = new Set(tables.map((t) => t.table_name))
+    checks.learningStateTables.userCourseEnrollments = tableNames.has('user_course_enrollments')
+    checks.learningStateTables.userCourseProgress = tableNames.has('user_course_progress')
+    checks.learningStateTables.userModuleProgress = tableNames.has('user_module_progress')
+    checks.learningStateTables.userSectionState = tableNames.has('user_section_state')
+    checks.learningStateTables.userQuizAttempts = tableNames.has('user_quiz_attempts')
+  } catch (error) {
+    checks.tablesError = error instanceof Error ? error.message : 'Unknown error checking tables'
+  }
+
   const ok =
     checks.hasDatabaseUrl &&
     checks.hasSupabaseUrl &&
     checks.hasSupabasePublishableKey &&
-    checks.prismaQueryOk
+    checks.prismaQueryOk &&
+    Object.values(checks.learningStateTables).every((v) => v === true)
 
   return NextResponse.json(
     {

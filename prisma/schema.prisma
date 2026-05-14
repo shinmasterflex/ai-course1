@@ -113,4 +113,101 @@ model users {
   updatedAt DateTime
   attempts  attempts[]
   progress  progress[]
+
+  // Learning state relationships
+  enrollments           user_course_enrollments[]
+  courseProgress        user_course_progress?
+  moduleProgress        user_module_progress[]
+  sectionState          user_section_state[]
+  quizAttempts          user_quiz_attempts[]
+}
+
+// ============================================================================
+// LEARNING STATE MODELS (Normalized schema for AI course tracking)
+// ============================================================================
+
+model user_course_enrollments {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  courseSlug String   @default("ai-course")
+  hasPaid    Boolean  @default(false)
+  enrolledAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseSlug])
+}
+
+model user_course_progress {
+  userId               String   @id
+  courseSlug           String   @default("ai-course")
+  currentModule        String?
+  currentSection       String?
+  modulesCompleted     Int      @default(0)
+  totalModules         Int      @default(5)
+  completionPercentage Decimal  @default(0) @db.Numeric(5, 2)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model user_module_progress {
+  id               String   @id @default(cuid())
+  userId           String
+  moduleId         String
+  status           String   @default("not_started") // not_started | in_progress | completed
+  sectionsCompleted Int     @default(0)
+  totalSections    Int?
+  quizPassed       Boolean  @default(false)
+  quizScore        Int?
+  quizAttempts     Int      @default(0)
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId])
+  @@index([userId, status])
+  @@index([moduleId])
+}
+
+model user_section_state {
+  id               String   @id @default(cuid())
+  userId           String
+  moduleId         String
+  sectionId        String
+  isCompleted      Boolean  @default(false)
+  timeSpentSeconds Int      @default(0)
+  lastViewedAt     DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId, sectionId])
+  @@index([userId, moduleId, isCompleted])
+}
+
+model user_quiz_attempts {
+  id              String   @id @default(cuid())
+  userId          String
+  moduleId        String
+  attemptNumber   Int      @default(1)
+  score           Int
+  totalQuestions  Int
+  passed          Boolean  @default(false)
+  answers         Json     @default("{}")
+  attemptedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, moduleId])
+  @@index([userId, attemptedAt])
 }
