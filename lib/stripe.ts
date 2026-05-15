@@ -7,10 +7,10 @@ function normalizeEmail(email: string): string {
 }
 
 function getStripeSecretKey(): string {
-  const secretKey = process.env.STRIPE_SECRET_KEY
+  const secretKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 
   if (!secretKey) {
-    throw new Error('Missing required environment variable: STRIPE_SECRET_KEY')
+    throw new Error('Missing required environment variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY')
   }
 
   return secretKey

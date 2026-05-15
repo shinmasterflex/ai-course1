@@ -15,6 +15,7 @@ import { ProgressBar } from "@/components/learning/progress-bar"
 import { Lightbulb, Brain, Zap, Lock, Workflow } from "lucide-react"
 import { useProgress } from "@/hooks/use-progress"
 import { getCourseStructure } from "@/lib/course-content"
+import { createClient } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 
 const MODULE_VISUALS = {
@@ -29,9 +30,63 @@ export default function DashboardPage() {
   const router = useRouter()
   const progress = useProgress()
   const [mounted, setMounted] = useState(false)
+  const [hasPaidAccess, setHasPaidAccess] = useState(false)
+  const [accessResolved, setAccessResolved] = useState(false)
   const courseModules = getCourseStructure().modules
 
   useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    const resolveAccess = async () => {
+      try {
+        const supabase = createClient()
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser()
+
+        if (!isMounted) return
+
+        if (error || !user) {
+          setHasPaidAccess(false)
+          setAccessResolved(true)
+          return
+        }
+
+        const response = await fetch("/api/auth/sync-user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        })
+
+        if (!isMounted) return
+
+        if (!response.ok) {
+          setHasPaidAccess(false)
+          setAccessResolved(true)
+          return
+        }
+
+        const result = await response.json()
+        setHasPaidAccess(Boolean(result?.hasAccess))
+        setAccessResolved(true)
+      } catch {
+        if (!isMounted) return
+        setHasPaidAccess(false)
+        setAccessResolved(true)
+      }
+    }
+
+    void resolveAccess()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const getModuleProgress = (moduleId: string) => {
     const mod = progress.modules?.find((m) => m.id === moduleId)
@@ -115,6 +170,8 @@ export default function DashboardPage() {
                 const status = getStatus(completed, total)
                 const visual = MODULE_VISUALS[module.id as keyof typeof MODULE_VISUALS] ?? { icon: Workflow, color: "brand-indigo" }
                 const Icon = visual.icon
+                const isDemoModule = module.id === "module-0"
+                const isLocked = accessResolved && !hasPaidAccess && !isDemoModule
 
                 return (
                   <Card key={module.id} className="border hover:shadow-md transition-shadow">
@@ -147,13 +204,24 @@ export default function DashboardPage() {
                         </div>
                         <Button
                           size="sm"
-                          variant={status === "Not Started" ? "default" : "outline"}
-                          className={cn(status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white")}
-                          onClick={() => router.push(`/course/${module.id}`)}
+                          variant={isLocked ? "outline" : status === "Not Started" ? "default" : "outline"}
+                          className={cn(
+                            isLocked
+                              ? "border-brand-indigo/30 text-brand-indigo hover:bg-brand-indigo/5"
+                              : status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white"
+                          )}
+                          onClick={() =>
+                            router.push(isLocked ? "/register?paymentRequired=1" : `/course/${module.id}`)
+                          }
                         >
-                          {status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
+                          {isLocked ? "Unlock" : status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
                         </Button>
                       </div>
+                      {isLocked ? (
+                        <p className="mt-3 text-xs text-muted-foreground">
+                          Module 0 is free. Unlock premium access to continue with Module 1 and beyond.
+                        </p>
+                      ) : null}
                     </CardContent>
                   </Card>
                 )

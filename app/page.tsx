@@ -39,9 +39,15 @@ export default function HomePage() {
               <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
                 Practical, beginner-friendly guidance for understanding and applying AI across tools, workflows, and measurable outcomes.
               </p>
+              <div className="inline-flex items-center rounded-full border border-brand-orange/40 bg-white/90 px-4 py-2 text-sm font-semibold text-brand-indigo">
+                Module 0 is free. Start now and unlock Modules 1-4 anytime.
+              </div>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/course">Start Overview of AI for Business Leaders</Link>
+                  <Link href="/course/module-0">Start Free Module 0</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-lg px-10">
+                  <Link href="/register?paymentRequired=1">Unlock Full Course</Link>
                 </Button>
               </div>
               <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">

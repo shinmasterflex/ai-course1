@@ -25,6 +25,7 @@ export default function CourseLayout({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { getCourseStructure, setCurrentPosition, currentModule, currentSection } = useProgress()
+  const isDemoAccessiblePath = pathname === "/course" || pathname?.startsWith("/course/module-0")
 
   // Setup automatic progress sync on page unload
   useEffect(() => {
@@ -51,6 +52,10 @@ export default function CourseLayout({
     if (currentModule === moduleId && currentSection === sectionId) return
     setCurrentPosition(moduleId, sectionId)
   }, [currentModule, currentSection, getCourseStructure, pathname, searchParams, setCurrentPosition])
+
+  if (isDemoAccessiblePath) {
+    return <CourseExplainerLayout>{children}</CourseExplainerLayout>
+  }
 
   return (
     <AuthGuard redirectTo="/register?paymentRequired=1">

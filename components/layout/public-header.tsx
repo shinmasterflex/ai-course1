@@ -24,7 +24,7 @@ export function PublicHeader() {
             <Link href="/course">Overview of AI for Business Leaders</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/demo">Preview Module 0</Link>
+            <Link href="/demo">Module 0 Free Preview</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="https://calendly.com/lfederico-cognijin/30min?month=2026-01" target="_blank" rel="noopener noreferrer">
