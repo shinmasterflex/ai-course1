@@ -103,14 +103,14 @@ model questions {
 }
 
 model users {
-  id        String     @id
+  id        String     @id @db.Uuid
   email     String     @unique
   firstName String?
   lastName  String?
-  paidAt    DateTime?
+  paidAt    DateTime?  @db.Timestamptz(6)
   stripeCheckoutSessionId String? @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime   @db.Timestamptz(6)
   attempts  attempts[]
   progress  progress[]
 

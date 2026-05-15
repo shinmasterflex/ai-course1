@@ -28,24 +28,3 @@ export function getAdminSupabaseClient() {
     throw error
   }
 }
-
-/**
- * Execute a database operation with Prisma as primary, Supabase admin as fallback
- * Useful for operations that might fail during app boot before Prisma is ready
- */
-export async function executeWithFallback<T>(
-  prismaOperation: () => Promise<T>,
-  supabaseOperation: () => Promise<T>
-): Promise<T> {
-  try {
-    return await prismaOperation()
-  } catch (prismaError) {
-    console.warn('[SupabaseAdmin] Prisma operation failed, trying Supabase fallback:', prismaError)
-    try {
-      return await supabaseOperation()
-    } catch (supabaseError) {
-      console.error('[SupabaseAdmin] Both Prisma and Supabase operations failed:', supabaseError)
-      throw supabaseError
-    }
-  }
-}

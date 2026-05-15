@@ -24,18 +24,20 @@
 -- login, progress syncing, and payment/access workflows.
 
 CREATE TABLE IF NOT EXISTS public."users" (
-  "id" TEXT PRIMARY KEY,
+  "id" UUID PRIMARY KEY,
   "email" TEXT NOT NULL UNIQUE,
   "firstName" TEXT,
   "lastName" TEXT,
-  "paidAt" TIMESTAMP(3),
+  "paidAt" TIMESTAMPTZ,
   "stripeCheckoutSessionId" TEXT UNIQUE,
-  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 COMMENT ON TABLE public."users" IS
   'Application-level user profiles mirrored from Supabase auth.users. Credentials stay in auth.users; this table is reused for app login state, progress, and access control.';
+COMMENT ON COLUMN public."users"."id" IS
+  'Matches auth.users.id (UUID). Required for UUID-typed foreign keys from learning state tables and auth.uid() RLS comparisons.';
 COMMENT ON COLUMN public."users"."stripeCheckoutSessionId" IS
   'Verified Stripe checkout session linked to the account for paid course access.';
 
@@ -59,7 +61,7 @@ BEGIN
     "updatedAt"
   )
   VALUES (
-    NEW.id::text,
+    NEW.id,
     lower(trim(NEW.email)),
     NULLIF(trim(COALESCE(NEW.raw_user_meta_data ->> 'first_name', '')), ''),
     NULLIF(trim(COALESCE(NEW.raw_user_meta_data ->> 'last_name', '')), ''),
@@ -84,30 +86,6 @@ ON auth.users
 FOR EACH ROW
 EXECUTE FUNCTION public.sync_auth_user_to_public_users();
 
-INSERT INTO public."users" (
-  "id",
-  "email",
-  "firstName",
-  "lastName",
-  "createdAt",
-  "updatedAt"
-)
-SELECT
-  au.id::text,
-  lower(trim(au.email)),
-  NULLIF(trim(COALESCE(au.raw_user_meta_data ->> 'first_name', '')), ''),
-  NULLIF(trim(COALESCE(au.raw_user_meta_data ->> 'last_name', '')), ''),
-  COALESCE(au.created_at, NOW()),
-  NOW()
-FROM auth.users AS au
-WHERE au.email IS NOT NULL
-ON CONFLICT ("id") DO UPDATE
-  SET
-    "email" = EXCLUDED."email",
-    "firstName" = EXCLUDED."firstName",
-    "lastName" = EXCLUDED."lastName",
-    "updatedAt" = NOW();
-
 -- ────────────────────────────────────────────────────────────────────────────
 -- 1. ENROLLMENTS & ACCESS CONTROL
 -- ────────────────────────────────────────────────────────────────────────────
@@ -125,7 +103,7 @@ CREATE TABLE IF NOT EXISTS public.user_course_enrollments (
 COMMENT ON TABLE public.user_course_enrollments IS
   'Links users to course enrollments. Synced with Stripe payment status via users.paidAt.';
 COMMENT ON COLUMN public.user_course_enrollments.has_paid IS
-  'Reflects sync status with Stripe; primary source of truth is users.paidAt in Prisma DB.';
+  'Reflects sync status with Stripe; primary source of truth is public.users.paidAt.';
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 2. PROGRESS SUMMARIES
@@ -308,6 +286,10 @@ CREATE INDEX IF NOT EXISTS idx_user_module_progress_user_id_module_id
 CREATE INDEX IF NOT EXISTS idx_user_module_progress_status
   ON public.user_module_progress(user_id, status);
 
+-- Matches Prisma `@@index([moduleId])` on user_module_progress.
+CREATE INDEX IF NOT EXISTS idx_user_module_progress_module_id
+  ON public.user_module_progress(module_id);
+
 CREATE INDEX IF NOT EXISTS idx_user_section_state_user_module
   ON public.user_section_state(user_id, module_id);
 
@@ -335,7 +317,7 @@ CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
 --           adoption-roadmap | module-quiz
 -- Module 4: overview | roi-fundamentals | metrics | strategic-positioning | module-quiz
 --
--- When implementing migrations or adding courses, update this reference section.
+-- When adding courses or modifying section structure, update this reference section.
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 10. BOOKING BOX SUBMISSIONS

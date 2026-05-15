@@ -1,10 +1,9 @@
 /**
  * USER DATABASE OPERATIONS
- * Centralized upsert logic for app users with proper error handling
+ * Centralized upsert logic for app users.
  */
 
 import { prisma } from '@/lib/prisma'
-import { getAdminSupabaseClient, executeWithFallback } from '@/lib/supabase-admin'
 
 export type AppUserUpsertPayload = {
   id: string
@@ -17,35 +16,14 @@ export type AppUserUpsertPayload = {
 }
 
 /**
- * Upsert app user with Prisma primary, Supabase fallback
- * Handles race conditions and provides clear error messages
+ * Upsert app user via Prisma.
  */
 export async function upsertAppUser(payload: AppUserUpsertPayload) {
-  return executeWithFallback(
-    // Prisma operation (primary)
-    async () => {
-      return await prisma.users.upsert({
-        where: { id: payload.id },
-        update: payload,
-        create: payload,
-      })
-    },
-    // Supabase operation (fallback)
-    async () => {
-      const adminClient = getAdminSupabaseClient()
-      const { data, error } = await (adminClient as any)
-        .from('users')
-        .upsert(payload as any, { onConflict: 'id' })
-        .select('*')
-        .single()
-
-      if (error || !data) {
-        throw new Error(error?.message ? error.message : 'Supabase upsert failed.')
-      }
-
-      return data
-    }
-  )
+  return prisma.users.upsert({
+    where: { id: payload.id },
+    update: payload,
+    create: payload,
+  })
 }
 
 /**
