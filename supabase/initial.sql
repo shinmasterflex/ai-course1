@@ -9,10 +9,104 @@
 --   Module 4 (Measure Business Value): 5 sections + quiz
 --
 -- Data Flow:
+--   auth.users (secure credentials) -> public.users (app profile mirror)
+--   app tables reference public.users so ORM and SQL stay aligned
 --   user_course_enrollments (entry) → user_course_progress (aggregate)
 --   user_module_progress (module-level) + user_section_state (section-level)
 --   user_quiz_attempts (quiz history per module)
 -- ============================================================================
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 0. APPLICATION USERS
+-- ────────────────────────────────────────────────────────────────────────────
+-- Supabase Auth remains the source of truth for credentials and password
+-- validation. The public.users table stores the reusable app profile needed by
+-- login, progress syncing, and payment/access workflows.
+
+CREATE TABLE IF NOT EXISTS public."users" (
+  "id" TEXT PRIMARY KEY,
+  "email" TEXT NOT NULL UNIQUE,
+  "firstName" TEXT,
+  "lastName" TEXT,
+  "paidAt" TIMESTAMP(3),
+  "stripeCheckoutSessionId" TEXT UNIQUE,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMENT ON TABLE public."users" IS
+  'Application-level user profiles mirrored from Supabase auth.users. Credentials stay in auth.users; this table is reused for app login state, progress, and access control.';
+COMMENT ON COLUMN public."users"."stripeCheckoutSessionId" IS
+  'Verified Stripe checkout session linked to the account for paid course access.';
+
+CREATE OR REPLACE FUNCTION public.sync_auth_user_to_public_users()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  IF NEW.email IS NULL THEN
+    RETURN NEW;
+  END IF;
+
+  INSERT INTO public."users" (
+    "id",
+    "email",
+    "firstName",
+    "lastName",
+    "createdAt",
+    "updatedAt"
+  )
+  VALUES (
+    NEW.id::text,
+    lower(trim(NEW.email)),
+    NULLIF(trim(COALESCE(NEW.raw_user_meta_data ->> 'first_name', '')), ''),
+    NULLIF(trim(COALESCE(NEW.raw_user_meta_data ->> 'last_name', '')), ''),
+    COALESCE(NEW.created_at, NOW()),
+    NOW()
+  )
+  ON CONFLICT ("id") DO UPDATE
+    SET
+      "email" = EXCLUDED."email",
+      "firstName" = EXCLUDED."firstName",
+      "lastName" = EXCLUDED."lastName",
+      "updatedAt" = NOW();
+
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_synced_to_public_users ON auth.users;
+CREATE TRIGGER on_auth_user_synced_to_public_users
+AFTER INSERT OR UPDATE OF email, raw_user_meta_data
+ON auth.users
+FOR EACH ROW
+EXECUTE FUNCTION public.sync_auth_user_to_public_users();
+
+INSERT INTO public."users" (
+  "id",
+  "email",
+  "firstName",
+  "lastName",
+  "createdAt",
+  "updatedAt"
+)
+SELECT
+  au.id::text,
+  lower(trim(au.email)),
+  NULLIF(trim(COALESCE(au.raw_user_meta_data ->> 'first_name', '')), ''),
+  NULLIF(trim(COALESCE(au.raw_user_meta_data ->> 'last_name', '')), ''),
+  COALESCE(au.created_at, NOW()),
+  NOW()
+FROM auth.users AS au
+WHERE au.email IS NOT NULL
+ON CONFLICT ("id") DO UPDATE
+  SET
+    "email" = EXCLUDED."email",
+    "firstName" = EXCLUDED."firstName",
+    "lastName" = EXCLUDED."lastName",
+    "updatedAt" = NOW();
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 1. ENROLLMENTS & ACCESS CONTROL
@@ -20,7 +114,7 @@
 
 CREATE TABLE IF NOT EXISTS public.user_course_enrollments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL UNIQUE REFERENCES public."users"(id) ON DELETE CASCADE,
   course_slug TEXT NOT NULL DEFAULT 'ai-course',
   has_paid BOOLEAN NOT NULL DEFAULT FALSE,
   enrolled_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -38,7 +132,7 @@ COMMENT ON COLUMN public.user_course_enrollments.has_paid IS
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_course_progress (
-  user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID PRIMARY KEY REFERENCES public."users"(id) ON DELETE CASCADE,
   course_slug TEXT NOT NULL DEFAULT 'ai-course',
   current_module TEXT,
   current_section TEXT,
@@ -62,7 +156,7 @@ COMMENT ON COLUMN public.user_course_progress.completion_percentage IS
 
 CREATE TABLE IF NOT EXISTS public.user_module_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'not_started',
   sections_completed INTEGER DEFAULT 0,
@@ -90,7 +184,7 @@ COMMENT ON COLUMN public.user_module_progress.total_sections IS
 
 CREATE TABLE IF NOT EXISTS public.user_section_state (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
   section_id TEXT NOT NULL,
   is_completed BOOLEAN DEFAULT FALSE,
@@ -112,7 +206,7 @@ COMMENT ON COLUMN public.user_section_state.time_spent_seconds IS
 
 CREATE TABLE IF NOT EXISTS public.user_quiz_attempts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
   attempt_number INTEGER NOT NULL DEFAULT 1,
   score INTEGER NOT NULL,
@@ -248,10 +342,11 @@ CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
 -- ────────────────────────────────────────────────────────────────────────────
 -- Matches website booking/contact box fields:
 --   name (required), email (required), message (required)
+-- This is the message table for visitors/users to contact you.
 
 CREATE TABLE IF NOT EXISTS public.booking_box_submissions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  user_id UUID REFERENCES public."users"(id) ON DELETE SET NULL,
   name TEXT NOT NULL CHECK (length(trim(name)) > 0),
   email TEXT NOT NULL CHECK (position('@' in email) > 1),
   message TEXT NOT NULL CHECK (length(trim(message)) > 0),

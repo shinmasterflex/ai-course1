@@ -1,15 +1,16 @@
 'use client'
 
-import { getAuthCallbackUrl } from '@/lib/site-url'
+import { getAuthCallbackUrl, getSafeAuthRedirectPath } from '@/lib/site-url'
 import { createClient } from '@/lib/supabase'
 import { TurnstileWidget } from '@/components/auth/turnstile-widget'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 export default function SignInPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,6 +24,7 @@ export default function SignInPage() {
   const isBotProtectionRequired =
     process.env.NEXT_PUBLIC_BOT_PROTECTION_REQUIRED === 'true' || process.env.NODE_ENV === 'production'
   const isTurnstileEnabled = isBotProtectionRequired && Boolean(turnstileSiteKey?.trim())
+  const nextPath = getSafeAuthRedirectPath(searchParams?.get('next'))
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -84,7 +86,7 @@ export default function SignInPage() {
         console.warn('[SignIn] Profile sync failed:', syncError)
       }
 
-      router.push('/course')
+      router.push(nextPath)
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to sign in right now. Please try again.')
@@ -121,7 +123,7 @@ export default function SignInPage() {
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(
         email.trim(),
         {
-          redirectTo: getAuthCallbackUrl('recovery'),
+          redirectTo: getAuthCallbackUrl('recovery', '/update-password'),
           captchaToken: captchaToken ? captchaToken : undefined,
         }
       )
@@ -312,7 +314,7 @@ export default function SignInPage() {
 
                 <p className="text-center text-sm text-gray-600">
                   Need an account?{' '}
-                  <Link href="/register" className="font-medium text-brand-indigo hover:underline">
+                  <Link href={nextPath === '/course' ? '/register' : `/register?next=${encodeURIComponent(nextPath)}`} className="font-medium text-brand-indigo hover:underline">
                     Register here
                   </Link>
                 </p>

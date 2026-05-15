@@ -184,7 +184,7 @@ export default function UpdatePasswordPage() {
             </form>
 
             <div className="text-center text-sm">
-              <Link href="/sign-in" className="font-medium text-brand-indigo hover:underline">
+              <Link href="/login" className="font-medium text-brand-indigo hover:underline">
                 Back to Sign In
               </Link>
             </div>

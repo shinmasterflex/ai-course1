@@ -10,6 +10,30 @@ function getFirstDefinedEnvVar(...names: string[]): string | null {
   return null
 }
 
+function isPlaceholder(value: string): boolean {
+  const lowered = value.toLowerCase()
+  return (
+    lowered.includes('your-project-ref') ||
+    lowered.includes('sb_publishable_xxx') ||
+    lowered.includes('sb_secret_xxx') ||
+    lowered.includes('example')
+  )
+}
+
+function assertValidUrl(value: string, envName: string): string {
+  try {
+    const parsed = new URL(value)
+
+    if (!parsed.protocol || !parsed.hostname) {
+      throw new Error('missing protocol or hostname')
+    }
+
+    return value
+  } catch {
+    throw new Error(`${envName} must be a full URL like https://your-project.supabase.co`)
+  }
+}
+
 function getClientSupabaseUrl(): string | null {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
     return process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -31,6 +55,10 @@ function getRequiredEnvVar(...names: string[]): string {
     throw new Error(`Missing required environment variable. Provide one of: ${names.join(', ')}`)
   }
 
+  if (isPlaceholder(value)) {
+    throw new Error(`Environment variable still has a placeholder value. Update one of: ${names.join(', ')}`)
+  }
+
   return value
 }
 
@@ -45,10 +73,10 @@ export function getSupabaseUrl(): string {
   const clientValue = getClientSupabaseUrl()
 
   if (clientValue) {
-    return clientValue
+    return assertValidUrl(clientValue, 'NEXT_PUBLIC_SUPABASE_URL')
   }
 
-  return getRequiredEnvVar('NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_URL')
+  return assertValidUrl(getRequiredEnvVar('NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_URL'), 'NEXT_PUBLIC_SUPABASE_URL')
 }
 
 export function getSupabasePublishableKey(): string {

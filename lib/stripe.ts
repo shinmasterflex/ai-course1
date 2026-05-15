@@ -2,15 +2,28 @@ import Stripe from 'stripe'
 
 let stripeClient: Stripe | null = null
 
+function isPlaceholder(value: string): boolean {
+  const lowered = value.toLowerCase()
+  return (
+    lowered.includes('xxx') ||
+    lowered.includes('your_') ||
+    lowered.includes('example')
+  )
+}
+
 function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
 }
 
 function getStripeSecretKey(): string {
-  const secretKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  const secretKey = process.env.STRIPE_SECRET_KEY?.trim()
 
   if (!secretKey) {
-    throw new Error('Missing required environment variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY')
+    throw new Error('Missing required environment variable: STRIPE_SECRET_KEY')
+  }
+
+  if (!secretKey.startsWith('sk_') || isPlaceholder(secretKey)) {
+    throw new Error('STRIPE_SECRET_KEY must be a real Stripe secret key and cannot use a publishable key.')
   }
 
   return secretKey

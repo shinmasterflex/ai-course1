@@ -2,6 +2,19 @@ function sanitizeUrl(value: string): string {
   return value.trim().replace(/\/$/, '')
 }
 
+export function getSafeAuthRedirectPath(nextPath?: string | null, fallbackPath: string = '/course'): string {
+  if (!nextPath) {
+    return fallbackPath
+  }
+
+  const trimmed = nextPath.trim()
+  if (!trimmed.startsWith('/') || trimmed.startsWith('//')) {
+    return fallbackPath
+  }
+
+  return trimmed
+}
+
 export function getAppBaseUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL
 
@@ -16,12 +29,17 @@ export function getAppBaseUrl(): string {
   return 'http://localhost:3000'
 }
 
-export function getAuthCallbackUrl(type?: string): string {
-  const callbackUrl = `${getAppBaseUrl()}/auth/callback`
+export function getAuthCallbackUrl(type?: string, nextPath?: string): string {
+  const callbackUrl = new URL(`${getAppBaseUrl()}/auth/callback`)
 
-  if (!type) {
-    return callbackUrl
+  if (type) {
+    callbackUrl.searchParams.set('type', type)
   }
 
-  return `${callbackUrl}?type=${encodeURIComponent(type)}`
+  const safeNextPath = getSafeAuthRedirectPath(nextPath, '')
+  if (safeNextPath) {
+    callbackUrl.searchParams.set('next', safeNextPath)
+  }
+
+  return callbackUrl.toString()
 }

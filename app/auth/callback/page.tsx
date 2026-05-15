@@ -1,5 +1,6 @@
 'use client'
 
+import { getSafeAuthRedirectPath } from '@/lib/site-url'
 import { createClient } from '@/lib/supabase'
 import type { EmailOtpType } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
@@ -16,6 +17,7 @@ export default function AuthCallbackPage() {
         const tokenHash = url.searchParams.get('token_hash')
         const rawType = url.searchParams.get('type')
         const code = url.searchParams.get('code')
+        const nextPath = getSafeAuthRedirectPath(url.searchParams.get('next'))
 
         const isEmailOtpType = (
           value: string | null
@@ -66,7 +68,7 @@ export default function AuthCallbackPage() {
         if (error || !user) {
           setStatus('Error confirming email. Please try again.')
           setTimeout(() => {
-            router.push('/sign-in')
+            router.push('/login')
           }, 2000)
           return
         }
@@ -75,7 +77,7 @@ export default function AuthCallbackPage() {
         if (rawType === 'recovery') {
           setStatus('Redirecting to password update...')
           setTimeout(() => {
-            router.push('/update-password')
+            router.push(nextPath === '/course' ? '/update-password' : nextPath)
           }, 500)
           return
         }
@@ -110,20 +112,20 @@ export default function AuthCallbackPage() {
             console.log('[Client Callback] User synced to Prisma successfully')
             setStatus('Success! Redirecting to your course...')
             setTimeout(() => {
-              router.push('/course')
+              router.push(nextPath)
             }, 1000)
           } else {
             console.error('[Client Callback] Failed to sync to Prisma:', responseData)
             setStatus('Account confirmed! Redirecting...')
             setTimeout(() => {
-              router.push('/course')
+              router.push(nextPath)
             }, 1000)
           }
         } catch (syncError) {
           console.error('[Client Callback] Sync error:', syncError)
           setStatus('Account confirmed! Redirecting...')
           setTimeout(() => {
-            router.push('/course')
+            router.push(nextPath)
           }, 1000)
         }
       } catch (error) {
