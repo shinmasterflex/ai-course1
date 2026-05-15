@@ -347,13 +347,16 @@ export default function RegisterPage() {
               </form>
             )}
 
-            <div className="border-t pt-4">
+            <div className="border-t pt-4 space-y-3">
               <p className="text-center text-sm text-gray-600">
                 Already have an account?{" "}
                 <Link href={nextPath === '/course' ? '/login' : `/login?next=${encodeURIComponent(nextPath)}`} className="font-medium text-brand-indigo hover:underline">
                   Login
                 </Link>
               </p>
+              <Button asChild variant="outline" className="w-full">
+                <Link href="/course">Return to Dashboard</Link>
+              </Button>
             </div>
           </div>
         </section>

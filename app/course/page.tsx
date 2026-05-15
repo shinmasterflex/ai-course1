@@ -32,8 +32,8 @@ export default function DashboardPage() {
   const [mounted, setMounted] = useState(false)
   const [hasPaidAccess, setHasPaidAccess] = useState(false)
   const [accessResolved, setAccessResolved] = useState(false)
-  // Module 0 is the free public preview and lives at /try, not on the dashboard.
-  const courseModules = getCourseStructure().modules.filter((m) => m.id !== "module-0")
+  // Module 0 is the free public preview that lives at /try; the rest require paid access.
+  const courseModules = getCourseStructure().modules
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -171,7 +171,9 @@ export default function DashboardPage() {
                 const status = getStatus(completed, total)
                 const visual = MODULE_VISUALS[module.id as keyof typeof MODULE_VISUALS] ?? { icon: Workflow, color: "brand-indigo" }
                 const Icon = visual.icon
-                const isLocked = accessResolved && !hasPaidAccess
+                const isFreeModule = module.id === "module-0"
+                const isLocked = !isFreeModule && accessResolved && !hasPaidAccess
+                const moduleHref = isFreeModule ? "/try" : `/course/${module.id}`
 
                 return (
                   <Card key={module.id} className="border hover:shadow-md transition-shadow">
@@ -211,10 +213,10 @@ export default function DashboardPage() {
                               : status === "Not Started" && "bg-brand-orange hover:bg-brand-orange/90 text-white"
                           )}
                           onClick={() =>
-                            router.push(isLocked ? "/register?paymentRequired=1" : `/course/${module.id}`)
+                            router.push(isLocked ? "/register?paymentRequired=1" : moduleHref)
                           }
                         >
-                          {isLocked ? "Unlock" : status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
+                          {isLocked ? "Unlock" : isFreeModule ? "Try Free" : status === "Not Started" ? "Start" : status === "Completed" ? "Review" : "Continue"}
                         </Button>
                       </div>
                       {isLocked ? (
