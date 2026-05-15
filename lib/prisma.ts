@@ -66,8 +66,6 @@ function getPrismaClient() {
   return prismaClient
 }
 
-export const prisma = getPrismaClient()
-
 // Graceful shutdown: close all connections on app termination
 export async function closePrismaConnection(): Promise<void> {
   try {

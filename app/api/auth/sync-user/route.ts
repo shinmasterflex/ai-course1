@@ -173,6 +173,9 @@ export async function POST(request: Request) {
         // Distinguish between session ID conflict vs email conflict
         const conflictTarget = Array.isArray(upsertErr.meta?.target) ? upsertErr.meta.target : []
         if (conflictTarget.includes('stripeCheckoutSessionId')) {
+          if (!sessionId) {
+            throw upsertErr
+          }
           // Session was claimed by another user during race window
           const sessionOwner = await findUserBySessionId(sessionId)
           if (sessionOwner?.id !== user.id) {

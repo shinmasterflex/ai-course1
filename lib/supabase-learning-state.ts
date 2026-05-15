@@ -1,20 +1,10 @@
 import { createClient } from "@/lib/supabase"
 
-const COURSE_SLUG = "ai-course"
 const COURSE_TABLE = "user_course_progress"
 const MODULE_TABLE = "user_module_progress"
 const SECTION_TABLE = "user_section_state"
 const QUIZ_TABLE = "user_quiz_attempts"
 
-// Module enrollment tracking
-export type CourseEnrollment = {
-  userId: string
-  hasEnrolled: boolean
-  hasPaid: boolean
-  enrolledAt: string
-}
-
-// Normalized course-level progress
 export type CourseProgressState = {
   currentModule?: string | null
   currentSection?: string | null
@@ -22,7 +12,6 @@ export type CourseProgressState = {
   completionPercentage?: number
 }
 
-// Normalized module-level progress
 export type ModuleProgressState = {
   moduleId: string
   status: "not_started" | "in_progress" | "completed"
@@ -33,7 +22,6 @@ export type ModuleProgressState = {
   quizAttempts: number
 }
 
-// Normalized section-level state
 export type SectionState = {
   moduleId: string
   sectionId: string
@@ -42,19 +30,25 @@ export type SectionState = {
   lastViewedAt?: string
 }
 
-// Quiz attempt record
+export type QuizResultsState = Record<string, boolean>
+
 export type QuizAttempt = {
   moduleId: string
   attemptNumber: number
   score: number
   totalQuestions: number
   passed: boolean
-  answers: Record<string, string>
+  answers: Record<string, string | boolean>
   attemptedAt: string
 }
 
-// Legacy type for backward compatibility
-export type QuizResultsState = Record<string, boolean>
+type SectionStateWrite = {
+  moduleId: string
+  sectionId: string
+  isCompleted: boolean
+  timeSpentSeconds?: number
+  lastViewedAt?: string
+}
 
 async function getAuthenticatedUserId(): Promise<string | null> {
   try {
@@ -106,8 +100,8 @@ export async function saveCourseProgressState(state: CourseProgressState): Promi
       user_id: userId,
       current_module: state.currentModule,
       current_section: state.currentSection,
-      modules_completed: state.modulesCompleted,
-      completion_percentage: state.completionPercentage,
+      modules_completed: state.modulesCompleted ?? 0,
+      completion_percentage: state.completionPercentage ?? 0,
       updated_at: new Date().toISOString(),
     },
     { onConflict: "user_id" },
@@ -139,33 +133,6 @@ export async function resetCourseProgressState(): Promise<void> {
   }
 }
 
-// DEPRECATED: Legacy section progress API (uses JSONB, kept for backward compatibility)
-export async function loadSectionProgressState() {
-  console.warn(
-    "[Deprecation] loadSectionProgressState() uses legacy JSONB model. Use loadModuleProgress() instead.",
-  )
-  const userId = await getAuthenticatedUserId()
-  if (!userId) return null
-
-  // For now, return null to trigger migration
-  return null
-}
-
-export async function saveSectionProgressState() {
-  console.warn(
-    "[Deprecation] saveSectionProgressState() uses legacy JSONB model. Use saveModuleProgress() instead.",
-  )
-  return
-}
-
-export async function resetSectionProgressState() {
-  console.warn(
-    "[Deprecation] resetSectionProgressState() uses legacy JSONB model. Use saveModuleProgress() instead.",
-  )
-  return
-}
-
-// NEW: Normalized module progress API
 export async function loadModuleProgress(moduleId: string): Promise<ModuleProgressState | null> {
   const userId = await getAuthenticatedUserId()
   if (!userId) return null
@@ -173,7 +140,7 @@ export async function loadModuleProgress(moduleId: string): Promise<ModuleProgre
   const supabase = createClient()
   const { data, error } = await supabase
     .from(MODULE_TABLE)
-    .select("*")
+    .select("module_id, status, sections_completed, total_sections, quiz_passed, quiz_score, quiz_attempts")
     .eq("user_id", userId)
     .eq("module_id", moduleId)
     .maybeSingle()
@@ -187,12 +154,26 @@ export async function loadModuleProgress(moduleId: string): Promise<ModuleProgre
     sectionsCompleted: data.sections_completed || 0,
     totalSections: data.total_sections || 0,
     quizPassed: data.quiz_passed || false,
-    quizScore: data.quiz_score,
+    quizScore: data.quiz_score ?? undefined,
     quizAttempts: data.quiz_attempts || 0,
   }
 }
 
-// NEW: Normalized section state API
+export async function resetModuleProgress(moduleId?: string): Promise<void> {
+  const userId = await getAuthenticatedUserId()
+  if (!userId) return
+
+  const supabase = createClient()
+  let query = supabase.from(MODULE_TABLE).delete().eq("user_id", userId)
+
+  if (moduleId) {
+    query = query.eq("module_id", moduleId)
+  }
+
+  const { error } = await query
+  if (error) throw error
+}
+
 export async function loadSectionState(moduleId: string, sectionId: string): Promise<SectionState | null> {
   const userId = await getAuthenticatedUserId()
   if (!userId) return null
@@ -200,7 +181,7 @@ export async function loadSectionState(moduleId: string, sectionId: string): Pro
   const supabase = createClient()
   const { data, error } = await supabase
     .from(SECTION_TABLE)
-    .select("*")
+    .select("module_id, section_id, is_completed, time_spent_seconds, last_viewed_at")
     .eq("user_id", userId)
     .eq("module_id", moduleId)
     .eq("section_id", sectionId)
@@ -214,37 +195,94 @@ export async function loadSectionState(moduleId: string, sectionId: string): Pro
     sectionId: data.section_id,
     isCompleted: data.is_completed || false,
     timeSpentSeconds: data.time_spent_seconds || 0,
-    lastViewedAt: data.last_viewed_at,
+    lastViewedAt: data.last_viewed_at ?? undefined,
   }
 }
 
+export async function loadAllSectionStates(moduleId?: string): Promise<SectionState[]> {
+  const userId = await getAuthenticatedUserId()
+  if (!userId) return []
+
+  const supabase = createClient()
+  let query = supabase
+    .from(SECTION_TABLE)
+    .select("module_id, section_id, is_completed, time_spent_seconds, last_viewed_at")
+    .eq("user_id", userId)
+
+  if (moduleId) {
+    query = query.eq("module_id", moduleId)
+  }
+
+  const { data, error } = await query
+  if (error) throw error
+
+  return (
+    data?.map((row) => ({
+      moduleId: row.module_id,
+      sectionId: row.section_id,
+      isCompleted: row.is_completed || false,
+      timeSpentSeconds: row.time_spent_seconds || 0,
+      lastViewedAt: row.last_viewed_at ?? undefined,
+    })) ?? []
+  )
+}
+
 export async function saveSectionState(moduleId: string, sectionId: string, state: Partial<SectionState>): Promise<void> {
+  await saveSectionStatesBulk([
+    {
+      moduleId,
+      sectionId,
+      isCompleted: state.isCompleted ?? false,
+      timeSpentSeconds: state.timeSpentSeconds,
+      lastViewedAt: state.lastViewedAt,
+    },
+  ])
+}
+
+export async function saveSectionStatesBulk(states: SectionStateWrite[]): Promise<void> {
   const userId = await getAuthenticatedUserId()
   if (!userId) {
     throw new Error("[Auth] Cannot save section state: user not authenticated")
   }
 
+  if (states.length === 0) return
+
   const supabase = createClient()
-  const { error } = await supabase.from(SECTION_TABLE).upsert(
-    {
-      user_id: userId,
-      module_id: moduleId,
-      section_id: sectionId,
-      is_completed: state.isCompleted,
-      time_spent_seconds: state.timeSpentSeconds,
-      last_viewed_at: state.lastViewedAt || new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: "user_id,module_id,section_id" },
-  )
+  const now = new Date().toISOString()
+  const payload = states.map((state) => ({
+    user_id: userId,
+    module_id: state.moduleId,
+    section_id: state.sectionId,
+    is_completed: state.isCompleted,
+    time_spent_seconds: state.timeSpentSeconds ?? 0,
+    last_viewed_at: state.lastViewedAt ?? now,
+    updated_at: now,
+  }))
+
+  const { error } = await supabase.from(SECTION_TABLE).upsert(payload, {
+    onConflict: "user_id,module_id,section_id",
+  })
 
   if (error) {
-    throw new Error(`[Supabase] Section state save failed: ${error.message}`)
+    throw new Error(`[Supabase] Section states bulk save failed: ${error.message}`)
   }
 }
 
-// Backward compat: Load quiz results (legacy boolean records)
-// Returns whether specific quiz keys were passed (true/false)
+export async function resetSectionStates(moduleId?: string): Promise<void> {
+  const userId = await getAuthenticatedUserId()
+  if (!userId) return
+
+  const supabase = createClient()
+  let query = supabase.from(SECTION_TABLE).delete().eq("user_id", userId)
+
+  if (moduleId) {
+    query = query.eq("module_id", moduleId)
+  }
+
+  const { error } = await query
+  if (error) throw error
+}
+
 export async function loadQuizResults(moduleId: string): Promise<QuizResultsState | null> {
   const userId = await getAuthenticatedUserId()
   if (!userId) return null
@@ -252,7 +290,7 @@ export async function loadQuizResults(moduleId: string): Promise<QuizResultsStat
   const supabase = createClient()
   const { data, error } = await supabase
     .from(QUIZ_TABLE)
-    .select("passed, answers")
+    .select("answers")
     .eq("user_id", userId)
     .eq("module_id", moduleId)
     .order("attempted_at", { ascending: false })
@@ -263,42 +301,38 @@ export async function loadQuizResults(moduleId: string): Promise<QuizResultsStat
     throw error
   }
 
-  if (!data) return null
-
-  // Convert legacy format: answers object keys become passed/failed booleans
-  const results: QuizResultsState = {}
-  if (data.answers && typeof data.answers === "object") {
-    Object.keys(data.answers).forEach((key) => {
-      results[key] = data.passed ?? false
-    })
+  if (!data || !data.answers || typeof data.answers !== "object" || Array.isArray(data.answers)) {
+    return null
   }
 
-  return results
+  const results: QuizResultsState = {}
+  Object.entries(data.answers as Record<string, unknown>).forEach(([key, value]) => {
+    if (typeof value === "boolean") {
+      results[key] = value
+    }
+  })
+
+  return Object.keys(results).length > 0 ? results : null
 }
 
-// Save quiz attempt with normalized structure
 export async function saveQuizResults(
   moduleId: string,
   results: QuizResultsState,
-  options?: { score?: number; totalQuestions?: number; answers?: Record<string, string> },
+  options?: { score?: number; totalQuestions?: number; answers?: Record<string, string | boolean> },
 ): Promise<void> {
   const userId = await getAuthenticatedUserId()
   if (!userId) {
     throw new Error("[Auth] Cannot save quiz results: user not authenticated")
   }
 
-  // Determine if quiz passed (all answers in results are true)
   const passed = Object.values(results).every((value) => value === true)
-  const score = options?.score ?? (passed ? 100 : 0)
+  const score = options?.score ?? Object.values(results).filter(Boolean).length
   const totalQuestions = options?.totalQuestions ?? Object.keys(results).length
 
   const supabase = createClient()
-
-  // First, increment attempt counter in user_module_progress
   const currentProgress = await loadModuleProgress(moduleId)
   const attemptNumber = (currentProgress?.quizAttempts ?? 0) + 1
 
-  // Save quiz attempt
   const { error: saveError } = await supabase.from(QUIZ_TABLE).insert({
     user_id: userId,
     module_id: moduleId,
@@ -313,7 +347,6 @@ export async function saveQuizResults(
     throw new Error(`[Supabase] Quiz attempt save failed for module ${moduleId}: ${saveError.message}`)
   }
 
-  // Update module progress with quiz result
   const { error: updateError } = await supabase.from(MODULE_TABLE).upsert(
     {
       user_id: userId,
@@ -333,7 +366,6 @@ export async function saveQuizResults(
   }
 }
 
-// NEW: Load all quiz attempts for a module
 export async function loadQuizAttempts(moduleId: string): Promise<QuizAttempt[]> {
   const userId = await getAuthenticatedUserId()
   if (!userId) return []
@@ -341,7 +373,7 @@ export async function loadQuizAttempts(moduleId: string): Promise<QuizAttempt[]>
   const supabase = createClient()
   const { data, error } = await supabase
     .from(QUIZ_TABLE)
-    .select("*")
+    .select("module_id, attempt_number, score, total_questions, passed, answers, attempted_at")
     .eq("user_id", userId)
     .eq("module_id", moduleId)
     .order("attempted_at", { ascending: false })
@@ -375,12 +407,14 @@ export async function resetQuizResults(moduleId?: string): Promise<void> {
   }
 
   const { error } = await query
-
-  if (error) {
-    throw error
-  }
+  if (error) throw error
 }
 
 export async function resetAllLearningState(): Promise<void> {
-  await Promise.all([resetCourseProgressState(), resetSectionProgressState(), resetQuizResults()])
+  await Promise.all([
+    resetCourseProgressState(),
+    resetModuleProgress(),
+    resetSectionStates(),
+    resetQuizResults(),
+  ])
 }

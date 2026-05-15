@@ -5,7 +5,14 @@
 
 import { getCourseStructure } from "./course-content"
 import { createClient } from "./supabase"
-import { loadCourseProgressState, resetAllLearningState, saveCourseProgressState } from "./supabase-learning-state"
+import {
+  loadAllSectionStates,
+  loadCourseProgressState,
+  resetSectionStates,
+  resetAllLearningState,
+  saveCourseProgressState,
+  saveSectionStatesBulk,
+} from "./supabase-learning-state"
 
 const courseStructure = getCourseStructure()
 
@@ -37,11 +44,20 @@ class GlobalProgressManager {
     this.activeUserId = await this.getCurrentUserId()
 
     try {
-      const savedProgress = await loadCourseProgressState()
+      const [savedProgress, savedSectionStates] = await Promise.all([
+        loadCourseProgressState(),
+        loadAllSectionStates(),
+      ])
 
       if (savedProgress) {
         this.mergeProgress(savedProgress)
       }
+
+      if (savedSectionStates.length > 0) {
+        this.applySectionStates(savedSectionStates)
+      }
+
+      this.recalculateModuleStatuses()
     } catch (error) {
       console.error("[Progress] Failed to load from Supabase:", error)
     }
@@ -135,10 +151,6 @@ class GlobalProgressManager {
     if (!savedProgress || typeof savedProgress !== "object") return
 
     const snapshot = savedProgress as Record<string, any>
-    const courseSnapshot = snapshot.courseStructure
-    if (!courseSnapshot || typeof courseSnapshot !== "object") return
-
-    const modulesData = (courseSnapshot as { modules?: unknown }).modules
 
     if (typeof snapshot.currentModule === "string" || snapshot.currentModule === null) {
       this.currentModule = snapshot.currentModule
@@ -147,55 +159,50 @@ class GlobalProgressManager {
     if (typeof snapshot.currentSection === "string" || snapshot.currentSection === null) {
       this.currentSection = snapshot.currentSection
     }
+  }
 
-    if (Array.isArray(modulesData)) {
-      const savedModulesById = new Map<string, any>()
+  private applySectionStates(
+    savedSectionStates: Array<{ moduleId: string; sectionId: string; isCompleted: boolean }>,
+  ) {
+    const completedByModule = new Map<string, Set<string>>()
 
-      modulesData.forEach((savedModule) => {
-        if (!savedModule || typeof savedModule !== "object") return
-        if (typeof savedModule.id === "string") {
-          savedModulesById.set(savedModule.id, savedModule)
-        }
+    savedSectionStates.forEach((state) => {
+      if (!state.isCompleted) return
+
+      const sectionSet = completedByModule.get(state.moduleId) ?? new Set<string>()
+      sectionSet.add(state.sectionId)
+      completedByModule.set(state.moduleId, sectionSet)
+    })
+
+    courseStructure.modules.forEach((module) => {
+      const completedSet = completedByModule.get(module.id) ?? new Set<string>()
+      module.sections.forEach((section) => {
+        section.completed = completedSet.has(section.id)
       })
+    })
+  }
 
-      courseStructure.modules.forEach((module) => {
-        const savedModule = savedModulesById.get(module.id)
-        if (!savedModule) return
+  private recalculateModuleStatuses() {
+    courseStructure.modules.forEach((module) => {
+      const totalSections = module.sections.length
+      const completedSections = module.sections.filter((section) => section.completed).length
 
-        if (typeof savedModule.status === "string") {
-          module.status = savedModule.status
-        }
+      if (totalSections === 0) {
+        module.status = "not-started"
+        module.completionRate = 0
+        return
+      }
 
-        if (typeof savedModule.completionRate === "number" && !isNaN(savedModule.completionRate)) {
-          module.completionRate = Math.min(Math.max(savedModule.completionRate, 0), 100)
-        }
+      module.completionRate = Math.round((completedSections / totalSections) * 100)
 
-        if (Array.isArray(savedModule.sections)) {
-          const completedById = new Map<string, boolean>()
-
-          savedModule.sections.forEach((savedSection: any) => {
-            if (
-              savedSection &&
-              typeof savedSection === "object" &&
-              typeof savedSection.id === "string" &&
-              typeof savedSection.completed === "boolean"
-            ) {
-              completedById.set(savedSection.id, savedSection.completed)
-            }
-          })
-
-          module.sections.forEach((section) => {
-            const completed = completedById.get(section.id)
-            if (typeof completed === "boolean") {
-              section.completed = completed
-            }
-          })
-        }
-      })
-
-      return
-    }
-
+      if (completedSections === 0) {
+        module.status = "not-started"
+      } else if (completedSections >= totalSections) {
+        module.status = "completed"
+      } else {
+        module.status = "in-progress"
+      }
+    })
   }
 
   setCurrentPosition(moduleId: string, sectionId: string) {
@@ -214,6 +221,7 @@ class GlobalProgressManager {
       if (section) {
         const rollbackSnapshot = this.createSnapshot()
         section.completed = true
+        this.recalculateModuleStatuses()
         console.log("[Progress] Section marked, triggering save")
         this.queuePersist(rollbackSnapshot)
 
@@ -234,6 +242,7 @@ class GlobalProgressManager {
       if (section) {
         const rollbackSnapshot = this.createSnapshot()
         section.completed = false
+        this.recalculateModuleStatuses()
         this.queuePersist(rollbackSnapshot)
         this.notifyListeners()
       }
@@ -267,11 +276,40 @@ class GlobalProgressManager {
     }
 
     try {
+      this.recalculateModuleStatuses()
+
+      const completedModules = courseStructure.modules.filter((module) => module.status === "completed").length
+      const completionPercentage = this.getOverallProgress()
+
+      const sectionStateWrites: Array<{
+        moduleId: string
+        sectionId: string
+        isCompleted: boolean
+        timeSpentSeconds: number
+      }> = []
+
+      courseStructure.modules.forEach((module) => {
+        module.sections.forEach((section) => {
+          if (!section.completed) return
+
+          sectionStateWrites.push({
+            moduleId: module.id,
+            sectionId: section.id,
+            isCompleted: true,
+            timeSpentSeconds: 0,
+          })
+        })
+      })
+
       await saveCourseProgressState({
-        courseStructure,
         currentModule: this.currentModule,
         currentSection: this.currentSection,
+        modulesCompleted: completedModules,
+        completionPercentage,
       })
+
+      await resetSectionStates()
+      await saveSectionStatesBulk(sectionStateWrites)
 
       // Discard results that arrived after a user switch.
       if (this.initGeneration !== generation) return

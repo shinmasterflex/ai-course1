@@ -409,7 +409,7 @@ describe("Payment session race condition", () => {
 
 ## Rollout Notes
 
-**Breaking Changes:** None - All changes are backward compatible.
+**Breaking Changes:** Legacy/backward-compat progress persistence paths were removed. Runtime now expects normalized Supabase tables only (`user_course_progress`, `user_module_progress`, `user_section_state`, `user_quiz_attempts`).
 
 **Monitoring to Add:**
 - Track `SaveProgressError` exceptions with `error.isTransient` flag

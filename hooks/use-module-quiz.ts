@@ -4,7 +4,7 @@
  * Persists quiz results to Supabase with unload protection.
  */
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { loadQuizResults, saveQuizResults } from "@/lib/supabase-learning-state"
 
 /**
@@ -21,7 +21,7 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
 
   const [quizResults, setQuizResults] = useState<Record<T, boolean>>(initialResults)
   const [isHydrated, setIsHydrated] = useState(false)
-  const [pendingSave, setPendingSave] = useState<NodeJS.Timeout | null>(null)
+  const pendingSaveRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     let isActive = true
@@ -65,8 +65,8 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
     }
 
     // Debounce quiz saves (1s)
-    if (pendingSave) {
-      clearTimeout(pendingSave)
+    if (pendingSaveRef.current) {
+      clearTimeout(pendingSaveRef.current)
     }
 
     const timeout = setTimeout(() => {
@@ -75,11 +75,14 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
       })
     }, 1000)
 
-    setPendingSave(timeout)
+    pendingSaveRef.current = timeout
 
     return () => {
       if (timeout) {
         clearTimeout(timeout)
+      }
+      if (pendingSaveRef.current === timeout) {
+        pendingSaveRef.current = null
       }
     }
   }, [isHydrated, moduleId, quizResults])
@@ -87,9 +90,9 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
   // Flush quiz results on page unload
   useEffect(() => {
     const handler = async () => {
-      if (pendingSave) {
-        clearTimeout(pendingSave)
-        setPendingSave(null)
+      if (pendingSaveRef.current) {
+        clearTimeout(pendingSaveRef.current)
+        pendingSaveRef.current = null
       }
       
       // Attempt one final save on page close
@@ -111,7 +114,7 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
       window.removeEventListener("pagehide", handler)
       window.removeEventListener("beforeunload", handler)
     }
-  }, [moduleId, quizResults, pendingSave])
+  }, [moduleId, quizResults])
 
   const handleQuizComplete = (quizKey: T, correct: boolean) => {
     setQuizResults((prev) => ({

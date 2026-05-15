@@ -120,6 +120,7 @@ model users {
   moduleProgress        user_module_progress[]
   sectionState          user_section_state[]
   quizAttempts          user_quiz_attempts[]
+  bookingBoxSubmissions booking_box_submissions[]
 }
 
 // ============================================================================
@@ -127,87 +128,113 @@ model users {
 // ============================================================================
 
 model user_course_enrollments {
-  id         String   @id @default(cuid())
-  userId     String   @unique
-  courseSlug String   @default("ai-course")
-  hasPaid    Boolean  @default(false)
-  enrolledAt DateTime @default(now())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid @map("id")
+  userId     String   @unique @db.Uuid @map("user_id")
+  courseSlug String   @default("ai-course") @map("course_slug")
+  hasPaid    Boolean  @default(false) @map("has_paid")
+  enrolledAt DateTime @default(now()) @map("enrolled_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   user users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, courseSlug])
+  @@map("user_course_enrollments")
 }
 
 model user_course_progress {
-  userId               String   @id
-  courseSlug           String   @default("ai-course")
-  currentModule        String?
-  currentSection       String?
-  modulesCompleted     Int      @default(0)
-  totalModules         Int      @default(5)
-  completionPercentage Decimal  @default(0) @db.Numeric(5, 2)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  userId               String   @id @db.Uuid @map("user_id")
+  courseSlug           String   @default("ai-course") @map("course_slug")
+  currentModule        String?  @map("current_module")
+  currentSection       String?  @map("current_section")
+  modulesCompleted     Int      @default(0) @map("modules_completed")
+  totalModules         Int      @default(5) @map("total_modules")
+  completionPercentage Decimal  @default(0) @db.Decimal(5, 2) @map("completion_percentage")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
 
   user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_course_progress")
 }
 
 model user_module_progress {
-  id               String   @id @default(cuid())
-  userId           String
-  moduleId         String
-  status           String   @default("not_started") // not_started | in_progress | completed
-  sectionsCompleted Int     @default(0)
-  totalSections    Int?
-  quizPassed       Boolean  @default(false)
-  quizScore        Int?
-  quizAttempts     Int      @default(0)
-  startedAt        DateTime?
-  completedAt      DateTime?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid @map("id")
+  userId            String   @db.Uuid @map("user_id")
+  moduleId          String   @map("module_id")
+  status            String   @default("not_started")
+  sectionsCompleted Int      @default(0) @map("sections_completed")
+  totalSections     Int?     @map("total_sections")
+  quizPassed        Boolean  @default(false) @map("quiz_passed")
+  quizScore         Int?     @map("quiz_score")
+  quizAttempts      Int      @default(0) @map("quiz_attempts")
+  startedAt         DateTime? @map("started_at")
+  completedAt       DateTime? @map("completed_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, moduleId])
   @@index([userId, status])
   @@index([moduleId])
+  @@map("user_module_progress")
 }
 
 model user_section_state {
-  id               String   @id @default(cuid())
-  userId           String
-  moduleId         String
-  sectionId        String
-  isCompleted      Boolean  @default(false)
-  timeSpentSeconds Int      @default(0)
-  lastViewedAt     DateTime?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid @map("id")
+  userId           String   @db.Uuid @map("user_id")
+  moduleId         String   @map("module_id")
+  sectionId        String   @map("section_id")
+  isCompleted      Boolean  @default(false) @map("is_completed")
+  timeSpentSeconds Int      @default(0) @map("time_spent_seconds")
+  lastViewedAt     DateTime? @map("last_viewed_at")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, moduleId, sectionId])
   @@index([userId, moduleId, isCompleted])
+  @@map("user_section_state")
 }
 
 model user_quiz_attempts {
-  id              String   @id @default(cuid())
-  userId          String
-  moduleId        String
-  attemptNumber   Int      @default(1)
-  score           Int
-  totalQuestions  Int
-  passed          Boolean  @default(false)
-  answers         Json     @default("{}")
-  attemptedAt     DateTime @default(now())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid @map("id")
+  userId         String   @db.Uuid @map("user_id")
+  moduleId       String   @map("module_id")
+  attemptNumber  Int      @default(1) @map("attempt_number")
+  score          Int
+  totalQuestions Int      @map("total_questions")
+  passed         Boolean  @default(false)
+  answers        Json     @default("{}")
+  attemptedAt    DateTime @default(now()) @map("attempted_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, moduleId])
   @@index([userId, attemptedAt])
+  @@map("user_quiz_attempts")
+}
+
+model booking_box_submissions {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid @map("id")
+  userId     String?  @db.Uuid @map("user_id")
+  name       String
+  email      String
+  message    String
+  status     String   @default("new")
+  sourcePage String?  @map("source_page")
+  ipAddress  String?  @db.Inet @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  user users? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([email])
+  @@index([status, createdAt])
+  @@index([userId])
+  @@map("booking_box_submissions")
 }

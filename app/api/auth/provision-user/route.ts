@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { Prisma } from '@prisma/client'
 import { enforceRateLimit } from '@/lib/rate-limit'
 import { verifyCheckoutSessionPayment } from '@/lib/stripe'
+import { getAdminSupabaseClient } from '@/lib/supabase-admin'
 import { upsertAppUser, findUserById, findUserBySessionId } from '@/lib/user-db-ops'
 
 type ProvisionBody = {
@@ -60,12 +61,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Missing required registration fields.' }, { status: 400 })
   }
 
-  const adminClient = createClient(getSupabaseUrl(), getSupabaseSecretKey(), {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  })
+  const adminClient = getAdminSupabaseClient()
 
   let authUserData: Awaited<ReturnType<typeof adminClient.auth.admin.getUserById>>['data'] | null = null
   let authUserError: Awaited<ReturnType<typeof adminClient.auth.admin.getUserById>>['error'] | null = null

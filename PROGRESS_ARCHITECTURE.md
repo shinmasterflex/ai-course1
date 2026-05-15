@@ -13,17 +13,18 @@ The course progress system now persists directly to Supabase tables from the cli
 ## Progress Managers
 
 **`lib/progress-manager.ts`**
-- Stores module section progress in Supabase
+- Stores normalized section rows in `user_section_state`
 - Keeps a client-side cache for fast reads during the session
 - `loadProgress()`, `saveProgress()`, `flushProgress()`, `resetAllProgress()` all use Supabase state
 
 **`lib/global-progress.ts`**
-- Stores the full course snapshot and current position in Supabase
+- Stores aggregate course position in `user_course_progress`
+- Writes normalized section completion rows via `saveSectionStatesBulk()`
 - Keeps the existing observer-pattern API for `useProgress()`
 - `markSectionComplete()`, `setCurrentPosition()`, `resetProgress()`, and `forceSync()` now persist directly to Supabase
 
 **`hooks/use-module-quiz.ts`**
-- Loads and saves quiz completions from Supabase per module
+- Loads and saves quiz attempt rows in `user_quiz_attempts`
 - Maintains the same hook API for the course module page
 
 ## Storage Layers
@@ -36,14 +37,16 @@ The course progress system now persists directly to Supabase tables from the cli
 ## Database Schema
 
 See [supabase/initial.sql](supabase/initial.sql) for the tables and RLS policies required for:
-- `user_course_progress_snapshots`
-- `user_section_progress_states`
-- `user_module_quiz_results`
+- `user_course_enrollments`
+- `user_course_progress`
+- `user_module_progress`
+- `user_section_state`
+- `user_quiz_attempts`
 
 ## Error Handling
 
 - Network and auth failures are logged and fall back to the in-memory cache for the active session
-- Reset operations clear both the client cache and the Supabase rows
+- Reset operations clear both client cache and normalized Supabase rows
 - Unload sync is best-effort and flushes the current cache to Supabase
 
 ## Testing Checklist

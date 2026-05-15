@@ -242,3 +242,56 @@ CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
 -- Module 4: overview | roi-fundamentals | metrics | strategic-positioning | module-quiz
 --
 -- When implementing migrations or adding courses, update this reference section.
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 10. BOOKING BOX SUBMISSIONS
+-- ────────────────────────────────────────────────────────────────────────────
+-- Matches website booking/contact box fields:
+--   name (required), email (required), message (required)
+
+CREATE TABLE IF NOT EXISTS public.booking_box_submissions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  name TEXT NOT NULL CHECK (length(trim(name)) > 0),
+  email TEXT NOT NULL CHECK (position('@' in email) > 1),
+  message TEXT NOT NULL CHECK (length(trim(message)) > 0),
+  status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'in_review', 'resolved', 'spam')),
+  source_page TEXT,
+  ip_address INET,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+COMMENT ON TABLE public.booking_box_submissions IS
+  'Stores booking/contact form submissions from the website booking box.';
+COMMENT ON COLUMN public.booking_box_submissions.status IS
+  'Workflow status for triage: new | in_review | resolved | spam.';
+COMMENT ON COLUMN public.booking_box_submissions.source_page IS
+  'Optional page path where the form was submitted (for attribution).';
+
+DROP TRIGGER IF EXISTS set_booking_box_submissions_updated_at ON public.booking_box_submissions;
+CREATE TRIGGER set_booking_box_submissions_updated_at
+BEFORE UPDATE ON public.booking_box_submissions
+FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
+
+ALTER TABLE public.booking_box_submissions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "public_submit_booking_box" ON public.booking_box_submissions;
+CREATE POLICY "public_submit_booking_box" ON public.booking_box_submissions
+  FOR INSERT TO anon, authenticated
+  WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "user_read_own_booking_box" ON public.booking_box_submissions;
+CREATE POLICY "user_read_own_booking_box" ON public.booking_box_submissions
+  FOR SELECT TO authenticated
+  USING (auth.uid() = user_id);
+
+CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_email
+  ON public.booking_box_submissions(email);
+
+CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_status_created
+  ON public.booking_box_submissions(status, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_user_id
+  ON public.booking_box_submissions(user_id);

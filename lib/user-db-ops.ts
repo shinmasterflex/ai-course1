@@ -33,9 +33,9 @@ export async function upsertAppUser(payload: AppUserUpsertPayload) {
     // Supabase operation (fallback)
     async () => {
       const adminClient = getAdminSupabaseClient()
-      const { data, error } = await adminClient
+      const { data, error } = await (adminClient as any)
         .from('users')
-        .upsert(payload, { onConflict: 'id' })
+        .upsert(payload as any, { onConflict: 'id' })
         .select('*')
         .single()
 

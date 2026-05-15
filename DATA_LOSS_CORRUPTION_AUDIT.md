@@ -277,11 +277,12 @@ export function useModuleQuiz<T extends string>(moduleId: string, quizKeys: T[])
 
 ### 6. Silent Failures in `saveSectionProgressState()` (MEDIUM SEVERITY)
 
-**Location:** [lib/supabase-learning-state.ts](lib/supabase-learning-state.ts#L108-L120)
+**Location:** Historical (`lib/supabase-learning-state.ts`, pre-normalization)
 
 **Issue:** `upsertStateRow()` throws but errors are not descriptive.
 
 ```typescript
+// Historical example (removed)
 // ❌ PROBLEMATIC
 async function upsertStateRow(table: string, userId: string, payload: Record<string, unknown>, onConflict: string) {
   const supabase = createClient()
@@ -496,12 +497,12 @@ model progress {
 
 ### 12. No Unique Constraint on Module Quiz Results (LOW SEVERITY)
 
-**Location:** [lib/supabase-learning-state.ts](lib/supabase-learning-state.ts#L1-30)
+**Location:** Historical (`supabase/initial.sql`, pre-normalization)
 
-**Issue:** Quiz results table has no `UNIQUE` constraint; duplicate quiz results could be created.
+**Issue (Historical):** The older `user_module_quiz_results` naming implied a single-row-per-module model and could be misread as under-constrained.
 
 ```sql
--- Initial SQL doesn't specify PRIMARY KEY for quiz results
+-- Historical table shape
 CREATE TABLE IF NOT EXISTS public.user_module_quiz_results (
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
@@ -513,28 +514,17 @@ CREATE TABLE IF NOT EXISTS public.user_module_quiz_results (
 );
 ```
 
-Actually, this **is** protected by the PRIMARY KEY. No issue here.
+Current schema uses `user_quiz_attempts` with a UUID primary key and timestamped attempts, so duplicate-row concerns are no longer relevant to the active model.
 
 ---
 
 ## 🟢 LOW SEVERITY / DESIGN OBSERVATIONS
 
-### 13. No Compression for Large Progress Snapshots
+### 13. Snapshot Storage Overhead (RESOLVED)
 
-Progress snapshots serialize entire course structure. For large courses with 100+ modules, this JSON could be large. No compression strategy.
+This is resolved in the current architecture. Runtime persistence now writes normalized section rows (`user_section_state`) and aggregate position (`user_course_progress`) instead of storing full course snapshots in the database.
 
-```typescript
-// lib/global-progress.ts
-private createSnapshot() {
-  return JSON.stringify({
-    courseStructure,  // ❌ Entire course structure serialized every save
-    currentModule: this.currentModule,
-    currentSection: this.currentSection,
-  })
-}
-```
-
-**Impact:** Supabase storage costs could be high; no immediate data loss but inefficient.
+**Current Impact:** No snapshot-size storage overhead in Supabase persistence path.
 
 ---
 

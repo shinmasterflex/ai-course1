@@ -589,7 +589,7 @@ If you get this wrong, don't view it as failure. Wrong answers during learning a
   const selectedOption = options.find((option) => option.id === selectedOptionId)
   const correctOption = options.find((option) => option.id === correctOptionId)
 
-  const feedbackText = useMemo(() => {
+  const feedbackText = (() => {
     if (!selectedOptionId) {
       return ""
     }
@@ -609,7 +609,7 @@ If you get this wrong, don't view it as failure. Wrong answers during learning a
     const bestAnswerText = correctOption?.label ? correctOption.label : "the highlighted option"
 
     return `Not quite. You selected: ${pickedAnswerText}. The best answer is: ${bestAnswerText}. ${explanationWithoutPrefix}`
-  }, [correctOption?.label, explanation, isCorrect, optionExplanations, selectedOption?.label, selectedOptionId])
+  })()
 
   return (
     <Card {...explainerAttributes} {...(componentId ? { "data-explainer-id": componentId } : {})} className={cn("p-5 border-brand-green/20 bg-brand-green/5", accentClassName)}>

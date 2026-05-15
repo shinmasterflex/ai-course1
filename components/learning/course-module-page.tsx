@@ -32,7 +32,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
   const currentSection = sections[currentSectionIndex]
   const completedSectionIds = getCompletedSections(moduleId)
 
-  const questions = moduleQuizData[moduleId] ?? []
+  const questions = useMemo(() => moduleQuizData[moduleId] ?? [], [moduleId])
   const quizKeys = useMemo(() => questions.map((question) => question.key), [questions])
   const { quizResults, handleQuizComplete, allQuizComplete } = useModuleQuiz<string>(moduleId, quizKeys)
 
