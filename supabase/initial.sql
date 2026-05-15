@@ -114,9 +114,9 @@ CREATE TABLE IF NOT EXISTS public.user_course_progress (
   course_slug TEXT NOT NULL DEFAULT 'ai-course',
   current_module TEXT,
   current_section TEXT,
-  modules_completed INTEGER DEFAULT 0,
-  total_modules INTEGER DEFAULT 5,
-  completion_percentage NUMERIC(5,2) DEFAULT 0,
+  modules_completed INTEGER NOT NULL DEFAULT 0,
+  total_modules INTEGER NOT NULL DEFAULT 5,
+  completion_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -137,11 +137,11 @@ CREATE TABLE IF NOT EXISTS public.user_module_progress (
   user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'not_started',
-  sections_completed INTEGER DEFAULT 0,
+  sections_completed INTEGER NOT NULL DEFAULT 0,
   total_sections INTEGER,
-  quiz_passed BOOLEAN DEFAULT FALSE,
+  quiz_passed BOOLEAN NOT NULL DEFAULT FALSE,
   quiz_score INTEGER,
-  quiz_attempts INTEGER DEFAULT 0,
+  quiz_attempts INTEGER NOT NULL DEFAULT 0,
   started_at TIMESTAMPTZ,
   completed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -165,8 +165,8 @@ CREATE TABLE IF NOT EXISTS public.user_section_state (
   user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
   section_id TEXT NOT NULL,
-  is_completed BOOLEAN DEFAULT FALSE,
-  time_spent_seconds INTEGER DEFAULT 0,
+  is_completed BOOLEAN NOT NULL DEFAULT FALSE,
+  time_spent_seconds INTEGER NOT NULL DEFAULT 0,
   last_viewed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -276,22 +276,15 @@ CREATE POLICY "user_isolation" ON public.user_quiz_attempts
 -- ────────────────────────────────────────────────────────────────────────────
 -- 8. INDEXES FOR QUERY PERFORMANCE
 -- ────────────────────────────────────────────────────────────────────────────
-
-CREATE INDEX IF NOT EXISTS idx_user_course_progress_user_id
-  ON public.user_course_progress(user_id);
-
-CREATE INDEX IF NOT EXISTS idx_user_module_progress_user_id_module_id
-  ON public.user_module_progress(user_id, module_id);
+-- Primary key and UNIQUE constraints already provide indexes for
+-- (user_id) on user_course_progress and the unique tuples on
+-- user_module_progress and user_section_state, so they are not redeclared here.
 
 CREATE INDEX IF NOT EXISTS idx_user_module_progress_status
   ON public.user_module_progress(user_id, status);
 
--- Matches Prisma `@@index([moduleId])` on user_module_progress.
 CREATE INDEX IF NOT EXISTS idx_user_module_progress_module_id
   ON public.user_module_progress(module_id);
-
-CREATE INDEX IF NOT EXISTS idx_user_section_state_user_module
-  ON public.user_section_state(user_id, module_id);
 
 CREATE INDEX IF NOT EXISTS idx_user_section_state_completed
   ON public.user_section_state(user_id, module_id, is_completed);
@@ -303,28 +296,9 @@ CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
   ON public.user_quiz_attempts(user_id, attempted_at DESC);
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 9. REFERENCE: MODULE & SECTION STRUCTURE
+-- 9. BOOKING BOX SUBMISSIONS
 -- ────────────────────────────────────────────────────────────────────────────
--- This schema is designed for the 5-module AI for Business Leaders course.
--- Module section names for reference (used in application course-content.ts):
---
--- Module 0: welcome | overview | summary
--- Module 1: overview | ai-fundamentals | ml-foundations | llm-mechanics | 
---           ai-tools-survey | myths-and-reality | agents | future-frontiers | module-quiz
--- Module 2: prompting | workflow-optimization | stack-management | people-and-skills | 
---           agent-deployment | module-quiz
--- Module 3: overview | evaluation | data-readiness | governance-and-risk | 
---           adoption-roadmap | module-quiz
--- Module 4: overview | roi-fundamentals | metrics | strategic-positioning | module-quiz
---
--- When adding courses or modifying section structure, update this reference section.
-
--- ────────────────────────────────────────────────────────────────────────────
--- 10. BOOKING BOX SUBMISSIONS
--- ────────────────────────────────────────────────────────────────────────────
--- Matches website booking/contact box fields:
---   name (required), email (required), message (required)
--- This is the message table for visitors/users to contact you.
+-- Visitor/user contact submissions from the website booking form.
 
 CREATE TABLE IF NOT EXISTS public.booking_box_submissions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
