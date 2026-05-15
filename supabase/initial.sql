@@ -11,8 +11,8 @@
 -- Data Flow:
 --   auth.users (secure credentials) -> public.users (app profile mirror)
 --   app tables reference public.users so ORM and SQL stay aligned
---   user_course_progress (aggregate)
---   user_module_progress (module-level) + user_section_state (section-level)
+--   user_course_progress (last position pointer)
+--   user_module_progress (per-module quiz outcome) + user_section_state (section-level)
 --   user_quiz_attempts (quiz history per module)
 -- ============================================================================
 
@@ -87,52 +87,38 @@ FOR EACH ROW
 EXECUTE FUNCTION public.sync_auth_user_to_public_users();
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 1. PROGRESS SUMMARIES
+-- 1. COURSE POSITION POINTER
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_course_progress (
   user_id UUID PRIMARY KEY REFERENCES public."users"(id) ON DELETE CASCADE,
-  course_slug TEXT NOT NULL DEFAULT 'ai-course',
   current_module TEXT,
   current_section TEXT,
-  modules_completed INTEGER NOT NULL DEFAULT 0,
-  completion_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 COMMENT ON TABLE public.user_course_progress IS
-  'Aggregate course-level progress snapshot. Updated when user changes position.';
-COMMENT ON COLUMN public.user_course_progress.completion_percentage IS
-  'Denormalized 0-100 progress percentage for quick dashboard queries.';
+  'Last-known module/section position so users can resume where they left off. Completion totals are derived on demand from user_section_state.';
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 2. MODULE-LEVEL TRACKING
+-- 2. MODULE-LEVEL QUIZ STATE
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_module_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES public."users"(id) ON DELETE CASCADE,
   module_id TEXT NOT NULL,
-  status TEXT NOT NULL DEFAULT 'not_started',
-  sections_completed INTEGER NOT NULL DEFAULT 0,
-  total_sections INTEGER,
   quiz_passed BOOLEAN NOT NULL DEFAULT FALSE,
   quiz_score INTEGER,
   quiz_attempts INTEGER NOT NULL DEFAULT 0,
-  started_at TIMESTAMPTZ,
-  completed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(user_id, module_id)
 );
 
 COMMENT ON TABLE public.user_module_progress IS
-  'Per-module progress: status, section completion, quiz results.';
-COMMENT ON COLUMN public.user_module_progress.status IS
-  'not_started | in_progress | completed. Updated when sections are marked complete or quiz passed.';
-COMMENT ON COLUMN public.user_module_progress.total_sections IS
-  'Total sections in module (varies by module: M0=3, M1=9, M2=6, M3=6, M4=5). Set on initial record creation, used for progress calculations.';
+  'Per-module quiz outcome summary: pass status, latest score, attempt counter. Section-level state lives in user_section_state.';
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 3. SECTION-LEVEL STATE
@@ -144,7 +130,6 @@ CREATE TABLE IF NOT EXISTS public.user_section_state (
   module_id TEXT NOT NULL,
   section_id TEXT NOT NULL,
   is_completed BOOLEAN NOT NULL DEFAULT FALSE,
-  time_spent_seconds INTEGER NOT NULL DEFAULT 0,
   last_viewed_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -152,9 +137,7 @@ CREATE TABLE IF NOT EXISTS public.user_section_state (
 );
 
 COMMENT ON TABLE public.user_section_state IS
-  'Section-level tracking: completion, engagement (time spent), last access time.';
-COMMENT ON COLUMN public.user_section_state.time_spent_seconds IS
-  'Cumulative time user spent on section. Can be approximated from timestamps if not explicitly tracked.';
+  'Section-level tracking: completion flag and last access time.';
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 4. QUIZ SUBMISSIONS & RESULTS
@@ -179,7 +162,7 @@ COMMENT ON TABLE public.user_quiz_attempts IS
 COMMENT ON COLUMN public.user_quiz_attempts.answers IS
   'JSON: { question_key: selected_option_id, ... }. Allows audit trail and review.';
 COMMENT ON COLUMN public.user_quiz_attempts.passed IS
-  'Derived from: score >= (total_questions * 0.8). Threshold may be configurable.';
+  'TRUE when every answer in the attempt is correct (100%). Computed at write time by saveQuizResults.';
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 5. TRIGGERS FOR TIMESTAMP AUTOMATION
@@ -247,12 +230,6 @@ CREATE POLICY "user_isolation" ON public.user_quiz_attempts
 -- Primary key and UNIQUE constraints already provide indexes for
 -- (user_id) on user_course_progress and the unique tuples on
 -- user_module_progress and user_section_state, so they are not redeclared here.
-
-CREATE INDEX IF NOT EXISTS idx_user_module_progress_status
-  ON public.user_module_progress(user_id, status);
-
-CREATE INDEX IF NOT EXISTS idx_user_module_progress_module_id
-  ON public.user_module_progress(module_id);
 
 CREATE INDEX IF NOT EXISTS idx_user_section_state_completed
   ON public.user_section_state(user_id, module_id, is_completed);

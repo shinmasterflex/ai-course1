@@ -278,14 +278,10 @@ class GlobalProgressManager {
     try {
       this.recalculateModuleStatuses()
 
-      const completedModules = courseStructure.modules.filter((module) => module.status === "completed").length
-      const completionPercentage = this.getOverallProgress()
-
       const sectionStateWrites: Array<{
         moduleId: string
         sectionId: string
         isCompleted: boolean
-        timeSpentSeconds: number
       }> = []
 
       courseStructure.modules.forEach((module) => {
@@ -296,7 +292,6 @@ class GlobalProgressManager {
             moduleId: module.id,
             sectionId: section.id,
             isCompleted: true,
-            timeSpentSeconds: 0,
           })
         })
       })
@@ -304,8 +299,6 @@ class GlobalProgressManager {
       await saveCourseProgressState({
         currentModule: this.currentModule,
         currentSection: this.currentSection,
-        modulesCompleted: completedModules,
-        completionPercentage,
       })
 
       await resetSectionStates()
