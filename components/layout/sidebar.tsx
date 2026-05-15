@@ -81,6 +81,16 @@ export function Sidebar() {
   })
 
   const activeSectionFromUrl = searchParams?.get("section")
+  const isOnTryRoute = pathname === "/try" || Boolean(pathname?.startsWith("/try/"))
+
+  // Module 0 always lives at the public /try preview route, regardless of
+  // where the sidebar is rendered. Other modules use the standard
+  // `/course/<id>` route (which AuthGuard gates as needed).
+  const getModuleBasePath = (moduleId: string) => {
+    if (moduleId === "module-0") return "/try"
+    return `/course/${moduleId}`
+  }
+
   const sidebarAttributes = getExplainerAttributes({
     type: "Course sidebar",
     title: "Module and section navigation",
@@ -94,17 +104,18 @@ export function Sidebar() {
 
   const handleSectionClick = (moduleId: string, sectionId: string) => {
     setCurrentPosition(moduleId, sectionId)
-    router.push(`/course/${moduleId}?section=${sectionId}`)
+    router.push(`${getModuleBasePath(moduleId)}?section=${sectionId}`)
   }
 
   const handleModuleClick = (moduleId: string, sections: { id: string }[]) => {
     if (pathname?.includes(moduleId)) return // already here
+    const base = getModuleBasePath(moduleId)
     const firstSection = sections[0]?.id
     if (firstSection) {
       setCurrentPosition(moduleId, firstSection)
-      router.push(`/course/${moduleId}?section=${firstSection}`)
+      router.push(`${base}?section=${firstSection}`)
     } else {
-      router.push(`/course/${moduleId}`)
+      router.push(base)
     }
   }
 
@@ -157,7 +168,8 @@ export function Sidebar() {
 
         <nav className="space-y-2">
           {courseStructure.modules.map((module) => {
-            const isActiveModule = pathname?.includes(module.id)
+            const isActiveModule =
+              pathname?.includes(module.id) || (isOnTryRoute && module.id === "module-0")
 
             return (
               <div key={module.id}>

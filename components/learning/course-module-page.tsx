@@ -17,11 +17,25 @@ import { getSectionCourseContentEntries } from "@/lib/course-content"
 
 type CourseModulePageProps = {
   moduleId: string
+  /**
+   * Route base used to build section URLs. Defaults to `/course/${moduleId}`.
+   * Provide a value when this component is hosted outside the standard
+   * course area (e.g. the public `/try` preview for Module 0).
+   */
+  basePath?: string
+  /**
+   * Route to navigate to after the learner finishes the final section.
+   * Defaults to the dashboard at `/course`. Use a public destination
+   * for visitor-facing previews.
+   */
+  exitPath?: string
 }
 
-export function CourseModulePage({ moduleId }: CourseModulePageProps) {
+export function CourseModulePage({ moduleId, basePath, exitPath }: CourseModulePageProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const effectiveBasePath = basePath ?? `/course/${moduleId}`
+  const effectiveExitPath = exitPath ?? "/course"
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 
@@ -63,8 +77,8 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
       return
     }
 
-    router.replace(`/course/${moduleId}?section=${currentSection.id}`)
-  }, [currentSection, moduleId, router, sectionParam])
+    router.replace(`${effectiveBasePath}?section=${currentSection.id}`)
+  }, [currentSection, effectiveBasePath, router, sectionParam])
 
   const goToSection = (index: number) => {
     const target = sections[index]
@@ -72,7 +86,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
     setCurrentSectionIndex(index)
     setCurrentPosition(moduleId, target.id)
-    router.push(`/course/${moduleId}?section=${target.id}`)
+    router.push(`${effectiveBasePath}?section=${target.id}`)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
@@ -92,7 +106,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
       return
     }
 
-    router.push("/course")
+    router.push(effectiveExitPath)
   }
 
   const explainerAttributes = getExplainerAttributes({
@@ -116,7 +130,7 @@ export function CourseModulePage({ moduleId }: CourseModulePageProps) {
 
   const isModuleQuizSection = currentSection?.id === "module-quiz"
   const sectionEntries = getSectionCourseContentEntries(moduleId, currentSection?.id)
-  const currentScopeKey = currentSection ? `/course/${moduleId}::${currentSection.id}` : undefined
+  const currentScopeKey = currentSection ? `${effectiveBasePath}::${currentSection.id}` : undefined
 
   return (
     <div className="min-h-screen bg-background">

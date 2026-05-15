@@ -41,7 +41,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col gap-4 pt-2 sm:flex-row">
                 <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/course/module-0">Start Free Module 0</Link>
+                  <Link href="/try">Start Free Module 0</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="text-lg px-10">
                   <Link href="/register?paymentRequired=1">Unlock Full Course</Link>

@@ -64,6 +64,10 @@ describe("course explainer coverage audit", () => {
 
     const missing = stats
       .filter((item) => /app\/course\/module-\d+\/page\.tsx$/.test(item.file))
+      // Module 0 now lives at the public /try preview route. Its legacy
+      // /course/module-0 page is intentionally a redirect stub and does
+      // not render CourseModulePage.
+      .filter((item) => !/app\/course\/module-0\/page\.tsx$/.test(item.file))
       .filter((item) => {
         const source = fs.readFileSync(path.join(process.cwd(), item.file), "utf8")
         return !/CourseModulePage/.test(source) || !/moduleId="module-\d+"/.test(source)
@@ -71,6 +75,14 @@ describe("course explainer coverage audit", () => {
       .map((item) => item.file)
 
     expect(missing).toEqual([])
+  })
+
+  it("keeps the legacy /course/module-0 page as a redirect to /try", () => {
+    const legacyPath = path.join(process.cwd(), "app", "course", "module-0", "page.tsx")
+    const source = fs.readFileSync(legacyPath, "utf8")
+
+    expect(source).toMatch(/redirect\(/)
+    expect(source).toMatch(/\/try/)
   })
 
   it("keeps the shared module page above the minimum explicit coverage threshold", () => {

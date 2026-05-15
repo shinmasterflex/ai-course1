@@ -12,13 +12,23 @@ export function ModuleSectionBackButton() {
   const searchParams = useSearchParams()
   const { getCourseStructure, setCurrentPosition } = useProgress()
 
-  const moduleId = useMemo(() => {
+  const routeContext = useMemo(() => {
+    if (pathname === "/try" || pathname?.startsWith("/try/")) {
+      return { moduleId: "module-0", basePath: "/try", exitPath: "/" }
+    }
+
     const match = pathname?.match(/^\/course\/(module-\d+)$/)
-    return match && match[1] ? match[1] : null
+    if (match && match[1]) {
+      return { moduleId: match[1], basePath: `/course/${match[1]}`, exitPath: "/course" }
+    }
+
+    return null
   }, [pathname])
 
+  const moduleId = routeContext?.moduleId ?? null
+
   const navigationTarget = useMemo(() => {
-    if (!moduleId) {
+    if (!routeContext || !moduleId) {
       return null
     }
 
@@ -33,7 +43,7 @@ export function ModuleSectionBackButton() {
 
     if (safeSectionIndex === 0) {
       return {
-        href: "/course",
+        href: routeContext.exitPath,
         label: "Back",
         sectionId: null,
       }
@@ -42,11 +52,11 @@ export function ModuleSectionBackButton() {
     const previousSection = module.sections[safeSectionIndex - 1]
 
     return {
-      href: `/course/${moduleId}?section=${previousSection.id}`,
+      href: `${routeContext.basePath}?section=${previousSection.id}`,
       label: "Back",
       sectionId: previousSection.id,
     }
-  }, [getCourseStructure, moduleId, searchParams])
+  }, [getCourseStructure, moduleId, routeContext, searchParams])
 
   if (!moduleId || !navigationTarget) {
     return null

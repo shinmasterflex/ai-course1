@@ -230,7 +230,7 @@ export default function RegisterPage() {
                     </Button>
                   )}
                   <Button asChild variant="outline">
-                    <Link href="/course/module-0">Try Module 0</Link>
+                    <Link href="/try">Try Module 0</Link>
                   </Button>
                 </div>
               </div>
@@ -259,7 +259,7 @@ export default function RegisterPage() {
                     </Button>
                   )}
                   <Button asChild variant="outline">
-                    <Link href="/course/module-0">Try Module 0</Link>
+                    <Link href="/try">Try Module 0</Link>
                   </Button>
                 </div>
               </div>

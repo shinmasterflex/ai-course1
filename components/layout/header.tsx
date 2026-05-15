@@ -8,11 +8,14 @@ import { ModuleSectionBackButton } from "@/components/learning/module-section-ba
 import { RotateCcw } from "lucide-react"
 import { progressManager } from "@/lib/global-progress"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 export function Header() {
   const [isResetting, setIsResetting] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
+  const isPublicPreview = pathname === "/try" || Boolean(pathname?.startsWith("/try/"))
+  const homeHref = isPublicPreview ? "/" : "/course"
   const headerAttributes = getExplainerAttributes({
     type: "Course header",
     title: "Top navigation bar",
@@ -31,7 +34,7 @@ export function Header() {
     setIsResetting(true)
     try {
       await progressManager.resetProgress()
-      router.push("/course")
+      router.push(homeHref)
       router.refresh()
     } finally {
       setIsResetting(false)
@@ -44,13 +47,17 @@ export function Header() {
         <div className="flex items-center gap-3">
           <ModuleSectionBackButton />
           <Link
-            href="/course"
+            href={homeHref}
             {...getExplainerAttributes({
               type: "Brand navigation",
               title: "Cognijin course logo",
-              summary: "This logo returns the learner to the course dashboard.",
+              summary: isPublicPreview
+                ? "This logo returns the visitor to the public landing page."
+                : "This logo returns the learner to the course dashboard.",
               details: ["Brand links are a common return path back to the main course overview."],
-              interaction: "Click the logo to leave the current lesson and return to the dashboard.",
+              interaction: isPublicPreview
+                ? "Click the logo to leave the preview and return to the home page."
+                : "Click the logo to leave the current lesson and return to the dashboard.",
             })}
             className="flex h-10 shrink-0 items-center"
           >
@@ -75,34 +82,52 @@ export function Header() {
           })}
           className="flex items-center gap-2"
         >
-          <Button
-            {...getExplainerAttributes({
-              type: "Reset action",
-              title: isResetting ? "Resetting progress" : "Reset Progress",
-              summary: "This button clears all saved course progress for the current learner on this device and in synced state.",
-              details: ["It is intentionally destructive and asks for confirmation before proceeding.", "Use it when you want a full restart instead of continuing where you left off."],
-              interaction: "Click it only if you want to permanently restart your course progress.",
-            })}
-            onClick={handleReset}
-            disabled={isResetting}
-            className="bg-brand-orange hover:bg-[#e64a19] text-white flex items-center gap-2"
-          >
-            <RotateCcw className="h-4 w-4" />
-            {isResetting ? "Resetting..." : "Reset Progress"}
-          </Button>
-          <Button
-            {...getExplainerAttributes({
-              type: "Navigation",
-              title: "Course Dashboard",
-              summary: "This button returns to the course progress dashboard.",
-              details: ["Use it to navigate back to the main course overview."],
-              interaction: "Click Course Dashboard to return to the course dashboard.",
-            })}
-            asChild
-            className="bg-brand-green hover:bg-[#143d31] text-white"
-          >
-            <Link href="/course">Course Dashboard</Link>
-          </Button>
+          {isPublicPreview ? null : (
+            <Button
+              {...getExplainerAttributes({
+                type: "Reset action",
+                title: isResetting ? "Resetting progress" : "Reset Progress",
+                summary: "This button clears all saved course progress for the current learner on this device and in synced state.",
+                details: ["It is intentionally destructive and asks for confirmation before proceeding.", "Use it when you want a full restart instead of continuing where you left off."],
+                interaction: "Click it only if you want to permanently restart your course progress.",
+              })}
+              onClick={handleReset}
+              disabled={isResetting}
+              className="bg-brand-orange hover:bg-[#e64a19] text-white flex items-center gap-2"
+            >
+              <RotateCcw className="h-4 w-4" />
+              {isResetting ? "Resetting..." : "Reset Progress"}
+            </Button>
+          )}
+          {isPublicPreview ? (
+            <Button
+              {...getExplainerAttributes({
+                type: "Navigation",
+                title: "Unlock Full Course",
+                summary: "This button takes visitors to registration and payment to unlock the rest of the course.",
+                details: ["Module 0 is a free preview; Modules 1 and beyond require an account and payment."],
+                interaction: "Click it when you are ready to continue past the free preview.",
+              })}
+              asChild
+              className="bg-brand-green hover:bg-[#143d31] text-white"
+            >
+              <Link href="/register?paymentRequired=1">Unlock Full Course</Link>
+            </Button>
+          ) : (
+            <Button
+              {...getExplainerAttributes({
+                type: "Navigation",
+                title: "Course Dashboard",
+                summary: "This button returns to the course progress dashboard.",
+                details: ["Use it to navigate back to the main course overview."],
+                interaction: "Click Course Dashboard to return to the course dashboard.",
+              })}
+              asChild
+              className="bg-brand-green hover:bg-[#143d31] text-white"
+            >
+              <Link href="/course">Course Dashboard</Link>
+            </Button>
+          )}
         </div>
       </div>
 

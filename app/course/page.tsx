@@ -32,7 +32,8 @@ export default function DashboardPage() {
   const [mounted, setMounted] = useState(false)
   const [hasPaidAccess, setHasPaidAccess] = useState(false)
   const [accessResolved, setAccessResolved] = useState(false)
-  const courseModules = getCourseStructure().modules
+  // Module 0 is the free public preview and lives at /try, not on the dashboard.
+  const courseModules = getCourseStructure().modules.filter((m) => m.id !== "module-0")
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -170,8 +171,7 @@ export default function DashboardPage() {
                 const status = getStatus(completed, total)
                 const visual = MODULE_VISUALS[module.id as keyof typeof MODULE_VISUALS] ?? { icon: Workflow, color: "brand-indigo" }
                 const Icon = visual.icon
-                const isDemoModule = module.id === "module-0"
-                const isLocked = accessResolved && !hasPaidAccess && !isDemoModule
+                const isLocked = accessResolved && !hasPaidAccess
 
                 return (
                   <Card key={module.id} className="border hover:shadow-md transition-shadow">
@@ -219,7 +219,7 @@ export default function DashboardPage() {
                       </div>
                       {isLocked ? (
                         <p className="mt-3 text-xs text-muted-foreground">
-                          Module 0 is free. Unlock premium access to continue with Module 1 and beyond.
+                          Unlock premium access to start this module. Want a preview first? Try the free <a href="/try" className="underline text-brand-indigo">Module 0</a>.
                         </p>
                       ) : null}
                     </CardContent>

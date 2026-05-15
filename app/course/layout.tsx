@@ -25,7 +25,9 @@ export default function CourseLayout({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { getCourseStructure, setCurrentPosition, currentModule, currentSection } = useProgress()
-  const isDemoAccessiblePath = pathname === "/course" || pathname?.startsWith("/course/module-0")
+  // The /course dashboard itself is reachable for browsing module listings;
+  // Module 0 now lives at the public /try route, so it is no longer gated here.
+  const isDemoAccessiblePath = pathname === "/course"
 
   // Setup automatic progress sync on page unload
   useEffect(() => {
