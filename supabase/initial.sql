@@ -11,7 +11,7 @@
 -- Data Flow:
 --   auth.users (secure credentials) -> public.users (app profile mirror)
 --   app tables reference public.users so ORM and SQL stay aligned
---   user_course_enrollments (entry) → user_course_progress (aggregate)
+--   user_course_progress (aggregate)
 --   user_module_progress (module-level) + user_section_state (section-level)
 --   user_quiz_attempts (quiz history per module)
 -- ============================================================================
@@ -87,26 +87,7 @@ FOR EACH ROW
 EXECUTE FUNCTION public.sync_auth_user_to_public_users();
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 1. ENROLLMENTS & ACCESS CONTROL
--- ────────────────────────────────────────────────────────────────────────────
-
-CREATE TABLE IF NOT EXISTS public.user_course_enrollments (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL UNIQUE REFERENCES public."users"(id) ON DELETE CASCADE,
-  course_slug TEXT NOT NULL DEFAULT 'ai-course',
-  has_paid BOOLEAN NOT NULL DEFAULT FALSE,
-  enrolled_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-COMMENT ON TABLE public.user_course_enrollments IS
-  'Links users to course enrollments. Synced with Stripe payment status via users.paidAt.';
-COMMENT ON COLUMN public.user_course_enrollments.has_paid IS
-  'Reflects sync status with Stripe; primary source of truth is public.users.paidAt.';
-
--- ────────────────────────────────────────────────────────────────────────────
--- 2. PROGRESS SUMMARIES
+-- 1. PROGRESS SUMMARIES
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_course_progress (
@@ -115,7 +96,6 @@ CREATE TABLE IF NOT EXISTS public.user_course_progress (
   current_module TEXT,
   current_section TEXT,
   modules_completed INTEGER NOT NULL DEFAULT 0,
-  total_modules INTEGER NOT NULL DEFAULT 5,
   completion_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -123,13 +103,11 @@ CREATE TABLE IF NOT EXISTS public.user_course_progress (
 
 COMMENT ON TABLE public.user_course_progress IS
   'Aggregate course-level progress snapshot. Updated when user changes position.';
-COMMENT ON COLUMN public.user_course_progress.total_modules IS
-  'Always 5 for this course (Module 0 through Module 4). Included for future multi-course support.';
 COMMENT ON COLUMN public.user_course_progress.completion_percentage IS
-  'Calculated: (modules_completed / 5) * 100. Denormalized for quick dashboard queries.';
+  'Denormalized 0-100 progress percentage for quick dashboard queries.';
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 3. MODULE-LEVEL TRACKING
+-- 2. MODULE-LEVEL TRACKING
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_module_progress (
@@ -157,7 +135,7 @@ COMMENT ON COLUMN public.user_module_progress.total_sections IS
   'Total sections in module (varies by module: M0=3, M1=9, M2=6, M3=6, M4=5). Set on initial record creation, used for progress calculations.';
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 4. SECTION-LEVEL STATE
+-- 3. SECTION-LEVEL STATE
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_section_state (
@@ -179,7 +157,7 @@ COMMENT ON COLUMN public.user_section_state.time_spent_seconds IS
   'Cumulative time user spent on section. Can be approximated from timestamps if not explicitly tracked.';
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 5. QUIZ SUBMISSIONS & RESULTS
+-- 4. QUIZ SUBMISSIONS & RESULTS
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.user_quiz_attempts (
@@ -204,7 +182,7 @@ COMMENT ON COLUMN public.user_quiz_attempts.passed IS
   'Derived from: score >= (total_questions * 0.8). Threshold may be configurable.';
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 6. TRIGGERS FOR TIMESTAMP AUTOMATION
+-- 5. TRIGGERS FOR TIMESTAMP AUTOMATION
 -- ────────────────────────────────────────────────────────────────────────────
 
 CREATE OR REPLACE FUNCTION public.set_updated_at_timestamp()
@@ -216,11 +194,6 @@ BEGIN
   RETURN NEW;
 END;
 $$;
-
-DROP TRIGGER IF EXISTS set_user_course_enrollments_updated_at ON public.user_course_enrollments;
-CREATE TRIGGER set_user_course_enrollments_updated_at
-BEFORE UPDATE ON public.user_course_enrollments
-FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
 DROP TRIGGER IF EXISTS set_user_course_progress_updated_at ON public.user_course_progress;
 CREATE TRIGGER set_user_course_progress_updated_at
@@ -243,20 +216,15 @@ BEFORE UPDATE ON public.user_quiz_attempts
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 7. ROW-LEVEL SECURITY
+-- 6. ROW-LEVEL SECURITY
 -- ────────────────────────────────────────────────────────────────────────────
 
-ALTER TABLE public.user_course_enrollments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_course_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_module_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_section_state ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_quiz_attempts ENABLE ROW LEVEL SECURITY;
 
 -- Enable RLS policies: users can only see/modify their own data
-DROP POLICY IF EXISTS "user_isolation" ON public.user_course_enrollments;
-CREATE POLICY "user_isolation" ON public.user_course_enrollments
-  FOR ALL USING (auth.uid() = user_id);
-
 DROP POLICY IF EXISTS "user_isolation" ON public.user_course_progress;
 CREATE POLICY "user_isolation" ON public.user_course_progress
   FOR ALL USING (auth.uid() = user_id);
@@ -274,7 +242,7 @@ CREATE POLICY "user_isolation" ON public.user_quiz_attempts
   FOR ALL USING (auth.uid() = user_id);
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 8. INDEXES FOR QUERY PERFORMANCE
+-- 7. INDEXES FOR QUERY PERFORMANCE
 -- ────────────────────────────────────────────────────────────────────────────
 -- Primary key and UNIQUE constraints already provide indexes for
 -- (user_id) on user_course_progress and the unique tuples on
@@ -296,7 +264,7 @@ CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
   ON public.user_quiz_attempts(user_id, attempted_at DESC);
 
 -- ────────────────────────────────────────────────────────────────────────────
--- 9. BOOKING BOX SUBMISSIONS
+-- 8. BOOKING BOX SUBMISSIONS
 -- ────────────────────────────────────────────────────────────────────────────
 -- Visitor/user contact submissions from the website booking form.
 

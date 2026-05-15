@@ -23,7 +23,6 @@ export async function GET() {
     prismaQueryOk: false,
     prismaError: null as string | null,
     learningStateTables: {
-      userCourseEnrollments: false,
       userCourseProgress: false,
       userModuleProgress: false,
       userSectionState: false,
@@ -60,7 +59,6 @@ export async function GET() {
       SELECT table_name FROM information_schema.tables 
       WHERE table_schema = 'public' 
       AND table_name IN (
-        'user_course_enrollments',
         'user_course_progress', 
         'user_module_progress',
         'user_section_state',
@@ -68,7 +66,6 @@ export async function GET() {
       )
     `
     const tableNames = new Set(tables.map((t) => t.table_name))
-    checks.learningStateTables.userCourseEnrollments = tableNames.has('user_course_enrollments')
     checks.learningStateTables.userCourseProgress = tableNames.has('user_course_progress')
     checks.learningStateTables.userModuleProgress = tableNames.has('user_module_progress')
     checks.learningStateTables.userSectionState = tableNames.has('user_section_state')

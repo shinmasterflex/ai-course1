@@ -102,7 +102,6 @@ export async function saveCourseProgressState(state: CourseProgressState): Promi
       current_section: state.currentSection,
       modules_completed: state.modulesCompleted ?? 0,
       completion_percentage: state.completionPercentage ?? 0,
-      updated_at: new Date().toISOString(),
     },
     { onConflict: "user_id" },
   )
@@ -124,7 +123,6 @@ export async function resetCourseProgressState(): Promise<void> {
       current_section: null,
       modules_completed: 0,
       completion_percentage: 0,
-      updated_at: new Date().toISOString(),
     })
     .eq("user_id", userId)
 
@@ -151,11 +149,11 @@ export async function loadModuleProgress(moduleId: string): Promise<ModuleProgre
   return {
     moduleId: data.module_id,
     status: data.status,
-    sectionsCompleted: data.sections_completed || 0,
-    totalSections: data.total_sections || 0,
-    quizPassed: data.quiz_passed || false,
+    sectionsCompleted: data.sections_completed,
+    totalSections: data.total_sections ?? 0,
+    quizPassed: data.quiz_passed,
     quizScore: data.quiz_score ?? undefined,
-    quizAttempts: data.quiz_attempts || 0,
+    quizAttempts: data.quiz_attempts,
   }
 }
 
@@ -193,8 +191,8 @@ export async function loadSectionState(moduleId: string, sectionId: string): Pro
   return {
     moduleId: data.module_id,
     sectionId: data.section_id,
-    isCompleted: data.is_completed || false,
-    timeSpentSeconds: data.time_spent_seconds || 0,
+    isCompleted: data.is_completed,
+    timeSpentSeconds: data.time_spent_seconds,
     lastViewedAt: data.last_viewed_at ?? undefined,
   }
 }
@@ -220,8 +218,8 @@ export async function loadAllSectionStates(moduleId?: string): Promise<SectionSt
     data?.map((row) => ({
       moduleId: row.module_id,
       sectionId: row.section_id,
-      isCompleted: row.is_completed || false,
-      timeSpentSeconds: row.time_spent_seconds || 0,
+      isCompleted: row.is_completed,
+      timeSpentSeconds: row.time_spent_seconds,
       lastViewedAt: row.last_viewed_at ?? undefined,
     })) ?? []
   )
@@ -256,7 +254,6 @@ export async function saveSectionStatesBulk(states: SectionStateWrite[]): Promis
     is_completed: state.isCompleted,
     time_spent_seconds: state.timeSpentSeconds ?? 0,
     last_viewed_at: state.lastViewedAt ?? now,
-    updated_at: now,
   }))
 
   const { error } = await supabase.from(SECTION_TABLE).upsert(payload, {
@@ -354,7 +351,6 @@ export async function saveQuizResults(
       quiz_passed: passed,
       quiz_score: score,
       quiz_attempts: attemptNumber,
-      updated_at: new Date().toISOString(),
     },
     { onConflict: "user_id,module_id" },
   )
@@ -389,7 +385,7 @@ export async function loadQuizAttempts(moduleId: string): Promise<QuizAttempt[]>
       score: row.score,
       totalQuestions: row.total_questions,
       passed: row.passed,
-      answers: row.answers || {},
+      answers: row.answers ?? {},
       attemptedAt: row.attempted_at,
     })) ?? []
   )

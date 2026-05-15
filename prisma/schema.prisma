@@ -16,7 +16,6 @@ model users {
   createdAt               DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt               DateTime  @updatedAt @db.Timestamptz(6)
 
-  enrollments           user_course_enrollments[]
   courseProgress        user_course_progress?
   moduleProgress        user_module_progress[]
   sectionState          user_section_state[]
@@ -28,27 +27,12 @@ model users {
 // LEARNING STATE MODELS (Normalized schema for AI course tracking)
 // ============================================================================
 
-model user_course_enrollments {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String   @unique @db.Uuid @map("user_id")
-  courseSlug String   @default("ai-course") @map("course_slug")
-  hasPaid    Boolean  @default(false) @map("has_paid")
-  enrolledAt DateTime @default(now()) @db.Timestamptz(6) @map("enrolled_at")
-  createdAt  DateTime @default(now()) @db.Timestamptz(6) @map("created_at")
-  updatedAt  DateTime @updatedAt @db.Timestamptz(6) @map("updated_at")
-
-  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("user_course_enrollments")
-}
-
 model user_course_progress {
   userId               String   @id @db.Uuid @map("user_id")
   courseSlug           String   @default("ai-course") @map("course_slug")
   currentModule        String?  @map("current_module")
   currentSection       String?  @map("current_section")
   modulesCompleted     Int      @default(0) @map("modules_completed")
-  totalModules         Int      @default(5) @map("total_modules")
   completionPercentage Decimal  @default(0) @db.Decimal(5, 2) @map("completion_percentage")
   createdAt            DateTime @default(now()) @db.Timestamptz(6) @map("created_at")
   updatedAt            DateTime @updatedAt @db.Timestamptz(6) @map("updated_at")
