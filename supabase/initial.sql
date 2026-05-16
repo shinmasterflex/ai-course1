@@ -1,6 +1,9 @@
 -- ============================================================================
 -- AI Course Schema: Learning State Persistence
 -- ============================================================================
+--
+-- This file contains all schema, triggers, indexes, and RLS policies for the AI Course platform.
+--
 -- 5-Module AI for Business Leaders Course
 --   Module 0 (The AI Shift): 3 sections + quiz
 --   Module 1 (AI Landscape & Agents): 9 sections + quiz
@@ -33,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public."users" (
   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
 
 COMMENT ON TABLE public."users" IS
   'Application-level user profiles mirrored from Supabase auth.users. Credentials stay in auth.users; this table is reused for app login state, progress, and access control.';
@@ -79,6 +83,7 @@ BEGIN
 END;
 $$;
 
+
 DROP TRIGGER IF EXISTS on_auth_user_synced_to_public_users ON auth.users;
 CREATE TRIGGER on_auth_user_synced_to_public_users
 AFTER INSERT OR UPDATE OF email, raw_user_meta_data
@@ -97,6 +102,7 @@ CREATE TABLE IF NOT EXISTS public.user_course_progress (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
 
 COMMENT ON TABLE public.user_course_progress IS
   'Last-known module/section position so users can resume where they left off. Completion totals are derived on demand from user_section_state.';
@@ -117,6 +123,7 @@ CREATE TABLE IF NOT EXISTS public.user_module_progress (
   UNIQUE(user_id, module_id)
 );
 
+
 COMMENT ON TABLE public.user_module_progress IS
   'Per-module quiz outcome summary: pass status, latest score, attempt counter. Section-level state lives in user_section_state.';
 
@@ -135,6 +142,7 @@ CREATE TABLE IF NOT EXISTS public.user_section_state (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(user_id, module_id, section_id)
 );
+
 
 COMMENT ON TABLE public.user_section_state IS
   'Section-level tracking: completion flag and last access time.';
@@ -157,6 +165,7 @@ CREATE TABLE IF NOT EXISTS public.user_quiz_attempts (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+
 COMMENT ON TABLE public.user_quiz_attempts IS
   'Complete history of quiz attempts per module. Each row = one submission.';
 COMMENT ON COLUMN public.user_quiz_attempts.answers IS
@@ -178,25 +187,30 @@ BEGIN
 END;
 $$;
 
+
 DROP TRIGGER IF EXISTS set_user_course_progress_updated_at ON public.user_course_progress;
 CREATE TRIGGER set_user_course_progress_updated_at
 BEFORE UPDATE ON public.user_course_progress
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
+
 
 DROP TRIGGER IF EXISTS set_user_module_progress_updated_at ON public.user_module_progress;
 CREATE TRIGGER set_user_module_progress_updated_at
 BEFORE UPDATE ON public.user_module_progress
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
+
 DROP TRIGGER IF EXISTS set_user_section_state_updated_at ON public.user_section_state;
 CREATE TRIGGER set_user_section_state_updated_at
 BEFORE UPDATE ON public.user_section_state
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
+
 DROP TRIGGER IF EXISTS set_user_quiz_attempts_updated_at ON public.user_quiz_attempts;
 CREATE TRIGGER set_user_quiz_attempts_updated_at
 BEFORE UPDATE ON public.user_quiz_attempts
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
+
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 6. ROW-LEVEL SECURITY
@@ -206,6 +220,7 @@ ALTER TABLE public.user_course_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_module_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_section_state ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_quiz_attempts ENABLE ROW LEVEL SECURITY;
+
 
 -- Enable RLS policies: users can only see/modify their own data
 DROP POLICY IF EXISTS "user_isolation" ON public.user_course_progress;
@@ -234,11 +249,14 @@ CREATE POLICY "user_isolation" ON public.user_quiz_attempts
 CREATE INDEX IF NOT EXISTS idx_user_section_state_completed
   ON public.user_section_state(user_id, module_id, is_completed);
 
+
 CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_user_module
   ON public.user_quiz_attempts(user_id, module_id);
 
+
 CREATE INDEX IF NOT EXISTS idx_user_quiz_attempts_timestamp
   ON public.user_quiz_attempts(user_id, attempted_at DESC);
+
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- 8. BOOKING BOX SUBMISSIONS
@@ -259,6 +277,7 @@ CREATE TABLE IF NOT EXISTS public.booking_box_submissions (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+
 COMMENT ON TABLE public.booking_box_submissions IS
   'Stores booking/contact form submissions from the website booking box.';
 COMMENT ON COLUMN public.booking_box_submissions.status IS
@@ -271,7 +290,9 @@ CREATE TRIGGER set_booking_box_submissions_updated_at
 BEFORE UPDATE ON public.booking_box_submissions
 FOR EACH ROW EXECUTE FUNCTION public.set_updated_at_timestamp();
 
+
 ALTER TABLE public.booking_box_submissions ENABLE ROW LEVEL SECURITY;
+
 
 DROP POLICY IF EXISTS "public_submit_booking_box" ON public.booking_box_submissions;
 CREATE POLICY "public_submit_booking_box" ON public.booking_box_submissions
@@ -286,8 +307,110 @@ CREATE POLICY "user_read_own_booking_box" ON public.booking_box_submissions
 CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_email
   ON public.booking_box_submissions(email);
 
+
 CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_status_created
   ON public.booking_box_submissions(status, created_at DESC);
 
+
 CREATE INDEX IF NOT EXISTS idx_booking_box_submissions_user_id
   ON public.booking_box_submissions(user_id);
+
+
+-- -----------------------------------------------------------------------------
+-- webinar_registrations - signed-in users registering for free webinars
+-- -----------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS public.webinar_registrations (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users (id) ON DELETE CASCADE,
+  webinar_id TEXT NOT NULL,
+  webinar_title TEXT,
+  webinar_start TIMESTAMPTZ,
+  email TEXT NOT NULL,
+  full_name TEXT,
+  source_page TEXT,
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (user_id, webinar_id)
+);
+
+CREATE INDEX IF NOT EXISTS webinar_registrations_webinar_id_idx
+  ON public.webinar_registrations (webinar_id);
+
+CREATE INDEX IF NOT EXISTS webinar_registrations_user_id_idx
+  ON public.webinar_registrations (user_id);
+
+ALTER TABLE public.webinar_registrations ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow service role inserts on webinar_registrations"
+  ON public.webinar_registrations;
+CREATE POLICY "Allow service role inserts on webinar_registrations"
+  ON public.webinar_registrations
+  FOR INSERT
+  TO service_role
+  WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Allow users to read their own webinar registrations"
+  ON public.webinar_registrations;
+CREATE POLICY "Allow users to read their own webinar registrations"
+  ON public.webinar_registrations
+  FOR SELECT
+  TO authenticated
+  USING (auth.uid() = user_id);
+
+-- -----------------------------------------------------------------------------
+-- Reload PostgREST schema cache
+-- -----------------------------------------------------------------------------
+
+SELECT pg_notify('pgrst', 'reload schema');
+
+
+-- -----------------------------------------------------------------------------
+-- webinar_registrations - signed-in users registering for free webinars
+-- -----------------------------------------------------------------------------
+
+create table if not exists public.webinar_registrations (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users (id) on delete cascade,
+  webinar_id text not null,
+  webinar_title text,
+  webinar_start timestamptz,
+  email text not null,
+  full_name text,
+  source_page text,
+  ip_address text,
+  user_agent text,
+  created_at timestamptz not null default now(),
+  unique (user_id, webinar_id)
+);
+
+create index if not exists webinar_registrations_webinar_id_idx
+  on public.webinar_registrations (webinar_id);
+
+create index if not exists webinar_registrations_user_id_idx
+  on public.webinar_registrations (user_id);
+
+alter table public.webinar_registrations enable row level security;
+
+drop policy if exists "Allow service role inserts on webinar_registrations"
+  on public.webinar_registrations;
+create policy "Allow service role inserts on webinar_registrations"
+  on public.webinar_registrations
+  for insert
+  to service_role
+  with check (true);
+
+drop policy if exists "Allow users to read their own webinar registrations"
+  on public.webinar_registrations;
+create policy "Allow users to read their own webinar registrations"
+  on public.webinar_registrations
+  for select
+  to authenticated
+  using (auth.uid() = user_id);
+
+-- -----------------------------------------------------------------------------
+-- Reload PostgREST schema cache
+-- -----------------------------------------------------------------------------
+
+select pg_notify('pgrst', 'reload schema');
