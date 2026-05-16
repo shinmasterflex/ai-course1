@@ -5,12 +5,7 @@
 
 "use client"
 
-import Link from "next/link"
-import { PublicHeader } from "@/components/layout/public-header"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
-import { getCourseStructure } from "@/lib/course-content"
+import DashboardPage from "./course/page"
 
 export default function HomePage() {
   const modules = getCourseStructure().modules
@@ -30,99 +25,7 @@ export default function HomePage() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-green/30 bg-white/80 px-4 py-2 text-sm font-semibold text-brand-indigo">
                 <Sparkles className="h-4 w-4 text-brand-orange" />
-                Overview of AI for Business Leaders
-              </div>
-              <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
-                <span className="text-brand-indigo">Lead AI</span>{" "}
-                <span className="brand-wordmark text-brand-orange">with Clarity</span>
-              </h1>
-              <p className="max-w-2xl text-xl text-muted-foreground md:text-2xl">
-                Practical, beginner-friendly guidance for understanding and applying AI across tools, workflows, and measurable outcomes.
-              </p>
-              <div className="flex flex-col gap-4 pt-2 sm:flex-row">
-                <Button asChild size="lg" className="text-lg px-10 bg-brand-orange hover:bg-brand-orange/90 text-white">
-                  <Link href="/try">Start Free Module 0</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="text-lg px-10">
-                  <Link href="/register?paymentRequired=1">Unlock Full Course</Link>
-                </Button>
-              </div>
-              <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-muted-foreground">
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> 5 Core Modules</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Decision Frameworks</span>
-                <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-green" /> Beginner Friendly</span>
-              </div>
-            </div>
-
-            <div className="relative">
-              <Card className="overflow-hidden border-brand-green/25 bg-white/85 shadow-xl backdrop-blur">
-                <CardContent className="space-y-5 p-6 md:p-8">
-                  <h3 className="text-2xl font-semibold text-brand-indigo">What You'll Learn</h3>
-                  <p className="text-muted-foreground">
-                    Build decision-ready AI capability with structured modules and practical implementation guidance.
-                  </p>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Navigate the AI landscape with operational clarity</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Optimize prompts, workflows, and your AI stack</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Evaluate partners and reduce deployment risk</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Build adoption roadmaps and governance controls</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Measure ROI and strategic business value</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-6 lg:grid-cols-3">
-            <Card className="overflow-hidden border-brand-indigo/20 bg-white/90">
-              <CardHeader>
-                <CardTitle className="text-brand-indigo">Beginner Friendly</CardTitle>
-                <CardDescription>Built for anyone who wants practical AI skills, from first-time learners to experienced practitioners.</CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Move from AI basics to confident application with frameworks you can use right away.
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden border-brand-green/20 bg-white/90">
-              <CardHeader>
-                <CardTitle className="text-brand-indigo">Decision Frameworks</CardTitle>
-                <CardDescription>Use structured scorecards, checkpoints, and implementation patterns.</CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Reduce guesswork when evaluating tools, partners, and rollout plans.
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden border-brand-orange/20 bg-white/90">
-              <CardHeader>
-                <CardTitle className="text-brand-indigo">Outcome Focused</CardTitle>
-                <CardDescription>Designed around adoption, governance, and measurable business value.</CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                Track progress through high-impact modules and knowledge checks.
-              </CardContent>
-            </Card>
-          </div>
+                  return <DashboardPage />
         </div>
       </section>
 
