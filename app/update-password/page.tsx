@@ -59,9 +59,9 @@ export default function UpdatePasswordPage() {
     setSuccess(true)
     setLoading(false)
 
-    // Redirect to course after 2 seconds
+    // Redirect to educ after 2 seconds
     setTimeout(() => {
-      router.push('/course')
+      router.push('/educ')
     }, 2000)
   }
 
@@ -76,7 +76,7 @@ export default function UpdatePasswordPage() {
               </p>
               <h2 className="text-3xl font-semibold text-brand-indigo">Your account is secure again</h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Password updated successfully. You will be redirected to your course dashboard in a moment.
+                Password updated successfully. You will be redirected to your learning dashboard in a moment.
               </p>
             </div>
             <div className="mt-8 overflow-hidden rounded-2xl border border-brand-indigo/10 bg-white">
@@ -100,7 +100,7 @@ export default function UpdatePasswordPage() {
               </div>
               <h1 className="text-2xl font-bold text-green-800">Password Updated!</h1>
               <p className="text-gray-600">
-                Your password has been successfully updated. Redirecting you to the course...
+                Your password has been successfully updated. Redirecting you to the learning area...
               </p>
             </div>
           </section>

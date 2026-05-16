@@ -2,7 +2,7 @@ function sanitizeUrl(value: string): string {
   return value.trim().replace(/\/$/, '')
 }
 
-export function getSafeAuthRedirectPath(nextPath?: string | null, fallbackPath: string = '/course'): string {
+export function getSafeAuthRedirectPath(nextPath?: string | null, fallbackPath: string = '/educ'): string {
   if (!nextPath) {
     return fallbackPath
   }

@@ -34,8 +34,8 @@ type CourseModulePageProps = {
 export function CourseModulePage({ moduleId, basePath, exitPath }: CourseModulePageProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const effectiveBasePath = basePath ?? `/course/${moduleId}`
-  const effectiveExitPath = exitPath ?? "/course"
+  const effectiveBasePath = basePath ?? `/educ/${moduleId}`
+  const effectiveExitPath = exitPath ?? "/educ"
   const { markSectionComplete, setCurrentPosition, getCompletedSections, getCourseStructure } = useProgress()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
 

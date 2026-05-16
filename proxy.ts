@@ -67,7 +67,7 @@ function getRateLimitConfig(request: NextRequest): { keyPrefix: string; maxReque
 
 function isSupabaseProtectedPath(pathname: string): boolean {
   return (
-    pathname.startsWith('/course') ||
+    pathname.startsWith('/educ') ||
     pathname.startsWith('/api/auth/sync-user') ||
     pathname.startsWith('/api/progress')
   )

@@ -62,7 +62,7 @@ export default function RegisterPage() {
   }, [])
 
   const paymentLinkUrl = process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_URL
-  const nextPath = getSafeAuthRedirectPath(searchParams?.get("next"), paymentRequired ? "/register?paymentRequired=1" : "/course")
+  const nextPath = getSafeAuthRedirectPath(searchParams?.get("next"), paymentRequired ? "/register?paymentRequired=1" : "/educ")
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
   const isBotProtectionRequired =
     process.env.NEXT_PUBLIC_BOT_PROTECTION_REQUIRED === "true" || process.env.NODE_ENV === "production"

@@ -88,7 +88,7 @@ export function Sidebar() {
   // `/course/<id>` route (which AuthGuard gates as needed).
   const getModuleBasePath = (moduleId: string) => {
     if (moduleId === "module-0") return "/try"
-    return `/course/${moduleId}`
+    return `/educ/${moduleId}`
   }
 
   const sidebarAttributes = getExplainerAttributes({

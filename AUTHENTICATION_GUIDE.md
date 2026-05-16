@@ -91,7 +91,7 @@ User Registration/Login Flow:
 ### Method 1: Normal Flow
 1. Go to `/sign-in`
 2. Enter email and password
-3. Should redirect to `/course` on success
+3. Should redirect to `/educ` on success
 
 ### Method 2: Password Reset Confirmation
 1. Go to `/sign-in`

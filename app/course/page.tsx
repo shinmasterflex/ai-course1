@@ -173,7 +173,7 @@ export default function DashboardPage() {
                 const Icon = visual.icon
                 const isFreeModule = module.id === "module-0"
                 const isLocked = !isFreeModule && accessResolved && !hasPaidAccess
-                const moduleHref = isFreeModule ? "/try" : `/course/${module.id}`
+                const moduleHref = isFreeModule ? "/try" : `/educ/${module.id}`
 
                 return (
                   <Card key={module.id} className="border hover:shadow-md transition-shadow">

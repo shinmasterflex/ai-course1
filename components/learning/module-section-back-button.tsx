@@ -17,9 +17,9 @@ export function ModuleSectionBackButton() {
       return { moduleId: "module-0", basePath: "/try", exitPath: "/" }
     }
 
-    const match = pathname?.match(/^\/course\/(module-\d+)$/)
+    const match = pathname?.match(/^\/educ\/(module-\d+)$/)
     if (match && match[1]) {
-      return { moduleId: match[1], basePath: `/course/${match[1]}`, exitPath: "/course" }
+      return { moduleId: match[1], basePath: `/educ/${match[1]}`, exitPath: "/educ" }
     }
 
     return null
